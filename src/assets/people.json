@@ -1,0 +1,66 @@
+[
+  { 
+    "id": 1,
+    "name": "Giseli",
+    "lastInitial": "V", 
+    "pic": "avatar-1.png",
+    "phone": "617-544-7354",
+    "availability": ["7to3", "3to7", "after7", "weekends"],
+    "location": {"lat": 40.6709948, "lng": -73.9845812},
+    "children": [
+    {
+      "name": "Martina",
+      "age": 14
+    }
+    ]
+  },
+  { 
+    "id": 2,
+    "name": "Manisha",  
+    "lastInitial": "S",
+    "pic": "avatar-2.png",
+    "phone": "646-623-4802‬",
+    "availability": ["after7", "weekends"],
+    "location": {"lat": 40.680316, "lng": -73.974780},
+    "children": [
+    { 
+      "name": "Martin",
+      "age": 8 
+    }, 
+    {
+      "name": "Mary",
+      "age": 2
+    }
+    ]
+  },
+  {
+    "id": 3,
+    "name": "Asa", 
+    "lastInitial": "N",
+    "pic": "avatar-3.png",
+    "phone": "774-242-2842",
+    "availability": ["after7", "weekends"],
+    "location": {"lat": 40.664725, "lng": 73.977001},
+    "children": []
+  },
+  { 
+    "id": 2,
+    "name": "Holmes",
+    "lastInitial": "W", 
+    "pic": "avatar-4.png",
+    "phone": "646-623-4802‬",
+    "availability": ["never"],
+    "location": {"lat": 40.667714, "lng": -73.987534},
+    "children": []
+  },
+  { 
+    "id": 2,
+    "name": "Mary", 
+    "lastInitial": "W",
+    "pic": "avatar-5.png",
+    "phone": "646-623-4802‬",
+    "availability": ["7to3", "3to7", "weekends"],
+    "location": {"lat": 40.665411, "lng": -73.986171},
+    "children": []
+  }
+]

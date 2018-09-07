@@ -1,0 +1,1 @@
+# cottageclass-map
