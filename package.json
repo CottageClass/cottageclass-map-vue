@@ -16,6 +16,7 @@
     "deploy": "node ./node_modules/vue-gh-pages/index.js"
   },
   "dependencies": {
+    "@pderas/vue2-geocoder": "^1.0.2",
     "vue": "^2.5.2",
     "vue-router": "^3.0.1",
     "vue2-google-maps": "^0.10.2"
