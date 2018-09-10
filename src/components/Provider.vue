@@ -1,6 +1,6 @@
 <template>
-	    <div class="list-item-container"><img :src="require(`@/assets/${person.pic}`)" class="image">
-      <div class="friend-indicator"><img src="@/assets/check.png"></div>
+	    <div class="list-item-container"><img :src="require(`../assets/${person.pic}`)" class="image">
+      <div class="friend-indicator"><img src="../assets/check.png"></div>
       <div class="list-item-content-left">
         <h5 class="heading">{{ person.name}} {{ person.lastInitial }}.</h5>
         <div class="text-block">
