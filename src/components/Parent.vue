@@ -1,31 +1,31 @@
 <template>
-  <div class="list-item-3-container">
- <div class="list-item-3-title-bar"><img src="../assets/avatar-5.png" class="image">
-        <div class="list-item-3-heading">
-          <h5 class="heading">{{ person.name}} {{ person.lastInitial }}.</h5>
-        </div>
-      </div>
-      <div class="list-item-3-child-list">
-        <div class="text-block">
-          <span v-for="(child, index) in person.children">{{ child.name }} 
-            <span class="black-50">({{ child.age }})</span><span v-if="(index < person.children.length - 1)">, </span>
-        </span></div>
-      </div>
-      <div class="list-item-3-actions">
-        <div class="list-item-3-link-block w-inline-block">
-          <TextMessageLink :number="8622944859" :message="'I\'m checking in ' + person.name + ' (#' + person.id + ') now. Number of kids: ' + person.children.length">
-            <div class="list-item-3-button-text">Check In</div>
-          </TextMessageLink>
-        </div>
-        <div class="list-item-3b-link-block w-inline-block">
-          <TextMessageLink :number="8622944859" :message="'I\'m checking out ' + person.name + ' (#' + person.id + ') now. Number of kids: ' + person.children.length">
-            <div class="list-item-3-button-text">
-              <div class="list-item-3-button-text">Check Out</div>
-            </div>
-          </TextMessageLink>
-      </div>
-    </div>
-  </div>
+ <div class="list-item-3-container">
+   <router-link :to="{ name: 'emergencyInfo', params: { id: person.id }}" class="list-item-3-title-bar"><img src="../assets/avatar-5.png" class="image">
+       <div class="list-item-3-heading">
+         <h5 class="heading">{{ person.name}} {{ person.lastInitial }}. </h5> 
+       </div>
+     </router-link>
+     <div class="list-item-3-child-list">
+       <div class="text-block">
+         <span v-for="(child, index) in person.children">{{ child.name }} 
+           <span class="black-50">({{ child.age }})</span><span v-if="(index < person.children.length - 1)">, </span>
+       </span></div>
+   </div>
+     <div class="list-item-3-actions">
+       <div class="list-item-3-link-block w-inline-block">
+         <TextMessageLink :number="8622944859" :message="'I\'m checking in ' + person.name + ' (#' + person.id + ') now. Number of kids: ' + person.children.length">
+           <div class="list-item-3-button-text">Check In</div>
+         </TextMessageLink>
+       </div>
+       <div class="list-item-3b-link-block w-inline-block">
+         <TextMessageLink :number="8622944859" :message="'I\'m checking out ' + person.name + ' (#' + person.id + ') now. Number of kids: ' + person.children.length">
+           <div class="list-item-3-button-text">
+             <div class="list-item-3-button-text">Check Out</div>
+           </div>
+         </TextMessageLink>
+     </div>
+   </div>
+ </div>
 </template>
 
 <script>

@@ -1,17 +1,48 @@
 [
   { 
     "id": 1,
-    "name": "Giseli",
-    "lastInitial": "V", 
+    "name": "Holmes",
+    "lastInitial": "W", 
     "pic": "avatar-1.png",
-    "phone": "617-544-7354",
+    "phone": "614-465-6371",
     "availability": ["7to3", "3to7", "after7", "weekends"],
     "location": {"lat": 40.6709948, "lng": -73.9845812},
+    "emergencyContacts": [
+        {
+          "name": "Giseli Vasconcelos",
+          "relationship": "mother",
+          "phone": "617-544-7354"
+        },
+        {
+          "name": "Tiffiniy Cheng",
+          "relationship": "friend",
+          "phone": "413-367-6255"
+        },
+        {
+          "name": "patrick moriarty",
+          "relationship": "roommate",
+          "phone": "508-555-1212"
+        }
+       ],
+    "doctors": [
+      {
+       "name": "Le Quang",
+       "phone": "508-796-5661"
+      },
+      {
+      "name": "Jane Doe",
+      "phone": "508-555-1212"
+      }
+   ],
     "children": [
-    {
-      "name": "Martina",
-      "age": 14
-    }
+      {
+        "name": "Martina",
+        "age": 14,
+        "birthday": "5/19/2004",
+        "allergies": "Martina is mildly allergic to gluten",
+        "medicalNeeds": "",
+        "otherNotes": "Please try to limit Martina's screentime."
+      }
     ]
   },
   { 
@@ -22,14 +53,49 @@
     "phone": "646-623-4802‬",
     "availability": ["after7", "weekends"],
     "location": {"lat": 40.680316, "lng": -73.974780},
+    "emergencyContacts": [
+        {
+          "name": "Giseli Vasconcelos",
+          "relationship": "mother",
+          "phone": "617-544-7354"
+        },
+        {
+          "name": "Tiffiniy Cheng",
+          "relationship": "friend",
+          "phone": "413-367-6255"
+        },
+        {
+          "name": "Patrick Moriarty",
+          "relationship": "roommate",
+          "phone": "508-555-1212"
+        }
+       ],
+    "doctors": [
+      {
+       "name": "Le Quang",
+       "phone": "508-796-5661"
+      },
+      {
+      "name": "Jane Doe",
+      "phone": "508-555-1212"
+      }
+   ],
     "children": [
     { 
-      "name": "Martin",
-      "age": 8 
+      "name": "Manisho",
+      "age": 8,
+      "birthday": "5/19/2010",
+      "allergies": "Penicillin, Benadryl",
+      "medicalNeeds": "",
+      "otherNotes": ""
     }, 
     {
-      "name": "Mary",
-      "age": 2
+      "name": "Manisha Jr.",
+      "age": 5,
+      "birthday": "4/16/2013",
+      "allergies": "She is extremely allergic to tree nuts.",
+      "medicalNeeds": "Must always have an epipen.",
+      "otherNotes": "She's shy at first but really loves to play with other kids once she gets warmed up to them."
     }
     ]
   },

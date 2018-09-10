@@ -1,40 +1,93 @@
 <template>
 <div class="body">
-  <div class="title-bar-container"><router-link to="/" class="title-bar-action-l w-inline-block"><img src="../assets/Close-X.svg"></router-link>
-    <h5 class="heading-3">Check in Children</h5><a href="#" class="title-bar-action-2 w-inline-block"></a></div>
-  <div class="top-content-container">
-    <div class="page-lead-text">Check children in at drop-off, and check them out at pick-up. (Make sure to text us so we can track time and bill the parent.)</div><a href="" class="button-small-outline w-button">Learn More</a></div>
-  <div class="list-container" v-for="person in parents">
-     <Parent :person="person" :key="person.key"/>
+  <div class="title-bar-container"><router-link to="/bookings" class="title-bar-action-l w-inline-block"><img src="../assets/Arrow-Back-2.svg"></router-link>
+    <h5 class="heading-3">Emergency Contacts</h5><a href="#" class="title-bar-action-2 w-inline-block"></a></div>
+
+ <!-- Note $route.params for pulling in data. I guess I can pull in people again. --> 
+  <div class="emergency-contact-parent-summary"><img :src="require(`@/assets/${person.pic}`)" class="ec-parent-avatar">
+    <h5 class="heading">{{ person.name }}</h5>
+    <div class="ec-parent-summary-phone"><a :href="'tel:' + person.phone">{{ person.phone }}</a></div>
+    <div class="list-info-1">
+    	<!-- List children, possibly re-use this component-->
+    	<span v-for="(child, index) in person.children">{{ child.name }} <span class="black-50">{{ child.age }}</span><span v-if="(index < person.children.length - 1)">, </span></span>
+    </div>
+    <div class="ec-parent-summary-action-button-container"><a href="#" class="ec-parent-summary-button w-inline-block"><img src="../assets/chat.svg"><div class="ec-parent-summary-button-text">Text</div></a><a :href="'tel:' + person.phone" class="ec-parent-summary-button-2 w-inline-block"><img src="../assets/call-green.svg"><div class="ec-parent-summary-button-text-2">Call</div></a></div>
+  </div>
+  <div class="group-title-container-2">
+    <h5 class="list-title-2">Other Emergency Contacts</h5>
+  </div>
+  <!-- Emergency contact info -->
+  <div v-for="contact in person.emergencyContacts" class="list-item-4-container">
+    <div class="name-and-caption">
+      <h5 class="heading contact-name">{{ contact.name }}</h5>
+      <h5 class="caption-2">{{ contact.relationship }}</h5>
+      <div class="phone-text">{{ contact.phone }}</div>
+    </div><a :href="'tel:' + contact.phone" class="list-item-4-action-right w-inline-block"><img src="../assets/call-green.svg" class="image-4"></a>
+</div>
+  <!-- Doctor contact info -->
+  <div v-for="contact in person.doctors" class="list-item-4-container">
+    <div class="name-and-caption">
+      <h5 class="heading contact-name">{{ contact.name }}</h5>
+      <h5 class="caption-2">Physician</h5>
+      <div class="phone-text">{{ contact.phone }}</div>
+    </div><a :href="'tel:' + contact.phone" class="list-item-4-action-right w-inline-block"><img src="../assets/call-green.svg" class="image-4"></a>
+</div>
+  <!-- Medical info for each kid -->
+
+  <div class="group-title-container-2">
+    <h5 class="list-title-2">Medical &amp; Essential Information</h5>
+  </div>
+  <div class="list-item-5" v-for="child in person.children">
+    <h5 class="heading">{{ child.name }}</h5>
+    <h5 class="caption-2">Age {{ child.age }} | Born {{ child.birthday }}</h5>
+    <div class="label-description-block" v-if="child.allergies">
+      <div class="text-block-5">Allergies</div>
+      <div class="text-block-6">{{ child.allergies }}</div>
+    </div>
+    <div class="label-description-block" v-if="child.medicalNeeds">
+      <div class="text-block-5">Medical Needs</div>
+      <div class="text-block-6">{{ child.medicalNeeds }}</div>
+    </div>
+    <div class="label-description-block" v-if="child.otherNotes">
+      <div class="text-block-5">Other Notes</div>
+      <div class="text-block-6">{{ child.otherNotes }}</div>
     </div>
   </div>
-</div>	
+  <div class="spacer-300px"></div>
+  <!-- [if lte IE 9]><script src="https://cdnjs.cloudflare.com/ajax/libs/placeholders/3.0.2/placeholders.min.js"></script><![endif] -->
+</div>
 </template>
 
 <script>
+// todo
+// finish adding phone numbers etc
+// add data to json
+// add live data here
 
 import people from '../assets/people.json'
-import Parent from './Parent.vue'
 
 export default {
-	name: 'Bookings',
-	components: { Parent },
+	name: 'RequestModal',
 	data () {
 		return {
 			people: people
 		}
 	},
 	computed: {
-		parents: function () {
-			return this.people.filter(person => person.children.length) // only return people who have kids.
+		person: function () {
+			return this.people[this.$route.params.id - 1]
 		}
 	}
 };
 </script>
 
 <style scoped>
-.body {
-  font-family: Arial, 'Helvetica Neue', Helvetica, sans-serif;
+
+.contact-name {
+	text-transform: capitalize;
+}
+body {
+  font-family: soleil, sans-serif;
   color: #333;
   font-size: 14px;
   line-height: 20px;
@@ -48,7 +101,7 @@ a {
   margin-top: 16px;
 }
 
-.list-item-container {
+.list-item-1-container {
   position: relative;
   display: -webkit-box;
   display: -webkit-flex;
@@ -69,7 +122,6 @@ a {
   border-bottom-color: rgba(0, 0, 0, .1);
   border-radius: 4px;
   background-color: #fff;
-  box-shadow: 0 0 6px 0 #fff;
 }
 
 .image {
@@ -107,13 +159,13 @@ a {
   display: -ms-flexbox;
   display: flex;
   margin-top: 0px;
-  margin-bottom: 2px;
+  margin-bottom: 4px;
   -webkit-box-orient: vertical;
   -webkit-box-direction: normal;
   -webkit-flex-direction: column;
   -ms-flex-direction: column;
   flex-direction: column;
-  font-size: 15px;
+  font-size: 16px;
   text-align: center;
 }
 
@@ -235,7 +287,7 @@ a {
   box-shadow: 0 9px 10px 0 rgba(0, 0, 0, .2);
 }
 
-.text-block {
+.list-info-1 {
   font-size: 13px;
 }
 
@@ -263,6 +315,7 @@ a {
   margin-top: 0px;
   padding-top: 40px;
   padding-bottom: 10px;
+  background-color: #f2f2f2;
 }
 
 .list-title {
@@ -288,7 +341,7 @@ a {
   text-transform: uppercase;
 }
 
-.list-item-3-button-text {
+.button-text {
   padding-left: 0px;
   color: #1f88e9;
   font-size: 13px;
@@ -594,9 +647,7 @@ a {
   border-style: none none solid;
   border-bottom-width: 1px;
   border-bottom-color: rgba(0, 0, 0, .1);
-  border-radius: 4px;
   background-color: #fff;
-  box-shadow: 0 0 6px 0 #fff;
 }
 
 .title-bar-and-action {
@@ -727,7 +778,7 @@ a {
   align-items: flex-start;
 }
 
-.name-title-group-container {
+.name-and-caption {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -743,7 +794,7 @@ a {
   align-items: flex-start;
 }
 
-.occupation {
+.caption {
   margin-top: 0px;
   margin-bottom: 0px;
   color: rgba(0, 0, 0, .5);
@@ -768,7 +819,7 @@ a {
   width: 202px;
   height: 111px;
   margin-right: 4px;
-  background-color: #0098ff;
+  background-color: #fff;
 }
 
 .list-item-3-container {
@@ -797,7 +848,6 @@ a {
   border-bottom-color: rgba(0, 0, 0, .1);
   border-radius: 4px;
   background-color: #fff;
-  box-shadow: 0 0 6px 0 #fff;
 }
 
 .top-content-container {
@@ -944,6 +994,7 @@ a {
   -webkit-align-items: center;
   -ms-flex-align: center;
   align-items: center;
+  background-color: #f2f2f2;
 }
 
 .copyright-text {
@@ -1027,8 +1078,314 @@ a {
   margin-bottom: 3px;
 }
 
+.body-2 {
+  background-color: #ddd;
+}
+
+.components-container-1 {
+  margin-top: 24px;
+  margin-bottom: 24px;
+  padding: 48px 32px 64px;
+  border: 1px none #f3f3f3;
+  background-color: #d8d8d8;
+}
+
+.components-h3 {
+  margin-top: 0px;
+  margin-bottom: 48px;
+  color: #000;
+  font-size: 30px;
+  text-align: center;
+}
+
+.components-sub-heading {
+  margin-top: 56px;
+  margin-bottom: 16px;
+  color: #00a3ff;
+  font-size: 11px;
+  font-weight: 700;
+  text-align: center;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+.components-container-2 {
+  margin-bottom: 6px;
+  padding: 16px;
+  background-color: #fafafa;
+}
+
+.spacer-300px {
+  height: 300px;
+}
+
+.top-content-container-copy {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  width: 100%;
+  padding: 16px 32px;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+  -ms-flex-align: center;
+  align-items: center;
+  border-style: none none solid;
+  border-width: 1px;
+  border-color: rgba(0, 0, 0, .1);
+  background-color: #fff;
+}
+
+.emergency-contact-parent-summary {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  width: 100%;
+  padding: 24px 32px;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+  -ms-flex-align: center;
+  align-items: center;
+  border-style: none none solid;
+  border-width: 1px;
+  border-color: rgba(0, 0, 0, .1);
+  background-color: #fff;
+}
+
+.ec-parent-avatar {
+  width: 120px;
+  height: 120px;
+  margin-bottom: 16px;
+}
+
+.ec-parent-summary-phone {
+  margin-bottom: 4px;
+}
+
+.ec-parent-summary-action-button-container {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  width: 150px;
+  margin-top: 16px;
+  -webkit-box-pack: justify;
+  -webkit-justify-content: space-between;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+}
+
+.ec-parent-summary-button {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  padding: 16px;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+  -ms-flex-align: center;
+  align-items: center;
+  border-radius: 4px;
+  background-color: #deedfc;
+}
+
+.ec-parent-summary-button-text {
+  color: #1f88e9;
+  font-size: 13px;
+  font-weight: 700;
+  text-align: center;
+  letter-spacing: 1.2px;
+  text-decoration: none;
+  text-transform: uppercase;
+}
+
+.ec-parent-summary-button-2 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  padding: 16px;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+  -ms-flex-align: center;
+  align-items: center;
+  border-radius: 4px;
+  background-color: #daf2e4;
+}
+
+.ec-parent-summary-button-text-2 {
+  color: #2aba5c;
+  font-size: 13px;
+  font-weight: 700;
+  text-align: center;
+  letter-spacing: 1.2px;
+  text-decoration: none;
+  text-transform: uppercase;
+}
+
+.list-title-2 {
+  margin-top: 0px;
+  margin-bottom: 0px;
+  color: #000;
+  font-size: 16px;
+  font-weight: 400;
+  text-align: left;
+}
+
+.group-title-container-2 {
+  margin-top: 0px;
+  padding-top: 40px;
+  padding-bottom: 16px;
+  padding-left: 16px;
+  background-color: #f2f2f2;
+}
+
+.list-item-4-container {
+  position: relative;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  padding: 16px;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+  -webkit-flex-direction: row;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  -webkit-box-pack: justify;
+  -webkit-justify-content: space-between;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+  -ms-flex-align: center;
+  align-items: center;
+  border-bottom: 1px solid rgba(0, 0, 0, .1);
+  background-color: #fff;
+}
+
+.phone-text {
+  color: #0cba52;
+}
+
+.caption-2 {
+  margin-top: 0px;
+  margin-bottom: 4px;
+  color: rgba(0, 0, 0, .5);
+  font-size: 13px;
+  font-weight: 400;
+  text-align: center;
+  text-transform: capitalize;
+}
+
+.list-item-4-action-right {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+  -webkit-flex-direction: row;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  -webkit-box-pack: end;
+  -webkit-justify-content: flex-end;
+  -ms-flex-pack: end;
+  justify-content: flex-end;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+  -ms-flex-align: center;
+  align-items: center;
+  border-radius: 4px;
+  background-color: hsla(0, 0%, 100%, .15);
+}
+
+.label-description-block {
+  margin-top: 16px;
+}
+
+.text-block-5 {
+  font-weight: 400;
+}
+
+.text-block-6 {
+  color: rgba(0, 0, 0, .5);
+  font-size: 13px;
+}
+
+.list-item-5 {
+  position: relative;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  margin-bottom: 8px;
+  padding: 16px;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  -webkit-box-pack: start;
+  -webkit-justify-content: flex-start;
+  -ms-flex-pack: start;
+  justify-content: flex-start;
+  -webkit-box-align: start;
+  -webkit-align-items: flex-start;
+  -ms-flex-align: start;
+  align-items: flex-start;
+  border-bottom: 1px solid rgba(0, 0, 0, .1);
+  background-color: #fff;
+}
+
+@media (max-width: 767px) {
+  .components-container-1 {
+    padding-right: 16px;
+    padding-left: 16px;
+  }
+}
+
 @media (max-width: 479px) {
-  .list-item-container {
+  .list-item-1-container {
     padding: 16px;
   }
   .friend-indicator {
@@ -1063,14 +1420,25 @@ a {
     -ms-flex-align: start;
     align-items: flex-start;
   }
-  .name-title-group-container {
+  .name-and-caption {
     display: -webkit-box;
     display: -webkit-flex;
     display: -ms-flexbox;
     display: flex;
   }
-  .occupation {
+  .caption {
     text-align: left;
   }
+  .list-item-4-container {
+    padding: 16px;
+  }
+  .caption-2 {
+    text-align: left;
+  }
+  .list-item-5 {
+    padding: 16px;
+  }
 }
+
+
 </style>
