@@ -105,7 +105,7 @@
     "lastInitial": "N",
     "pic": "avatar-3.png",
     "phone": "774-242-2842",
-    "availability": ["after7", "weekends"],
+    "availability": ["never"],
     "location": {"lat": 40.664725, "lng": 73.977001},
     "children": []
   },
