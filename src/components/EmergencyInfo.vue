@@ -5,7 +5,7 @@
 
  <!-- Note $route.params for pulling in data. I guess I can pull in people again. --> 
   <div class="emergency-contact-parent-summary"><img :src="require(`@/assets/${person.pic}`)" class="ec-parent-avatar">
-    <h5 class="heading">{{ person.name }}</h5>
+    <h5 class="heading">{{ person.name}} {{ person.lastInitial }}.</h5>
     <div class="ec-parent-summary-phone"><a :href="'tel:' + person.phone">{{ person.phone }}</a></div>
     <div class="list-info-1">
     	<!-- List children, possibly re-use this component-->
