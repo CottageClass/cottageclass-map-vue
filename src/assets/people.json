@@ -65,9 +65,9 @@
           "phone": "413-367-6255"
         },
         {
-          "name": "Patrick Moriarty",
-          "relationship": "roommate",
-          "phone": "508-555-1212"
+          "name": "Janet Snoyer",
+          "relationship": "mother",
+          "phone": "607-279-1964"
         }
        ],
     "doctors": [
@@ -105,7 +105,7 @@
     "lastInitial": "N",
     "pic": "avatar-3.png",
     "phone": "774-242-2842",
-    "availability": ["after7", "weekends"],
+    "availability": ["never"],
     "location": {"lat": 40.664725, "lng": 73.977001},
     "children": []
   },
