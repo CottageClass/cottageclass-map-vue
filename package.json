@@ -4,6 +4,7 @@
   "description": "A Vue.js project",
   "author": "holmesworcester <hwilson@gmail.com>",
   "private": true,
+  "homepage": "https://github.com/holmesworcester/cottageclass-map-vue",
   "scripts": {
     "dev": "webpack-dev-server --inline --progress --config build/webpack.dev.conf.js",
     "start": "npm run dev",
