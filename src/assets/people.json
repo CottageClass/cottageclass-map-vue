@@ -99,6 +99,60 @@
     }
     ]
   },
+  { 
+    "id": 7,
+    "name": "Kecia",  
+    "lastInitial": "A",
+    "pic": "avatar-2.png",
+    "phone": "760-484-0137",
+    "availability": ["7to3", "weekends"],
+    "location": {"lat": 40.680316, "lng": -73.974780},
+    "emergencyContacts": [
+        {
+          "name": "Mom",
+          "relationship": "mother",
+          "phone": "617-544-7354"
+        },
+        {
+          "name": "dad",
+          "relationship": "friend",
+          "phone": "413-367-6255"
+        },
+        {
+          "name": "Manisha Snoyer",
+          "relationship": "friend",
+          "phone": "607-279-1964"
+        }
+       ],
+    "doctors": [
+      {
+       "name": "Le Quang",
+       "phone": "508-796-5661"
+      },
+      {
+      "name": "Jane Doe",
+      "phone": "508-555-1212"
+      }
+   ],
+    "children": [
+    { 
+      "name": "Miles",
+      "age": 8,
+      "birthday": "5/19/2010",
+      "allergies": "Penicillin, Benadryl",
+      "medicalNeeds": "",
+      "otherNotes": ""
+    }, 
+    {
+      "name": "Manisha Jr.",
+      "age": 5,
+      "birthday": "4/16/2013",
+      "allergies": "She is extremely allergic to tree nuts.",
+      "medicalNeeds": "Must always have an epipen.",
+      "otherNotes": "She's shy at first but really loves to play with other kids once she gets warmed up to them."
+    }
+    ]
+  },
   {
     "id": 3,
     "name": "Asa", 
