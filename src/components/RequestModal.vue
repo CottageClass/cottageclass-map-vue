@@ -639,8 +639,8 @@ a {
   display: -webkit-flex;
   display: -ms-flexbox;
   display: flex;
-  padding-top: 32px;
-  padding-bottom: 32px;
+  padding-top: 16px;
+  padding-bottom: 16px;
   -webkit-box-orient: vertical;
   -webkit-box-direction: normal;
   -webkit-flex-direction: column;
@@ -682,12 +682,14 @@ a {
   }
 }
 
+/*
 	.avatar-and-cta-container {
 		display: none;
 	}
+	*/
 /* This isn't working on android so I've hidden that thumbnail with the line above */
 
-@media(max-height:400px) {
+@media(max-height:600px) {
 	.avatar-and-cta-container {
 		display: none;
 	}
