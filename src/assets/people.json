@@ -4,9 +4,12 @@
     "name": "Holmes",
     "lastInitial": "W", 
     "pic": "avatar-1.png",
+    "images": ["holmes-3.jpg", "holmes-4.jpg", "holmes-5.jpg", "holmes-1.jpg", "holmes-2.jpg"],
     "phone": "614-465-6371",
     "availability": ["7to3", "3to7", "after7", "weekends"],
     "location": {"lat": 40.6709948, "lng": -73.9845812},
+    "job": {"title": "Co-founder", "employer": "CottageClass"},
+    "activities": ["baking", "biking", "tennis", "running"],
     "emergencyContacts": [
         {
           "name": "Giseli Vasconcelos",
@@ -51,8 +54,11 @@
     "lastInitial": "S",
     "pic": "avatar-2.png",
     "phone": "646-623-4802‬",
-    "availability": ["after7", "weekends"],
+    "availability": ["3to7", "after7", "weekends"],
     "location": {"lat": 40.680316, "lng": -73.974780},
+    "job": {"title": "Co-founder", "employer": "CottageClass"},
+    "activities":[],
+    "images": ["manisha-4.jpg", "manisha-6.jpg", "manisha-7.jpg", "manisha-1.jpg", "manisha-3.jpg", "manisha-5.jpg"],
     "emergencyContacts": [
         {
           "name": "Giseli Vasconcelos",
@@ -107,26 +113,58 @@
     "phone": "774-242-2842",
     "availability": ["never"],
     "location": {"lat": 40.664725, "lng": 73.977001},
+    "activities":[],
     "children": []
   },
   { 
     "id": 2,
-    "name": "Holmes",
+    "name": "Jane",
     "lastInitial": "W", 
     "pic": "avatar-4.png",
     "phone": "646-623-4802‬",
     "availability": ["never"],
+    "activities":[],
     "location": {"lat": 40.667714, "lng": -73.987534},
+    "activities":[],
     "children": []
   },
   { 
     "id": 2,
-    "name": "Mary", 
-    "lastInitial": "W",
+    "name": "Marixsa", 
+    "lastInitial": "R",
     "pic": "avatar-5.png",
+    "images": ["marixsa-0.jpg", "marixsa-1.jpg", "marixsa-7.jpg", "marixsa-4.jpg", "marixsa-2.jpg", "marixsa-5.jpg", "marixsa-3.jpg"],
     "phone": "646-623-4802‬",
     "availability": ["7to3", "3to7", "weekends"],
     "location": {"lat": 40.665411, "lng": -73.986171},
-    "children": []
+    "activities":["spanish", "art", "music"],
+    "job": {"title" : "Educator", "employer": "Tambor Playgroup"},
+    "children": 
+    [
+    { 
+      "name": "Tenoch",
+      "age": 9,
+      "birthday": "11/25/2008",
+      "allergies": "",
+      "medicalNeeds": "",
+      "otherNeeds": ""
+    },
+    { 
+      "name": "Taina",
+      "age": 7,
+      "birthday": "6/10/2011",
+      "allergies": "",
+      "medicalNeeds": "",
+      "otherNeeds": ""
+    },
+    {
+      "name": "Tristan",
+      "age": 1,
+      "birthday": "6/29/2017",
+      "allergies": "",
+      "medicalNeeds": "",
+      "otherNeeds": ""
+  }
+  ]
   }
 ]
