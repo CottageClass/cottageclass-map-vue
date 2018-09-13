@@ -5,6 +5,7 @@ import App from './App';
 import router from './router'
 import * as VueGoogleMaps from 'vue2-google-maps';
 import Geocoder from "@pderas/vue2-geocoder";
+import './registerServiceWorker'
 
 Vue.config.productionTip = false
 

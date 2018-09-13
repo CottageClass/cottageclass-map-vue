@@ -1,27 +1,25 @@
 {
   "name": "cottageclass-map",
   "version": "1.0.0",
-  "description": "A Vue.js project",
-  "author": "holmesworcester <hwilson@gmail.com>",
   "private": true,
-  "homepage": "https://github.com/holmesworcester/cottageclass-map-vue",
-  "wst": "/dist",
   "scripts": {
+    "build": "node build/build.js",
+    "test": "npm run unit && npm run e2e",
+    "e2e": "node test/e2e/runner.js",
+    "deploy": "node ./node_modules/vue-gh-pages/index.js",
     "dev": "webpack-dev-server --inline --progress --config build/webpack.dev.conf.js",
     "start": "npm run dev",
-    "unit": "jest --config test/unit/jest.conf.js --coverage",
-    "e2e": "node test/e2e/runner.js",
-    "test": "npm run unit && npm run e2e",
-    "build": "node build/build.js",
-    "deploy": "node ./node_modules/vue-gh-pages/index.js"
+    "unit": "jest --config test/unit/jest.conf.js --coverage"
   },
   "dependencies": {
     "@pderas/vue2-geocoder": "^1.0.2",
+    "register-service-worker": "^1.0.0",
     "vue": "^2.5.2",
     "vue-router": "^3.0.1",
     "vue2-google-maps": "^0.10.2"
   },
   "devDependencies": {
+    "@vue/cli-plugin-pwa": "^3.0.3",
     "autoprefixer": "^7.1.2",
     "babel-core": "^6.22.1",
     "babel-helper-vue-jsx-merge-props": "^2.0.3",
@@ -70,13 +68,17 @@
     "webpack-dev-server": "^2.9.1",
     "webpack-merge": "^4.1.0"
   },
-  "engines": {
-    "node": ">= 6.0.0",
-    "npm": ">= 3.0.0"
-  },
   "browserslist": [
     "> 1%",
     "last 2 versions",
     "not ie <= 8"
-  ]
+  ],
+  "homepage": "https://github.com/holmesworcester/cottageclass-map-vue",
+  "author": "holmesworcester <hwilson@gmail.com>",
+  "description": "A Vue.js project",
+  "engines": {
+    "node": ">= 6.0.0",
+    "npm": ">= 3.0.0"
+  },
+  "wst": "/dist"
 }
