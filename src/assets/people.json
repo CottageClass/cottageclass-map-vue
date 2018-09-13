@@ -171,7 +171,7 @@
     "children": []
   },
   { 
-    "id": 2,
+    "id": 4,
     "name": "Jane",
     "lastInitial": "W", 
     "pic": "avatar-4.png",
@@ -183,7 +183,7 @@
     "children": []
   },
   { 
-    "id": 2,
+    "id": 5,
     "name": "Marixsa", 
     "lastInitial": "R",
     "pic": "avatar-5.png",
@@ -256,8 +256,8 @@
     "id": 9,
     "name": "Holly", 
     "lastInitial": "S",
-    "pic": "",
-    "images": [],
+    "pic": ["avatar-HollyS.png"],
+    "images": ["HollyS-1.jpg", "HollyS-2.jpg", "HollyS-3.jpg", "HollyS-4.jpg"],
     "phone": "646-228-3419",
     "availability": ["9to3"],
     "location": {"lat": 40.640652, "lng": -73.943440},
