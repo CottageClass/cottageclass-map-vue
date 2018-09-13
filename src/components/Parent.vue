@@ -15,7 +15,7 @@
          <TextMessageLink class="list-item-3-link-block w-inline-block" :number="8622944859" :message="'I\'m checking in ' + person.name + ' (#' + person.id + ') now. Number of kids: ' + person.children.length">
            <div class="list-item-3-button-text">Check In</div>
          </TextMessageLink>
-         <TextMessageLink class="list-item-3b-link-block w-inline-block":number="8622944859" :message="'I\'m checking out ' + person.name + ' (#' + person.id + ') now. Number of kids: ' + person.children.length">
+         <TextMessageLink class="list-item-3b-link-block w-inline-block":number="8622944859" :message="'I\'m checking out ' + person.name + ' (' + person.id + ') now. Number of kids: ' + person.children.length">
            <div class="list-item-3-button-text">
              <div class="list-item-3-button-text">Check Out</div>
            </div>
