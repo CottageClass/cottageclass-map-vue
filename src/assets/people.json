@@ -57,7 +57,7 @@
     "availability": ["3to7", "after7", "weekends"],
     "location": {"lat": 40.680316, "lng": -73.974780},
     "job": {"title": "Co-founder", "employer": "CottageClass"},
-    "activities":[],
+    "activities":["french"],
     "images": ["manisha-4.jpg", "manisha-6.jpg", "manisha-7.jpg", "manisha-1.jpg", "manisha-3.jpg", "manisha-5.jpg"],
     "emergencyContacts": [
         {
@@ -261,7 +261,7 @@
     "phone": "646-228-3419",
     "availability": ["9to3"],
     "location": {"lat": 40.640652, "lng": -73.943440},
-    "activities":["volunteering" "arts & crafts"],
+    "activities":["volunteering", "arts & crafts"],
     "job": {"title" : "Film and Video Producer", "employer": "Freelance"},
     "children": 
     [
@@ -282,7 +282,7 @@
     "pic": "",
     "images": [],
     "phone": "310-869-1687",
-    "availability": ["after7" "weekends"],
+    "availability": ["after7", "weekends"],
     "location": {"lat": 40.646183, "lng": -73.943512},
     "activities":["cooking"],
     "job": {"title" : "Writer and Editor", "employer": "Sara Grace Editorial"},
@@ -305,9 +305,9 @@
     "pic": "",
     "images": [],
     "phone": "347-489-2204",
-    "availability": ["3to7" "9to3" "weekends" "after7"],
+    "availability": ["3to7", "9to3", "weekends", "after7"],
     "location": {"lat": 40.687043, "lng": -73.935099},
-    "activities":["book club" "arts & crafts" "music"],
+    "activities":["book club", "arts & crafts", "music"],
     "job": {"title" : "Adjunct Faculty", "employer": "Argosy University"},
     "children": 
     [
@@ -351,7 +351,7 @@
     "pic": "",
     "images": [],
     "phone": "646-737-4382",
-    "availability": ["3to7" "weekends"],
+    "availability": ["3to7", "weekends"],
     "location": {"lat": 40.722274, "lng": -73.945048},
     "activities":["cooking"],
     "job": {"title" : "", "employer": ""},
@@ -374,14 +374,14 @@
     "pic": "",
     "images": [],
     "phone": "917-612-6432",
-    "availability": ["3to7" "9to3" "weekends"],
+    "availability": ["3to7", "9to3", "weekends"],
     "location": {"lat": 40.677184, "lng": -73.974447},
-    "activities":["book club" "field trips"],
+    "activities":["book club", "field trips"],
     "job": {"title" : "Editor", "employer": "Self-employed"},
     "children": 
     [
     { 
-      "name":Taj,
+      "name":"Taj",
       "age": 5,
       "birthday": "07/29/2013",
       "allergies": "",
@@ -389,7 +389,7 @@
       "otherNeeds": ""
     },
     { 
-      "name":Noor,
+      "name":"Noor",
       "age": 3,
       "birthday": "05/05/2015",
       "allergies": "",
@@ -412,7 +412,7 @@
     "children": 
     [
     { 
-      "name":Finn,
+      "name":"Finn",
       "age": 5,
       "birthday": "12/12/2012",
       "allergies": "",
@@ -420,7 +420,7 @@
       "otherNeeds": ""
     },
     { 
-      "name":Hildy,
+      "name":"Hildy",
       "age": 3,
       "birthday": "07/12/2015",
       "allergies": "",
@@ -443,7 +443,7 @@
     "children": 
     [
     { 
-      "name":Miles,
+      "name":"Miles",
       "age": 10,
       "birthday": "12/23/2007",
       "allergies": "",
@@ -451,7 +451,7 @@
       "otherNeeds": ""
     },
     { 
-      "name":Maya,
+      "name":"Maya",
       "age": 6,
       "birthday": "05/08/2012",
       "allergies": "",
@@ -460,5 +460,4 @@
     }
   ]
   }
-
 ]
