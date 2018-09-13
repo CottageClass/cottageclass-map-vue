@@ -12,9 +12,9 @@ export default {
         share: function () {
             if (navigator.share) {
                 navigator.share({
-                    title: 'Web Fundamentals',
-                    text: 'Check out Web Fundamentals — it rocks!',
-                    url: 'https://developers.google.com/web',
+                    title: 'Want to share childcare with me?',
+                    text: 'I\'m sharing childcare with a small circle of parents and friends. If you\'d like to join just fill this out!',
+                    url: 'https://cottageclass1.typeform.com/to/XEyKhf',
                 })
                 .then(() => console.log('Successful share'))
                 .catch((error) => console.log('Error sharing', error));
