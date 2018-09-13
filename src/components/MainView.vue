@@ -49,6 +49,10 @@
     </div>
      <provider v-for="person in peopleAvailable" :person="person" :key="person.key" @click.native="launchPreMessageModal(person)"></provider>
   </div>
+    <div class="invite-friends-container">
+    <h5 class="heading">Want more providers you know?</h5>
+    <div class="spacer-16"></div><a v-on:click="share" class="button w-button share-button">Invite Friends</a>
+  </div>
   <br><br>
       <h5 class="heading-2">Map data &#169; 2018 Google (<a href="https://www.google.com/intl/en-US_US/help/terms_maps.html">terms of use</a> - <a href="https://www.google.com/maps/@40.6782,-73.9442,12z/data=!10m2!1e3!2e10!12b1?rapsrc=apiv3">report a map error</a>)</h5>
   </div>
@@ -115,6 +119,17 @@ export default {
           launchPreMessageModal: function (person) {
             this.selectedPerson = person
             this.showRequestModal = true
+          },
+          share: function () {
+            if (navigator.share) {
+  navigator.share({
+      title: 'Web Fundamentals',
+      text: 'Check out Web Fundamentals — it rocks!',
+      url: 'https://developers.google.com/web',
+  })
+    .then(() => console.log('Successful share'))
+    .catch((error) => console.log('Error sharing', error));
+}
           }
         },
       };
@@ -219,5 +234,9 @@ text-align: center;
 
 .availability-container a {
   text-decoration: none;
+}
+
+.share-button {
+  background-color: #1f88e9;
 }
 </style>

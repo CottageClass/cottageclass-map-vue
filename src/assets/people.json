@@ -57,7 +57,7 @@
     "availability": ["3to7", "after7", "weekends"],
     "location": {"lat": 40.680316, "lng": -73.974780},
     "job": {"title": "Co-founder", "employer": "CottageClass"},
-    "activities":[],
+    "activities":["french"],
     "images": ["manisha-4.jpg", "manisha-6.jpg", "manisha-7.jpg", "manisha-1.jpg", "manisha-3.jpg", "manisha-5.jpg"],
     "emergencyContacts": [
         {
