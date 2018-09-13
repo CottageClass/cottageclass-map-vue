@@ -30,7 +30,7 @@
       <h5 class="heading contact-name">{{ contact.name }}</h5>
       <h5 class="caption-2">Physician</h5>
       <div class="phone-text">{{ contact.phone }}</div>
-    </div><a :href="'tel:' + contact.phone" class="list-item-4-action-right w-inline-block"><img src="../assets/call-green.svg" class="image-4"></a>
+    </div><a :href="'tel:' + contact.phone" class="list-item-4-action-right w-inline-block"><img src="../assets/doctor-2.svg" class="image-4"><img src="../assets/call-green.svg" class="image-4"></a>
 </div>
   <!-- Medical info for each kid -->
 
