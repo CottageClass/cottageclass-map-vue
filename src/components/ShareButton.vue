@@ -18,7 +18,7 @@ export default {
                 })
                 .then(() => console.log('Successful share'))
                 .catch((error) => console.log('Error sharing', error));
-            }
+            } else window.open("https://www.facebook.com/sharer/sharer.php?u=https%3A//cottageclass1.typeform.com/to/XEyKhf")
         }
 	}
 };
