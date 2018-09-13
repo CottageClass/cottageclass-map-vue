@@ -10,15 +10,16 @@ export default {
 	name: 'ShareButton',
 	methods: {
         share: function () {
+            const url = "https://cottageclass1.typeform.com/to/XEyKhf"
             if (navigator.share) {
                 navigator.share({
                     title: 'Want to share childcare with me?',
                     text: 'I\'m sharing childcare with a small circle of parents and friends. If you\'d like to join just fill this out!',
-                    url: 'https://cottageclass1.typeform.com/to/XEyKhf',
+                    url: url,
                 })
                 .then(() => console.log('Successful share'))
                 .catch((error) => console.log('Error sharing', error));
-            } else window.open("https://www.facebook.com/sharer/sharer.php?u=https%3A//cottageclass1.typeform.com/to/XEyKhf")
+            } else window.open('https://www.facebook.com/sharer/sharer.php?u=' + url)
         }
 	}
 };
