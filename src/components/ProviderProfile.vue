@@ -59,6 +59,16 @@
       </div>
   </div>
 
+<!-- Photos --> 
+
+  <div class="group-title-container-2">
+    <h5 class="list-title-2">Photos</h5> 
+  </div>
+
+  <div class="scrolling-wrapper">
+    <div class="card" v-for="image in person.images"><img :src="require(`../assets/${image}`)"></div>
+  </div>
+
 <!-- Positive reviews --> 
   <div class="group-title-container-2">
     <h5 class="list-title-2">Greate Experiences</h5>
@@ -112,7 +122,37 @@ export default {
 </script>
 
 <style scoped>
-.body {
+
+.scrolling-wrapper {
+  overflow-x: auto;
+  display: flex;
+  align-items: center;
+}
+
+.card {
+    flex: 0 0 auto;
+  }
+
+.card img {
+	height: 100%;
+	width: auto;
+	display: inline-block;
+	box-sizing: border-box;
+	vertical-align: middle;
+}
+
+.scrolling-wrapper {
+  -webkit-overflow-scrolling: touch;
+}
+
+.scrolling-wrapper {
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+
+body {
   font-family: soleil, sans-serif;
   color: #333;
   font-size: 14px;
