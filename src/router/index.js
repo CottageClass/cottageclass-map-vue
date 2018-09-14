@@ -46,6 +46,13 @@ export default new Router({
     	path: '/request/:id',
     	name: 'RequestModal',
     	component: RequestModal
-    },
-  ]
+    }
+  ],
+ scrollBehavior (to, from, savedPosition) {
+  if (savedPosition) {
+    return savedPosition
+  } else {
+    return { x: 0, y: 0 }
+  }
+}
 })
