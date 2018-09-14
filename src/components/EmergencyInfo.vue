@@ -67,7 +67,7 @@
 import people from '../assets/people.json'
 
 export default {
-	name: 'RequestModal',
+	name: 'EmergencyInfo',
 	data () {
 		return {
 			people: people
