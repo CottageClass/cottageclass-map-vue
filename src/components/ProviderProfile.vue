@@ -1,6 +1,9 @@
 <template>
 <div class="body">
-  Profile for {{ person.name }} {{ person.initial }}. 
+
+	      <router-link :to="{ name: 'MainView' }">
+        <img src="../assets/Close-X.svg">
+      </router-link>
 
         <h5 class="heading">{{ person.name}} {{ person.lastInitial }}.</h5>
         <h5 v-if="person.job && person.job.employer" class="caption">{{ person.job.title }} <span v-if="person.job.employer">at {{ person.job.employer }}</span></h5>
