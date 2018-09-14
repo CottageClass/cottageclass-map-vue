@@ -1,131 +1,23 @@
 <template>
-<div class="body">
-	  <div class="providerp-provider-info-section">
-	  	<router-link :to="{ name: 'MainView' }" class="providerp-button-back w-inline-block"><img src="../assets/Arrow-Back-2.svg">
-	  </router-link><img :src="require(`../assets/${person.pic}`)" class="providerp-avatar">
-    <h1 class="providerp-h1">{{ person.name}} {{ person.lastInitial }}.</h1>
-
-
-
-    <div class="providerp-occupation" v-if="person.job && person.job.employer">{{ person.job.title }} at {{ person.job.employer }}</div>
-    <div class="providerp-children">Parent to 
-    	<span v-for="(child, index) in person.children">
-    		{{ child.name }} <span class="text-span-2">({{ child.age }})</span><span v-if="index < person.children.length - 1">, </span>
-    	</span>
-    	</div>
-    <div v-if="person.blurb" class="providerp-chat-bubble-container">
-      <div class="providerp-chat-bubble-caret"><img src="../assets/chat-bubble-caret.svg"></div>
-      <div class="providerp-chat-bubble-primary">
-        <div>{{ person.blurb }}</div>
-      </div>
-    </div>
+  <span class="body">
+  <div class="scrolling-wrapper">
+    <div class="card" v-for="image in person.images"><img :src="require(`../assets/${image}`)"></div>
   </div>
-  <div class="providerp-provider-info-bullets">
-
- <!-- background check -->
-
-    <div class="providerp-background-check-badge-container" v-if="person.backgroundCheck">
-      <div class="providerp-background-check-badge"><img src="../assets/check-white-14.svg" class="checkmark-image">
-        <div class="background-check-text">Background checked</div>
-      </div>
-    </div>
-
- <!-- activities --> 
-
-      <div class="tag-group-container" v-if="person.activities.length"><img src="../assets/tag-24-2.svg" width="20" height="20" class="image-tag">
-        <div class="tags-container" v-for="activity in person.activities">
-          <div class="tag">
-            <div class="small-text-upper-black-40">{{ activity }}</div>
-          </div>
-      </div>
-      </div>
-
-<!-- Times --> 
-      <div class="time-group-container"><img src="../assets/time-24-2.svg" width="20" height="20" class="image-time">
-        <div class="times-container">
-          <div class="time" v-if="person.availability.includes('7to3')">
-            <div class="small-text-upper-purple">7a–3p</div>
-          </div>
-          <div class="time" v-if="person.availability.includes('3to7')">
-            <div class="small-text-upper-purple">3p–7p</div>
-          </div>
-          <div class="time" v-if="person.availability.includes('after7')">
-            <div class="small-text-upper-purple">7p-</div>
-          </div>
-          <div class="time" v-if="person.availability.includes('weekends')">
-            <div class="small-text-upper-purple">Weekends</div>
-          </div>
-        </div>
-      </div>
-  </div>
-
-<!-- Photos --> 
-
-  <div class="group-title-container-2">
-    <h5 class="list-title-2">Photos</h5> 
-  </div>
-
-  <Images :person="person"/>
-
-<!-- Positive reviews --> 
-  <div class="group-title-container-2">
-    <h5 class="list-title-2">Greate Experiences</h5>
-  </div>
-  <span v-for="review in person.reviews">
-<ReviewItem :review="review"/>
 </span>
-
-<!-- Leave a review --> 
-
-  <div class="providerp-post-comment-container"><a :href="'mailto:info@cottageclass.com?subject=Great experience with ' + person.name + ' ' + person.lastInitial + '. (' + person.id + ')&body=(please%20describe%20your%20great%20experience%20here!)'" class="pprofile-compose-button w-inline-block"><img src="../assets/compose.svg" class="image-5"><div class="pprofile-comment-prompt-button-text">Post a great experience</div></a>
-    <div class="providerp-book-care-container">
-    	<router-link :to="{ name: 'RequestModal', params: { id: person.id }}" class="pprovider-book-care-button w-inline-block"><img src="../assets/chat.svg"><div class="pprovider-primary-action-text">Book Care</div>
-    	</router-link>
-    </div>
-  </div>
-
-<!-- Negative reviews (concerns) --> 
-
-  <div class="group-title-container-2">
-    <h5 class="list-title-2">Concerns</h5>
-  </div>
-  <span v-for="review in person.concerns">
-<ReviewItem :review="review"/>
-</span>
-
-  <!-- concern link --> 
-
-  <div class="providerp-post-comment-container"><a :href="'mailto:info@cottageclass.com?subject=Concern re: ' + person.name + ' ' + person.lastInitial + '. (' + person.id + ')&body=(please%20detail%20your%20concern%20here)'" class="pprofile-compose-button w-inline-block"><img src="../assets/compose.svg" class="image-5"><div class="pprofile-comment-prompt-button-text">Post a concern</div></a></div>
-  <div class="spacer-100px"></div>
-</div>
 </template>
 
 <script>
-import Images from './Images.vue'
-import ReviewItem from './ReviewItem.vue'
-import people from '../assets/people.json'
 export default {
-	components: { ReviewItem, Images },
-	name: 'ProviderProfile',
-	data () {
-		return {
-			people: people
-		}
-	},
-	computed: {
-		person: function () {
-			return this.people[this.$route.params.id - 1]
-		}
-	}
+        name: 'Images',
+        props: ['person'],
 };
 </script>
+
 
 <style scoped>
 
 .scrolling-wrapper {
   overflow-x: auto;
-  display: flex;
-  align-items: center;
 }
 
 .card {
@@ -135,9 +27,6 @@ export default {
 .card img {
 	height: 100%;
 	width: auto;
-	display: inline-block;
-	box-sizing: border-box;
-	vertical-align: middle;
 }
 
 .scrolling-wrapper {
@@ -150,8 +39,11 @@ export default {
   }
 }
 
+.child {
+	white-space:nowrap;
+}
 
-body {
+.body {
   font-family: soleil, sans-serif;
   color: #333;
   font-size: 14px;
@@ -164,6 +56,39 @@ a {
 
 .list-container {
   margin-top: 16px;
+}
+
+.providerp-background-check-badge {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  padding: 3px 10px;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+  -ms-flex-align: center;
+  align-items: center;
+  border-radius: 500px;
+  background-color: #0cba5282;
+}
+
+.background-check-text {
+  margin-top: 1px;
+  color: hsla(0, 0%, 100%, .9);
+  font-size: 10px;
+  line-height: 9px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+}
+
+.checkmark-image {
+  margin-right: 8px;
+}
+
+.providerp-background-check-badge-container {
+  margin-bottom: 6px;
+  margin-left: 20px;
 }
 
 .list-item-1-container {
@@ -235,7 +160,7 @@ a {
 }
 
 .black-50 {
-  color: rgba(0, 0, 0, .5);
+  color: rgba(0, 0, 0, .25);
 }
 
 .invite-friends-container {
@@ -353,9 +278,7 @@ a {
 }
 
 .list-info-1 {
-  color: rgba(0, 0, 0, .5);
   font-size: 13px;
-  text-align: left;
 }
 
 .home-on-map {
@@ -764,12 +687,13 @@ a {
 
 .tag {
   display: inline-block;
-  margin-right: 4px;
-  margin-bottom: 4px;
+  margin-right: 6px;
+  margin-bottom: 6px;
   padding: 4px 6px;
   clear: none;
   border-radius: 2px;
   background-color: rgba(0, 0, 0, .1);
+  white-space: nowrap;
 }
 
 .small-text-upper-black-40 {
@@ -788,21 +712,21 @@ a {
 
 .time {
   display: inline-block;
-  margin-right: 4px;
-  margin-bottom: 4px;
+  margin-right: 6px;
+  margin-bottom: 6px;
   padding: 4px 6px;
   clear: none;
   border-radius: 2px;
   background-color: rgba(100, 66, 107, .2);
 }
 
-.small-text-upper-purple {
+.time-tags {
+  margin-top: 1px;
   color: #64426b;
   font-size: 9px;
   line-height: 9px;
   font-weight: 700;
   letter-spacing: 1.03px;
-  text-transform: none;
 }
 
 .kids-container {
@@ -813,13 +737,11 @@ a {
 }
 
 .image-tag {
-  margin-top: 1px;
-  margin-right: 6px;
+  padding: 4px;
 }
 
 .image-time {
-  margin-top: 2px;
-  margin-right: 6px;
+  padding: 4px;
 }
 
 .tag-group-container {
@@ -828,7 +750,6 @@ a {
   display: -ms-flexbox;
   display: flex;
   margin-top: 6px;
-  margin-bottom: 8px;
   -webkit-box-align: start;
   -webkit-align-items: flex-start;
   -ms-flex-align: start;
@@ -840,6 +761,7 @@ a {
   display: -webkit-flex;
   display: -ms-flexbox;
   display: flex;
+  margin-top: 6px;
   -webkit-box-align: start;
   -webkit-align-items: flex-start;
   -ms-flex-align: start;
@@ -884,7 +806,7 @@ a {
 }
 
 .card {
-  width: 202px;
+  width: auto;
   height: 111px;
   margin-right: 4px;
   background-color: #fff;
@@ -1018,12 +940,13 @@ a {
   margin-left: -3px;
 }
 
-.splash-button {
+.list-item-3b-link-block {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
   display: flex;
-  padding: 16px 32px;
+  width: 48%;
+  padding: 16px;
   -webkit-box-orient: vertical;
   -webkit-box-direction: normal;
   -webkit-flex-direction: column;
@@ -1038,7 +961,7 @@ a {
   -ms-flex-align: center;
   align-items: center;
   border-radius: 4px;
-  background-color: hsla(0, 0%, 100%, .6);
+  background-color: #deedfc;
 }
 
 .footer {
@@ -1096,6 +1019,20 @@ a {
   align-items: center;
 }
 
+.temporary-note-text {
+  margin-top: 16px;
+  margin-right: 16px;
+  margin-left: 16px;
+  -webkit-align-self: flex-start;
+  -ms-flex-item-align: start;
+  align-self: flex-start;
+  color: red;
+  font-size: 10px;
+  line-height: 15px;
+  text-align: left;
+  letter-spacing: 0.9px;
+}
+
 .note-container {
   display: block;
   width: 100%;
@@ -1117,8 +1054,22 @@ a {
   line-height: 15px;
 }
 
+.text-block-4 {
+  padding: 16px;
+}
+
+.note-text {
+  padding: 16px;
+  font-size: 10px;
+  line-height: 15px;
+}
+
 .check-out-image {
   margin-bottom: 3px;
+}
+
+.body-2 {
+  background-color: #ddd;
 }
 
 .components-container-1 {
@@ -1148,8 +1099,40 @@ a {
   text-transform: uppercase;
 }
 
+.components-container-2 {
+  margin-bottom: 6px;
+  padding: 16px;
+  background-color: #fafafa;
+}
+
 .spacer-300px {
   height: 300px;
+}
+
+.top-content-container-copy {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  width: 100%;
+  padding: 16px 32px;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+  -ms-flex-align: center;
+  align-items: center;
+  border-style: none none solid;
+  border-width: 1px;
+  border-color: rgba(0, 0, 0, .1);
+  background-color: #fff;
 }
 
 .emergency-contact-parent-summary {
@@ -1383,492 +1366,6 @@ a {
   background-color: #fff;
 }
 
-.body-splash {
-  background-color: #1f88e9;
-}
-
-.splash-h1 {
-  margin-top: 48px;
-  color: #fff;
-  font-size: 25px;
-  text-align: center;
-}
-
-.splash-text-50 {
-  color: hsla(0, 0%, 100%, .5);
-  text-align: center;
-}
-
-.div-block-4 {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  height: 85vh;
-  margin-top: 24px;
-  padding-right: 32px;
-  padding-bottom: 32px;
-  padding-left: 32px;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-  -webkit-flex-direction: column;
-  -ms-flex-direction: column;
-  flex-direction: column;
-  -webkit-box-pack: justify;
-  -webkit-justify-content: space-between;
-  -ms-flex-pack: justify;
-  justify-content: space-between;
-  -webkit-box-align: center;
-  -webkit-align-items: center;
-  -ms-flex-align: center;
-  align-items: center;
-}
-
-.splash-logo {
-  margin-bottom: 16px;
-}
-
-.splash-text-input {
-  width: 160px;
-  height: 50px;
-  padding-top: 6px;
-  padding-bottom: 10px;
-  border: 3px none #dbdbdb;
-  border-radius: 4px;
-  box-shadow: 0 1px 15px 4px rgba(0, 0, 0, .4);
-  color: #000;
-  font-size: 30px;
-  font-weight: 700;
-  text-align: center;
-  letter-spacing: 2px;
-}
-
-.splash-content-1 {
-  margin-bottom: 24px;
-}
-
-.splash-text-small-50 {
-  margin-top: -16px;
-  color: hsla(0, 0%, 100%, .5);
-  font-size: 11px;
-  text-align: center;
-}
-
-.div-block-5 {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-  -webkit-flex-direction: column;
-  -ms-flex-direction: column;
-  flex-direction: column;
-  -webkit-box-pack: center;
-  -webkit-justify-content: center;
-  -ms-flex-pack: center;
-  justify-content: center;
-  -webkit-box-align: center;
-  -webkit-align-items: center;
-  -ms-flex-align: center;
-  align-items: center;
-}
-
-.splash-3-h1 {
-  margin-top: 48px;
-  color: #fff;
-  font-size: 25px;
-  text-align: center;
-}
-
-.body-splash-2 {
-  background-color: #1f88e9;
-}
-
-.body-splash-3 {
-  background-color: #fd6f77;
-}
-
-.providerp-button-back {
-  width: 24px;
-  height: 24px;
-  -webkit-align-self: flex-start;
-  -ms-flex-item-align: start;
-  align-self: flex-start;
-}
-
-.providerp-provider-info-section {
-  position: relative;
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  width: 100%;
-  padding: 16px 16px 32px;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-  -webkit-flex-direction: column;
-  -ms-flex-direction: column;
-  flex-direction: column;
-  -webkit-box-pack: start;
-  -webkit-justify-content: flex-start;
-  -ms-flex-pack: start;
-  justify-content: flex-start;
-  -webkit-box-align: center;
-  -webkit-align-items: center;
-  -ms-flex-align: center;
-  align-items: center;
-  border-style: none none solid;
-  border-width: 1px;
-  border-color: rgba(0, 0, 0, .1);
-  background-color: #fff;
-}
-
-.providerp-avatar {
-  width: 100px;
-  height: 100px;
-  border-radius: 100px;
-}
-
-.providerp-h1 {
-  margin-top: 8px;
-  margin-bottom: 2px;
-  font-size: 20px;
-  line-height: 30px;
-}
-
-.text-span-2 {
-  color: rgba(0, 0, 0, .25);
-}
-
-.text-span-3 {
-  color: rgba(0, 0, 0, .25);
-}
-
-.providerp-occupation {
-  max-width: 500px;
-  margin-top: 0px;
-  margin-bottom: 4px;
-  color: rgba(0, 0, 0, .5);
-  font-size: 13px;
-  font-weight: 400;
-  text-align: center;
-}
-
-.providerp-children {
-  max-width: 500px;
-  margin-bottom: 12px;
-  color: rgba(0, 0, 0, .5);
-  font-size: 13px;
-  text-align: center;
-}
-
-.providerp-chat-bubble-container {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  max-width: 500px;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-  -webkit-flex-direction: column;
-  -ms-flex-direction: column;
-  flex-direction: column;
-  -webkit-justify-content: space-around;
-  -ms-flex-pack: distribute;
-  justify-content: space-around;
-  -webkit-box-align: center;
-  -webkit-align-items: center;
-  -ms-flex-align: center;
-  align-items: center;
-}
-
-.providerp-chat-bubble-caret {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-  -webkit-flex-direction: column;
-  -ms-flex-direction: column;
-  flex-direction: column;
-  -webkit-box-pack: end;
-  -webkit-justify-content: flex-end;
-  -ms-flex-pack: end;
-  justify-content: flex-end;
-}
-
-.providerp-chat-bubble-primary {
-  width: 100%;
-  padding: 16px;
-  border-radius: 8px;
-  background-color: #f3f3f3;
-}
-
-.providerp-provider-info-bullets {
-  position: relative;
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  width: 100%;
-  padding: 16px;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-  -webkit-flex-direction: column;
-  -ms-flex-direction: column;
-  flex-direction: column;
-  -webkit-box-pack: start;
-  -webkit-justify-content: flex-start;
-  -ms-flex-pack: start;
-  justify-content: flex-start;
-  -webkit-box-align: start;
-  -webkit-align-items: flex-start;
-  -ms-flex-align: start;
-  align-items: flex-start;
-  border-style: none none solid;
-  border-width: 1px;
-  border-color: rgba(0, 0, 0, .1);
-  background-color: #fff;
-}
-
-.providerp-background-check-badge {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  padding: 5px 10px;
-  -webkit-box-align: center;
-  -webkit-align-items: center;
-  -ms-flex-align: center;
-  align-items: center;
-  border-radius: 500px;
-  background-color: #0cba52;
-}
-
-.background-check-text {
-  margin-top: 1px;
-  color: hsla(0, 0%, 100%, .9);
-  font-size: 10px;
-  line-height: 9px;
-  font-weight: 700;
-  letter-spacing: 1.5px;
-  text-transform: uppercase;
-}
-
-.checkmark-image {
-  margin-right: 8px;
-}
-
-.providerp-background-check-badge-container {
-  margin-bottom: 6px;
-}
-
-.providerp-user-comments-item {
-  position: relative;
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  width: 100%;
-  padding: 16px;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-  -webkit-flex-direction: column;
-  -ms-flex-direction: column;
-  flex-direction: column;
-  -webkit-box-pack: start;
-  -webkit-justify-content: flex-start;
-  -ms-flex-pack: start;
-  justify-content: flex-start;
-  -webkit-box-align: start;
-  -webkit-align-items: flex-start;
-  -ms-flex-align: start;
-  align-items: flex-start;
-  border-style: none none solid;
-  border-width: 1px;
-  border-color: rgba(0, 0, 0, .1);
-  background-color: #fff;
-}
-
-.providerp-user-comment-avatar {
-  width: 40px;
-  height: 40px;
-}
-
-.providerp-user-comment-username {
-  margin-left: 16px;
-  font-weight: 700;
-}
-
-.providerp-user-comment-text {
-  margin-top: 16px;
-  font-size: 14px;
-}
-
-.providerp-avatar-name-group {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-align: center;
-  -webkit-align-items: center;
-  -ms-flex-align: center;
-  align-items: center;
-}
-
-.providerp-post-comment-container {
-  position: relative;
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  width: 100%;
-  padding: 16px;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-  -webkit-flex-direction: column;
-  -ms-flex-direction: column;
-  flex-direction: column;
-  -webkit-box-pack: start;
-  -webkit-justify-content: flex-start;
-  -ms-flex-pack: start;
-  justify-content: flex-start;
-  -webkit-box-align: start;
-  -webkit-align-items: flex-start;
-  -ms-flex-align: start;
-  align-items: flex-start;
-  border-style: none none solid;
-  border-width: 1px;
-  border-color: rgba(0, 0, 0, .1);
-  background-color: #fff;
-}
-
-.spacer-100px {
-  height: 100px;
-}
-
-.providerp-book-care-container {
-  position: fixed;
-  left: 0px;
-  right: 0px;
-  bottom: 0px;
-  z-index: 1000;
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  width: 100%;
-  padding-top: 10px;
-  padding-bottom: 10px;
-  -webkit-box-orient: horizontal;
-  -webkit-box-direction: normal;
-  -webkit-flex-direction: row;
-  -ms-flex-direction: row;
-  flex-direction: row;
-  -webkit-box-pack: center;
-  -webkit-justify-content: center;
-  -ms-flex-pack: center;
-  justify-content: center;
-  border-style: none;
-  border-width: 1px;
-  border-color: rgba(0, 0, 0, .1) #000 #000;
-  background-color: #fff;
-  box-shadow: 0 -1px 3px 0 rgba(0, 0, 0, .08);
-}
-
-.pprovider-book-care-button {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  padding: 8px 20px 8px 16px;
-  -webkit-box-orient: horizontal;
-  -webkit-box-direction: normal;
-  -webkit-flex-direction: row;
-  -ms-flex-direction: row;
-  flex-direction: row;
-  -webkit-box-pack: center;
-  -webkit-justify-content: center;
-  -ms-flex-pack: center;
-  justify-content: center;
-  -webkit-box-align: center;
-  -webkit-align-items: center;
-  -ms-flex-align: center;
-  align-items: center;
-  border-radius: 4px;
-  background-color: #deedfc;
-}
-
-.pprovider-primary-action-text {
-  margin-left: 8px;
-  color: #1f88e9;
-  font-size: 13px;
-  font-weight: 700;
-  text-align: center;
-  letter-spacing: 1.2px;
-  text-decoration: none;
-  text-transform: uppercase;
-}
-
-.pprofile-compose-button {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  width: 100%;
-  padding: 8px 12px;
-  -webkit-box-align: center;
-  -webkit-align-items: center;
-  -ms-flex-align: center;
-  align-items: center;
-  border-radius: 10px;
-  background-color: #f2f2f2;
-}
-
-.pprofile-comment-prompt-button-text {
-  margin-top: -2px;
-  margin-left: 8px;
-  color: rgba(0, 0, 0, .4);
-}
-
-.image-5 {
-  opacity: 0.3;
-}
-
-.econtacts-right-actions-container {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-}
-
-.econtacts-list-item-icon-1 {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  margin-right: 16px;
-  padding-top: 4px;
-  padding-bottom: 4px;
-  -webkit-box-orient: horizontal;
-  -webkit-box-direction: normal;
-  -webkit-flex-direction: row;
-  -ms-flex-direction: row;
-  flex-direction: row;
-  -webkit-box-pack: end;
-  -webkit-justify-content: flex-end;
-  -ms-flex-pack: end;
-  justify-content: flex-end;
-  -webkit-box-align: center;
-  -webkit-align-items: center;
-  -ms-flex-align: center;
-  align-items: center;
-  border-radius: 4px;
-  background-color: hsla(0, 0%, 100%, .15);
-}
-
 @media (max-width: 767px) {
   .components-container-1 {
     padding-right: 16px;
@@ -1902,16 +1399,6 @@ a {
   .time {
     clear: both;
   }
-  .tag-group-container {
-    display: -webkit-box;
-    display: -webkit-flex;
-    display: -ms-flexbox;
-    display: flex;
-    -webkit-box-align: start;
-    -webkit-align-items: flex-start;
-    -ms-flex-align: start;
-    align-items: flex-start;
-  }
   .name-and-caption {
     display: -webkit-box;
     display: -webkit-flex;
@@ -1930,35 +1417,6 @@ a {
   .list-item-5 {
     padding: 16px;
   }
-  .providerp-provider-info-section {
-    -webkit-box-align: center;
-    -webkit-align-items: center;
-    -ms-flex-align: center;
-    align-items: center;
-  }
-  .providerp-provider-info-bullets {
-    -webkit-box-align: start;
-    -webkit-align-items: flex-start;
-    -ms-flex-align: start;
-    align-items: flex-start;
-  }
-  .providerp-user-comments-item {
-    -webkit-box-align: start;
-    -webkit-align-items: flex-start;
-    -ms-flex-align: start;
-    align-items: flex-start;
-  }
-  .providerp-post-comment-container {
-    -webkit-box-align: start;
-    -webkit-align-items: flex-start;
-    -ms-flex-align: start;
-    align-items: flex-start;
-  }
-  .spacer-100px {
-    height: 100px;
-  }
 }
-
-
 
 </style>

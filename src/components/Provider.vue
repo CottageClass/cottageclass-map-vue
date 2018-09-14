@@ -1,9 +1,7 @@
 <template>
 <router-link :to="{ name: 'ProviderProfile', params: { id: person.id }}">
   <span class="body">
-  <div class="scrolling-wrapper">
-    <div class="card" v-for="image in person.images"><img :src="require(`../assets/${image}`)"></div>
-  </div>
+  <Images :person="person"/>
   <div class="list-item-container-2">
     <div class="title-bar-and-action">
       <div class="name-and-caption">
@@ -51,6 +49,17 @@
 </span>
 </router-link>
 </template>
+
+
+<script>
+import Images from './Images.vue'
+export default {
+        name: 'Provider',
+        props: ['person'],
+        components: { Images }
+};
+</script>
+
 
 <style scoped>
 
@@ -1458,10 +1467,3 @@ a {
 }
 
 </style>
-
-<script>
-export default {
-        name: 'Provider',
-        props: ['person'],
-};
-</script>
