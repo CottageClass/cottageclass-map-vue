@@ -1,114 +1,34 @@
 <template>
-<div class="body">
-	  <div class="providerp-provider-info-section">
-	  	<router-link :to="{ name: 'MainView' }" class="providerp-button-back w-inline-block"><img src="../assets/Arrow-Back-2.svg">
-	  </router-link><img :src="require(`../assets/${person.pic}`)" class="providerp-avatar">
-    <h1 class="providerp-h1">{{ person.name}} {{ person.lastInitial }}.</h1>
-
-
-
-    <div class="providerp-occupation" v-if="person.job && person.job.employer">{{ person.job.title }} at {{ person.job.employer }}</div>
-    <div class="providerp-children">Parent to 
-    	<span v-for="(child, index) in person.children">
-    		{{ child.name }} <span class="text-span-2">({{ child.age }})</span><span v-if="index < person.children.length - 1">, </span>
-    	</span>
-    	</div>
-    <div v-if="person.blurb" class="providerp-chat-bubble-container">
-      <div class="providerp-chat-bubble-caret"><img src="../assets/chat-bubble-caret.svg"></div>
-      <div class="providerp-chat-bubble-primary">
-        <div>{{ person.blurb }}</div>
-      </div>
+<span>
+<div class="providerp-user-comments-item"> 
+    <div class="providerp-avatar-name-group"><img :src="require(`../assets/${person.pic}`)" class="providerp-user-comment-avatar">
+      <div class="providerp-user-comment-username">{{ person.name }} {{person.lastInitial}}.</div>
     </div>
+    <div class="providerp-user-comment-text">{{ review.text }}</div>
   </div>
-  <div class="providerp-provider-info-bullets">
-    <div class="providerp-background-check-badge-container" v-if="person.backgroundCheck">
-      <div class="providerp-background-check-badge"><img src="../assets/check-white-14.svg" class="checkmark-image">
-        <div class="background-check-text">Background check</div>
-      </div>
-    </div>
-
- <!-- activities --> 
-
-      <div class="tag-group-container" v-if="person.activities.length"><img src="../assets/tag-24-2.svg" width="20" height="20" class="image-tag">
-        <div class="tags-container" v-for="activity in person.activities">
-          <div class="tag">
-            <div class="small-text-upper-black-40">{{ activity }}</div>
-          </div>
-      </div>
-      </div>
-
-<!-- Times --> 
-      <div class="time-group-container"><img src="../assets/time-24-2.svg" width="20" height="20" class="image-time">
-        <div class="times-container">
-          <div class="time" v-if="person.availability.includes('7to3')">
-            <div class="small-text-upper-purple">7a–3p</div>
-          </div>
-          <div class="time" v-if="person.availability.includes('3to7')">
-            <div class="small-text-upper-purple">3p–7p</div>
-          </div>
-          <div class="time" v-if="person.availability.includes('after7')">
-            <div class="small-text-upper-purple">7p-</div>
-          </div>
-          <div class="time" v-if="person.availability.includes('weekends')">
-            <div class="small-text-upper-purple">Weekends</div>
-          </div>
-        </div>
-      </div>
-  </div>
-
-<!-- Positive reviews --> 
-  <div class="group-title-container-2">
-    <h5 class="list-title-2">Greate Experiences</h5>
-  </div>
-  <span v-for="review in person.reviews">
-<ReviewItem :review="review"/>
 </span>
-
-<!-- Leave a review --> 
-
-  <div class="providerp-post-comment-container"><a :href="'mailto:info@cottageclass.com?subject=Great experience with ' + person.name + ' ' + person.lastInitial + '. (' + person.id + ')&body=(please%20describe%20your%20great%20experience%20here!)'" class="pprofile-compose-button w-inline-block"><img src="../assets/compose.svg" class="image-5"><div class="pprofile-comment-prompt-button-text">Post a great experience</div></a>
-    <div class="providerp-book-care-container">
-    	<router-link :to="{ name: 'RequestModal', params: { id: person.id }}" class="pprovider-book-care-button w-inline-block"><img src="../assets/chat.svg"><div class="pprovider-primary-action-text">Book Care</div>
-    	</router-link>
-    </div>
-  </div>
-
-<!-- Negative reviews (concerns) --> 
-
-  <div class="group-title-container-2">
-    <h5 class="list-title-2">Concerns</h5>
-  </div>
-  <span v-for="review in person.concerns">
-<ReviewItem :review="review"/>
-</span>
-
-  <!-- concern link --> 
-
-  <div class="providerp-post-comment-container"><a :href="'mailto:info@cottageclass.com?subject=Concern re: ' + person.name + ' ' + person.lastInitial + '. (' + person.id + ')&body=(please%20detail%20your%20concern%20here)'" class="pprofile-compose-button w-inline-block"><img src="../assets/compose.svg" class="image-5"><div class="pprofile-comment-prompt-button-text">Post a concern</div></a></div>
-  <div class="spacer-100px"></div>
-</div>
 </template>
 
 <script>
-import ReviewItem from './ReviewItem.vue'
 import people from '../assets/people.json'
 export default {
-	components: { ReviewItem },
-	name: 'ProviderProfile',
 	data () {
 		return {
 			people: people
 		}
 	},
-	computed: {
-		person: function () {
-			return this.people[this.$route.params.id - 1]
-		}
-	}
+    name: 'ReviewItem',
+    props: ['review'],
+    computed: {
+    	person: function () {
+    		return this.people[this.review.userId - 1]
+    	}
+    }
 };
 </script>
 
 <style scoped>
+
 body {
   font-family: soleil, sans-serif;
   color: #333;
@@ -1916,7 +1836,6 @@ a {
     height: 100px;
   }
 }
-
 
 
 </style>

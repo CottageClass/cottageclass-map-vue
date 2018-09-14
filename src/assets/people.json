@@ -3,7 +3,7 @@
     "id": 1,
     "name": "Holmes",
     "lastInitial": "W", 
-    "pic": "avatar-1.png",
+    "pic": "avatar-8.png",
     "images": ["holmes-3.jpg", "holmes-4.jpg", "holmes-5.jpg", "holmes-1.jpg", "holmes-2.jpg"],
     "phone": "614-465-6371",
     "availability": ["7to3", "3to7", "after7", "weekends"],
@@ -11,7 +11,7 @@
     "job": {"title": "Co-founder", "employer": "CottageClass"},
     "activities": ["baking", "biking", "tennis", "running"],
     "blurb": "I'm an activist, a step dad, and now I run a startup, I've been babysitting since I was 11.",
-    "background-check": true,
+    "backgroundCheck": true,
     "emergencyContacts": [
         {
           "name": "Giseli Vasconcelos",
@@ -59,7 +59,7 @@
       "text": "Holmes is super nice!"
     }
     ],
-    "reviews": [
+    "concerns": [
       {
         "userId": 2,
         "text": "Holmes's neighbors have a big scary dog so kids should probably stay inside."

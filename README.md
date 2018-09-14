@@ -10,4 +10,5 @@ To deploy:
 
 Note: I had a problem getting google maps to resize avatar images, so it currently does not. Instead, I resized all the avatar images using a command line tool. So run this in the assets folder when updating images. (This is not great, I know.)
 
- resize avatar* -w 40 -h 40 -o ./small-avatars
+And... I updated the version of node I was using and broke my image resizing tool, I think. 
+
