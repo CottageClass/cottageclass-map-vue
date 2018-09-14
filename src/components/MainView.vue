@@ -67,7 +67,6 @@ export default {
           return {
           timeSelected: "now", // or "7to3", "3to7", "after7", "weekends"
           people: people,
-          showRequestModal: false,
           selectedPerson: null,
           mapOptions: { // move this to map component when i separate it.
             "disableDefaultUI": true, // turns off map controls
@@ -111,12 +110,6 @@ export default {
                 });
             }
         },
-        methods: {
-          launchPreMessageModal: function (person) {
-            this.selectedPerson = person
-            this.showRequestModal = true
-          }
-        }
       };
 </script>
 
