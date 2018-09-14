@@ -1,78 +1,47 @@
 <template>
-<router-link :to="{ name: 'ProviderProfile', params: { id: person.id }}">
-  <span class="body">
-  <div class="scrolling-wrapper">
-    <div class="card" v-for="image in person.images"><img :src="require(`../assets/${image}`)"></div>
-  </div>
-  <div class="list-item-container-2">
-    <div class="title-bar-and-action">
-      <div class="name-and-caption">
+<div class="body">
+  Profile for {{ person.name }} {{ person.initial }}. 
+
         <h5 class="heading">{{ person.name}} {{ person.lastInitial }}.</h5>
         <h5 v-if="person.job && person.job.employer" class="caption">{{ person.job.title }} <span v-if="person.job.employer">at {{ person.job.employer }}</span></h5>
         	<h5 class="caption" v-if="person.children.length">Parent to <span v-for="(child, index) in person.children"><span class="child">{{ child.name }} 
         		<span class="black-50">({{ child.age }})</span></span><span v-if="(index < person.children.length - 1)">, </span>
-        </span></h5>
-      </div><a href="#" class="button-send-message w-inline-block"><img src="../assets/chat.svg" class="image-4"><div class="list-item-1-button">Book</div></a></div>
-    <div class="list-item-content-container">
-      <div class="tag-group-container" v-if="person.activities.length"><img src="../assets/tag.svg" class="image-tag">
-        <div class="tags-container" v-for="activity in person.activities">
-          <div class="tag">
-            <div class="small-text-upper-black-40">{{ activity }}</div>
-          </div>
-      </div>
-      </div>
-      <div class="time-group-container"><img src="../assets/time.svg" class="image-time">
-        <div class="times-container">
-          <div class="time" v-if="person.availability.includes('7to3')">
-            <div class="time-tags">7a–3p</div>
-          </div>
-          <div class="time" v-if="person.availability.includes('3to7')">
-            <div class="time-tags">3p–7p</div>
-          </div>
-          <div class="time" v-if="person.availability.includes('after7')">
-            <div class="time-tags">7p-</div>
-          </div>
-          <div class="time" v-if="person.availability.includes('weekends')">
-            <div class="time-tags">WEEKENDS</div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</span>
-</router-link>
+        </span>
+    </h5>
+
+  {{ person.blurb }}
+
+  <div v-for="review in person.reviews"> 
+  User #{{ review.userId }} says "{{ review.text }}"
+</div>
+  <router-link :to="{ name: 'RequestModal', params: { id: person.id }}">Book care</router-link>
+
+</div>
 </template>
+
+<script>
+import people from '../assets/people.json'
+export default {
+	name: 'ProviderProfile',
+	data () {
+		return {
+			people: people
+		}
+	},
+	computed: {
+		person: function () {
+			this.people[this.$route.params.id - 1]
+		}
+	}
+};
+</script>
 
 <style scoped>
 
-.scrolling-wrapper {
-  overflow-x: auto;
+.contact-name {
+	text-transform: capitalize;
 }
-
-.card {
-    flex: 0 0 auto;
-  }
-
-.card img {
-	height: 100%;
-	width: auto;
-}
-
-.scrolling-wrapper {
-  -webkit-overflow-scrolling: touch;
-}
-
-.scrolling-wrapper {
-  &::-webkit-scrollbar {
-    display: none;
-  }
-}
-
-.child {
-	white-space:nowrap;
-}
-
-.body {
+body {
   font-family: soleil, sans-serif;
   color: #333;
   font-size: 14px;
@@ -156,7 +125,7 @@ a {
 }
 
 .black-50 {
-  color: rgba(0, 0, 0, .25);
+  color: rgba(0, 0, 0, .5);
 }
 
 .invite-friends-container {
@@ -689,7 +658,6 @@ a {
   clear: none;
   border-radius: 2px;
   background-color: rgba(0, 0, 0, .1);
-  white-space: nowrap;
 }
 
 .small-text-upper-black-40 {
@@ -716,13 +684,14 @@ a {
   background-color: rgba(100, 66, 107, .2);
 }
 
-.time-tags {
+.small-text-upper-purple {
   margin-top: 1px;
   color: #64426b;
   font-size: 9px;
   line-height: 9px;
   font-weight: 700;
   letter-spacing: 1.03px;
+  text-transform: uppercase;
 }
 
 .kids-container {
@@ -802,7 +771,7 @@ a {
 }
 
 .card {
-  width: auto;
+  width: 202px;
   height: 111px;
   margin-right: 4px;
   background-color: #fff;
@@ -1298,6 +1267,7 @@ a {
   font-size: 13px;
   font-weight: 400;
   text-align: center;
+  text-transform: capitalize;
 }
 
 .list-item-4-action-right {
@@ -1395,6 +1365,16 @@ a {
   .time {
     clear: both;
   }
+  .tag-group-container {
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: start;
+    -webkit-align-items: flex-start;
+    -ms-flex-align: start;
+    align-items: flex-start;
+  }
   .name-and-caption {
     display: -webkit-box;
     display: -webkit-flex;
@@ -1415,11 +1395,5 @@ a {
   }
 }
 
-</style>
 
-<script>
-export default {
-        name: 'Provider',
-        props: ['person'],
-};
-</script>
+</style>

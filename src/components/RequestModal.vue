@@ -2,7 +2,10 @@
 
 <div class="modal-wrapper">
 
-    <div class="title-bar-container"><a @click="$emit('close')" class="title-bar-action-l w-inline-block"><img src="../assets/Close-X.svg"></a>
+    <div class="title-bar-container">
+      <router-link :to="{ name: 'ProviderProfile', params: { id: person.id }}">
+        <img src="../assets/Close-X.svg">
+      </router-link>
       <h5 class="heading-3">Request Care</h5><a href="#" class="title-bar-action-2 w-inline-block"></a></div>
     <div class="form-container">
        <div class="form-block w-form">
@@ -54,17 +57,19 @@
 // try adding an animation so it fades in
 
 import TextMessageLink from './TextMessageLink.vue'
+import people from '../assets/people.json'
 
 export default {
     name: 'RequestModal',
-    props: ['person'],
     components: { TextMessageLink },
     data () {
     	return {
           numberOfChildren: 1,
           day: "today",
           startTime: "19:00",
-          endTime: "22:00",          
+          endTime: "22:00",
+          /* to be able to use "people" that I'm importing */
+          people: people
       }
   }, 
   methods: {
@@ -78,6 +83,11 @@ export default {
   		}
   		return hours12 + ':' + minutes + ampm
   	}
+  },
+  computed: {
+    person: function () {
+      return this.people[this.$route.params.id - 1]
+    }
   }
 };
 </script>
