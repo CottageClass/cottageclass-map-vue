@@ -67,6 +67,29 @@
 
   <Images :person="person"/>
 
+ <!-- location with link to directions -->
+
+  <div class="group-title-container-2">
+    <h5 class="list-title-2">Location</h5>
+  </div>
+
+   <div class="map-container" @click="getDirections(person.location)">
+  <GmapMap
+    :disableDefaultUI="true"
+    :center="person.location"
+    :zoom="13"
+    :options="mapOptions"
+    style="width: 100%; height: 230px;">
+      <GmapMarker
+      :key="index"
+      :position="person.location"
+      :title="person.name"
+      :icon="require(`@/assets/small-avatars/${person.pic}`)"
+      @click="getDirections(person.location)"      
+      />
+    </GmapMap>
+  </div>
+
 <!-- Positive reviews --> 
   <div class="group-title-container-2">
     <h5 class="list-title-2">Greate Experiences</h5>
@@ -96,7 +119,9 @@
   <!-- concern link --> 
 
   <div class="providerp-post-comment-container"><a :href="'mailto:info@cottageclass.com?subject=Concern re: ' + person.name + ' ' + person.lastInitial + '. (' + person.id + ')&body=(please%20detail%20your%20concern%20here)'" class="pprofile-compose-button w-inline-block"><img src="../assets/compose.svg" class="image-5"><div class="pprofile-comment-prompt-button-text">Post a concern</div></a></div>
+
   <div class="spacer-100px"></div>
+
 </div>
 </template>
 
@@ -107,9 +132,19 @@ import people from '../assets/people.json'
 export default {
 	components: { ReviewItem, Images },
 	name: 'ProviderProfile',
+	methods: {
+		getDirections: function (location) {
+			window.open('https://www.google.com/maps?saddr=My+Location&daddr=' + location.lat + ',' + location.lng)
+		}
+	},
 	data () {
 		return {
-			people: people
+			people: people,
+			 mapOptions: 
+			 { // move this to map component when i separate it.
+            "disableDefaultUI": true, // turns off map controls
+            "gestureHandling": "none" // prevents any kind of scrolling
+          }
 		}
 	},
 	computed: {
