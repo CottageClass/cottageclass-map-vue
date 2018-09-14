@@ -2,9 +2,6 @@
 
 <!-- the modal, if it displays --> 
 
-<div v-if="showRequestModal">
-  <RequestModal :person="selectedPerson" @close="showRequestModal=false"/>
-  </div>
 <div v-else>
 <!-- the map! -->
   <div class="map-container">
