@@ -12,7 +12,7 @@
         	<h5 class="caption" v-if="person.children.length">Parent to <span v-for="(child, index) in person.children"><span class="child">{{ child.name }} 
         		<span class="black-50">({{ child.age }})</span></span><span v-if="(index < person.children.length - 1)">, </span>
         </span></h5>
-      </div><a href="#" class="button-send-message w-inline-block"><img src="../assets/chat.svg" class="image-4"><div class="list-item-1-button">Book</div></a></div>
+      </div><router-link :to="{ name: 'RequestModal', params: { id: person.id }}"  class="button-send-message w-inline-block"><img src="../assets/chat.svg" class="image-4"><div class="list-item-1-button">Book</div></router-link></div>
 
 
        <div class="providerp-background-check-badge-container" v-if="person.backgroundCheck">
