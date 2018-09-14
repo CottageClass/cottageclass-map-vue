@@ -3,9 +3,9 @@
 <div class="modal-wrapper">
 
     <div class="title-bar-container">
-      <router-link :to="{ name: 'ProviderProfile', params: { id: person.id }}">
+      <a href="javascript:history.go(-1)">
         <img src="../assets/Close-X.svg">
-      </router-link>
+      </a>
       <h5 class="heading-3">Request Care</h5><a href="#" class="title-bar-action-2 w-inline-block"></a></div>
     <div class="form-container">
        <div class="form-block w-form">
