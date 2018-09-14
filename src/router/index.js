@@ -14,8 +14,8 @@ export default new Router({
   routes: [
     {
       path: '/',
-      name: 'MainView',
-      component: MainView
+      name: 'Splash',
+      component: Splash
     },
     {
       path: '/bookings',
@@ -28,9 +28,9 @@ export default new Router({
     	component: EmergencyInfo
     },
     {
-    	path: '/splash',
-    	name: 'Splash',
-    	component: Splash 
+    	path: '/home',
+    	name: 'MainView',
+    	component: MainView 
     },
     {
     	path: '/enter-code',
