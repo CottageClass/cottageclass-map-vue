@@ -30,7 +30,7 @@ export default {
 	},
 	computed: {
 		person: function () {
-			this.people[this.$route.params.id - 1]
+			return this.people[this.$route.params.id - 1]
 		}
 	}
 };
