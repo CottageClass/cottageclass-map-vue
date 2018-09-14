@@ -44,7 +44,7 @@
   <!-- the list --> 
   <div class="list-container">
     <div class="group-title-container">
-      <h5 class="heading-2">Brooklyn Apple Families</h5>
+      <h5 class="heading-2">Providers in &ldquo;Flatbush Families&rdquo;</h5>
     </div>
      <Provider v-for="person in peopleAvailable" :person="person" :key="person.key"></Provider>
   </div>
