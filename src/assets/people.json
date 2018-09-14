@@ -132,7 +132,7 @@
     "phone": "646-623-4802‬",
     "availability": ["7to3", "3to7", "weekends"],
     "location": {"lat": 40.665411, "lng": -73.986171},
-    "activities":["spanish", "art", "music", "cooking", "sports"],
+    "activities":["spanish", "art", "music", "sports"],
     "job": {"title" : "Educator", "employer": "Tambor Playgroup"},
     "children": 
     [
