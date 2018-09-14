@@ -10,6 +10,8 @@
     "location": {"lat": 40.6709948, "lng": -73.9845812},
     "job": {"title": "Co-founder", "employer": "CottageClass"},
     "activities": ["baking", "biking", "tennis", "running"],
+    "blurb": "I'm an activist, a step dad, and now I run a startup, I've been babysitting since I was 11.",
+    "background-check": true,
     "emergencyContacts": [
         {
           "name": "Giseli Vasconcelos",
@@ -45,6 +47,22 @@
         "allergies": "Martina is mildly allergic to gluten",
         "medicalNeeds": "",
         "otherNotes": "Please try to limit Martina's screentime."
+      }
+    ],
+    "reviews": [
+    {
+      "userId": 2,
+      "text": "Holmes takes great care of kids!"
+    },
+    {
+      "userId": 3,
+      "text": "Holmes is super nice!"
+    }
+    ],
+    "reviews": [
+      {
+        "userId": 2,
+        "text": "Holmes's neighbors have a big scary dog so kids should probably stay inside."
       }
     ]
   },
@@ -106,7 +124,7 @@
     ]
   },
   { 
-    "id": 5,
+    "id": 3,
     "name": "Marixsa", 
     "lastInitial": "R",
     "pic": "avatar-5.png",
