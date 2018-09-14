@@ -17,10 +17,12 @@
       :position="person.location"
       :title="person.name"
       :icon="require(`@/assets/small-avatars/${person.pic}`)"
-      @click="launchPreMessageModal(person)"
+      @click="$router.push({name: 'ProviderProfile', params: { id: person.id }})"
       />
     </GmapMap>
   </div>
+
+
 
 <!-- calendar or "bookings / provider" button -->
 
