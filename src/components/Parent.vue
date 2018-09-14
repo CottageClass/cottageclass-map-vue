@@ -1,6 +1,7 @@
 <template>
  <div class="list-item-3-container">
-   <router-link :to="{ name: 'emergencyInfo', params: { id: person.id }}" class="list-item-3-title-bar"><img src="../assets/avatar-5.png" class="image">
+   <router-link :to="{ name: 'emergencyInfo', params: { id: person.id }}" class="list-item-3-title-bar">
+    <img src="../assets/avatar-5.png" class="image">
        <div class="list-item-3-heading">
          <h5 class="heading">{{ person.name}} {{ person.lastInitial }}. </h5> 
        </div>

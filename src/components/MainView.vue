@@ -47,7 +47,7 @@
     <div class="group-title-container">
       <h5 class="heading-2">Brooklyn Apple Families</h5>
     </div>
-     <provider v-for="person in peopleAvailable" :person="person" :key="person.key"></provider>
+     <Provider v-for="person in peopleAvailable" :person="person" :key="person.key"></Provider>
   </div>
 <!-- share button -->
 <ShareButton/>

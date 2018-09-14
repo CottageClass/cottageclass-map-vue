@@ -21,9 +21,12 @@
     </div>
   </div>
   <div class="providerp-provider-info-bullets">
+
+ <!-- background check -->
+
     <div class="providerp-background-check-badge-container" v-if="person.backgroundCheck">
       <div class="providerp-background-check-badge"><img src="../assets/check-white-14.svg" class="checkmark-image">
-        <div class="background-check-text">Background check</div>
+        <div class="background-check-text">Background checked</div>
       </div>
     </div>
 
@@ -109,7 +112,7 @@ export default {
 </script>
 
 <style scoped>
-body {
+.body {
   font-family: soleil, sans-serif;
   color: #333;
   font-size: 14px;

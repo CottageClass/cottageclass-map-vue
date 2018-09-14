@@ -13,6 +13,15 @@
         		<span class="black-50">({{ child.age }})</span></span><span v-if="(index < person.children.length - 1)">, </span>
         </span></h5>
       </div><a href="#" class="button-send-message w-inline-block"><img src="../assets/chat.svg" class="image-4"><div class="list-item-1-button">Book</div></a></div>
+
+
+       <div class="providerp-background-check-badge-container" v-if="person.backgroundCheck">
+      <div class="providerp-background-check-badge"><img src="../assets/check-white-14.svg" class="checkmark-image">
+        <div class="background-check-text">Background checked</div>
+      </div>
+    </div>
+    
+
     <div class="list-item-content-container">
       <div class="tag-group-container" v-if="person.activities.length"><img src="../assets/tag.svg" class="image-tag">
         <div class="tags-container" v-for="activity in person.activities">
@@ -85,6 +94,39 @@ a {
 
 .list-container {
   margin-top: 16px;
+}
+
+.providerp-background-check-badge {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  padding: 3px 10px;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+  -ms-flex-align: center;
+  align-items: center;
+  border-radius: 500px;
+  background-color: #0cba5282;
+}
+
+.background-check-text {
+  margin-top: 1px;
+  color: hsla(0, 0%, 100%, .9);
+  font-size: 10px;
+  line-height: 9px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+}
+
+.checkmark-image {
+  margin-right: 8px;
+}
+
+.providerp-background-check-badge-container {
+  margin-bottom: 6px;
+  margin-left: 20px;
 }
 
 .list-item-1-container {

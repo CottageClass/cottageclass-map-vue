@@ -29,7 +29,7 @@ export default {
 
 <style scoped>
 
-body {
+.body {
   font-family: soleil, sans-serif;
   color: #333;
   font-size: 14px;
