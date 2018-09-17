@@ -1,9 +1,9 @@
 <template>
 <div class="body">
   <div class="title-bar-container"><router-link to="/" class="title-bar-action-l w-inline-block"><img src="../assets/Close-X.svg"></router-link>
-    <h5 class="heading-3">Check in Children</h5><a href="#" class="title-bar-action-2 w-inline-block"></a></div>
+    <h5 class="heading-3">Check-in children</h5><a href="#" class="title-bar-action-2 w-inline-block"></a></div>
   <div class="top-content-container">
-    <div class="page-lead-text">Check children in at drop-off, and check them out at pick-up. (Make sure to text us so we can track time and bill the parent.)</div><a href="" class="button-small-outline w-button">Learn More</a></div>
+    <div class="page-lead-text">Are you providing care? Simply check children in at drop-off, and check them out at pick-up. Click on the parent name for emergency information.</div><a href="" class="button-small-outline w-button">How it works</a></div>
   <div class="list-container" v-for="person in parents">
      <Parent :person="person" :key="person.key"/>
     </div>
