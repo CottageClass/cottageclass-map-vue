@@ -12,7 +12,7 @@
            <span class="black-50">({{ child.age }})</span><span v-if="(index < person.children.length - 1)">, </span>
        </span></div> 
    </div>
-     <div class="list-item-3-actions">
+     <div v-if="checkState != 'error'" class="list-item-3-actions">
       <!-- check in button -->
          <a class="list-item-3-link-block w-inline-block" @click="check('in')">
            <div v-if="checkState=='checking in'"class="list-item-3-button-text">Checking in...</div>
@@ -26,6 +26,11 @@
            <div v-if="checkState=='checked in' || checkState=='unknown' || checkState=='checking in'" class="list-item-3-button-text">Check Out</div>
          </a>
    </div>
+      <div class="note-container" v-if="checkState=='error'">
+        <div class="note">
+          <div>We're sorry! There was a problem saving your check-in. To make sure it's recorded properly, call or text us right away at <a href="tel:‭+1-862-294-4859‬">862-294-4859‬</a>.</div>
+        </div>
+      </div>
  </div>
 </template>
 
@@ -44,7 +49,7 @@ export default {
         components: { TextMessageLink },
         data () {
           return {
-            checkState: "unknown" // "unknown", "checking in", "problem checking in", "checked in", "checking out", "problem checking out", "checked out"
+            checkState: "unknown" // "unknown", "checking in", "checked in", "checking out", "checked out", "error"
           }
         },
         methods: {
@@ -52,15 +57,21 @@ export default {
             // ask them their name if we don't know it.
             this.checkState = 'checking ' + inOrOut
             if (!this.$cookies.isKey('providerName')) {
-                var name = prompt("What\'s your full name?")
+                var name = prompt("Please enter the full name of the person providing care.")
                 this.$cookies.set('providerName', name)
             }
             let providerName = this.$cookies.get('providerName')
+            // ask them how many children if there is more than one. Add validation here. 
+            if (this.person.children.length > 1){
+              var children = prompt("How many children are checking in?")
+            } else {
+              var children = 1
+            }
             client.create({
               "parentId": this.person.id, 
               "parentName": this.person.name + ' ' + this.person.lastInitial,
               "providerName": providerName,
-              "howManyChildren": this.person.children.length +1,
+              "howManyChildren": children,
               "checked": inOrOut,
               "time": Date(),
             }, "events").then((data) => {
@@ -68,7 +79,7 @@ export default {
               this.checkState = 'checked ' + inOrOut
             }, (err) => {
               console.log(err)
-              this.checkState = 'problem checking ' + inOrOut
+              this.checkState = 'error'
               });
           }
         }
@@ -1056,6 +1067,10 @@ a {
   color: #c200ff;
   font-size: 11px;
   line-height: 15px;
+}
+
+.note a {
+  text-decoration: underline;
 }
 
 .text-block-4 {
