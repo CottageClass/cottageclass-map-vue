@@ -12,13 +12,18 @@
            <span class="black-50">({{ child.age }})</span><span v-if="(index < person.children.length - 1)">, </span>
        </span></div> 
    </div>
-          "{{ checkState}}!"
      <div class="list-item-3-actions">
+      <!-- check in button -->
          <a class="list-item-3-link-block w-inline-block" @click="check('in')">
-           <div class="list-item-3-button-text">Check In</div>
+           <div v-if="checkState=='checking in'"class="list-item-3-button-text">Checking in...</div>
+            <div v-if="checkState=='checked in'"class="list-item-3-button-text">&#10004; Checked in</div>           
+           <div v-if="checkState=='checked out' || checkState=='unknown' || checkState=='checking out'" class="list-item-3-button-text">Check In</div>
          </a>
+      <!-- check out button --> 
          <a class="list-item-3b-link-block w-inline-block" @click="check('out')">
-           <div class="list-item-3-button-text">Check Out</div>
+            <div v-if="checkState=='checking out'"class="list-item-3-button-text">Checking out...</div>
+            <div v-if="checkState=='checked out'"class="list-item-3-button-text">&#10004; Checked out</div>           
+           <div v-if="checkState=='checked in' || checkState=='unknown' || checkState=='checking in'" class="list-item-3-button-text">Check Out</div>
          </a>
    </div>
  </div>
