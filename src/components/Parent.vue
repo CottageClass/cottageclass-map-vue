@@ -57,7 +57,7 @@ export default {
             // ask them their name if we don't know it.
             this.checkState = 'checking ' + inOrOut
             if (!this.$cookies.isKey('providerName')) {
-                var name = prompt("Please enter the full name of the person providing care.")
+                var name = prompt("What is your full name?")
                 this.$cookies.set('providerName', name)
             }
             let providerName = this.$cookies.get('providerName')
