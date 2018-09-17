@@ -3,9 +3,12 @@
 import Vue from 'vue';
 import App from './App';
 import router from './router'
-import * as VueGoogleMaps from 'vue2-google-maps';
-import Geocoder from "@pderas/vue2-geocoder";
+import * as VueGoogleMaps from 'vue2-google-maps'
+import Geocoder from "@pderas/vue2-geocoder"
 import './registerServiceWorker'
+import VueCookies from 'vue-cookies'
+Vue.use(VueCookies)
+
 
 Vue.config.productionTip = false
 

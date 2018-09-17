@@ -14,7 +14,9 @@
   "dependencies": {
     "@pderas/vue2-geocoder": "^1.0.2",
     "register-service-worker": "^1.0.0",
+    "sheetsu-node": "0.0.7",
     "vue": "^2.5.2",
+    "vue-cookies": "^1.5.7",
     "vue-router": "^3.0.1",
     "vue2-google-maps": "^0.10.2"
   },

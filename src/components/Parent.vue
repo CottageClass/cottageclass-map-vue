@@ -1,7 +1,7 @@
 <template>
  <div class="list-item-3-container">
    <router-link :to="{ name: 'emergencyInfo', params: { id: person.id }}" class="list-item-3-title-bar">
-    <img src="../assets/avatar-5.png" class="image">
+    <img :src="require(`../assets/${person.pic}`)" class="image">
        <div class="list-item-3-heading">
          <h5 class="heading">{{ person.name}} {{ person.lastInitial }}. </h5> 
        </div>
@@ -10,17 +10,16 @@
        <div class="text-block">
          <span v-for="(child, index) in person.children">{{ child.name }} 
            <span class="black-50">({{ child.age }})</span><span v-if="(index < person.children.length - 1)">, </span>
-       </span></div>
+       </span></div> 
    </div>
+          "{{ checkState}}!"
      <div class="list-item-3-actions">
-         <TextMessageLink class="list-item-3-link-block w-inline-block" :number="8622944859" :message="'I\'m checking in ' + person.name + ' (#' + person.id + ') now. Number of kids: ' + person.children.length">
+         <a class="list-item-3-link-block w-inline-block" @click="check('in')">
            <div class="list-item-3-button-text">Check In</div>
-         </TextMessageLink>
-         <TextMessageLink class="list-item-3b-link-block w-inline-block":number="8622944859" :message="'I\'m checking out ' + person.name + ' (' + person.id + ') now. Number of kids: ' + person.children.length">
-           <div class="list-item-3-button-text">
-             <div class="list-item-3-button-text">Check Out</div>
-           </div>
-         </TextMessageLink>
+         </a>
+         <a class="list-item-3b-link-block w-inline-block" @click="check('out')">
+           <div class="list-item-3-button-text">Check Out</div>
+         </a>
    </div>
  </div>
 </template>
@@ -28,10 +27,46 @@
 <script>
 import TextMessageLink from './TextMessageLink'
 
+// import google sheets API service
+import sheetsu from 'sheetsu-node';
+
+// create a config file to identify which spreadsheet we push to.
+var client = sheetsu({ address: 'https://sheetsu.com/apis/v1.0su/62cd725d6088' })
+
 export default {
         name: 'Parent',
         props: ['person'],
-        components: { TextMessageLink }
+        components: { TextMessageLink },
+        data () {
+          return {
+            checkState: "unknown" // "unknown", "checking in", "problem checking in", "checked in", "checking out", "problem checking out", "checked out"
+          }
+        },
+        methods: {
+          check: function (inOrOut) {
+            // ask them their name if we don't know it.
+            this.checkState = 'checking ' + inOrOut
+            if (!this.$cookies.isKey('providerName')) {
+                var name = prompt("What\'s your full name?")
+                this.$cookies.set('providerName', name)
+            }
+            let providerName = this.$cookies.get('providerName')
+            client.create({
+              "parentId": this.person.id, 
+              "parentName": this.person.name + ' ' + this.person.lastInitial,
+              "providerName": providerName,
+              "howManyChildren": this.person.children.length +1,
+              "checked": inOrOut,
+              "time": Date(),
+            }, "events").then((data) => {
+              console.log(data)
+              this.checkState = 'checked ' + inOrOut
+            }, (err) => {
+              console.log(err)
+              this.checkState = 'problem checking ' + inOrOut
+              });
+          }
+        }
 };
 </script>
 
@@ -896,6 +931,7 @@ a {
   align-items: center;
   border-radius: 4px;
   background-color: #aff0fc;
+  cursor: pointer;
 }
 
 .check-in-image {
@@ -925,6 +961,7 @@ a {
   align-items: center;
   border-radius: 4px;
   background-color: #deedfc;
+  cursor: pointer;
 }
 
 .footer {
