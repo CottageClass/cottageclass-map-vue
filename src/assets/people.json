@@ -134,6 +134,7 @@
     "location": {"lat": 40.665411, "lng": -73.986171},
     "activities":["spanish", "art", "music", "sports"],
     "job": {"title" : "Educator", "employer": "Tambor Playgroup"},
+    "backgroundCheck": true,
     "children": 
     [
     { 
