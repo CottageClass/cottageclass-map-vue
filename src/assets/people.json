@@ -192,7 +192,7 @@
     "phone": "646-623-4802‬",
     "availability": ["never"],
     "activities":[],
-    "location": {"lat": 40.667714, "lng": -73.987534},
+    "location": {"lat": 40.667714, "lng": -73.987534}, 
     "children": []
   },
   { 
@@ -203,7 +203,7 @@
     "images": ["marixsa-0.jpg", "marixsa-1.jpg", "marixsa-7.jpg", "marixsa-4.jpg", "marixsa-2.jpg", "marixsa-5.jpg", "marixsa-3.jpg"],
     "phone": "646-623-4802‬",
     "availability": ["7to3", "3to7", "weekends"],
-    "location": {"lat": 40.665411, "lng": -73.986171},
+    "location": {"lat": 40.642485, "lng": -73.944122},
     "activities":["spanish", "art", "music", "sports"],
     "job": {"title" : "Educator", "employer": "Tambor Playgroup"},
     "backgroundCheck": true,
