@@ -1,6 +1,6 @@
 <template>
 <div class="body">
-  <div class="title-bar-container"><router-link to="/bookings" class="title-bar-action-l w-inline-block"><img src="../assets/Arrow-Back-2.svg"></router-link>
+  <div class="title-bar-container"><router-link :to="{ name: 'Bookings' }" class="title-bar-action-l w-inline-block"><img src="../assets/Arrow-Back-2.svg"></router-link>
     <h5 class="heading-3">Emergency Contacts</h5><a href="#" class="title-bar-action-2 w-inline-block"></a></div>
 
  <!-- Note $route.params for pulling in data. I guess I can pull in people again. --> 
