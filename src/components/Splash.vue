@@ -3,7 +3,7 @@
   <div class="div-block-4">
     <div class="div-block-5"><img src="../assets/cc-logo-vert-inverse.svg">
       <div class="splash-content-1">
-        <div class="splash-text-50">Welcome to <strong>{{ network.name }}</strong> on CareShare by <a href="https://cottageclass.com">CottageClass</a>. We're testing out a new way to share childcare within a trusted networks of parents and friends. Just browse the list of parents available, then reach out to book care. Are you ready to try it?<br><br>(You pay ${{ network.price }}/hour for the time you use, with a 50% sibling discount. Providers pay a 20% fee to cover credit card fees, background checks.)</div>
+        <div class="splash-text-50">Welcome to <strong>{{ network.name }}</strong> on CareShare by <a href="https://cottageclass.com">CottageClass</a>. We're testing out a new way to share childcare within a trusted networks of parents and friends. Just browse the list of parents available, then reach out to book care. Are you ready to try it?<br><br>(Parents pay ${{ network.price }}/hour for time used and providers receive ${{ network.price * 0.8 }}/hour, with 50% off for siblings.)</div>
       </div>
     </div>
     <a href="#" class="splash-button w-inline-block">

@@ -8,6 +8,7 @@ import EnterCode from '@/components/EnterCode.vue'
 import ProviderProfile from '@/components/ProviderProfile.vue'
 import RequestModal from '@/components/RequestModal.vue'
 import network from '../assets/network-info.json'
+import HowItWorks from '@/components/HowItWorks.vue'
 
 Vue.use(Router)
 
@@ -49,6 +50,11 @@ export default new Router({
     	path: '/y723hz/request/:id',
     	name: 'RequestModal',
     	component: RequestModal
+    },
+    {
+      path:'/y723hz/how-it-works',
+      name: 'HowItWorks',
+      component: HowItWorks
     }
   ],
  scrollBehavior (to, from, savedPosition) {
