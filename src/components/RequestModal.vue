@@ -38,7 +38,7 @@
           <TextMessageLink :number="person.phone" :message="'Hi ' + person.name + '!! I\'m a parent from ' + network.name + ', I\'m looking for care for ' + numberOfChildren + ' ' + ((numberOfChildren > 1) ? 'children' : 'child') + ' ' + day + ' from ' + formatTime(startTime) + ' to ' + formatTime(endTime) + ', and I saw you were often available at these times. Would this work? Thanks!'">
           	<button value="Send Text" class="button-small-3 w-button">Send Text</button>
           </TextMessageLink>
-          <div class="small-text-black-40">You can edit it on the next screen.</div>
+          <div class="small-text-black-40">You can edit it on the next screen.<br>Each booking costs ${{ network.price }}/hour<br> &amp; you only pay for what you use.</div>
         </div>
       </div>
     </div>
@@ -677,6 +677,7 @@ a {
   margin-top: 7px;
   color: rgba(0, 0, 0, .4);
   font-size: 11px;
+  line-height: 16px;
 }
 
 @media (max-width: 479px) {
