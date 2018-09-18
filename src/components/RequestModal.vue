@@ -35,7 +35,8 @@
           <div class="avatar-and-cta-container"><img :src="require(`@/assets/${person.pic}`)" class="image">
             <div class="text-block-4">Send a text message to<br><span class="text-span">{{ person.name}} {{ person.lastInitial }}.</span><span class="black-50"></span></div>
           </div>
-          <TextMessageLink :number="person.phone" :message="'Hi ' + person.name + '!! I\'m a parent from ' + network.name + ', I\'m looking for care for ' + numberOfChildren + ' ' + ((numberOfChildren > 1) ? 'children' : 'child') + ' ' + day + ' from ' + formatTime(startTime) + ' to ' + formatTime(endTime) + ', and I saw you were often available at these times. Would this work? Thanks!'">
+          <TextMessageLink :number="person.phone" :message="'Hi ' + person.name + '!! I\'m a parent from ' + network.name + ', I\'m looking for care for ' + numberOfChildren + ' ' + ((numberOfChildren > 1) ? 'children' : 'child') + ' ' + day + ' from ' + formatTime(startTime) + ' to ' + formatTime(endTime) + ', and I saw you were often available at these times. Would this work? Thanks! \ud83c\udf08\u26a1\ud83e\udd84'">
+        <!-- ^^ Those crazy unicode characters are emojis :) -->
           	<button value="Send Text" class="button-small-3 w-button">Send Text</button>
           </TextMessageLink>
           <div class="small-text-black-40">You can edit it on the next screen.<br>Each booking costs ${{ network.price }}/hour<br> &amp; you only pay for what you use.</div>
