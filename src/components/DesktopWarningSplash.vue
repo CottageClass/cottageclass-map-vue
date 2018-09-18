@@ -3,34 +3,21 @@
   <div class="div-block-4">
     <div class="div-block-5"><img src="../assets/cc-logo-vert-inverse.svg">
       <div class="splash-content-1">
-        <div class="splash-text-50">Welcome to <strong>{{ network.name }}</strong> on CareShare by <a href="https://cottageclass.com">CottageClass</a>. We're testing out a new way to share childcare within a trusted networks of parents and friends. Just browse the list of parents available, then reach out to book care. Are you ready to try it?<br><br>(Parents pay ${{ network.price }}/hour for time used and providers receive ${{ network.price * 0.8 }}/hour, with 50% off for siblings.)</div>
+        <div class="splash-text-50">Welcome to CareShare by <a href="https://cottageclass.com">CottageClass</a>. Unfortunately, it looks like you're accessing this site from a computer and not a phone. If you're really sure you'd like to continue that's okay with us, but things might look funny, and you won't be able to message folks. Is that okay?<br><br>
+        (P.S. If you'd like us to re-send the link to your phone, call or text ‭1-862-294-4859‬.)</div>
       </div>
     </div>
     <a href="#" class="splash-button w-inline-block">
-      <router-link :to="{ name: 'MainView' }" class="button-text">GET STARTED</router-link>
+      <router-link :to="{ name: 'MainView' }" class="button-text">Um... I guess?</router-link>
     </a>
   </div>
 </div>
 </template>
 
 <script>
-import network from '../assets/network-info.json'
 
 export default {
-	name: 'Splash',
-  data () {
-    return {
-      network: network
-    }
-  },
-  created: function () {
-    if (!navigator.userAgent.match(/(iPad)|(iPhone)|(iPod)|(android)|(webOS)/i)) {
-      this.$router.push({ name: 'DesktopWarningSplash' })
-      console.log('desktop detected')
-    } else {
-      console.log('desktop not detected')
-    }
-  }
+	name: 'DesktopWarningSplash',
 };
 </script>
 
