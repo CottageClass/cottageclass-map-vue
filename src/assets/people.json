@@ -125,6 +125,78 @@
   },
   { 
     "id": 3,
+    "name": "Kecia",  
+    "lastInitial": "A",
+    "pic": "avatar-2.png",
+    "phone": "760-484-0137",
+    "availability": ["7to3", "weekends"],
+    "location": {"lat": 40.680316, "lng": -73.974780},
+    "emergencyContacts": [
+        {
+          "name": "Mom",
+          "relationship": "mother",
+          "phone": "617-544-7354"
+        },
+        {
+          "name": "Dad",
+          "relationship": "friend",
+          "phone": "413-367-6255"
+        },
+        {
+          "name": "Manisha Snoyer",
+          "relationship": "friend",
+          "phone": "607-279-1964"
+        }
+       ],
+    "doctors": [
+      {
+       "name": "",
+       "phone": ""
+      }
+   ],
+    "children": [
+    { 
+      "name": "Miles",
+      "age": 8,
+      "birthday": "5/19/2010",
+      "allergies": "Penicillin, Benadryl",
+      "medicalNeeds": "",
+      "otherNotes": ""
+    }, 
+    {
+      "name": "Manisha Jr.",
+      "age": 5,
+      "birthday": "4/16/2013",
+      "allergies": "She is extremely allergic to tree nuts.",
+      "medicalNeeds": "Must always have an epipen.",
+      "otherNotes": "She's shy at first but really loves to play with other kids once she gets warmed up to them."
+    }
+    ]
+  },
+  {
+    "id": 4,
+    "name": "Asa", 
+    "lastInitial": "N",
+    "pic": "avatar-3.png",
+    "phone": "774-242-2842",
+    "availability": ["never"],
+    "location": {"lat": 40.664725, "lng": 73.977001},
+    "activities":[],
+    "children": []
+  },
+  { 
+    "id": 5,
+    "name": "Jane",
+    "lastInitial": "W", 
+    "pic": "avatar-4.png",
+    "phone": "646-623-4802‬",
+    "availability": ["never"],
+    "activities":[],
+    "location": {"lat": 40.667714, "lng": -73.987534},
+    "children": []
+  },
+  { 
+    "id": 6,
     "name": "Marixsa", 
     "lastInitial": "R",
     "pic": "avatar-5.png",
@@ -161,6 +233,245 @@
       "medicalNeeds": "",
       "otherNeeds": ""
   }
+  ]
+  },
+  { 
+    "id": 7,
+    "name": "Donna", 
+    "lastInitial": "M",
+    "pic": "avatar-5.png",
+    "images": [],
+    "phone": "929-360-3245",
+    "availability": ["9to3", "3to7", "weekends"],
+    "location": {"lat": 40.652256, "lng": -73.956582},
+    "activities":["arts & crafts"],
+    "job": {"title" : "Digital Content Producer", "employer": "Columbia University"},
+    "children": 
+    [
+    { 
+      "name": "Nina",
+      "age": 6,
+      "birthday": "04/17/2012",
+      "allergies": "",
+      "medicalNeeds": "",
+      "otherNeeds": ""
+    },
+    { 
+      "name": "Reed",
+      "age": 1,
+      "birthday": "09/27/2016",
+      "allergies": "",
+      "medicalNeeds": "",
+      "otherNeeds": ""
+    }
+  ]
+  },
+    { 
+    "id": 8,
+    "name": "Holly", 
+    "lastInitial": "S",
+    "pic": ["avatar-HollyS.png"],
+    "images": ["HollyS-1.jpg", "HollyS-2.jpg", "HollyS-3.jpg", "HollyS-4.jpg"],
+    "phone": "646-228-3419",
+    "availability": ["9to3"],
+    "location": {"lat": 40.640652, "lng": -73.943440},
+    "activities":["volunteering", "arts & crafts"],
+    "job": {"title" : "Film and Video Producer", "employer": "Freelance"},
+    "children": 
+    [
+    { 
+      "name": "Holter",
+      "age": 1,
+      "birthday": "09/21/2016",
+      "allergies": "",
+      "medicalNeeds": "",
+      "otherNeeds": ""
+    }
+  ]
+  },
+  { 
+    "id": 9,
+    "name": "Sara", 
+    "lastInitial": "C",
+    "pic": "avatar-5.png",
+    "images": [],
+    "phone": "310-869-1687",
+    "availability": ["after7", "weekends"],
+    "location": {"lat": 40.646183, "lng": -73.943512},
+    "activities":["cooking"],
+    "job": {"title" : "Writer and Editor", "employer": "Sara Grace Editorial"},
+    "children": 
+    [
+    { 
+      "name": "Mia",
+      "age": 3,
+      "birthday": "12/10/2014",
+      "allergies": "",
+      "medicalNeeds": "",
+      "otherNeeds": ""
+    }
+  ]
+  },
+  { 
+    "id": 10,
+    "name": "Rachel", 
+    "lastInitial": "C",
+    "pic": "avatar-5.png",
+    "images": [],
+    "phone": "347-489-2204",
+    "availability": ["3to7", "9to3", "weekends", "after7"],
+    "location": {"lat": 40.687043, "lng": -73.935099},
+    "activities":["book club", "arts & crafts", "music"],
+    "job": {"title" : "Adjunct Faculty", "employer": "Argosy University"},
+    "children": 
+    [
+    { 
+      "name": "Audrey",
+      "age": 2,
+      "birthday": "06/02/2016",
+      "allergies": "",
+      "medicalNeeds": "",
+      "otherNeeds": ""
+    }
+  ]
+  },
+  { 
+    "id": 11,
+    "name": "Jill", 
+    "lastInitial": "A",
+    "pic": "avatar-5.png",
+    "images": [],
+    "phone": "646-523-0540",
+    "availability": ["weekends"],
+    "location": {"lat": 40.652256, "lng": -73.956582},
+    "activities":["outdoor adventure"],
+    "job": {"title" : "Prop Master in TV and Film", "employer": "Self-Employed"},
+    "children": 
+    [
+    { 
+      "name": "Wren",
+      "age": 8,
+      "birthday": "09/02/2010",
+      "allergies": "",
+      "medicalNeeds": "",
+      "otherNeeds": ""
+    }
+  ]
+  },
+   { 
+    "id": 12,
+    "name": "Sari", 
+    "lastInitial": "G",
+    "pic": "avatar-5.png",
+    "images": [],
+    "phone": "646-737-4382",
+    "availability": ["3to7", "weekends"],
+    "location": {"lat": 40.722274, "lng": -73.945048},
+    "activities":["cooking"],
+    "job": {"title" : "", "employer": ""},
+    "children": 
+    [
+    { 
+      "name": "Sai",
+      "age": 4,
+      "birthday": "08/02/2014",
+      "allergies": "",
+      "medicalNeeds": "",
+      "otherNeeds": ""
+    }
+  ]
+  },
+  { 
+    "id": 13,
+    "name": "Fayre", 
+    "lastInitial": "M",
+    "pic": "avatar-5.png",
+    "images": [],
+    "phone": "917-612-6432",
+    "availability": ["3to7", "9to3", "weekends"],
+    "location": {"lat": 40.677184, "lng": -73.974447},
+    "activities":["book club", "field trips"],
+    "job": {"title" : "Editor", "employer": "Self-employed"},
+    "children": 
+    [
+    { 
+      "name":"Taj",
+      "age": 5,
+      "birthday": "07/29/2013",
+      "allergies": "",
+      "medicalNeeds": "",
+      "otherNeeds": ""
+    },
+    { 
+      "name":"Noor",
+      "age": 3,
+      "birthday": "05/05/2015",
+      "allergies": "",
+      "medicalNeeds": "",
+      "otherNeeds": ""
+    }
+  ]
+  },
+  { 
+    "id": 14,
+    "name": "CJ", 
+    "lastInitial": "W",
+    "pic": "avatar-5.png",
+    "images": [],
+    "phone": "646-522-6889",
+    "availability": ["after7"],
+    "location": {"lat": 40.652603, "lng": -73.980889},
+    "activities":["arts & crafts"],
+    "job": {"title" : "Vice President", "employer": "New York Center for Child Development"},
+    "children": 
+    [
+    { 
+      "name":"Finn",
+      "age": 5,
+      "birthday": "12/12/2012",
+      "allergies": "",
+      "medicalNeeds": "",
+      "otherNeeds": ""
+    },
+    { 
+      "name":"Hildy",
+      "age": 3,
+      "birthday": "07/12/2015",
+      "allergies": "",
+      "medicalNeeds": "",
+      "otherNeeds": ""
+    }
+  ]
+  },
+    { 
+    "id": 15,
+    "name": "Kecia", 
+    "lastInitial": "A",
+    "pic": "avatar-5.png",
+    "images": [],
+    "phone": "760-484-0137",
+    "availability": ["9to3"],
+    "location": {"lat": 40.579718, "lng": -73.957695},
+    "activities":["arts & crafts"],
+    "job": {"title" : "Teacher", "employer": "CottageClass"},
+    "children": 
+    [
+    { 
+      "name":"Miles",
+      "age": 10,
+      "birthday": "12/23/2007",
+      "allergies": "",
+      "medicalNeeds": "",
+      "otherNeeds": ""
+    },
+    { 
+      "name":"Maya",
+      "age": 6,
+      "birthday": "05/08/2012",
+      "allergies": "",
+      "medicalNeeds": "",
+      "otherNeeds": ""
+    }
   ]
   }
 ]
