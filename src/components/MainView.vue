@@ -7,7 +7,7 @@
   <div class="map-container">
   <GmapMap
     :disableDefaultUI="true"
-    :center="{lat:40.6756941, lng:-73.9875457}"
+    :center="network.location"
     :zoom="13"
     :options="mapOptions"
     style="width: 100%; height: 230px;">
@@ -44,7 +44,7 @@
   <!-- the list --> 
   <div class="list-container">
     <div class="group-title-container">
-      <h5 class="heading-2">Providers in &ldquo;Flatbush Families&rdquo;</h5>
+      <h5 class="heading-2">Providers in &ldquo;{{ network.name }}&rdquo;</h5>
     </div>
      <Provider v-for="person in peopleAvailable" :person="person" :key="person.id"></Provider>
   </div>
@@ -61,6 +61,7 @@ import RequestModal from './RequestModal.vue'
 import people from '../assets/people.json'
 import router from '../router'
 import ShareButton from './ShareButton.vue'
+import network from '../assets/network-info.json'
 
 export default {
         name: 'MainView',
@@ -68,7 +69,8 @@ export default {
         data () { 
           return {
           timeSelected: "now", // or "7to3", "3to7", "after7", "weekends"
-          people: people,
+          people: people, // to bring from import into vue model
+          network: network, // to bring from import into vue model
           selectedPerson: null,
           mapOptions: { // move this to map component when i separate it.
             "disableDefaultUI": true, // turns off map controls

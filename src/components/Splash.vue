@@ -3,7 +3,7 @@
   <div class="div-block-4">
     <div class="div-block-5"><img src="../assets/cc-logo-vert-inverse.svg">
       <div class="splash-content-1">
-        <div class="splash-text-50">Welcome to <strong>BoCoCa Families</strong> on CareShare by <a href="https://cottageclass.com">CottageClass</a>. We're testing out new way to share childcare within a trusted networks of parents and friends. Browse providers & activities&mdash;then reach out to book care. Are you ready to try it?</div>
+        <div class="splash-text-50">Welcome to <strong>{{ network.name }}</strong> on CareShare by <a href="https://cottageclass.com">CottageClass</a>. We're testing out new way to share childcare within a trusted networks of parents and friends. Just browse the list of parents available, then reach out to book care. Are you ready to try it?</div>
       </div>
     </div>
     <a href="#" class="splash-button w-inline-block">
@@ -14,8 +14,15 @@
 </template>
 
 <script>
+import network from '../assets/network-info.json'
+
 export default {
 	name: 'Splash',
+  data () {
+    return {
+      network: network
+    }
+  }
 };
 </script>
 
