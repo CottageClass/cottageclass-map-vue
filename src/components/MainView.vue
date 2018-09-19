@@ -8,7 +8,7 @@
   <GmapMap
     :disableDefaultUI="true"
     :center="network.location"
-    :zoom="13"
+    :zoom="network.zoom"
     :options="mapOptions"
     style="width: 100%; height: 230px;">
       <GmapMarker

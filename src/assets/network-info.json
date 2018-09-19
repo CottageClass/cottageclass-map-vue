@@ -1,6 +1,7 @@
 {
 	"name": "Flatbush Families",  
-	"location": {"lat": 40.642485, "lng": -73.944122}, 
+	"location": {"lat": 40.666485, "lng": -73.944122},
+	"zoom": 12, 
 	"stub": "y723hz",
 	"price": "12.50"
 }
