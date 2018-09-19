@@ -1,36 +1,21 @@
 <template>
 <div class="body">
-  <div class="title-bar-container"><router-link :to="{ name: 'MainView' }" class="title-bar-action-l w-inline-block"><img src="../assets/Close-X.svg"></router-link>
-    <h5 class="heading-3">Check-in children</h5><a href="#" class="title-bar-action-2 w-inline-block"></a></div>
+  <div class="title-bar-container">
+    <a href="javascript:history.go(-1)" class="title-bar-action-l w-inline-block"><img src="../assets/Close-X.svg"></a>
+    <h5 class="heading-3">How it works</h5><a href="#" class="title-bar-action-2 w-inline-block"></a></div>
   <div class="top-content-container">
-    <div class="page-lead-text">Are you providing care? Simply check children in at drop-off, and check them out at pick-up. Click on the parent name for emergency information.</div>
-    <router-link :to="{ name: 'HowItWorks' }" class="button-small-outline w-button">How it works</router-link>
-  </div>
-  <div class="list-container" v-for="person in parents">
-     <Parent :person="person" :key="person.key"/>
-    </div>
-  </div>
-</div>	
+    <div class="page-lead-text">
+
+When children arrive check them in, and when they leave check them out. It's that simple! Since parents only pay for the time they use, please do not check them in before their arrival. We will calculate your hours from check-in to check-out, and pay you $10/hr per child per hour of care (plus $5/hour for each additional sibling.) 
+
+</div><a href="javascript:history.go(-1)" class="button-small-outline w-button">OK, Got it</a></div>
+
+</div>
 </template>
 
 <script>
-
-import people from '../assets/people.json'
-import Parent from './Parent.vue'
-
 export default {
-	name: 'Bookings',
-	components: { Parent },
-	data () {
-		return {
-			people: people
-		}
-	},
-	computed: {
-		parents: function () {
-			return this.people.filter(person => person.children.length) // only return people who have kids.
-		}
-	}
+	name: 'HowItWorks'
 };
 </script>
 
@@ -247,10 +232,6 @@ a {
   top: 131px;
   z-index: 3;
   box-shadow: none;
-}
-
-.body {
-  background-color: #f2f2f2;
 }
 
 .map {

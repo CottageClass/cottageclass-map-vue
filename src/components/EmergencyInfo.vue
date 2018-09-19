@@ -1,6 +1,6 @@
 <template>
 <div class="body">
-  <div class="title-bar-container"><router-link to="/bookings" class="title-bar-action-l w-inline-block"><img src="../assets/Arrow-Back-2.svg"></router-link>
+  <div class="title-bar-container"><router-link :to="{ name: 'Bookings' }" class="title-bar-action-l w-inline-block"><img src="../assets/Arrow-Back-2.svg"></router-link>
     <h5 class="heading-3">Emergency Contacts</h5><a href="#" class="title-bar-action-2 w-inline-block"></a></div>
 
  <!-- Note $route.params for pulling in data. I guess I can pull in people again. --> 
@@ -11,7 +11,9 @@
     	<!-- List children, possibly re-use this component-->
     	<span v-for="(child, index) in person.children">{{ child.name }} <span class="black-50">{{ child.age }}</span><span v-if="(index < person.children.length - 1)">, </span></span>
     </div>
-    <div class="ec-parent-summary-action-button-container"><a href="#" class="ec-parent-summary-button w-inline-block"><img src="../assets/chat.svg"><div class="ec-parent-summary-button-text">Text</div></a><a :href="'tel:' + person.phone" class="ec-parent-summary-button-2 w-inline-block"><img src="../assets/call-green.svg"><div class="ec-parent-summary-button-text-2">Call</div></a></div>
+    <div class="ec-parent-summary-action-button-container">
+      <a :href="'sms:' + person.phone" class="ec-parent-summary-button w-inline-block"><img src="../assets/chat.svg"><div class="ec-parent-summary-button-text">Text</div></a>
+    <a :href="'tel:' + person.phone" class="ec-parent-summary-button-2 w-inline-block"><img src="../assets/call-green.svg"><div class="ec-parent-summary-button-text-2">Call</div></a></div>
   </div>
   <div class="group-title-container-2">
     <h5 class="list-title-2">Other Emergency Contacts</h5>

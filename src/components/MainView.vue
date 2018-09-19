@@ -26,7 +26,7 @@
 
 <!-- calendar or "bookings / provider" button -->
 
-<router-link to="/bookings"><div class="calendar-button"><img src="../assets/calendar.png"></div></router-link>
+<router-link :to="{ name: 'Bookings' }"><div class="calendar-button"><img src="../assets/calendar.png"></div></router-link>
 
 <!-- availability --> 
 
