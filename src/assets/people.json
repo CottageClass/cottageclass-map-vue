@@ -70,7 +70,7 @@
     "id": 2,
     "name": "Manisha",  
     "lastInitial": "S",
-    "pic": "avatar-2.png",
+    "pic": "avatar-ManishaS.png",
     "phone": "646-623-4802‬",
     "availability": ["3to7", "after7", "weekends"],
     "location": {"lat": 40.680316, "lng": -73.974780},
@@ -199,7 +199,7 @@
     "id": 6,
     "name": "Marixsa", 
     "lastInitial": "R",
-    "pic": "avatar-5.png",
+    "pic": "avatar-MarixsaR.png",
     "images": ["marixsa-0.jpg", "marixsa-1.jpg", "marixsa-7.jpg", "marixsa-4.jpg", "marixsa-2.jpg", "marixsa-5.jpg", "marixsa-3.jpg"],
     "phone": "646-623-4802‬",
     "availability": ["7to3", "3to7", "weekends"],
@@ -232,7 +232,7 @@
       "allergies": "",
       "medicalNeeds": "",
       "otherNeeds": ""
-  }
+    }
   ]
   },
   { 
@@ -339,7 +339,7 @@
     "id": 11,
     "name": "Jill", 
     "lastInitial": "A",
-    "pic": "avatar-5.png",
+    "pic": "avatar-JillA.png",
     "images": [],
     "phone": "646-523-0540",
     "availability": ["weekends"],
@@ -385,8 +385,8 @@
     "id": 13,
     "name": "Fayre", 
     "lastInitial": "M",
-    "pic": "avatar-5.png",
-    "images": [],
+    "pic": "avatar-FayreM.png",
+    "images": ["FayreM-1.jpg", "FayreM-2.jpg", "FayreM-3.jpg", "FayreM-4.jpg", "FayreM-5.jpg", "FayreM-6.jpg"],
     "phone": "917-612-6432",
     "availability": ["3to7", "9to3", "weekends"],
     "location": {"lat": 40.677184, "lng": -73.974447},
@@ -451,7 +451,7 @@
     "images": [],
     "phone": "760-484-0137",
     "availability": ["9to3"],
-    "location": {"lat": 40.579718, "lng": -73.957695},
+    "location": {"lat": 33.104881, "lng": -117.05618},
     "activities":["arts & crafts"],
     "job": {"title" : "Teacher", "employer": "CottageClass"},
     "children": 
@@ -468,6 +468,60 @@
       "name":"Maya",
       "age": 6,
       "birthday": "05/08/2012",
+      "allergies": "",
+      "medicalNeeds": "",
+      "otherNeeds": ""
+    }
+  ]
+  },
+    { 
+    "id": 16,
+    "name": "Caitlin", 
+    "lastInitial": "D",
+    "pic": "",
+    "images": [],
+    "phone": "207-712-9763",
+    "availability": ["7to10", "weekends"],
+    "location": {"lat": 40.657351, "lng": -73.955993},
+    "activities":["field trips"],
+    "job": {"title" : "Freelance editor & writer", "employer": "Various"},
+    "children": 
+    [
+    { 
+      "name":"Sebastian",
+      "age": 10,
+      "birthday": "04/11/2008",
+      "allergies": "",
+      "medicalNeeds": "",
+      "otherNeeds": ""
+    },
+    { 
+      "name":"Ivan",
+      "age": 9,
+      "birthday": "10/05/2008",
+      "allergies": "",
+      "medicalNeeds": "",
+      "otherNeeds": ""
+    }
+  ]
+  },
+  { 
+    "id": 17,
+    "name": "Marianna", 
+    "lastInitial": "A",
+    "pic": "avatar-MariannaA.png",
+    "images": ["MariannaA-1.jpg", "MariannaA-2.jpg", "MariannaA-3.jpg", "MariannaA-4.jpg", "MariannaA-5.jpg", "MariannaA-6.jpg"],
+    "phone": "646-957-6809",
+    "availability": [""],
+    "location": {"lat": 40.631852, "lng": -73.944411},
+    "activities":["book club"],
+    "job": {"title" : "", "employer": ""},
+    "children": 
+    [
+    { 
+      "name":"Yeva",
+      "age": 1,
+      "birthday": "04/20/2017",
       "allergies": "",
       "medicalNeeds": "",
       "otherNeeds": ""
