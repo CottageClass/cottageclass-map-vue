@@ -1,17 +1,6 @@
 [
   { 
     "id": 1,
-    "name": "Jane",
-    "lastInitial": "W", 
-    "pic": "avatar-placeholder.png",
-    "phone": "646-623-4802‬",
-    "availability": ["never"],
-    "activities":[],
-    "location": {"lat": 40.667714, "lng": -73.987534}, 
-    "children": []
-  },
-  { 
-    "id": 2,
     "name": "Marixsa", 
     "lastInitial": "R",
     "pic": "avatar-MarixsaR.png",
@@ -51,11 +40,11 @@
   ]
   },
     { 
-    "id": 3,
+    "id": 2,
     "name": "Manisha",  
     "lastInitial": "S",
     "pic": "avatar-ManishaS.png",
-    "phone": "646-623-4802‬",
+    "phone": "212-920-4828",
     "availability": ["3to7", "after7", "weekends"],
     "location": {"lat": 40.680316, "lng": -73.974780},
     "job": {"title": "Co-founder", "employer": "CottageClass"},
@@ -91,7 +80,7 @@
     "children": []
   },
   { 
-    "id": 4,
+    "id": 3,
     "name": "Donna", 
     "lastInitial": "M",
     "pic": "avatar-placeholder.png",
@@ -122,7 +111,7 @@
   ]
   },
     { 
-    "id": 5,
+    "id": 4,
     "name": "Holly", 
     "lastInitial": "S",
     "pic": ["avatar-HollyS.png"],
@@ -145,7 +134,7 @@
   ]
   },
   { 
-    "id": 6,
+    "id": 5,
     "name": "Sara", 
     "lastInitial": "C",
     "pic": "avatar-SaraC.png",
@@ -168,7 +157,7 @@
   ]
   },
   { 
-    "id": 7,
+    "id": 6,
     "name": "Rachel", 
     "lastInitial": "C",
     "pic": "avatar-RachelC.png",
@@ -191,7 +180,7 @@
   ]
   },
   { 
-    "id": 8,
+    "id": 7,
     "name": "Jill", 
     "lastInitial": "A",
     "pic": "avatar-JillA.png",
@@ -214,7 +203,7 @@
   ]
   },
    { 
-    "id": 9,
+    "id": 8,
     "name": "Sari", 
     "lastInitial": "G",
     "pic": "avatar-placeholder.png",
@@ -237,7 +226,7 @@
   ]
   },
   { 
-    "id": 10,
+    "id": 9,
     "name": "Fayre", 
     "lastInitial": "M",
     "pic": "avatar-FayreM.png",
@@ -268,7 +257,7 @@
   ]
   },
   { 
-    "id": 11,
+    "id": 10,
     "name": "CJ", 
     "lastInitial": "W",
     "pic": "avatar-placeholder.png",
@@ -299,7 +288,7 @@
   ]
   },
     { 
-    "id": 12,
+    "id": 11,
     "name": "Caitlin", 
     "lastInitial": "D",
     "pic": "avatar-placeholder.png",
@@ -330,7 +319,7 @@
   ]
   },
   { 
-    "id": 13,
+    "id": 12,
     "name": "Marianna", 
     "lastInitial": "A",
     "pic": "avatar-MariannaA.png",
