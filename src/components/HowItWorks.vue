@@ -6,7 +6,7 @@
   <div class="top-content-container">
     <div class="page-lead-text">
 
-When children arrive check them in, and when they leave check them out. It's that simple! Since parents only pay for the time they use, please do not check them in before their arrival. We will calculate your hours from check-in to check-out, and pay you $10/hr per child per hour of care (plus $5/hour for each additional sibling.) 
+When children arrive check them in, and when they leave check them out. It's that simple! Since parents only pay for the time they use, please do not check them in before their arrival. We will calculate your hours from check-in to check-out, and pay you ${{ (network.price - network.price * network.percentage).toFixed(2) }}/hr per child per hour of care (plus ${{ ((network.price - network.price * network.percentage)/2).toFixed(2) }}/hour for each additional sibling.) 
 
 </div><a href="javascript:history.go(-1)" class="button-small-outline w-button">OK, Got it</a></div>
 
@@ -14,8 +14,15 @@ When children arrive check them in, and when they leave check them out. It's tha
 </template>
 
 <script>
+import network from '../assets/network-info.json'
+
 export default {
-	name: 'HowItWorks'
+	name: 'HowItWorks',
+  data () {
+    return {
+      network: network
+    }
+  }
 };
 </script>
 
