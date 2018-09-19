@@ -61,7 +61,7 @@
 
 <!-- Photos --> 
 
-  <div class="group-title-container-2">
+  <div v-if="person.images.length > 0" class="group-title-container-2">
     <h5 class="list-title-2">Photos</h5> 
   </div>
 
