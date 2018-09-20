@@ -1,202 +1,6 @@
 [
   { 
     "id": 1,
-    "name": "Holmes",
-    "lastInitial": "W", 
-    "pic": "avatar-8.png",
-    "images": ["holmes-3.jpg", "holmes-4.jpg", "holmes-5.jpg", "holmes-1.jpg", "holmes-2.jpg"],
-    "phone": "614-465-6371",
-    "availability": ["7to3", "3to7", "after7", "weekends"],
-    "location": {"lat": 40.6709948, "lng": -73.9845812},
-    "job": {"title": "Co-founder", "employer": "CottageClass"},
-    "activities": ["baking", "biking", "tennis", "running"],
-    "blurb": "I'm an activist, a step dad, and now I run a startup, I've been babysitting since I was 11.",
-    "backgroundCheck": true,
-    "emergencyContacts": [
-        {
-          "name": "Giseli Vasconcelos",
-          "relationship": "mother",
-          "phone": "617-544-7354"
-        },
-        {
-          "name": "Tiffiniy Cheng",
-          "relationship": "friend",
-          "phone": "413-367-6255"
-        },
-        {
-          "name": "patrick moriarty",
-          "relationship": "roommate",
-          "phone": "508-555-1212"
-        }
-       ],
-    "doctors": [
-      {
-       "name": "Le Quang",
-       "phone": "508-796-5661"
-      },
-      {
-      "name": "Jane Doe",
-      "phone": "508-555-1212"
-      }
-   ],
-    "children": [
-      {
-        "name": "Martina",
-        "age": 14,
-        "birthday": "5/19/2004",
-        "allergies": "Martina is mildly allergic to gluten",
-        "medicalNeeds": "",
-        "otherNotes": "Please try to limit Martina's screentime."
-      }
-    ],
-    "reviews": [
-    {
-      "userId": 2,
-      "text": "Holmes takes great care of kids!"
-    },
-    {
-      "userId": 3,
-      "text": "Holmes is super nice!"
-    }
-    ],
-    "concerns": [
-      {
-        "userId": 2,
-        "text": "Holmes's neighbors have a big scary dog so kids should probably stay inside."
-      }
-    ]
-  },
-  { 
-    "id": 2,
-    "name": "Manisha",  
-    "lastInitial": "S",
-    "pic": "avatar-ManishaS.png",
-    "phone": "646-623-4802‬",
-    "availability": ["3to7", "after7", "weekends"],
-    "location": {"lat": 40.680316, "lng": -73.974780},
-    "job": {"title": "Co-founder", "employer": "CottageClass"},
-    "activities":["french"],
-    "images": ["manisha-4.jpg", "manisha-6.jpg", "manisha-7.jpg", "manisha-1.jpg", "manisha-3.jpg", "manisha-5.jpg"],
-    "emergencyContacts": [
-        {
-          "name": "Giseli Vasconcelos",
-          "relationship": "mother",
-          "phone": "617-544-7354"
-        },
-        {
-          "name": "Tiffiniy Cheng",
-          "relationship": "friend",
-          "phone": "413-367-6255"
-        },
-        {
-          "name": "Janet Snoyer",
-          "relationship": "mother",
-          "phone": "607-279-1964"
-        }
-       ],
-    "doctors": [
-      {
-       "name": "Le Quang",
-       "phone": "508-796-5661"
-      },
-      {
-      "name": "Jane Doe",
-      "phone": "508-555-1212"
-      }
-   ],
-    "children": [
-    { 
-      "name": "Manisho",
-      "age": 8,
-      "birthday": "5/19/2010",
-      "allergies": "Penicillin, Benadryl",
-      "medicalNeeds": "",
-      "otherNotes": ""
-    }, 
-    {
-      "name": "Manisha Jr.",
-      "age": 5,
-      "birthday": "4/16/2013",
-      "allergies": "She is extremely allergic to tree nuts.",
-      "medicalNeeds": "Must always have an epipen.",
-      "otherNotes": "She's shy at first but really loves to play with other kids once she gets warmed up to them."
-    }
-    ]
-  },
-  { 
-    "id": 3,
-    "name": "Kecia",  
-    "lastInitial": "A",
-    "pic": "avatar-2.png",
-    "phone": "760-484-0137",
-    "availability": ["7to3", "weekends"],
-    "location": {"lat": 40.680316, "lng": -73.974780},
-    "emergencyContacts": [
-        {
-          "name": "Mom",
-          "relationship": "mother",
-          "phone": "617-544-7354"
-        },
-        {
-          "name": "Dad",
-          "relationship": "friend",
-          "phone": "413-367-6255"
-        },
-        {
-          "name": "Manisha Snoyer",
-          "relationship": "friend",
-          "phone": "607-279-1964"
-        }
-       ],
-    "doctors": [
-      {
-       "name": "",
-       "phone": ""
-      }
-   ],
-    "children": [
-    { 
-      "name": "Miles",
-      "age": 8,
-      "birthday": "5/19/2010",
-      "allergies": "Penicillin, Benadryl",
-      "medicalNeeds": "",
-      "otherNotes": ""
-    }, 
-    {
-      "name": "Manisha Jr.",
-      "age": 5,
-      "birthday": "4/16/2013",
-      "allergies": "She is extremely allergic to tree nuts.",
-      "medicalNeeds": "Must always have an epipen.",
-      "otherNotes": "She's shy at first but really loves to play with other kids once she gets warmed up to them."
-    }
-    ]
-  },
-  {
-    "id": 4,
-    "name": "Asa", 
-    "lastInitial": "N",
-    "pic": "avatar-placeholder.png",
-    "phone": "774-242-2842",
-    "availability": ["never"],
-    "location": {"lat": 40.664725, "lng": 73.977001},
-    "activities":[],
-    "children": []
-  },
-  { 
-    "id": 5,
-    "name": "Jane",
-    "lastInitial": "W", 
-    "pic": "avatar-placeholder.png",
-    "phone": "646-623-4802‬",
-    "availability": ["never"],
-    "activities":[],
-    "location": {"lat": 40.667714, "lng": -73.987534}, 
-    "children": []
-  },
-  { 
-    "id": 6,
     "name": "Marixsa", 
     "lastInitial": "R",
     "pic": "avatar-MarixsaR.png",
@@ -235,14 +39,54 @@
     }
   ]
   },
+    { 
+    "id": 2,
+    "name": "Manisha",  
+    "lastInitial": "S",
+    "pic": "avatar-ManishaS.png",
+    "phone": "212-920-4828",
+    "availability": ["3to7", "after7", "weekends"],
+    "location": {"lat": 40.680316, "lng": -73.974780},
+    "job": {"title": "Co-founder", "employer": "CottageClass"},
+    "activities":["french"],
+    "images": ["manisha-4.jpg", "manisha-6.jpg", "manisha-7.jpg", "manisha-1.jpg", "manisha-3.jpg", "manisha-5.jpg"],
+    "emergencyContacts": [
+        {
+          "name": "Giseli Vasconcelos",
+          "relationship": "mother",
+          "phone": "617-544-7354"
+        },
+        {
+          "name": "Tiffiniy Cheng",
+          "relationship": "friend",
+          "phone": "413-367-6255"
+        },
+        {
+          "name": "Janet Snoyer",
+          "relationship": "mother",
+          "phone": "607-279-1964"
+        }
+       ],
+    "doctors": [
+      {
+       "name": "Le Quang",
+       "phone": "508-796-5661"
+      },
+      {
+      "name": "Jane Doe",
+      "phone": "508-555-1212"
+      }
+   ],
+    "children": []
+  },
   { 
-    "id": 7,
+    "id": 3,
     "name": "Donna", 
     "lastInitial": "M",
     "pic": "avatar-placeholder.png",
     "images": [],
     "phone": "929-360-3245",
-    "availability": ["9to3", "3to7", "weekends"],
+    "availability": ["7to3", "3to7", "weekends"],
     "location": {"lat": 40.652256, "lng": -73.956582},
     "activities":["arts & crafts"],
     "job": {"title" : "Digital Content Producer", "employer": "Columbia University"},
@@ -267,7 +111,7 @@
   ]
   },
     { 
-    "id": 8,
+    "id": 4,
     "name": "Holly", 
     "lastInitial": "S",
     "pic": ["avatar-HollyS.png"],
@@ -290,7 +134,7 @@
   ]
   },
   { 
-    "id": 9,
+    "id": 5,
     "name": "Sara", 
     "lastInitial": "C",
     "pic": "avatar-SaraC.png",
@@ -313,13 +157,13 @@
   ]
   },
   { 
-    "id": 10,
+    "id": 6,
     "name": "Rachel", 
     "lastInitial": "C",
     "pic": "avatar-RachelC.png",
     "images": ["RachelC-1.jpg", "RachelC-2.jpg", "RachelC-3.jpg", "RachelC-4.jpg", "RachelC-5.jpg", "RachelC-6.jpg", "RachelC-7.jpg"],
     "phone": "347-489-2204",
-    "availability": ["3to7", "9to3", "weekends", "after7"],
+    "availability": ["3to7", "7to3", "weekends", "after7"],
     "location": {"lat": 40.687043, "lng": -73.935099},
     "activities":["book club", "arts & crafts", "music"],
     "job": {"title" : "Adjunct Faculty", "employer": "Argosy University"},
@@ -336,7 +180,7 @@
   ]
   },
   { 
-    "id": 11,
+    "id": 7,
     "name": "Jill", 
     "lastInitial": "A",
     "pic": "avatar-JillA.png",
@@ -359,7 +203,7 @@
   ]
   },
    { 
-    "id": 12,
+    "id": 8,
     "name": "Sari", 
     "lastInitial": "G",
     "pic": "avatar-placeholder.png",
@@ -382,13 +226,13 @@
   ]
   },
   { 
-    "id": 13,
+    "id": 9,
     "name": "Fayre", 
     "lastInitial": "M",
     "pic": "avatar-FayreM.png",
     "images": ["FayreM-1.jpg", "FayreM-2.jpg", "FayreM-3.jpg", "FayreM-4.jpg", "FayreM-5.jpg", "FayreM-6.jpg"],
     "phone": "917-612-6432",
-    "availability": ["3to7", "9to3", "weekends"],
+    "availability": ["3to7", "7to3", "weekends"],
     "location": {"lat": 40.677184, "lng": -73.974447},
     "activities":["book club", "field trips"],
     "job": {"title" : "Editor", "employer": "Self-employed"},
@@ -413,7 +257,7 @@
   ]
   },
   { 
-    "id": 14,
+    "id": 10,
     "name": "CJ", 
     "lastInitial": "W",
     "pic": "avatar-placeholder.png",
@@ -444,38 +288,7 @@
   ]
   },
     { 
-    "id": 15,
-    "name": "Kecia", 
-    "lastInitial": "A",
-    "pic": "avatar-placeholder.png",
-    "images": [],
-    "phone": "760-484-0137",
-    "availability": ["9to3"],
-    "location": {"lat": 33.104881, "lng": -117.05618},
-    "activities":["arts & crafts"],
-    "job": {"title" : "Teacher", "employer": "CottageClass"},
-    "children": 
-    [
-    { 
-      "name":"Miles",
-      "age": 10,
-      "birthday": "12/23/2007",
-      "allergies": "",
-      "medicalNeeds": "",
-      "otherNeeds": ""
-    },
-    { 
-      "name":"Maya",
-      "age": 6,
-      "birthday": "05/08/2012",
-      "allergies": "",
-      "medicalNeeds": "",
-      "otherNeeds": ""
-    }
-  ]
-  },
-    { 
-    "id": 16,
+    "id": 11,
     "name": "Caitlin", 
     "lastInitial": "D",
     "pic": "avatar-CaitlinD.png",
@@ -506,7 +319,7 @@
   ]
   },
   { 
-    "id": 17,
+    "id": 12,
     "name": "Marianna", 
     "lastInitial": "A",
     "pic": "avatar-MariannaA.png",

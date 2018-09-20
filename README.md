@@ -10,10 +10,9 @@ Setup:
 
  npm run dev
 
-Deploy:
+Deploy (to Github Pages)
 
- node ./node_modules/vue-gh-pages/index.js -b gh-pages
-
+ npm run deploy
 
 ## Notes:
 
