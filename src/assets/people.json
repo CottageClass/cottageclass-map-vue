@@ -37,7 +37,17 @@
       "medicalNeeds": "",
       "otherNeeds": ""
     }
-  ]
+  ],
+    "reviews": [
+    {
+      "userId": 14,
+      "text": "Marixsa leads Tambor with an incredible energy. She seems to know the perfect way to engage each child and help that child learn and grow. She is a gem and has created a fantastic program. Tambor is fun, interesting,and educational, and I'm so thrilled that our little one is part of it."
+    },
+    {
+      "userId": 14,
+      "text": "We are so lucky we found Tambor! Our little guy loved his time there this past spring (2018). And no wonder.... Marixsa has a warm, mama bear energy with a true gift for early childhood education. Her home is super kid-focused and filled with art, music and lots of play! We've just loved everything about our experience with Marixsa - highly recommend!!"
+    }
+    ]
   },
     { 
     "id": 2,
@@ -340,5 +350,32 @@
       "otherNeeds": ""
     }
   ]
+  },
+  { 
+    "id": 14,
+    "name": "Nicole", 
+    "lastInitial": "M",
+    "pic": "avatar-placeholder.png",
+    "images": [],
+    "phone": "",
+    "availability": [""],
+    "location": {},
+    "activities":[""],
+    "job": {"title" : "", "employer": ""}
+  },
+
+  { 
+    "id": 15,
+    "name": "Meghan", 
+    "lastInitial": "C",
+    "pic": "avatar-placeholder.png",
+    "images": [],
+    "phone": "",
+    "availability": [""],
+    "location": {},
+    "activities":[""],
+    "job": {"title" : "", "employer": ""}
   }
+  
+  
 ]
