@@ -24,7 +24,10 @@
 
 <!-- calendar or "bookings / provider" button -->
 
-<router-link :to="{ name: 'Bookings' }"><div class="calendar-button"><img src="../assets/calendar.png"></div></router-link>
+<router-link :to="{ name: 'Bookings' }"><div class="calendar-button-2"><img src="../assets/calendar-check.svg" class="calendar-button-2-image"></div></router-link>
+
+<!-- <div class="calendar-button-2"><img src="images/calendar-check.svg" class="calendar-button-2-image"></div> -->
+
 
 <!-- availability --> 
 
@@ -125,6 +128,33 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 
 <style scoped>
+
+.calendar-button-2 {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  z-index: 2;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  overflow: visible;
+  width: 56px;
+  height: 56px;
+  clear: none;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+  -ms-flex-align: center;
+  align-items: center;
+  border-radius: 100px;
+  background-color: #1c8fe5;
+  box-shadow: 0 10px 25px -3px rgba(0, 0, 0, .45);
+}
+
 #clock-button {
   position: absolute;
   top: 170px;
