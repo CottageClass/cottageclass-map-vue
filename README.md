@@ -28,3 +28,6 @@ Deploy:
 
 Also: I had a problem getting google maps to resize avatar images, so it currently does not. So that needs to be fixed or done by hand. 
 
+To get the CNAME to work correctly, I changed line 101 of node_modules/vue-gh-pages to the following, so that those key files would get put someplace else. 
+
+ const pathToBuild = '/'; 

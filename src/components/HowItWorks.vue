@@ -14,13 +14,18 @@ When children arrive check them in, and when they leave check them out. It's tha
 </template>
 
 <script>
-import network from '../assets/network-info.json'
+import networks from '../assets/network-info.json'
 
 export default {
 	name: 'HowItWorks',
   data () {
     return {
-      network: network
+      networks: networks
+    }
+  },
+  computed: {
+    network: function () {
+      return this.networks.find(network => network.stub === this.$route.params.networkId)
     }
   }
 };

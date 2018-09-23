@@ -1,6 +1,7 @@
 [
   { 
     "id": 1,
+    "networks": ["y723hz", "demo"],
     "name": "Marixsa", 
     "lastInitial": "R",
     "pic": "avatar-MarixsaR.png",
@@ -41,6 +42,7 @@
   },
     { 
     "id": 2,
+    "networks": ["y723hz", "demo"],
     "name": "Manisha",  
     "lastInitial": "S",
     "pic": "avatar-ManishaS.png",
@@ -81,6 +83,7 @@
   },
   { 
     "id": 3,
+    "networks": ["y723hz"],
     "name": "Donna", 
     "lastInitial": "M",
     "pic": "avatar-placeholder.png",
@@ -112,7 +115,8 @@
   },
     { 
     "id": 4,
-    "name": "Holly", 
+    "name": "Holly",
+    "networks": ["y723hz"],
     "lastInitial": "S",
     "pic": ["avatar-HollyS.png"],
     "images": ["HollyS-1.jpg", "HollyS-2.jpg", "HollyS-3.jpg", "HollyS-4.jpg"],
@@ -135,6 +139,7 @@
   },
   { 
     "id": 5,
+    "networks": ["y723hz"],
     "name": "Sara", 
     "lastInitial": "C",
     "pic": "avatar-SaraC.png",
@@ -158,6 +163,7 @@
   },
   { 
     "id": 6,
+    "networks": ["y723hz"],
     "name": "Rachel", 
     "lastInitial": "C",
     "pic": "avatar-RachelC.png",
@@ -181,6 +187,7 @@
   },
   { 
     "id": 7,
+    "networks": ["y723hz"],
     "name": "Jill", 
     "lastInitial": "A",
     "pic": "avatar-JillA.png",
@@ -204,6 +211,7 @@
   },
    { 
     "id": 8,
+    "networks": ["y723hz"],
     "name": "Sari", 
     "lastInitial": "G",
     "pic": "avatar-placeholder.png",
@@ -227,6 +235,7 @@
   },
   { 
     "id": 9,
+    "networks": ["y723hz"],
     "name": "Fayre", 
     "lastInitial": "M",
     "pic": "avatar-FayreM.png",
@@ -258,6 +267,7 @@
   },
   { 
     "id": 10,
+    "networks": ["y723hz"],
     "name": "CJ", 
     "lastInitial": "W",
     "pic": "avatar-placeholder.png",
@@ -289,6 +299,7 @@
   },
     { 
     "id": 11,
+    "networks": ["y723hz"],
     "name": "Caitlin", 
     "lastInitial": "D",
     "pic": "avatar-CaitlinD.png",
@@ -320,7 +331,7 @@
   },
   { 
     "id": 12,
-    "name": "Marianna", 
+    "networks": ["y723hz"],
     "lastInitial": "A",
     "pic": "avatar-MariannaA.png",
     "images": ["MariannaA-1.jpg", "MariannaA-2.jpg", "MariannaA-3.jpg", "MariannaA-4.jpg", "MariannaA-5.jpg", "MariannaA-6.jpg"],
@@ -340,5 +351,73 @@
       "otherNeeds": ""
     }
   ]
+  },
+  { 
+    "id": 13,
+    "name": "Holmes",
+    "networks": ["demo"],
+    "lastInitial": "W", 
+    "pic": "avatar-8.png",
+    "images": ["holmes-3.jpg", "holmes-4.jpg", "holmes-5.jpg", "holmes-1.jpg", "holmes-2.jpg"],
+    "phone": "614-465-6371",
+    "availability": ["7to3", "3to7", "after7", "weekends"],
+    "location": {"lat": 40.6709948, "lng": -73.9845812},
+    "job": {"title": "Co-founder", "employer": "CottageClass"},
+    "activities": ["baking", "biking", "tennis", "running"],
+    "blurb": "I'm an activist, a step dad, and now I run a startup, I've been babysitting since I was 11.",
+    "backgroundCheck": true,
+    "emergencyContacts": [
+        {
+          "name": "Giseli Vasconcelos",
+          "relationship": "mother",
+          "phone": "617-544-7354"
+        },
+        {
+          "name": "Tiffiniy Cheng",
+          "relationship": "friend",
+          "phone": "413-367-6255"
+        },
+        {
+          "name": "patrick moriarty",
+          "relationship": "roommate",
+          "phone": "508-555-1212"
+        }
+       ],
+    "doctors": [
+      {
+       "name": "Le Quang",
+       "phone": "508-796-5661"
+      },
+      {
+      "name": "Jane Doe",
+      "phone": "508-555-1212"
+      }
+   ],
+    "children": [
+      {
+        "name": "Martina",
+        "age": 14,
+        "birthday": "5/19/2004",
+        "allergies": "Martina is mildly allergic to gluten",
+        "medicalNeeds": "",
+        "otherNotes": "Please try to limit Martina's screentime."
+      }
+    ],
+    "reviews": [
+    {
+      "userId": 2,
+      "text": "Holmes takes great care of kids!"
+    },
+    {
+      "userId": 3,
+      "text": "Holmes is super nice!"
+    }
+    ],
+    "concerns": [
+      {
+        "userId": 2,
+        "text": "Holmes's neighbors have a big scary dog so kids should probably stay inside."
+      }
+    ]
   }
 ]

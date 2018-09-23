@@ -22,8 +22,6 @@
     </GmapMap>
   </div>
 
-
-
 <!-- calendar or "bookings / provider" button -->
 
 <router-link :to="{ name: 'Bookings' }"><div class="calendar-button"><img src="../assets/calendar.png"></div></router-link>
@@ -61,7 +59,7 @@ import RequestModal from './RequestModal.vue'
 import people from '../assets/people.json'
 import router from '../router'
 import ShareButton from './ShareButton.vue'
-import network from '../assets/network-info.json'
+import networks from '../assets/network-info.json'
 
 export default {
         name: 'MainView',
@@ -70,7 +68,7 @@ export default {
           return {
           timeSelected: "now", // or "7to3", "3to7", "after7", "weekends"
           people: people, // to bring from import into vue model
-          network: network, // to bring from import into vue model
+          networks: networks, // to bring from import into vue model
           selectedPerson: null,
           mapOptions: { // move this to map component when i separate it.
             "disableDefaultUI": true, // turns off map controls
@@ -80,6 +78,13 @@ export default {
           }
         },
         computed: {
+          network: function () {
+           return this.networks.find(network => network.stub === this.$route.params.networkId)
+         },
+          peopleInNetwork: function () {
+            console.log(this.$route.params.networkId)
+            return this.people.filter(person => person.networks.includes(this.$route.params.networkId))
+          },
           peopleAvailable: function () {
             let timeShown = function (time) {
               if (time != "now") return time
@@ -96,7 +101,7 @@ export default {
                 }
             }
           }
-          return this.people.filter(person => (!person.availability.includes("never")) && person.availability.includes(timeShown(this.timeSelected))) // availability can be "never" and we don't want to show people who say "never". 
+          return this.peopleInNetwork.filter(person => (!person.availability.includes("never")) && person.availability.includes(timeShown(this.timeSelected))) // availability can be "never" and we don't want to show people who say "never". 
           },
           decodeLatLong: function () {
                 let geocoder = new google.maps.Geocoder();

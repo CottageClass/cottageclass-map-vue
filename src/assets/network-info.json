@@ -1,8 +1,18 @@
-{
+[
+	{
 	"name": "Flatbush Families",  
 	"location": {"lat": 40.666485, "lng": -73.944122},
 	"zoom": 12, 
 	"stub": "y723hz",
 	"price": "12.25",
 	"percentage": 0.2
-}
+    },
+    {
+	"name": "Prospect Families",  
+	"location": {"lat": 40.666485, "lng": -73.944122},
+	"zoom": 12, 
+	"stub": "demo",
+	"price": "12.50",
+	"percentage": 0.2
+    }
+]

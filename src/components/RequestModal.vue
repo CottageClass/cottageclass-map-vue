@@ -59,7 +59,7 @@
 
 import TextMessageLink from './TextMessageLink.vue'
 import people from '../assets/people.json'
-import network from '../assets/network-info.json'
+import networks from '../assets/network-info.json'
 
 
 export default {
@@ -73,7 +73,7 @@ export default {
           endTime: "22:00",
           /* to be able to use "people" that I'm importing */
           people: people,
-          network: network
+          networks: networks
       }
   }, 
   methods: {
@@ -89,6 +89,9 @@ export default {
   	}
   },
   computed: {
+    network: function () {
+      return this.networks.find(network => network.stub === this.$route.params.networkId)
+    },
     person: function () {
       return this.people[this.$route.params.id - 1]
     }

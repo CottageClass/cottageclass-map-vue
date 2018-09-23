@@ -27,8 +27,12 @@ export default {
 		}
 	},
 	computed: {
+    peopleInNetwork: function () {
+      console.log(this.$route.params.networkId)
+      return this.people.filter(person => person.networks.includes(this.$route.params.networkId))
+          },
 		parents: function () {
-			return this.people.filter(person => person.children.length) // only return people who have kids.
+			return this.peopleInNetwork.filter(person => person.children.length) // only return people in network who have kids.
 		}
 	}
 };

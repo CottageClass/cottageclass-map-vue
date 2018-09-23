@@ -14,13 +14,13 @@
 </template>
 
 <script>
-import network from '../assets/network-info.json'
+import networks from '../assets/network-info.json'
 
 export default {
 	name: 'Splash',
   data () {
     return {
-      network: network
+      networks: networks
     }
   },
   created: function () {
@@ -29,6 +29,11 @@ export default {
       console.log('desktop detected')
     } else {
       console.log('desktop not detected')
+    }
+  },
+  computed: {
+    network: function () {
+      return this.networks.find(network => network.stub === this.$route.params.networkId)
     }
   }
 };

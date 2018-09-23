@@ -13,52 +13,52 @@ import DesktopWarningSplash from '@/components/DesktopWarningSplash.vue'
 
 Vue.use(Router)
 
-// '/y723hz/' is a temporary hack. This should get reworked once we add multiple networks. 
+// '/:networkId/' is a temporary hack. This should get reworked once we add multiple networks. 
 
 export default new Router({
   routes: [
     {
-      path: '/y723hz/',
+      path: '/:networkId/',
       name: 'Splash',
       component: Splash
     },
     {
-      path: '/y723hz/bookings',
+      path: '/:networkId/bookings',
       name: 'Bookings',
       component: Bookings
     },
     {
-    	path: '/y723hz/emergency-info/:id',
+    	path: '/:networkId/emergency-info/:id',
     	name: 'emergencyInfo',
     	component: EmergencyInfo
     },
     {
-    	path: '/y723hz/home',
+    	path: '/:networkId/home',
     	name: 'MainView',
     	component: MainView 
     },
     {
-    	path: '/y723hz/enter-code',
+    	path: '/:networkId/enter-code',
     	name: 'EnterCode',
     	component: EnterCode
     },
     {
-    	path: '/y723hz/provider-profile/:id',
+    	path: '/:networkId/provider-profile/:id',
     	name: 'ProviderProfile',
     	component: ProviderProfile
     },
     {
-    	path: '/y723hz/request/:id',
+    	path: '/:networkId/request/:id',
     	name: 'RequestModal',
     	component: RequestModal
     },
     {
-      path:'/y723hz/how-it-works',
+      path:'/:networkId/how-it-works',
       name: 'HowItWorks',
       component: HowItWorks
     },
     {
-      path:'/y723hz/desktop-warning',
+      path:'/:networkId/desktop-warning',
       name: 'DesktopWarningSplash',
       component: DesktopWarningSplash
     }
