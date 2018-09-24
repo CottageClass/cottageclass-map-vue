@@ -6,7 +6,7 @@
     "lastInitial": "R",
     "pic": "avatar-MarixsaR.png",
     "images": ["marixsa-0.jpg", "marixsa-1.jpg", "marixsa-7.jpg", "marixsa-4.jpg", "marixsa-2.jpg", "marixsa-5.jpg", "marixsa-3.jpg"],
-    "phone": "646-623-4802‬",
+    "phone": "212-920-4828",
     "availability": ["7to3", "3to7", "weekends"],
     "location": {"lat": 40.642485, "lng": -73.944122},
     "activities":["spanish", "art", "music", "sports"],
@@ -46,12 +46,13 @@
     "name": "Manisha",  
     "lastInitial": "S",
     "pic": "avatar-ManishaS.png",
-    "phone": "212-920-4828",
+    "phone": "646-623-4802‬",
     "availability": ["3to7", "after7", "weekends"],
     "location": {"lat": 40.680316, "lng": -73.974780},
     "job": {"title": "Co-founder", "employer": "CottageClass"},
     "activities":["french"],
     "images": ["manisha-4.jpg", "manisha-6.jpg", "manisha-7.jpg", "manisha-1.jpg", "manisha-3.jpg", "manisha-5.jpg"],
+    "backgroundCheck": true,
     "emergencyContacts": [
         {
           "name": "Giseli Vasconcelos",
