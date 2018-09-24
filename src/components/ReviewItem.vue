@@ -21,7 +21,7 @@ export default {
     props: ['review'],
     computed: {
     	person: function () {
-    		return this.people[this.review.userId - 1]
+        return this.people.find(person => person.id === this.review.userId)
     	}
     }
 };

@@ -149,9 +149,9 @@ export default {
 	},
 	computed: {
 		person: function () {
-			return this.people[this.$route.params.id - 1]
-		}
+          return this.people.find(person => person.id === this.$route.params.id)
 	}
+}
 };
 </script>
 
