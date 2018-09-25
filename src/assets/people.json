@@ -38,8 +38,15 @@
       "medicalNeeds": "",
       "otherNeeds": ""
     }
-  ]
+  ],
+    "reviews": [
+    {
+      "userId": 4,
+      "text": "Marixsa is the best! My little guy attended Tambor for 6 months and got to the point where he would skip ahead of us and shut the door in our faces when he got there - he couldn't wait to play with his friends! She's attentive, creative, knows when to be hands-on and when to encourage independence. We love and trust her completely."
+    }
+    ]
   },
+  
     { 
     "id": 2,
     "networks": ["y723hz", "demo"],
