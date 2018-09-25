@@ -85,8 +85,7 @@ export default {
            return this.networks.find(network => network.stub === this.$route.params.networkId)
          },
           peopleInNetwork: function () {
-            console.log(this.$route.params.networkId)
-            return this.people.filter(person => person.networks.includes(this.$route.params.networkId))
+            return this.people.filter(person => (person.networks && person.networks.includes(this.$route.params.networkId)))
           },
           peopleAvailable: function () {
             let timeShown = function (time) {
