@@ -192,7 +192,7 @@
     "name": "Jill", 
     "lastInitial": "A",
     "pic": "avatar-JillA.png",
-    "images": [],
+    "images": ["JillA-1.jpg", "JillA-2.jpg", "JillA-4.jpg", "JillA-5.jpg", "JillA-6.jpg"],
     "phone": "646-523-0540",
     "availability": ["weekends"],
     "location": {"lat": 40.652256, "lng": -73.956582},
