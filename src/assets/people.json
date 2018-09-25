@@ -38,8 +38,15 @@
       "medicalNeeds": "",
       "otherNeeds": ""
     }
-  ]
+  ],
+    "reviews": [
+    {
+      "userId": 4,
+      "text": "Marixsa is the best! My little guy attended Tambor for 6 months and got to the point where he would skip ahead of us and shut the door in our faces when he got there - he couldn't wait to play with his friends! She's attentive, creative, knows when to be hands-on and when to encourage independence. We love and trust her completely."
+    }
+    ]
   },
+  
     { 
     "id": 2,
     "networks": ["y723hz", "demo"],
@@ -87,8 +94,8 @@
     "networks": ["y723hz"],
     "name": "Donna", 
     "lastInitial": "M",
-    "pic": "avatar-placeholder.png",
-    "images": [],
+    "pic": "avatar-DonnaM.png",
+    "images": ["DonnaM-1.jpg", "DonnaM-2.jpg", "DonnaM-3.jpg", "DonnaM-4.jpg", "DonnaM-5.jpg", "DonnaM-6.jpg"],
     "phone": "929-360-3245",
     "availability": ["7to3", "3to7", "weekends"],
     "location": {"lat": 40.652256, "lng": -73.956582},
@@ -192,7 +199,7 @@
     "name": "Jill", 
     "lastInitial": "A",
     "pic": "avatar-JillA.png",
-    "images": [],
+    "images": ["JillA-1.jpg", "JillA-2.jpg", "JillA-4.jpg", "JillA-5.jpg", "JillA-6.jpg"],
     "phone": "646-523-0540",
     "availability": ["weekends"],
     "location": {"lat": 40.652256, "lng": -73.956582},
@@ -333,6 +340,7 @@
   { 
     "id": 12,
     "networks": ["y723hz"],
+    "name": "Marianna",
     "lastInitial": "A",
     "pic": "avatar-MariannaA.png",
     "images": ["MariannaA-1.jpg", "MariannaA-2.jpg", "MariannaA-3.jpg", "MariannaA-4.jpg", "MariannaA-5.jpg", "MariannaA-6.jpg"],
@@ -353,6 +361,90 @@
     }
   ]
   },
+  { 
+    "id": 14,
+    "networks": ["y723hz"],
+    "name": "Julia",
+    "lastInitial": "K",
+    "pic": "avatar-JuliaK.png",
+    "images": ["JuliaK-1.jpeg"],
+    "phone": "914-589-6491",
+    "availability": ["weekends"],
+    "location": {"lat": 40.650778, "lng": -73.961347},
+    "activities":[""],
+    "blurb": "I work for the city, am married to another city employee, and we are about to have our second kid. We’ve lived in the neighborhood for about 3 years and in Brooklyn for about 7.",
+    "job": {"title" : "Director", "employer": "City of New York"},
+    "children": 
+    [
+    { 
+      "name":"Lucy",
+      "age": 1,
+      "birthday": "10/10/2016",
+      "allergies": "",
+      "medicalNeeds": "",
+      "otherNeeds": ""
+    }
+  ]
+  },
+  { 
+    "id": 15,
+    "networks": ["y723hz"],
+    "name": "Marie",
+    "lastInitial": "F",
+    "pic": "avatar-MarieF.png",
+    "images": ["MarieF-1.jpeg"],
+    "phone": "718-938-6257",
+    "availability": ["7to3", "after7", "weekends"],
+    "location": {"lat": 40.645530, "lng": -73.958760},
+    "activities":["arts & crafts", "playing outside", "homework help", "yoga", "cooking"],
+    "blurb": "I’m a preschool teacher, costume designer, actor, writer, and artist. I’m a new parent and I’m doing it by myself! Also a huge cat lover.",
+    "job": {"title" : "Teacher", "employer": "Brooklyn FreeSpace"},
+    "children": 
+    [
+    { 
+      "name":"Ja'Kaela",
+      "age": 1,
+      "birthday": "10/13/2017",
+      "allergies": "",
+      "medicalNeeds": "",
+      "otherNeeds": ""
+    }
+  ]
+  },
+  { 
+    "id": 16,
+    "networks": ["y723hz"],
+    "name": "Eileen",
+    "lastInitial": "M",
+    "pic": "avatar-EileenM.png",
+    "images": ["EileenM-1.jpeg", "EileenM-2.jpeg", "EileenM-3.jpeg", "EileenM-4.jpeg", "EileenM-5.jpeg"],
+    "phone": "678-763-3311",
+    "availability": ["after7", "weekends"],
+    "location": {"lat": 40.642360, "lng": -73.962420},
+    "activities":["arts & crafts", "cooking", "music", "book club", "playing outside", "sports and recreation"],
+    "blurb": "I am the director of operations at a digital marketing agency and I run a non-profit. I have two sweet boys who are full of energy. We love playgrounds, libraries, and exploring.",
+    "job": {"title" : "Director of Operations", "employer": "Situation"},
+    "children": 
+    [
+    { 
+      "name":"Declan",
+      "age": 3,
+      "birthday": "02/17/2015",
+      "allergies": "",
+      "medicalNeeds": "",
+      "otherNeeds": ""
+    },
+    { 
+      "name":"Teddy",
+      "age": 1,
+      "birthday": "02/17/2018",
+      "allergies": "",
+      "medicalNeeds": "",
+      "otherNeeds": ""
+    }
+  ]
+  },
+
   { 
     "id": 13,
     "name": "Holmes",
