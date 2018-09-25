@@ -21,9 +21,17 @@ export default {
     props: ['review'],
     computed: {
     	person: function () {
+        if (this.review.userId) { 
         return this.people.find(person => person.id === this.review.userId)
-    	}
+    	} else {
+        return {
+          'name': this.review.name,
+          'lastInitial': this.review.lastInitial,
+          'pic': 'avatar-placeholder.png'
+        }
+      }
     }
+}
 };
 </script>
 
