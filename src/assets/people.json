@@ -503,7 +503,7 @@
   { 
     "id": 13,
     "name": "Holmes",
-    "networks": ["demo"],
+    "networks": ["demo", "a-new-network"],
     "lastInitial": "W", 
     "pic": "avatar-8.png",
     "images": ["holmes-3.jpg", "holmes-4.jpg", "holmes-5.jpg", "holmes-1.jpg", "holmes-2.jpg"],
