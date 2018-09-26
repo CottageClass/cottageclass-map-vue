@@ -31,3 +31,5 @@ Also: I had a problem getting google maps to resize avatar images, so it current
 To get the CNAME to work correctly, I changed line 101 of node_modules/vue-gh-pages to the following, so that those key files would get put someplace else. 
 
  const pathToBuild = '/'; 
+
+To add new networks see this commit: <https://github.com/CottageClass/cottageclass-map-vue/commit/dae3315597dc36ca874e1096360450ee224b64c8>
