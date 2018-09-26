@@ -15,19 +15,21 @@
 	"price": "12.50",
 	"percentage": 0.2
     },
-<<<<<<< HEAD
-      {
+
+    {
 	"name": "Bococa Families",  
 	"location": {"lat": 40.6816365, "lng": -73.9935895},
 	"zoom": 12, 
 	"stub": "jhdxb7",
-=======
+	"price": "12.50",
+	"percentage": 0.2
+	},
+
     {
 	"name": "A new network",  
 	"location": {"lat": 40.666485, "lng": -73.944122},
 	"zoom": 12, 
 	"stub": "a-new-network",
->>>>>>> dae3315597dc36ca874e1096360450ee224b64c8
 	"price": "12.50",
 	"percentage": 0.2
     }
