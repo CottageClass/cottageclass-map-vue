@@ -14,5 +14,13 @@
 	"stub": "demo",
 	"price": "12.50",
 	"percentage": 0.2
+    },
+      {
+	"name": "Bococa Families",  
+	"location": {"lat": 40.6816365, "lng": -73.9935895},
+	"zoom": 12, 
+	"stub": "jhdxb7",
+	"price": "12.50",
+	"percentage": 0.2
     }
 ]
