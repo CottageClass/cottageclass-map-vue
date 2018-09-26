@@ -298,7 +298,7 @@
   },
   { 
     "id": 9,
-    "networks": ["y723hz"],
+    "networks": ["y723hz", "jhdxb7"],
     "name": "Fayre", 
     "lastInitial": "M",
     "pic": "avatar-FayreM.png",
@@ -330,7 +330,7 @@
   },
   { 
     "id": 10,
-    "networks": ["y723hz"],
+    "networks": ["y723hz", "jhdxb7"],
     "name": "CJ", 
     "lastInitial": "W",
     "pic": "avatar-placeholder.png",
@@ -362,7 +362,7 @@
   },
     { 
     "id": 11,
-    "networks": ["y723hz"],
+    "networks": ["y723hz", "jhdxb7"],
     "name": "Caitlin", 
     "lastInitial": "D",
     "pic": "avatar-CaitlinD.png",
