@@ -638,8 +638,8 @@
     "networks": ["y723hz"],
     "name": "Lori",
     "lastInitial": "H",
-    "pic": "avatar-placeholder.png",
-    "images": [],
+    "pic": "avatar-LoriH.png",
+    "images": ["LoriH-1.jpeg", "LoriH-2.jpg", "LoriH-3.jpg"],
     "phone": "917-941-8009",
     "availability": ["after7", "weekends"],
     "location": {"lat": 40.6327175, "lng": -73.9644302},
@@ -666,6 +666,42 @@
     }
   ]
   },
+
+  { 
+    "id": 100,
+    "networks": ["escondido-network"],
+    "name": "Kecia",
+    "lastInitial": "A",
+    "pic": "avatar-placeholder.png",
+    "images": [],
+    "phone": "760-484-0137",
+    "availability": ["7to3"],
+    "location": {"lat": 33.1048457, "lng": -117.0562155},
+    "activities":[],
+    "job": {"title" : "Teacher", "employer": "CottageClass"},
+    "children": 
+    [
+      { 
+      "name":"Miles",
+      "age": 10,
+      "birthday": "12/23/2007",
+      "allergies": "",
+      "medicalNeeds": "",
+      "otherNeeds": ""
+    },
+    { 
+      "name":"Maya",
+      "age": 6,
+      "birthday": "05/08/2012",
+      "allergies": "",
+      "medicalNeeds": "",
+      "otherNeeds": ""
+    }
+  ]
+  },
+
+
+
 
   { 
     "id": 13,
