@@ -666,6 +666,74 @@
     }
   ]
   },
+    { 
+    "id": 24,
+    "networks": ["jhdxb7"],
+    "name": "Ariella",
+    "lastInitial": "W",
+    "pic": "avatar-placeholder.png",
+    "images": [""],
+    "phone": "917-509-2146",
+    "availability": [],
+    "location": {},
+    "activities":[],
+    "blurb": "",
+    "job": {},
+    "children": 
+    [
+        ]
+  },
+  { 
+    "id": 25,
+    "networks": ["jhdxb7"],
+    "name": "Jaclyn",
+    "lastInitial": "K",
+    "pic": "avatar-placeholder.png",
+    "images": [""],
+    "phone": "954-295-4217",
+    "availability": [],
+    "location": {},
+    "activities":[],
+    "blurb": "",
+    "job": {},
+    "children": 
+    [
+        ]
+  },
+   { 
+    "id": 26,
+    "networks": ["jhdxb7"],
+    "name": "Jessica",
+    "lastInitial": "S",
+    "pic": "avatar-placeholder.png",
+    "images": [""],
+    "phone": "646-327-4678",
+    "availability": [],
+    "location": {},
+    "activities":[],
+    "blurb": "",
+    "job": {},
+    "children": 
+    [
+        ]
+  },
+   { 
+    "id": 27,
+    "networks": ["y723hz"],
+    "name": "Dominique",
+    "lastInitial": "D",
+    "pic": "avatar-placeholder.png",
+    "images": [""],
+    "phone": "917-837-7415",
+    "availability": [],
+    "location": {},
+    "activities":[],
+    "blurb": "",
+    "job": {},
+    "children": 
+    [
+        ]
+  },
 
   { 
     "id": 100,
