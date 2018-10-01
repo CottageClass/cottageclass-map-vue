@@ -9,7 +9,7 @@
     },
     {
 	"name": "Prospect Families",  
-	"location": {"lat": 40.666485, "lng": -73.944122},
+	"location": {"lat": 40.6668972, "lng": -73.9798299},
 	"zoom": 12, 
 	"stub": "demo",
 	"price": "12.50",
@@ -17,10 +17,10 @@
     },
 
     {
-	"name": "Bococa Families",  
+	"name": "BoCoCaGo Families",  
 	"location": {"lat": 40.6816365, "lng": -73.9935895},
 	"zoom": 12, 
-	"stub": "jhdxb7",
+	"stub": "BoCoCaGo",
 	"price": "12.50",
 	"percentage": 0.2
 	},
@@ -34,6 +34,42 @@
 	"percentage": 0.2
 	},
 
+
+    {
+	"name": "Bushridge Families",  
+	"location": {"lat": 40.6942496, "lng": -73.9564409},
+	"zoom": 12, 
+	"stub": "bushridge",
+	"price": "12.50",
+	"percentage": 0.2
+    },
+
+    {
+	"name": "Greenpoint Families",  
+	"location": {"lat": 40.7293685, "lng": -73.9633257},
+	"zoom": 12, 
+	"stub": "greenpoint",
+	"price": "12.50",
+	"percentage": 0.2
+    },
+
+    {
+	"name": "NYC Homeschool Families",  
+	"location": {"lat": 40.6971494, "lng": -74.2598572},
+	"zoom": 10, 
+	"stub": "nyc-homeschool",
+	"price": "12.50",
+	"percentage": 0.2
+    },
+    {
+	"name": "Prospect Heights Families",  
+	"location": {"lat": 40.6778882, "lng": -73.9787793},
+	"zoom": 12, 
+	"stub": "prospect-heights",
+	"price": "12.50",
+	"percentage": 0.2
+    },
+
     {
 	"name": "A new network",  
 	"location": {"lat": 40.666485, "lng": -73.944122},
@@ -42,4 +78,6 @@
 	"price": "12.50",
 	"percentage": 0.2
     }
+
+
 ]
