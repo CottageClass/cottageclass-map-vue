@@ -15,6 +15,25 @@
 	"price": "12.50",
 	"percentage": 0.2
     },
+
+    {
+	"name": "Bococa Families",  
+	"location": {"lat": 40.6816365, "lng": -73.9935895},
+	"zoom": 12, 
+	"stub": "jhdxb7",
+	"price": "12.50",
+	"percentage": 0.2
+	},
+
+	{
+	"name": "Escondido Families",  
+	"location": {"lat": 33.1048457, "lng": -117.0562155},
+	"zoom": 12, 
+	"stub": "escondido-network",
+	"price": "12.50",
+	"percentage": 0.2
+	},
+
     {
 	"name": "A new network",  
 	"location": {"lat": 40.666485, "lng": -73.944122},

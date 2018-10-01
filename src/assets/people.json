@@ -298,7 +298,7 @@
   },
   { 
     "id": 9,
-    "networks": ["y723hz"],
+    "networks": ["y723hz", "jhdxb7"],
     "name": "Fayre", 
     "lastInitial": "M",
     "pic": "avatar-FayreM.png",
@@ -330,7 +330,7 @@
   },
   { 
     "id": 10,
-    "networks": ["y723hz"],
+    "networks": ["y723hz", "jhdxb7"],
     "name": "CJ", 
     "lastInitial": "W",
     "pic": "avatar-placeholder.png",
@@ -362,7 +362,7 @@
   },
     { 
     "id": 11,
-    "networks": ["y723hz"],
+    "networks": ["y723hz", "jhdxb7"],
     "name": "Caitlin", 
     "lastInitial": "D",
     "pic": "avatar-CaitlinD.png",
@@ -499,6 +499,277 @@
     }
   ]
   },
+  { 
+    "id": 17,
+    "networks": ["y723hz"],
+    "name": "Katya",
+    "lastInitial": "S",
+    "pic": "avatar-placeholder.png",
+    "images": [],
+    "phone": "347-453-5611",
+    "availability": [],
+    "location": {},
+    "activities":[],
+    "blurb": "I'm a children's librarian and an expecting mom.",
+    "job": {"title" : "Senior Children's Librarian", "employer": "Brooklyn Public Library"},
+    "children": 
+    [
+  ]
+  },
+   { 
+    "id": 18,
+    "networks": ["y723hz"],
+    "name": "Donnette",
+    "lastInitial": "W",
+    "pic": "avatar-placeholder.png",
+    "images": [],
+    "phone": "917-653-0167",
+    "availability": ["7to3", "3to7", "after7", "weekends"],
+    "location": {},
+    "activities":[],
+    "blurb": "I am a college student that lives in the Flatbush area with my family for over 14 years.",
+    "job": {"title" : "Student", "employer": ""},
+    "children": 
+    [
+  ]
+  },
+  { 
+    "id": 19,
+    "networks": ["jhdxb7"],
+    "name": "Stephanie",
+    "lastInitial": "R",
+    "pic": "avatar-StephanieR.png",
+    "images": ["StephanieR-1.jpg", "StephanieR-2.jpg", "StephanieR-3.jpg", "StephanieR-4.jpg"],
+    "phone": "202-744-1716",
+    "availability": ["after7", "weekends"],
+    "location": {"lat": 40.688758, "lng": -73.985117},
+    "activities":["playing outside"],
+    "blurb": "",
+    "job": {"title" : "Director of Strategy and Audience", "employer": "FiveThirtyEight"},
+    "children": 
+    [
+      { 
+      "name":"Casey",
+      "age": 1,
+      "birthday": "10/25/2017",
+      "allergies": "",
+      "medicalNeeds": "",
+      "otherNeeds": ""
+    }
+  ]
+  },
+    { 
+    "id": 20,
+    "networks": ["jhdxb7"],
+    "name": "Jessica",
+    "lastInitial": "V",
+    "pic": "avatar-JessicaV.png",
+    "images": ["JessicaV-1.jpg"],
+    "phone": "347-822-3387",
+    "availability": ["7to3", "weekends"],
+    "location": {"lat": 40.6776569, "lng": -74.0031373},
+    "activities":["sports and recreation", "cooking", "arts & crafts", "playing outside", "video games"],
+    "blurb": "Hello my name is Jessica and I'm a mom of a 9 year old daughter as well as a nanny of over 15 years experience with excellent references and CPR and First Aid certification.",
+    "job": {"title" : "Stay-at-home Mom/Nanny", "employer": ""},
+    "children": 
+    [
+      { 
+      "name":"Jeylani",
+      "age": 9,
+      "birthday": "05/28/2009",
+      "allergies": "",
+      "medicalNeeds": "",
+      "otherNeeds": ""
+    }
+  ]
+  },
+     { 
+    "id": 21,
+    "networks": ["jhdxb7"],
+    "name": "Aastha",
+    "lastInitial": "M",
+    "pic": "avatar-AasthaM.png",
+    "images": ["AasthaM-1.jpg"],
+    "phone": "847-804-1197",
+    "availability": ["after7", "weekends"],
+    "location": {"lat": 40.6950707, "lng": -73.9835309},
+    "activities":["bilingual immersion", "arts & crafts", "playing outside"],
+    "blurb": "I’m a Brooklyn Mama who works in philanthropy. On weekends i love to bake and hang out w my two year old.",
+    "job": {"title" : "Program Manager", "employer": "NEO Philanthropy"},
+    "children": 
+    [
+      { 
+      "name":"Kaavya",
+      "age": 2,
+      "birthday": "04/26/2016",
+      "allergies": "",
+      "medicalNeeds": "",
+      "otherNeeds": ""
+    }
+  ]
+  },
+   { 
+    "id": 22,
+    "networks": ["jhdxb7"],
+    "name": "Tish",
+    "lastInitial": "K",
+    "pic": "avatar-TishK.png",
+    "images": ["TishK-1.jpeg", "TishK-2.jpg", "TishK-3.jpg", "TishK-4.jpg", "TishK-5.jpg"],
+    "phone": "713-295-0180",
+    "availability": ["after7", "weekends"],
+    "location": {"lat": 40.6902039, "lng": -73.9902112},
+    "activities":["playing outside", "yoga", "cooking"],
+    "blurb":"",
+    "job": {"title" : "Senior Valuation Specialist", "employer": "Colliers International"},
+    "children": 
+    [
+      { 
+      "name":"Edina",
+      "age": 1,
+      "birthday": "11/11/2017",
+      "allergies": "",
+      "medicalNeeds": "",
+      "otherNeeds": ""
+    }
+  ]
+  },
+   { 
+    "id": 23,
+    "networks": ["y723hz"],
+    "name": "Lori",
+    "lastInitial": "H",
+    "pic": "avatar-LoriH.png",
+    "images": ["LoriH-1.jpeg", "LoriH-2.jpg", "LoriH-3.jpg"],
+    "phone": "917-941-8009",
+    "availability": ["after7", "weekends"],
+    "location": {"lat": 40.6327175, "lng": -73.9644302},
+    "activities":["playing outside", "homework help", "science", "cooking"],
+    "blurb": "I’m an environmental health scientist who has been working in public health for over 20 years. I have two boys, ages 13 and 7. I truly believe ‘it takes a village’!",
+    "job": {"title" : "Assistant Professor", "employer": "SUNY Downstate"},
+    "children": 
+    [
+      { 
+      "name":"Aidan",
+      "age": 13,
+      "birthday": "09/07/2005",
+      "allergies": "",
+      "medicalNeeds": "",
+      "otherNeeds": ""
+    },
+    { 
+      "name":"Kyle",
+      "age": 7,
+      "birthday": "09/27/2011",
+      "allergies": "",
+      "medicalNeeds": "",
+      "otherNeeds": ""
+    }
+  ]
+  },
+    { 
+    "id": 24,
+    "networks": ["jhdxb7"],
+    "name": "Ariella",
+    "lastInitial": "W",
+    "pic": "avatar-placeholder.png",
+    "images": [""],
+    "phone": "917-509-2146",
+    "availability": [],
+    "location": {},
+    "activities":[],
+    "blurb": "",
+    "job": {},
+    "children": 
+    [
+        ]
+  },
+  { 
+    "id": 25,
+    "networks": ["jhdxb7"],
+    "name": "Jaclyn",
+    "lastInitial": "K",
+    "pic": "avatar-placeholder.png",
+    "images": [""],
+    "phone": "954-295-4217",
+    "availability": [],
+    "location": {},
+    "activities":[],
+    "blurb": "",
+    "job": {},
+    "children": 
+    [
+        ]
+  },
+   { 
+    "id": 26,
+    "networks": ["jhdxb7"],
+    "name": "Jessica",
+    "lastInitial": "S",
+    "pic": "avatar-placeholder.png",
+    "images": [""],
+    "phone": "646-327-4678",
+    "availability": [],
+    "location": {},
+    "activities":[],
+    "blurb": "",
+    "job": {},
+    "children": 
+    [
+        ]
+  },
+   { 
+    "id": 27,
+    "networks": ["y723hz"],
+    "name": "Dominique",
+    "lastInitial": "D",
+    "pic": "avatar-placeholder.png",
+    "images": [""],
+    "phone": "917-837-7415",
+    "availability": [],
+    "location": {},
+    "activities":[],
+    "blurb": "",
+    "job": {},
+    "children": 
+    [
+        ]
+  },
+
+  { 
+    "id": 100,
+    "networks": ["escondido-network"],
+    "name": "Kecia",
+    "lastInitial": "A",
+    "pic": "avatar-placeholder.png",
+    "images": [],
+    "phone": "760-484-0137",
+    "availability": ["7to3"],
+    "location": {"lat": 33.1048457, "lng": -117.0562155},
+    "activities":[],
+    "job": {"title" : "Teacher", "employer": "CottageClass"},
+    "children": 
+    [
+      { 
+      "name":"Miles",
+      "age": 10,
+      "birthday": "12/23/2007",
+      "allergies": "",
+      "medicalNeeds": "",
+      "otherNeeds": ""
+    },
+    { 
+      "name":"Maya",
+      "age": 6,
+      "birthday": "05/08/2012",
+      "allergies": "",
+      "medicalNeeds": "",
+      "otherNeeds": ""
+    }
+  ]
+  },
+
+
+
 
   { 
     "id": 13,
