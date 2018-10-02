@@ -79,6 +79,12 @@
     <div class="onb-location-search-container">
       <div class="w-form">
         <form id="email-form-2" name="email-form-2" data-name="Email Form 2"><input v-model="address" type="text" class="location-text-field w-input" maxlength="256" name="name" data-name="Name" placeholder="e.g. Portland, OR" id="name"></form>
+             
+      <gmap-autocomplete :value="address"
+        @place_changed="setPlace"
+        :select-first-on-enter="true">
+      </gmap-autocomplete>
+
       </div>
     </div>
     <p class="onb-paragraph-small-50">Only those you invite to your home will see this.</p>
@@ -316,7 +322,14 @@ export default {
     },
     removeChild: function (index) {
       this.children.splice(index, 1);
-    }
+    },
+    setPlace: function (place) {
+        if (place) return
+        this.latLng = {
+          lat: place.geometry.location.lat(),
+          lng: place.geometry.location.lng(),
+        };
+      }
   },
   computed: {
     phoneValidates: function () {
@@ -335,7 +348,8 @@ export default {
     return {
       step: 0,
       agreedToTos: false,
-      address: null, // get real location from google maps
+      address: '', // get real location from google maps
+      latLng: {},
       phone: null,
       children: [{name: null, birthday: null}],
       availability: {
