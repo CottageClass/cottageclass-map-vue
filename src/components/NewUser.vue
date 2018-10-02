@@ -99,7 +99,7 @@
   </span>
 
   <span v-else>
-      <a @click="throwError('Please enter your phone number to continue.')" class="onb-title-bar-next-button-inactive w-inline-block">
+      <a @click="throwError('Please enter a valid US phone number to continue.')" class="onb-title-bar-next-button-inactive w-inline-block">
       <div class="onb-title-bar-next-button-text">NEXT</div>
     </a>
   </span>
@@ -319,12 +319,16 @@ export default {
     }
   },
   computed: {
-    phoneValidates: function () { // just a placeholder
-      if (this.phone) {
+    phoneValidates: function () {
+      if (this.phone) { 
+      var number = this.phone.replace(/[^\d]/g, '')
+      console.log(number)
+      if ((number[0] != '1' && number.length === 10) || (number[0] == '1') && number.length === 11) {
         return true 
       } else {
         return false
       }
+    } return false
     }
   },
   data () {
