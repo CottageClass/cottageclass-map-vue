@@ -7,14 +7,6 @@
 	"price": "12.25",
 	"percentage": 0.2
     },
-    {
-	"name": "Prospect Families",  
-	"location": {"lat": 40.6668972, "lng": -73.9798299},
-	"zoom": 12, 
-	"stub": "demo",
-	"price": "12.50",
-	"percentage": 0.2
-    },
 
     {
 	"name": "BoCoCaGo Families",  
@@ -61,6 +53,7 @@
 	"price": "12.50",
 	"percentage": 0.2
     },
+
     {
 	"name": "Prospect Heights Families",  
 	"location": {"lat": 40.6778882, "lng": -73.9787793},
@@ -70,11 +63,21 @@
 	"percentage": 0.2
     },
 
+
+
     {
-	"name": "A new network",  
+	"name": "A new network (demo)",  
 	"location": {"lat": 40.666485, "lng": -73.944122},
 	"zoom": 12, 
 	"stub": "a-new-network",
+	"price": "12.50",
+	"percentage": 0.2
+    },
+    {
+	"name": "Prospect Families (demo)",  
+	"location": {"lat": 40.6668972, "lng": -73.9798299},
+	"zoom": 12, 
+	"stub": "demo",
 	"price": "12.50",
 	"percentage": 0.2
     }
