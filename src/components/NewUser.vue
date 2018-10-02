@@ -58,7 +58,7 @@
     <div class="onb-error-text">{{ error }}</div>
   </div>
   <div class="onb-title-bar"><a @click="prevStep" class="onb-title-bar-back-button w-inline-block"></a>
-    <span v-if="address">
+    <span v-if="addressEntered">
     <a @click="nextStep" class="onb-title-bar-next-button w-inline-block">
       <div class="onb-title-bar-next-button-text">NEXT</div>
     </a>
@@ -78,12 +78,16 @@
     </div>
     <div class="onb-location-search-container">
       <div class="w-form">
-        <form id="email-form-2" name="email-form-2" data-name="Email Form 2"><input v-model="address" type="text" class="location-text-field w-input" maxlength="256" name="name" data-name="Name" placeholder="e.g. Portland, OR" id="name"></form>
-             
-      <gmap-autocomplete :value="address"
-        @place_changed="setPlace"
-        :select-first-on-enter="true">
-      </gmap-autocomplete>
+
+        <vue-google-autocomplete
+            ref="address"
+            id="map"
+            classname="email-form-2 w-form location-text-field w-input"
+            placeholder="e.g. 10 Main St."
+            v-on:placechanged="getAddressData"
+            country="us"
+        >
+        </vue-google-autocomplete>
 
       </div>
     </div>
@@ -299,55 +303,15 @@ Done! Here's the data we collected: <br>
 </template>
 
 <script>
+import VueGoogleAutocomplete from 'vue-google-autocomplete'
+
 export default {
-  name: 'NewUser',
-  methods: {
-    nextStep: function () {
-      this.step = this.step + 1
-      this.clearError()
-      window.scrollTo(0,0)
-    },
-    prevStep: function () {
-      this.step = this.step - 1
-      this.clearError()
-    },
-    throwError: function (msg) {
-      this.error = msg
-    },
-    clearError: function () {
-      this.error = false
-    },
-    addChild: function () {
-      this.children.push({name: null, birthday: null})
-    },
-    removeChild: function (index) {
-      this.children.splice(index, 1);
-    },
-    setPlace: function (place) {
-        if (place) return
-        this.latLng = {
-          lat: place.geometry.location.lat(),
-          lng: place.geometry.location.lng(),
-        };
-      }
-  },
-  computed: {
-    phoneValidates: function () {
-      if (this.phone) { 
-      var number = this.phone.replace(/[^\d]/g, '')
-      console.log(number)
-      if ((number[0] != '1' && number.length === 10) || (number[0] == '1') && number.length === 11) {
-        return true 
-      } else {
-        return false
-      }
-    } return false
-    }
-  },
-  data () {
+  components: { VueGoogleAutocomplete },
+    data () {
     return {
       step: 0,
       agreedToTos: false,
+      addressEntered: false,
       address: '', // get real location from google maps
       latLng: {},
       phone: null,
@@ -368,6 +332,53 @@ export default {
         bookClub: false
       },
       error: false
+    }
+  },
+  name: 'NewUser',
+  methods: {
+                /**
+            * When the location found
+            * @param {Object} addressData Data of the found location
+            * @param {Object} placeResultData PlaceResult object
+            * @param {String} id Input container ID
+            */
+            getAddressData: function (addressData, placeResultData, id) {
+              this.address = addressData
+              this.addressEntered = true
+            },
+    nextStep: function () {
+      this.step = this.step + 1
+      this.clearError()
+      window.scrollTo(0,0)
+    },
+    prevStep: function () {
+      this.step = this.step - 1
+      this.clearError()
+    },
+    throwError: function (msg) {
+      this.error = msg
+    },
+    clearError: function () {
+      this.error = false
+    },
+    addChild: function () {
+      this.children.push({name: null, birthday: null})
+    },
+    removeChild: function (index) {
+      this.children.splice(index, 1);
+    }
+  },
+  computed: {
+    phoneValidates: function () {
+      if (this.phone) { 
+      var number = this.phone.replace(/[^\d]/g, '')
+      console.log(number)
+      if ((number[0] != '1' && number.length === 10) || (number[0] == '1') && number.length === 11) {
+        return true 
+      } else {
+        return false
+      }
+    } return false
     }
   }
 };
