@@ -10,6 +10,7 @@ import RequestModal from '@/components/RequestModal.vue'
 import network from '../assets/network-info.json'
 import HowItWorks from '@/components/HowItWorks.vue'
 import DesktopWarningSplash from '@/components/DesktopWarningSplash.vue'
+import NewUser from '@/components/NewUser.vue'
 
 Vue.use(Router)
 
@@ -17,6 +18,11 @@ Vue.use(Router)
 
 export default new Router({
   routes: [
+  {
+    path: '/new-user',
+    name: 'NewUser',
+    component: NewUser
+  },
     {
       path: '/:networkId/',
       name: 'Splash',
