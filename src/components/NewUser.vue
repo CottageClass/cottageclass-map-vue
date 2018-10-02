@@ -120,13 +120,175 @@
 
 <!-- Enter child info --> 
 
+<div class="onb-body-full-height" v-if="step === 4">
+     <div v-if="error" class="onb-error-container">
+    <div class="onb-error-text">{{ error }}</div>
+  </div>
+
+<!--  For testing
+   <div class="onb-error-container">
+    <div class="onb-error-text">{{ children }}</div>
+  </div>
+-->
+
+  <div class="onb-title-bar"><a @click="prevStep" class="onb-title-bar-back-button w-inline-block"></a>
+    <span v-if="children[0].name && children[0].birthday">
+    <a @click="nextStep" class="onb-title-bar-next-button w-inline-block">
+      <div class="onb-title-bar-next-button-text">NEXT</div>
+    </a>
+  </span>
+
+  <span v-else>
+     <a @click="nextStep" class="onb-title-bar-next-button w-inline-block">
+      <div class="onb-title-bar-next-button-text">SKIP</div>
+    </a>
+  </span>
+
+  </div>
+
+  <div class="onb-content-container-2">
+    <div class="onb-top-content-container">
+      <h1 class="onb-heading-large">Child Info</h1>
+      <p class="onb-paragraph-subheading-2">Have kids? Please enter their first names (or nicknames) and birthdays.</p>
+    </div>
+  </div>
+  <div class="onb-child-info-container">
+    <div class="form-block-3 w-form">
+      <form id="email-form-2" name="email-form-2" data-name="Email Form 2" class="form-2">
+        <div v-for="(child, index) in children" class="onb-child-group-2">
+          <div class="onb-group-header" key="index">
+            <h2 class="onb-child-group-heading">Child {{ index + 1}}</h2>
+            <a @click="removeChild(index)" class="onb-button-delete-child w-inline-block"><img src="../assets/remove.svg" width="24" height="24" alt="" class="image-6"></a>
+          </div><label for="birthday-2" class="onb-field-label">Name</label><input type="text" class="name-text-field w-input" maxlength="256" name="name-2" data-name="Name 2" placeholder="First Name" id="name-2" v-model="children[index].name"><label for="birthday-3" class="onb-field-label">Birthday</label><input type="text" class="basic-text-field w-input" maxlength="256" name="birthday-2" data-name="Birthday 2" placeholder="MM / DD / YYYY" id="birthday-2" v-model="children[index].birthday"></div>
+      </form><a @click="addChild" class="onb-button-add-group w-inline-block"><img src="../assets/add.svg" alt="" class="image-7"><div class="onb-button-add-group-text">Add Another child</div></a>
+    </div>
+  </div>
+</div>
+
 <!-- Choose availability -->
+
+<div class="onb-body-full-height" v-if="step === 5">
+  
+    <div v-if="error" class="onb-error-container">
+    <div class="onb-error-text">{{ error }}</div>
+  </div>
+
+  <div class="onb-title-bar"><a @click="prevStep" class="onb-title-bar-back-button w-inline-block"></a>
+    <span v-if="availability.weekends || availability.mornings || availability.afternoons || availability.evenings">
+    <a @click="nextStep" class="onb-title-bar-next-button w-inline-block">
+      <div class="onb-title-bar-next-button-text">NEXT</div>
+    </a>
+  </span>
+
+  <span v-else>
+      <a @click="nextStep" class="onb-title-bar-next-button w-inline-block">
+      <div class="onb-title-bar-next-button-text">SKIP</div>
+    </a>
+  </span>
+  </div>
+
+  <div class="onb-content-container _100vh">
+    <div class="onb-top-content-container">
+      <h1 class="onb-heading-large">Availability</h1>
+      <p class="onb-paragraph-subheading-2">When are you generally available to offer care or educational activities to other families? Select all that apply.</p>
+    </div>
+    <div class="onb-form-block-checkbox-list w-form">
+      <form id="email-form" name="email-form" data-name="Email Form" class="onb-form-checkbox-list">
+        <div class="checkbox-field-extra-space" :class="{'active-checkbox': availability.mornings}"><input v-model="availability.mornings" type="checkbox" id="checkbox" name="checkbox" data-name="Checkbox" class="onb-checkbox w-checkbox-input" :class="{ 'active-checkbox': availability.mornings }"><label for="checkbox" class="onb-checkbox-label w-form-label">7-3</label></div>
+        <div class="checkbox-field-extra-space" :class="{'active-checkbox': availability.afternoons}"><input v-model="availability.afternoons" type="checkbox" id="checkbox-5" name="checkbox-5" data-name="Checkbox 5" class="onb-checkbox w-checkbox-input"><label for="checkbox-5" class="onb-checkbox-label w-form-label">3-7</label></div>
+        <div class="checkbox-field-extra-space" :class="{'active-checkbox': availability.evenings}"><input v-model="availability.evenings" type="checkbox" id="checkbox-4" name="checkbox-4" data-name="Checkbox 4" class="onb-checkbox w-checkbox-input"><label for="checkbox-4" class="onb-checkbox-label w-form-label">After 7</label></div>
+        <div class="checkbox-field-extra-space" :class="{'active-checkbox': availability.weekends}"><input v-model="availability.weekends" type="checkbox" id="checkbox-3" name="checkbox-3" data-name="Checkbox 3" class="onb-checkbox w-checkbox-input"><label for="checkbox-3" class="onb-checkbox-label w-form-label">Weekends</label></div>
+      </form>
+    </div>
+    <p class="onb-paragraph-small-50">You&#x27;ll be able to accept or decline any requests. Most families list days and times that they are generally at home with their own children or are doing a fun or educational activity which they&#x27;d like to include other children in.</p>
+  </div>
+</div>
 
 <!-- Choose activities --> 
 
+<div class="onb-body-full-height" v-if="step === 6">
+  
+    <div v-if="error" class="onb-error-container">
+    <div class="onb-error-text">{{ error }}</div>
+  </div>
+
+  <div class="onb-title-bar"><a @click="prevStep" class="onb-title-bar-back-button w-inline-block"></a>
+    <span v-if="availability.weekends || availability.mornings || availability.afternoons || availability.evenings">
+    <a @click="nextStep" class="onb-title-bar-next-button w-inline-block">
+      <div class="onb-title-bar-next-button-text">NEXT</div>
+    </a>
+  </span>
+
+  <span v-else>
+      <a @click="nextStep" class="onb-title-bar-next-button w-inline-block">
+      <div class="onb-title-bar-next-button-text">SKIP</div>
+    </a>
+  </span>
+  </div>
+
+  <div class="onb-content-container">
+    <div class="onb-top-content-container">
+      <h1 class="onb-heading-large">Activities</h1>
+      <p class="onb-paragraph-subheading-2">What are the activities kids especially love doing with you?</p>
+    </div>
+    <div class="onb-form-block-checkbox-list w-form">
+      <form class="onb-form-checkbox-list">
+        <div class="checkbox-field-extra-space" :class="{'active-checkbox': activities.playingOutside}"><input v-model="activities.playingOutside" type="checkbox" id="checkbox" name="checkbox" data-name="Checkbox" class="onb-checkbox w-checkbox-input"><label for="checkbox" class="onb-checkbox-label w-form-label">Playing outside</label></div>
+        <div class="checkbox-field-extra-space" :class="{'active-checkbox': activities.artsAndCrafts}"><input v-model="activities.artsAndCrafts" type="checkbox" id="checkbox-1" name="checkbox-1" data-name="Checkbox 1" class="onb-checkbox w-checkbox-input"><label for="checkbox-1" class="onb-checkbox-label w-form-label">Arts &amp; crafts</label></div>
+        <div class="checkbox-field-extra-space" :class="{'active-checkbox': activities.fieldTrips}"><input v-model="activities.fieldTrips" type="checkbox" id="checkbox-2" name="checkbox-2" data-name="Checkbox 2" class="onb-checkbox w-checkbox-input"><label for="checkbox-2" class="onb-checkbox-label w-form-label">Field trips</label></div>
+        <div class="checkbox-field-extra-space" :class="{'active-checkbox': activities.cooking}"><input v-model="activities.cooking" type="checkbox" id="checkbox-3" name="checkbox-3" data-name="Checkbox 3" class="onb-checkbox w-checkbox-input"><label for="checkbox-3" class="onb-checkbox-label w-form-label">Cooking</label></div>
+        <div class="checkbox-field-extra-space" :class="{'active-checkbox': activities.homeworkHelp}"><input v-model="activities.homeworkHelp" type="checkbox" id="checkbox-4" name="checkbox-4" data-name="Checkbox 4" class="onb-checkbox w-checkbox-input"><label for="checkbox-4" class="onb-checkbox-label w-form-label">Homework help</label></div>
+        <div class="checkbox-field-extra-space" :class="{'active-checkbox': activities.bilingualImmersion}"><input v-model="activities.bilingualImmersion" type="checkbox" id="checkbox-5" name="checkbox-5" data-name="Checkbox 5" class="onb-checkbox w-checkbox-input"><label for="checkbox-5" class="onb-checkbox-label w-form-label">Bilingual immersion</label></div>
+        <div class="checkbox-field-extra-space" :class="{'active-checkbox': activities.music}"><input v-model="activities.music" type="checkbox" id="checkbox-6" name="checkbox-6" data-name="Checkbox 6" class="onb-checkbox w-checkbox-input"><label for="checkbox-6" class="onb-checkbox-label w-form-label">Music</label></div>
+      </form>
+    </div>
+    <p class="onb-paragraph-small-50"></p>
+  </div>
+</div>
+
 <!-- Add the app --> 
 
+<div class="onb-body-full-height" v-if="step === 7">
+  <div class="onb-arrow-animation-container"><img src="../assets/Comp_2.gif" height="60" alt=""></div>
 
+  <div class="onb-title-bar"><a @click="prevStep" class="onb-title-bar-back-button w-inline-block"></a>
+    <span>
+    <a @click="nextStep" class="onb-title-bar-next-button w-inline-block">
+      <div class="onb-title-bar-next-button-text">NEXT</div>
+    </a>
+  </span>
+  </div>
+
+
+  <div class="onb-content-container _100vh">
+    <div class="onb-top-content-container">
+      <h1 class="onb-heading-large">Add the App</h1>
+      <p class="onb-paragraph-subheading-2">Add CottageClass to your home screen</p>
+    </div>
+
+    <div class="onb-step-container">
+      <div class="onb-number-circle">
+        <div class="text-block-7">1</div>
+      </div>
+      <div class="onb-step-text">Tap the action icon at the bottom</div>
+    </div>
+
+    <div class="onb-step-container">
+      <div class="onb-number-circle">
+        <div class="text-block-7">2</div>
+      </div>
+      <div class="onb-step-text">Then tap &#x27;Add to Home Screen&#x27;</div>
+    </div>
+
+  </div>
+</div>
+
+<!-- Final screen -->
+
+<div class="onb-body-full-height" v-if="step === 8">
+Done! Here's the data we collected: <br>
+{{ $data }}
+</div>
 </span>
 </template>
 
@@ -137,6 +299,7 @@ export default {
     nextStep: function () {
       this.step = this.step + 1
       this.clearError()
+      window.scrollTo(0,0)
     },
     prevStep: function () {
       this.step = this.step - 1
@@ -147,10 +310,16 @@ export default {
     },
     clearError: function () {
       this.error = false
+    },
+    addChild: function () {
+      this.children.push({name: null, birthday: null})
+    },
+    removeChild: function (index) {
+      this.children.splice(index, 1);
     }
   },
   computed: {
-    phoneValidates: function () {
+    phoneValidates: function () { // just a placeholder
       if (this.phone) {
         return true 
       } else {
@@ -164,13 +333,26 @@ export default {
       agreedToTos: false,
       address: null, // get real location from google maps
       phone: null,
-      children: [],
-      availability: [],
-      activities: [],
+      children: [{name: null, birthday: null}],
+      availability: {
+        mornings: false,
+        afternoons: false,
+        evenings: false,
+        weekends: false
+      },
+      activities: {
+        playingOutside: false,
+        artsAndCrafts: false,
+        fieldTrips: false,
+        cooking: false,
+        homeworkHelp: false,
+        bilingualImmersion: false,
+        bookClub: false
+      },
       error: false
     }
   }
-}
+};
 
 </script>
 
@@ -201,7 +383,12 @@ export default {
 
 
 <!-- this is a giant jumble of all app styles. Would be great to separate it out --> 
+
 <style scoped>
+
+.active-checkbox {
+   background-color: #fff !important;
+ }
 
 textarea, input[type="text"] {
 -webkit-appearance: none;
@@ -2582,8 +2769,7 @@ a {
   padding-left: 35px;
   border-radius: 4px;
   background-color: hsla(0, 0%, 100%, .7);
-  color: #fff;
-}
+ }
 
 .checkbox-field-extra-space:active {
   background-color: #fff;
