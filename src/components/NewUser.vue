@@ -169,7 +169,7 @@
           <div class="onb-group-header" key="index">
             <h2 class="onb-child-group-heading">Child {{ index + 1}}</h2>
             <a @click="removeChild(index)" class="onb-button-delete-child w-inline-block"><img src="../assets/remove.svg" width="24" height="24" alt="" class="image-6"></a>
-          </div><label for="birthday-2" class="onb-field-label">Name</label><input type="text" class="name-text-field w-input" maxlength="256" name="name-2" data-name="Name 2" placeholder="First Name" id="name-2" v-model="children[index].name"><label for="birthday-3" class="onb-field-label">Birthday</label><input type="text" class="basic-text-field w-input" maxlength="256" name="birthday-2" data-name="Birthday 2" placeholder="MM / DD / YYYY" id="birthday-2" v-model="children[index].birthday"></div>
+          </div><label for="birthday-2" class="onb-field-label">Name</label><input type="text" class="name-text-field w-input" maxlength="256" name="name-2" data-name="Name 2" placeholder="First Name" id="name-2" v-model="children[index].name"><label for="birthday-3" class="onb-field-label">Birthday</label><input type="date" class="basic-text-field w-input" maxlength="256" name="birthday-2" data-name="Birthday 2" placeholder="MM / DD / YYYY" id="birthday-2" v-model="children[index].birthday"></div>
       </form><a @click="addChild" class="onb-button-add-group w-inline-block"><img src="../assets/add.svg" alt="" class="image-7"><div class="onb-button-add-group-text">Add Another child</div></a>
     </div>
   </div>
@@ -413,6 +413,16 @@ export default {
 <!-- this is a giant jumble of all app styles. Would be great to separate it out --> 
 
 <style scoped>
+
+/* child birthdate selector */
+::-webkit-datetime-edit-text { color: rgba(0, 0, 0, .3); padding: 0 0.3em; }
+::-webkit-datetime-edit-month-field { color: rgba(0, 0, 0, .3); text-transform: uppercase; }
+::-webkit-datetime-edit-day-field { color: rgba(0, 0, 0, .3); text-transform: uppercase;}
+::-webkit-datetime-edit-year-field { color: rgba(0, 0, 0, .3); text-transform: uppercase;}
+::-webkit-inner-spin-button { display: none; }
+::-webkit-calendar-picker-indicator { color: rgba(0, 0, 0, .3); }
+
+/* background color state on checkbox list items */
 
 .active-checkbox {
    background-color: #fff !important;
