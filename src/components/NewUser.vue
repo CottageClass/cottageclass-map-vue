@@ -372,7 +372,6 @@ export default {
     phoneValidates: function () {
       if (this.phone) { 
       var number = this.phone.replace(/[^\d]/g, '')
-      console.log(number)
       if ((number[0] != '1' && number.length === 10) || (number[0] == '1') && number.length === 11) {
         return true 
       } else {
