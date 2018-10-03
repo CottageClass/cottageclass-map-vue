@@ -4,7 +4,6 @@ import Vue from 'vue';
 import App from './App';
 import router from './router'
 import * as VueGoogleMaps from 'vue2-google-maps'
-import Geocoder from "@pderas/vue2-geocoder"
 import './registerServiceWorker'
 import VueCookies from 'vue-cookies'
 Vue.use(VueCookies)
@@ -15,6 +14,7 @@ Vue.config.productionTip = false
 Vue.use(VueGoogleMaps, {
   load: {
     key: 'AIzaSyCAxZ4ERhmcq87C5HK91ujxDLl7gQ_k_-c',
+    libraries: 'geocoder, places',
     // libraries: 'geocoder', // This is required if you use the Autocomplete plugin
     // OR: libraries: 'places,drawing'
     // OR: libraries: 'places,drawing,visualization'
@@ -36,10 +36,6 @@ Vue.use(VueGoogleMaps, {
   //// then disable the following:
   // installComponents: true,
 })
-
-Vue.use(Geocoder, {
-    googleMapsApiKey: 'AIzaSyCAxZ4ERhmcq87C5HK91ujxDLl7gQ_k_'
-});
 
 /* eslint-disable no-new */
 new Vue({

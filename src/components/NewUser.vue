@@ -58,7 +58,7 @@
     <div class="onb-error-text">{{ error }}</div>
   </div>
   <div class="onb-title-bar"><a @click="prevStep" class="onb-title-bar-back-button w-inline-block"></a>
-    <span v-if="address">
+    <span v-if="addressEntered">
     <a @click="nextStep" class="onb-title-bar-next-button w-inline-block">
       <div class="onb-title-bar-next-button-text">NEXT</div>
     </a>
@@ -78,7 +78,17 @@
     </div>
     <div class="onb-location-search-container">
       <div class="w-form">
-        <form id="email-form-2" name="email-form-2" data-name="Email Form 2"><input v-model="address" type="text" class="location-text-field w-input" maxlength="256" name="name" data-name="Name" placeholder="e.g. Portland, OR" id="name"></form>
+
+        <vue-google-autocomplete
+            ref="address"
+            id="map"
+            classname="email-form-2 w-form location-text-field w-input"
+            placeholder="e.g. 10 Main St."
+            v-on:placechanged="getAddressData"
+            country="us"
+        >
+        </vue-google-autocomplete>
+
       </div>
     </div>
     <p class="onb-paragraph-small-50">Only those you invite to your home will see this.</p>
@@ -99,7 +109,7 @@
   </span>
 
   <span v-else>
-      <a @click="throwError('Please enter your phone number to continue.')" class="onb-title-bar-next-button-inactive w-inline-block">
+      <a @click="throwError('Please enter a valid US phone number to continue.')" class="onb-title-bar-next-button-inactive w-inline-block">
       <div class="onb-title-bar-next-button-text">NEXT</div>
     </a>
   </span>
@@ -159,7 +169,7 @@
           <div class="onb-group-header" key="index">
             <h2 class="onb-child-group-heading">Child {{ index + 1}}</h2>
             <a @click="removeChild(index)" class="onb-button-delete-child w-inline-block"><img src="../assets/remove.svg" width="24" height="24" alt="" class="image-6"></a>
-          </div><label for="birthday-2" class="onb-field-label">Name</label><input type="text" class="name-text-field w-input" maxlength="256" name="name-2" data-name="Name 2" placeholder="First Name" id="name-2" v-model="children[index].name"><label for="birthday-3" class="onb-field-label">Birthday</label><input type="text" class="basic-text-field w-input" maxlength="256" name="birthday-2" data-name="Birthday 2" placeholder="MM / DD / YYYY" id="birthday-2" v-model="children[index].birthday"></div>
+          </div><label for="birthday-2" class="onb-field-label">Name</label><input type="text" class="name-text-field w-input" maxlength="256" name="name-2" data-name="Name 2" placeholder="First Name" id="name-2" v-model="children[index].name"><label for="birthday-3" class="onb-field-label">Birthday</label><input type="date" class="basic-text-field w-input" maxlength="256" name="birthday-2" data-name="Birthday 2" placeholder="MM / DD / YYYY" id="birthday-2" v-model="children[index].birthday"></div>
       </form><a @click="addChild" class="onb-button-add-group w-inline-block"><img src="../assets/add.svg" alt="" class="image-7"><div class="onb-button-add-group-text">Add Another child</div></a>
     </div>
   </div>
@@ -293,9 +303,49 @@ Done! Here's the data we collected: <br>
 </template>
 
 <script>
+import VueGoogleAutocomplete from 'vue-google-autocomplete'
+
 export default {
+  components: { VueGoogleAutocomplete },
+    data () {
+    return {
+      step: 0,
+      agreedToTos: false,
+      addressEntered: false,
+      address: '', // get real location from google maps
+      latLng: {},
+      phone: null,
+      children: [{name: null, birthday: null}],
+      availability: {
+        mornings: false,
+        afternoons: false,
+        evenings: false,
+        weekends: false
+      },
+      activities: {
+        playingOutside: false,
+        artsAndCrafts: false,
+        fieldTrips: false,
+        cooking: false,
+        homeworkHelp: false,
+        bilingualImmersion: false,
+        bookClub: false
+      },
+      error: false
+    }
+  },
   name: 'NewUser',
   methods: {
+                /**
+            * When the location found
+            * @param {Object} addressData Data of the found location
+            * @param {Object} placeResultData PlaceResult object
+            * @param {String} id Input container ID
+            */
+            getAddressData: function (addressData, placeResultData, id) {
+              this.address = addressData
+              this.addressEntered = true
+            },
     nextStep: function () {
       this.step = this.step + 1
       this.clearError()
@@ -319,37 +369,15 @@ export default {
     }
   },
   computed: {
-    phoneValidates: function () { // just a placeholder
-      if (this.phone) {
+    phoneValidates: function () {
+      if (this.phone) { 
+      var number = this.phone.replace(/[^\d]/g, '')
+      if ((number[0] != '1' && number.length === 10) || (number[0] == '1') && number.length === 11) {
         return true 
       } else {
         return false
       }
-    }
-  },
-  data () {
-    return {
-      step: 0,
-      agreedToTos: false,
-      address: null, // get real location from google maps
-      phone: null,
-      children: [{name: null, birthday: null}],
-      availability: {
-        mornings: false,
-        afternoons: false,
-        evenings: false,
-        weekends: false
-      },
-      activities: {
-        playingOutside: false,
-        artsAndCrafts: false,
-        fieldTrips: false,
-        cooking: false,
-        homeworkHelp: false,
-        bilingualImmersion: false,
-        bookClub: false
-      },
-      error: false
+    } return false
     }
   }
 };
@@ -385,6 +413,16 @@ export default {
 <!-- this is a giant jumble of all app styles. Would be great to separate it out --> 
 
 <style scoped>
+
+/* child birthdate selector */
+::-webkit-datetime-edit-text { color: rgba(0, 0, 0, .3); padding: 0 0.3em; }
+::-webkit-datetime-edit-month-field { color: rgba(0, 0, 0, .3); text-transform: uppercase; }
+::-webkit-datetime-edit-day-field { color: rgba(0, 0, 0, .3); text-transform: uppercase;}
+::-webkit-datetime-edit-year-field { color: rgba(0, 0, 0, .3); text-transform: uppercase;}
+::-webkit-inner-spin-button { display: none; }
+::-webkit-calendar-picker-indicator { color: rgba(0, 0, 0, .3); }
+
+/* background color state on checkbox list items */
 
 .active-checkbox {
    background-color: #fff !important;
