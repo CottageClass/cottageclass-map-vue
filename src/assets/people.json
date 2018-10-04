@@ -745,7 +745,7 @@
     "name": "Catherine",
     "lastInitial": "B",
     "pic": "avatar-CatherineBagner.png",
-    "images": ["CatherineBagner-1.jpeg"],
+    "images": ["CatherineBagner-1.jpg"],
     "phone": "732-425-5999",
     "availability": ["after7", "weekends"],
     "location": {"lat": 40.7043156, "lng": -73.9234745},
@@ -932,14 +932,14 @@
 
   {
     "id": 9178481185,
-    "networks": ["BoCoCaGo"],
+    "networks": ["flatbushfamilies"],
     "name": "Amaranta",
     "lastInitial": "V",
     "pic": "avatar-AmarantaV.png",
     "images": ["AmarantaV-1.jpg"],
     "phone": "917-848-1185",
-    "availability": [""],
-    "location": {},
+    "availability": ["9to3", "3to7", "weekends"],
+    "location": {"lat": 40.6397983, "lng": -73.9597081},
     "activities":["field trips", "homework help", "music", "playing outside", "sports and recreation" ],
     "job": {"title" : "Musician", "employer": "Self-Employed Musician"},
     "children":
