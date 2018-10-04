@@ -23,6 +23,11 @@ export default new Router({
     name: 'NewUser',
     component: NewUser
   },
+  { 
+    // necessary to redirect based on earlier error where network name was changed.
+    path: '/y723hz', 
+    redirect: '/BoCoCaGo'
+  }, 
     {
       path: '/:networkId/',
       name: 'Splash',
