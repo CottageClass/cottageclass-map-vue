@@ -702,6 +702,7 @@
     "availability": ["after7", "9to3"],
     "location": {"lat": 40.6617556, "lng": -73.9538533},
     "activities":["bilingual immersion", "cooking", "playing outside"],
+    "blurb": "I'm a non-profit worker, mother, social justice fighter, cyclist, runner and walker.",
     "job": {"title" : "Direction, International Education", "employer": "AJWS"},
     "children":
     [
@@ -726,6 +727,7 @@
     "availability": ["after7", "weekends"],
     "location": {"lat": 40.7047738, "lng": -73.944049},
     "activities":["bilingual immersion", "field trips", "homework help", "playing outside"],
+    "blurb": "Hi, I am a local ER Doc and my Husband is an accountant. We are new parents to boy and our little tri-lingual family loves food, the park... and food.",
     "job": {"title" : "Resident Physician", "employer": "Kings County Hospital"},
     "children":
     [
@@ -750,6 +752,7 @@
     "availability": ["after7", "weekends"],
     "location": {"lat": 40.7043156, "lng": -73.9234745},
     "activities":["arts & crafts", "book club", "cooking", "homework help", "playing outside"],
+    "blurb": "I am a single by choice mother who works in the accounting field.  My 8 year old is in 3rd Grade at PS34 and goes to afterschool on Lorimer St. by Mccarren Park. I also have a 22 month old son who is loads of fun.  I am always busy taking my 8 year old to activities.",
     "job": {"title" : "Accountant", "employer": "Accounting"},
     "children":
     [
@@ -784,6 +787,7 @@
     "availability": ["after7", "9to3", "3to7", "weekends"],
     "location": {"lat": 40.675657, "lng": -73.9844455},
     "activities":["arts & crafts", "cooking", "music", "yoga", "science experiments", "dancing"],
+    "blurb": "I am a homeschooling SAHM, holistic health practitioner. I enjoy playing with children, everything from cooking to making music to crafts.",
     "job": {"title" : "SAHM", "employer": "Home"},
     "children":
     [
@@ -817,6 +821,7 @@
     "availability": [""],
     "location": {"lat": 40.6534004, "lng": -73.9593867},
     "activities":["playing outside"],
+    "blurb": "Hi Everyone!  I am a professional dancer, choreographer, educator and Pilates instructor.  I am a new mother looking to build my childcare network as well as connect to other families.",
     "job": {"title" : "Dancer", "employer": "The Metropolitan Opera"},
     "children":
     [
@@ -842,6 +847,7 @@
     "availability": ["7to3"],
     "location": {"lat": 40.7246789, "lng": -73.9820467},
     "activities":["arts & crafts", "book club", "cooking", "field trips", "homework help", "playing outside", "dance"],
+    "blurb": "I'm an early childhood educator currently caring for my 2 year old full-time, as well as writing/illustrating children's books during nap time!",
     "job": {"title" : "Teacher", "employer": "Maple Street School"},
     "children":
     [
@@ -866,6 +872,7 @@
     "availability": ["7to3", "weekends"],
     "location": {"lat": 40.839799, "lng": -73.8684857},
     "activities":["arts & crafts", "music", "playing outside", "science", "cooking"],
+    "blurb": "I'm a certified art, elementary, and English teacher.  My husband (social work student) and my daughter and I haunt local libraries, the zoo, and parks in the Bronx!",
     "job": {"title" : "Educator", "employer": "Adelphi University"},
     "children":
     [
@@ -891,6 +898,7 @@
     "availability": [""],
     "location": {"lat": 40.685033, "lng": -73.9322547},
     "activities":["bilingual immersion", "field trips", "arts & crafts", "music", "playing outside"],
+    "blurb": "I'm a freelance photographer, mother, wife, airbnb manager, landlady, etc",
     "job": {"title" : "Photographer", "employer": "freelance so everywhere"},
     "children":
     [
@@ -941,6 +949,7 @@
     "availability": ["9to3", "3to7", "weekends"],
     "location": {"lat": 40.6397983, "lng": -73.9597081},
     "activities":["field trips", "homework help", "music", "playing outside", "sports and recreation" ],
+    "blurb": "I'm a freelance classical musician and music teacher, lover of poetry and nature, and proud mom and feminist.",
     "job": {"title" : "Musician", "employer": "Self-Employed Musician"},
     "children":
     [
@@ -1056,7 +1065,7 @@
     "availability": ["after7", "weekends"],
     "location": {"lat": 40.6873894, "lng": -73.9937772},
     "activities":["bilingual immersion", "book club", "playing outside"],
-    "job": {"title" : "Banker", "employer": "Bank"},
+    "job": {"title": "Banker", "employer": "Bank"},
     "children":
     [
     {
@@ -1089,7 +1098,7 @@
     "availability": ["weekends"],
     "location": {"lat": 40.686275, "lng": -73.9771757},
     "activities":["playing outside"],
-    "job": {"title" : "Associate Director of Social Media", "employer": "ACLU"},
+    "job": {"title": "Associate Director of Social Media", "employer": "ACLU"},
     "children":
     [
     {
@@ -1114,7 +1123,7 @@
     "availability": [""],
     "location": {"lat": 40.709738, "lng": -73.9178477},
     "activities":["arts & crafts"],
-    "job": {"title" : "Data Analyst", "employer": "Advancing New Standards in Reproductive Health"},
+    "job": {"title": "Data Analyst", "employer": "Advancing New Standards in Reproductive Health"},
     "children":
     [
     {
@@ -1138,7 +1147,7 @@
     "availability": ["7to3"],
     "location": {"lat": 40.7015807, "lng": -73.9857971},
     "activities":["Bilingual immersion", "playing outside", "photography" ],
-    "job": {"title" : "Photographer", "employer": "Self employed"},
+    "job": {"title": "Photographer", "employer": "Self employed"},
     "children":
     [
     {
@@ -1163,7 +1172,7 @@
     "availability": ["3to7"],
     "location": {"lat": 40.6931661, "lng": -73.9115443},
     "activities":["homework help", "playing outside", "photography" ],
-    "job": {"title" : "", "employer": ""},
+    "job": {"title": "", "employer": ""},
     "children":
     [
     {
@@ -1188,7 +1197,7 @@
     "availability":  ["after7", "7to3", "3to7", "weekends"],
     "location": {"lat": 40.6812265, "lng": -73.9742094},
     "activities":["arts & crafts", "field trips", "music", "playing outside", "sports and recreation"],
-    "job": {"title" : "Financial Controller/Book Keeper", "employer": "Home"},
+    "job": {"title": "Financial Controller/Book Keeper", "employer": "Home"},
     "children":
     [
     {
@@ -1220,7 +1229,7 @@
     "availability":  ["weekends"],
     "location": {"lat": 40.6812265, "lng": -73.9742094},
     "activities":["arts & crafts", "homework help"],
-    "job": {"title" : "Teacher", "employer": "The Earth School"},
+    "job": {"title": "Teacher", "employer": "The Earth School"},
     "children":
     [
     {
@@ -1245,7 +1254,7 @@
     "availability": ["3to7", "after7", "weekends"],
     "location": {"lat": 40.6877381, "lng": -73.9788248}, 
     "activities":["music", "bilingual immersion", "cooking", "homework help"],
-    "job": {"title" : "Language Lecturer", "employer": "New York University"},
+    "job": {"title": "Language Lecturer", "employer": "New York University"},
     "children":
     [
     {
@@ -1270,7 +1279,7 @@
     "availability": ["3to7"],
     "location": {"lat": 40.696842, "lng": -73.9948596}, 
     "activities":["arts & crafts", "field trips", "playing outside"],
-    "job": {"title" : "", "employer": ""},
+    "job": {"title": "", "employer": ""},
     "children":
     [
     {
@@ -1302,7 +1311,7 @@
     "availability": [""],
     "location": {"lat": 40.6850662, "lng": -73.9810975}, 
     "activities":["Playing outside"],
-    "job": {"title" : "Operations Consultant", "employer": "Self-Employed"},
+    "job": {"title": "Operations Consultant", "employer": "Self-Employed"},
     "children":
     [
     {
@@ -1323,6 +1332,552 @@
     }
     ]
   },
+{
+  "id": 8649151850,
+  "networks": ["Harlem"],
+  "name": "April",
+  "lastInitial": "S",
+  "pic": "avatar-AprilSmith-Hirak.png",
+  "images": ["AprilSmith-Hirak-1.jpg"],
+  "phone": "8649151850",
+  "availability": ["after7", "weekends"],
+  "location": {"lat": 40.8050888, "lng": -73.9543009}, 
+  "activities":["arts & crafts", "book club", "playing outside", "music"],
+  "job": {"title": "Acting Regional Health Administrator", "employer": "US Department of Health and Human Services"},
+  "children":
+  [
+  {
+  "name":"Daniella",
+  "age": 2,
+  "birthday": "2015-12-01",
+  "allergies": "",
+  "medicalNeeds": "",
+  "otherNeeds": ""
+  },
+  {
+  "name":"Maya",
+  "age": 0,
+  "birthday": "2017-11-01",
+  "allergies": "",
+  "medicalNeeds": "",
+  "otherNeeds": ""
+  }
+  ]
+},
+
+
+{
+  "id": 9132207739,
+  "networks": ["HydePark"],
+  "name": "Rebecca",
+  "lastInitial": "M",
+  "pic": "avatar-RebeccaMeyer.png",
+  "images": ["RebeccaMeyer-1.jpg"],
+  "phone": "9132207739",
+  "availability": [""],
+  "location": {"lat": 41.793478, "lng": -87.591307},   
+  "activities":["Playing Outside"],
+  "job": {"title": "Counselor", "employer": "Wheaton College"},
+  "children":
+  [
+  {
+  "name":"Caleb",
+  "age": 0,
+  "birthday": "2018-09-08",
+  "allergies": "",
+  "medicalNeeds": "",
+  "otherNeeds": ""
+  }
+  ]
+},
+
+{
+  "id": 9376843845,
+  "networks": ["Sunnyside"],
+  "name": "Jamie",
+  "lastInitial": "C",
+  "pic": "avatar-JamieCox.png",
+  "images": ["JamieCox-1.jpg"],
+  "phone": "9376843845",
+  "availability": ["9to3", "3to7", "weekends"],
+  "location": {"lat": 40.747969, "lng": -73.902101},
+  "activities":["Arts & Crafts", "Music", "Playing Outside"],
+  "job": {"title": "Direct sales at home ", "employer": "Home"},
+  "children":
+  [
+  {
+  "name":"Spencer ",
+  "age": 0,
+  "birthday": "2017-11-17",
+  "allergies": "",
+  "medicalNeeds": "",
+  "otherNeeds": ""
+  }
+  ]
+},
+
+{
+  "id": 2027252036,
+  "networks": ["DupontCircle"],
+  "name": "Mariana",
+  "lastInitial": "D",
+  "pic": "avatar-marianadiez.png",
+  "images": ["MarianaDiez-1.jpg"],
+  "phone": "2027252036",
+  "availability": ["3to7"],
+  "location": {"lat": 38.906262, "lng": -77.053191}, 
+  "activities":["Playing Outside", "Yoga"],
+  "job": {"title": "Community Manager", "employer": "Workafrolic"},
+  "children":
+  [
+  {
+  "name":"Adrian Simon Moreno",
+  "age": 0,
+  "birthday": "2017-11-09",
+  "allergies": "",
+  "medicalNeeds": "",
+  "otherNeeds": ""
+  }
+  ]
+},
+{
+  "id": 4153476178,
+  "networks": ["NoeValley"],
+  "name": "Tia",
+  "lastInitial": "G",
+  "pic": "avatar-TiaGhose.png",
+  "images": ["TiaGhose-1.jpg"],
+  "phone": "4153476178",
+  "availability": ["3to7", "after7", "weekends"],
+  "location": {"lat": 40.758657, "lng": -73.937974},  
+  "activities":["Book club", "Cooking", "Arts & Crafts", "Homework Help"],
+  "job": {"title": "Editor", "employer": "home-based"},
+  "children":
+  [
+  {
+  "name":"Zane",
+  "age": 6,
+  "birthday": "2012-05-08",
+  "allergies": "",
+  "medicalNeeds": "",
+  "otherNeeds": ""
+  },
+  {
+  "name":"Samson Ghose",
+  "age": 4,
+  "birthday": "2014-04-04",
+  "allergies": "",
+  "medicalNeeds": "",
+  "otherNeeds": ""
+  },
+  {
+  "name": "Colin",
+  "age": 1,
+  "birthday": "2017-10-03",
+  "allergies": "",
+  "medicalNeeds": "",
+  "otherNeeds": ""
+  }
+  ]
+},
+
+{
+  "id": 7347170840,
+  "networks": ["Cortelyou"],
+  "name": "Anna",
+  "lastInitial": "N",
+  "pic": "avatar-AnnaNovick.png",
+  "images": ["AnnaNovick-1.jpg"],
+  "phone": "7347170840",
+  "availability": ["9to3", "3to7"],
+  "location": {"lat": 40.635011, "lng": -73.943780}, 
+  "activities":["Playing Outside"],
+  "job": {"title": "Manager", "employer": "Self employed"},
+  "children":
+  [
+  {
+  "name":"Sean",
+  "age": 2,
+  "birthday": "2016-04-09",
+  "allergies": "",
+  "medicalNeeds": "",
+  "otherNeeds": ""
+  }
+  ]
+},
+{
+  "id": 9785784783,
+  "networks": ["Dumbo"],
+  "name": "Susy",
+  "lastInitial": "J",
+  "pic": "avatar-Susy Jackson .png",
+  "images": ["SusyJackson-1.jpg"],
+  "phone": "9785784783",
+  "availability": [""],
+  "location": {}, 
+  "activities":["Sports and recreation"],
+  "job": {"title": "", "employer": "LinkedIn "},
+  "children":
+  [
+  {
+  "name":"M",
+  "age": 2,
+  "birthday": "2016-09-01",
+  "allergies": "",
+  "medicalNeeds": "",
+  "otherNeeds": ""
+  },
+  {
+  "name":"H",
+  "age": 0,
+  "birthday": "2018-09-01",
+  "allergies": "",
+  "medicalNeeds": "",
+  "otherNeeds": ""
+  }
+  ]
+},
+{
+  "id": 9176769399,
+  "networks": ["ForestHills"],
+  "name": "Elizaveta",
+  "lastInitial": "Bor",
+  "pic": "avatar-ElizavetaBor.png",
+  "images": ["ElizavetaBor-1.jpg"],
+  "phone": "9176769399",
+  "availability": ["9to3", "3to7"],
+  "location": {}, 
+  "activities":[""],
+  "job": {"title": "beauty", "employer": "freelancer"},
+  "children":
+  [
+  {
+  }
+  ]
+},
+{
+  "id": 3125222713,
+  "networks": ["HydePark"],
+  "name": "Efe",
+  "lastInitial": "A",
+  "pic": "avatar-EfeAdefulu.png",
+  "images": ["EfeAdefulu-1.jpg"],
+  "phone": "3125222713",
+  "availability": ["after7", "weekends"],
+  "location": {"lat": 41.781391, "lng": -87.595907},   
+  "activities":["Homework Help", "Playing Outside"],
+  "job": {"title": "Accountant", "employer": "Renewable Energy Company"},
+  "children":
+  [
+  {
+  "name":"Sayo",
+  "birthday": "",
+  "allergies": "",
+  "medicalNeeds": "",
+  "otherNeeds": ""
+  },
+  {
+  "name":"Mayo",
+  "birthday": "",
+  "allergies": "",
+  "medicalNeeds": "",
+  "otherNeeds": ""
+  }
+  ]
+},
+{
+  "id": 9172547116,
+  "networks": ["Brooklyn"],
+  "name": "Katya",
+  "lastInitial": "C",
+  "pic": "avatar-KatyaChitov.png",
+  "images": ["KatyaChitov-1.jpg"],
+  "availability": ["9to3"],
+  "location": {"lat": 40.655476, "lng": -73.977100},
+  "activities": ["Arts & Crafts", "Bilingual Immersion", "Field Trips", "Homework Help", "Music", "Playing Outside", "Sports and recreation", "Yoga"],
+  "job": {"title": "Accounting", "employer": "NYC "},
+  "children":
+  [
+  {
+  "name":"Dasha",
+  "age": 3,
+  "birthday": "2015-01-04",
+  "allergies": "",
+  "medicalNeeds": "",
+  "otherNeeds": ""
+  },
+  {
+  "name":"Erik",
+  "age": 7,
+  "birthday": "2011-05-04",
+  "allergies": "",
+  "medicalNeeds": "",
+  "otherNeeds": ""
+  }
+  ]
+},
+{
+  "id": 7188733716,
+  "networks": ["Harlem"],
+  "name": "Marta",
+  "lastInitial": "P",
+  "pic": "avatar-MartaPeimer.png",
+  "images": ["MartaPeimer-1.jpg"],
+  "phone": "7188733716",
+  "availability": ["after7"],
+  "location": {"lat": 40.824667, "lng": -73.941749}, 
+  "activities":["Book club, Playing Outside"],
+  "job": {"title" : "Nurse practitioner", "employer": "Mount Sinai"},
+  "children":
+  [
+  {
+  "name":"Shoshana ",
+  "age": 4,
+  "birthday": "2014-07-15",
+  "allergies": "",
+  "medicalNeeds": "",
+  "otherNeeds": ""
+  },
+  {
+  "name":"Saul",
+  "age": 4,
+  "birthday": "2014-07-15",
+  "allergies": "",
+  "medicalNeeds": "",
+  "otherNeeds": ""
+  }
+  ]
+},
+{
+  "id": 4147087500,
+  "networks": ["DupontCircle"],
+  "name": "Carmiel",
+  "lastInitial": "A",
+  "pic": "avatar-CarmielArbit.png",
+  "images": ["CarmielArbit-1.jpg"],
+  "phone": "4147087500",
+  "availability": [""],
+  "location": {"lat": 40.597956, "lng": -73.650571}, 
+  "activities":["Volunteering"],
+  "job": {"title" : "Director ", "employer": "Aipac "},
+  "children":
+  [
+  {
+  "name":"Solomon ",
+  "age": 0,
+  "birthday": "2018-06-15",
+  "allergies": "",
+  "medicalNeeds": "",
+  "otherNeeds": ""
+  }
+  ]
+},
+{
+  "id": 7825166545,
+  "networks": ["Henley"],
+  "name": "Katie",
+  "lastInitial": "C",
+  "pic": "avatar-KatieCampbell.png",
+  "images": ["KatieCampbell-1.jpg"],
+  "phone": "07825166545",
+  "availability": ["9to3", "after7"],
+  "location": {"lat": 51.5316145, "lng": -0.9193641}, 
+  "activities":["Playing Outside", "Sports and recreation", "Dance"],
+  "job": {"title" : "Head of Year ", "employer": "Newlands Girls’ School"},
+  "children":
+  [
+  {
+  "name":"Tabitha “Tatty”",
+  "age": 5,
+  "birthday": "2013-10-18",
+  "allergies": "",
+  "medicalNeeds": "",
+  "otherNeeds": ""
+  },
+  {
+  "name":"Saskia “Kiki”",
+  "age": 3,
+  "birthday": "2015-05-15",
+  "allergies": "",
+  "medicalNeeds": "",
+  "otherNeeds": ""
+  },
+  {
+  "name": "Indira “Indie”",
+  "age": 0,
+  "birthday": "2018-02-09",
+  "allergies": "",
+  "medicalNeeds": "",
+  "otherNeeds": ""
+  }
+  ]
+},
+{
+  "id": 9174746866,
+  "networks": ["Brooklyn"],
+  "name": "Melissa",
+  "lastInitial": "G",
+  "pic": "avatar-MelissaGorelick.png",
+  "images": ["MelissaGorelick-1.jpg"], 
+  "phone": "9174746866",
+  "availability": ["weekends"],
+  "location": {"lat": 40.6743075, "lng": -73.9734987},  
+  "activities":["Playing Outside"],
+  "job": {"title" : "Press Officer", "employer": "United Nations HQ New York"},
+  "children":
+  [
+  {
+  }
+  ]
+},
+{
+  "id": 3473068673,
+  "networks": ["Sunnyside"],
+  "name": "Emily",
+  "lastInitial": "K",
+  "pic": "avatar-EmilyKangas.png",
+  "images": ["EmilyKangas-1.jpg"],
+  "phone": "3473068673",
+  "availability": ["weekends"],
+  "location": {"lat": 40.746347, "lng": -73.914718},  
+  "activities":[""],
+  "job": {"title" : "Designer", "employer": "DSM"},
+  "children":
+  [
+  {
+  "name":"Aili",
+  "age": 1,
+  "birthday": "2017-08-21",
+  "allergies": "",
+  "medicalNeeds": "",
+  "otherNeeds": ""
+  }
+  ]
+},
+{
+  "id": 4156725666,
+  "networks": ["theMission"],
+  "name": "Jennifer",
+  "lastInitial": "S",
+  "pic": "avatar-JenniferShenker.png",
+  "images": ["JenniferShenker-1.jpg"],
+  "phone": "4156725666",
+  "availability": ["3to7"],
+  "location": {"lat": 37.7510832, "lng": -122.4168187}, 
+  "activities":["Cooking", "Playing Outside", "Ballet"],
+  "job": {"title" : "Consultant", "employer": "Self employed"},
+  "children":
+  [
+  {
+  "name":"Greta",
+  "age": 3,
+  "birthday": "2015-04-03",
+  "allergies": "",
+  "medicalNeeds": "",
+  "otherNeeds": ""
+  }
+  ]
+},
+{
+  "id": 2818137501,
+  "networks": ["HydePark"],
+  "name": "Christin ",
+  "lastInitial": "S",
+  "pic": "avatar-ChristinScott.png",
+  "images": ["ChristinScott-1.jpg"],
+  "phone": "2818137501",
+  "availability": ["7to9", "9to3"],
+  "location": {"lat": 41.7974109, "lng": -87.5912157}, 
+  "activities":["Arts & Crafts", "Field Trips", "Music", "Playing Outside", "Sports and recreation"],
+  "job": {"title" : "SAHM", "employer": "Home"},
+  "children":
+  [
+  {
+  "name":"Elijah ",
+  "age": 1,
+  "birthday": "2017-08-23",
+  "allergies": "",
+  "medicalNeeds": "",
+  "otherNeeds": ""
+  }
+  ]
+},
+{
+  "id": 4088889316,
+  "networks": ["madisonsquarepark"],
+  "name": "Melissa",
+  "lastInitial": "H",
+  "pic": "avatar-MelissaHonores.png",
+  "images": ["MelissaHonores-1.jpg"],
+  "phone": "4088889316",
+  "availability": [""],
+  "location": {"lat": 40.7520547, "lng": -74.0037646}, 
+  "activities":[""],
+  "job": {"title" : "Sub.", "employer": "LREI"},
+  "children":
+  [
+  {
+  "name":"Gavin",
+  "age": 11,
+  "birthday": "2007-07-18",
+  "allergies": "",
+  "medicalNeeds": "",
+  "otherNeeds": ""
+  }
+  ]
+},
+{
+  "id": 9176030492,
+  "networks": ["theMission"],
+  "name": "Riddhi",
+  "lastInitial": "S",
+  "pic": "avatar-RiddhiShah.png",
+  "images": ["RiddhiShah-1.jpg"],
+  "phone": "9176030492",
+  "availability": ["weekends"],
+  "location": {"lat": 37.7666452, "lng": -122.4296227}, 
+  "activities":["Arts & Crafts", "Book club"],
+  "job": {"title" : "Head of Content & Social", "employer": "Gusto"},
+  "children":
+  [
+  {
+  "name":"Leila",
+  "age": 2,
+  "birthday": "2016-02-05",
+  "allergies": "",
+  "medicalNeeds": "",
+  "otherNeeds": ""
+  }
+  ]
+},
+{
+  "id": 9177714211,
+  "networks": ["PortWashington"],
+  "name": "Michelle",
+  "lastInitial": "H",
+  "pic": "avatar-MichelleHsiao.png",
+  "images": ["MichelleHsiao-1.jpg"],
+  "phone": "9177714211",
+  "availability": ["weekends"],
+  "location": {"lat": 40.8400207, "lng": -73.6933107}, 
+  "activities":["Cooking", "Field Trips"],
+  "job": {"title" : "Consultant", "employer": "Self employed "},
+  "children":
+  [
+  {
+  "name":"Lauren",
+  "age": 3,
+  "birthday": "2014-11-17",
+  "allergies": "",
+  "medicalNeeds": "",
+  "otherNeeds": ""
+  }
+  ]
+},
+
+
+
+
 
 
   { 
