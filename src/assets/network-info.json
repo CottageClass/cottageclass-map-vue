@@ -96,6 +96,15 @@
 	"percentage": 0.2
     },
     {
+	"name": "North Brooklyn",  
+	"location": {"lat": 40.670768, "lng": -73.930578},
+	"zoom": 13, 
+	"stub": "North Brooklyn",
+	"price": "12.50",
+	"percentage": 0.2
+    },
+
+    {
 	"name": "BedStuy Parents",  
 	"location": {"lat": 40.688553, "lng": -73.9335877},
 	"zoom": 13, 
@@ -231,6 +240,73 @@
 	"price": "12.50",
 	"percentage": 0.2
     },
+    {
+	"name": "ProspectHeights",  
+    "location": {"lat": 40.6668972, "lng": -73.9798299}, 
+	"zoom": 12, 
+	"stub": "NoeValley",
+	"price": "12.50",
+	"percentage": 0.2
+    },
+    {
+	"name": "AU Park",  
+    "location": {"lat": 38.9486599, "lng": -77.0880777}, 	
+    "zoom": 12, 
+	"stub": "AUpark",
+	"price": "12.50",
+	"percentage": 0.2
+    },
+    {
+	"name": "Riverdale",  
+    "location": {"lat": 40.876798, "lng": -73.9198921}, 	
+    "zoom": 12, 
+	"stub": "Riverdale",
+	"price": "12.50",
+	"percentage": 0.2
+    },
+    {
+	"name": "FortGreene",  
+    "location": {"lat": 40.692324, "lng": -73.9833117}, 
+    "zoom": 12, 
+	"stub": "FortGreene",
+	"price": "12.50",
+	"percentage": 0.2
+    },
+    {
+	"name": "Somerville",  
+    "location": {"lat": 42.427501, "lng": -71.1113899}, 
+    "zoom": 12, 
+	"stub": "Somerville",
+	"price": "12.50",
+	"percentage": 0.2
+    },
+    {
+	"name": "Syracuse",  
+    "location": {"lat": 43.0367387, "lng": -76.1051214}, 
+    "zoom": 12, 
+	"stub": "Syracuse",
+	"price": "12.50",
+	"percentage": 0.2
+    },
+    {
+	"name": "Generic",  
+    "location": {"lat": 35.5599124, "lng": -97.6315306}, 
+    "zoom": 9, 
+	"stub": "generic",
+	"price": "12.50",
+	"percentage": 0.2
+    },
+    {
+	"name": "Cambridge",  
+    "location": {"lat": 42.372713, "lng": -71.1088089}, 
+    "zoom": 12, 
+	"stub": "Cambridge",
+	"price": "12.50",
+	"percentage": 0.2
+    },
+   
+
+
 
 
 
