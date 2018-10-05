@@ -2644,7 +2644,7 @@
 },
 {
   "id": 6464836634,
-  "networks": ["ProspectHeights"],
+  "networks": ["prospectheightsparents"],
   "name": "Julia",
   "lastInitial": "D",
   "pic": "avatar-JuliaDruk.png",
@@ -2700,7 +2700,7 @@
 },
 {
   "id": 9795836197,
-  "networks": ["ProspectHeights"],
+  "networks": ["prospectheightsparents"],
   "name": "Gwen",
   "lastInitial": "S",
   "pic": "avatar-GwenSchroeder.png",

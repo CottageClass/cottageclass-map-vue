@@ -88,14 +88,6 @@
 	"percentage": 0.2
     },
     {
-	"name": "North Brooklyn Education",  
-	"location": {"lat": 40.670768, "lng": -73.930578},
-	"zoom": 13, 
-	"stub": "northbrooklyneducation",
-	"price": "12.50",
-	"percentage": 0.2
-    },
-    {
 	"name": "North Brooklyn",  
 	"location": {"lat": 40.670768, "lng": -73.930578},
 	"zoom": 13, 
@@ -237,14 +229,6 @@
     "location": {"lat": 37.7490555, "lng": -122.4344773}, 
 	"zoom": 12, 
 	"stub": "NoeValley",
-	"price": "12.50",
-	"percentage": 0.2
-    },
-    {
-	"name": "ProspectHeights",  
-    "location": {"lat": 40.6668972, "lng": -73.9798299}, 
-	"zoom": 12, 
-	"stub": "ProspectHeights",
 	"price": "12.50",
 	"percentage": 0.2
     },
