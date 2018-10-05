@@ -74,7 +74,7 @@
   <div class="onb-content-container _100vh">
     <div class="onb-top-content-container">
       <h1 class="onb-heading-large">Where do you live?</h1>
-      <p class="onb-paragraph-subheading-2">Please provide the city and state where you live.</p>
+      <p class="onb-paragraph-subheading-2">Please enter your address so we can find families near you.</p>
     </div>
     <div class="onb-location-search-container">
       <div class="w-form">
@@ -142,15 +142,22 @@
 -->
 
   <div class="onb-title-bar"><a @click="prevStep" class="onb-title-bar-back-button w-inline-block"></a>
-    <span v-if="children[0].name && children[0].birthday">
+
+  <span v-if="noChildren">
+     <a @click="nextStep" class="onb-title-bar-next-button w-inline-block">
+      <div class="onb-title-bar-next-button-text">SKIP</div>
+    </a>
+  </span>
+
+  <span v-else-if="childrenValidates">
     <a @click="nextStep" class="onb-title-bar-next-button w-inline-block">
       <div class="onb-title-bar-next-button-text">NEXT</div>
     </a>
   </span>
 
   <span v-else>
-     <a @click="nextStep" class="onb-title-bar-next-button w-inline-block">
-      <div class="onb-title-bar-next-button-text">SKIP</div>
+    <a @click="throwError('Please enter a first name and birthdate for each child.')" class="onb-title-bar-next-button-inactive">
+      <div class="onb-title-bar-next-button-text">NEXT</div>
     </a>
   </span>
 
@@ -169,7 +176,7 @@
           <div class="onb-group-header" key="index">
             <h2 class="onb-child-group-heading">Child {{ index + 1}}</h2>
             <a @click="removeChild(index)" class="onb-button-delete-child w-inline-block"><img src="../assets/remove.svg" width="24" height="24" alt="" class="image-6"></a>
-          </div><label for="birthday-2" class="onb-field-label">Name</label><input type="text" class="name-text-field w-input" maxlength="256" name="name-2" data-name="Name 2" placeholder="First Name" id="name-2" v-model="children[index].name"><label for="birthday-3" class="onb-field-label">Birthday</label><input type="date" class="basic-text-field w-input" maxlength="256" name="birthday-2" data-name="Birthday 2" placeholder="MM / DD / YYYY" id="birthday-2" v-model="children[index].birthday"></div>
+          </div><label for="birthday-2" class="onb-field-label">Name</label><input type="text" class="name-text-field w-input" maxlength="256" name="name-2" data-name="Name 2" placeholder="First Name" id="name-2" v-model="children[index].name"><label for="birthday-3" class="onb-field-label">Birthday</label><input type="date" min="1980-01-01" class="basic-text-field w-input" maxlength="256" name="birthday-2" data-name="Birthday 2" placeholder="MM / DD / YYYY" id="birthday-2" v-model="children[index].birthday"></div>
       </form><a @click="addChild" class="onb-button-add-group w-inline-block"><img src="../assets/add.svg" alt="" class="image-7"><div class="onb-button-add-group-text">Add Another child</div></a>
     </div>
   </div>
@@ -369,6 +376,23 @@ export default {
     }
   },
   computed: {
+    noChildren: function() {
+      return (this.children.length === 0 || (this.children[0].name === null && this.children[0].birthday === null))
+    },
+    childrenValidates: function () {
+      // child has name and birthday
+      let childValidates = function (child) {
+        return child.birthday && child.name
+      }
+      if (this.noChildren ||
+        // validate that each child has name, birthday
+        (this.children.reduce((soFar, child) => soFar && childValidates(child), true))) {
+        this.clearError()
+        return true
+      } else {        
+        return false
+    }
+  },
     phoneValidates: function () {
       if (this.phone) { 
       var number = this.phone.replace(/[^\d]/g, '')
