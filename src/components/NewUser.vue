@@ -200,7 +200,7 @@
 
   </div>
 
-  <div class="onb-content-container-2">
+  <div class="onb-children-info-container onb-content-container-2">
     <div class="onb-top-content-container">
       <h1 class="onb-heading-large">Child Info</h1>
       <p class="onb-paragraph-subheading-2">Have kids? Please enter their first names (or nicknames) and birthdays.</p>
@@ -217,6 +217,7 @@
       </form><a @click="addChild" class="onb-button-add-group w-inline-block"><img src="../assets/add.svg" alt="" class="image-7"><div class="onb-button-add-group-text">Add Another child</div></a>
     </div>
   </div>
+</div>
 </div>
 
 <!-- Choose availability -->
@@ -528,6 +529,12 @@ export default {
 .active-checkbox {
    background-color: #fff !important;
  }
+
+.onb-content-container {
+  margin: 0 auto;
+  max-width: 600px;
+  height: 100vh;
+}
 
 textarea, input[type="text"] {
 -webkit-appearance: none;
