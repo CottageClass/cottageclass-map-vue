@@ -14,7 +14,6 @@ Vue.config.productionTip = false
 Vue.use(VueGoogleMaps, {
   load: {
     key: 'AIzaSyCAxZ4ERhmcq87C5HK91ujxDLl7gQ_k_-c',
-    libraries: 'geocoder, places',
     // libraries: 'geocoder', // This is required if you use the Autocomplete plugin
     // OR: libraries: 'places,drawing'
     // OR: libraries: 'places,drawing,visualization'
