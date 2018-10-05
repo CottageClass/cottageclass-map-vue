@@ -99,7 +99,7 @@
 	"name": "North Brooklyn",  
 	"location": {"lat": 40.670768, "lng": -73.930578},
 	"zoom": 13, 
-	"stub": "North Brooklyn",
+	"stub": "NorthBrooklyn",
 	"price": "12.50",
 	"percentage": 0.2
     },
@@ -194,7 +194,7 @@
     },
     {
 	"name": "Dupont Circle",  
-    "location": {"lat": 40.597956, "lng": -73.650571}, 
+    "location": {"lat": 38.9111048, "lng": -77.042613}, 
 	"zoom": 12, 
 	"stub": "DupontCircle",
 	"price": "12.50",
@@ -234,7 +234,7 @@
     },
     {
 	"name": "NoeValley",  
-    "location": {"lat": 40.758657, "lng": -73.937974}, 
+    "location": {"lat": 37.7490555, "lng": -122.4344773}, 
 	"zoom": 12, 
 	"stub": "NoeValley",
 	"price": "12.50",
@@ -244,7 +244,7 @@
 	"name": "ProspectHeights",  
     "location": {"lat": 40.6668972, "lng": -73.9798299}, 
 	"zoom": 12, 
-	"stub": "NoeValley",
+	"stub": "ProspectHeights",
 	"price": "12.50",
 	"percentage": 0.2
     },
