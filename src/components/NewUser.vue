@@ -51,9 +51,46 @@
   </div>
 </div>
 
-<!-- Enter location -->
+<!-- Enter name -->
+
 
 <div class="onb-body" v-if="step === 2">
+    <div v-if="error" class="onb-error-container">
+    <div class="onb-error-text">{{ error }}</div>
+  </div>
+  <div class="onb-title-bar"><a @click="prevStep" class="onb-title-bar-back-button w-inline-block"></a>
+    <span v-if="(firstName && lastName)">
+    <a @click="nextStep" class="onb-title-bar-next-button w-inline-block">
+      <div class="onb-title-bar-next-button-text">NEXT</div>
+    </a>
+  </span>
+
+  <span v-else>
+      <a @click="throwError('Please enter a first and last name.')" class="onb-title-bar-next-button-inactive w-inline-block">
+      <div class="onb-title-bar-next-button-text">NEXT</div>
+    </a>
+  </span>
+  </div>
+
+  <div class="onb-content-container _100vh">
+    <div class="onb-top-content-container">
+      <h1 class="onb-heading-large">What's your name?</h1>
+    </div>
+    <div class="onb-location-search-container">
+      <div class="w-form">
+        <form id="email-form-2" name="email-form-2" data-name="Email Form 2">
+          <input v-model="firstName" type="text" class="location-text-field w-input" maxlength="256" name="name" data-name="Name" placeholder="First name" id="name">
+          <input v-model="lastName" type="text" class="location-text-field w-input" maxlength="256" name="name" data-name="Name" placeholder="Last name" id="name">
+        </form>
+      </div>
+    </div>
+    <p class="onb-paragraph-small-50">We'll only display your first name and initial to others.</p>
+  </div>
+</div>
+
+<!-- Enter location -->
+
+<div class="onb-body" v-if="step === 3">
     <div v-if="error" class="onb-error-container">
     <div class="onb-error-text">{{ error }}</div>
   </div>
@@ -97,7 +134,7 @@
 
 <!-- Enter phone --> 
 
-<div class="onb-body" v-if="step === 3">
+<div class="onb-body" v-if="step === 4">
     <div v-if="error" class="onb-error-container">
     <div class="onb-error-text">{{ error }}</div>
   </div>
@@ -124,13 +161,13 @@
         <form id="email-form-2" name="email-form-2" data-name="Email Form 2"><input v-model="phone" type="tel" class="location-text-field w-input" maxlength="256" name="name" data-name="Name" placeholder="e.g. 1-212-555-1212" id="name"></form>
       </div>
     </div>
-    <p class="onb-paragraph-small-50">Other families will text you to request or offer care. (We may also send you text messages about special CottageClass CareShare events or news. Message &amp; data rates apply.)</p>
+    <p class="onb-paragraph-small-50">Other families will text you to request or offer care. (We may also send you text messages about special CottageClass  CareShare events or news. Message &amp; data rates apply.)</p>
   </div>
 </div>
 
 <!-- Enter child info --> 
 
-<div class="onb-body-full-height" v-if="step === 4">
+<div class="onb-body-full-height" v-if="step === 5">
      <div v-if="error" class="onb-error-container">
     <div class="onb-error-text">{{ error }}</div>
   </div>
@@ -184,7 +221,7 @@
 
 <!-- Choose availability -->
 
-<div class="onb-body-full-height" v-if="step === 5">
+<div class="onb-body-full-height" v-if="step === 6">
   
     <div v-if="error" class="onb-error-container">
     <div class="onb-error-text">{{ error }}</div>
@@ -223,7 +260,7 @@
 
 <!-- Choose activities --> 
 
-<div class="onb-body-full-height" v-if="step === 6">
+<div class="onb-body-full-height" v-if="step === 7">
   
     <div v-if="error" class="onb-error-container">
     <div class="onb-error-text">{{ error }}</div>
@@ -231,13 +268,13 @@
 
   <div class="onb-title-bar"><a @click="prevStep" class="onb-title-bar-back-button w-inline-block"></a>
     <span v-if="availability.weekends || availability.mornings || availability.afternoons || availability.evenings">
-    <a @click="nextStep" class="onb-title-bar-next-button w-inline-block">
+    <a @click="nextStep();submitData();" class="onb-title-bar-next-button w-inline-block">
       <div class="onb-title-bar-next-button-text">NEXT</div>
     </a>
   </span>
 
   <span v-else>
-      <a @click="nextStep" class="onb-title-bar-next-button w-inline-block">
+      <a @click="nextStep();submitData();" class="onb-title-bar-next-button w-inline-block">
       <div class="onb-title-bar-next-button-text">SKIP</div>
     </a>
   </span>
@@ -263,9 +300,31 @@
   </div>
 </div>
 
-<!-- Add the app --> 
+<!-- Final screen --> 
 
-<div class="onb-body-full-height" v-if="step === 7">
+
+<div class="onb-body" v-if="step === 8">
+    <div v-if="error" class="onb-error-container">
+    <div class="onb-error-text">{{ error }}</div>
+  </div>
+  <div class="onb-title-bar">
+    <a @click="prevStep" class="onb-title-bar-back-button w-inline-block"></a>
+  </div>
+
+  <div class="onb-content-container _100vh">
+    <div class="onb-top-content-container">
+      <h1 class="onb-heading-large">Thanks for signing up!</h1>
+      <p class="onb-paragraph-subheading-2">Once there are enough people to start a CareShare group in your area, we'll text you a link to join! Would you like to invite some friends to join now?</p>
+    </div>
+      <a href="#" class="splash-button w-inline-block button-text">
+      SHARE ON FACEBOOK</a>
+  </div>
+</div>
+
+
+<!--  
+
+<div class="onb-body-full-height" v-if="step === 8">
   <div class="onb-arrow-animation-container"><img src="../assets/Comp_2.gif" height="60" alt=""></div>
 
   <div class="onb-title-bar"><a @click="prevStep" class="onb-title-bar-back-button w-inline-block"></a>
@@ -300,23 +359,26 @@
   </div>
 </div>
 
-<!-- Final screen -->
+-->
 
-<div class="onb-body-full-height" v-if="step === 8">
-Done! Here's the data we collected: <br>
-{{ $data }}
-</div>
 </span>
 </template>
 
 <script>
 import VueGoogleAutocomplete from 'vue-google-autocomplete'
+// import google sheets API service
+import sheetsu from 'sheetsu-node';
+
+// create a config file to identify which spreadsheet we push to.
+var client = sheetsu({ address: 'https://sheetsu.com/apis/v1.0su/e383acab3f80' })
 
 export default {
   components: { VueGoogleAutocomplete },
     data () {
     return {
       step: 0,
+      firstName: null,
+      lastName: null,
       agreedToTos: false,
       addressEntered: false,
       address: '', // get real location from google maps
@@ -343,6 +405,21 @@ export default {
   },
   name: 'NewUser',
   methods: {
+    submitData: function () {
+            client.create({
+              "address": this.address,
+
+              "phone": this.phone,
+              "children": this.children,
+              "availability": this.availability,
+              "activities": this.activities,
+              "testArray": ["basketball", "soccer", "football"],
+            }).then((data) => {
+              console.log(data)
+            }, (err) => {
+              console.log(err)
+              });
+    },
                 /**
             * When the location found
             * @param {Object} addressData Data of the found location
