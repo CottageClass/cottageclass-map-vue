@@ -6,137 +6,24 @@
 
 <div class="onb-body" v-if="step != 0">
 
+<!-- Nav -->
+<Nav :button="nextButtonState" 
+@next="nextStep"
+@prev="prevStep" />
+
 <!-- error message for all screens --> 
 
   <div v-if="error" class="onb-error-container">
     <div class="onb-error-text">{{ error }}</div>
   </div>
 
-<!-- TOS --> 
-
-<div v-if="step === 1"> 
-  <div class="onb-title-bar"><a @click="prevStep" class="onb-title-bar-back-button w-inline-block"></a>
-    <span v-if="agreedToTos">
-    <a @click="nextStep" class="onb-title-bar-next-button w-inline-block">
-      <div class="onb-title-bar-next-button-text">NEXT</div>
-    </a>
-  </span>
-
-  <span v-if="!agreedToTos">
-      <a @click="throwError('To continue, you must agree to our terms of service by checking the box below')" class="onb-title-bar-next-button-inactive w-inline-block">
-      <div class="onb-title-bar-next-button-text">NEXT</div>
-    </a>
-  </span>
-  </div>
-
-  <div class="onb-content-container">
-    <div class="onb-top-content-container">
-      <h1 class="onb-heading-large">Terms</h1>
-      <p class="onb-paragraph-subheading-2">Please check the box at the bottom to agree to our terms before continuing</p>
-    </div>
-    <div class="onb-paragraph-align-left">Terms of service<br>Last updated: June 6, 2018<br>If you reside in the United States, please note that section 13 of these terms of service contains an arbitration clause and class action waiver. It affects how disputes with CottageClass are resolved. By accepting these terms of service, you agree to be bound by this arbitration provision. Please read it carefully.Please read these terms of service carefully as they contain important information regarding your legal rights, remedies and obligations. These include various limitations and exclusions, a clause that governs the jurisdiction and venue of disputes, and obligations to comply with applicable laws and regulations.In particular... (ADD LATEST TERMS OF SERVICE HERE)</div>
-    <div class="onb-fixed-bottom-actions-checkbox-container">
-      <div class="form-block-2 w-form">
-        <form id="email-form" name="email-form" data-name="Email Form">
-          <div class="checkbox-field w-checkbox"><input type="checkbox" id="checkbox" name="checkbox" data-name="Checkbox" @click="clearError" v-model="agreedToTos" class="w-checkbox-input"><label for="checkbox" class="checkbox-label w-form-label">I agree to the terms</label></div>
-        </form>
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- Enter name -->
-
-
-<div v-if="step === 2">
-  <div class="onb-title-bar"><a @click="prevStep" class="onb-title-bar-back-button w-inline-block"></a>
-    <span v-if="(firstName && lastName)">
-    <a @click="nextStep" class="onb-title-bar-next-button w-inline-block">
-      <div class="onb-title-bar-next-button-text">NEXT</div>
-    </a>
-  </span>
-
-  <span v-else>
-      <a @click="throwError('Please enter a first and last name.')" class="onb-title-bar-next-button-inactive w-inline-block">
-      <div class="onb-title-bar-next-button-text">NEXT</div>
-    </a>
-  </span>
-  </div>
-
-  <div class="onb-content-container _100vh">
-    <div class="onb-top-content-container">
-      <h1 class="onb-heading-large">What's your name?</h1>
-    </div>
-    <div class="onb-location-search-container">
-      <div class="w-form">
-        <form id="email-form-2" name="email-form-2" data-name="Email Form 2">
-          <input v-model="firstName" type="text" class="location-text-field w-input" maxlength="256" name="name" data-name="Name" placeholder="First name" id="name">
-          <input v-model="lastName" type="text" class="location-text-field w-input" maxlength="256" name="name" data-name="Name" placeholder="Last name" id="name">
-        </form>
-      </div>
-    </div>
-    <p class="onb-paragraph-small-50">We'll only display your first name and initial to others.</p>
-  </div>
-</div>
-
-<!-- Enter location -->
-
-<div v-if="step === 3">
-  <div class="onb-title-bar"><a @click="prevStep" class="onb-title-bar-back-button w-inline-block"></a>
-    <span v-if="addressEntered">
-    <a @click="nextStep" class="onb-title-bar-next-button w-inline-block">
-      <div class="onb-title-bar-next-button-text">NEXT</div>
-    </a>
-  </span>
-
-  <span v-else>
-      <a @click="throwError('Please enter your address to continue.')" class="onb-title-bar-next-button-inactive w-inline-block">
-      <div class="onb-title-bar-next-button-text">NEXT</div>
-    </a>
-  </span>
-  </div>
-
-  <div class="onb-content-container _100vh">
-    <div class="onb-top-content-container">
-      <h1 class="onb-heading-large">Where do you live?</h1>
-      <p class="onb-paragraph-subheading-2">Please enter your address so we can find families near you.</p>
-    </div>
-    <div class="onb-location-search-container">
-      <div class="w-form">
-
-        <vue-google-autocomplete
-            ref="address"
-            id="map"
-            classname="email-form-2 w-form location-text-field w-input"
-            placeholder="e.g. 10 Main St."
-            v-on:placechanged="getAddressData"
-            country="us"
-        >
-        </vue-google-autocomplete>
-
-      </div>
-    </div>
-    <p class="onb-paragraph-small-50">Only those you invite to your home will see this.</p>
-  </div>
-</div>
+<Terms v-if="step === 1" v-model="agreedToTerms" @error="throwError" @complete="clearError" /> 
+<Name v-if="step === 2" v-model="name"/>
+<Location v-if="step === 3" v-model="location"/>
 
 <!-- Enter phone --> 
 
 <div v-if="step === 4">
-  <div class="onb-title-bar"><a @click="prevStep" class="onb-title-bar-back-button w-inline-block"></a>
-    <span v-if="phoneValidates">
-    <a @click="nextStep" class="onb-title-bar-next-button w-inline-block">
-      <div class="onb-title-bar-next-button-text">NEXT</div>
-    </a>
-  </span>
-
-  <span v-else>
-      <a @click="throwError('Please enter a valid US phone number to continue.')" class="onb-title-bar-next-button-inactive w-inline-block">
-      <div class="onb-title-bar-next-button-text">NEXT</div>
-    </a>
-  </span>
-  </div>
-
   <div class="onb-content-container _100vh">
     <div class="onb-top-content-container">
       <h1 class="onb-heading-large">What's your phone number?</h1>
@@ -153,28 +40,6 @@
 <!-- Enter child info --> 
 
 <div v-if="step === 5">
-  <div class="onb-title-bar"><a @click="prevStep" class="onb-title-bar-back-button w-inline-block"></a>
-
-  <span v-if="noChildren">
-     <a @click="nextStep" class="onb-title-bar-next-button w-inline-block">
-      <div class="onb-title-bar-next-button-text">SKIP</div>
-    </a>
-  </span>
-
-  <span v-else-if="childrenValidates">
-    <a @click="nextStep" class="onb-title-bar-next-button w-inline-block">
-      <div class="onb-title-bar-next-button-text">NEXT</div>
-    </a>
-  </span>
-
-  <span v-else>
-    <a @click="throwError('Please enter a first name and birthdate for each child.')" class="onb-title-bar-next-button-inactive">
-      <div class="onb-title-bar-next-button-text">NEXT</div>
-    </a>
-  </span>
-
-  </div>
-
   <div class="onb-children-info-container onb-content-container-2">
     <div class="onb-top-content-container">
       <h1 class="onb-heading-large">Child Info</h1>
@@ -198,20 +63,6 @@
 <!-- Choose availability -->
 
 <div v-if="step === 6">
-  <div class="onb-title-bar"><a @click="prevStep" class="onb-title-bar-back-button w-inline-block"></a>
-    <span v-if="availability.weekends || availability.mornings || availability.afternoons || availability.evenings">
-    <a @click="nextStep" class="onb-title-bar-next-button w-inline-block">
-      <div class="onb-title-bar-next-button-text">NEXT</div>
-    </a>
-  </span>
-
-  <span v-else>
-      <a @click="nextStep" class="onb-title-bar-next-button w-inline-block">
-      <div class="onb-title-bar-next-button-text">SKIP</div>
-    </a>
-  </span>
-  </div>
-
   <div class="onb-content-container">
     <div class="onb-top-content-container">
       <h1 class="onb-heading-large">Availability</h1>
@@ -232,20 +83,6 @@
 <!-- Choose activities --> 
 
 <div v-if="step === 7">
-  <div class="onb-title-bar"><a @click="prevStep" class="onb-title-bar-back-button w-inline-block"></a>
-    <span v-if="availability.weekends || availability.mornings || availability.afternoons || availability.evenings">
-    <a @click="nextStep();submitData();" class="onb-title-bar-next-button w-inline-block">
-      <div class="onb-title-bar-next-button-text">NEXT</div>
-    </a>
-  </span>
-
-  <span v-else>
-      <a @click="nextStep();submitData();" class="onb-title-bar-next-button w-inline-block">
-      <div class="onb-title-bar-next-button-text">SKIP</div>
-    </a>
-  </span>
-  </div>
-
   <div class="onb-content-container">
     <div class="onb-top-content-container">
       <h1 class="onb-heading-large">Activities</h1>
@@ -270,10 +107,6 @@
 
 
 <div v-if="step === 8">
-  <div class="onb-title-bar">
-    <a @click="prevStep" class="onb-title-bar-back-button w-inline-block"></a>
-  </div>
-
   <div class="onb-content-container _100vh">
     <div class="onb-top-content-container">
       <h1 class="onb-heading-large">Thanks for signing up!</h1>
@@ -329,7 +162,11 @@
 
 <script>
 import Login from '@/components/onboarding/Login.vue'
-import VueGoogleAutocomplete from 'vue-google-autocomplete'
+import Nav from '@/components/onboarding/Nav.vue'
+import Terms from '@/components/onboarding/Terms.vue'
+import Name from '@/components/onboarding/Name.vue'
+import Location from '@/components/onboarding/Location.vue'
+
 // import google sheets API service
 import sheetsu from 'sheetsu-node';
 
@@ -337,16 +174,16 @@ import sheetsu from 'sheetsu-node';
 var client = sheetsu({ address: 'https://sheetsu.com/apis/v1.0su/e383acab3f80' })
 
 export default {
-  components: { VueGoogleAutocomplete, Login },
+  components: { Login, Nav, Terms, Name, Location },
     data () {
     return {
       step: 0,
-      firstName: null,
-      lastName: null,
-      agreedToTos: false,
-      addressEntered: false,
-      address: '', // get real location from google maps
-      latLng: {},
+      name: {
+        first: null,
+        last: null
+      },
+      location: {},
+      agreedToTerms: false,
       phone: null,
       children: [{name: null, birthday: null}],
       availability: {
@@ -372,7 +209,6 @@ export default {
     submitData: function () {
             client.create({
               "address": this.address,
-
               "phone": this.phone,
               "children": this.children,
               "availability": this.availability,
@@ -384,16 +220,6 @@ export default {
               console.log(err)
               });
     },
-                /**
-            * When the location found
-            * @param {Object} addressData Data of the found location
-            * @param {Object} placeResultData PlaceResult object
-            * @param {String} id Input container ID
-            */
-            getAddressData: function (addressData, placeResultData, id) {
-              this.address = addressData
-              this.addressEntered = true
-            },
     nextStep: function () {
       this.step = this.step + 1
       this.clearError()
@@ -417,6 +243,27 @@ export default {
     }
   },
   computed: {
+    nextButtonState: function () {
+      let isComplete = function (step) {
+        // this is a stub, add logic here
+        return false
+      };
+      let isSkippable = function (step) {
+        return [5, 6, 7].includes(step)
+      };
+      let isLastStep = function (step) {
+        return step === 8
+      };
+      if (isSkippable(this.step)) {
+        return "skip"
+      } else if (isLastStep(this.step)) {
+        return "none"
+      } else if (isComplete(this.step)) {
+        return "next"
+      } else {
+        return "inactive"
+      }
+    },
     noChildren: function() {
       return (this.children.length === 0 || (this.children[0].name === null && this.children[0].birthday === null))
     },
