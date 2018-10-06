@@ -1,20 +1,6 @@
 <template>
 <span>
-<!-- Login splash -->
-<div id="body onb-body-splash" v-if="step === 0">
-
-  <div class="div-block-6"><img src="../assets/cc-splash-logo.svg" width="150" alt=""></div>
-  <div class="onb-splash-title-container">
-    <h1 class="onb-heading-large-black">Why parent alone?</h1>
-    <p class="onb-paragraph-subheading-2-black">Sign in to build the free, flexible, childcare network of your dreams, by connecting with friends and parents in your community.</p>
-  </div>
-  <div class="embed-facebook-button">
-    <div class="w-embed">
-      <div @click="nextStep" class="fb-login-button button" data-max-rows="1" data-size="large" data-button-type="continue_with" data-show-faces="false" data-auto-logout-link="false" data-use-continue-as="false">Continue with Facebook</div>
-    </div>
-  </div>
-</div>
-
+<Login v-if="step === 0" v-on:next-step="nextStep" />
 <!-- Accept TOS -->
 
 <div class="onb-body" v-if="step === 1">
@@ -167,7 +153,7 @@
 
 <!-- Enter child info --> 
 
-<div class="onb-body-full-height" v-if="step === 5">
+<div class="onb-body" v-if="step === 5">
      <div v-if="error" class="onb-error-container">
     <div class="onb-error-text">{{ error }}</div>
   </div>
@@ -366,6 +352,7 @@
 </template>
 
 <script>
+import Login from '@/components/onboarding/Login.vue'
 import VueGoogleAutocomplete from 'vue-google-autocomplete'
 // import google sheets API service
 import sheetsu from 'sheetsu-node';
@@ -374,7 +361,7 @@ import sheetsu from 'sheetsu-node';
 var client = sheetsu({ address: 'https://sheetsu.com/apis/v1.0su/e383acab3f80' })
 
 export default {
-  components: { VueGoogleAutocomplete },
+  components: { VueGoogleAutocomplete, Login },
     data () {
     return {
       step: 0,
@@ -514,7 +501,7 @@ export default {
 
 <!-- this is a giant jumble of all app styles. Would be great to separate it out --> 
 
-<style scoped>
+<style>
 
 /* child birthdate selector */
 ::-webkit-datetime-edit-text { color: rgba(0, 0, 0, .3); padding: 0 0.3em; }
@@ -3184,6 +3171,7 @@ a {
   font-size: 16px;
   line-height: 16px;
   font-weight: 400;
+  color: #fff;
 }
 
 .form-block-3 {
