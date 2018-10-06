@@ -1,12 +1,20 @@
 <template>
 <span>
 <Login v-if="step === 0" v-on:next-step="nextStep" />
-<!-- Accept TOS -->
 
-<div class="onb-body" v-if="step === 1">
-    <div v-if="error" class="onb-error-container">
+<!-- start nav, error, and onboarding fields -->
+
+<div class="onb-body" v-if="step != 0">
+
+<!-- error message for all screens --> 
+
+  <div v-if="error" class="onb-error-container">
     <div class="onb-error-text">{{ error }}</div>
   </div>
+
+<!-- TOS --> 
+
+<div v-if="step === 1"> 
   <div class="onb-title-bar"><a @click="prevStep" class="onb-title-bar-back-button w-inline-block"></a>
     <span v-if="agreedToTos">
     <a @click="nextStep" class="onb-title-bar-next-button w-inline-block">
@@ -40,10 +48,7 @@
 <!-- Enter name -->
 
 
-<div class="onb-body" v-if="step === 2">
-    <div v-if="error" class="onb-error-container">
-    <div class="onb-error-text">{{ error }}</div>
-  </div>
+<div v-if="step === 2">
   <div class="onb-title-bar"><a @click="prevStep" class="onb-title-bar-back-button w-inline-block"></a>
     <span v-if="(firstName && lastName)">
     <a @click="nextStep" class="onb-title-bar-next-button w-inline-block">
@@ -76,10 +81,7 @@
 
 <!-- Enter location -->
 
-<div class="onb-body" v-if="step === 3">
-    <div v-if="error" class="onb-error-container">
-    <div class="onb-error-text">{{ error }}</div>
-  </div>
+<div v-if="step === 3">
   <div class="onb-title-bar"><a @click="prevStep" class="onb-title-bar-back-button w-inline-block"></a>
     <span v-if="addressEntered">
     <a @click="nextStep" class="onb-title-bar-next-button w-inline-block">
@@ -120,10 +122,7 @@
 
 <!-- Enter phone --> 
 
-<div class="onb-body" v-if="step === 4">
-    <div v-if="error" class="onb-error-container">
-    <div class="onb-error-text">{{ error }}</div>
-  </div>
+<div v-if="step === 4">
   <div class="onb-title-bar"><a @click="prevStep" class="onb-title-bar-back-button w-inline-block"></a>
     <span v-if="phoneValidates">
     <a @click="nextStep" class="onb-title-bar-next-button w-inline-block">
@@ -153,17 +152,7 @@
 
 <!-- Enter child info --> 
 
-<div class="onb-body" v-if="step === 5">
-     <div v-if="error" class="onb-error-container">
-    <div class="onb-error-text">{{ error }}</div>
-  </div>
-
-<!--  For testing
-   <div class="onb-error-container">
-    <div class="onb-error-text">{{ children }}</div>
-  </div>
--->
-
+<div v-if="step === 5">
   <div class="onb-title-bar"><a @click="prevStep" class="onb-title-bar-back-button w-inline-block"></a>
 
   <span v-if="noChildren">
@@ -208,12 +197,7 @@
 
 <!-- Choose availability -->
 
-<div class="onb-body" v-if="step === 6">
-  
-    <div v-if="error" class="onb-error-container">
-    <div class="onb-error-text">{{ error }}</div>
-  </div>
-
+<div v-if="step === 6">
   <div class="onb-title-bar"><a @click="prevStep" class="onb-title-bar-back-button w-inline-block"></a>
     <span v-if="availability.weekends || availability.mornings || availability.afternoons || availability.evenings">
     <a @click="nextStep" class="onb-title-bar-next-button w-inline-block">
@@ -228,7 +212,7 @@
   </span>
   </div>
 
-  <div class="onb-content-container _100vh">
+  <div class="onb-content-container">
     <div class="onb-top-content-container">
       <h1 class="onb-heading-large">Availability</h1>
       <p class="onb-paragraph-subheading-2">When are you generally available to offer care or educational activities to other families? Select all that apply.</p>
@@ -247,12 +231,7 @@
 
 <!-- Choose activities --> 
 
-<div class="onb-body" v-if="step === 7">
-  
-    <div v-if="error" class="onb-error-container">
-    <div class="onb-error-text">{{ error }}</div>
-  </div>
-
+<div v-if="step === 7">
   <div class="onb-title-bar"><a @click="prevStep" class="onb-title-bar-back-button w-inline-block"></a>
     <span v-if="availability.weekends || availability.mornings || availability.afternoons || availability.evenings">
     <a @click="nextStep();submitData();" class="onb-title-bar-next-button w-inline-block">
@@ -290,10 +269,7 @@
 <!-- Final screen --> 
 
 
-<div class="onb-body" v-if="step === 8">
-    <div v-if="error" class="onb-error-container">
-    <div class="onb-error-text">{{ error }}</div>
-  </div>
+<div v-if="step === 8">
   <div class="onb-title-bar">
     <a @click="prevStep" class="onb-title-bar-back-button w-inline-block"></a>
   </div>
@@ -2799,7 +2775,7 @@ a {
 .onb-body {
   overflow: visible;
   padding-top: 53px;
-  padding-bottom: 53px;
+  padding-bottom: 0px;
   background-color: #1d8ae7;
 }
 
