@@ -208,7 +208,7 @@
 
 <!-- Choose availability -->
 
-<div class="onb-body-full-height" v-if="step === 6">
+<div class="onb-body" v-if="step === 6">
   
     <div v-if="error" class="onb-error-container">
     <div class="onb-error-text">{{ error }}</div>
@@ -247,7 +247,7 @@
 
 <!-- Choose activities --> 
 
-<div class="onb-body-full-height" v-if="step === 7">
+<div class="onb-body" v-if="step === 7">
   
     <div v-if="error" class="onb-error-container">
     <div class="onb-error-text">{{ error }}</div>
