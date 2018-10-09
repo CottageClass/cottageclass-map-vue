@@ -7,8 +7,8 @@
     <div class="onb-location-search-container">
       <div class="w-form">
         <form id="email-form-2" name="email-form-2" data-name="Email Form 2">
-          <input @input="$emit('input', name)" type="text" value="first" v-model="first" class="location-text-field w-input" maxlength="256" name="name" data-name="Name" placeholder="First name" id="name">
-          <input @input="$emit('input', name)" value="last" type="text" v-model="last" class="location-text-field w-input" maxlength="256" name="name" data-name="Name" placeholder="Last name" id="name">
+          <input v-model="first" @input="emit()" type="text" value="first" class="location-text-field w-input" maxlength="256" name="name" data-name="Name" placeholder="First name" id="name">
+          <input v-model="last" @input="emit()" value="last" type="text" class="location-text-field w-input" maxlength="256" name="name" data-name="Name" placeholder="Last name" id="name">
         </form>
       </div>
     </div>
@@ -26,17 +26,20 @@ export default {
   data () {
     return {
       first: this.value.first,
-      last: this.value.last
+      last: this.value.last,
+      errorMesg: 'Please enter your first and last name.'
     }
   },
-  computed: {
-    name: function () {
-      return {
-        first: this.first,
-        last: this.last,
-        error: this.error
-      }
+  mounted: function () {
+    if (!this.isComplete) {
+      this.$emit('input', {
+        first: this.value.first,
+        last: this.value.last,
+        err: this.errorMesg 
+      })
+    }
     },
+  computed: {
     isComplete: function () {
       return (this.first && this.last)
     },
@@ -44,8 +47,24 @@ export default {
       if (this.isComplete) {
         return false
       } else {
-        return 'Please enter your first and last name.'
+        return this.errorMesg
       }
+    },
+    name: function() {
+      return {
+        first: this.first,
+        last: this.last,
+        err: this.error
+      }
+    }
+  },
+  methods: {
+    emit: function () {
+      this.$emit('input', {
+        first: this.first,
+        last: this.last,
+        err: this.error
+      })
     }
   }
 };

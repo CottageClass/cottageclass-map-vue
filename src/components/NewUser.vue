@@ -1,163 +1,21 @@
 <template>
-<span>
-<Login v-if="step === 0" v-on:next-step="nextStep" />
-
-<!-- start nav, error, and onboarding fields -->
-
-<div class="onb-body" v-if="step != 0">
-
-<!-- Nav -->
-<Nav :button="nextButtonState" 
-@next="nextStep"
-@prev="prevStep" />
-
-<!-- error message for all screens --> 
-
-  <div v-if="error" class="onb-error-container">
-    <div class="onb-error-text">{{ error }}</div>
-  </div>
-
-<Terms v-if="step === 1" v-model="agreedToTerms" @error="throwError" @complete="clearError" /> 
-<Name v-if="step === 2" v-model="name"/>
-<Location v-if="step === 3" v-model="location"/>
-
-<!-- Enter phone --> 
-
-<div v-if="step === 4">
-  <div class="onb-content-container _100vh">
-    <div class="onb-top-content-container">
-      <h1 class="onb-heading-large">What's your phone number?</h1>
-    </div>
-    <div class="onb-location-search-container">
-      <div class="w-form">
-        <form id="email-form-2" name="email-form-2" data-name="Email Form 2"><input v-model="phone" type="tel" class="location-text-field w-input" maxlength="256" name="name" data-name="Name" placeholder="e.g. 1-212-555-1212" id="name"></form>
+  <span>
+    <Login v-if="step === 0" v-on:next="nextStep" />
+    <div class="onb-body" v-if="step != 0">
+      <Nav :button="nextButtonState" @next="nextStep" @prev="prevStep" />
+      <div v-if="showError && error" class="onb-error-container">
+        <div class="onb-error-text">{{ error }}</div>
       </div>
+      <Terms v-if="step === 1" v-model="terms" /> 
+      <Name v-if="step === 2" v-model="name"/>
+      <Location v-if="step === 3" v-model="location"/>
+      <Phone v-if="step === 4" v-model="phone" />
+      <Children v-if="step === 5" v-model="children" />
+      <Availability v-if="step === 6" v-model="availability" />
+      <Activities v-if="step === 7" v-model="activities" />
+      <Invite v-if="step === 8" />
     </div>
-    <p class="onb-paragraph-small-50">Other families will text you to request or offer care. (We may also send you text messages about special CottageClass  CareShare events or news. Message &amp; data rates apply.)</p>
-  </div>
-</div>
-
-<!-- Enter child info --> 
-
-<div v-if="step === 5">
-  <div class="onb-children-info-container onb-content-container-2">
-    <div class="onb-top-content-container">
-      <h1 class="onb-heading-large">Child Info</h1>
-      <p class="onb-paragraph-subheading-2">Have kids? Please enter their first names (or nicknames) and birthdays.</p>
-    </div>
-  </div>
-  <div class="onb-child-info-container">
-    <div class="form-block-3 w-form">
-      <form id="email-form-2" name="email-form-2" data-name="Email Form 2" class="form-2">
-        <div v-for="(child, index) in children" class="onb-child-group-2">
-          <div class="onb-group-header" key="index">
-            <h2 class="onb-child-group-heading">Child {{ index + 1}}</h2>
-            <a @click="removeChild(index)" class="onb-button-delete-child w-inline-block"><img src="../assets/remove.svg" width="24" height="24" alt="" class="image-6"></a>
-          </div><label for="birthday-2" class="onb-field-label">Name</label><input type="text" class="name-text-field w-input" maxlength="256" name="name-2" data-name="Name 2" placeholder="First Name" id="name-2" v-model="children[index].name"><label for="birthday-3" class="onb-field-label">Birthday</label><input type="date" min="1980-01-01" class="basic-text-field w-input" maxlength="256" name="birthday-2" data-name="Birthday 2" placeholder="MM / DD / YYYY" id="birthday-2" v-model="children[index].birthday"></div>
-      </form><a @click="addChild" class="onb-button-add-group w-inline-block"><img src="../assets/add.svg" alt="" class="image-7"><div class="onb-button-add-group-text">Add Another child</div></a>
-    </div>
-  </div>
-</div>
-</div>
-
-<!-- Choose availability -->
-
-<div v-if="step === 6">
-  <div class="onb-content-container">
-    <div class="onb-top-content-container">
-      <h1 class="onb-heading-large">Availability</h1>
-      <p class="onb-paragraph-subheading-2">When are you generally available to offer care or educational activities to other families? Select all that apply.</p>
-    </div>
-    <div class="onb-form-block-checkbox-list w-form">
-      <form id="email-form" name="email-form" data-name="Email Form" class="onb-form-checkbox-list">
-        <div class="checkbox-field-extra-space" :class="{'active-checkbox': availability.mornings}"><input v-model="availability.mornings" type="checkbox" id="checkbox" name="checkbox" data-name="Checkbox" class="onb-checkbox w-checkbox-input" :class="{ 'active-checkbox': availability.mornings }"><label for="checkbox" class="onb-checkbox-label w-form-label">7-3</label></div>
-        <div class="checkbox-field-extra-space" :class="{'active-checkbox': availability.afternoons}"><input v-model="availability.afternoons" type="checkbox" id="checkbox-5" name="checkbox-5" data-name="Checkbox 5" class="onb-checkbox w-checkbox-input"><label for="checkbox-5" class="onb-checkbox-label w-form-label">3-7</label></div>
-        <div class="checkbox-field-extra-space" :class="{'active-checkbox': availability.evenings}"><input v-model="availability.evenings" type="checkbox" id="checkbox-4" name="checkbox-4" data-name="Checkbox 4" class="onb-checkbox w-checkbox-input"><label for="checkbox-4" class="onb-checkbox-label w-form-label">After 7</label></div>
-        <div class="checkbox-field-extra-space" :class="{'active-checkbox': availability.weekends}"><input v-model="availability.weekends" type="checkbox" id="checkbox-3" name="checkbox-3" data-name="Checkbox 3" class="onb-checkbox w-checkbox-input"><label for="checkbox-3" class="onb-checkbox-label w-form-label">Weekends</label></div>
-      </form>
-    </div>
-    <p class="onb-paragraph-small-50">You&#x27;ll be able to accept or decline any requests. Most families list days and times that they are generally at home with their own children or are doing a fun or educational activity which they&#x27;d like to include other children in.</p>
-  </div>
-</div>
-
-<!-- Choose activities --> 
-
-<div v-if="step === 7">
-  <div class="onb-content-container">
-    <div class="onb-top-content-container">
-      <h1 class="onb-heading-large">Activities</h1>
-      <p class="onb-paragraph-subheading-2">What are the activities kids especially love doing with you?</p>
-    </div>
-    <div class="onb-form-block-checkbox-list w-form">
-      <form class="onb-form-checkbox-list">
-        <div class="checkbox-field-extra-space" :class="{'active-checkbox': activities.playingOutside}"><input v-model="activities.playingOutside" type="checkbox" id="checkbox" name="checkbox" data-name="Checkbox" class="onb-checkbox w-checkbox-input"><label for="checkbox" class="onb-checkbox-label w-form-label">Playing outside</label></div>
-        <div class="checkbox-field-extra-space" :class="{'active-checkbox': activities.artsAndCrafts}"><input v-model="activities.artsAndCrafts" type="checkbox" id="checkbox-1" name="checkbox-1" data-name="Checkbox 1" class="onb-checkbox w-checkbox-input"><label for="checkbox-1" class="onb-checkbox-label w-form-label">Arts &amp; crafts</label></div>
-        <div class="checkbox-field-extra-space" :class="{'active-checkbox': activities.fieldTrips}"><input v-model="activities.fieldTrips" type="checkbox" id="checkbox-2" name="checkbox-2" data-name="Checkbox 2" class="onb-checkbox w-checkbox-input"><label for="checkbox-2" class="onb-checkbox-label w-form-label">Field trips</label></div>
-        <div class="checkbox-field-extra-space" :class="{'active-checkbox': activities.cooking}"><input v-model="activities.cooking" type="checkbox" id="checkbox-3" name="checkbox-3" data-name="Checkbox 3" class="onb-checkbox w-checkbox-input"><label for="checkbox-3" class="onb-checkbox-label w-form-label">Cooking</label></div>
-        <div class="checkbox-field-extra-space" :class="{'active-checkbox': activities.homeworkHelp}"><input v-model="activities.homeworkHelp" type="checkbox" id="checkbox-4" name="checkbox-4" data-name="Checkbox 4" class="onb-checkbox w-checkbox-input"><label for="checkbox-4" class="onb-checkbox-label w-form-label">Homework help</label></div>
-        <div class="checkbox-field-extra-space" :class="{'active-checkbox': activities.bilingualImmersion}"><input v-model="activities.bilingualImmersion" type="checkbox" id="checkbox-5" name="checkbox-5" data-name="Checkbox 5" class="onb-checkbox w-checkbox-input"><label for="checkbox-5" class="onb-checkbox-label w-form-label">Bilingual immersion</label></div>
-        <div class="checkbox-field-extra-space" :class="{'active-checkbox': activities.music}"><input v-model="activities.music" type="checkbox" id="checkbox-6" name="checkbox-6" data-name="Checkbox 6" class="onb-checkbox w-checkbox-input"><label for="checkbox-6" class="onb-checkbox-label w-form-label">Music</label></div>
-      </form>
-    </div>
-    <p class="onb-paragraph-small-50"></p>
-  </div>
-</div>
-
-<!-- Final screen --> 
-
-
-<div v-if="step === 8">
-  <div class="onb-content-container _100vh">
-    <div class="onb-top-content-container">
-      <h1 class="onb-heading-large">Thanks for signing up!</h1>
-      <p class="onb-paragraph-subheading-2">Once there are enough people to start a CareShare group in your area, we'll text you a link to join! Would you like to invite some friends to join now?</p>
-    </div>
-      <a href="#" class="splash-button w-inline-block button-text">
-      SHARE ON FACEBOOK</a>
-  </div>
-</div>
-
-
-<!--  
-
-<div class="onb-body-full-height" v-if="step === 8">
-  <div class="onb-arrow-animation-container"><img src="../assets/Comp_2.gif" height="60" alt=""></div>
-
-  <div class="onb-title-bar"><a @click="prevStep" class="onb-title-bar-back-button w-inline-block"></a>
-    <span>
-    <a @click="nextStep" class="onb-title-bar-next-button w-inline-block">
-      <div class="onb-title-bar-next-button-text">NEXT</div>
-    </a>
   </span>
-  </div>
-
-
-  <div class="onb-content-container _100vh">
-    <div class="onb-top-content-container">
-      <h1 class="onb-heading-large">Add the App</h1>
-      <p class="onb-paragraph-subheading-2">Add CottageClass to your home screen</p>
-    </div>
-
-    <div class="onb-step-container">
-      <div class="onb-number-circle">
-        <div class="text-block-7">1</div>
-      </div>
-      <div class="onb-step-text">Tap the action icon at the bottom</div>
-    </div>
-
-    <div class="onb-step-container">
-      <div class="onb-number-circle">
-        <div class="text-block-7">2</div>
-      </div>
-      <div class="onb-step-text">Then tap &#x27;Add to Home Screen&#x27;</div>
-    </div>
-
-  </div>
-</div>
-
--->
-
-</span>
 </template>
 
 <script>
@@ -166,26 +24,30 @@ import Nav from '@/components/onboarding/Nav.vue'
 import Terms from '@/components/onboarding/Terms.vue'
 import Name from '@/components/onboarding/Name.vue'
 import Location from '@/components/onboarding/Location.vue'
+import Phone from '@/components/onboarding/Phone.vue'
+import Children from '@/components/onboarding/Children.vue'
+import Availability from '@/components/onboarding/Availability.vue'
+import Activities from '@/components/onboarding/Activities.vue'
+import Invite from '@/components/onboarding/Invite.vue'
 
-// import google sheets API service
+// import google sheets API service and give it a spreadsheet to push to 
 import sheetsu from 'sheetsu-node';
-
-// create a config file to identify which spreadsheet we push to.
 var client = sheetsu({ address: 'https://sheetsu.com/apis/v1.0su/e383acab3f80' })
 
 export default {
-  components: { Login, Nav, Terms, Name, Location },
+  components: { Login, Nav, Terms, Name, Location, Phone, Children, Availability, Activities, Invite },
     data () {
     return {
       step: 0,
-      name: {
-        first: null,
-        last: null
-      },
+      showError: false,
+      terms: {},
+      name: {},
       location: {},
-      agreedToTerms: false,
-      phone: null,
-      children: [{name: null, birthday: null}],
+      phone: {},
+      children: {
+        list: [{name: null, birthday: null}],
+        err: false
+      },
       availability: {
         mornings: false,
         afternoons: false,
@@ -201,126 +63,65 @@ export default {
         bilingualImmersion: false,
         bookClub: false
       },
-      error: false
     }
   },
   name: 'NewUser',
   methods: {
     submitData: function () {
-            client.create({
-              "address": this.address,
-              "phone": this.phone,
-              "children": this.children,
-              "availability": this.availability,
-              "activities": this.activities,
-              "testArray": ["basketball", "soccer", "football"],
-            }).then((data) => {
-              console.log(data)
-            }, (err) => {
-              console.log(err)
-              });
+      client.create({
+        "address": this.address,
+        "phone": this.phone,
+        "children": this.children,
+        "availability": this.availability,
+        "activities": this.activities,
+      }).then((data) => {
+        console.log(data)
+      }, (err) => {
+        console.log(err)
+        });
     },
     nextStep: function () {
-      this.step = this.step + 1
-      this.clearError()
-      window.scrollTo(0,0)
+      // check if there's an error, if so show it, if not advance and clear the error.
+      if (!this.error) {
+        this.step = this.step + 1
+        window.scrollTo(0,0)
+      } else {
+        this.showError = true
+      }
     },
     prevStep: function () {
+      this.showError = false
       this.step = this.step - 1
-      this.clearError()
-    },
-    throwError: function (msg) {
-      this.error = msg
-    },
-    clearError: function () {
-      this.error = false
-    },
-    addChild: function () {
-      this.children.push({name: null, birthday: null})
-    },
-    removeChild: function (index) {
-      this.children.splice(index, 1);
     }
   },
   computed: {
+    error: function () {
+      switch (this.step) {
+        case 1: 
+        return this.terms.err
+        case 2:
+        return this.name.err
+        case 3:
+        return this.location.err
+        case 4: 
+        return this.phone.err
+        case 5:
+        return this.children.err
+        default: 
+        return false
+      }
+    },
     nextButtonState: function () {
-      let isComplete = function (step) {
-        // this is a stub, add logic here
-        return false
-      };
-      let isSkippable = function (step) {
-        return [5, 6, 7].includes(step)
-      };
-      let isLastStep = function (step) {
-        return step === 8
-      };
-      if (isSkippable(this.step)) {
-        return "skip"
-      } else if (isLastStep(this.step)) {
-        return "none"
-      } else if (isComplete(this.step)) {
-        return "next"
-      } else {
+      if (this.error) {
         return "inactive"
-      }
-    },
-    noChildren: function() {
-      return (this.children.length === 0 || (this.children[0].name === null && this.children[0].birthday === null))
-    },
-    childrenValidates: function () {
-      // child has name and birthday
-      let childValidates = function (child) {
-        return child.birthday && child.name
-      }
-      if (this.noChildren ||
-        // validate that each child has name, birthday
-        (this.children.reduce((soFar, child) => soFar && childValidates(child), true))) {
-        this.clearError()
-        return true
-      } else {        
-        return false
-    }
-  },
-    phoneValidates: function () {
-      if (this.phone) { 
-      var number = this.phone.replace(/[^\d]/g, '')
-      if ((number[0] != '1' && number.length === 10) || (number[0] == '1') && number.length === 11) {
-        return true 
       } else {
-        return false
+        return "next"
       }
-    } return false
     }
   }
 };
 
 </script>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 <!-- this is a giant jumble of all app styles. Would be great to separate it out --> 
 

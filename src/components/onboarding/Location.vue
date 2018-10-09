@@ -35,7 +35,7 @@ export default {
   components: { VueGoogleAutocomplete },
   mounted: function () {
   		this.$emit('input', {
-  			error: 'Please enter your street address.'
+  			err: 'Please enter your street address.'
   		})
   	},
   methods: {

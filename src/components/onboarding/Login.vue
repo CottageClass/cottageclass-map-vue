@@ -7,7 +7,7 @@
   </div>
   <div class="embed-facebook-button">
     <div class="w-embed">
-      <div @click="$emit('next-step')" class="fb-login-button button">Continue with Facebook</div>
+      <div @click="$emit('next')" class="fb-login-button button">Continue with Facebook</div>
     </div>
   </div>
 </div>

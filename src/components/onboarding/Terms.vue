@@ -8,9 +8,9 @@
     <div class="onb-fixed-bottom-actions-checkbox-container">
       <div class="form-block-2 w-form">
         <form id="email-form" name="email-form" data-name="Email Form">
-          <div class="checkbox-field w-checkbox"><input type="checkbox" id="checkbox" name="checkbox" data-name="Checkbox" class="w-checkbox-input"
-                v-model="checked"
-      @change="$emit('input', $event.target.checked)"><label for="checkbox" class="checkbox-label w-form-label">I agree to the terms</label></div>
+          <div class="checkbox-field w-checkbox"><input type="checkbox" id="checkbox" name="checkbox" data-name="Checkbox" class="w-checkbox-input" v-model="checked">
+            <label for="checkbox" class="checkbox-label w-form-label">I agree to the terms</label>
+          </div>
         </form>
       </div>
     </div>
@@ -21,28 +21,35 @@
 
 export default {
 	name: 'Terms',
+  props: ['value'],
   data () {
     return {
-      checked: false
-    }
-  },
-  props: ['value'],
-  methods: {
-    emitError: function () {
-      this.$emit('error', 'To continue, check the box below to agree to our terms of service.')
-      console.log('emitted')
+      checked: this.value.agreed,
+      errorMsg: 'To continue, check the box below to agree to our terms of service.'
     }
   },
   mounted: function () {
-    this.emitError()
-  },
-  watched: {
-    watchCompleteness: function() {
+    if (!this.checked) {
+      this.$emit('input', {
+        agreed: this.checked,
+        err: this.errorMsg
+      })}
+    },
+  computed: {
+    err: function () {
       if (this.checked) {
-        this.$emit('complete')
-      } else {
-        this.emitError()
-      }
+        return false
+        } else {
+          return this.errorMsg
+        }
+      },
+    },
+  watch: {
+    checked: function () {
+      this.$emit('input', {
+        agreed: this.checked,
+        err: this.err
+      })
     }
   }
 };
