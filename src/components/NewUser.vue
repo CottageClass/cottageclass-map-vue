@@ -46,13 +46,14 @@ export default {
       phone: {},
       children: {
         list: [{name: null, birthday: null}],
-        err: false
+        err: "skippable"
       },
       availability: {
         mornings: false,
         afternoons: false,
         evenings: false,
-        weekends: false
+        weekends: false,
+        err: "skippable"
       },
       activities: {
         playingOutside: false,
@@ -61,7 +62,8 @@ export default {
         cooking: false,
         homeworkHelp: false,
         bilingualImmersion: false,
-        bookClub: false
+        bookClub: false,
+        err: "skippable"
       },
     }
   },
@@ -82,8 +84,9 @@ export default {
     },
     nextStep: function () {
       // check if there's an error, if so show it, if not advance and clear the error.
-      if (!this.error) {
+      if (!this.error || this.error === "skippable") {
         this.step = this.step + 1
+        this.showError = false
         window.scrollTo(0,0)
       } else {
         this.showError = true
@@ -107,12 +110,18 @@ export default {
         return this.phone.err
         case 5:
         return this.children.err
+        case 6:
+        return this.availability.err
+        case 7:
+        return this.activities.err
         default: 
         return false
       }
     },
     nextButtonState: function () {
-      if (this.error) {
+      if (this.error === "skippable") {
+        return "skip"
+      } else if (this.error) {
         return "inactive"
       } else {
         return "next"

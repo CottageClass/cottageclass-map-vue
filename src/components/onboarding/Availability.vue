@@ -28,8 +28,12 @@ export default {
     }
   },
   watch: {
-    availability: function () {
-      this.$emit('input', this.availability)
+    availability: {
+      handler: function () {
+        this.availability.err = false
+        this.$emit('input', this.availability)
+      },
+      deep: true
     }
   }
 };

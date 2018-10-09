@@ -20,9 +20,7 @@
 </template>
 
 <script>
-
 export default {
-
   name: "Activities",
   props: ['value'],
   data () {
@@ -31,8 +29,12 @@ export default {
     }
   },
   watch: {
-    activities: function () {
-      this.$emit('input', this.activities)
+    activities: {
+      handler: function () {
+        this.activities.err = false
+        this.$emit('input', this.activities)
+      },
+      deep: true
     }
   }
 };

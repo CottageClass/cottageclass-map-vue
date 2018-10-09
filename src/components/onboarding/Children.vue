@@ -66,19 +66,15 @@ export default {
     }
   },
   watch: {
-    children: function () {
+    children: {
+      handler: function () {
       this.$emit('input', {
         list: this.children,
         err: this.error
       })
     },
-    // we need this because error doesn't update for some reason when children changes. 
-    error: function () { 
-      this.$emit('input', {
-        list: this.children,
-        err: this.error
-      })
-    }
+    deep: true
+  }
 }
 };
 </script>
