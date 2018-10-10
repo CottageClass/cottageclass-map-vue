@@ -1635,7 +1635,7 @@
   "images": ["ElizavetaBor-1.jpg"],
   "phone": "9176769399",
   "availability": ["7to3", "3to7"],
-  "location": {}, 
+  "location": {"lat": 40.7222576, "lng": -73.8615555}, 
   "activities":[""],
   "job": {"title": "beauty", "employer": "freelancer"},
   "children":
@@ -2109,7 +2109,7 @@
 },
 {
   "id": 4052507184,
-  "networks": ["generic"],
+  "networks": ["cottageclass"],
   "name": "Ruth",
   "lastInitial": "A",
   "pic": "avatar-RuthAbrahams.png",
@@ -2693,7 +2693,7 @@
   "images": ["EllieMcGlinchey-1.jpg"],
   "phone": "267-240-3750",
   "availability": ["after7", "weekends"],
-  "location": {}, 
+  "location": {"lat": 40.8935937, "lng": -73.9176928}, 
   "activities":[""],
   "job": {"title" : "Assistant Professor", "employer": "Fairleigh Dickinson University"},
   "children":
@@ -2876,7 +2876,7 @@
   "images": ["RachelLevenstein-1.jpg"],
   "phone": "412-612-4381",
   "availability": ["weekends"],
-  "location": {}, 
+  "location": {"lat": 41.7942336, "lng": -87.5995406}, 
   "activities":["Arts & Crafts", "Book club", "Cooking", "Homework Help", "Playing Outside"],
   "job": {"title" : "Senior researcher", "employer": "American Institutes for Research"},
   "children":
@@ -2924,7 +2924,7 @@
 	"images": ["StephanieBest-1.jpg"],
 	"phone": "6176697422",
 	"availability": ["7to3"],
-	"location": {}, 
+	"location": {"lat": 42.378369, "lng": -71.1829495}, 
 	"activities":["Book club", "Music","English", "French"],
 	"job": {"title" : "Psychologist", "employer": "McLean Hospital"},
 	"children":
@@ -3543,33 +3543,143 @@
 	}
 	]
 },
-
-
-
-
 {
-        "id": 9176134901,
-        "networks": ["Fort Greene"],
-        "name": "Whitney",
-        "lastInitial": "M",
-        "pic": "Avatar-WhitneyMcMullan.png",
-        "images": ["WhitneyMcMullan-1.jpg"],
-        "phone": "9176134901",
-        "availability": [""],
-        "location": {"lat": 40.6860719, "lng": -73.9616521},
+  "id": 3477039744,
+  "networks": ["BoCoCaGo"],
+  "name": "Laurène",
+  "lastInitial": "H",
+  "pic": "avatar-LaureneHamilton.png",
+  "images": ["LaureneHamilton-1.jpg", "LaureneHamilton-2.jpg", "LaureneHamilton-3.jpg", "LaureneHamilton-4.jpg", "LaureneHamilton-5.jpg"],
+  "phone": "3477039744",
+  "availability": ["7to3"],
+  "location": {"lat": 40.6820474, "lng": -73.9986437}, 
+  "activities":["Arts & Crafts", "Bilingual Immersion", "Cooking", "Playing Outside", "French", "English"],
+  "job": {"title" : "Tour Guide", "employer": "NYC "},
+  "children":
+  [
+  {
+  "name":"Jeremy",
+  "age": 2,
+  "birthday": "2016-01-01",
+  "allergies": "",
+  "medicalNeeds": "",
+  "otherNeeds": ""
+  },
+  {
+  "name":"Victoria",
+  "age": 0,
+  "birthday": "2018-08-28",
+  "allergies": "",
+  "medicalNeeds": "",
+  "otherNeeds": ""
+  }
+  ]
+},
+{
+  "id": 3035232173,
+  "networks": ["Alameda"],
+  "name": "Anna",
+  "lastInitial": "P",
+  "pic": "avatar-AnnaPiller.png",
+  "images": ["AnnaPiller-1.jpg", "AnnaPiller-2.jpg", "AnnaPiller-3.jpg", "AnnaPiller-4.jpg", "AnnaPiller-5.jpg"],
+  "phone": "3035232173",
+  "availability": ["9to3", "3to7", "after7", "weekends"],
+  "location": {"lat": 37.7762864, "lng": -122.264126}, 
+  "activities":["Arts & Crafts", "Playing Outside", "Homework Help", "Volunteering", "Reading", "English"],
+  "job": {"title" : "Director of Organizing & Advocacty", "employer": "Education for Just Peace in the Middle East"},
+  "children":
+  [
+  {
+  "name":"Eleanor",
+  "age": 4,
+  "birthday": "2014-01-08",
+  "allergies": "",
+  "medicalNeeds": "",
+  "otherNeeds": ""
+  },
+  {
+  "name":"Magnolia",
+  "age": 2,
+  "birthday": "2016-02-15",
+  "allergies": "",
+  "medicalNeeds": "",
+  "otherNeeds": ""
+  }
+  ]
+},
+{
+  "id": 4109638422,
+  "networks": ["crownheights"],
+  "name": "Rajya",
+  "lastInitial": "K",
+  "pic": "avatar-RajyaKaripineni.png",
+  "images": ["RajyaKaripineni-1.jpg"],
+  "phone": "4109638422",
+  "availability": ["9to3", "3to7", "weekends"],
+  "location": {"lat": 40.664858, "lng": -73.9578597}, 
+  "activities":["Arts & Crafts", "Music", "Playing Outside", "Yoga"],
+  "job": {"title" : "Stay at home parent", "employer": "Home"},
+  "children":
+  [
+  {
+  "name":"E",
+  "age": 0,
+  "birthday": "2018-03-26",
+  "allergies": "",
+  "medicalNeeds": "",
+  "otherNeeds": ""
+  }
+  ]
+},
+{
+  "id": 4199445086,
+  "networks": ["BoCoCaGo"],
+  "name": "Micah ",
+  "lastInitial": "R",
+  "pic": "avatar-MicahRubin.png",
+  "images": ["MicahRubin-1.jpg"],
+  "phone": "4199445086",
+  "availability": ["after7", "9to3", "3to7"],
+  "location": {"lat": 40.6881173, "lng": -74.0028903}, 
+  "activities":["Playing Outside", "English"],
+  "job": {"title" : "Creative Director/Photographer", "employer": "Self-Employed"},
+  "children":
+  [
+  {
+  "name":"Adina",
+  "age": 2,
+  "birthday": "2016-08-01",
+  "allergies": "",
+  "medicalNeeds": "",
+  "otherNeeds": ""
+  }
+  ]
+},
+{
+        "id": 6462504076,
+        "networks": ["Dumbo"],
+        "name": "Priscilla",
+        "lastInitial": "P",
+        "pic": "Avatar-PriscillaPolley.png",
+        "images": ["PriscillaPolley-1.jpg"],
+        "phone": "6462504076",
+        "availability": ["weekends"],
+        "location": {"lat": 40.704106, "lng": -73.988006},
         "activities":[""],
         "job": {"title" : "", "employer": ""},
         "children":
         [
         {
-        "name": "",
+        "name":"",
         "birthday": "",
         "allergies": "",
         "medicalNeeds": "",
         "otherNeeds": ""
         }
         ]
-  },
+},     
+
+
 
 
 

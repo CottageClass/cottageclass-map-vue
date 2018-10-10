@@ -273,14 +273,6 @@
 	"percentage": 0.2
     },
     {
-	"name": "CottageClass",  
-    "location": {"lat": 35.5599124, "lng": -97.6315306}, 
-    "zoom": 9, 
-	"stub": "generic",
-	"price": "12.50",
-	"percentage": 0.2
-    },
-    {
 	"name": "Cambridge",  
     "location": {"lat": 42.372713, "lng": -71.1088089}, 
     "zoom": 12, 
