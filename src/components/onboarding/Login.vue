@@ -26,15 +26,18 @@
    * - gives us auth/login/logout methods
    * - see: https://www.npmjs.com/package/vue-authenticate
    */
+
+  let origin = window.location.origin
+
   Vue.use(VueAxios, axios)
   Vue.use(VueAuthenticate, {
-    baseUrl: 'https://localhost:3000',
+    baseUrl: 'https://cottageclass-app-api.herokuapp.com',
     withCredentials: true,
     tokenName: 'jwt',
     providers: {
       facebook: {
 	clientId: '905335782985620',
-	redirectUri: 'https://localhost:8077/oauth-callback',
+	redirectUri: `${origin}/oauth-callback`,
 	// Add additional scopes (properties) to be retrieved from Facebook here
 	// - see link below for properties accessible by default and properties requiring app review:
 	// - https://developers.facebook.com/docs/facebook-login/permissions/#reference-default

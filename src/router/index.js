@@ -15,7 +15,7 @@ import NewUser from '@/components/NewUser.vue'
 
 Vue.use(Router)
 
-// '/:networkId/' is a temporary hack. This should get reworked once we add multiple networks. 
+// '/:networkId/' is a temporary hack. This should get reworked once we add multiple networks.
 
 export default new Router({
   routes: [
