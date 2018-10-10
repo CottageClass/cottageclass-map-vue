@@ -26,9 +26,7 @@ export default {
   created: function () {
     if (!navigator.userAgent.match(/(iPad)|(iPhone)|(iPod)|(android)|(webOS)/i)) {
       this.$router.push({ name: 'DesktopWarningSplash' })
-      console.log('desktop detected')
     } else {
-      console.log('desktop not detected')
     }
   },
   computed: {
