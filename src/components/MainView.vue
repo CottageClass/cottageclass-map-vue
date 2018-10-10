@@ -35,7 +35,7 @@
       <h5 class="heading-2-strong">See who&#x27;s available:</h5>
       <select v-model="timeSelected">
         <option value="now">Right now</option>
-        <option value="7to3">7AM &ndash; 3PM</option>
+        <option value="7to3">9AM &ndash; 3PM</option>
         <option value="3to7">3PM &ndash; 7PM</option>
         <option value="after7">After 7PM</option>
         <option value="weekends">Weekends</option>
