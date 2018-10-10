@@ -7,13 +7,12 @@
         <div class="onb-error-text">{{ error }}</div>
       </div>
       <Terms v-if="step === 1" v-model="terms" /> 
-      <Name v-if="step === 2" v-model="name"/>
-      <Location v-if="step === 3" v-model="location"/>
-      <Phone v-if="step === 4" v-model="phone" />
-      <Children v-if="step === 5" v-model="children" />
-      <Availability v-if="step === 6" v-model="availability" />
-      <Activities v-if="step === 7" v-model="activities" />
-      <Invite v-if="step === 8" />
+      <Location v-if="step === 2" v-model="location"/>
+      <Phone v-if="step === 3" v-model="phone" />
+      <Children v-if="step === 4" v-model="children" />
+      <Availability v-if="step === 5" v-model="availability" />
+      <Activities v-if="step === 6" v-model="activities" />
+      <Invite v-if="step === 7" />
     </div>
   </span>
 </template>
@@ -39,8 +38,8 @@ export default {
     data () {
     return {
       step: 0,
-      lastStep: 8,
-      afterLastStep: '../demo/',
+      lastStep: 7,
+      afterLastStep: '../demo/home/',
       showError: false,
       terms: {},
       name: {},
@@ -115,16 +114,14 @@ export default {
         case 1: 
         return this.terms.err
         case 2:
-        return this.name.err
-        case 3:
         return this.location.err
-        case 4: 
+        case 3: 
         return this.phone.err
-        case 5:
+        case 4:
         return this.children.err
-        case 6:
+        case 5:
         return this.availability.err
-        case 7:
+        case 6:
         return this.activities.err
         default: 
         return false
