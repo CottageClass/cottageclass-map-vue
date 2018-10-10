@@ -258,8 +258,8 @@
     },
     {
 	"name": "Somerville",  
-    "location": {"lat": 42.427501, "lng": -71.1113899}, 
-    "zoom": 12, 
+    "location": {"lat": 42.402828, "lng": -71.1094112}, 
+    "zoom": 11, 
 	"stub": "Somerville",
 	"price": "12.50",
 	"percentage": 0.2
