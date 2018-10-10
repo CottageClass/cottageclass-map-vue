@@ -137,7 +137,7 @@
 	"percentage": 0.2
     },
     {
-	"name": "The Mission",  
+	"name": "Mission Parents",  
 	"location": {"lat": 37.7666452, "lng": -122.4296227}, 
 	"zoom": 12, 
 	"stub": "theMission",
@@ -161,7 +161,7 @@
 	"percentage": 0.2
     },
     {
-	"name": "Sunny Side",  
+	"name": "Sunnyside",  
 	"location": {"lat": 40.746347, "lng": -73.914718},   
 	"zoom": 12, 
 	"stub": "Sunnyside",
@@ -225,7 +225,7 @@
 	"percentage": 0.2
     },
     {
-	"name": "NoeValley",  
+	"name": "Noe Valley",  
     "location": {"lat": 37.7490555, "lng": -122.4344773}, 
 	"zoom": 12, 
 	"stub": "NoeValley",
@@ -273,7 +273,7 @@
 	"percentage": 0.2
     },
     {
-	"name": "Generic",  
+	"name": "CottageClass",  
     "location": {"lat": 35.5599124, "lng": -97.6315306}, 
     "zoom": 9, 
 	"stub": "generic",
@@ -288,12 +288,54 @@
 	"price": "12.50",
 	"percentage": 0.2
     },
+
+
+    {
+	"name": "Alexandria Moms",  
+    "location": {"lat": 38.8149521, "lng": -77.0758811},
+    "zoom": 12, 
+	"stub": "Alexandria",
+	"price": "12.50",
+	"percentage": 0.2
+    },
+
+    {
+	"name": "Alameda",  
+    "location": {"lat": 37.776726, "lng": -122.2750433}, 
+    "zoom": 12, 
+	"stub": "Alameda",
+	"price": "12.50",
+	"percentage": 0.2
+    },
+
+    {
+	"name": "Silver Spring Parents",  
+    "location": {"lat": 39.00262, "lng": -77.0411167}, 
+    "zoom": 12, 
+	"stub": "SilverSpring",
+	"price": "12.50",
+	"percentage": 0.2
+    },
+
+    {
+	"name": "Brooklyn Heights",  
+    "location": {"lat": 40.6971038, "lng": -74.006533}, 
+    "zoom": 12, 
+	"stub": "BrooklynHeights",
+	"price": "12.50",
+	"percentage": 0.2
+    },
+
+    {
+	"name": "Passaic County",  
+    "location": {"lat": 40.8757983, "lng": -74.2083852},  
+    "zoom": 12, 
+	"stub": "passaiccounty",
+	"price": "12.50",
+	"percentage": 0.2
+    },
+
    
-
-
-
-
-
 
 
     {
