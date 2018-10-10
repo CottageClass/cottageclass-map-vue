@@ -39,6 +39,8 @@ export default {
     data () {
     return {
       step: 0,
+      lastStep: 8,
+      afterLastStep: '../demo/',
       showError: false,
       terms: {},
       name: {},
@@ -83,8 +85,11 @@ export default {
         });
     },
     nextStep: function () {
+      if (this.step === this.lastStep) {
+        this.$router.push({ path: this.afterLastStep })
+      }
       // check if there's an error, if so show it, if not advance and clear the error.
-      if (!this.error || this.error === "skippable") {
+      else if (!this.error || this.error === "skippable") {
         this.step = this.step + 1
         this.showError = false
         window.scrollTo(0,0)
