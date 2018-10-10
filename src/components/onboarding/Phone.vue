@@ -5,7 +5,7 @@
     </div>
     <div class="onb-location-search-container">
       <div class="w-form">
-        <form id="email-form-2" name="email-form-2" data-name="Email Form 2"><input v-model="number" type="tel" class="location-text-field w-input" maxlength="256" name="name" data-name="Name" placeholder="e.g. 1-212-555-1212" id="name"></form>
+        <form id="email-form-2" name="email-form-2" data-name="Email Form 2"><input v-model="number" type="tel" class="location-text-field w-input" maxlength="256" name="name" data-name="Name" placeholder="e.g. 2125551212" id="name"></form>
       </div>
     </div>
     <p class="onb-paragraph-small-50">Other families will text you to request or offer care. (We may also send you text messages about special CottageClass  CareShare events or news. Message &amp; data rates apply.)</p>
