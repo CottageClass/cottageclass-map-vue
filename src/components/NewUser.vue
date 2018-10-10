@@ -72,7 +72,7 @@ export default {
   methods: {
     nextStep: function () {
       if (this.step === this.lastStep) {
-        this.submitData()
+        // this.submitData()
         this.$router.push({ path: this.afterLastStep })
       }
       // check if there's an error, if so show it, if not advance and clear the error.
