@@ -23,11 +23,11 @@ export default {
     	person: function () {
         if (this.review.userId) { 
         return this.people.find(person => person.id === this.review.userId)
-    	} else {
+    	} else if (this.review.pic) {
         return {
           'name': this.review.name,
           'lastInitial': this.review.lastInitial,
-          'pic': 'avatar-placeholder.png'
+          'pic': this.review.pic ? this.review.pic : 'avatar-placeholder.png'
         }
       }
     }

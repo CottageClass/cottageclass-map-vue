@@ -1,7 +1,7 @@
 [
   { 
     "id": 1,
-    "networks": ["flatbushfamilies", "demo"],
+    "networks": ["flatbushfamilies"],
     "name": "Marixsa", 
     "lastInitial": "R",
     "pic": "avatar-MarixsaR.png",
@@ -3594,5 +3594,94 @@
         "text": "Holmes's neighbors have a big scary dog so kids should probably stay inside."
       }
     ]
+  },
+  { 
+    "id": 18936129,
+    "networks": ["demo"],
+    "name": "Marixsa", 
+    "lastInitial": "R",
+    "pic": "avatar-MarixsaR.png",
+    "images": ["marixsa-0.jpg", "marixsa-1.jpg", "marixsa-7.jpg", "marixsa-4.jpg", "marixsa-2.jpg", "marixsa-5.jpg", "marixsa-3.jpg"],
+    "phone": "212-920-4828",
+    "availability": ["7to3", "3to7", "weekends"],
+    "location": {"lat": 40.642485, "lng": -73.944122},
+    "activities":["spanish", "art", "music", "sports"],
+    "job": {"title" : "Educator", "employer": "Tambor Playgroup"},
+    "backgroundCheck": true,
+    "children": 
+    [
+    { 
+      "name": "Tenoch",
+      "age": 9,
+      "birthday": "11/25/2008",
+      "allergies": "",
+      "medicalNeeds": "",
+      "otherNeeds": ""
+    },
+    { 
+      "name": "Taina",
+      "age": 7,
+      "birthday": "6/10/2011",
+      "allergies": "",
+      "medicalNeeds": "",
+      "otherNeeds": ""
+    },
+    {
+      "name": "Tristan",
+      "age": 1,
+      "birthday": "6/29/2017",
+      "allergies": "",
+      "medicalNeeds": "",
+      "otherNeeds": ""
+    }
+  ],
+  "reviews": [
+    {
+      "userId": 4,
+      "text": "Marixsa is the best! My little guy attended Tambor for 6 months and got to the point where he would skip ahead of us and shut the door in our faces when he got there - he couldn't wait to play with his friends! She's attentive, creative, knows when to be hands-on and when to encourage independence. We love and trust her completely."
+    },
+    {
+      "name": "Nicole",
+      "lastInitial": "M",
+      "text": "Marixsa leads Tambor with an incredible energy. She seems to know the perfect way to engage each child and help that child learn and grow. She is a gem and has created a fantastic program. Tambor is fun, interesting,and educational, and I'm so thrilled that our little one is part of it.",
+      "pic": "avatar-1.png"
+    },
+  { 
+    "name": "Meghan", 
+    "lastInitial": "C",
+    "text": "We are so lucky we found Tambor! Our little guy loved his time there this past spring (2018). And no wonder.... Marixsa has a warm, mama bear energy with a true gift for early childhood education. Her home is super kid-focused and filled with art, music and lots of play! We've just loved everything about our experience with Marixsa - highly recommend!!",
+    "pic": "avatar-2.png"
+  },
+  { 
+    "name": "Nobella", 
+    "lastInitial": "P",
+    "text": "Marixsa is an awesome educator! She puts thought and care into each lesson plan. She connects with each child and has a special way of encouraging then to function as individuals. I highly recommend her classes for your little one!",
+    "pic": "avatar-3.png"
+  },
+  { 
+    "name": "Abby", 
+    "lastInitial": "B",
+    "text": "Marixsa has a wonderful thing going on at her home-based Spanish Immersion playgroup. My 4-year old has been attending Tambor this year, and he has such a fun time with Marixsa and the kids in the group. We do not speak or teach Spanish at home, but when he goes to Marixsa's, he easily slides into the routine of Spanish. Her home is set up in such a child-friendly way, she makes food for the kids, and she works diligently to plan music, art, and physical activities that are age appropriate. Marixsa is also extremely trustworthy and responsible - she takes this job seriously and is a mom of 3. It's so clear that she is meant to be in early childhood education! Her warmth and her demeanor and patience make for a wonderful teacher. All of these wonderful things at a very reasonable price make this little playgroup a gem!",
+    "pic": "avatar-4.png"
+  },
+  { 
+    "name": "Susannah", 
+    "lastInitial": "M",
+    "text": "My daughter loved her time with Marixsa. My husband’s family is Venezuelan, and we want to raise our daughter bilingual, but I don’t speak Spanish, and I’m the one who spends most of the day with her. Enter Marixsa! Her warmth made my little one comfortable right away, and her creativity and sense of wonder kept her captivated all day. Instruments! Books! Exploring in the back garden! I highly recommend Marixsa’s program.",
+    "pic": "avatar-5.png"
+  },
+  { 
+    "name": "Marie", 
+    "lastInitial": "S",
+    "text": "Marixsa is an authentically warm, nurturing, earthmother-like person. Children feel very comfortable in her presence. She's committed to building community and using education to do it.",
+    "pic": "avatar-6.png"
+  },
+  { 
+    "name": "Natalia", 
+    "lastInitial": "G",
+    "text": "My two boys, ages 3 and almost 5 had a wonderful time at Marixsa's summer camp! We recently relocated to Brooklyn after living in Cusco, Peru and we had been looking for a school that resembled my waldorf/montessori inspired preschool over there, that my son loved. And we found it with Marixsa! A nurturing, creative and child centered discovery space with outdoors time to play with the earth and the water and in Spanish!! Our dream came true this summer and my boys would wake up every morning excited to go to the Taino school (that is how we named it)! Marixsa brings together her soul and love for the ways she believes her own children should learn, her roots and her professional teaching knowledge in the perfect inspiring way.",
+    "pic": "avatar-7.png"
+  }
+  ]
   }
 ]
