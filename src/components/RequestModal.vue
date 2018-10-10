@@ -93,7 +93,7 @@ export default {
       return this.networks.find(network => network.stub === this.$route.params.networkId)
     },
     person: function () {
-      return this.people.find(person => person.id === this.$route.params.id)
+      return this.people.find(person => person.id == this.$route.params.id)
     }
   }
 };

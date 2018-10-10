@@ -8,7 +8,7 @@
 
 
     <div class="providerp-occupation" v-if="person.job && person.job.employer">{{ person.job.title }} at {{ person.job.employer }}</div>
-    <div class="providerp-children">Parent to 
+    <div v-if="person.children.length > 0" class="providerp-children">Parent to 
     	<span v-for="(child, index) in person.children">
     		{{ child.name }} <span class="text-span-2">({{ child.age }})</span><span v-if="index < person.children.length - 1">, </span>
     	</span>
@@ -149,7 +149,7 @@ export default {
 	},
 	computed: {
 		person: function () {
-          return this.people.find(person => person.id === this.$route.params.id)
+          return this.people.find(person => person.id == this.$route.params.id)
 	}
 }
 };
