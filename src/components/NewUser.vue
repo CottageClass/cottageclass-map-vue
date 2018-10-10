@@ -6,7 +6,7 @@
       <div v-if="showError && error" class="onb-error-container">
         <div class="onb-error-text">{{ error }}</div>
       </div>
-      <Terms v-if="step === 1" v-model="terms" /> 
+      <Terms v-if="step === 1" v-model="terms" />
       <Name v-if="step === 2" v-model="name"/>
       <Location v-if="step === 3" v-model="location"/>
       <Phone v-if="step === 4" v-model="phone" />
