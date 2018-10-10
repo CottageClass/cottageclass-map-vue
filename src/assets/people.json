@@ -2804,7 +2804,7 @@
 },
 {
 	"id": 6466331390,
-	"networks": ["ProspectHeights"],
+	"networks": ["prospectheightsparents"],
 	"name": "Molly",
 	"lastInitial": "C",
 	"pic": "avatar-MollyChanoff.png",
@@ -2852,7 +2852,7 @@
 },
 {
 	"id": 9143823076,
-	"networks": ["ProspectHeights"],
+	"networks": ["prospectheightsparents"],
 	"name": "Elana",
 	"lastInitial": "B",
 	"pic": "avatar-ElanaBerman.png",
@@ -2879,10 +2879,10 @@
 	"networks": ["Cambridge"],
 	"name": "Elana",
 	"lastInitial": "T",
-	"pic": "avatar-ElanaTsogt-Erdene.png",
-	"images": ["ElanaTsogt-Erdene-1.jpg"],
+	"pic": "avatar-ElanaTsogtErdene.png",
+	"images": ["ElanaTsogtErdene-1.jpg"],
 	"phone": "9196192414",
-	"availability": ["7to9", "7to3", "3to7", "after7", "weekends"],
+	"availability": ["7to3", "3to7", "after7", "weekends"],
 	"location": {"lat": 42.3730046, "lng": -71.090964}, 
 	"activities":["Arts & Crafts", "Field Trips", "Homework Help", "English"],
 	"job": {"title" : "", "employer": ""},
@@ -2941,38 +2941,6 @@
 	]
 },
 {
-	"id": [],
-	"networks": ["HydePark"],
-	"name": "[]",
-	"lastInitial": "[",
-	"pic": "",
-	"images": [],
-	"phone": "[]",
-	"availability": ["weekends", "after7"],
-	"location": {}, 
-	"activities":["Arts & Crafts", "Cooking", "Book club", "Bilingual Immersion", "Spanish"],
-	"job": {"title" : "Studying (LLM Program)", "employer": "University of Chicago"},
-	"children":
-	[
-	{
-	"name":"Baltazar",
-	"age": 5,
-	"birthday": "2013-02-04",
-	"allergies": "",
-	"medicalNeeds": "",
-	"otherNeeds": ""
-	},
-	{
-	"name":"Simona",
-	"age": 2,
-	"birthday": "2016-07-27",
-	"allergies": "",
-	"medicalNeeds": "",
-	"otherNeeds": ""
-	}
-	]
-},
-{
 	"id": 6468969620,
 	"networks": ["FortGreene"],
 	"name": "Amelia",
@@ -2980,7 +2948,7 @@
 	"pic": "avatar-AmeliaChappelow.png",
 	"images": ["AmeliaChappelow-1.jpg"],
 	"phone": "6468969620",
-	"availability": ["7to9"],
+	"availability": ["7to3", "3to7"],
 	"location": {}, 
 	"activities":["Music", "Book club", "English"],
 	"job": {"title" : "Radio/Film Producer", "employer": "Freelance"},
@@ -3488,6 +3456,31 @@
 },
 
 
+
+
+{
+        "id": 9176134901,
+        "networks": ["Fort Greene"],
+        "name": "Whitney",
+        "lastInitial": "M",
+        "pic": "Avatar-WhitneyMcMullan.png",
+        "images": ["WhitneyMcMullan-1.jpg"],
+        "phone": "9176134901",
+        "availability": [""],
+        "location": {"lat": 40.6860719, "lng": -73.9616521},
+        "activities":[""],
+        "job": {"title" : "", "employer": ""},
+        "children":
+        [
+        {
+        "name": "",
+        "birthday": "",
+        "allergies": "",
+        "medicalNeeds": "",
+        "otherNeeds": ""
+        }
+        ]
+  },
 
 
 

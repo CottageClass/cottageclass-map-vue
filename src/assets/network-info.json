@@ -155,7 +155,7 @@
     {
 	"name": "Hyde Park",  
 	"location": {"lat": 41.7974109, "lng": -87.5912157}, 
-	"zoom": 12, 
+	"zoom": 11, 
 	"stub": "HydePark",
 	"price": "12.50",
 	"percentage": 0.2
