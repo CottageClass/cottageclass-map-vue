@@ -6,13 +6,14 @@
       <div v-if="showError && error" class="onb-error-container">
         <div class="onb-error-text">{{ error }}</div>
       </div>
-      <Terms v-if="step === 1" v-model="terms" /> 
-      <Location v-if="step === 2" v-model="location"/>
-      <Phone v-if="step === 3" v-model="phone" />
-      <Children v-if="step === 4" v-model="children" />
-      <Availability v-if="step === 5" v-model="availability" />
-      <Activities v-if="step === 6" v-model="activities" />
-      <Invite v-if="step === 7" />
+      <Terms v-if="step === 1" v-model="terms" />
+      <Name v-if="step === 2" v-model="name"/>
+      <Location v-if="step === 3" v-model="location"/>
+      <Phone v-if="step === 4" v-model="phone" />
+      <Children v-if="step === 5" v-model="children" />
+      <Availability v-if="step === 6" v-model="availability" />
+      <Activities v-if="step === 7" v-model="activities" />
+      <Invite v-if="step === 8" />
     </div>
   </span>
 </template>
