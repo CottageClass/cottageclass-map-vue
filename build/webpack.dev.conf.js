@@ -33,7 +33,7 @@ const devWebpackConfig = merge(baseWebpackConfig, {
     // Can turn on HTTPS
     // - See below for how to provide a certificate
     // - https://webpack.js.org/configuration/dev-server/#devserver-https
-    // https: true,
+    https: true,
     contentBase: false, // since we use CopyWebpackPlugin.
     compress: true,
     host: HOST || config.dev.host,
