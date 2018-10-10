@@ -71,21 +71,9 @@ export default {
   },
   name: 'NewUser',
   methods: {
-    submitData: function () {
-      client.create({
-        "address": this.address,
-        "phone": this.phone,
-        "children": this.children,
-        "availability": this.availability,
-        "activities": this.activities,
-      }).then((data) => {
-        console.log(data)
-      }, (err) => {
-        console.log(err)
-        });
-    },
     nextStep: function () {
       if (this.step === this.lastStep) {
+        this.submitData()
         this.$router.push({ path: this.afterLastStep })
       }
       // check if there's an error, if so show it, if not advance and clear the error.
@@ -100,6 +88,25 @@ export default {
     prevStep: function () {
       this.showError = false
       this.step = this.step - 1
+    },
+    submitData: function () {
+      client.create({
+        "agreedToTerms": this.terms.agreed,
+        "firstName": this.name.first,
+        "lastName": this.name.last,
+        "lastInitial": this.name.last[0],
+        "address": this.location.fullAddress,
+        "lat": this.location.lat,
+        "lng": this.location.lng,
+        "phone": this.phone.number,
+        "children": this.children.list,
+        "availability": this.availability,
+        "activities": this.activities,
+      }).then((data) => {
+        console.log(data)
+      }, (err) => {
+        console.log(err)
+        });
     }
   },
   computed: {
