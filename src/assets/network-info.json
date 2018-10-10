@@ -155,7 +155,7 @@
     {
 	"name": "Hyde Park",  
 	"location": {"lat": 41.7974109, "lng": -87.5912157}, 
-	"zoom": 12, 
+	"zoom": 11, 
 	"stub": "HydePark",
 	"price": "12.50",
 	"percentage": 0.2
@@ -258,8 +258,8 @@
     },
     {
 	"name": "Somerville",  
-    "location": {"lat": 42.427501, "lng": -71.1113899}, 
-    "zoom": 12, 
+    "location": {"lat": 42.402828, "lng": -71.1094112}, 
+    "zoom": 11, 
 	"stub": "Somerville",
 	"price": "12.50",
 	"percentage": 0.2
