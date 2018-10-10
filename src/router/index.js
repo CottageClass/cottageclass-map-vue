@@ -7,6 +7,7 @@ import Splash from '@/components/Splash.vue'
 import EnterCode from '@/components/EnterCode.vue'
 import ProviderProfile from '@/components/ProviderProfile.vue'
 import RequestModal from '@/components/RequestModal.vue'
+import OAuthCallback from '@/components/OAuthCallback.vue'
 import network from '../assets/network-info.json'
 import HowItWorks from '@/components/HowItWorks.vue'
 import DesktopWarningSplash from '@/components/DesktopWarningSplash.vue'
@@ -29,6 +30,11 @@ export default new Router({
     redirect: '/BoCoCaGo'
   }, 
     {
+      path: '/oauth-callback',
+      name: 'Root',
+      component: OAuthCallback
+    },
+    {
       path: '/:networkId/',
       name: 'Splash',
       component: Splash
@@ -46,7 +52,7 @@ export default new Router({
     {
     	path: '/:networkId/home',
     	name: 'MainView',
-    	component: MainView 
+      component: MainView
     },
     {
     	path: '/:networkId/enter-code',

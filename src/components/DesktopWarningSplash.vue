@@ -8,6 +8,11 @@
       </div>
     </div>
     <a href="#" class="splash-button w-inline-block">
+      <button
+        @click="authenticate('facebook')"
+      >
+        Log In To Facebook and Stuff
+      </button>
       <router-link :to="{ name: 'MainView' }" class="button-text">Um... I guess?</router-link>
     </a>
   </div>
@@ -15,9 +20,58 @@
 </template>
 
 <script>
+import Vue from 'vue';
+import VueAxios from 'vue-axios';
+import VueAuthenticate from 'vue-authenticate';
+import axios from 'axios';
+
+Vue.use(VueAxios, axios)
+Vue.use(VueAuthenticate, {
+  baseUrl: 'https://localhost:3000',
+  //baseUrl: 'https://cottageclass-map-vue.herokuapp.com',
+  withCredentials: true,
+  tokenName: 'jwt',
+  providers: {
+    facebook: {
+      clientId: '905335782985620',
+      redirectUri: 'https://localhost:8077/oauth-callback',
+      // add additional scopes to be retrieved from Facebook here
+      // - see link below for properties accessible by default and properties requiring app review:
+      // - https://developers.facebook.com/docs/facebook-login/permissions/#reference-default
+      // scope: [],
+    },
+  },
+})
 
 export default {
-	name: 'DesktopWarningSplash',
+  name: 'DesktopWarningSplash',
+  methods: {
+    authenticate: function(provider) {
+      /*
+       *  Logs in the user (Facebook)
+       * - follows OAuth flow using VueAuth to get OAuth code
+       * - sends code to backend to exchange for access_token
+       * - backend fetches access_token, stores it in DB, and sends back JWT for user
+       * - VueAuthenticate stores JWT for future API access authorization
+       */
+
+      /* TODO: Refactor front and backend to authenticate via the following:
+       * - use FB library to obtain access token and store in cookies
+       * - send FB access_token to backend
+       * - backend decodes token using Koala, finds user by fbId or email, and sends back JWT for future API access
+       * - VueAuthenticate or other JWT auth library stores JWT token in localStorage or otherwise for us
+       */
+      this.$auth.authenticate(provider)
+        .then(function(res) {
+          console.log("auth SUCCESS")
+          console.log(res)
+        })
+        .catch(function(err) {
+          console.log("auth FAILURE")
+          console.log(err)
+        })
+    }
+  }
 };
 </script>
 
