@@ -35,9 +35,14 @@ export default {
   computed: {
     phone: function () {
       return {
-        number: this.number,
+        number: this.numberWithoutOne,
         err: this.error
       }
+    },
+    numberWithoutOne: function () {
+      if (this.number[0] == "1") {
+        return this.number.slice(1)
+      } 
     },
     isComplete: function () {
       if (this.number) { 
