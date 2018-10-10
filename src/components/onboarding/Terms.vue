@@ -19,44 +19,44 @@
 
 <script>
 
-export default {
-	name: 'Terms',
-  props: ['value'],
-  data () {
-    return {
-      checked: this.value.agreed,
-      errorMsg: 'To continue, check the box below to agree to our terms of service.'
-    }
-  },
-  methods: {
-    toggle: function () {
-      this.checked = !this.checked
-    }
-  },
-  mounted: function () {
-    if (!this.checked) {
-      this.$emit('input', {
-        agreed: this.checked,
-        err: this.errorMsg
-      })}
+  export default {
+    name: 'Terms',
+    props: ['value'],
+    data () {
+      return {
+        checked: this.value.agreed,
+        errorMsg: 'To continue, check the box below to agree to our terms of service.'
+      }
     },
-  computed: {
-    err: function () {
-      if (this.checked) {
-        return false
+    methods: {
+      toggle: function () {
+        this.checked = !this.checked
+      }
+    },
+    mounted: function () {
+      if (!this.checked) {
+        this.$emit('input', {
+          agreed: this.checked,
+          err: this.errorMsg
+        })}
+    },
+    computed: {
+      err: function () {
+        if (this.checked) {
+          return false
         } else {
           return this.errorMsg
         }
       },
     },
-  watch: {
-    checked: function () {
-      this.$emit('input', {
-        agreed: this.checked,
-        err: this.err
-      })
+    watch: {
+      checked: function () {
+        this.$emit('input', {
+          agreed: this.checked,
+          err: this.err
+        })
+      }
     }
-  }
-};
+  };
 
 </script>
