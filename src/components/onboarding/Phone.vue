@@ -5,7 +5,9 @@
     </div>
     <div class="onb-location-search-container">
       <div class="w-form">
-        <form id="email-form-2" name="email-form-2" data-name="Email Form 2"><input v-model="number" type="tel" class="location-text-field w-input" maxlength="256" name="name" data-name="Name" placeholder="e.g. 1-212-555-1212" id="name"></form>
+        <form id="email-form-2" name="email-form-2" data-name="Email Form 2">
+          <input v-model="number" type="tel" class="location-text-field w-input" maxlength="256" name="name" data-name="Name" placeholder="e.g. 1-212-555-1212" id="name">
+        </form>
       </div>
     </div>
     <p class="onb-paragraph-small-50">Other families will text you to request or offer care. (We may also send you text messages about special CottageClass  CareShare events or news. Message &amp; data rates apply.)</p>
@@ -14,8 +16,15 @@
 
 <script>
 
-export default {
+// Use lighter-weight port of Google libphonenumber with friendlier API
+// - https://www.npmjs.com/package/libphonenumber-js
+import {
+  formatNumber,
+  isValidNumber,
+} from 'libphonenumber-js'
 
+
+export default {
   name: "Phone",
   props: ['value'],
   data () {
@@ -31,28 +40,29 @@ export default {
        err: this.error
       })
     }
-    },
+  },
+  filters: {
+    // TODO: create an autoformatting phone-input component
+    // - don't use filters as of Vue2
+    // - instead create a component with a on:blur directive
+    // - https://vuejs.org/v2/guide/migration.html#Two-Way-Filters-replaced
+    // for example, https://www.npmjs.com/package/vue-tel-input,
+    // - which uses libphonenumber-js for autoformatting
+  },
   computed: {
     phone: function () {
       return {
-        number: this.numberWithoutOne,
+        number: this.formattedNumberUsa,
         err: this.error
       }
     },
-    numberWithoutOne: function () {
-      if (this.number[0] == "1") {
-        return this.number.slice(1)
-      } 
+    formattedNumberUsa: function() {
+      // https://www.npmjs.com/package/libphonenumber-js#format-phone-number
+      // - arg 'National' removes country code 1, arg 'International' keeps it
+      return formatNumber({ country: 'US', phone: this.number}, 'National')
     },
     isComplete: function () {
-      if (this.number) { 
-      var number = this.number.replace(/[^\d]/g, '')
-      if ((number[0] != '1' && number.length === 10) || (number[0] == '1') && number.length === 11) {
-        return true 
-      } else {
-        return false
-      }
-    } return false
+      return this.number && isValidNumber(this.number, 'US')
     },
     error: function () {
       if (this.isComplete) {

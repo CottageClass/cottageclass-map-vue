@@ -16,8 +16,8 @@ Vue.use(VueCookies)
  *  VueAxios Setup
  *  - access axios via Vue.axios, this.axios, or this.$http
  */
-import VueAxios from 'vue-axios';
 import axios from 'axios';
+import VueAxios from 'vue-axios';
 Vue.use(VueAxios, axios)
 
 /*
