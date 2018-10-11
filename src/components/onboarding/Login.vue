@@ -14,37 +14,6 @@
 </template>
 
 <script>
-  import Vue from 'vue';
-  import VueAxios from 'vue-axios';
-  import VueAuthenticate from 'vue-authenticate';
-  import axios from 'axios';
-
-  /*
-   * Config for VueAuthenticate
-   * - stores our auth token
-   * - sends it back and forth with every request for us
-   * - gives us auth/login/logout methods
-   * - see: https://www.npmjs.com/package/vue-authenticate
-   */
-
-  let origin = window.location.origin
-
-  Vue.use(VueAxios, axios)
-  Vue.use(VueAuthenticate, {
-    baseUrl: 'https://cottageclass-app-api.herokuapp.com',
-    withCredentials: true,
-    tokenName: 'jwt',
-    providers: {
-      facebook: {
-	clientId: '905335782985620',
-	redirectUri: `${origin}/oauth-callback`,
-	// Add additional scopes (properties) to be retrieved from Facebook here
-	// - see link below for properties accessible by default and properties requiring app review:
-	// - https://developers.facebook.com/docs/facebook-login/permissions/#reference-default
-	// scope: [],
-      },
-    },
-  })
 
 
   export default {
