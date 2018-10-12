@@ -145,7 +145,7 @@ export default {
       }
 
       this.axios.post(
-        `https://localhost:3000/users/${userId}`,
+        `${process.env.BASE_URL_API}/users/${userId}`,
         postData
       )
         .then(res => {

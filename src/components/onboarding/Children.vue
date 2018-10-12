@@ -53,7 +53,7 @@ export default {
         // validate that each child has name, birthday
         (this.children.reduce((soFar, child) => soFar && childValidates(child), true))) {
         return true
-      } else {        
+      } else {
         return false
     }
   },
