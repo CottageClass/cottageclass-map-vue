@@ -29,8 +29,9 @@ import Children from '@/components/onboarding/Children.vue'
 import Availability from '@/components/onboarding/Availability.vue'
 import Activities from '@/components/onboarding/Activities.vue'
 import Invite from '@/components/onboarding/Invite.vue'
+import * as Token from '@/utils/tokens.js'
 
-// import google sheets API service and give it a spreadsheet to push to 
+// import google sheets API service and give it a spreadsheet to push to
 import sheetsu from 'sheetsu-node';
 var client = sheetsu({ address: 'https://sheetsu.com/apis/v1.0su/e383acab3f80' })
 
@@ -90,6 +91,7 @@ export default {
       this.step = this.step - 1
     },
     submitData: function () {
+      // submit to sheetsu
       client.create({
         "agreedToTerms": this.terms.agreed,
         "firstName": this.name.first,
@@ -106,19 +108,66 @@ export default {
         console.log(data)
       }, (err) => {
         console.log(err)
-        });
+      });
+
+      // in parallel, submit to the backend
+      let userId = Token.currentUserId(this.$auth)
+      let address = this.location.fullAddress
+      let {
+        street_number,
+        route,
+        locality,
+        administrative_area_level_1,
+        country,
+        postal_code,
+      } = address
+
+      let phoneAreaCode = this.phone.number.match(/(\(\d+\))/)[0].replace(/[^\d]/g,'')
+      let phoneNumber = this.phone.number.match(/\d{3}-\d{4}/)[0].replace(/[^\d]/g,'')
+
+      let postData = {
+        agreeTos: this.terms.agreed,
+        firstName: this.name.first,
+        lastName: this.name.last,
+        streetNumber: street_number,
+        route: route,
+        locality: locality,
+        // snake_case key name is ugly but necessary for backend to recognize attr with trailing 1
+        admin_area_level_1: administrative_area_level_1,
+        country: country,
+        postalCode: postal_code,
+        latitude: this.location.lat,
+        longitude: this.location.lng,
+        phoneAreaCode: phoneAreaCode,
+        phoneNumber: phoneNumber,
+      }
+
+      this.axios.post(
+        `https://cottageclass-app-api.herokuapp.com/users/${userId}`,
+        postData
+      )
+        .then(res => {
+          console.log("user update SUCCESS")
+          console.log(res)
+        })
+        .catch(err => {
+          console.log("user update FAILURE")
+          console.log(err)
+          console.log(Object.entries(err))
+        })
+
     }
   },
   computed: {
     error: function () {
       switch (this.step) {
-        case 1: 
+        case 1:
         return this.terms.err
         case 2:
         return this.name.err
         case 3:
         return this.location.err
-        case 4: 
+        case 4:
         return this.phone.err
         case 5:
         return this.children.err
@@ -126,7 +175,7 @@ export default {
         return this.availability.err
         case 7:
         return this.activities.err
-        default: 
+        default:
         return false
       }
     },
@@ -144,7 +193,7 @@ export default {
 
 </script>
 
-<!-- this is a giant jumble of all app styles. Would be great to separate it out --> 
+<!-- this is a giant jumble of all app styles. Would be great to separate it out -->
 
 <style>
 
