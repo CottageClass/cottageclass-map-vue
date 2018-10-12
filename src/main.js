@@ -34,7 +34,8 @@ const origin = window.location.origin
  * - see: https://www.npmjs.com/package/vue-authenticate
  */
 Vue.use(VueAuthenticate, {
-  baseUrl: 'https://cottageclass-app-api.herokuapp.com',
+  //baseUrl: 'https://cottageclass-app-api.herokuapp.com',
+  baseUrl: 'https://localhost:3000',
   withCredentials: true,
   tokenName: 'jwt',
   providers: {

@@ -143,7 +143,7 @@ export default {
       }
 
       this.axios.post(
-        `https://cottageclass-app-api.herokuapp.com/users/${userId}`,
+        `https://localhost:3000/users/${userId}`,
         postData
       )
         .then(res => {
