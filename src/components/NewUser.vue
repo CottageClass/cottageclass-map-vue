@@ -36,8 +36,10 @@ import sheetsu from 'sheetsu-node';
 var client = sheetsu({ address: 'https://sheetsu.com/apis/v1.0su/e383acab3f80' })
 
 export default {
-  components: { Login, Nav, Terms, Name, Location, Phone, Children, Availability, Activities, Invite },
-    data () {
+  components: {
+    Login, Nav, Terms, Name, Location, Phone, Children, Availability, Activities, Invite
+  },
+  data () {
     return {
       step: 0,
       lastStep: 8,
@@ -162,21 +164,21 @@ export default {
     error: function () {
       switch (this.step) {
         case 1:
-        return this.terms.err
+          return this.terms.err
         case 2:
-        return this.name.err
+          return this.name.err
         case 3:
-        return this.location.err
+          return this.location.err
         case 4:
-        return this.phone.err
+          return this.phone.err
         case 5:
-        return this.children.err
+          return this.children.err
         case 6:
-        return this.availability.err
+          return this.availability.err
         case 7:
-        return this.activities.err
+          return this.activities.err
         default:
-        return false
+          return false
       }
     },
     nextButtonState: function () {
@@ -197,7 +199,7 @@ export default {
 
 <style>
 
-/* child birthdate selector */
+  /* child birthdate selector */
 ::-webkit-datetime-edit-text { color: rgba(0, 0, 0, .3); padding: 0 0.3em; }
 ::-webkit-datetime-edit-month-field { color: rgba(0, 0, 0, .3); text-transform: uppercase; }
 ::-webkit-datetime-edit-day-field { color: rgba(0, 0, 0, .3); text-transform: uppercase;}
@@ -208,8 +210,8 @@ export default {
 /* background color state on checkbox list items */
 
 .active-checkbox {
-   background-color: #fff !important;
- }
+  background-color: #fff !important;
+}
 
 .onb-content-container {
   margin: 0 auto;
@@ -218,11 +220,11 @@ export default {
 }
 
 textarea, input[type="text"] {
--webkit-appearance: none;
+  -webkit-appearance: none;
 }
 
 html {
-    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
 }
 
 .scrolling-wrapper {
@@ -230,8 +232,8 @@ html {
 }
 
 .card {
-    flex: 0 0 auto;
- }
+  flex: 0 0 auto;
+}
 
 .scrolling-wrapper {
   -webkit-overflow-scrolling: touch;
@@ -2596,7 +2598,7 @@ a {
   padding-left: 35px;
   border-radius: 4px;
   background-color: hsla(0, 0%, 100%, .7);
- }
+}
 
 .checkbox-field-extra-space:active {
   background-color: #fff;
