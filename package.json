@@ -8,7 +8,6 @@
     "e2e": "node test/e2e/runner.js",
     "deploy": "node ./node_modules/vue-gh-pages/index.js -b gh-pages",
     "dev": "webpack-dev-server --inline --progress --config build/webpack.dev.conf.js",
-    "prod": "NODE_ENV='production' webpack-dev-server --inline --progress --config build/webpack.prod.conf.js",
     "start": "npm run dev",
     "unit": "jest --config test/unit/jest.conf.js --coverage"
   },
