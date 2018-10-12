@@ -41,14 +41,6 @@ export default {
       })
     }
   },
-  filters: {
-    // TODO: create an autoformatting phone-input component
-    // - don't use filters as of Vue2
-    // - instead create a component with a on:blur directive
-    // - https://vuejs.org/v2/guide/migration.html#Two-Way-Filters-replaced
-    // for example, https://www.npmjs.com/package/vue-tel-input,
-    // - which uses libphonenumber-js for autoformatting
-  },
   computed: {
     phone: function () {
       return {
@@ -57,9 +49,15 @@ export default {
       }
     },
     formattedNumberUsa: function() {
+      // still have to slice the country code off
+      let num = this.number.replace(/[^\d]/g, '')
+      if (num && num[0] === '1' && num.length === 11) {
+        num = num.slice(1, num.length)
+      }
+
       // https://www.npmjs.com/package/libphonenumber-js#format-phone-number
-      // - arg 'National' removes country code 1, arg 'International' keeps it
-      return formatNumber({ country: 'US', phone: this.number}, 'National')
+      // - arg 'National' does not expect a country code, arg 'International' does expect it
+      return formatNumber({ country: 'US', phone: num}, 'National')
     },
     isComplete: function () {
       return this.number && isValidNumber(this.number, 'US')
