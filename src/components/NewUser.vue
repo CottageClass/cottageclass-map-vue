@@ -45,6 +45,7 @@ export default {
     return {
       step: 0,
       lastStep: 8,
+      afterLastStep: '../demo/home/',
       showError: false,
       terms: {},
       name: {},
@@ -94,6 +95,8 @@ export default {
       if (this.step == this.lastStep) {
         console.log('calling continueorrunsharingask')
         this.continueOrShowSharingAsk()
+        this.submitData()
+        this.$router.push({ path: this.afterLastStep })
       }
       // check if there's an error, if so show it, if not advance and clear the error.
       else if (!this.error || this.error === "skippable") {
