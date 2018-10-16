@@ -6,13 +6,14 @@
       <div v-if="showError && error" class="onb-error-container">
         <div class="onb-error-text">{{ error }}</div>
       </div>
-      <Terms v-if="step === 1" v-model="terms" /> 
-      <Location v-if="step === 2" v-model="location"/>
-      <Phone v-if="step === 3" v-model="phone" />
-      <Children v-if="step === 4" v-model="children" />
-      <Availability v-if="step === 5" v-model="availability" />
-      <Activities v-if="step === 6" v-model="activities" />
-      <Invite v-if="step === 7" />
+      <Terms v-if="step === 1" v-model="terms" />
+      <Name v-if="step === 2" v-model="name"/>
+      <Location v-if="step === 3" v-model="location"/>
+      <Phone v-if="step === 4" v-model="phone" />
+      <Children v-if="step === 5" v-model="children" />
+      <Availability v-if="step === 6" v-model="availability" />
+      <Activities v-if="step === 7" v-model="activities" />
+      <Invite v-if="step === 8" />
     </div>
   </span>
 </template>
@@ -28,14 +29,17 @@ import Children from '@/components/onboarding/Children.vue'
 import Availability from '@/components/onboarding/Availability.vue'
 import Activities from '@/components/onboarding/Activities.vue'
 import Invite from '@/components/onboarding/Invite.vue'
+import * as Token from '@/utils/tokens.js'
 
-// import google sheets API service and give it a spreadsheet to push to 
+// import google sheets API service and give it a spreadsheet to push to
 import sheetsu from 'sheetsu-node';
 var client = sheetsu({ address: 'https://sheetsu.com/apis/v1.0su/e383acab3f80' })
 
 export default {
-  components: { Login, Nav, Terms, Name, Location, Phone, Children, Availability, Activities, Invite },
-    data () {
+  components: {
+    Login, Nav, Terms, Name, Location, Phone, Children, Availability, Activities, Invite
+  },
+  data () {
     return {
       step: 0,
       lastStep: 7,
@@ -89,6 +93,7 @@ export default {
       this.step = this.step - 1
     },
     submitData: function () {
+      // submit to sheetsu
       client.create({
         "agreedToTerms": this.terms.agreed,
         "firstName": this.name.first,
@@ -105,26 +110,75 @@ export default {
         console.log(data)
       }, (err) => {
         console.log(err)
-        });
+      });
+
+      // in parallel, submit to the backend
+      let userId = Token.currentUserId(this.$auth)
+      let address = this.location.fullAddress
+      let {
+        street_number,
+        route,
+        locality,
+        administrative_area_level_1,
+        country,
+        postal_code,
+      } = address
+
+      let phoneAreaCode = this.phone.number.match(/(\(\d+\))/)[0].replace(/[^\d]/g,'')
+      let phoneNumber = this.phone.number.match(/\d{3}-\d{4}/)[0].replace(/[^\d]/g,'')
+
+      let postData = {
+        agreeTos: this.terms.agreed,
+        firstName: this.name.first,
+        lastName: this.name.last,
+        streetNumber: street_number,
+        route: route,
+        locality: locality,
+        // snake_case key name is ugly but necessary for backend to recognize attr with trailing 1
+        admin_area_level_1: administrative_area_level_1,
+        country: country,
+        postalCode: postal_code,
+        latitude: this.location.lat,
+        longitude: this.location.lng,
+        phoneAreaCode: phoneAreaCode,
+        phoneNumber: phoneNumber,
+      }
+
+      this.axios.post(
+        `${process.env.BASE_URL_API}/users/${userId}`,
+        postData
+      )
+        .then(res => {
+          console.log("user update SUCCESS")
+          console.log(res)
+        })
+        .catch(err => {
+          console.log("user update FAILURE")
+          console.log(err)
+          console.log(Object.entries(err))
+        })
+
     }
   },
   computed: {
     error: function () {
       switch (this.step) {
-        case 1: 
-        return this.terms.err
+        case 1:
+          return this.terms.err
         case 2:
-        return this.location.err
-        case 3: 
-        return this.phone.err
+          return this.name.err
+        case 3:
+          return this.location.err
         case 4:
-        return this.children.err
+          return this.phone.err
         case 5:
-        return this.availability.err
+          return this.children.err
         case 6:
-        return this.activities.err
-        default: 
-        return false
+          return this.availability.err
+        case 7:
+          return this.activities.err
+        default:
+          return false
       }
     },
     nextButtonState: function () {
@@ -141,11 +195,11 @@ export default {
 
 </script>
 
-<!-- this is a giant jumble of all app styles. Would be great to separate it out --> 
+<!-- this is a giant jumble of all app styles. Would be great to separate it out -->
 
 <style>
 
-/* child birthdate selector */
+  /* child birthdate selector */
 ::-webkit-datetime-edit-text { color: rgba(0, 0, 0, .3); padding: 0 0.3em; }
 ::-webkit-datetime-edit-month-field { color: rgba(0, 0, 0, .3); text-transform: uppercase; }
 ::-webkit-datetime-edit-day-field { color: rgba(0, 0, 0, .3); text-transform: uppercase;}
@@ -156,8 +210,8 @@ export default {
 /* background color state on checkbox list items */
 
 .active-checkbox {
-   background-color: #fff !important;
- }
+  background-color: #fff !important;
+}
 
 .onb-content-container {
   margin: 0 auto;
@@ -166,11 +220,11 @@ export default {
 }
 
 textarea, input[type="text"] {
--webkit-appearance: none;
+  -webkit-appearance: none;
 }
 
 html {
-    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
 }
 
 .scrolling-wrapper {
@@ -178,8 +232,8 @@ html {
 }
 
 .card {
-    flex: 0 0 auto;
- }
+  flex: 0 0 auto;
+}
 
 .scrolling-wrapper {
   -webkit-overflow-scrolling: touch;
@@ -2511,7 +2565,7 @@ a {
   padding-left: 35px;
   border-radius: 4px;
   background-color: hsla(0, 0%, 100%, .7);
- }
+}
 
 .checkbox-field-extra-space:active {
   background-color: #fff;
