@@ -16,7 +16,7 @@
       v-for="(person, index) in peopleAvailable"
       :position="person.location"
       :title="person.name"
-      :icon="require(`@/assets/small-avatars/${person.pic}`)"
+      :icon="facebookMapIcon(person.fbid)"
       @click="$router.push({name: 'ProviderProfile', params: { id: person.id }})"
       />
     </GmapMap>
@@ -44,7 +44,7 @@
     <div class="group-title-container">
       <h5 class="heading-2">{{ providersSectionTitle }}</h5>
     </div>
-     <Provider v-for="person in peopleAvailable" :person="person" :key="person.id"></Provider>
+     <Provider2 v-for="person in peopleAvailable" :person="person" :key="person.id" />
   </div>
 <!-- share button -->
 <ShareButton/>
@@ -55,6 +55,7 @@
 
 <script>
 import Provider from './Provider.vue'
+import Provider2 from './Provider2.vue'
 import RequestModal from './RequestModal.vue'
 import people from '../assets/people.json'
 import router from '../router'
@@ -64,7 +65,7 @@ var moment = require('moment');
 
 export default {
         name: 'MainView',
-        components: { Provider, RequestModal, ShareButton },
+        components: { Provider, Provider2, RequestModal, ShareButton },
         data () { 
           return {
           dateTimeSelected: null,  
@@ -85,6 +86,11 @@ export default {
               behavior: "smooth"
             });
           } 
+        },
+        methods: {
+          facebookMapIcon: function (fbid) {
+            return "https://graph.facebook.com/" + fbid + "/picture?width=30"
+          }
         },
         computed: {
           providersSectionTitle: function () {

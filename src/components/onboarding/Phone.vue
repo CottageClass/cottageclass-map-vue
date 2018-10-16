@@ -5,7 +5,9 @@
     </div>
     <div class="onb-location-search-container">
       <div class="w-form">
-        <form id="email-form-2" name="email-form-2" data-name="Email Form 2"><input v-model="number" type="tel" class="location-text-field w-input" maxlength="256" name="name" data-name="Name" placeholder="e.g. 2125551212" id="name"></form>
+        <form id="email-form-2" name="email-form-2" data-name="Email Form 2">
+          <input v-model="number" type="tel" class="location-text-field w-input" maxlength="256" name="name" data-name="Name" placeholder="e.g. 1-212-555-1212" id="name">
+        </form>
       </div>
     </div>
     <p class="onb-paragraph-small-50">Other families will text you to request or offer care. (We may also send you text messages about special CottageClass  CareShare events or news. Message &amp; data rates apply.)</p>
@@ -14,8 +16,15 @@
 
 <script>
 
-export default {
+// Use lighter-weight port of Google libphonenumber with friendlier API
+// - https://www.npmjs.com/package/libphonenumber-js
+import {
+  formatNumber,
+  isValidNumber,
+} from 'libphonenumber-js'
 
+
+export default {
   name: "Phone",
   props: ['value'],
   data () {
@@ -31,28 +40,27 @@ export default {
        err: this.error
       })
     }
-    },
+  },
   computed: {
     phone: function () {
       return {
-        number: this.numberWithoutOne,
+        number: this.formattedNumberUsa,
         err: this.error
       }
     },
-    numberWithoutOne: function () {
-      if (this.number[0] == "1") {
-        return this.number.slice(1)
-      } 
+    formattedNumberUsa: function() {
+      // still have to slice the country code off
+      let num = this.number.replace(/[^\d]/g, '')
+      if (num && num[0] === '1' && num.length === 11) {
+        num = num.slice(1, num.length)
+      }
+
+      // https://www.npmjs.com/package/libphonenumber-js#format-phone-number
+      // - arg 'National' does not expect a country code, arg 'International' does expect it
+      return formatNumber({ country: 'US', phone: num}, 'National')
     },
     isComplete: function () {
-      if (this.number) { 
-      var number = this.number.replace(/[^\d]/g, '')
-      if ((number[0] != '1' && number.length === 10) || (number[0] == '1') && number.length === 11) {
-        return true 
-      } else {
-        return false
-      }
-    } return false
+      return this.number && isValidNumber(this.number, 'US')
     },
     error: function () {
       if (this.isComplete) {

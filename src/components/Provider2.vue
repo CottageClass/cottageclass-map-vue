@@ -1,250 +1,76 @@
 <template>
-  <span>
-    <Login v-if="step === 0" v-on:next="nextStep" />
-    <div class="onb-body" v-if="step != 0">
-      <Nav :button="nextButtonState" @next="nextStep" @prev="prevStep" />
-      <div v-if="showError && error" class="onb-error-container">
-        <div class="onb-error-text">{{ error }}</div>
+	<router-link :to="{ name: 'ProviderProfile', params: { id: person.id }}">
+	<span class="body">
+		  <div class="landing-page-list-item-header">
+    <div class="avatar-name-container"><FacebookAvatar :person="person" className="image" />
+      <div class="list-item-3-heading">
+        <h5 class="heading">{{ person.name}} {{ person.lastInitial }}.</h5>
       </div>
-      <Terms v-if="step === 1" v-model="terms" />
-      <Name v-if="step === 2" v-model="name"/>
-      <Location v-if="step === 3" v-model="location"/>
-      <Phone v-if="step === 4" v-model="phone" />
-      <Children v-if="step === 5" v-model="children" />
-      <Availability v-if="step === 6" v-model="availability" />
-      <Activities v-if="step === 7" v-model="activities" />
-      <Invite v-if="step === 8" />
+    </div><router-link :to="{ name: 'RequestModal', params: { id: person.id }}"  class="button-send-message w-inline-block"><img src="../assets/chat.svg" class="image-4"><div class="list-item-1-button">Book</div></router-link></div>
+  <Images :person="person" />
+  <div class="list-item-container-2">
+    <div class="title-bar-and-action-v2">
+      <div class="div-block-7">
+        <div class="name-and-caption">
+          <h5 v-if="person.job && person.job.employer" class="caption">{{ person.job.title }} <span v-if="person.job.employer">at {{ person.job.employer }}</span></h5>
+        </div>
+      </div>
+      <!-- Children --> 
+
+<h5 class="caption" v-if="person.children.length">Parent to <span v-for="(child, index) in person.children"><span class="child">{{ child.name }} <span class="black-50">({{ child.age }})</span></span><span v-if="(index < person.children.length - 1)">, </span>
+        </span></h5>      
+
+      <!-- Background check --> 
+        
+        <div class="providerp-background-check-badge-container2" v-if="person.backgroundCheck">
+        <div class="providerp-background-check-badge"><img src="../assets/check-green.svg" alt="" class="checkmark-image">
+          <div class="background-check-text">Background checked</div>
+        </div>
+      </div>
+
+
+      <div class="tag-group-container" v-if="person.activities.length"><img src="../assets/tag.svg" class="image-tag">
+        <div class="tags-container" v-for="activity in person.activities">
+          <div class="tag">
+            <div class="small-text-upper-black-40">{{ activity }}</div>
+          </div>
+      </div>
+      </div>
+      <div class="time-group-container"><img src="../assets/time.svg" class="image-time">
+        <div class="times-container">
+          <div class="time" v-if="person.availability.includes('7to3')">
+            <div class="time-tags">9a–3p</div>
+          </div>
+          <div class="time" v-if="person.availability.includes('3to7')">
+            <div class="time-tags">3p–7p</div>
+          </div>
+          <div class="time" v-if="person.availability.includes('after7')">
+            <div class="time-tags">7p-</div>
+          </div>
+          <div class="time" v-if="person.availability.includes('weekends')">
+            <div class="time-tags">WEEKENDS</div>
+          </div>
+        </div>
+      </div>
+      <div class="list-item-content-container"></div>
     </div>
-  </span>
+  </div>
+	</span>
+</router-link>
 </template>
 
 <script>
-import Login from '@/components/onboarding/Login.vue'
-import Nav from '@/components/onboarding/Nav.vue'
-import Terms from '@/components/onboarding/Terms.vue'
-import Name from '@/components/onboarding/Name.vue'
-import Location from '@/components/onboarding/Location.vue'
-import Phone from '@/components/onboarding/Phone.vue'
-import Children from '@/components/onboarding/Children.vue'
-import Availability from '@/components/onboarding/Availability.vue'
-import Activities from '@/components/onboarding/Activities.vue'
-import Invite from '@/components/onboarding/Invite.vue'
-import * as Token from '@/utils/tokens.js'
-
-// import google sheets API service and give it a spreadsheet to push to
-import sheetsu from 'sheetsu-node';
-var client = sheetsu({ address: 'https://sheetsu.com/apis/v1.0su/e383acab3f80' })
+import Images from './Images.vue'
+import FacebookAvatar from './FacebookAvatar.vue'
 
 export default {
-  components: {
-    Login, Nav, Terms, Name, Location, Phone, Children, Availability, Activities, Invite
-  },
-  data () {
-    return {
-      step: 0,
-      lastStep: 7,
-      afterLastStep: '../demo/home/',
-      showError: false,
-      terms: {},
-      name: {},
-      location: {},
-      phone: {},
-      children: {
-        list: [{name: null, birthday: null}],
-        err: "skippable"
-      },
-      availability: {
-        mornings: false,
-        afternoons: false,
-        evenings: false,
-        weekends: false,
-        err: "skippable"
-      },
-      activities: {
-        playingOutside: false,
-        artsAndCrafts: false,
-        fieldTrips: false,
-        cooking: false,
-        homeworkHelp: false,
-        bilingualImmersion: false,
-        bookClub: false,
-        err: "skippable"
-      },
-    }
-  },
-  name: 'NewUser',
-  methods: {
-    nextStep: function () {
-      if (this.step === this.lastStep) {
-        // this.submitData()
-        this.$router.push({ path: this.afterLastStep })
-      }
-      // check if there's an error, if so show it, if not advance and clear the error.
-      else if (!this.error || this.error === "skippable") {
-        this.step = this.step + 1
-        this.showError = false
-        window.scrollTo(0,0)
-      } else {
-        this.showError = true
-      }
-    },
-    prevStep: function () {
-      this.showError = false
-      this.step = this.step - 1
-    },
-    submitData: function () {
-      // submit to sheetsu
-      client.create({
-        "agreedToTerms": this.terms.agreed,
-        "firstName": this.name.first,
-        "lastName": this.name.last,
-        "lastInitial": this.name.last[0],
-        "address": this.location.fullAddress,
-        "lat": this.location.lat,
-        "lng": this.location.lng,
-        "phone": this.phone.number,
-        "children": this.children.list,
-        "availability": this.availability,
-        "activities": this.activities,
-      }).then((data) => {
-        console.log(data)
-      }, (err) => {
-        console.log(err)
-      });
-
-      // in parallel, submit to the backend
-      let userId = Token.currentUserId(this.$auth)
-      let address = this.location.fullAddress
-      let {
-        street_number,
-        route,
-        locality,
-        administrative_area_level_1,
-        country,
-        postal_code,
-      } = address
-
-      let phoneAreaCode = this.phone.number.match(/(\(\d+\))/)[0].replace(/[^\d]/g,'')
-      let phoneNumber = this.phone.number.match(/\d{3}-\d{4}/)[0].replace(/[^\d]/g,'')
-
-      let postData = {
-        agreeTos: this.terms.agreed,
-        firstName: this.name.first,
-        lastName: this.name.last,
-        streetNumber: street_number,
-        route: route,
-        locality: locality,
-        // snake_case key name is ugly but necessary for backend to recognize attr with trailing 1
-        admin_area_level_1: administrative_area_level_1,
-        country: country,
-        postalCode: postal_code,
-        latitude: this.location.lat,
-        longitude: this.location.lng,
-        phoneAreaCode: phoneAreaCode,
-        phoneNumber: phoneNumber,
-      }
-
-      this.axios.post(
-        `${process.env.BASE_URL_API}/users/${userId}`,
-        postData
-      )
-        .then(res => {
-          console.log("user update SUCCESS")
-          console.log(res)
-        })
-        .catch(err => {
-          console.log("user update FAILURE")
-          console.log(err)
-          console.log(Object.entries(err))
-        })
-
-    }
-  },
-  computed: {
-    error: function () {
-      switch (this.step) {
-        case 1:
-          return this.terms.err
-        case 2:
-          return this.name.err
-        case 3:
-          return this.location.err
-        case 4:
-          return this.phone.err
-        case 5:
-          return this.children.err
-        case 6:
-          return this.availability.err
-        case 7:
-          return this.activities.err
-        default:
-          return false
-      }
-    },
-    nextButtonState: function () {
-      if (this.error === "skippable") {
-        return "skip"
-      } else if (this.error) {
-        return "inactive"
-      } else {
-        return "next"
-      }
-    }
-  }
+        name: 'Provider',
+        props: ['person'],
+        components: { Images, FacebookAvatar }
 };
-
 </script>
 
-<!-- this is a giant jumble of all app styles. Would be great to separate it out -->
-
-<style>
-
-  /* child birthdate selector */
-::-webkit-datetime-edit-text { color: rgba(0, 0, 0, .3); padding: 0 0.3em; }
-::-webkit-datetime-edit-month-field { color: rgba(0, 0, 0, .3); text-transform: uppercase; }
-::-webkit-datetime-edit-day-field { color: rgba(0, 0, 0, .3); text-transform: uppercase;}
-::-webkit-datetime-edit-year-field { color: rgba(0, 0, 0, .3); text-transform: uppercase;}
-::-webkit-inner-spin-button { display: none; }
-::-webkit-calendar-picker-indicator { color: rgba(0, 0, 0, .3); }
-
-/* background color state on checkbox list items */
-
-.active-checkbox {
-  background-color: #fff !important;
-}
-
-.onb-content-container {
-  margin: 0 auto;
-  max-width: 600px;
-  height: 100vh;
-}
-
-textarea, input[type="text"] {
-  -webkit-appearance: none;
-}
-
-html {
-  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
-}
-
-.scrolling-wrapper {
-  overflow-x: auto;
-}
-
-.card {
-  flex: 0 0 auto;
-}
-
-.scrolling-wrapper {
-  -webkit-overflow-scrolling: touch;
-}
-
-.scrolling-wrapper {
-  &::-webkit-scrollbar {
-    display: none;
-  }
-}
-
+<style scoped>
 .body {
   font-family: soleil, sans-serif;
   color: #333;
@@ -252,8 +78,35 @@ html {
   line-height: 20px;
 }
 
+.times-container {
+  width: 100%;
+}
+
+.time {
+  display: inline-block;
+  margin-right: 6px;
+  margin-bottom: 6px;
+  padding: 4px 6px;
+  clear: none;
+  border-radius: 2px;
+  background-color: rgba(100, 66, 107, .2);
+}
+
+.time-tags {
+  margin-top: 1px;
+  color: #64426b;
+  font-size: 9px;
+  line-height: 9px;
+  font-weight: 700;
+  letter-spacing: 1.03px;
+}
+
 a {
   text-decoration: none;
+}
+
+img {
+  display: inline-block;
 }
 
 .list-container {
@@ -355,8 +208,7 @@ a {
 
 .button {
   border-radius: 4px;
-  background-color: blue;
-  color: white;
+  background-color: #000;
   font-size: 13px;
   font-weight: 400;
   text-align: left;
@@ -819,14 +671,19 @@ a {
   display: flex;
   width: 100%;
   padding: 12px 16px 6px;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+  -webkit-flex-direction: row;
+  -ms-flex-direction: row;
+  flex-direction: row;
   -webkit-box-pack: justify;
   -webkit-justify-content: space-between;
   -ms-flex-pack: justify;
   justify-content: space-between;
-  -webkit-box-align: center;
-  -webkit-align-items: center;
-  -ms-flex-align: center;
-  align-items: center;
+  -webkit-box-align: start;
+  -webkit-align-items: flex-start;
+  -ms-flex-align: start;
+  align-items: flex-start;
 }
 
 .list-item-content-container {
@@ -848,6 +705,25 @@ a {
   text-align: left;
 }
 
+.tags-container {
+  display: block;
+  width: 100%;
+  -webkit-box-align: start;
+  -webkit-align-items: flex-start;
+  -ms-flex-align: start;
+  align-items: flex-start;
+}
+
+.tag {
+  display: inline-block;
+  margin-right: 4px;
+  margin-bottom: 4px;
+  padding: 4px 6px;
+  clear: none;
+  border-radius: 2px;
+  background-color: rgba(0, 0, 0, .1);
+}
+
 .small-text-upper-black-40 {
   margin-top: 1px;
   color: rgba(0, 0, 0, .4);
@@ -856,6 +732,20 @@ a {
   font-weight: 700;
   letter-spacing: 1.03px;
   text-transform: uppercase;
+}
+
+.times-container {
+  width: 100%;
+}
+
+.time {
+  display: inline-block;
+  margin-right: 4px;
+  margin-bottom: 4px;
+  padding: 4px 6px;
+  clear: none;
+  border-radius: 2px;
+  background-color: rgba(100, 66, 107, .2);
 }
 
 .small-text-upper-purple {
@@ -1705,12 +1595,12 @@ a {
   -ms-flex-align: center;
   align-items: center;
   border-radius: 500px;
-  background-color: #0cba52;
+  background-color: rgba(12, 186, 82, .2);
 }
 
 .background-check-text {
   margin-top: 1px;
-  color: hsla(0, 0%, 100%, .9);
+  color: #0dba52;
   font-size: 10px;
   line-height: 9px;
   font-weight: 700;
@@ -1976,7 +1866,6 @@ a {
 
 .div-fake-map {
   height: 200px;
-  background-image: url('../assets/Screenshot-2018-09-18-15.26.16.png');
   background-position: 50% 50%;
   background-size: 1500px;
   background-repeat: no-repeat;
@@ -2250,11 +2139,10 @@ a {
   border-width: 1px;
   border-color: hsla(0, 0%, 100%, .1);
   background-color: rgba(108, 200, 255, .93);
-  background-image: url('../assets/cclogo-house-blue.svg');
   background-position: 50% 13px;
   background-size: 24px 24px;
   background-repeat: no-repeat;
-  box-shadow: 1px 1px 3px 0 rgba(0, 0, 0, .08);
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, .08);
 }
 
 .onb-title-bar-next-button {
@@ -2317,7 +2205,6 @@ a {
   align-items: center;
   border-radius: 4px;
   background-color: transparent;
-  background-image: url('../assets/arrow-back-white.svg');
   background-position: 50% 50%;
   background-size: 24px 24px;
   background-repeat: no-repeat;
@@ -2326,7 +2213,6 @@ a {
 
 .onb-title-bar-back-button:active {
   background-color: hsla(0, 0%, 100%, .2);
-  background-image: url('../assets/arrow-back-white.svg');
   background-size: 24px;
 }
 
@@ -2360,7 +2246,6 @@ a {
   -webkit-align-items: center;
   -ms-flex-align: center;
   align-items: center;
-  height: 100vh;
 }
 
 .onb-heading-large {
@@ -2462,7 +2347,7 @@ a {
 .onb-body {
   overflow: visible;
   padding-top: 53px;
-  padding-bottom: 0px;
+  padding-bottom: 53px;
   background-color: #1d8ae7;
 }
 
@@ -2565,6 +2450,7 @@ a {
   padding-left: 35px;
   border-radius: 4px;
   background-color: hsla(0, 0%, 100%, .7);
+  color: #fff;
 }
 
 .checkbox-field-extra-space:active {
@@ -2583,6 +2469,7 @@ a {
 
 .list-item-7 {
   margin-bottom: 4px;
+  color: #888;
 }
 
 .onb-location-search-container {
@@ -2650,15 +2537,19 @@ a {
   margin-top: 22px;
 }
 
-.embed-facebook-button {
+.onb-fb-button-container {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
   display: flex;
   width: 100%;
-  height: 40px;
-  padding-top: 16px;
-  padding-bottom: 16px;
+  padding-right: 32px;
+  padding-left: 32px;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
   -webkit-box-pack: center;
   -webkit-justify-content: center;
   -ms-flex-pack: center;
@@ -2690,7 +2581,6 @@ a {
   -webkit-align-items: center;
   -ms-flex-align: center;
   align-items: center;
-  background-image: url('../assets/splash-bg.svg');
   background-position: 50% 50%;
   background-size: cover;
   background-repeat: no-repeat;
@@ -2834,7 +2724,6 @@ a {
   font-size: 16px;
   line-height: 16px;
   font-weight: 400;
-  color: #fff;
 }
 
 .form-block-3 {
@@ -3001,10 +2890,6 @@ a {
   font-weight: 700;
 }
 
-.image-8 {
-  margin-bottom: 24px;
-}
-
 .onb-arrow-animation-container {
   position: fixed;
   left: 0px;
@@ -3028,20 +2913,6 @@ a {
   -webkit-align-items: center;
   -ms-flex-align: center;
   align-items: center;
-}
-
-.onb-add-to-home-screen-container {
-  margin-top: 0px;
-  padding: 8px;
-  border-radius: 4px;
-  background-color: hsla(0, 0%, 100%, .66);
-  box-shadow: none;
-}
-
-.div-block-8 {
-  width: 300px;
-  height: 60px;
-  background-color: #80a4bd;
 }
 
 .onb-number-circle {
@@ -3086,10 +2957,468 @@ a {
   text-align: center;
 }
 
+.onb-button-social {
+  position: relative;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  width: 100%;
+  padding: 13px 16px;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+  -ms-flex-align: center;
+  align-items: center;
+  border-radius: 4px;
+  background-color: hsla(0, 0%, 100%, .7);
+  cursor: pointer;
+}
+
+.onb-button-social:active {
+  background-color: #fff;
+}
+
+.onb-button-social-text {
+  margin-left: 10px;
+  color: #1d8ae7;
+}
+
+.onb-social-button-list {
+  width: 100%;
+  margin-bottom: 0px;
+  padding-left: 0px;
+  list-style-type: none;
+}
+
+.onb-button-social-list-item {
+  margin-bottom: 8px;
+}
+
+.onb-copy-link-container {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  width: 100%;
+  margin-bottom: 8px;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+  -ms-flex-align: center;
+  align-items: center;
+}
+
+.copy-text-link-field {
+  width: 100%;
+  height: 56px;
+  margin-bottom: 0px;
+  padding-top: 8px;
+  padding-left: 18px;
+  border: 1px none #000;
+  border-radius: 4px;
+  background-color: #fff;
+  color: #fff;
+  font-size: 16px;
+}
+
+.copy-text-link-field:active {
+  background-color: #fff;
+}
+
+.copy-text-link-field:focus {
+  background-color: #fff;
+}
+
+.copy-text-link-field::-webkit-input-placeholder {
+  color: #333;
+  font-weight: 700;
+}
+
+.copy-text-link-field:-ms-input-placeholder {
+  color: #333;
+  font-weight: 700;
+}
+
+.copy-text-link-field::placeholder {
+  color: #333;
+  font-weight: 700;
+}
+
+.onb-copy-link-form {
+  position: relative;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  width: 100%;
+  -webkit-box-pack: start;
+  -webkit-justify-content: flex-start;
+  -ms-flex-pack: start;
+  justify-content: flex-start;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+  -ms-flex-align: center;
+  align-items: center;
+  color: #fff;
+}
+
+.onb-copy-link-form-block {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  width: 100%;
+  margin-bottom: 16px;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+  -ms-flex-align: center;
+  align-items: center;
+}
+
+.onb-button-copy-link {
+  position: absolute;
+  right: 0px;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  min-height: 100%;
+  padding-right: 16px;
+  padding-left: 16px;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  border-top-right-radius: 4px;
+  border-bottom-right-radius: 4px;
+  background-color: #bbddf7;
+  color: #1d8ae7;
+  font-size: 12px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+.onb-button-copy-link:active {
+  background-color: #4cb2ff;
+  color: #fff;
+}
+
+.onb-body-overlay {
+  overflow: visible;
+  padding-top: 0px;
+  padding-bottom: 0px;
+  background-color: #1d8ae7;
+  color: #fff;
+}
+
+.onb-invite-friends-hero-image {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  padding: 0px;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+  -ms-flex-align: center;
+  align-items: center;
+}
+
+.onb-button-continue-with-facebook {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  padding: 16px 24px 16px 16px;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+  -ms-flex-align: center;
+  align-items: center;
+  border-radius: 4px;
+  background-color: #3b5998;
+  color: #fff;
+}
+
+.onb-button-continue-with-facebook:active {
+  background-image: -webkit-linear-gradient(270deg, rgba(0, 0, 0, .15), rgba(0, 0, 0, .15));
+  background-image: linear-gradient(180deg, rgba(0, 0, 0, .15), rgba(0, 0, 0, .15));
+}
+
+.onb-button-facebook-text {
+  margin-left: 12px;
+  font-size: 14px;
+  text-align: left;
+  letter-spacing: 0.4px;
+}
+
+.onb-photo-grid-container {
+  position: static;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  margin-right: auto;
+  margin-left: auto;
+  padding: 4px;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  -webkit-flex-wrap: wrap;
+  -ms-flex-wrap: wrap;
+  flex-wrap: wrap;
+  -webkit-box-align: start;
+  -webkit-align-items: flex-start;
+  -ms-flex-align: start;
+  align-items: flex-start;
+  -webkit-align-content: flex-start;
+  -ms-flex-line-pack: start;
+  align-content: flex-start;
+}
+
+.onb-photo-item-container {
+  position: relative;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  width: 33.33333333%;
+  max-height: 96px;
+  max-width: 96px;
+  min-height: 96px;
+  min-width: 96px;
+  margin: 4px;
+  float: left;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+  -ms-flex-align: center;
+  align-items: center;
+  background-position: 0px 0px;
+  background-size: cover;
+  background-repeat: no-repeat;
+  text-align: left;
+}
+
+.availability-container-v2 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  width: 100%;
+  padding: 24px 16px;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+  -ms-flex-align: center;
+  align-items: center;
+  background-color: #fff;
+  text-align: left;
+}
+
+.div-block-7 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  width: 100%;
+  -webkit-box-pack: justify;
+  -webkit-justify-content: space-between;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+}
+
+.title-bar-and-action-v2 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  width: 100%;
+  padding: 12px 16px 6px;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  -webkit-box-pack: justify;
+  -webkit-justify-content: space-between;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+  -webkit-box-align: start;
+  -webkit-align-items: flex-start;
+  -ms-flex-align: start;
+  align-items: flex-start;
+}
+
+.landing-page-v2-h1 {
+  margin-top: 0px;
+  margin-bottom: 16px;
+  font-size: 16px;
+  line-height: 16px;
+  text-align: center;
+}
+
+.lpv2-choose-time-button {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  width: 100%;
+  padding: 16px;
+  -webkit-box-pack: justify;
+  -webkit-justify-content: space-between;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+  -ms-flex-align: center;
+  align-items: center;
+  border-radius: 4px;
+  box-shadow: 0 0 20px 0 rgba(0, 0, 0, .2);
+}
+
+.lpv2-choose-time-button-text {
+  margin-right: 16px;
+  margin-left: 16px;
+  color: #1c8fe5;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 1.2px;
+  text-transform: uppercase;
+}
+
+.div-block-8 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  width: 100%;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+  -ms-flex-align: center;
+  align-items: center;
+}
+
+.providerp-background-check-badge-container2 {
+  margin-top: 8px;
+  margin-bottom: 6px;
+}
+
+.onb-top-content-wrapper {
+  padding-top: 32px;
+  padding-right: 32px;
+  padding-left: 32px;
+}
+
+.selection-number-not-selected {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  width: 32px;
+  height: 32px;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+  -ms-flex-align: center;
+  align-items: center;
+  border: 1px solid #ffd6d6;
+  border-radius: 50%;
+  box-shadow: 0 0 6px 0 rgba(0, 0, 0, .3), inset 0 0 8px 0 rgba(0, 0, 0, .3);
+}
+
+.photo-selected {
+  min-height: 96px;
+  min-width: 96px;
+  background-color: hsla(0, 0%, 100%, .3);
+}
+
+.photo-not-selected {
+  min-height: 96px;
+  min-width: 96px;
+  background-color: hsla(0, 0%, 100%, 0);
+}
+
+.selection-number-selected {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  width: 32px;
+  height: 32px;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+  -ms-flex-align: center;
+  align-items: center;
+  border: 1px solid #ffd6d6;
+  border-radius: 50%;
+  background-color: #383838;
+  box-shadow: 0 0 6px 0 rgba(0, 0, 0, .3);
+  color: #fff;
+}
+
+.landing-page-list-item-header {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  width: 100%;
+  padding: 16px;
+  -webkit-box-pack: justify;
+  -webkit-justify-content: space-between;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+  -ms-flex-align: center;
+  align-items: center;
+  background-color: #fff;
+}
+
+@media (max-width: 991px) {
+  .onb-invite-friends-hero-image {
+    padding: 0px;
+  }
+}
+
 @media (max-width: 767px) {
   .components-container-1 {
     padding-right: 16px;
     padding-left: 16px;
+  }
+  .onb-invite-friends-hero-image {
+    padding: 0px;
   }
 }
 
@@ -3119,7 +3448,16 @@ a {
   .time {
     clear: both;
   }
- 
+  .tag-group-container {
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: start;
+    -webkit-align-items: flex-start;
+    -ms-flex-align: start;
+    align-items: flex-start;
+  }
   .name-and-caption {
     display: -webkit-box;
     display: -webkit-flex;
@@ -3171,8 +3509,94 @@ a {
     -ms-flex-align: center;
     align-items: center;
   }
+  .onb-button-continue-with-facebook {
+    width: 100%;
+    padding-bottom: 17px;
+    -webkit-box-pack: center;
+    -webkit-justify-content: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+  }
+  .onb-button-continue-with-facebook:active {
+    background-color: #3b5998;
+  }
+  .onb-button-facebook-text {
+    font-weight: 400;
+  }
+  .onb-photo-grid-container {
+    width: 100%;
+  }
+  .lpv2-choose-time-button {
+    min-width: 100%;
+  }
+  .selection-number-not-selected {
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    width: 32px;
+    height: 32px;
+    -webkit-box-pack: center;
+    -webkit-justify-content: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+    -webkit-box-align: center;
+    -webkit-align-items: center;
+    -ms-flex-align: center;
+    align-items: center;
+    box-shadow: inset 0 0 8px 0 rgba(0, 0, 0, .33), 0 0 8px 0 rgba(0, 0, 0, .33);
+  }
+  .photo-selected {
+    position: relative;
+    width: 96px;
+    height: 96px;
+    background-color: hsla(0, 0%, 100%, .3);
+  }
+  .photo-not-selected {
+    position: relative;
+    width: 96px;
+    height: 96px;
+    background-color: hsla(0, 0%, 100%, .3);
+  }
+  .selection-number-selected {
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    width: 32px;
+    height: 32px;
+    -webkit-box-pack: center;
+    -webkit-justify-content: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+    -webkit-box-align: center;
+    -webkit-align-items: center;
+    -ms-flex-align: center;
+    align-items: center;
+    box-shadow: inset 0 0 8px 0 rgba(0, 0, 0, .33), 0 0 8px 0 rgba(0, 0, 0, .33);
+  }
 }
 
+/* Remove inner shadow from inputs on mobile iOS */
+textarea, input[type="text"] {
+-webkit-appearance: none;
+}
 
-
+html {
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+}
+.scrolling-wrapper {
+  overflow-x: auto;
+}
+  .card {
+    flex: 0 0 auto;
+  }
+  .scrolling-wrapper {
+  -webkit-overflow-scrolling: touch;
+}
+.scrolling-wrapper {
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
 </style>
