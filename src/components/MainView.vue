@@ -16,7 +16,7 @@
       v-for="(person, index) in peopleAvailable"
       :position="person.location"
       :title="person.name"
-      :icon="require(`@/assets/small-avatars/${person.pic}`)"
+      :icon="facebookMapIcon(person.fbid)"
       @click="$router.push({name: 'ProviderProfile', params: { id: person.id }})"
       />
     </GmapMap>
@@ -86,6 +86,11 @@ export default {
               behavior: "smooth"
             });
           } 
+        },
+        methods: {
+          facebookMapIcon: function (fbid) {
+            return "https://graph.facebook.com/" + fbid + "/picture?width=30"
+          }
         },
         computed: {
           providersSectionTitle: function () {
