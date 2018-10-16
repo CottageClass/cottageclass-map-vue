@@ -2,7 +2,7 @@
 <div class="body">
 	  <div class="providerp-provider-info-section">
 	  	<router-link :to="{ name: 'MainView' }" class="providerp-button-back w-inline-block"><img src="../assets/Arrow-Back-2.svg">
-	  </router-link><img :src="require(`../assets/${person.pic}`)" class="providerp-avatar">
+	  </router-link><img :src="facebookAvatar" class="providerp-avatar">
     <h1 class="providerp-h1">{{ person.name}} {{ person.lastInitial }}.</h1>
 
 
@@ -150,8 +150,11 @@ export default {
 	computed: {
 		person: function () {
           return this.people.find(person => person.id == this.$route.params.id)
-	}
-}
+        },
+    facebookAvatar: function () {
+      return "https://graph.facebook.com/" + this.person.fbid + "/picture?width=200"
+    }
+  }
 };
 </script>
 
