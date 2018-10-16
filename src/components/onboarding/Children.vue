@@ -13,7 +13,12 @@
           <div class="onb-group-header" key="index">
             <h2 class="onb-child-group-heading">Child {{ index + 1}}</h2>
             <a @click="removeChild(index)" class="onb-button-delete-child w-inline-block"><img src="@/assets/remove.svg" width="24" height="24" alt="" class="image-6"></a>
-          </div><label for="birthday-2" class="onb-field-label">Name</label><input type="text" class="name-text-field w-input" maxlength="256" name="name-2" data-name="Name 2" placeholder="First Name" id="name-2" v-model="children[index].name"><label for="birthday-3" class="onb-field-label">Birthday</label><input type="date" min="1980-01-01" class="basic-text-field w-input" maxlength="256" name="birthday-2" data-name="Birthday 2" placeholder="MM / DD / YYYY" id="birthday-2" v-model="children[index].birthday"></div>
+          </div>
+          <label for="birthday-2" class="onb-field-label">First Name</label>
+          <input type="text" class="name-text-field w-input" maxlength="256" name="name-2" data-name="Name 2" placeholder="First Name" id="name-2" v-model="children[index].firstName" />
+          <label for="birthday-3" class="onb-field-label">Birthday</label>
+          <input type="date" min="1980-01-01" class="basic-text-field w-input" maxlength="256" name="birthday-2" data-name="Birthday 2" placeholder="MM / DD / YYYY" id="birthday-2" v-model="children[index].birthday" />
+        </div>
       </form><a @click="addChild" class="onb-button-add-group w-inline-block"><img src="@/assets/add.svg" alt="" class="image-7"><div class="onb-button-add-group-text">Add Another child</div></a>
     </div>
   </div>
@@ -34,7 +39,7 @@ export default {
   },
   methods: {
     addChild: function () {
-      this.children.push({name: null, birthday: null})
+      this.children.push({firstName: null, birthday: null})
     },
     removeChild: function (index) {
       this.children.splice(index, 1);
@@ -42,12 +47,17 @@ export default {
   },
   computed: {
     noChildren: function() {
-      return (this.children.length === 0 || (this.children[0].name === null && this.children[0].birthday === null))
+      return (this.children.length === 0 || (this.children[0].firstName === null && this.children[0].birthday === null))
     },
     childrenValidates: function () {
       // child has name and birthday
       let childValidates = function (child) {
-        return child.birthday && child.name
+        return (
+          child.birthday &&
+          child.firstName &&
+          child.birthday.length > 0 &&
+          child.firstName.length > 0
+        )
       }
       if (this.noChildren ||
         // validate that each child has name, birthday

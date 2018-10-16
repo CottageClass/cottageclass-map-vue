@@ -51,7 +51,7 @@ export default {
       location: {},
       phone: {},
       children: {
-        list: [{name: null, birthday: null}],
+        list: [{firstName: null, birthday: null}],
         err: "skippable"
       },
       availability: {
