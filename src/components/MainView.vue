@@ -284,6 +284,8 @@ select {
   -webkit-align-items: center;
   -ms-flex-align: center;
   align-items: center;
+  height: unset;
+  background-color: unset;
 }
 
 .availability-container-v2 {
