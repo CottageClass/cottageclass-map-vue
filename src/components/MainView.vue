@@ -31,23 +31,20 @@
 
 <!-- availability --> 
 
-    <div class="availability-container">
-      <h5 class="heading-2-strong">See who&#x27;s available:</h5>
-      <select v-model="timeSelected">
-        <option value="now">Right now</option>
-        <option value="7to3">9AM &ndash; 3PM</option>
-        <option value="3to7">3PM &ndash; 7PM</option>
-        <option value="after7">After 7PM</option>
-        <option value="weekends">Weekends</option>
-      </select><img src="../assets/Dropdown-Arrows.svg" class="dropdown-arrows"></a>
+    <div class="availability-container-v2">
+      <h1 class="landing-page-v2-h1">When do you need childcare?</h1>
+      <label class="lpv2-choose-time-button w-inline-block">
+        <div class="div-block-8"><img src="../assets/time-outline-blue.svg" width="15" height="15" alt="">
+          <div class="lpv2-choose-time-button-text">{{ timePlaceholder }}</div><input type="datetime-local" v-model="dateTimeSelected" />
+        </div><img src="../assets/Dropdown-Arrows.svg" alt=""></label>
     </div>
 
   <!-- the list --> 
   <div class="list-container">
     <div class="group-title-container">
-      <h5 class="heading-2">Providers in &ldquo;{{ network.name }}&rdquo;</h5>
+      <h5 class="heading-2">{{ providersSectionTitle }}</h5>
     </div>
-     <Provider v-for="person in peopleAvailable" :person="person" :key="person.id"></Provider>
+     <Provider2 v-for="person in peopleAvailable" :person="person" :key="person.id" />
   </div>
 <!-- share button -->
 <ShareButton/>
@@ -58,18 +55,20 @@
 
 <script>
 import Provider from './Provider.vue'
+import Provider2 from './Provider2.vue'
 import RequestModal from './RequestModal.vue'
 import people from '../assets/people.json'
 import router from '../router'
 import ShareButton from './ShareButton.vue'
 import networks from '../assets/network-info.json'
+var moment = require('moment');
 
 export default {
         name: 'MainView',
-        components: { Provider, RequestModal, ShareButton },
+        components: { Provider, Provider2, RequestModal, ShareButton },
         data () { 
           return {
-          timeSelected: "now", // or "7to3", "3to7", "after7", "weekends"
+          dateTimeSelected: null,  
           people: people, // to bring from import into vue model
           networks: networks, // to bring from import into vue model
           selectedPerson: null,
@@ -80,7 +79,50 @@ export default {
 // these items are for the modal
           }
         },
+        watch: {
+          dateTimeSelected: function () {
+            window.scrollTo({
+              top: 367,
+              behavior: "smooth"
+            });
+          } 
+        },
         computed: {
+          providersSectionTitle: function () {
+            if (!this.dateTimeSelected) {
+              return "Providers in \"" + this.network.name + "\""
+            } else {
+              var aMoment = moment(this.dateTimeSelected)
+              var day = aMoment.format("dddd")
+              var time = aMoment.format("h:mm a")
+              return "The following providers in \"" + this.network.name + "\" are typically available at " + time + " on " + day + "s."
+            }
+          },
+          timePlaceholder: function () {
+            if (!this.dateTimeSelected) {
+              return "Choose a time"
+            } else {
+              return moment(this.dateTimeSelected).format("dddd, h:mm a")
+            }
+          },
+          timeSlot: function () {
+              var dt = moment(this.dateTimeSelected)
+              var hour = dt.hour()
+              var day = dt.day()
+              if (day == 0 || day == 6) {
+                return "weekends"
+              } else {
+                if (hour < 15 && hour >= 7) {
+                  return "7to3"
+                } else if (hour < 19 && hour >= 14) {
+                  return "3to7"
+                } else if (hour >= 19) {
+                  return "after7" 
+              } else {
+                return false
+              }
+            }
+          },
           network: function () {
            return this.networks.find(network => network.stub === this.$route.params.networkId)
          },
@@ -88,22 +130,11 @@ export default {
             return this.people.filter(person => (person.networks && person.networks.includes(this.$route.params.networkId)))
           },
           peopleAvailable: function () {
-            let timeShown = function (time) {
-              if (time != "now") return time
-                else {// calculate what timeSlot is "now" and return that.
-                  var now = new Date()
-                  var day = now.getDay()
-                  if (day == 6 || day == 0) {
-                  return "weekends"
+            if (!this.timeSlot) {
+                return this.peopleInNetwork
                 } else {
-                  var hour = now.getHours()
-                  if (hour < 15 && hour >= 7) return "7to3"
-                    else if (hour < 19 && hour >= 14) return "3to7"
-                    else return "after7" 
+                  return this.peopleInNetwork.filter(person => (person.availability.includes(this.timeSlot)))
                 }
-            }
-          }
-          return this.peopleInNetwork.filter(person => (!person.availability.includes("never")) && person.availability.includes(timeShown(this.timeSelected))) // availability can be "never" and we don't want to show people who say "never". 
           },
           decodeLatLong: function () {
                 let geocoder = new google.maps.Geocoder();
@@ -127,6 +158,11 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 
 <style scoped>
+
+input {
+  font-size: 1px; 
+  opacity: 0;
+}
 
 .calendar-button-2 {
   position: absolute;
@@ -160,15 +196,6 @@ export default {
   right: 36px;
   z-index: 8;
   filter: drop-shadow(2px 2px 2px #888);
-}
-
-label {
-  position: relative;
-  border: 1.5px solid #1f88e9;
-  display: block;
-  background-color: white;
-  padding-left: 10px;
-  border-radius: 5px;
 }
 
 select {
@@ -211,15 +238,21 @@ select {
 
 /* Availability container pull this out to component */
 
-.availability-container {
+.landing-page-v2-h1 {
+  margin-top: 0px;
+  margin-bottom: 16px;
+  font-size: 16px;
+  line-height: 16px;
+  text-align: center;
+}
+
+.lpv2-choose-time-button {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
   display: flex;
   width: 100%;
-  height: 60px;
-  padding-right: 16px;
-  padding-left: 16px;
+  padding: 16px;
   -webkit-box-pack: justify;
   -webkit-justify-content: space-between;
   -ms-flex-pack: justify;
@@ -227,8 +260,63 @@ select {
   -webkit-box-align: center;
   -webkit-align-items: center;
   -ms-flex-align: center;
+  align-items: center;
+  border-radius: 4px;
+  box-shadow: 0 0 20px 0 rgba(0, 0, 0, .2);
+}
+
+.lpv2-choose-time-button-text {
+  margin-right: 16px;
+  margin-left: 16px;
+  color: #1c8fe5;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 1.2px;
+  text-transform: uppercase;
+}
+
+.div-block-8 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  width: 100%;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+  -ms-flex-align: center;
+  align-items: center;
+  height: unset;
+  background-color: unset;
+}
+
+.availability-container-v2 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  width: 100%;
+  padding: 24px 16px;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+  -ms-flex-align: center;
+  align-items: center;
   background-color: #fff;
   text-align: left;
+}
+
+@media (max-width: 479px){
+  .lpv2-choose-time-button {
+    min-width: 100%;
+  }
 }
 
 h5.heading-2-strong {
