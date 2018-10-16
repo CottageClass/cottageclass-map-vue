@@ -2,7 +2,7 @@
 <div class="body">
 	  <div class="providerp-provider-info-section">
 	  	<router-link :to="{ name: 'MainView' }" class="providerp-button-back w-inline-block"><img src="../assets/Arrow-Back-2.svg">
-	  </router-link><img :src="facebookAvatar" class="providerp-avatar">
+	  </router-link><FacebookAvatar :person="person" className="providerp-avatar" />
     <h1 class="providerp-h1">{{ person.name}} {{ person.lastInitial }}.</h1>
 
 
@@ -129,8 +129,10 @@
 import Images from './Images.vue'
 import ReviewItem from './ReviewItem.vue'
 import people from '../assets/people.json'
+import FacebookAvatar from './FacebookAvatar.vue'
+
 export default {
-	components: { ReviewItem, Images },
+	components: { ReviewItem, Images, FacebookAvatar },
 	name: 'ProviderProfile',
 	methods: {
 		getDirections: function (location) {
@@ -150,10 +152,7 @@ export default {
 	computed: {
 		person: function () {
           return this.people.find(person => person.id == this.$route.params.id)
-        },
-    facebookAvatar: function () {
-      return "https://graph.facebook.com/" + this.person.fbid + "/picture?width=200"
-    }
+        }
   }
 };
 </script>
