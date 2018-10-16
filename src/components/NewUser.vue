@@ -146,6 +146,14 @@ export default {
       let phoneAreaCode = this.phone.number.match(/(\(\d+\))/)[0].replace(/[^\d]/g,'')
       let phoneNumber = this.phone.number.match(/\d{3}-\d{4}/)[0].replace(/[^\d]/g,'')
 
+      // set child attributes, plus the parentId
+      let childrenAttributes = this.children.list.map(childAttrs => (
+        {
+          ...childAttrs,
+          userId: userId,
+        }
+      ))
+
       let postData = {
         agreeTos: this.terms.agreed,
         firstName: this.name.first,
@@ -161,6 +169,7 @@ export default {
         longitude: this.location.lng,
         phoneAreaCode: phoneAreaCode,
         phoneNumber: phoneNumber,
+        childrenAttributes: childrenAttributes,
       }
 
       this.axios.post(
