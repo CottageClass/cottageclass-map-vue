@@ -16,6 +16,8 @@
 </template>
 
 <script>
+import networks from '@/assets/network-info.json'
+const networkCodes = networks.map(network => network.stub.toLowerCase())
 
 export default {
   name: "InvitationCode",
@@ -24,7 +26,7 @@ export default {
     return {
       code: "",
       errorMesg: 'We\'re sorry, but this code doesn\'t match our records. Please try again or continue without a code.',
-      validCodes: ["test", "Test", "Brooklyn", "1234"]
+      validCodes: networkCodes
     }
   },
   computed: {
@@ -47,7 +49,7 @@ export default {
   watch: {
     code: function () {
       this.$emit('input', {
-        code: this.code,
+        code: this.codeValidates ? this.code : null,
         err: this.err,
         isValid: this.codeValidates
       })
