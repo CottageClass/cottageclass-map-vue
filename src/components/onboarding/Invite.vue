@@ -1,8 +1,8 @@
 <template>
   <div class="onb-content-container">
     <div class="onb-top-content-container">
-      <h1 class="onb-heading-large">Invite Friends</h1>
-      <p class="onb-paragraph-subheading-2">It only takes 3 parents to build a trusted network! Invite friends you&#x27;d like to share care with.</p>
+      <h1 class="onb-heading-large">Thank you!</h1>
+      <p class="onb-paragraph-subheading-2">We're still invitation only. But if you can find enough parents in your school or neighborhood we'll give you your own network code. Here are some ways to invite other families...</p>
     </div>
     <div class="onb-copy-link-container">
     	<!-- 

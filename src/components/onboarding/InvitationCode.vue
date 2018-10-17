@@ -48,7 +48,8 @@ export default {
     code: function () {
       this.$emit('input', {
         code: this.code,
-        err: this.err
+        err: this.err,
+        isValid: this.codeValidates
       })
     }
   }

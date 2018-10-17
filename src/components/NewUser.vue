@@ -44,8 +44,7 @@ export default {
   data () {
     return {
       step: 0,
-      lastStep: 9, //do we even need this now?
-      afterLastStep: '../demo/home/',
+      lastStep: 8,
       showError: false,
       terms: {},
       name: {},
@@ -74,16 +73,27 @@ export default {
       },
       invitationCode: {
         codeEntered: null,
-        err: "skippable"
+        err: "skippable",
+        isValid: false
       }
     }
   },
   name: 'NewUser',
   methods: {
+    continueOrShowSharingAsk: function () {
+      if (this.invitationCode.isValid) {
+        // send user into app (ultimately this logic should change so that the homepage checks to see if the user has been fully onboarded, correct?)
+        console.log(this.invitationCode.isValid)
+        this.$router.push({ path: '../demo/home' })
+      } else {
+        // show sharing ask
+        this.step = 9
+      }
+    },
     nextStep: function () {
-      if (this.step === this.lastStep) {
-        // this.submitData()
-        this.$router.push({ path: this.afterLastStep })
+      if (this.step == this.lastStep) {
+        console.log('calling continueorrunsharingask')
+        this.continueOrShowSharingAsk()
       }
       // check if there's an error, if so show it, if not advance and clear the error.
       else if (!this.error || this.error === "skippable") {
@@ -194,7 +204,10 @@ export default {
         return "skip"
       } else if (this.error) {
         return "inactive"
-      } else {
+      } else if (this.step > this.lastStep) {
+        return "hide"
+      }
+      else {
         return "next"
       }
     }
