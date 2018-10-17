@@ -20,57 +20,47 @@ Vue.use(Router)
 export default new Router({
   routes: [
     {
-      path: '/new-user',
+      path: '/',
       name: 'NewUser',
       component: NewUser
     },
     {
-      // necessary to redirect based on earlier error where network name was changed.
-      path: '/y723hz',
-      redirect: '/BoCoCaGo'
-    },
-    {
-      path: '/:networkId/',
-      name: 'Splash',
-      component: Splash
-    },
-    {
-      path: '/:networkId/bookings',
+      path: '/bookings',
       name: 'Bookings',
       component: Bookings
     },
     {
-      path: '/:networkId/emergency-info/:id',
+      path: '/emergency-info/:id',
       name: 'emergencyInfo',
       component: EmergencyInfo
     },
     {
-      path: '/:networkId/home',
+      path: '/home',
       name: 'MainView',
       component: MainView
     },
     {
-      path: '/:networkId/enter-code',
+      path: '/enter-code',
       name: 'EnterCode',
       component: EnterCode
     },
     {
-      path: '/:networkId/provider-profile/:id',
+      path: '/provider-profile/:id',
       name: 'ProviderProfile',
       component: ProviderProfile
     },
     {
-      path: '/:networkId/request/:id',
+      path: '/request/:id',
       name: 'RequestModal',
       component: RequestModal
     },
     {
-      path:'/:networkId/how-it-works',
+      path:'/how-it-works',
       name: 'HowItWorks',
       component: HowItWorks
     },
     {
-      path:'/:networkId/desktop-warning',
+      path:'/desktop-warning',
       name: 'DesktopWarningSplash',
       component: DesktopWarningSplash
     },

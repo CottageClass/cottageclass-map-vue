@@ -69,6 +69,7 @@ export default {
         components: { Provider, RequestModal, ShareButton },
         data () { 
           return {
+          defaultNetwork: "demo",
           timeSelected: "now", // or "7to3", "3to7", "after7", "weekends"
           people: people, // to bring from import into vue model
           networks: networks, // to bring from import into vue model
@@ -82,10 +83,11 @@ export default {
         },
         computed: {
           network: function () {
-           return this.networks.find(network => network.stub === this.$route.params.networkId)
+            // todo: pull network id from user info
+           return this.networks.find(network => network.stub === this.defaultNetwork)
          },
           peopleInNetwork: function () {
-            return this.people.filter(person => (person.networks && person.networks.includes(this.$route.params.networkId)))
+            return this.people.filter(person => (person.networks && person.networks.includes(this.defaultNetwork)))
           },
           peopleAvailable: function () {
             let timeShown = function (time) {
