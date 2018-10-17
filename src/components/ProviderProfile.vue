@@ -2,7 +2,7 @@
 <div class="body">
 	  <div class="providerp-provider-info-section">
 	  	<router-link :to="{ name: 'MainView' }" class="providerp-button-back w-inline-block"><img src="../assets/Arrow-Back-2.svg">
-	  </router-link><FacebookAvatar :person="person" className="providerp-avatar" />
+	  </router-link><img :src="require(`../assets/${person.pic}`)" class="providerp-avatar">
     <h1 class="providerp-h1">{{ person.name}} {{ person.lastInitial }}.</h1>
 
 
@@ -44,7 +44,7 @@
       <div class="time-group-container"><img src="../assets/time-24-2.svg" width="20" height="20" class="image-time">
         <div class="times-container">
           <div class="time" v-if="person.availability.includes('7to3')">
-            <div class="small-text-upper-purple">9a–3p</div>
+            <div class="small-text-upper-purple">7a–3p</div>
           </div>
           <div class="time" v-if="person.availability.includes('3to7')">
             <div class="small-text-upper-purple">3p–7p</div>
@@ -129,10 +129,8 @@
 import Images from './Images.vue'
 import ReviewItem from './ReviewItem.vue'
 import people from '../assets/people.json'
-import FacebookAvatar from './FacebookAvatar.vue'
-
 export default {
-	components: { ReviewItem, Images, FacebookAvatar },
+	components: { ReviewItem, Images },
 	name: 'ProviderProfile',
 	methods: {
 		getDirections: function (location) {
@@ -152,8 +150,8 @@ export default {
 	computed: {
 		person: function () {
           return this.people.find(person => person.id == this.$route.params.id)
-        }
-  }
+	}
+}
 };
 </script>
 

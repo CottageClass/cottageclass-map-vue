@@ -3,7 +3,7 @@
     <Login v-if="step === 0" v-on:next="nextStep" />
     <div class="onb-body" v-if="step != 0">
       <Nav :button="nextButtonState" @next="nextStep" @prev="prevStep" />
-      <div v-if="showError && error && error!='skippable'" class="onb-error-container">
+      <div v-if="showError && error" class="onb-error-container">
         <div class="onb-error-text">{{ error }}</div>
       </div>
       <Terms v-if="step === 1" v-model="terms" />
@@ -13,8 +13,7 @@
       <Children v-if="step === 5" v-model="children" />
       <Availability v-if="step === 6" v-model="availability" />
       <Activities v-if="step === 7" v-model="activities" />
-      <InvitationCode v-if="step === 8" v-model="invitationCode" />
-      <Invite v-if="step === 9" />
+      <Invite v-if="step === 8" />
     </div>
   </span>
 </template>
@@ -30,7 +29,6 @@ import Children from '@/components/onboarding/Children.vue'
 import Availability from '@/components/onboarding/Availability.vue'
 import Activities from '@/components/onboarding/Activities.vue'
 import Invite from '@/components/onboarding/Invite.vue'
-import InvitationCode from '@/components/onboarding/InvitationCode.vue'
 import * as Token from '@/utils/tokens.js'
 
 // import google sheets API service and give it a spreadsheet to push to
@@ -39,13 +37,13 @@ var client = sheetsu({ address: 'https://sheetsu.com/apis/v1.0su/e383acab3f80' }
 
 export default {
   components: {
-    Login, Nav, Terms, Name, Location, Phone, Children, Availability, Activities, Invite, InvitationCode
+    Login, Nav, Terms, Name, Location, Phone, Children, Availability, Activities, Invite
   },
   data () {
     return {
       step: 0,
-      lastStep: 9, //do we even need this now?
-      afterLastStep: '../demo/home/',
+      lastStep: 8,
+      afterLastStep: '../demo/',
       showError: false,
       terms: {},
       name: {},
@@ -72,17 +70,13 @@ export default {
         bookClub: false,
         err: "skippable"
       },
-      invitationCode: {
-        codeEntered: null,
-        err: "skippable"
-      }
     }
   },
   name: 'NewUser',
   methods: {
     nextStep: function () {
       if (this.step === this.lastStep) {
-        // this.submitData()
+        this.submitData()
         this.$router.push({ path: this.afterLastStep })
       }
       // check if there's an error, if so show it, if not advance and clear the error.
@@ -183,8 +177,6 @@ export default {
           return this.availability.err
         case 7:
           return this.activities.err
-        case 8:
-          return this.invitationCode.err
         default:
           return false
       }
@@ -856,6 +848,25 @@ a {
   text-align: left;
 }
 
+.tags-container {
+  display: block;
+  width: 100%;
+  -webkit-box-align: start;
+  -webkit-align-items: flex-start;
+  -ms-flex-align: start;
+  align-items: flex-start;
+}
+
+.tag {
+  display: inline-block;
+  margin-right: 4px;
+  margin-bottom: 4px;
+  padding: 4px 6px;
+  clear: none;
+  border-radius: 2px;
+  background-color: rgba(0, 0, 0, .1);
+}
+
 .small-text-upper-black-40 {
   margin-top: 1px;
   color: rgba(0, 0, 0, .4);
@@ -864,6 +875,20 @@ a {
   font-weight: 700;
   letter-spacing: 1.03px;
   text-transform: uppercase;
+}
+
+.times-container {
+  width: 100%;
+}
+
+.time {
+  display: inline-block;
+  margin-right: 4px;
+  margin-bottom: 4px;
+  padding: 4px 6px;
+  clear: none;
+  border-radius: 2px;
+  background-color: rgba(100, 66, 107, .2);
 }
 
 .small-text-upper-purple {
@@ -3127,7 +3152,16 @@ a {
   .time {
     clear: both;
   }
- 
+  .tag-group-container {
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: start;
+    -webkit-align-items: flex-start;
+    -ms-flex-align: start;
+    align-items: flex-start;
+  }
   .name-and-caption {
     display: -webkit-box;
     display: -webkit-flex;

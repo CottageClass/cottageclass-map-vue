@@ -31,7 +31,7 @@
       <div class="time-group-container"><img src="../assets/time.svg" class="image-time">
         <div class="times-container">
           <div class="time" v-if="person.availability.includes('7to3')">
-            <div class="time-tags">9a–3p</div>
+            <div class="time-tags">7a–3p</div>
           </div>
           <div class="time" v-if="person.availability.includes('3to7')">
             <div class="time-tags">3p–7p</div>
