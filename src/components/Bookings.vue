@@ -23,12 +23,13 @@ export default {
 	components: { Parent },
 	data () {
 		return {
-			people: people
+			people: people,
+      userNetwork: "demo"
 		}
 	},
 	computed: {
     peopleInNetwork: function () {
-        return this.people.filter(person => (person.networks && person.networks.includes(this.$route.params.networkId)))
+        return this.people.filter(person => (person.networks && person.networks.includes(this.userNetwork)))
           },
 		parents: function () {
 			return this.peopleInNetwork.filter(person => person.children.length) // only return people in network who have kids.

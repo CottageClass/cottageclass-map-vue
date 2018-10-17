@@ -85,7 +85,7 @@ export default {
       if (this.invitationCode.isValid) {
         // send user into app (ultimately this logic should change so that the homepage checks to see if the user has been fully onboarded, correct?)
         console.log(this.invitationCode.isValid)
-        this.$router.push({ path: '../demo/home' })
+        this.$router.push({ name: 'MainView' })
       } else {
         // show sharing ask
         this.step = 9

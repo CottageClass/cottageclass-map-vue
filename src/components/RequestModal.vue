@@ -73,7 +73,8 @@ export default {
           endTime: "22:00",
           /* to be able to use "people" that I'm importing */
           people: people,
-          networks: networks
+          networks: networks,
+          userNetwork: "demo" // replace with user's own network
       }
   }, 
   methods: {
@@ -90,7 +91,7 @@ export default {
   },
   computed: {
     network: function () {
-      return this.networks.find(network => network.stub === this.$route.params.networkId)
+      return this.networks.find(network => network.stub === this.userNetwork)
     },
     person: function () {
       return this.people.find(person => person.id == this.$route.params.id)
