@@ -707,7 +707,6 @@ img {
 
 .tags-container {
   display: block;
-  width: 100%;
   -webkit-box-align: start;
   -webkit-align-items: flex-start;
   -ms-flex-align: start;
@@ -785,6 +784,7 @@ img {
   -webkit-align-items: flex-start;
   -ms-flex-align: start;
   align-items: flex-start;
+  flex-wrap: wrap;
 }
 
 .time-group-container {
