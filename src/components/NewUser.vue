@@ -881,6 +881,24 @@ a {
   text-align: left;
 }
 
+.tags-container {
+  display: block;
+  -webkit-box-align: start;
+  -webkit-align-items: flex-start;
+  -ms-flex-align: start;
+  align-items: flex-start;
+}
+
+.tag {
+  display: inline-block;
+  margin-right: 4px;
+  margin-bottom: 4px;
+  padding: 4px 6px;
+  clear: none;
+  border-radius: 2px;
+  background-color: rgba(0, 0, 0, .1);
+}
+
 .small-text-upper-black-40 {
   margin-top: 1px;
   color: rgba(0, 0, 0, .4);
@@ -928,6 +946,7 @@ a {
   -webkit-align-items: flex-start;
   -ms-flex-align: start;
   align-items: flex-start;
+  flex-wrap: wrap;
 }
 
 .time-group-container {
