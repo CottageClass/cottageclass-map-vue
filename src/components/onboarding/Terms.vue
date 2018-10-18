@@ -978,7 +978,7 @@ available upon request by emailing us at <a href="mailto:info@cottageclass.com">
 </p>    <br/>
     <br/>
     <br/></div>
-    <label><div class="onb-fixed-bottom-actions-checkbox-container">
+    <div class="onb-fixed-bottom-actions-checkbox-container">
       <div class="form-block-2 w-form">
         <form id="email-form" name="email-form" data-name="Email Form">
           <div class="checkbox-field w-checkbox"><input type="checkbox" id="checkbox" name="checkbox" data-name="Checkbox" class="w-checkbox-input" v-model="checked">
