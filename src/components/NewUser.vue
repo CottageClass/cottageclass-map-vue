@@ -96,7 +96,6 @@ export default {
         console.log('calling continueorrunsharingask')
         this.continueOrShowSharingAsk()
         this.submitData()
-        this.$router.push({ path: this.afterLastStep })
       }
       // check if there's an error, if so show it, if not advance and clear the error.
       else if (!this.error || this.error === "skippable") {
@@ -154,6 +153,11 @@ export default {
         }
       ))
 
+      let activities = Object.keys(this.activities)
+        .filter(k => this.activities[k])
+        // convert activites to snake_case
+        .map(activity => activity.replace( /([A-Z])/g, "_$1" ).toLowerCase())
+
       let postData = {
         agreeTos: this.terms.agreed,
         firstName: this.name.first,
@@ -169,7 +173,13 @@ export default {
         longitude: this.location.lng,
         phoneAreaCode: phoneAreaCode,
         phoneNumber: phoneNumber,
+        activities: activities,
+        availableMornings: this.availability.mornings,
+        availableAfternoons: this.availability.afternoons,
+        availableEvenings: this.availability.evenings,
+        availableWeekends: this.availability.weekends,
         childrenAttributes: childrenAttributes,
+        networkCode: this.invitationCode.code,
       }
 
       this.axios.post(

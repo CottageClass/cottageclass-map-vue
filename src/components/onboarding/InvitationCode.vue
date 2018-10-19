@@ -34,16 +34,18 @@ export default {
       if (this.codeValidates) {
         return null
       } else if (this.code == "") {
-      return "skippable"
-    } else {
-      return this.errorMesg
-    }
+        return "skippable"
+      } else {
+        return this.errorMesg
+      }
     },
     codeValidates: function () {
       // todo: add real logic here
       if (this.validCodes.includes(this.code.toLowerCase())) {
         return true
-      } else return false
+      } else {
+        return false
+      }
     }
   },
   watch: {
