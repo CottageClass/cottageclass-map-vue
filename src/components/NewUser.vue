@@ -149,7 +149,7 @@ export default {
       let childrenAttributes = this.children.list.map(childAttrs => (
         {
           ...childAttrs,
-          userId: userId,
+          parentId: userId,
         }
       ))
 
