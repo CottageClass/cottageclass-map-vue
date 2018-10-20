@@ -15,3 +15,9 @@ export function currentUserId(vueAuth) {
   let userId = parseJWT(token).sub
   return userId
 }
+
+export function currentUserNetworkCode(vueAuth) {
+  let token = getToken(vueAuth)
+  let networkCode = parseJWT(token).network_code
+  return networkCode
+}

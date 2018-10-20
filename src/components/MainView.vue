@@ -56,13 +56,14 @@
     </div>
   </template>
 
-  <script>
-    import Provider from './Provider.vue'
-import RequestModal from './RequestModal.vue'
-import people from '../assets/people.json'
-import router from '../router'
-import ShareButton from './ShareButton.vue'
-import networks from '../assets/network-info.json'
+<script>
+  import Provider from './Provider.vue'
+  import RequestModal from './RequestModal.vue'
+  import people from '../assets/people.json'
+  import router from '../router'
+  import ShareButton from './ShareButton.vue'
+  import networks from '../assets/network-info.json'
+  import * as Token from '@/utils/tokens.js'
 
 export default {
   name: 'MainView',
@@ -88,14 +89,39 @@ export default {
       });
     }
   },
+  mounted: function () {
+    this.fetchUsersInNetwork()
+      .then(res => {
+        // do stuff
+        // - save result data
+        // - populate photos, etc
+      })
+  },
   methods: {
     facebookMapIcon: function (fbid) {
       return "https://graph.facebook.com/" + fbid + "/picture?width=30"
-    }
+    },
+    fetchUsersInNetwork: function () {
+      let networkId = this.$route.params.networkId
+      return this.axios.get(
+        `${process.env.BASE_URL_API}/networks/${networkId}/users`
+      ).then(res => {
+        console.log("FETCH USERS IN NETWORK SUCCESS")
+        console.log(res.data)
+        // return data to next promise in the chain
+        return res.data
+      }).catch(err => {
+        console.log("FETCH USERS IN NETWORK FAILURE")
+        console.log(err.errors)
+      })
+    },
+    currentNetwork: function () {
+      return this.networks.find(network => network.stub === this.$route.params.networkId)
+    },
   },
   computed: {
     network: function () {
-      return this.networks.find(network => network.stub === this.$route.params.networkId)
+      return this.currentNetwork()
     },
     peopleInNetwork: function () {
       return this.people.filter(person => (person.networks && person.networks.includes(this.$route.params.networkId)))
