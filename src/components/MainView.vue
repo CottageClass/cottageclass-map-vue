@@ -64,6 +64,7 @@ import router from '../router'
 import ShareButton from './ShareButton.vue'
 import networks from '../assets/network-info.json'
 import * as Token from '@/utils/tokens.js'
+// todo: use the token so that people get redirected to login screen if not logged in. either here or in vue router.
 
 export default {
   name: 'MainView',
@@ -71,7 +72,7 @@ export default {
   data () {
     return {
       timeSelected: "now", // or "7to3", "3to7", "after7", "weekends"
-      people: people, // to bring from import into vue model
+      people: [], // gets updated on mount by fetchUsersInNetwork
       networks: networks, // to bring from import into vue model
       selectedPerson: null,
       mapOptions: { // move this to map component when i separate it.
@@ -92,9 +93,7 @@ export default {
   mounted: function () {
     this.fetchUsersInNetwork()
       .then(res => {
-        // do stuff
-        // - save result data
-        // - populate photos, etc
+        this.people = res.data
       })
   },
   methods: {
@@ -102,7 +101,7 @@ export default {
       return "https://graph.facebook.com/" + fbid + "/picture?width=30"
     },
     fetchUsersInNetwork: function () {
-      let networkId = this.$route.params.networkId
+      let networkId = "demo" // todo: change this to be the user's own network 
       return this.axios.get(
         `${process.env.BASE_URL_API}/networks/${networkId}/users`
       ).then(res => {
@@ -115,6 +114,7 @@ export default {
         console.log(err.errors)
       })
     },
+    // todo: update this so that it's the user's own network
     currentNetwork: function () {
       return this.networks.find(network => network.stub === this.$route.params.networkId)
     },
@@ -123,6 +123,7 @@ export default {
     network: function () {
       return this.currentNetwork()
     },
+    // todo: remove this because it's not necessary since this happens at the API level now
     peopleInNetwork: function () {
       return this.people.filter(person => (person.networks && person.networks.includes(this.$route.params.networkId)))
     },
@@ -144,6 +145,7 @@ export default {
       }
       return this.peopleInNetwork.filter(person => (!person.availability.includes("never")) && person.availability.includes(timeShown(this.timeSelected))) // availability can be "never" and we don't want to show people who say "never". 
     },
+    // where is this getting used?? todo: remove
     decodeLatLong: function () {
       let geocoder = new google.maps.Geocoder();
       let theLocation = this.location;
