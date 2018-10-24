@@ -1,28 +1,29 @@
 <template>
-	<router-link :to="{ name: 'ProviderProfile', params: { id: person.id }}">
+	<router-link :to="{ name: 'ProviderProfile', params: { id: id }}">
 	<span class="body">
 		  <div class="landing-page-list-item-header">
-    <div class="avatar-name-container"><FacebookAvatar :facebookId="attributes.facebook_id" className="image" />
+    <div class="avatar-name-container"><FacebookAvatar :facebookId="person.facebook_id" className="image" />
       <div class="list-item-3-heading">
-        <h5 class="heading">{{ person.name}} {{ person.lastInitial }}.</h5>
+        <h5 class="heading">{{ firstName }} {{ lastInitial }}.</h5>
       </div>
-    </div><router-link :to="{ name: 'RequestModal', params: { id: person.id }}"  class="button-send-message w-inline-block"><img src="../assets/chat.svg" class="image-4"><div class="list-item-1-button">Book</div></router-link></div>
+    </div><router-link :to="{ name: 'RequestModal', params: { id: id }}"  class="button-send-message w-inline-block"><img src="../assets/chat.svg" class="image-4"><div class="list-item-1-button">Book</div></router-link></div>
   <Images :person="person" />
   <div class="list-item-container-2">
     <div class="title-bar-and-action-v2">
       <div class="div-block-7">
         <div class="name-and-caption">
-          <h5 v-if="person.job && person.job.employer" class="caption">{{ person.job.title }} <span v-if="person.job.employer">at {{ person.job.employer }}</span></h5>
+          <h5 v-if="person.job && person.job.employer" class="caption">{{ title }} <span v-if="person.job.employer">at {{ employer }}</span></h5>
         </div>
       </div>
-      <!-- Children --> 
+      <!-- Children  
 
 <h5 class="caption" v-if="person.children.length">Parent to <span v-for="(child, index) in person.children"><span class="child">{{ child.name }} <span class="black-50">({{ child.age }})</span></span><span v-if="(index < person.children.length - 1)">, </span>
         </span></h5>      
+-->
 
       <!-- Background check --> 
         
-        <div class="providerp-background-check-badge-container2" v-if="person.backgroundCheck">
+        <div class="providerp-background-check-badge-container2" v-if="backgroundCheck">
         <div class="providerp-background-check-badge"><img src="../assets/check-green.svg" alt="" class="checkmark-image">
           <div class="background-check-text">Background checked</div>
         </div>
@@ -30,7 +31,7 @@
 
 
       <div class="tag-group-container" v-if="person.activities.length"><img src="../assets/tag.svg" class="image-tag">
-        <div class="tags-container" v-for="activity in person.activities">
+        <div class="tags-container" v-for="activity in activities">
           <div class="tag">
             <div class="small-text-upper-black-40">{{ activity }}</div>
           </div>
@@ -38,16 +39,16 @@
       </div>
       <div class="time-group-container"><img src="../assets/time.svg" class="image-time">
         <div class="times-container">
-          <div class="time" v-if="person.availability.includes('7to3')">
+          <div class="time" v-if="availability.includes('7to3')">
             <div class="time-tags">9a–3p</div>
           </div>
-          <div class="time" v-if="person.availability.includes('3to7')">
+          <div class="time" v-if="availability.includes('3to7')">
             <div class="time-tags">3p–7p</div>
           </div>
-          <div class="time" v-if="person.availability.includes('after7')">
+          <div class="time" v-if="availability.includes('after7')">
             <div class="time-tags">7p-</div>
           </div>
-          <div class="time" v-if="person.availability.includes('weekends')">
+          <div class="time" v-if="availability.includes('weekends')">
             <div class="time-tags">WEEKENDS</div>
           </div>
         </div>
@@ -64,9 +65,27 @@ import Images from './Images.vue'
 import FacebookAvatar from './FacebookAvatar.vue'
 
 export default {
-        name: 'Provider',
-        props: ['person'],
-        components: { Images, FacebookAvatar }
+  name: 'Provider',
+  props: ['person', 'id'],
+  components: { Images, FacebookAvatar },
+  data () {
+    return {
+      firstName: this.person.first_name,
+      lastInitial: this.person.last_name[0],
+      // todo: add title and employer
+      title: "",
+      employer: "",
+      backgroundCheck: false, // add background check
+    }
+  },
+  computed: {
+    activities: function () {
+      return ['brunch', 'breakfast'] // todo: make this compute from person.activities
+    },
+    availability: function () {
+      return ['7to3', '3to7', 'after7', 'weekends'] // todo: make this compute from person.availability
+    }
+  }
 };
 </script>
 

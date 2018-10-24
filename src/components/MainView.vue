@@ -39,7 +39,7 @@
     <div class="group-title-container">
       <h5 class="heading-2">{{ providersSectionTitle }}</h5>
     </div>
-    <Provider v-for="person in peopleAvailable" :id="person.id" :attributes="person.attributes" :key="person.id"></Provider>
+    <Provider v-for="person in peopleAvailable" :id="person.id" :person="person.attributes" :key="person.id"></Provider>
   </div>
 
   <!-- share button -->
@@ -96,7 +96,7 @@ export default {
       return "https://graph.facebook.com/" + fbid + "/picture?width=30"
     },
     fetchUsersInNetwork: function () {
-      let networkId = "demo" // Token.currentUserNetworkCode(this.$auth)
+      let networkId = Token.currentUserNetworkCode(this.$auth)
       return this.axios.get(
         `${process.env.BASE_URL_API}/networks/${networkId}/users`
       ).then(res => {
