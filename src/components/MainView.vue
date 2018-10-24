@@ -44,7 +44,7 @@
     <div class="group-title-container">
       <h5 class="heading-2">{{ providersSectionTitle }}</h5>
     </div>
-    <Provider v-for="person in peopleAvailable" :person="person" :key="person.id"></Provider>
+    <Provider v-for="person in peopleAvailable" :id="person.id" :attributes="person.attributes" :key="person.id"></Provider>
   </div>
   <!-- share button -->
   <ShareButton/>
