@@ -2,7 +2,7 @@
 	<router-link :to="{ name: 'ProviderProfile', params: { id: person.id }}">
 	<span class="body">
 		  <div class="landing-page-list-item-header">
-    <div class="avatar-name-container"><FacebookAvatar :person="person" className="image" />
+    <div class="avatar-name-container"><FacebookAvatar :facebookId="attributes.facebook_id" className="image" />
       <div class="list-item-3-heading">
         <h5 class="heading">{{ person.name}} {{ person.lastInitial }}.</h5>
       </div>

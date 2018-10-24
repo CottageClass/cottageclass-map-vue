@@ -5,10 +5,10 @@
 <script>
 export default {
   name: 'FacebookAvatar',
-  props: ['person', 'className'],
+  props: ['facebookId', 'className'],
   computed: {
   	url: function () {
-  	  return "https://graph.facebook.com/" + this.person.fbid + "/picture?width=200"
+  	  return "https://graph.facebook.com/" + this.facebookId + "/picture?width=200"
     }
 }
 };
