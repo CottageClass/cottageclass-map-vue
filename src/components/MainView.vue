@@ -78,8 +78,8 @@ export default {
       mapOptions: { // move this to map component when i separate it.
         "disableDefaultUI": true, // turns off map controls
         "gestureHandling": "greedy", // allows one finger pan.
-      }
-      // these items are for the modal
+      },
+      // userId: Token.currentUserId(this.$auth) // this might be useful
     }
   },
   watch: {
@@ -101,7 +101,7 @@ export default {
       return "https://graph.facebook.com/" + fbid + "/picture?width=30"
     },
     fetchUsersInNetwork: function () {
-      let networkId = "demo" // todo: change this to be the user's own network 
+      let networkId = "demo" // Token.currentUserNetworkCode(this.$auth)
       return this.axios.get(
         `${process.env.BASE_URL_API}/networks/${networkId}/users`
       ).then(res => {
@@ -113,19 +113,13 @@ export default {
         console.log("FETCH USERS IN NETWORK FAILURE")
         console.log(err.errors)
       })
-    },
-    // todo: update this so that it's the user's own network
-    currentNetwork: function () {
-      return this.networks.find(network => network.stub === this.$route.params.networkId)
-    },
+    }
   },
   computed: {
     network: function () {
-      return this.currentNetwork()
-    },
-    // todo: remove this because it's not necessary since this happens at the API level now
-    peopleInNetwork: function () {
-      return this.people.filter(person => (person.networks && person.networks.includes(this.$route.params.networkId)))
+      let networkId = Token.currentUserNetworkCode(this.$auth)
+      console.log('networkId is ' + networkId)
+      return this.networks.find(network => network.stub == networkId)
     },
     peopleAvailable: function () {
       let timeShown = function (time) {
@@ -143,7 +137,7 @@ export default {
           }
         }
       }
-      return this.peopleInNetwork.filter(person => (!person.availability.includes("never")) && person.availability.includes(timeShown(this.timeSelected))) // availability can be "never" and we don't want to show people who say "never". 
+      return this.people.filter(person => (!person.availability.includes("never")) && person.availability.includes(timeShown(this.timeSelected))) // availability can be "never" and we don't want to show people who say "never". 
     },
     // where is this getting used?? todo: remove
     decodeLatLong: function () {
