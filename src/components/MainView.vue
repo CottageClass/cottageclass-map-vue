@@ -1,33 +1,27 @@
 <template>
-
-  <!-- the modal, if it displays -->
-
-  <div v-else>
-    <!-- the map! -->
-    <div class="map-container">
-      <GmapMap
-        :disableDefaultUI="true"
-        :center="network.location"
-        :zoom="network.zoom"
-        :options="mapOptions"
-        style="width: 100%; height: 230px;">
-        <GmapMarker
-          :key="index"
-          v-for="(person, index) in peopleAvailable"
-          :position="person.location"
-          :title="person.name"
-          :icon="facebookMapIcon(person.fbid)"
-          @click="$router.push({name: 'ProviderProfile', params: { id: person.id }})"
-        />
-      </GmapMap>
-    </div>
+<div>
+<!-- the map! -->
+  <div class="map-container">
+  <GmapMap
+    :disableDefaultUI="true"
+    :center="network.location"
+    :zoom="network.zoom"
+    :options="mapOptions"
+    style="width: 100%; height: 230px;">
+      <GmapMarker
+      :key="index"
+      v-for="(person, index) in peopleAvailable"
+      :position="person.location"
+      :title="person.name"
+      :icon="facebookMapIcon(person.fbid)"
+      @click="$router.push({name: 'ProviderProfile', params: { id: person.id }})"
+      />
+    </GmapMap>
+  </div>
 
     <!-- calendar or "bookings / provider" button -->
 
     <router-link :to="{ name: 'Bookings' }"><div class="calendar-button-2"><img src="../assets/calendar-check.svg" class="calendar-button-2-image"></div></router-link>
-
-    <!-- <div class="calendar-button-2"><img src="images/calendar-check.svg" class="calendar-button-2-image"></div> -->
-
 
     <!-- availability -->
 
@@ -40,13 +34,16 @@
     </div>
 
   <!-- the list -->
+
   <div class="list-container">
     <div class="group-title-container">
       <h5 class="heading-2">{{ providersSectionTitle }}</h5>
     </div>
     <Provider v-for="person in peopleAvailable" :id="person.id" :attributes="person.attributes" :key="person.id"></Provider>
   </div>
+
   <!-- share button -->
+
   <ShareButton/>
     <br><br>
     <h5 class="heading-2">Map data &#169; 2018 Google (<a href="https://www.google.com/intl/en-US_US/help/terms_maps.html">terms of use</a> - <a href="https://www.google.com/maps/@40.6782,-73.9442,12z/data=!10m2!1e3!2e10!12b1?rapsrc=apiv3">report a map error</a>)</h5>
