@@ -1,18 +1,18 @@
 <template>
-<div v-if="person" class="body">
-	  <div class="providerp-provider-info-section">
-	  	<router-link :to="{ name: 'MainView' }" class="providerp-button-back w-inline-block"><img src="../assets/Arrow-Back-2.svg">
-	  </router-link><img :src="require(`../assets/${person.pic}`)" class="providerp-avatar">
+<div class="body">
+    <div class="providerp-provider-info-section">
+      <router-link :to="{ name: 'MainView' }" class="providerp-button-back w-inline-block"><img src="../assets/Arrow-Back-2.svg">
+    </router-link><img :src="require(`../assets/${person.pic}`)" class="providerp-avatar">
     <h1 class="providerp-h1">{{ person.name}} {{ person.lastInitial }}.</h1>
 
 
 
     <div class="providerp-occupation" v-if="person.job && person.job.employer">{{ person.job.title }} at {{ person.job.employer }}</div>
     <div v-if="person.children.length > 0" class="providerp-children">Parent to 
-    	<span v-for="(child, index) in person.children">
-    		{{ child.name }} <span class="text-span-2">({{ child.age }})</span><span v-if="index < person.children.length - 1">, </span>
-    	</span>
-    	</div>
+      <span v-for="(child, index) in person.children">
+        {{ child.name }} <span class="text-span-2">({{ child.age }})</span><span v-if="index < person.children.length - 1">, </span>
+      </span>
+      </div>
     <div v-if="person.blurb" class="providerp-chat-bubble-container">
       <div class="providerp-chat-bubble-caret"><img src="../assets/chat-bubble-caret.svg"></div>
       <div class="providerp-chat-bubble-primary">
@@ -73,19 +73,19 @@
     <h5 class="list-title-2">Location</h5>
   </div>
 
-   <div class="map-container" @click="getDirections(person.location)">
+   <div class="map-container" @click="getDirections(location)">
   <GmapMap
     :disableDefaultUI="true"
-    :center="person.location"
+    :center="location"
     :zoom="13"
     :options="mapOptions"
     style="width: 100%; height: 230px;">
       <GmapMarker
       :key="index"
-      :position="person.location"
-      :title="person.name"
-      :icon="require(`@/assets/small-avatars/${person.pic}`)"
-      @click="getDirections(person.location)"      
+      :position="location"
+      :title="person.first_name"
+      :icon="facebookMapIcon(person)"
+      @click="getDirections(location)"      
       />
     </GmapMap>
   </div>
@@ -102,8 +102,8 @@
 
   <div class="providerp-post-comment-container"><a :href="'mailto:info@cottageclass.com?subject=Great experience with ' + person.name + ' ' + person.lastInitial + '. (' + person.id + ')&body=(please%20describe%20your%20great%20experience%20here!)'" class="pprofile-compose-button w-inline-block"><img src="../assets/compose.svg" class="image-5"><div class="pprofile-comment-prompt-button-text">Post a great experience</div></a>
     <div class="providerp-book-care-container">
-    	<router-link :to="{ name: 'RequestModal', params: { id: person.id }}" class="pprovider-book-care-button w-inline-block"><img src="../assets/chat.svg"><div class="pprovider-primary-action-text">Book Care</div>
-    	</router-link>
+      <router-link :to="{ name: 'RequestModal', params: { id: person.id }}" class="pprovider-book-care-button w-inline-block"><img src="../assets/chat.svg"><div class="pprovider-primary-action-text">Book Care</div>
+      </router-link>
     </div>
   </div>
 
@@ -131,28 +131,37 @@ import ReviewItem from './ReviewItem.vue'
 import * as Token from '@/utils/tokens.js'
 
 export default {
-	components: { ReviewItem, Images },
-	name: 'ProviderProfile',
-	methods: {
-		getDirections: function (location) {
-			window.open('https://www.google.com/maps?saddr=My+Location&daddr=' + location.lat + ',' + location.lng)
-		}
-	},
-	data () {
-		return {
+  components: { ReviewItem, Images },
+  name: 'ProviderProfile',
+  methods: {
+    getDirections: function (location) {
+      window.open('https://www.google.com/maps?saddr=My+Location&daddr=' + location.lat + ',' + location.lng)
+    }
+  },
+  data () {
+    return {
       person: null,
-			mapOptions: 
-			 { // move this to map component when i separate it.
+      mapOptions: 
+       { // move this to map component when i separate it.
             "disableDefaultUI": true, // turns off map controls
             "gestureHandling": "none" // prevents any kind of scrolling
           }
-		}
-	},
+    }
+  },
   mounted: function () {
     this.fetchUser()
       .then(res => {
         this.person = res.data.attributes
       })
+  },
+  computed: {
+    location: function () {
+      return {
+        // todo: make this real
+        lat: 0, 
+        lng: 0
+      }
+    }
   },
   methods: {
     fetchUser: function () {
@@ -167,6 +176,9 @@ export default {
         console.log("FETCH USERS IN NETWORK FAILURE")
         console.log(err.errors)
       })
+    },
+    facebookMapIcon: function (person) {
+      return 'https://graph.facebook.com/' + person.attributes.facebook_id + '/picture?width=30'
     }
   }
 };
@@ -186,11 +198,11 @@ export default {
   }
 
 .card img {
-	height: 100%;
-	width: auto;
-	display: inline-block;
-	box-sizing: border-box;
-	vertical-align: middle;
+  height: 100%;
+  width: auto;
+  display: inline-block;
+  box-sizing: border-box;
+  vertical-align: middle;
 }
 
 .scrolling-wrapper {
