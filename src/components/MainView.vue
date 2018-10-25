@@ -9,11 +9,11 @@
     :options="mapOptions"
     style="width: 100%; height: 230px;">
       <GmapMarker
-      :key="index"
       v-for="(person, index) in peopleAvailable"
-      :position="person.location"
-      :title="person.name"
-      :icon="facebookMapIcon(person.fbid)"
+      :key="index"
+      :position="location(person)"
+      :title="person.attributes.first_name"
+      :icon="facebookMapIcon(person)"
       @click="$router.push({name: 'ProviderProfile', params: { id: person.id }})"
       />
     </GmapMap>
@@ -92,8 +92,14 @@ export default {
       })
   },
   methods: {
-    facebookMapIcon: function (fbid) {
-      return "https://graph.facebook.com/" + fbid + "/picture?width=30"
+    facebookMapIcon: function (person) {
+      return 'https://graph.facebook.com/' + person.attributes.facebook_id + '/picture?width=30'
+    },
+    location: function (person) {
+      return {
+        lat: parseFloat(person.attributes.latitude),
+        lng: parseFloat(person.attributes.longitude) 
+      }
     },
     fetchUsersInNetwork: function () {
       let networkId = Token.currentUserNetworkCode(this.$auth)
@@ -293,8 +299,6 @@ select {
   -webkit-align-items: center;
   -ms-flex-align: center;
   align-items: center;
-  height: unset;
-  background-color: unset;
 }
 
 .availability-container-v2 {
