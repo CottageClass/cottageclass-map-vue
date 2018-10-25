@@ -295,6 +295,8 @@ select {
   display: -ms-flexbox;
   display: flex;
   width: 100%;
+  height: unset;
+  background-color: unset;
   -webkit-box-align: center;
   -webkit-align-items: center;
   -ms-flex-align: center;
