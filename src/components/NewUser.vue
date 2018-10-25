@@ -925,31 +925,6 @@ a {
   margin-right: 6px;
 }
 
-.tag-group-container {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  margin-top: 6px;
-  margin-bottom: 8px;
-  -webkit-box-align: start;
-  -webkit-align-items: flex-start;
-  -ms-flex-align: start;
-  align-items: flex-start;
-  flex-wrap: wrap;
-}
-
-.time-group-container {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-align: start;
-  -webkit-align-items: flex-start;
-  -ms-flex-align: start;
-  align-items: flex-start;
-}
-
 .name-and-caption {
   display: -webkit-box;
   display: -webkit-flex;
