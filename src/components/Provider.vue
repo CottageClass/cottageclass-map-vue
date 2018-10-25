@@ -80,7 +80,7 @@ export default {
   },
   computed: {
     activities: function () {
-      return ['brunch', 'breakfast'] // todo: make this compute from person.activities
+      return this.person.activities.map(activity => activity.replace(/_/g, " "))
     }
   }
 };
