@@ -39,16 +39,16 @@
       </div>
       <div class="time-group-container"><img src="../assets/time.svg" class="image-time">
         <div class="times-container">
-          <div class="time" v-if="availability.includes('7to3')">
+          <div class="time" v-if="person.available_mornings">
             <div class="time-tags">9a–3p</div>
           </div>
-          <div class="time" v-if="availability.includes('3to7')">
+          <div class="time" v-if="person.available_afternoons">
             <div class="time-tags">3p–7p</div>
           </div>
-          <div class="time" v-if="availability.includes('after7')">
+          <div class="time" v-if="person.available_evenings">
             <div class="time-tags">7p-</div>
           </div>
-          <div class="time" v-if="availability.includes('weekends')">
+          <div class="time" v-if="person.available_weekends">
             <div class="time-tags">WEEKENDS</div>
           </div>
         </div>
@@ -81,9 +81,6 @@ export default {
   computed: {
     activities: function () {
       return ['brunch', 'breakfast'] // todo: make this compute from person.activities
-    },
-    availability: function () {
-      return ['7to3', '3to7', 'after7', 'weekends'] // todo: make this compute from person.availability
     }
   }
 };
