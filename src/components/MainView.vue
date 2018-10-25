@@ -123,12 +123,30 @@ export default {
       return this.networks.find(network => network.stub == networkId)
     },
     peopleAvailable: function () {
-      if (!this.timeSlot) {
-        return this.people
+      let personAvailable = function (aPerson) {
+      let dt = moment(this.dateTimeSelected)
+      let hour = dt.hour()
+      let day = dt.day()
+      if (day == 0 || day == 6) {
+        return aPerson.attributes.available_weekends
       } else {
-        return this.people.filter(person => (person.availability.includes(this.timeSlot)))
+        if (hour < 15 && hour >= 7) {
+          return aPerson.attributes.available_mornings
+        } else if (hour < 19 && hour >= 14) {
+          return aPerson.attributes.available_afternoons
+        } else if (hour >= 19) {
+          return aPerson.attributes.available_evenings 
+        } else {
+          return false
+        }
       }
-    },
+    }
+    if (!this.DateTimeSelected) {
+      return this.people
+    } else {
+      return this.people.filter(personAvailable)
+    }
+  },
     providersSectionTitle: function () {
       if (!this.dateTimeSelected) {
         return "Providers in \"" + this.network.name + "\""
@@ -144,24 +162,6 @@ export default {
         return "Choose a time"
       } else {
         return moment(this.dateTimeSelected).format("dddd, h:mm a")
-      }
-    },
-    timeSlot: function () {
-      var dt = moment(this.dateTimeSelected)
-      var hour = dt.hour()
-      var day = dt.day()
-      if (day == 0 || day == 6) {
-        return "weekends"
-      } else {
-        if (hour < 15 && hour >= 7) {
-          return "7to3"
-        } else if (hour < 19 && hour >= 14) {
-          return "3to7"
-        } else if (hour >= 19) {
-          return "after7" 
-        } else {
-          return false
-        }
       }
     }
   }
