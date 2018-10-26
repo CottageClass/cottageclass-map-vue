@@ -2,7 +2,7 @@
 <div class="body">
     <div class="providerp-provider-info-section">
       <router-link :to="{ name: 'MainView' }" class="providerp-button-back w-inline-block"><img src="../assets/Arrow-Back-2.svg">
-    </router-link><img :src="require(`../assets/${person.pic}`)" class="providerp-avatar">
+    </router-link><FacebookAvatar :facebookId="person.facebookId" class="providerp-avatar" />
     <h1 class="providerp-h1">{{ person.firstName }} {{ person.lastInitial }}.</h1>
 
 
@@ -43,17 +43,17 @@
 <!-- Times --> 
       <div class="time-group-container"><img src="../assets/time-24-2.svg" width="20" height="20" class="image-time">
         <div class="times-container">
-          <div class="time" v-if="person.availability.includes('7to3')">
+          <div class="time" v-if="person.availableMornings">
             <div class="small-text-upper-purple">9a–3p</div>
           </div>
-          <div class="time" v-if="person.availability.includes('3to7')">
+          <div class="time" v-if="person.availableAfternoons">
             <div class="small-text-upper-purple">3p–7p</div>
           </div>
-          <div class="time" v-if="person.availability.includes('after7')">
+          <div class="time" v-if="person.availableEvenings">
             <div class="small-text-upper-purple">7p-</div>
           </div>
-          <div class="time" v-if="person.availability.includes('weekends')">
-            <div class="small-text-upper-purple">Weekends</div>
+          <div class="time" v-if="person.availableWeekends">
+            <div class="small-text-upper-purple">WEEKENDS</div>
           </div>
         </div>
       </div>
@@ -61,7 +61,7 @@
 
 <!-- Photos --> 
 
-  <div v-if="person.images.length > 0" class="group-title-container-2">
+  <div v-if="person.images" class="group-title-container-2">
     <h5 class="list-title-2">Photos</h5> 
   </div>
 
@@ -73,19 +73,19 @@
     <h5 class="list-title-2">Location</h5>
   </div>
 
-   <div class="map-container" @click="getDirections(location)">
+   <div class="map-container" @click="getDirections(person.location)">
   <GmapMap
     :disableDefaultUI="true"
-    :center="location"
+    :center="person.location"
     :zoom="13"
     :options="mapOptions"
     style="width: 100%; height: 230px;">
       <GmapMarker
       :key="index"
-      :position="location"
-      :title="person.first_name"
-      :icon="facebookMapIcon(person)"
-      @click="getDirections(location)"      
+      :position="person.location"
+      :title="person.firstName"
+      :icon="person.facebookMapIcon"
+      @click="getDirections(person.location)"      
       />
     </GmapMap>
   </div>
@@ -170,6 +170,7 @@ export default {
           employer: "",
           backgroundCheck: false,
           facebookId: p.facebook_id,
+          facebookMapIcon: 'https://graph.facebook.com/' + p.facebook_id + '/picture?width=30',
           // todo: add children now
           children: []
         }
