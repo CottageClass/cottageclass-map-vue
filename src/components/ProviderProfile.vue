@@ -3,11 +3,11 @@
     <div class="providerp-provider-info-section">
       <router-link :to="{ name: 'MainView' }" class="providerp-button-back w-inline-block"><img src="../assets/Arrow-Back-2.svg">
     </router-link><img :src="require(`../assets/${person.pic}`)" class="providerp-avatar">
-    <h1 class="providerp-h1">{{ person.name}} {{ person.lastInitial }}.</h1>
+    <h1 class="providerp-h1">{{ person.firstName }} {{ person.lastInitial }}.</h1>
 
 
 
-    <div class="providerp-occupation" v-if="person.job && person.job.employer">{{ person.job.title }} at {{ person.job.employer }}</div>
+    <div class="providerp-occupation" v-if="person.title && person.employer">{{ person.title }} at {{ person.employer }}</div>
     <div v-if="person.children.length > 0" class="providerp-children">Parent to 
       <span v-for="(child, index) in person.children">
         {{ child.name }} <span class="text-span-2">({{ child.age }})</span><span v-if="index < person.children.length - 1">, </span>
@@ -129,9 +129,10 @@
 import Images from './Images.vue'
 import ReviewItem from './ReviewItem.vue'
 import * as Token from '@/utils/tokens.js'
+import FacebookAvatar from './FacebookAvatar'
 
 export default {
-  components: { ReviewItem, Images },
+  components: { ReviewItem, Images, FacebookAvatar },
   name: 'ProviderProfile',
   methods: {
     getDirections: function (location) {
@@ -151,34 +152,46 @@ export default {
   mounted: function () {
     this.fetchUser()
       .then(res => {
-        this.person = res.data.attributes
+        let p = res.data.attributes
+        this.person = {
+          firstName: p.first_name,
+          lastInitial: p.last_name[0],
+          activities: p.activities.map(activity => activity.replace(/_/g, " ")),
+          availableMornings: p.availabile_mornings,
+          availableEvenings: p.available_evenings,
+          availableAfternoons: p.available_afternoons,
+          availableWeekends: p.available_weekends,
+          location: {
+            lat: parseFloat(p.latitude),
+            lng: parseFloat(p.longitude)
+          },
+          // todo: add these once API has them
+          title: "",
+          employer: "",
+          backgroundCheck: false,
+          facebookId: p.facebook_id,
+          // todo: add children now
+          children: []
+        }
       })
-  },
-  computed: {
-    location: function () {
-      return {
-        // todo: make this real
-        lat: 0, 
-        lng: 0
-      }
-    }
-  },
+    },
   methods: {
     fetchUser: function () {
+      console.log(`${process.env.BASE_URL_API}/users/${ this.$route.params.id }`)
       return this.axios.get(
         `${process.env.BASE_URL_API}/users/${ this.$route.params.id }` // todo: rename to userId
       ).then(res => {
-        console.log("FETCH USERS IN NETWORK SUCCESS")
+        console.log("FETCH USER SUCCESS")
         console.log(res.data)
         // return data to next promise in the chain
         return res.data
       }).catch(err => {
-        console.log("FETCH USERS IN NETWORK FAILURE")
+        console.log("FETCH USER FAILURE")
         console.log(err.errors)
       })
     },
-    facebookMapIcon: function (person) {
-      return 'https://graph.facebook.com/' + person.attributes.facebook_id + '/picture?width=30'
+    facebookMapIcon: function () {
+      return 'https://graph.facebook.com/' + this.person.facebookId + '/picture?width=30'
     }
   }
 };
