@@ -35,10 +35,10 @@
 </template>
 
 <script>
-import TextMessageLink from './TextMessageLink'
+import TextMessageLink from './TextMessageLink.vue'
 
 // import google sheets API service
-import sheetsu from 'sheetsu-node';
+import sheetsu from 'sheetsu-node'
 
 // create a config file to identify which spreadsheet we push to.
 var client = sheetsu({ address: 'https://sheetsu.com/apis/v1.0su/62cd725d6088' })

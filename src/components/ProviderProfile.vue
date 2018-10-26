@@ -130,6 +130,7 @@ import Images from './Images.vue'
 import ReviewItem from './ReviewItem.vue'
 import * as Token from '@/utils/tokens.js'
 import FacebookAvatar from './FacebookAvatar'
+import * as api from '@/utils/api.js'
 
 export default {
   components: { ReviewItem, Images, FacebookAvatar },
@@ -141,7 +142,7 @@ export default {
   },
   data () {
     return {
-      person: null,
+      people: [],
       mapOptions: 
        { // move this to map component when i separate it.
             "disableDefaultUI": true, // turns off map controls
@@ -149,53 +150,14 @@ export default {
           }
     }
   },
-  mounted: function () {
-    this.fetchUser()
-      .then(res => {
-        let p = res.data.attributes
-        this.person = {
-          firstName: p.first_name,
-          lastInitial: p.last_name[0],
-          activities: p.activities.map(activity => activity.replace(/_/g, " ")),
-          availableMornings: p.availabile_mornings,
-          availableEvenings: p.available_evenings,
-          availableAfternoons: p.available_afternoons,
-          availableWeekends: p.available_weekends,
-          location: {
-            lat: parseFloat(p.latitude),
-            lng: parseFloat(p.longitude)
-          },
-          // todo: add these once API has them
-          title: "",
-          employer: "",
-          backgroundCheck: false,
-          facebookId: p.facebook_id,
-          facebookMapIcon: 'https://graph.facebook.com/' + p.facebook_id + '/picture?width=30',
-          // todo: add children now
-          children: []
-        }
-      })
-    },
-  methods: {
-    fetchUser: function () {
-      console.log(`${process.env.BASE_URL_API}/users/${ this.$route.params.id }`)
-      return this.axios.get(
-        `${process.env.BASE_URL_API}/users/${ this.$route.params.id }` // todo: rename to userId
-      ).then(res => {
-        console.log("FETCH USER SUCCESS")
-        console.log(res.data)
-        // return data to next promise in the chain
-        return res.data
-      }).catch(err => {
-        console.log("FETCH USER FAILURE")
-        console.log(err.errors)
-      })
-    },
-    facebookMapIcon: function () {
-      return 'https://graph.facebook.com/' + this.person.facebookId + '/picture?width=30'
-    }
+  mounted: api.fetchUsersInNetwork, // updates people directly
+  computed: {
+    person: function () {
+    return this.people.find(person => person.id == this.$route.params.id) // computes person. this isn't efficient but simplifies interaction with the API.
+  }
   }
 };
+
 
 </script>
 

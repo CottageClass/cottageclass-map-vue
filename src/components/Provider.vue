@@ -1,10 +1,10 @@
 <template>
-	<router-link :to="{ name: 'ProviderProfile', params: { id: id }}">
+	<router-link :to="{ name: 'ProviderProfile', params: { id: person.id }}">
 	<span class="body">
 		  <div class="landing-page-list-item-header">
-    <div class="avatar-name-container"><FacebookAvatar :facebookId="person.facebook_id" className="image" />
+    <div class="avatar-name-container"><FacebookAvatar :facebookId="person.facebookId" className="image" />
       <div class="list-item-3-heading">
-        <h5 class="heading">{{ firstName }} {{ lastInitial }}.</h5>
+        <h5 class="heading">{{ person.firstName }} {{ person.lastInitial }}.</h5>
       </div>
     </div><router-link :to="{ name: 'RequestModal', params: { id: id }}"  class="button-send-message w-inline-block"><img src="../assets/chat.svg" class="image-4"><div class="list-item-1-button">Book</div></router-link></div>
   <Images :person="person" />
@@ -12,7 +12,7 @@
     <div class="title-bar-and-action-v2">
       <div class="div-block-7">
         <div class="name-and-caption">
-          <h5 v-if="person.job && person.job.employer" class="caption">{{ title }} <span v-if="person.job.employer">at {{ employer }}</span></h5>
+          <h5 v-if="person.job && person.job.employer" class="caption">{{ person.title }} <span v-if="person.job.employer">at {{ person.employer }}</span></h5>
         </div>
       </div>
       <!-- Children  
@@ -23,7 +23,7 @@
 
       <!-- Background check --> 
         
-        <div class="providerp-background-check-badge-container2" v-if="backgroundCheck">
+        <div class="providerp-background-check-badge-container2" v-if="person.backgroundCheck">
         <div class="providerp-background-check-badge"><img src="../assets/check-green.svg" alt="" class="checkmark-image">
           <div class="background-check-text">Background checked</div>
         </div>
@@ -31,7 +31,7 @@
 
 
       <div class="tag-group-container" v-if="person.activities.length"><img src="../assets/tag.svg" class="image-tag">
-        <div class="tags-container" v-for="activity in activities">
+        <div class="tags-container" v-for="activity in person.activities">
           <div class="tag">
             <div class="small-text-upper-black-40">{{ activity }}</div>
           </div>
@@ -39,16 +39,16 @@
       </div>
       <div class="time-group-container"><img src="../assets/time.svg" class="image-time">
         <div class="times-container">
-          <div class="time" v-if="person.available_mornings">
+          <div class="time" v-if="person.availableMornings">
             <div class="time-tags">9a–3p</div>
           </div>
-          <div class="time" v-if="person.available_afternoons">
+          <div class="time" v-if="person.availableAfternoons">
             <div class="time-tags">3p–7p</div>
           </div>
-          <div class="time" v-if="person.available_evenings">
+          <div class="time" v-if="person.availableEvenings">
             <div class="time-tags">7p-</div>
           </div>
-          <div class="time" v-if="person.available_weekends">
+          <div class="time" v-if="person.availableWeekends">
             <div class="time-tags">WEEKENDS</div>
           </div>
         </div>
@@ -68,21 +68,6 @@ export default {
   name: 'Provider',
   props: ['person', 'id'],
   components: { Images, FacebookAvatar },
-  data () {
-    return {
-      firstName: this.person.first_name,
-      lastInitial: this.person.last_name[0],
-      // todo: add title and employer
-      title: "",
-      employer: "",
-      backgroundCheck: false, // add background check
-    }
-  },
-  computed: {
-    activities: function () {
-      return this.person.activities.map(activity => activity.replace(/_/g, " "))
-    }
-  }
 };
 </script>
 

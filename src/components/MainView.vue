@@ -11,9 +11,9 @@
       <GmapMarker
       v-for="(person, index) in peopleAvailable"
       :key="index"
-      :position="location(person)"
-      :title="person.attributes.first_name"
-      :icon="facebookMapIcon(person)"
+      :position="person.location"
+      :title="person.firstName"
+      :icon="person.facebookMapIcon"
       @click="$router.push({name: 'ProviderProfile', params: { id: person.id }})"
       />
     </GmapMap>
@@ -39,7 +39,7 @@
     <div class="group-title-container">
       <h5 class="heading-2">{{ providersSectionTitle }}</h5>
     </div>
-    <Provider v-for="person in peopleAvailable" :id="person.id" :person="person.attributes" :key="person.id"></Provider>
+    <Provider v-for="person in peopleAvailable" :person="person" :key="person.id"></Provider>
   </div>
 
   <!-- share button -->
@@ -53,12 +53,14 @@
 <script>
 import Provider from './Provider.vue'
 import RequestModal from './RequestModal.vue'
-import people from '../assets/people.json'
 import router from '../router'
 import ShareButton from './ShareButton.vue'
 import networks from '../assets/network-info.json'
 import * as Token from '@/utils/tokens.js'
+import * as api from '@/utils/api.js'
+
 var moment = require('moment');
+
 // todo: use the token so that people get redirected to login screen if not logged in. either here or in vue router.
 
 export default {
@@ -69,7 +71,6 @@ export default {
       dateTimeSelected: null,  
       people: [], // gets updated on mount by fetchUsersInNetwork
       networks: networks, // to bring from import into vue model
-      selectedPerson: null,
       mapOptions: { // move this to map component when i separate it.
         "disableDefaultUI": true, // turns off map controls
         "gestureHandling": "greedy", // allows one finger pan.
@@ -85,37 +86,7 @@ export default {
       });
     }
   },
-  mounted: function () {
-    this.fetchUsersInNetwork()
-      .then(res => {
-        this.people = res.data
-      })
-  },
-  methods: {
-    facebookMapIcon: function (person) {
-      return 'https://graph.facebook.com/' + person.attributes.facebook_id + '/picture?width=30'
-    },
-    location: function (person) {
-      return {
-        lat: parseFloat(person.attributes.latitude),
-        lng: parseFloat(person.attributes.longitude) 
-      }
-    },
-    fetchUsersInNetwork: function () {
-      let networkId = Token.currentUserNetworkCode(this.$auth)
-      return this.axios.get(
-        `${process.env.BASE_URL_API}/networks/${networkId}/users`
-      ).then(res => {
-        console.log("FETCH USERS IN NETWORK SUCCESS")
-        console.log(res.data)
-        // return data to next promise in the chain
-        return res.data
-      }).catch(err => {
-        console.log("FETCH USERS IN NETWORK FAILURE")
-        console.log(err.errors)
-      })
-    }
-  },
+  mounted: api.fetchUsersInNetwork,
   computed: {
     network: function () {
       let networkId = Token.currentUserNetworkCode(this.$auth)
