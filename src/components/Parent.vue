@@ -1,9 +1,9 @@
 <template>
  <div class="list-item-3-container">
    <router-link :to="{ name: 'emergencyInfo', params: { id: person.id }}" class="list-item-3-title-bar">
-    <img :src="require(`../assets/${person.pic}`)" class="image">
+    <FacebookAvatar :facebookId="person.facebookId" class="image" />
        <div class="list-item-3-heading">
-         <h5 class="heading">{{ person.name}} {{ person.lastInitial }}. </h5> 
+         <h5 class="heading">{{ person.firstName}} {{ person.lastInitial }}. </h5> 
        </div>
      </router-link>
      <div class="list-item-3-child-list">
@@ -36,6 +36,7 @@
 
 <script>
 import TextMessageLink from './TextMessageLink.vue'
+import FacebookAvatar from './FacebookAvatar.vue'
 
 // import google sheets API service
 import sheetsu from 'sheetsu-node'
@@ -46,7 +47,7 @@ var client = sheetsu({ address: 'https://sheetsu.com/apis/v1.0su/62cd725d6088' }
 export default {
         name: 'Parent',
         props: ['person'],
-        components: { TextMessageLink },
+        components: { TextMessageLink, FacebookAvatar },
         data () {
           return {
             checkState: "unknown" // "unknown", "checking in", "checked in", "checking out", "checked out", "error"

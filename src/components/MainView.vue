@@ -9,8 +9,8 @@
     :options="mapOptions"
     style="width: 100%; height: 230px;">
       <GmapMarker
-      v-for="(person, index) in peopleAvailable"
-      :key="index"
+      v-for="person in peopleAvailable"
+      :key="person.id"
       :position="person.location"
       :title="person.firstName"
       :icon="person.facebookMapIcon"
@@ -90,7 +90,6 @@ export default {
   computed: {
     network: function () {
       let networkId = Token.currentUserNetworkCode(this.$auth)
-      console.log('networkId is ' + networkId)
       return this.networks.find(network => network.stub == networkId)
     },
     peopleAvailable: function () {
