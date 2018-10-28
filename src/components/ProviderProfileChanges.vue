@@ -1,45 +1,210 @@
 <template>
-	<div class="body body-splash-2">
-  <div class="div-block-4">
-    <div class="div-block-5"><img src="../assets/cc-logo-vert-inverse.svg">
-      <div class="splash-content-1">
-        <div class="splash-text-50">Welcome to <strong>{{ network.name }}</strong> on CareShare by <a href="https://cottageclass.com">CottageClass</a>. We're testing out a new way to share childcare within a trusted networks of parents and friends. Just browse the list of parents available, then reach out to book care. Are you ready to try it?<br><br>(Parents pay ${{ network.price }}/hour for time used and providers receive ${{ (network.price - network.price * network.percentage).toFixed(2) }}/hour, with 50% off for siblings.)</div>
+<div v-if="person" class="body">
+	  <div class="providerp-provider-info-section">
+	  	<router-link :to="{ name: 'MainView' }" class="providerp-button-back w-inline-block"><img src="../assets/Arrow-Back-2.svg">
+	  </router-link><img :src="require(`../assets/${person.pic}`)" class="providerp-avatar">
+    <h1 class="providerp-h1">{{ person.name}} {{ person.lastInitial }}.</h1>
+
+
+
+    <div class="providerp-occupation" v-if="person.job && person.job.employer">{{ person.job.title }} at {{ person.job.employer }}</div>
+    <div v-if="person.children.length > 0" class="providerp-children">Parent to 
+    	<span v-for="(child, index) in person.children">
+    		{{ child.name }} <span class="text-span-2">({{ child.age }})</span><span v-if="index < person.children.length - 1">, </span>
+    	</span>
+    	</div>
+    <div v-if="person.blurb" class="providerp-chat-bubble-container">
+      <div class="providerp-chat-bubble-caret"><img src="../assets/chat-bubble-caret.svg"></div>
+      <div class="providerp-chat-bubble-primary">
+        <div>{{ person.blurb }}</div>
       </div>
     </div>
-    <a href="#" class="splash-button w-inline-block">
-      <router-link :to="{ name: 'MainView' }" class="button-text">GET STARTED</router-link>
-    </a>
   </div>
+  <div class="providerp-provider-info-bullets">
+
+ <!-- background check -->
+
+    <div class="providerp-background-check-badge-container" v-if="person.backgroundCheck">
+      <div class="providerp-background-check-badge"><img src="../assets/check-white-14.svg" class="checkmark-image">
+        <div class="background-check-text">Background checked</div>
+      </div>
+    </div>
+
+ <!-- activities --> 
+
+      <div class="tag-group-container" v-if="person.activities.length"><img src="../assets/tag-24-2.svg" width="20" height="20" class="image-tag">
+        <div class="tags-container" v-for="activity in person.activities">
+          <div class="tag">
+            <div class="small-text-upper-black-40">{{ activity }}</div>
+          </div>
+      </div>
+      </div>
+
+<!-- Times --> 
+      <div class="time-group-container"><img src="../assets/time-24-2.svg" width="20" height="20" class="image-time">
+        <div class="times-container">
+          <div class="time" v-if="person.availability.includes('7to3')">
+            <div class="small-text-upper-purple">9a–3p</div>
+          </div>
+          <div class="time" v-if="person.availability.includes('3to7')">
+            <div class="small-text-upper-purple">3p–7p</div>
+          </div>
+          <div class="time" v-if="person.availability.includes('after7')">
+            <div class="small-text-upper-purple">7p-</div>
+          </div>
+          <div class="time" v-if="person.availability.includes('weekends')">
+            <div class="small-text-upper-purple">Weekends</div>
+          </div>
+        </div>
+      </div>
+  </div>
+
+<!-- Photos --> 
+
+  <div v-if="person.images.length > 0" class="group-title-container-2">
+    <h5 class="list-title-2">Photos</h5> 
+  </div>
+
+  <Images :person="person"/>
+
+ <!-- location with link to directions -->
+
+  <div class="group-title-container-2">
+    <h5 class="list-title-2">Location</h5>
+  </div>
+
+   <div class="map-container" @click="getDirections(person.location)">
+  <GmapMap
+    :disableDefaultUI="true"
+    :center="person.location"
+    :zoom="13"
+    :options="mapOptions"
+    style="width: 100%; height: 230px;">
+      <GmapMarker
+      :key="index"
+      :position="person.location"
+      :title="person.name"
+      :icon="require(`@/assets/small-avatars/${person.pic}`)"
+      @click="getDirections(person.location)"      
+      />
+    </GmapMap>
+  </div>
+
+<!-- Positive reviews --> 
+  <div class="group-title-container-2">
+    <h5 class="list-title-2">Great Experiences</h5>
+  </div>
+  <span v-for="review in person.reviews">
+<ReviewItem :review="review"/>
+</span>
+
+<!-- Leave a review --> 
+
+  <div class="providerp-post-comment-container"><a :href="'mailto:info@cottageclass.com?subject=Great experience with ' + person.name + ' ' + person.lastInitial + '. (' + person.id + ')&body=(please%20describe%20your%20great%20experience%20here!)'" class="pprofile-compose-button w-inline-block"><img src="../assets/compose.svg" class="image-5"><div class="pprofile-comment-prompt-button-text">Post a great experience</div></a>
+    <div class="providerp-book-care-container">
+    	<router-link :to="{ name: 'RequestModal', params: { id: person.id }}" class="pprovider-book-care-button w-inline-block"><img src="../assets/chat.svg"><div class="pprovider-primary-action-text">Book Care</div>
+    	</router-link>
+    </div>
+  </div>
+
+<!-- Negative reviews (concerns) --> 
+
+  <div class="group-title-container-2">
+    <h5 class="list-title-2">Concerns</h5>
+  </div>
+  <span v-for="review in person.concerns">
+<ReviewItem :review="review"/>
+</span>
+
+  <!-- concern link --> 
+
+  <div class="providerp-post-comment-container"><a :href="'mailto:info@cottageclass.com?subject=Concern re: ' + person.name + ' ' + person.lastInitial + '. (' + person.id + ')&body=(please%20detail%20your%20concern%20here)'" class="pprofile-compose-button w-inline-block"><img src="../assets/compose.svg" class="image-5"><div class="pprofile-comment-prompt-button-text">Post a concern</div></a></div>
+
+  <div class="spacer-100px"></div>
+
 </div>
 </template>
 
 <script>
-import networks from '../assets/network-info.json'
+import Images from './Images.vue'
+import ReviewItem from './ReviewItem.vue'
+import * as Token from '@/utils/tokens.js'
 
 export default {
-	name: 'Splash',
-  data () {
-    return {
-      networks: networks,
-      userNetwork: "demo" //eventually this will be user.network
-    }
+	components: { ReviewItem, Images },
+	name: 'ProviderProfile',
+	methods: {
+		getDirections: function (location) {
+			window.open('https://www.google.com/maps?saddr=My+Location&daddr=' + location.lat + ',' + location.lng)
+		}
+	},
+	data () {
+		return {
+      person: null,
+			mapOptions: 
+			 { // move this to map component when i separate it.
+            "disableDefaultUI": true, // turns off map controls
+            "gestureHandling": "none" // prevents any kind of scrolling
+          }
+		}
+	},
+  mounted: function () {
+    this.fetchUser()
+      .then(res => {
+        this.person = res.data.attributes
+      })
   },
-  created: function () {
-    if (!navigator.userAgent.match(/(iPad)|(iPhone)|(iPod)|(android)|(webOS)/i)) {
-      this.$router.push({ name: 'DesktopWarningSplash' })
-    } else {
-    }
-  },
-  computed: {
-    network: function () {
-      return this.networks.find(network => network.stub === this.userNetwork)
+  methods: {
+    fetchUser: function () {
+      return this.axios.get(
+        `${process.env.BASE_URL_API}/users/${ this.$route.params.id }` // todo: rename to userId
+      ).then(res => {
+        console.log("FETCH USERS IN NETWORK SUCCESS")
+        console.log(res.data)
+        // return data to next promise in the chain
+        return res.data
+      }).catch(err => {
+        console.log("FETCH USERS IN NETWORK FAILURE")
+        console.log(err.errors)
+      })
     }
   }
 };
+
 </script>
 
 <style scoped>
-.body {
+
+.scrolling-wrapper {
+  overflow-x: auto;
+  display: flex;
+  align-items: center;
+}
+
+.card {
+    flex: 0 0 auto;
+  }
+
+.card img {
+	height: 100%;
+	width: auto;
+	display: inline-block;
+	box-sizing: border-box;
+	vertical-align: middle;
+}
+
+.scrolling-wrapper {
+  -webkit-overflow-scrolling: touch;
+}
+
+.scrolling-wrapper {
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+
+body {
   font-family: soleil, sans-serif;
   color: #333;
   font-size: 14px;
@@ -49,12 +214,6 @@ export default {
 a {
   text-decoration: none;
 }
-
-.splash-text-50 strong {
-  color: white;
-}
-
-.splash-text-50 {}
 
 .list-container {
   margin-top: 16px;
@@ -1282,9 +1441,9 @@ a {
 }
 
 .splash-h1 {
-  padding-top: 10vh;
+  margin-top: 48px;
   color: #fff;
-  font-size: 20px;
+  font-size: 25px;
   text-align: center;
 }
 
@@ -1298,9 +1457,8 @@ a {
   display: -webkit-flex;
   display: -ms-flexbox;
   display: flex;
-  height: 100vh;
-  margin-top: 0px;
-  padding-top: 32px;
+  height: 85vh;
+  margin-top: 24px;
   padding-right: 32px;
   padding-bottom: 32px;
   padding-left: 32px;
@@ -1340,7 +1498,6 @@ a {
 
 .splash-content-1 {
   margin-bottom: 24px;
-  margin-top: 10vh;
 }
 
 .splash-text-small-50 {
@@ -1368,7 +1525,6 @@ a {
   -webkit-align-items: center;
   -ms-flex-align: center;
   align-items: center;
-  padding-top: 4vh;
 }
 
 .splash-3-h1 {
@@ -1855,7 +2011,6 @@ a {
     height: 100px;
   }
 }
-
 
 
 

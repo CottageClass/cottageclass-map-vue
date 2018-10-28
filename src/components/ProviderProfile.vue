@@ -1,18 +1,18 @@
 <template>
 <div class="body">
-	  <div class="providerp-provider-info-section">
-	  	<router-link :to="{ name: 'MainView' }" class="providerp-button-back w-inline-block"><img src="../assets/Arrow-Back-2.svg">
-	  </router-link><img :src="require(`../assets/${person.pic}`)" class="providerp-avatar">
-    <h1 class="providerp-h1">{{ person.name}} {{ person.lastInitial }}.</h1>
+    <div class="providerp-provider-info-section">
+      <router-link :to="{ name: 'MainView' }" class="providerp-button-back w-inline-block"><img src="../assets/Arrow-Back-2.svg">
+    </router-link><FacebookAvatar :facebookId="person.facebookId" class="providerp-avatar" />
+    <h1 class="providerp-h1">{{ person.firstName }} {{ person.lastInitial }}.</h1>
 
 
 
-    <div class="providerp-occupation" v-if="person.job && person.job.employer">{{ person.job.title }} at {{ person.job.employer }}</div>
+    <div class="providerp-occupation" v-if="person.title && person.employer">{{ person.title }} at {{ person.employer }}</div>
     <div v-if="person.children.length > 0" class="providerp-children">Parent to 
-    	<span v-for="(child, index) in person.children">
-    		{{ child.name }} <span class="text-span-2">({{ child.age }})</span><span v-if="index < person.children.length - 1">, </span>
-    	</span>
-    	</div>
+      <span v-for="(child, index) in person.children">
+        {{ child.name }} <span class="text-span-2">({{ child.age }})</span><span v-if="index < person.children.length - 1">, </span>
+      </span>
+      </div>
     <div v-if="person.blurb" class="providerp-chat-bubble-container">
       <div class="providerp-chat-bubble-caret"><img src="../assets/chat-bubble-caret.svg"></div>
       <div class="providerp-chat-bubble-primary">
@@ -43,17 +43,17 @@
 <!-- Times --> 
       <div class="time-group-container"><img src="../assets/time-24-2.svg" width="20" height="20" class="image-time">
         <div class="times-container">
-          <div class="time" v-if="person.availability.includes('7to3')">
-            <div class="small-text-upper-purple">7a–3p</div>
+          <div class="time" v-if="person.availableMornings">
+            <div class="small-text-upper-purple">9a–3p</div>
           </div>
-          <div class="time" v-if="person.availability.includes('3to7')">
+          <div class="time" v-if="person.availableAfternoons">
             <div class="small-text-upper-purple">3p–7p</div>
           </div>
-          <div class="time" v-if="person.availability.includes('after7')">
+          <div class="time" v-if="person.availableEvenings">
             <div class="small-text-upper-purple">7p-</div>
           </div>
-          <div class="time" v-if="person.availability.includes('weekends')">
-            <div class="small-text-upper-purple">Weekends</div>
+          <div class="time" v-if="person.availableWeekends">
+            <div class="small-text-upper-purple">WEEKENDS</div>
           </div>
         </div>
       </div>
@@ -61,7 +61,7 @@
 
 <!-- Photos --> 
 
-  <div v-if="person.images.length > 0" class="group-title-container-2">
+  <div v-if="person.images" class="group-title-container-2">
     <h5 class="list-title-2">Photos</h5> 
   </div>
 
@@ -83,8 +83,8 @@
       <GmapMarker
       :key="index"
       :position="person.location"
-      :title="person.name"
-      :icon="require(`@/assets/small-avatars/${person.pic}`)"
+      :title="person.firstName"
+      :icon="person.facebookMapIcon"
       @click="getDirections(person.location)"      
       />
     </GmapMap>
@@ -102,8 +102,8 @@
 
   <div class="providerp-post-comment-container"><a :href="'mailto:info@cottageclass.com?subject=Great experience with ' + person.name + ' ' + person.lastInitial + '. (' + person.id + ')&body=(please%20describe%20your%20great%20experience%20here!)'" class="pprofile-compose-button w-inline-block"><img src="../assets/compose.svg" class="image-5"><div class="pprofile-comment-prompt-button-text">Post a great experience</div></a>
     <div class="providerp-book-care-container">
-    	<router-link :to="{ name: 'RequestModal', params: { id: person.id }}" class="pprovider-book-care-button w-inline-block"><img src="../assets/chat.svg"><div class="pprovider-primary-action-text">Book Care</div>
-    	</router-link>
+      <router-link :to="{ name: 'RequestModal', params: { id: person.id }}" class="pprovider-book-care-button w-inline-block"><img src="../assets/chat.svg"><div class="pprovider-primary-action-text">Book Care</div>
+      </router-link>
     </div>
   </div>
 
@@ -128,31 +128,37 @@
 <script>
 import Images from './Images.vue'
 import ReviewItem from './ReviewItem.vue'
-import people from '../assets/people.json'
+import * as Token from '@/utils/tokens.js'
+import FacebookAvatar from './FacebookAvatar'
+import * as api from '@/utils/api.js'
+
 export default {
-	components: { ReviewItem, Images },
-	name: 'ProviderProfile',
-	methods: {
-		getDirections: function (location) {
-			window.open('https://www.google.com/maps?saddr=My+Location&daddr=' + location.lat + ',' + location.lng)
-		}
-	},
-	data () {
-		return {
-			people: people,
-			 mapOptions: 
-			 { // move this to map component when i separate it.
+  components: { ReviewItem, Images, FacebookAvatar },
+  name: 'ProviderProfile',
+  methods: {
+    getDirections: function (location) {
+      window.open('https://www.google.com/maps?saddr=My+Location&daddr=' + location.lat + ',' + location.lng)
+    }
+  },
+  data () {
+    return {
+      people: [],
+      mapOptions: 
+       { // move this to map component when i separate it.
             "disableDefaultUI": true, // turns off map controls
             "gestureHandling": "none" // prevents any kind of scrolling
           }
-		}
-	},
-	computed: {
-		person: function () {
-          return this.people.find(person => person.id == this.$route.params.id)
-	}
-}
+    }
+  },
+  mounted: api.fetchUsersInNetwork, // updates people directly
+  computed: {
+    person: function () {
+    return this.people.find(person => person.id == this.$route.params.id) // computes person. this isn't efficient but simplifies interaction with the API.
+  }
+  }
 };
+
+
 </script>
 
 <style scoped>
@@ -168,11 +174,11 @@ export default {
   }
 
 .card img {
-	height: 100%;
-	width: auto;
-	display: inline-block;
-	box-sizing: border-box;
-	vertical-align: middle;
+  height: 100%;
+  width: auto;
+  display: inline-block;
+  box-sizing: border-box;
+  vertical-align: middle;
 }
 
 .scrolling-wrapper {

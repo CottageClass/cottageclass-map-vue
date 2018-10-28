@@ -1034,7 +1034,7 @@
 
 </script>
 
-<style>
+<style scoped>
 
   .onb-content-container {
     height: unset;

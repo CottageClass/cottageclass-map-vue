@@ -7,7 +7,7 @@
     <router-link :to="{ name: 'HowItWorks' }" class="button-small-outline w-button">How it works</router-link>
   </div>
   <div class="list-container" v-for="person in parents">
-     <Parent :person="person" :key="person.key"/>
+     <Parent :person="person" :key="person.id"/>
     </div>
   </div>
 </div>	
@@ -15,23 +15,23 @@
 
 <script>
 
-import people from '../assets/people.json'
 import Parent from './Parent.vue'
+import * as api from '@/utils/api.js'
 
 export default {
 	name: 'Bookings',
 	components: { Parent },
 	data () {
 		return {
-			people: people
+			people: [],
+      userNetwork: "demo" // todo: make this real
 		}
 	},
+  mounted: api.fetchUsersInNetwork, // modifies this.people directly 
 	computed: {
-    peopleInNetwork: function () {
-        return this.people.filter(person => (person.networks && person.networks.includes(this.$route.params.networkId)))
-          },
 		parents: function () {
-			return this.peopleInNetwork.filter(person => person.children.length) // only return people in network who have kids.
+      console.log(this.people)
+			return this.people // return this.people.filter(person => person.children.length) // only return people in network who have kids.
 		}
 	}
 };

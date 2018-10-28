@@ -85,7 +85,7 @@ export default {
       if (this.invitationCode.isValid) {
         // send user into app (ultimately this logic should change so that the homepage checks to see if the user has been fully onboarded, correct?)
         console.log(this.invitationCode.isValid)
-        this.$router.push({ path: '../demo/home' })
+        this.$router.push({ name: 'MainView' })
       } else {
         // show sharing ask
         this.step = 9
@@ -111,26 +111,6 @@ export default {
       this.step = this.step - 1
     },
     submitData: function () {
-      // submit to sheetsu
-      client.create({
-        "agreedToTerms": this.terms.agreed,
-        "firstName": this.name.first,
-        "lastName": this.name.last,
-        "lastInitial": this.name.last[0],
-        "address": this.location.fullAddress,
-        "lat": this.location.lat,
-        "lng": this.location.lng,
-        "phone": this.phone.number,
-        "children": this.children.list,
-        "availability": this.availability,
-        "activities": this.activities,
-      }).then((data) => {
-        console.log(data)
-      }, (err) => {
-        console.log(err)
-      });
-
-      // in parallel, submit to the backend
       let userId = Token.currentUserId(this.$auth)
       let address = this.location.fullAddress
       let {
@@ -943,31 +923,6 @@ a {
 .image-time {
   margin-top: 2px;
   margin-right: 6px;
-}
-
-.tag-group-container {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  margin-top: 6px;
-  margin-bottom: 8px;
-  -webkit-box-align: start;
-  -webkit-align-items: flex-start;
-  -ms-flex-align: start;
-  align-items: flex-start;
-  flex-wrap: wrap;
-}
-
-.time-group-container {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-align: start;
-  -webkit-align-items: flex-start;
-  -ms-flex-align: start;
-  align-items: flex-start;
 }
 
 .name-and-caption {

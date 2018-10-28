@@ -20,12 +20,13 @@ export default {
 	name: 'HowItWorks',
   data () {
     return {
-      networks: networks
+      networks: networks,
+      userNetwork: "demo" // todo: replace with user's own network
     }
   },
   computed: {
     network: function () {
-      return this.networks.find(network => network.stub === this.$route.params.networkId)
+      return this.networks.find(network => network.stub === this.userNetwork)
     }
   }
 };
