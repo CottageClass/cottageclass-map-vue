@@ -32,8 +32,9 @@
     <option value="3">3 children</option>
     <option value="4">4 children</option>
    </select>
-          <div class="avatar-and-cta-container"><img :src="require(`@/assets/${person.pic}`)" class="image">
-            <div class="text-block-4">Send a text message to<br><span class="text-span">{{ person.name}} {{ person.lastInitial }}.</span><span class="black-50"></span></div>
+          <div class="avatar-and-cta-container">
+            <FacebookAvatar :facebookId="person.facebookId" class="image" />
+            <div class="text-block-4">Send a text message to<br><span class="text-span">{{ person.firstName}} {{ person.lastInitial }}.</span><span class="black-50"></span></div>
           </div>
           <TextMessageLink :number="person.phone" :message="'Hi ' + person.name + '!! I\'m a parent from ' + network.name + ', I\'m looking for care for ' + numberOfChildren + ' ' + ((numberOfChildren > 1) ? 'children' : 'child') + ' ' + day + ' from ' + formatTime(startTime) + ' to ' + formatTime(endTime) + ', and I saw you were often available at these times. Would this work? Thanks! \ud83c\udf08\u26a1\ud83e\udd84'">
         <!-- ^^ Those crazy unicode characters are emojis :) -->
@@ -58,8 +59,10 @@
 // try adding an animation so it fades in
 
 import TextMessageLink from './TextMessageLink.vue'
-import people from '../assets/people.json'
 import networks from '../assets/network-info.json'
+import * as api from '@/utils/api.js'
+import * as Token from '@/utils/tokens.js'
+import FacebookAvatar from './FacebookAvatar.vue'
 
 
 export default {
@@ -72,11 +75,12 @@ export default {
           startTime: "19:00",
           endTime: "22:00",
           /* to be able to use "people" that I'm importing */
-          people: people,
+          people: [],
           networks: networks,
           userNetwork: "demo" // replace with user's own network
       }
   }, 
+  mounted: api.fetchUsersInNetwork,
   methods: {
   	formatTime: function (time) {
   		var minutes = time.slice(-2);

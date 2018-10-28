@@ -25,7 +25,7 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 .share-button {
   background-color: #1f88e9;
 }
