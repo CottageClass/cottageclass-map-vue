@@ -12,7 +12,7 @@ function createPersonObject (personInApi) {
           return moment().diff(birthdayDateTime, 'years')
         }
         return {
-          birthday: child.attributes.birthday,
+          birthday: moment(child.attributes.birthday).format('l'),
           firstName: child.attributes.first_name,
           age: childAge(child.attributes.birthday)
         }
@@ -44,7 +44,8 @@ function createPersonObject (personInApi) {
       // todo: add these once I have them
       title: "",
       employer: "",
-      backgroundCheck: false, // add background check
+      backgroundCheck: false, // add background check,
+      phone: p.phone
     }
   }
 
