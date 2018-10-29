@@ -45,6 +45,7 @@ const devWebpackConfig = merge(baseWebpackConfig, {
     publicPath: config.dev.assetsPublicPath,
     proxy: config.dev.proxyTable,
     quiet: true, // necessary for FriendlyErrorsPlugin
+    host: '0.0.0.0', // required for testing locally on phones over LAN
     watchOptions: {
       poll: config.dev.poll,
     }
