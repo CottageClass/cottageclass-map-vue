@@ -68,15 +68,3 @@ export function fetchUsersInNetwork(networkId) {
           console.log(err.errors)
         })*/
 }
-
-export function fetchUser(userId) {
-  return {
-    id: userId
-  }
-}
-
-export function fetchNetworkInfo(vueAuth) {
-  return {
-
-  }
-}
