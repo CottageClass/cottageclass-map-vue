@@ -15,11 +15,9 @@
           <h5 v-if="person.job && person.job.employer" class="caption">{{ person.title }} <span v-if="person.job.employer">at {{ person.employer }}</span></h5>
         </div>
       </div>
-      <!-- Children  
 
-<h5 class="caption" v-if="person.children.length">Parent to <span v-for="(child, index) in person.children"><span class="child">{{ child.name }} <span class="black-50">({{ child.age }})</span></span><span v-if="(index < person.children.length - 1)">, </span>
+<h5 class="caption" v-if="person.children.length">Parent to <span v-for="(child, index) in person.children"><span class="child">{{ child.firstName }} <span class="black-50">({{ child.age }})</span></span><span v-if="(index < person.children.length - 1)">, </span>
         </span></h5>      
--->
 
       <!-- Background check --> 
         
