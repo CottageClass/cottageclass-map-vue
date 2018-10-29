@@ -53,7 +53,7 @@ function createPeopleObject (data) {
   return peopleDataArray.map(createPersonObject)
 }
 
-export async function fetchUsersInNetwork(networkId) {
+export function fetchUsersInNetwork(networkId) {
   return Vue.axios.get(
     `${process.env.BASE_URL_API}/networks/${networkId}/users`
     ).then(res => {

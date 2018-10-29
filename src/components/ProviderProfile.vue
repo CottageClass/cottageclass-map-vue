@@ -131,6 +131,7 @@ import ReviewItem from './ReviewItem.vue'
 import * as Token from '@/utils/tokens.js'
 import FacebookAvatar from './FacebookAvatar'
 import * as api from '@/utils/api.js'
+import networks from '@/assets/network-info.json' 
 
 export default {
   components: { ReviewItem, Images, FacebookAvatar },
@@ -143,6 +144,7 @@ export default {
   data () {
     return {
       people: [],
+      networks: networks,
       mapOptions: 
        { // move this to map component when i separate it.
             "disableDefaultUI": true, // turns off map controls
@@ -150,8 +152,16 @@ export default {
           }
     }
   },
-  mounted: api.fetchUsersInNetwork, // updates people directly
+  mounted: function () {
+    api.fetchUsersInNetwork(this.network.stub).then(res => {
+      this.people = res
+    })
+  },
   computed: {
+    network: function () {
+      let networkId = Token.currentUserNetworkCode(this.$auth)
+      return this.networks.find(network => network.stub == networkId)
+    },
     person: function () {
     return this.people.find(person => person.id == this.$route.params.id) // computes person. this isn't efficient but simplifies interaction with the API.
   }
