@@ -17,6 +17,8 @@
 
 import Parent from './Parent.vue'
 import * as api from '@/utils/api.js'
+import networks from '@/assets/network-info.json'
+import * as Token from '@/utils/tokens.js'
 
 export default {
 	name: 'Bookings',
@@ -24,14 +26,21 @@ export default {
 	data () {
 		return {
 			people: [],
-      userNetwork: "demo" // todo: make this real
+      networks: networks,
+      currentUserId: Token.currentUserId(this.$auth)
 		}
 	},
-  mounted: api.fetchUsersInNetwork, // modifies this.people directly 
+  mounted: function () {
+    api.fetchUsersInNetwork(this.network.stub).then(res => {
+    this.people = res.filter(person => person.id != this.currentUserId)    })
+  },
 	computed: {
+    network: function () {
+      let networkId = Token.currentUserNetworkCode(this.$auth)
+      return this.networks.find(network => network.stub == networkId)
+    },
 		parents: function () {
-      console.log(this.people)
-			return this.people // return this.people.filter(person => person.children.length) // only return people in network who have kids.
+			return this.people.filter(person => person.children.length) // only return people in network who have kids.
 		}
 	}
 };

@@ -15,9 +15,37 @@
 
 <script>
 
+import networks from '@/assets/network-info.json'
+import * as Token from '@/utils/tokens.js'
+import * as api from '@/utils/api.js'
 
-  export default {
+export default {
     name: 'Login',
+    data () {
+      return {
+        networks: networks,
+        currentUserId: Token.currentUserId(this.$auth),
+        currentUser: {}
+      }
+    },
+    mounted: function () {
+      api.fetchUsersInNetwork(this.network.stub).then(res => {
+      this.currentUser = res.find(person => person.id == this.currentUserId)
+    })
+  },
+  computed: {
+    network: function () {
+    let networkId = Token.currentUserNetworkCode(this.$auth)
+    return this.networks.find(network => network.stub == networkId)
+    },
+    isUserAlreadyOnboarded: function () {
+      if (this.currentUser.phone && this.currentUser.firstName && this.currentUser.lastInitial && this.currentUser.location.lat && this.currentUser.location.lng && this.currentUser.facebookId) {
+        return true
+      } else {
+        return false
+      }
+    }
+  },
     methods: {
       authenticate: function(provider) {
 	/*
@@ -38,18 +66,21 @@
 	// store value of this to access this.$emit during callback
 	let component = this
 	this.$auth.authenticate(provider)
-	  .then(function(res) {
+	  .then(res => {
 	    console.log("auth SUCCESS")
 	    console.log(res)
-	    component.$emit('next')
-	  })
-	  .catch(function(err) {
+      if (this.isUserAlreadyOnboarded) {
+      this.$emit('userAlreadyOnboarded')
+	  } else {
+      this.$emit('next')
+    }
+  }).catch(function(err) {
 	    console.log("auth FAILURE")
 	    console.log(err)
 	  })
-      }
-    }
-  };
+}
+}
+};
 
 </script>
 

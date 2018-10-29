@@ -12,7 +12,7 @@ function createPersonObject (personInApi) {
           return moment().diff(birthdayDateTime, 'years')
         }
         return {
-          birthday: child.attributes.birthday,
+          birthday: moment(child.attributes.birthday).format('l'),
           firstName: child.attributes.first_name,
           age: childAge(child.attributes.birthday)
         }
@@ -44,7 +44,8 @@ function createPersonObject (personInApi) {
       // todo: add these once I have them
       title: "",
       employer: "",
-      backgroundCheck: false, // add background check
+      backgroundCheck: false, // add background check,
+      phone: p.phone
     }
   }
 
@@ -53,31 +54,17 @@ function createPeopleObject (data) {
   return peopleDataArray.map(createPersonObject)
 }
 
-export function fetchUsersInNetwork() {
-  let networkId = Token.currentUserNetworkCode(this.$auth)
-  return this.axios.get(
+export function fetchUsersInNetwork(networkId) {
+  return Vue.axios.get(
     `${process.env.BASE_URL_API}/networks/${networkId}/users`
     ).then(res => {
       console.log("FETCH USERS IN NETWORK SUCCESS")
       console.log(res.data)
           childrenInNetwork = res.data.included.filter(obj => obj.type === "child")
           // set this.people in the function that called us
-          this.people = createPeopleObject(res.data)
-          return res.data
+          return createPeopleObject(res.data)
         }) /* .catch(err => {
           console.log("FETCH USERS IN NETWORK FAILURE")
           console.log(err.errors)
         })*/
-}
-
-export function fetchUser(userId) {
-  return {
-    id: userId
-  }
-}
-
-export function fetchNetworkInfo(vueAuth) {
-  return {
-
-  }
 }

@@ -8,7 +8,7 @@
      </router-link>
      <div class="list-item-3-child-list">
        <div class="text-block">
-         <span v-for="(child, index) in person.children">{{ child.name }} 
+         <span v-for="(child, index) in person.children">{{ child.firstName }} 
            <span class="black-50">({{ child.age }})</span><span v-if="(index < person.children.length - 1)">, </span>
        </span></div> 
    </div>

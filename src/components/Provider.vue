@@ -6,7 +6,7 @@
       <div class="list-item-3-heading">
         <h5 class="heading">{{ person.firstName }} {{ person.lastInitial }}.</h5>
       </div>
-    </div><router-link :to="{ name: 'RequestModal', params: { id: id }}"  class="button-send-message w-inline-block"><img src="../assets/chat.svg" class="image-4"><div class="list-item-1-button">Book</div></router-link></div>
+    </div><router-link :to="{ name: 'RequestModal', params: { id: person.id }}"  class="button-send-message w-inline-block"><img src="../assets/chat.svg" class="image-4"><div class="list-item-1-button">Book</div></router-link></div>
   <Images :person="person" />
   <div class="list-item-container-2">
     <div class="title-bar-and-action-v2">
@@ -15,11 +15,9 @@
           <h5 v-if="person.job && person.job.employer" class="caption">{{ person.title }} <span v-if="person.job.employer">at {{ person.employer }}</span></h5>
         </div>
       </div>
-      <!-- Children  
 
-<h5 class="caption" v-if="person.children.length">Parent to <span v-for="(child, index) in person.children"><span class="child">{{ child.name }} <span class="black-50">({{ child.age }})</span></span><span v-if="(index < person.children.length - 1)">, </span>
+<h5 class="caption" v-if="person.children.length">Parent to <span v-for="(child, index) in person.children"><span class="child">{{ child.firstName }} <span class="black-50">({{ child.age }})</span></span><span v-if="(index < person.children.length - 1)">, </span>
         </span></h5>      
--->
 
       <!-- Background check --> 
         

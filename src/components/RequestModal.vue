@@ -80,7 +80,11 @@ export default {
           userNetwork: "demo" // replace with user's own network
       }
   }, 
-  mounted: api.fetchUsersInNetwork,
+   mounted: function () {
+    api.fetchUsersInNetwork(this.network.stub).then(res => {
+      this.people = res
+    })
+  },
   methods: {
   	formatTime: function (time) {
   		var minutes = time.slice(-2);
@@ -95,7 +99,8 @@ export default {
   },
   computed: {
     network: function () {
-      return this.networks.find(network => network.stub === this.userNetwork)
+      let networkId = Token.currentUserNetworkCode(this.$auth)
+      return this.networks.find(network => network.stub == networkId)
     },
     person: function () {
       return this.people.find(person => person.id == this.$route.params.id)
