@@ -53,17 +53,15 @@ function createPeopleObject (data) {
   return peopleDataArray.map(createPersonObject)
 }
 
-export function fetchUsersInNetwork() {
-  let networkId = Token.currentUserNetworkCode(this.$auth)
-  return this.axios.get(
+export async function fetchUsersInNetwork(networkId) {
+  return Vue.axios.get(
     `${process.env.BASE_URL_API}/networks/${networkId}/users`
     ).then(res => {
       console.log("FETCH USERS IN NETWORK SUCCESS")
       console.log(res.data)
           childrenInNetwork = res.data.included.filter(obj => obj.type === "child")
           // set this.people in the function that called us
-          this.people = createPeopleObject(res.data)
-          return res.data
+          return createPeopleObject(res.data)
         }) /* .catch(err => {
           console.log("FETCH USERS IN NETWORK FAILURE")
           console.log(err.errors)

@@ -86,7 +86,11 @@ export default {
       });
     }
   },
-  mounted: api.fetchUsersInNetwork,
+  mounted: function () {
+    api.fetchUsersInNetwork(this.network.stub).then(res => {
+      this.people = res
+    })
+  },
   computed: {
     network: function () {
       let networkId = Token.currentUserNetworkCode(this.$auth)
