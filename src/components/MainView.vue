@@ -75,7 +75,7 @@ export default {
         "disableDefaultUI": true, // turns off map controls
         "gestureHandling": "greedy", // allows one finger pan.
       },
-      // userId: Token.currentUserId(this.$auth) // this might be useful
+       currentUserId: Token.currentUserId(this.$auth) 
     }
   },
   watch: {
@@ -88,7 +88,7 @@ export default {
   },
   mounted: function () {
     api.fetchUsersInNetwork(this.network.stub).then(res => {
-      this.people = res
+      this.people = res.filter(person => person.id != this.currentUserId)
     })
   },
   computed: {

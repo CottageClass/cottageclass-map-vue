@@ -26,13 +26,13 @@ export default {
 	data () {
 		return {
 			people: [],
-      networks: networks
+      networks: networks,
+      currentUserId: Token.currentUserId(this.$auth)
 		}
 	},
   mounted: function () {
     api.fetchUsersInNetwork(this.network.stub).then(res => {
-      this.people = res
-    })
+    this.people = res.filter(person => person.id != this.currentUserId)    })
   },
 	computed: {
     network: function () {
