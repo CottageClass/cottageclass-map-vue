@@ -96,6 +96,14 @@ export default {
   height: 100vh;
 }
 
+.onb-paragraph-subheading-2-black-50 {
+  margin-bottom: 8px;
+  color: rgba(0, 0, 0, .5);
+  font-size: 13px;
+  line-height: 21px;
+  text-align: center;
+}
+
 .onb-login-logo-container-v4 {
   display: -webkit-box;
   display: -webkit-flex;
