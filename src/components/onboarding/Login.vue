@@ -50,10 +50,10 @@ export default {
 	  .then(res => {
 	    console.log("auth SUCCESS")
   }).then(res => api.fetchCurrentUser(Token.currentUserId(component.$auth))).then(currentUser => {
-    if (currentUser.agreeTos && currentUser.phone && currentUser.firstName && currentUser.lastInitial && currentUser.location.lat && currentUser.location.lng && currentUser.facebookId) {
+    if (currentUser.hasAllRequiredFields) {
       this.$emit('userAlreadyOnboarded')
     } else if (currentUser.id) {
-      this.$emit('next')
+      this.$emit('proceedToOnboarding')
     } else {
       return false
     }
