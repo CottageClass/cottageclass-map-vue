@@ -37,6 +37,9 @@
 <script>
 import TextMessageLink from './TextMessageLink.vue'
 import FacebookAvatar from './FacebookAvatar.vue'
+import * as api from '@/utils/api.js'
+import networks from '@/assets/network-info.json'
+import * as Token from '@/utils/tokens.js'
 
 // import google sheets API service
 import sheetsu from 'sheetsu-node'
@@ -46,7 +49,7 @@ var client = sheetsu({ address: 'https://sheetsu.com/apis/v1.0su/62cd725d6088' }
 
 export default {
         name: 'Parent',
-        props: ['person'],
+        props: ['person', 'currentUser'],
         components: { TextMessageLink, FacebookAvatar },
         data () {
           return {
@@ -55,23 +58,22 @@ export default {
         },
         methods: {
           check: function (inOrOut) {
-            // ask them their name if we don't know it.
+            let children = ""
             this.checkState = 'checking ' + inOrOut
-            if (!this.$cookies.isKey('providerName')) {
-                var name = prompt("What is your full name?")
-                this.$cookies.set('providerName', name)
-            }
-            let providerName = this.$cookies.get('providerName')
-            // ask them how many children if there is more than one. Add validation here. 
-            if (this.person.children.length > 1){
-              var children = prompt("How many children are checking in?")
-            } else {
-              var children = 1
+            if (inOrOut == 'in') {
+              if (this.person.children.length > 1) {
+                children = prompt("How many children are checking in?")
+              } else {
+                children = 1
+              }
             }
             client.create({
               "parentId": this.person.id, 
               "parentName": this.person.name + ' ' + this.person.lastInitial,
-              "providerName": providerName,
+              "providerFirstName": this.currentUser.firstName,
+              "providerLastInitial": this.currentUser.lastInitial,
+              "providerId": this.currentUser.id,
+              "providerPhone": this.currentUser.phone,
               "howManyChildren": children,
               "checked": inOrOut,
               "time": Date(),
