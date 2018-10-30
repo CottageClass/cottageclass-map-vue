@@ -27,31 +27,6 @@ export default {
         currentUser: {}
       }
     },
-    mounted: function () {
-      api.fetchUsersInNetwork(this.network.stub).then(res => {
-      this.currentUser = res.find(person => person.id == this.currentUserId)
-    })
-  },
-  computed: {
-    currentUserId: function () {
-      return Token.currentUserId(this.$auth)
-    },
-    network: function () {
-    let networkId = Token.currentUserNetworkCode(this.$auth)
-    return this.networks.find(network => network.stub == networkId)
-    },
-    isUserAlreadyOnboarded: function () {
-      if (this.currentUser.phone && this.currentUser.firstName && this.currentUser.lastInitial && this.currentUser.location.lat && this.currentUser.location.lng && this.currentUser.facebookId) {
-        this.$emit('userAlreadyOnboarded')
-        return true
-      } else if (this.currentUserId) {
-        this.$emit('next')
-        return false
-      } else {
-        return false
-      }
-    }
-  },
     methods: {
       authenticate: function(provider) {
 	/*
@@ -74,10 +49,16 @@ export default {
 	this.$auth.authenticate(provider)
 	  .then(res => {
 	    console.log("auth SUCCESS")
-	    console.log(res)
-      console.log(component.isUserAlreadyOnboarded) // just to compute it now and trigger the event $emit if onboarded. 
+  }).then(res => api.fetchCurrentUser(Token.currentUserId(component.$auth))).then(currentUser => {
+    if (currentUser.agreeTos && currentUser.phone && currentUser.firstName && currentUser.lastInitial && currentUser.location.lat && currentUser.location.lng && currentUser.facebookId) {
+      this.$emit('userAlreadyOnboarded')
+    } else if (currentUser.id) {
+      this.$emit('next')
+    } else {
+      return false
+    }
   }).catch(function(err) {
-	    console.log("auth FAILURE")
+	    console.log("auth FAILURE or user not onboarded yet")
 	    console.log(err) 
 	  })
 }
