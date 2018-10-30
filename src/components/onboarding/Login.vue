@@ -24,7 +24,6 @@ export default {
     data () {
       return {
         networks: networks,
-        currentUserId: Token.currentUserId(this.$auth),
         currentUser: {}
       }
     },
@@ -34,13 +33,20 @@ export default {
     })
   },
   computed: {
+    currentUserId: function () {
+      return Token.currentUserId(this.$auth)
+    },
     network: function () {
     let networkId = Token.currentUserNetworkCode(this.$auth)
     return this.networks.find(network => network.stub == networkId)
     },
     isUserAlreadyOnboarded: function () {
       if (this.currentUser.phone && this.currentUser.firstName && this.currentUser.lastInitial && this.currentUser.location.lat && this.currentUser.location.lng && this.currentUser.facebookId) {
+        this.$emit('userAlreadyOnboarded')
         return true
+      } else if (this.currentUserId) {
+        this.$emit('next')
+        return false
       } else {
         return false
       }
@@ -69,14 +75,10 @@ export default {
 	  .then(res => {
 	    console.log("auth SUCCESS")
 	    console.log(res)
-      if (this.isUserAlreadyOnboarded) {
-      this.$emit('userAlreadyOnboarded')
-	  } else {
-      this.$emit('next')
-    }
+      console.log(component.isUserAlreadyOnboarded) // just to compute it now and trigger the event $emit if onboarded. 
   }).catch(function(err) {
 	    console.log("auth FAILURE")
-	    console.log(err)
+	    console.log(err) 
 	  })
 }
 }
