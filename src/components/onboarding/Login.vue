@@ -24,28 +24,9 @@ export default {
     data () {
       return {
         networks: networks,
-        currentUserId: Token.currentUserId(this.$auth),
         currentUser: {}
       }
     },
-    mounted: function () {
-      api.fetchUsersInNetwork(this.network.stub).then(res => {
-      this.currentUser = res.find(person => person.id == this.currentUserId)
-    })
-  },
-  computed: {
-    network: function () {
-    let networkId = Token.currentUserNetworkCode(this.$auth)
-    return this.networks.find(network => network.stub == networkId)
-    },
-    isUserAlreadyOnboarded: function () {
-      if (this.currentUser.phone && this.currentUser.firstName && this.currentUser.lastInitial && this.currentUser.location.lat && this.currentUser.location.lng && this.currentUser.facebookId) {
-        return true
-      } else {
-        return false
-      }
-    }
-  },
     methods: {
       authenticate: function(provider) {
 	/*
@@ -68,15 +49,17 @@ export default {
 	this.$auth.authenticate(provider)
 	  .then(res => {
 	    console.log("auth SUCCESS")
-	    console.log(res)
-      if (this.isUserAlreadyOnboarded) {
+  }).then(res => api.fetchCurrentUser(Token.currentUserId(component.$auth))).then(currentUser => {
+    if (currentUser.hasAllRequiredFields) {
       this.$emit('userAlreadyOnboarded')
-	  } else {
-      this.$emit('next')
+    } else if (currentUser.id) {
+      this.$emit('userNotYetOnboarded')
+    } else {
+      return false
     }
   }).catch(function(err) {
-	    console.log("auth FAILURE")
-	    console.log(err)
+	    console.log("auth FAILURE or user not onboarded yet")
+	    console.log(err) 
 	  })
 }
 }

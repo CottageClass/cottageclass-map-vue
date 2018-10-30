@@ -6,6 +6,13 @@ var childrenInNetwork = [] // this should be a local variable in a larger functi
 
 function createPersonObject (personInApi) {
     var p = personInApi.attributes
+    let hasAllRequiredFields = function () {
+      if (p.agree_tos && p.phone && p.facebook_id && p.latitude && p.longitude) {
+        return true
+      } else {
+        return false
+      }
+    }
     let createChildrenList = function () {
       let parseChild = function (child) {
         let childAge = function (birthdayDateTime) {
@@ -21,6 +28,7 @@ function createPersonObject (personInApi) {
        // make sure this is an array.
     }
     return {
+      agreeTos: p.agree_tos,
       id: personInApi.id,
       firstName: p.first_name,
       lastInitial: p.last_name[0],
@@ -45,7 +53,8 @@ function createPersonObject (personInApi) {
       title: "",
       employer: "",
       backgroundCheck: false, // add background check,
-      phone: p.phone
+      phone: p.phone,
+      hasAllRequiredFields: hasAllRequiredFields() 
     }
   }
 
@@ -63,8 +72,21 @@ export function fetchUsersInNetwork(networkId) {
           childrenInNetwork = res.data.included.filter(obj => obj.type === "child")
           // set this.people in the function that called us
           return createPeopleObject(res.data)
-        }) /* .catch(err => {
+        }).catch(err => {
           console.log("FETCH USERS IN NETWORK FAILURE")
           console.log(err.errors)
-        })*/
+        })
+}
+
+export function fetchCurrentUser(userId) {
+  return Vue.axios.get(
+    `${process.env.BASE_URL_API}/users/${userId}`
+    ).then(res => {
+      console.log("FETCH CURRENT USER SUCCESS")
+      console.log(createPersonObject(res.data.data))
+          return createPersonObject(res.data.data)
+        }).catch(err => {
+          console.log("FETCH CURRENT USER FAILURE")
+          console.log(err.errors)
+        })
 }
