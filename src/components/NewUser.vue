@@ -82,7 +82,7 @@ export default {
         this.$router.push({ name: 'MainView' })
       } else {
         // show sharing ask
-        this.step = 9
+        this.step = 8
       }
     },
     nextStep: function () {
