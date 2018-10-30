@@ -7,14 +7,13 @@
         <div class="onb-error-text">{{ error }}</div>
       </div>
       <Terms v-if="step === 1" v-model="terms" />
-      <Name v-if="step === 2" v-model="name"/>
-      <Location v-if="step === 3" v-model="location"/>
-      <Phone v-if="step === 4" v-model="phone" />
-      <Children v-if="step === 5" v-model="children" />
-      <Availability v-if="step === 6" v-model="availability" />
-      <Activities v-if="step === 7" v-model="activities" />
-      <InvitationCode v-if="step === 8" v-model="invitationCode" />
-      <Invite v-if="step === 9" />
+      <Location v-if="step === 2" v-model="location"/>
+      <Phone v-if="step === 3" v-model="phone" />
+      <Children v-if="step === 4" v-model="children" />
+      <Availability v-if="step === 5" v-model="availability" />
+      <Activities v-if="step === 6" v-model="activities" />
+      <InvitationCode v-if="step === 7" v-model="invitationCode" />
+      <Invite v-if="step === 8" />
     </div>
   </span>
 </template>
@@ -23,7 +22,6 @@
 import Login from '@/components/onboarding/Login.vue'
 import Nav from '@/components/onboarding/Nav.vue'
 import Terms from '@/components/onboarding/Terms.vue'
-import Name from '@/components/onboarding/Name.vue'
 import Location from '@/components/onboarding/Location.vue'
 import Phone from '@/components/onboarding/Phone.vue'
 import Children from '@/components/onboarding/Children.vue'
@@ -33,18 +31,14 @@ import Invite from '@/components/onboarding/Invite.vue'
 import InvitationCode from '@/components/onboarding/InvitationCode.vue'
 import * as Token from '@/utils/tokens.js'
 
-// import google sheets API service and give it a spreadsheet to push to
-import sheetsu from 'sheetsu-node';
-var client = sheetsu({ address: 'https://sheetsu.com/apis/v1.0su/e383acab3f80' })
-
 export default {
   components: {
-    Login, Nav, Terms, Name, Location, Phone, Children, Availability, Activities, Invite, InvitationCode
+    Login, Nav, Terms, Location, Phone, Children, Availability, Activities, Invite, InvitationCode
   },
   data () {
     return {
       step: 0,
-      lastStep: 8,
+      lastStep: 7,
       afterLastStep: '../demo/home/',
       showError: false,
       terms: {},
@@ -140,8 +134,6 @@ export default {
 
       let postData = {
         agreeTos: this.terms.agreed,
-        firstName: this.name.first,
-        lastName: this.name.last,
         streetNumber: street_number,
         route: route,
         locality: locality,
