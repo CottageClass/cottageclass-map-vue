@@ -4,7 +4,7 @@
   <div class="onb-login-top-image-container"><img src="images/login-photo-2.jpg" width="640" srcset="@/assets/login-photo-2.jpg 500w, @/assets/login-photo-2.jpg 800w, @/assets/login-photo-2.jpg 1280w" sizes="(max-width: 767px) 100vw, 640px" alt="" class="image-8"></div>
   <div class="onb-login-text-container">
     <h1 class="onb-heading-large-black">Why Parent Alone?</h1>
-    <p class="onb-paragraph-subheading-2-black-50">Sign in to build the childcare network of your dreams, by connecting with friends and parents in your community</p>
+    <p class="onb-paragraph-subheading-2-black-50">Sign in to build the affordable, flexible childcare network of your dreams, by connecting with friends and parents in your community.</p>
   </div>
       <div class="onb-fb-button-container">
       <a @click="authenticate('facebook')" class="onb-button-continue-with-facebook w-inline-block">
