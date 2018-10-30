@@ -7,7 +7,7 @@
     <router-link :to="{ name: 'HowItWorks' }" class="button-small-outline w-button">How it works</router-link>
   </div>
   <div class="list-container" v-for="person in parents">
-     <Parent :person="person" :currentUser="currentUser" :key="person.id"/>
+     <Parent :person="person" :currentUser="currentUser" :network="network" :key="person.id"/>
     </div>
   </div>
 </div>	
