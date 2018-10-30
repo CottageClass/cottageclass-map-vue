@@ -96,33 +96,42 @@ export default {
       let networkId = Token.currentUserNetworkCode(this.$auth)
       return this.networks.find(network => network.stub == networkId)
     },
-    peopleAvailable: function () {
-      let personAvailable = function (aPerson) {
-      let dt = moment(this.dateTimeSelected)
-      let hour = dt.hour()
-      let day = dt.day()
-      if (day == 0 || day == 6) {
-        return aPerson.attributes.available_weekends
+     daySelected: function () {
+      return moment(this.dateTimeSelected).day()
+    },
+    hourSelected: function () {
+      return moment(this.dateTimeSelected).hour()
+    },
+    timeSlotSelected: function () {
+      if (this.daySelected == 0 || this.daySelected == 6) {
+        return "weekends"
       } else {
-        if (hour < 15 && hour >= 7) {
-          return aPerson.attributes.available_mornings
-        } else if (hour < 19 && hour >= 14) {
-          return aPerson.attributes.available_afternoons
-        } else if (hour >= 19) {
-          return aPerson.attributes.available_evenings 
+        if (this.hourSelected < 15 && this.hourSelected >= 7) {
+          return "mornings"
+        } else if (this.hourSelected < 19 && this.hourSelected >= 14) {
+          return "afternoons"
+        } else if (this.hourSelected >= 19 || this.hourSelected < 7) {
+          return "evenings" 
         } else {
-          return false
+          return "allTimes"
         }
       }
-    }
-    if (!this.DateTimeSelected) {
-      return this.people
-    } else {
-      return this.people.filter(personAvailable)
-    }
-  },
+    },
+    peopleAvailable: function () {
+      if (this.timeSlotSelected == "allTimes") {
+        return this.people.filter(person => person.availableMornings || person.availableAfternoons || person.availableEvenings || person.availableWeekends)
+      } else if (this.timeSlotSelected == "mornings") {
+        return this.people.filter(person => person.availableMornings)
+      } else if (this.timeSlotSelected == "afternoons") {
+        return this.people.filter(person => person.availableAfternoons)
+      } else if (this.timeSlotSelected == "evenings") {
+        return this.people.filter(person => person.availableEvenings)
+      } else if (this.timeSlotSelected == "weekends") {
+        return this.people.filter(person => person.availableWeekends)
+      }
+    },
     providersSectionTitle: function () {
-      if (!this.dateTimeSelected) {
+      if (this.dateTimeSelected == null) {
         return "Providers in \"" + this.network.name + "\""
       } else {
         var aMoment = moment(this.dateTimeSelected)
@@ -132,7 +141,7 @@ export default {
       }
     },
     timePlaceholder: function () {
-      if (!this.dateTimeSelected) {
+      if (this.dateTimeSelected == null) {
         return "Choose a time"
       } else {
         return moment(this.dateTimeSelected).format("dddd, h:mm a")
