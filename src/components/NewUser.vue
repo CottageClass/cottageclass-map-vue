@@ -31,10 +31,6 @@ import Invite from '@/components/onboarding/Invite.vue'
 import InvitationCode from '@/components/onboarding/InvitationCode.vue'
 import * as Token from '@/utils/tokens.js'
 
-// import google sheets API service and give it a spreadsheet to push to
-import sheetsu from 'sheetsu-node';
-var client = sheetsu({ address: 'https://sheetsu.com/apis/v1.0su/e383acab3f80' })
-
 export default {
   components: {
     Login, Nav, Terms, Location, Phone, Children, Availability, Activities, Invite, InvitationCode
