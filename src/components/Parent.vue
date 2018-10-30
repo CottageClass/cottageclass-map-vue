@@ -49,7 +49,7 @@ var client = sheetsu({ address: 'https://sheetsu.com/apis/v1.0su/62cd725d6088' }
 
 export default {
         name: 'Parent',
-        props: ['person', 'currentUser'],
+        props: ['person', 'currentUser', 'network'],
         components: { TextMessageLink, FacebookAvatar },
         data () {
           return {
@@ -57,26 +57,40 @@ export default {
           }
         },
         methods: {
+          calculateHourlyRate: function (numChildren) {
+            const siblingDiscount = 0.5
+            if (numChildren == 1) {
+              return this.network.price
+            } else if (numChildren > 1) {
+              return this.network.price + (siblingDiscount * this.network.price * (parseInt(numChildren) - 1))
+            } else {
+              return ""
+            }
+          },
           check: function (inOrOut) {
-            let children = ""
+            let numChildren = ""
             this.checkState = 'checking ' + inOrOut
             if (inOrOut == 'in') {
               if (this.person.children.length > 1) {
-                children = prompt("How many children are checking in?")
+                numChildren = prompt("How many children are checking in?", this.person.children.length)
               } else {
-                children = 1
+                numChildren = 1
               }
             }
             client.create({
-              "parentId": this.person.id, 
-              "parentName": this.person.name + ' ' + this.person.lastInitial,
-              "providerFirstName": this.currentUser.firstName,
-              "providerLastInitial": this.currentUser.lastInitial,
-              "providerId": this.currentUser.id,
-              "providerPhone": this.currentUser.phone,
-              "howManyChildren": children,
-              "checked": inOrOut,
-              "time": Date(),
+              "Parent ID": this.person.id, 
+              "Parent Name": this.person.firstName + ' ' + this.person.lastInitial,
+              "Provider ID": this.currentUser.id,
+              "Provider Name": this.currentUser.firstName + ' ' + this.currentUser.lastInitial,
+              "# Children": numChildren,
+              "Checked": inOrOut,
+              "Time": Date(),
+              "Provider Phone #": this.currentUser.phone,
+              "Network": this.network.name,
+              "Network rate": this.network.price,
+              "Total hourly rate (broken)": this.calculateHourlyRate(numChildren),
+              "Percentage": this.network.percentage,
+              "Network Code": this.network.stub
             }, "events").then((data) => {
               console.log(data)
               this.checkState = 'checked ' + inOrOut
