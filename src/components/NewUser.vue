@@ -134,8 +134,6 @@ export default {
 
       let postData = {
         agreeTos: this.terms.agreed,
-        firstName: this.name.first,
-        lastName: this.name.last,
         streetNumber: street_number,
         route: route,
         locality: locality,
