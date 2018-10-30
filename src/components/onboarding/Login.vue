@@ -1,16 +1,17 @@
 <template>
-  <div id="body onb-body-splash">
-    <div class="div-block-6"><img src="@/assets/cc-splash-logo.svg" width="150" alt=""></div>
-    <div class="onb-splash-title-container">
-      <h1 class="onb-heading-large-black">Why parent alone?</h1>
-      <p class="onb-paragraph-subheading-2-black">Sign in to build the free, flexible, childcare of your dreams, by connecting with friends and parents in your community.</p>
-    </div>
-    <div class="onb-fb-button-container">
+<div class="body onb-body-splash">
+  <div class="onb-login-logo-container-v4"><img src="@/assets/cc-logo-horiz-blue.svg" width="170" height="32" alt=""></div>
+  <div class="onb-login-top-image-container"><img src="images/login-photo-2.jpg" width="640" srcset="@/assets/login-photo-2.jpg 500w, @/assets/login-photo-2.jpg 800w, @/assets/login-photo-2.jpg 1280w" sizes="(max-width: 767px) 100vw, 640px" alt="" class="image-8"></div>
+  <div class="onb-login-text-container">
+    <h1 class="onb-heading-large-black">Why Parent Alone?</h1>
+    <p class="onb-paragraph-subheading-2-black-50">Sign in to build the childcare network of your dreams, by connecting with friends and parents in your community</p>
+  </div>
+      <div class="onb-fb-button-container">
       <a @click="authenticate('facebook')" class="onb-button-continue-with-facebook w-inline-block">
-	<img src="@/assets/facebook-button-icon.svg" width="24" height="24" alt=""><div class="onb-button-facebook-text">Continue with Facebook</div>
+  <img src="@/assets/facebook-button-icon.svg" width="24" height="24" alt=""><div class="onb-button-facebook-text">Continue with Facebook</div>
       </a>
     </div>
-  </div>
+</div>
 </template>
 
 <script>
@@ -84,7 +85,64 @@ export default {
 
 </script>
 
-<style>
+<style scoped>
+
+.onb-body-splash {
+  overflow: visible;
+  background-color: #fff;
+}
+
+.body {
+  height: 100vh;
+}
+
+.onb-login-logo-container-v4 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  margin-top: 16px;
+  margin-bottom: 16px;
+  padding-right: 32px;
+  padding-left: 32px;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+}
+
+.onb-heading-large-black {
+  margin-top: 0px;
+  margin-bottom: 10px;
+  color: #333;
+  font-size: 24px;
+  line-height: 34px;
+  text-align: center;
+  letter-spacing: -0.3px;
+}
+
+.onb-login-text-container {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  padding: 16px 32px 24px;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  -webkit-box-pack: start;
+  -webkit-justify-content: flex-start;
+  -ms-flex-pack: start;
+  justify-content: flex-start;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+  -ms-flex-align: center;
+  align-items: center;
+  border-style: none;
+}
+
   .onb-button-continue-with-facebook {
     display: -webkit-box;
     display: -webkit-flex;
