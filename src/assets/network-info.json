@@ -311,6 +311,14 @@
 	"stub": "demo",
 	"price": "12.50",
 	"percentage": 0.2
+    },
+    {
+    	"name": "Clinton Hill Coops",
+    	"location": {"lat": 40.6920723, "lng": -73.9705158},
+    	"zoom": 15,
+    	"stub": "210clinton",
+    	"price": "12.50",
+    	"percentage": 0.2
     }
 
 ]
