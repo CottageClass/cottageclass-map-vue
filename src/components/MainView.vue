@@ -7,7 +7,7 @@
     :center="network.location"
     :zoom="network.zoom"
     :options="mapOptions"
-    style="width: 100%; height: 230px;">
+    style="width: 100%; height: 180px;">
       <GmapMarker
       v-for="person in peopleAvailable"
       :key="person.id"
@@ -18,10 +18,6 @@
       />
     </GmapMap>
   </div>
-
-    <!-- calendar or "bookings / provider" button -->
-
-    <router-link :to="{ name: 'Bookings' }"><div class="calendar-button-2"><img src="../assets/calendar-check.svg" class="calendar-button-2-image"></div></router-link>
 
     <!-- availability -->
 
