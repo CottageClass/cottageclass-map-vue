@@ -53,7 +53,7 @@ export default {
     if (currentUser.hasAllRequiredFields) {
       this.$emit('userAlreadyOnboarded')
     } else if (currentUser.id) {
-      this.$emit('proceedToOnboarding')
+      this.$emit('userNotYetOnboarded')
     } else {
       return false
     }

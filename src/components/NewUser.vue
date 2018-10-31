@@ -1,6 +1,8 @@
 <template>
   <span>
-    <Login v-if="step === 0" v-on:proceedToOnboarding="nextStep" v-on:userAlreadyOnboarded="$router.push({name: 'MainView'})" />
+    <Login 
+    v-if="step === 0" 
+    v-on:userNotYetOnboarded="nextStep" v-on:userAlreadyOnboarded="$router.push({name: 'MainView'})" />
     <div class="onb-body" v-if="step != 0">
       <Nav :button="nextButtonState" @next="nextStep" @prev="prevStep" />
       <div v-if="showError && error && error!='skippable'" class="onb-error-container">
