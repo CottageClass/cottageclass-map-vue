@@ -10,7 +10,7 @@ export default {
 	name: 'ShareButton',
 	methods: {
         share: function () {
-            const url = "https://cottageclass1.typeform.com/to/XEyKhf"
+            const url = "https://app.cottageclass.com"
             if (navigator.share) {
                 navigator.share({
                     title: 'Want to share childcare with me?',
