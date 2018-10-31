@@ -1,6 +1,9 @@
 <template>
   <span>
-    <Login v-if="step === 0" v-on:next="nextStep" v-on:userAlreadyOnboarded="$router.push({name: 'MainView'})" />
+    <Login 
+    v-if="step === 0" 
+    v-on:userNotYetOnboarded="nextStep" 
+    v-on:userAlreadyOnboarded="$router.push({name: 'MainView'})" />
     <div class="onb-body" v-if="step != 0">
       <Nav :button="nextButtonState" @next="nextStep" @prev="prevStep" />
       <div v-if="showError && error && error!='skippable'" class="onb-error-container">
@@ -82,7 +85,7 @@ export default {
         this.$router.push({ name: 'MainView' })
       } else {
         // show sharing ask
-        this.step = 9
+        this.step = 8
       }
     },
     nextStep: function () {
