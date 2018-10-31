@@ -7,7 +7,7 @@
     <router-link :to="{ name: 'HowItWorks' }" class="button-small-outline w-button">How it works</router-link>
   </div>
   <div class="list-container" v-for="person in parents">
-     <Parent :person="person" :key="person.id"/>
+     <Parent :person="person" :currentUser="currentUser" :network="network" :key="person.id"/>
     </div>
   </div>
 </div>	
@@ -27,12 +27,14 @@ export default {
 		return {
 			people: [],
       networks: networks,
-      currentUserId: Token.currentUserId(this.$auth)
+      currentUserId: Token.currentUserId(this.$auth),
+      currentUser: {}
 		}
 	},
   mounted: function () {
     api.fetchUsersInNetwork(this.network.stub).then(res => {
-    this.people = res.filter(person => person.id != this.currentUserId)    })
+    this.people = res.filter(person => person.id != this.currentUserId)
+    this.currentUser = res.find(person => person.id == this.currentUserId)    })
   },
 	computed: {
     network: function () {
