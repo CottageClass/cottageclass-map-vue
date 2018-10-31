@@ -27,10 +27,19 @@
 
     <div class="availability-container-v2">
       <h1 class="landing-page-v2-h1">When do you need childcare?</h1>
-      <label class="lpv2-choose-time-button w-inline-block">
+      <label class="lpv2-choose-time-button w-inline-block" @click="toggleShowDatetimeInputOnDesktop">
         <div class="div-block-8"><img src="../assets/time-outline-blue.svg" width="15" height="15" alt="">
-          <div class="lpv2-choose-time-button-text">{{ timePlaceholder }}</div><input type="datetime-local" v-model="dateTimeSelected" />
-        </div><img src="../assets/Dropdown-Arrows.svg" alt=""></label>
+          <div  
+          class="lpv2-choose-time-button-text"
+          v-if="hideDateTimeInputOnMobile">{{ timePlaceholder }}</div>
+          <input type="datetime-local" 
+          v-model="dateTimeSelected"
+          class="timePlacholderText" 
+          :class="[{ hideDateTimeInput: hideDateTimeInputOnMobile }]"/>
+        </div>
+        <img v-if="hideDateTimeInputOnMobile" 
+        src="../assets/Dropdown-Arrows.svg">
+      </label>
     </div>
 
   <!-- the list -->
@@ -75,7 +84,8 @@ export default {
         "disableDefaultUI": true, // turns off map controls
         "gestureHandling": "greedy", // allows one finger pan.
       },
-       currentUserId: Token.currentUserId(this.$auth) 
+      currentUserId: Token.currentUserId(this.$auth),
+      hideDateTimeInputOnMobile: true,
     }
   },
   watch: {
@@ -84,6 +94,16 @@ export default {
         top: 367,
         behavior: "smooth"
       });
+    }
+  },
+  methods: {
+    toggleShowDatetimeInputOnDesktop: function () {
+      if (!navigator.userAgent.match(/(iPad)|(iPhone)|(iPod)|(android)|(webOS)/i)) {
+        this.hideDateTimeInputOnMobile = false
+        this.hideDateTimePlaceholderOnDesktop = true
+      } else {
+        console.log('HTML5 date picker should display on mobile, but it will not on desktop')
+      }
     }
   },
   mounted: function () {
@@ -155,9 +175,17 @@ export default {
 
 <style scoped>
 
-input {
+.hideDateTimeInput {
   font-size: 1px; 
-  opacity: 0;
+  opacity: 0
+}
+
+.hideDateTimePlaceholder {
+  display: none;
+}
+
+.timePlacholderText {
+  color: #1c8fe5;
 }
 
 .calendar-button-2 {
