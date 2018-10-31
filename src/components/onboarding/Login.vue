@@ -70,6 +70,10 @@ export default {
 
 <style scoped>
 
+.onb-login-top-image-container {
+  text-align: center;
+}
+
 .onb-body-splash {
   overflow: visible;
   background-color: #fff;
