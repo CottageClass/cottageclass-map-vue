@@ -1,6 +1,6 @@
 <template>
   <span>
-    <Login 
+    <Login class="onb-body"
     v-if="step === 0" 
     v-on:userNotYetOnboarded="nextStep" 
     v-on:userAlreadyOnboarded="$router.push({name: 'MainView'})" />
