@@ -59,22 +59,21 @@ export default {
         methods: {
           calculateHourlyRate: function (numChildren) {
             const siblingDiscount = 0.5
+            const price = parseFloat(this.network.price)
             if (numChildren == 1) {
-              return this.network.price
+              return price
             } else if (numChildren > 1) {
-              return this.network.price + (siblingDiscount * this.network.price * (parseInt(numChildren) - 1))
+              return price + (siblingDiscount * price * (parseInt(numChildren) - 1))
             } else {
               return ""
             }
           },
           check: function (inOrOut) {
-            let numChildren = ""
+            let numChildren = 1
             this.checkState = 'checking ' + inOrOut
             if (inOrOut == 'in') {
               if (this.person.children.length > 1) {
-                numChildren = prompt("How many children are checking in?", this.person.children.length)
-              } else {
-                numChildren = 1
+                numChildren = parseInt(prompt("How many children are checking in?", this.person.children.length))
               }
             }
             client.create({
@@ -88,7 +87,7 @@ export default {
               "Provider Phone #": this.currentUser.phone,
               "Network": this.network.name,
               "Network rate": this.network.price,
-              "Total hourly rate (broken)": this.calculateHourlyRate(numChildren),
+              "Total hourly rate": this.calculateHourlyRate(numChildren),
               "Percentage": this.network.percentage,
               "Network Code": this.network.stub
             }, "events").then((data) => {
