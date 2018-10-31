@@ -2,7 +2,7 @@
 <span>
 <div class="providerp-user-comments-item"> 
     <div class="providerp-avatar-name-group"><img :src="require(`../assets/${person.pic}`)" class="providerp-user-comment-avatar">
-      <div class="providerp-user-comment-username">{{ person.name }} {{person.lastInitial}}.</div>
+      <div class="providerp-user-comment-username">{{ person.firstName }} {{person.lastInitial}}.</div>
     </div>
     <div class="providerp-user-comment-text">{{ review.text }}</div>
   </div>
