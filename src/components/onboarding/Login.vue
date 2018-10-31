@@ -1,10 +1,10 @@
 <template>
-<div class="body onb-body-splash">
-  <div class="onb-login-logo-container-v4"><img src="@/assets/cc-logo-horiz-blue.svg" width="170" height="32" alt=""></div>
+<div class="onb-body-splash">
+  <div class="onb-login-logo-container-v4"><img src="@/assets/cc-logo-horiz-blue.svg" width="127" height="24" alt=""></div>
   <div class="onb-login-top-image-container"><img src="images/login-photo-2.jpg" width="640" srcset="@/assets/login-photo-2.jpg 500w, @/assets/login-photo-2.jpg 800w, @/assets/login-photo-2.jpg 1280w" sizes="(max-width: 767px) 100vw, 640px" alt="" class="image-8"></div>
   <div class="onb-login-text-container">
     <h1 class="onb-heading-large-black">Why Parent Alone?</h1>
-    <p class="onb-paragraph-subheading-2-black-50">Sign in to build the affordable, flexible childcare network of your dreams, by connecting with friends and parents in your community.</p>
+    <p class="onb-paragraph-subheading-2-black-50">Sign in to build the flexible childcare network of your dreams, by connecting with families in your community.</p>
   </div>
       <div class="onb-fb-button-container">
       <a @click="authenticate('facebook')" class="onb-button-continue-with-facebook w-inline-block">
@@ -90,11 +90,17 @@ export default {
 .onb-body-splash {
   overflow: visible;
   background-color: #fff;
+  padding-top: 12px;
+  height: 100vh;
 }
 
 .body {
   height: 100vh;
 }
+
+.image-8 {
+  margin-bottom: 0;
+} 
 
 .onb-paragraph-subheading-2-black-50 {
   margin-bottom: 8px;
@@ -109,8 +115,7 @@ export default {
   display: -webkit-flex;
   display: -ms-flexbox;
   display: flex;
-  margin-top: 16px;
-  margin-bottom: 16px;
+  margin-bottom: 12px;
   padding-right: 32px;
   padding-left: 32px;
   -webkit-box-pack: center;
