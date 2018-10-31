@@ -51,7 +51,7 @@ export default {
   watch: {
     code: function () {
       this.$emit('input', {
-        code: this.codeValidates ? this.code : null,
+        code: this.codeValidates ? this.code.toLowerCase() : null,
         err: this.err,
         isValid: this.codeValidates
       })
