@@ -81,7 +81,7 @@
     "last 2 versions",
     "not ie <= 8"
   ],
-  "homepage": "https://github.com/CottageClass/cottageclass-map-vue",
+  "homepage": "git@github.com:CottageClass/cottageclass-map-vue",
   "author": "holmesworcester <hwilson@gmail.com>",
   "description": "A Vue.js project",
   "engines": {
