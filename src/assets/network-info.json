@@ -1,5 +1,5 @@
 [
-	{
+    {
 	"name": "Flatbush Families",  
 	"location": {"lat": 40.666485, "lng": -73.944122},
 	"zoom": 12, 
@@ -15,16 +15,16 @@
 	"stub": "BoCoCaGo",
 	"price": "12.50",
 	"percentage": 0.2
-	},
+    },
 
-	{
+    {
 	"name": "Escondido Families",  
 	"location": {"lat": 33.1048457, "lng": -117.0562155},
 	"zoom": 12, 
 	"stub": "escondido-network",
 	"price": "12.50",
 	"percentage": 0.2
-	},
+    },
 
 
     {
@@ -186,7 +186,7 @@
     },
     {
 	"name": "Dupont Circle",  
-    "location": {"lat": 38.9111048, "lng": -77.042613}, 
+	"location": {"lat": 38.9111048, "lng": -77.042613}, 
 	"zoom": 12, 
 	"stub": "DupontCircle",
 	"price": "12.50",
@@ -194,7 +194,7 @@
     },
     {
 	"name": "Harlem",  
-    "location": {"lat": 40.824667, "lng": -73.941749}, 
+	"location": {"lat": 40.824667, "lng": -73.941749}, 
 	"zoom": 12, 
 	"stub": "Harlem",
 	"price": "12.50",
@@ -202,7 +202,7 @@
     },
     {
 	"name": "Forest Hills",  
-    "location": {"lat": 40.7222902, "lng": -73.8615556}, 
+	"location": {"lat": 40.7222902, "lng": -73.8615556}, 
 	"zoom": 12, 
 	"stub": "ForestHills",
 	"price": "12.50",
@@ -210,7 +210,7 @@
     },
     {
 	"name": "Dumbo",  
-    "location": {"lat": 40.7035132, "lng": -73.9939204}, 
+	"location": {"lat": 40.7035132, "lng": -73.9939204}, 
 	"zoom": 12, 
 	"stub": "Dumbo",
 	"price": "12.50",
@@ -218,7 +218,7 @@
     },
     {
 	"name": "Cortelyou",  
-    "location": {"lat": 40.635011, "lng": -73.943780}, 
+	"location": {"lat": 40.635011, "lng": -73.943780}, 
 	"zoom": 12, 
 	"stub": "Cortelyou",
 	"price": "12.50",
@@ -226,7 +226,7 @@
     },
     {
 	"name": "NoeValley",  
-    "location": {"lat": 37.7490555, "lng": -122.4344773}, 
+	"location": {"lat": 37.7490555, "lng": -122.4344773}, 
 	"zoom": 12, 
 	"stub": "NoeValley",
 	"price": "12.50",
@@ -234,68 +234,60 @@
     },
     {
 	"name": "AU Park",  
-    "location": {"lat": 38.9486599, "lng": -77.0880777}, 	
-    "zoom": 12, 
+	"location": {"lat": 38.9486599, "lng": -77.0880777}, 	
+	"zoom": 12, 
 	"stub": "AUpark",
 	"price": "12.50",
 	"percentage": 0.2
     },
     {
 	"name": "Riverdale",  
-    "location": {"lat": 40.876798, "lng": -73.9198921}, 	
-    "zoom": 12, 
+	"location": {"lat": 40.876798, "lng": -73.9198921}, 	
+	"zoom": 12, 
 	"stub": "Riverdale",
 	"price": "12.50",
 	"percentage": 0.2
     },
     {
 	"name": "FortGreene",  
-    "location": {"lat": 40.692324, "lng": -73.9833117}, 
-    "zoom": 12, 
+	"location": {"lat": 40.692324, "lng": -73.9833117}, 
+	"zoom": 12, 
 	"stub": "FortGreene",
 	"price": "12.50",
 	"percentage": 0.2
     },
     {
 	"name": "Somerville",  
-    "location": {"lat": 42.427501, "lng": -71.1113899}, 
-    "zoom": 12, 
+	"location": {"lat": 42.427501, "lng": -71.1113899}, 
+	"zoom": 12, 
 	"stub": "Somerville",
 	"price": "12.50",
 	"percentage": 0.2
     },
     {
 	"name": "Syracuse",  
-    "location": {"lat": 43.0367387, "lng": -76.1051214}, 
-    "zoom": 12, 
+	"location": {"lat": 43.0367387, "lng": -76.1051214}, 
+	"zoom": 12, 
 	"stub": "Syracuse",
 	"price": "12.50",
 	"percentage": 0.2
     },
     {
 	"name": "Generic",  
-    "location": {"lat": 35.5599124, "lng": -97.6315306}, 
-    "zoom": 9, 
+	"location": {"lat": 35.5599124, "lng": -97.6315306}, 
+	"zoom": 9, 
 	"stub": "generic",
 	"price": "12.50",
 	"percentage": 0.2
     },
     {
 	"name": "Cambridge",  
-    "location": {"lat": 42.372713, "lng": -71.1088089}, 
-    "zoom": 12, 
+	"location": {"lat": 42.372713, "lng": -71.1088089}, 
+	"zoom": 12, 
 	"stub": "Cambridge",
 	"price": "12.50",
 	"percentage": 0.2
     },
-   
-
-
-
-
-
-
-
     {
 	"name": "A new network (demo)",  
 	"location": {"lat": 40.666485, "lng": -73.944122},
@@ -313,12 +305,11 @@
 	"percentage": 0.2
     },
     {
-    	"name": "Clinton Hill Coops",
-    	"location": {"lat": 40.6920723, "lng": -73.9705158},
-    	"zoom": 15,
-    	"stub": "210clinton",
-    	"price": "12.50",
-    	"percentage": 0.2
+	"name": "Clinton Hill Coops",
+	"location": {"lat": 40.6920723, "lng": -73.9705158},
+	"zoom": 15,
+	"stub": "210clinton",
+	"price": "12.50",
+	"percentage": 0.2
     }
-
 ]
