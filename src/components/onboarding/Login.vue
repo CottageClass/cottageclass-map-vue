@@ -28,6 +28,16 @@ export default {
         currentUser: {}
       }
     },
+    mounted: function () {
+      api.fetchCurrentUser(Token.currentUserId(this.$auth)).then(currentUser => {
+    if (currentUser.hasAllRequiredFields) {
+      this.$emit('userAlreadyOnboarded')
+    } else if (currentUser.id) {
+      this.$emit('userNotYetOnboarded')
+    } else {
+      return false
+    }});
+    },
     methods: {
       authenticate: function(provider) {
 	/*
