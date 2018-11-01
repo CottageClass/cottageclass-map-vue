@@ -7,7 +7,7 @@
     </div>
     <div class="onb-invitation-code-container">
       <div class="invite-code-form-block w-form">
-        <form id="email-form" class="invite-code-form">
+        <form v-on:submit.prevent id="email-form" class="invite-code-form">
           <input
             type="text"
             class="invite-code-input w-input"
