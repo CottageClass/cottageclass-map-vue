@@ -8,7 +8,7 @@
   </div>
   <div class="onb-child-info-container">
     <div class="form-block-3 w-form">
-      <form id="email-form-2" name="email-form-2" data-name="Email Form 2" class="form-2">
+      <form v-on:submit.prevent id="email-form-2" name="email-form-2" data-name="Email Form 2" class="form-2">
         <div v-for="(child, index) in children" class="onb-child-group-2">
           <div class="onb-group-header" key="index">
             <h2 class="onb-child-group-heading">Child {{ index + 1}}</h2>
