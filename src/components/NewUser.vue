@@ -204,14 +204,13 @@ export default {
       }
     },
     nextButtonState: function () {
-      if (this.error === "skippable") {
+      if (this.step > this.lastStep) {
+        return "none"
+      } else if (this.error === "skippable") {
         return "skip"
       } else if (this.error) {
         return "inactive"
-      } else if (this.step > this.lastStep) {
-        return "hide"
-      }
-      else {
+      } else {
         return "next"
       }
     }
