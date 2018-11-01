@@ -91,8 +91,13 @@ export default {
     nextStep: function () {
       if (this.step == this.lastStep) {
         console.log('calling continueorrunsharingask')
-        this.continueOrShowSharingAsk()
         this.submitData()
+          .then(res => {
+            // only move to next page once we have saved user data
+            // - get back userId
+            // - get back networkCode
+            this.continueOrShowSharingAsk()
+          })
       }
       // check if there's an error, if so show it, if not advance and clear the error.
       else if (!this.error || this.error === "skippable") {
@@ -157,18 +162,20 @@ export default {
         networkCode: this.invitationCode.code,
       }
 
-      this.axios.post(
+      return this.axios.post(
         `${process.env.BASE_URL_API}/users/${userId}`,
         postData
       )
         .then(res => {
           console.log("user update SUCCESS")
           console.log(res)
+          return res
         })
         .catch(err => {
           console.log("user update FAILURE")
           console.log(err)
           console.log(Object.entries(err))
+          throw err
         })
 
     }
