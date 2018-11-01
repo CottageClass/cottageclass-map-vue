@@ -90,12 +90,12 @@ export default {
     },
     nextStep: function () {
       if (this.step == this.lastStep) {
-        console.log('calling continueorrunsharingask')
         this.submitData()
           .then(res => {
             // only move to next page once we have saved user data
             // - get back userId
             // - get back networkCode
+            console.log('calling continueorrunsharingask')
             this.continueOrShowSharingAsk()
           })
       }

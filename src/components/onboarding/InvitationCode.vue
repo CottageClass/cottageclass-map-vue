@@ -7,7 +7,17 @@
     </div>
     <div class="onb-invitation-code-container">
       <div class="invite-code-form-block w-form">
-        <form id="email-form" class="invite-code-form"><input type="text" class="invite-code-input w-input" maxlength="36" placeholder="######" id="email" v-model="code"></form>
+        <form id="email-form" class="invite-code-form">
+          <input
+            type="text"
+            class="invite-code-input w-input"
+            maxlength="36"
+            placeholder="######"
+            id="email"
+            :value="code"
+            @input='e => code=e.target.value'
+          >
+        </form>
       </div>
     </div>
     <p class="onb-paragraph-small-50">Don’t have a code? That’s ok, just continue. You'll be able to invite friends, and we'll let you know when we can launch for your network.</p>
@@ -26,7 +36,7 @@ export default {
     return {
       code: "",
       errorMesg: 'We\'re sorry, but this code doesn\'t match our records. Please try again or continue without a code.',
-      validCodes: networkCodes
+      validCodes: networkCodes,
     }
   },
   computed: {
@@ -46,10 +56,22 @@ export default {
       } else {
         return false
       }
-    }
+    },
   },
   watch: {
-    code: function () {
+    /*
+    NB: when used with v-model, watch does not trigger on Android (or any keyboard)
+          until the keyboard is shut or clicked away.
+          This causes a common bug where values are not updated as expected on mobile.
+          Solution is to prefer `:value` plus `@input` to v-model
+          See:
+          - https://stackoverflow.com/questions/49929703/vue-js-watched-input-not-fired-on-every-keypress
+          - https://github.com/vuejs/vue/issues/8231
+          - https://github.com/vuejs/vue/issues/5248
+          - https://stackoverflow.com/questions/50617865/vue-v-model-input-change-mobile-chrome-not-work
+          - 2nd '!' in https://vuejs.org/v2/guide/forms.html#Basic-Usage
+    */
+    code: function (val) {
       this.$emit('input', {
         code: this.codeValidates ? this.code.toLowerCase() : null,
         err: this.err,
