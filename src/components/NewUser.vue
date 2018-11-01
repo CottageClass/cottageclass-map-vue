@@ -186,18 +186,16 @@ export default {
         case 1:
           return this.terms.err
         case 2:
-          return this.name.err
-        case 3:
           return this.location.err
-        case 4:
+        case 3:
           return this.phone.err
-        case 5:
+        case 4:
           return this.children.err
-        case 6:
+        case 5:
           return this.availability.err
-        case 7:
+        case 6:
           return this.activities.err
-        case 8:
+        case 7:
           return this.invitationCode.err
         default:
           return false
