@@ -5,8 +5,13 @@
     </div>
     <div class="onb-location-search-container">
       <div class="w-form">
-        <form id="email-form-2" name="email-form-2" data-name="Email Form 2">
-          <input v-model="number" type="tel" class="location-text-field w-input" maxlength="256" name="name" data-name="Name" placeholder="e.g. 1-212-555-1212" id="name">
+        <form v-on:submit.prevent id="email-form-2" name="email-form-2" data-name="Email Form 2">
+          <input 
+          v-model="number"
+          type="tel" 
+          class="location-text-field w-input" 
+          maxlength="30" 
+          placeholder="e.g. 2125551212">
         </form>
       </div>
     </div>
@@ -40,6 +45,11 @@ export default {
        err: this.error
       })
     }
+  },
+  methods: {
+      pressedEnter: function () {
+        this.$emit('pressedEnter')
+      }
   },
   computed: {
     phone: function () {
