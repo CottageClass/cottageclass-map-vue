@@ -20,7 +20,8 @@ export default {
 	name: 'Splash',
   data () {
     return {
-      networks: networks
+      networks: networks,
+      userNetwork: "demo" //eventually this will be user.network
     }
   },
   created: function () {
@@ -31,7 +32,7 @@ export default {
   },
   computed: {
     network: function () {
-      return this.networks.find(network => network.stub === this.$route.params.networkId)
+      return this.networks.find(network => network.stub === this.userNetwork)
     }
   }
 };

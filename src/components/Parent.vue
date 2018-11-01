@@ -1,14 +1,14 @@
 <template>
  <div class="list-item-3-container">
    <router-link :to="{ name: 'emergencyInfo', params: { id: person.id }}" class="list-item-3-title-bar">
-    <img :src="require(`../assets/${person.pic}`)" class="image">
+    <FacebookAvatar :facebookId="person.facebookId" class="image" />
        <div class="list-item-3-heading">
-         <h5 class="heading">{{ person.name}} {{ person.lastInitial }}. </h5> 
+         <h5 class="heading">{{ person.firstName}} {{ person.lastInitial }}. </h5> 
        </div>
      </router-link>
      <div class="list-item-3-child-list">
        <div class="text-block">
-         <span v-for="(child, index) in person.children">{{ child.name }} 
+         <span v-for="(child, index) in person.children">{{ child.firstName }} 
            <span class="black-50">({{ child.age }})</span><span v-if="(index < person.children.length - 1)">, </span>
        </span></div> 
    </div>
@@ -35,45 +35,61 @@
 </template>
 
 <script>
-import TextMessageLink from './TextMessageLink'
+import TextMessageLink from './TextMessageLink.vue'
+import FacebookAvatar from './FacebookAvatar.vue'
+import * as api from '@/utils/api.js'
+import networks from '@/assets/network-info.json'
+import * as Token from '@/utils/tokens.js'
 
 // import google sheets API service
-import sheetsu from 'sheetsu-node';
+import sheetsu from 'sheetsu-node'
 
 // create a config file to identify which spreadsheet we push to.
 var client = sheetsu({ address: 'https://sheetsu.com/apis/v1.0su/62cd725d6088' })
 
 export default {
         name: 'Parent',
-        props: ['person'],
-        components: { TextMessageLink },
+        props: ['person', 'currentUser', 'network'],
+        components: { TextMessageLink, FacebookAvatar },
         data () {
           return {
             checkState: "unknown" // "unknown", "checking in", "checked in", "checking out", "checked out", "error"
           }
         },
         methods: {
-          check: function (inOrOut) {
-            // ask them their name if we don't know it.
-            this.checkState = 'checking ' + inOrOut
-            if (!this.$cookies.isKey('providerName')) {
-                var name = prompt("What is your full name?")
-                this.$cookies.set('providerName', name)
-            }
-            let providerName = this.$cookies.get('providerName')
-            // ask them how many children if there is more than one. Add validation here. 
-            if (this.person.children.length > 1){
-              var children = prompt("How many children are checking in?")
+          calculateHourlyRate: function (numChildren) {
+            const siblingDiscount = 0.5
+            const price = parseFloat(this.network.price)
+            if (numChildren == 1) {
+              return price
+            } else if (numChildren > 1) {
+              return price + (siblingDiscount * price * (parseInt(numChildren) - 1))
             } else {
-              var children = 1
+              return ""
+            }
+          },
+          check: function (inOrOut) {
+            let numChildren = 1
+            this.checkState = 'checking ' + inOrOut
+            if (inOrOut == 'in') {
+              if (this.person.children.length > 1) {
+                numChildren = parseInt(prompt("How many children are checking in?", this.person.children.length))
+              }
             }
             client.create({
-              "parentId": this.person.id, 
-              "parentName": this.person.name + ' ' + this.person.lastInitial,
-              "providerName": providerName,
-              "howManyChildren": children,
-              "checked": inOrOut,
-              "time": Date(),
+              "Parent ID": this.person.id, 
+              "Parent Name": this.person.firstName + ' ' + this.person.lastInitial,
+              "Provider ID": this.currentUser.id,
+              "Provider Name": this.currentUser.firstName + ' ' + this.currentUser.lastInitial,
+              "# Children": numChildren,
+              "Checked": inOrOut,
+              "Time": Date(),
+              "Provider Phone #": this.currentUser.phone,
+              "Network": this.network.name,
+              "Network rate": this.network.price,
+              "Total hourly rate": this.calculateHourlyRate(numChildren),
+              "Percentage": this.network.percentage,
+              "Network Code": this.network.stub
             }, "events").then((data) => {
               console.log(data)
               this.checkState = 'checked ' + inOrOut

@@ -40,9 +40,3 @@ export default {
 };
 </script>
 
-<style scoped>
-.onb-content-container {
-  height: unset;
-}
-</style>
-

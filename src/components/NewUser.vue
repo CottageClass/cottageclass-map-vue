@@ -1,18 +1,22 @@
 <template>
   <span>
-    <Login v-if="step === 0" v-on:next="nextStep" />
+    <Login class="onb-body"
+    v-if="step === 0" 
+    v-on:userNotYetOnboarded="nextStep" 
+    v-on:userAlreadyOnboarded="$router.push({name: 'MainView'})" />
     <div class="onb-body" v-if="step != 0">
       <Nav :button="nextButtonState" @next="nextStep" @prev="prevStep" />
-      <div v-if="showError && error" class="onb-error-container">
+      <div v-if="showError && error && error!='skippable'" class="onb-error-container">
         <div class="onb-error-text">{{ error }}</div>
       </div>
-      <Terms v-if="step === 1" v-model="terms" /> 
+      <Terms v-if="step === 1" v-model="terms" />
       <Location v-if="step === 2" v-model="location"/>
       <Phone v-if="step === 3" v-model="phone" />
       <Children v-if="step === 4" v-model="children" />
       <Availability v-if="step === 5" v-model="availability" />
       <Activities v-if="step === 6" v-model="activities" />
-      <Invite v-if="step === 7" />
+      <InvitationCode v-if="step === 7" v-model="invitationCode" />
+      <Invite v-if="step === 8" />
     </div>
   </span>
 </template>
@@ -21,21 +25,20 @@
 import Login from '@/components/onboarding/Login.vue'
 import Nav from '@/components/onboarding/Nav.vue'
 import Terms from '@/components/onboarding/Terms.vue'
-import Name from '@/components/onboarding/Name.vue'
 import Location from '@/components/onboarding/Location.vue'
 import Phone from '@/components/onboarding/Phone.vue'
 import Children from '@/components/onboarding/Children.vue'
 import Availability from '@/components/onboarding/Availability.vue'
 import Activities from '@/components/onboarding/Activities.vue'
 import Invite from '@/components/onboarding/Invite.vue'
-
-// import google sheets API service and give it a spreadsheet to push to 
-import sheetsu from 'sheetsu-node';
-var client = sheetsu({ address: 'https://sheetsu.com/apis/v1.0su/e383acab3f80' })
+import InvitationCode from '@/components/onboarding/InvitationCode.vue'
+import * as Token from '@/utils/tokens.js'
 
 export default {
-  components: { Login, Nav, Terms, Name, Location, Phone, Children, Availability, Activities, Invite },
-    data () {
+  components: {
+    Login, Nav, Terms, Location, Phone, Children, Availability, Activities, Invite, InvitationCode
+  },
+  data () {
     return {
       step: 0,
       lastStep: 7,
@@ -46,7 +49,7 @@ export default {
       location: {},
       phone: {},
       children: {
-        list: [{name: null, birthday: null}],
+        list: [{firstName: null, birthday: null}],
         err: "skippable"
       },
       availability: {
@@ -66,14 +69,35 @@ export default {
         bookClub: false,
         err: "skippable"
       },
+      invitationCode: {
+        codeEntered: null,
+        err: "skippable",
+        isValid: false
+      }
     }
   },
   name: 'NewUser',
   methods: {
+    continueOrShowSharingAsk: function () {
+      if (this.invitationCode.isValid) {
+        // send user into app (ultimately this logic should change so that the homepage checks to see if the user has been fully onboarded, correct?)
+        console.log(this.invitationCode.isValid)
+        this.$router.push({ name: 'MainView' })
+      } else {
+        // show sharing ask
+        this.step = 8
+      }
+    },
     nextStep: function () {
-      if (this.step === this.lastStep) {
-        // this.submitData()
-        this.$router.push({ path: this.afterLastStep })
+      if (this.step == this.lastStep) {
+        this.submitData()
+          .then(res => {
+            // only move to next page once we have saved user data
+            // - get back userId
+            // - get back networkCode
+            console.log('calling continueorrunsharingask')
+            this.continueOrShowSharingAsk()
+          })
       }
       // check if there's an error, if so show it, if not advance and clear the error.
       else if (!this.error || this.error === "skippable") {
@@ -89,42 +113,94 @@ export default {
       this.step = this.step - 1
     },
     submitData: function () {
-      client.create({
-        "agreedToTerms": this.terms.agreed,
-        "firstName": this.name.first,
-        "lastName": this.name.last,
-        "lastInitial": this.name.last[0],
-        "address": this.location.fullAddress,
-        "lat": this.location.lat,
-        "lng": this.location.lng,
-        "phone": this.phone.number,
-        "children": this.children.list,
-        "availability": this.availability,
-        "activities": this.activities,
-      }).then((data) => {
-        console.log(data)
-      }, (err) => {
-        console.log(err)
-        });
+      let userId = Token.currentUserId(this.$auth)
+      let address = this.location.fullAddress
+      let {
+        street_number,
+        route,
+        locality,
+        administrative_area_level_1,
+        country,
+        postal_code,
+      } = address
+
+      let phoneAreaCode = this.phone.number.match(/(\(\d+\))/)[0].replace(/[^\d]/g,'')
+      let phoneNumber = this.phone.number.match(/\d{3}-\d{4}/)[0].replace(/[^\d]/g,'')
+
+      // set child attributes, plus the parentId
+      let childrenAttributes = this.children.list.map(childAttrs => (
+        {
+          ...childAttrs,
+          parentId: userId,
+        }
+      ))
+
+      let activities = Object.keys(this.activities)
+        .filter(k => this.activities[k])
+        // convert activites to snake_case
+        .map(activity => activity.replace( /([A-Z])/g, "_$1" ).toLowerCase())
+
+      let postData = {
+        agreeTos: this.terms.agreed,
+        streetNumber: street_number,
+        route: route,
+        locality: locality,
+        // snake_case key name is ugly but necessary for backend to recognize attr with trailing 1
+        admin_area_level_1: administrative_area_level_1,
+        country: country,
+        postalCode: postal_code,
+        latitude: this.location.lat,
+        longitude: this.location.lng,
+        phoneAreaCode: phoneAreaCode,
+        phoneNumber: phoneNumber,
+        activities: activities,
+        availableMornings: this.availability.mornings,
+        availableAfternoons: this.availability.afternoons,
+        availableEvenings: this.availability.evenings,
+        availableWeekends: this.availability.weekends,
+        childrenAttributes: childrenAttributes,
+        networkCode: this.invitationCode.code,
+      }
+
+      return this.axios.post(
+        `${process.env.BASE_URL_API}/users/${userId}`,
+        postData
+      )
+        .then(res => {
+          console.log("user update SUCCESS")
+          console.log(res)
+          return res
+        })
+        .catch(err => {
+          console.log("user update FAILURE")
+          console.log(err)
+          console.log(Object.entries(err))
+          throw err
+        })
+
     }
   },
   computed: {
     error: function () {
       switch (this.step) {
-        case 1: 
-        return this.terms.err
+        case 1:
+          return this.terms.err
         case 2:
-        return this.location.err
-        case 3: 
-        return this.phone.err
+          return this.name.err
+        case 3:
+          return this.location.err
         case 4:
-        return this.children.err
+          return this.phone.err
         case 5:
-        return this.availability.err
+          return this.children.err
         case 6:
-        return this.activities.err
-        default: 
-        return false
+          return this.availability.err
+        case 7:
+          return this.activities.err
+        case 8:
+          return this.invitationCode.err
+        default:
+          return false
       }
     },
     nextButtonState: function () {
@@ -132,7 +208,10 @@ export default {
         return "skip"
       } else if (this.error) {
         return "inactive"
-      } else {
+      } else if (this.step > this.lastStep) {
+        return "hide"
+      }
+      else {
         return "next"
       }
     }
@@ -141,11 +220,11 @@ export default {
 
 </script>
 
-<!-- this is a giant jumble of all app styles. Would be great to separate it out --> 
+<!-- this is a giant jumble of all app styles. Would be great to separate it out -->
 
 <style>
 
-/* child birthdate selector */
+  /* child birthdate selector */
 ::-webkit-datetime-edit-text { color: rgba(0, 0, 0, .3); padding: 0 0.3em; }
 ::-webkit-datetime-edit-month-field { color: rgba(0, 0, 0, .3); text-transform: uppercase; }
 ::-webkit-datetime-edit-day-field { color: rgba(0, 0, 0, .3); text-transform: uppercase;}
@@ -156,8 +235,8 @@ export default {
 /* background color state on checkbox list items */
 
 .active-checkbox {
-   background-color: #fff !important;
- }
+  background-color: #fff !important;
+}
 
 .onb-content-container {
   margin: 0 auto;
@@ -166,11 +245,11 @@ export default {
 }
 
 textarea, input[type="text"] {
--webkit-appearance: none;
+  -webkit-appearance: none;
 }
 
 html {
-    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
 }
 
 .scrolling-wrapper {
@@ -178,8 +257,8 @@ html {
 }
 
 .card {
-    flex: 0 0 auto;
- }
+  flex: 0 0 auto;
+}
 
 .scrolling-wrapper {
   -webkit-overflow-scrolling: touch;
@@ -794,6 +873,24 @@ a {
   text-align: left;
 }
 
+.tags-container {
+  display: block;
+  -webkit-box-align: start;
+  -webkit-align-items: flex-start;
+  -ms-flex-align: start;
+  align-items: flex-start;
+}
+
+.tag {
+  display: inline-block;
+  margin-right: 4px;
+  margin-bottom: 4px;
+  padding: 4px 6px;
+  clear: none;
+  border-radius: 2px;
+  background-color: rgba(0, 0, 0, .1);
+}
+
 .small-text-upper-black-40 {
   margin-top: 1px;
   color: rgba(0, 0, 0, .4);
@@ -828,30 +925,6 @@ a {
 .image-time {
   margin-top: 2px;
   margin-right: 6px;
-}
-
-.tag-group-container {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  margin-top: 6px;
-  margin-bottom: 8px;
-  -webkit-box-align: start;
-  -webkit-align-items: flex-start;
-  -ms-flex-align: start;
-  align-items: flex-start;
-}
-
-.time-group-container {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-align: start;
-  -webkit-align-items: flex-start;
-  -ms-flex-align: start;
-  align-items: flex-start;
 }
 
 .name-and-caption {
@@ -2511,7 +2584,7 @@ a {
   padding-left: 35px;
   border-radius: 4px;
   background-color: hsla(0, 0%, 100%, .7);
- }
+}
 
 .checkbox-field-extra-space:active {
   background-color: #fff;

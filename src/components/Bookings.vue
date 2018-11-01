@@ -7,7 +7,7 @@
     <router-link :to="{ name: 'HowItWorks' }" class="button-small-outline w-button">How it works</router-link>
   </div>
   <div class="list-container" v-for="person in parents">
-     <Parent :person="person" :key="person.key"/>
+     <Parent :person="person" :currentUser="currentUser" :network="network" :key="person.id"/>
     </div>
   </div>
 </div>	
@@ -15,23 +15,34 @@
 
 <script>
 
-import people from '../assets/people.json'
 import Parent from './Parent.vue'
+import * as api from '@/utils/api.js'
+import networks from '@/assets/network-info.json'
+import * as Token from '@/utils/tokens.js'
 
 export default {
 	name: 'Bookings',
 	components: { Parent },
 	data () {
 		return {
-			people: people
+			people: [],
+      networks: networks,
+      currentUserId: Token.currentUserId(this.$auth),
+      currentUser: {}
 		}
 	},
+  mounted: function () {
+    api.fetchUsersInNetwork(this.network.stub).then(res => {
+    this.people = res.filter(person => person.id != this.currentUserId)
+    this.currentUser = res.find(person => person.id == this.currentUserId)    })
+  },
 	computed: {
-    peopleInNetwork: function () {
-        return this.people.filter(person => (person.networks && person.networks.includes(this.$route.params.networkId)))
-          },
+    network: function () {
+      let networkId = Token.currentUserNetworkCode(this.$auth)
+      return this.networks.find(network => network.stub == networkId)
+    },
 		parents: function () {
-			return this.peopleInNetwork.filter(person => person.children.length) // only return people in network who have kids.
+			return this.people.filter(person => person.children.length) // only return people in network who have kids.
 		}
 	}
 };

@@ -15,9 +15,8 @@
 </template>
 
 <script>
-
 export default {
-	name: 'DesktopWarningSplash',
+  name: 'DesktopWarningSplash',
 };
 </script>
 

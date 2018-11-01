@@ -2,7 +2,7 @@
 <span>
 <div class="providerp-user-comments-item"> 
     <div class="providerp-avatar-name-group"><img :src="require(`../assets/${person.pic}`)" class="providerp-user-comment-avatar">
-      <div class="providerp-user-comment-username">{{ person.name }} {{person.lastInitial}}.</div>
+      <div class="providerp-user-comment-username">{{ person.firstName }} {{person.lastInitial}}.</div>
     </div>
     <div class="providerp-user-comment-text">{{ review.text }}</div>
   </div>
@@ -23,11 +23,11 @@ export default {
     	person: function () {
         if (this.review.userId) { 
         return this.people.find(person => person.id === this.review.userId)
-    	} else if (this.review.pic) {
+    	} else {
         return {
           'name': this.review.name,
           'lastInitial': this.review.lastInitial,
-          'pic': this.review.pic ? this.review.pic : 'avatar-placeholder.png'
+          'pic': 'avatar-placeholder.png'
         }
       }
     }
