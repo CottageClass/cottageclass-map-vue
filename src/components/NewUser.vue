@@ -128,12 +128,16 @@ export default {
       let phoneNumber = this.phone.number.match(/\d{3}-\d{4}/)[0].replace(/[^\d]/g,'')
 
       // set child attributes, plus the parentId
-      let childrenAttributes = this.children.list.map(childAttrs => (
-        {
-          ...childAttrs,
-          parentId: userId,
-        }
-      ))
+      let birthday = new Date().to_string
+      let childrenAttributes = []
+      if (this.children.list !== null) {
+        let childrenAttributes = this.children.list.map(childAttrs => (
+          {
+            ...childAttrs,
+            parentId: userId,
+          }
+        ))
+      }
 
       let activities = Object.keys(this.activities)
         .filter(k => this.activities[k])
@@ -158,8 +162,11 @@ export default {
         availableAfternoons: this.availability.afternoons,
         availableEvenings: this.availability.evenings,
         availableWeekends: this.availability.weekends,
-        childrenAttributes: childrenAttributes,
         networkCode: this.invitationCode.code,
+      }
+
+      if (this.children.list !== null) {
+        postData["childrenAttributes"] = childrenAttributes
       }
 
       return this.axios.post(
