@@ -128,9 +128,9 @@ export default {
       let phoneNumber = this.phone.number.match(/\d{3}-\d{4}/)[0].replace(/[^\d]/g,'')
 
       // set child attributes, plus the parentId
-      let birthday = new Date().to_string
+      let birthday = new Date().toString()
       let childrenAttributes = []
-      if (this.children.list !== null) {
+      if (this.children.list.length > 0) {
         let childrenAttributes = this.children.list.map(childAttrs => (
           {
             ...childAttrs,
@@ -165,7 +165,7 @@ export default {
         networkCode: this.invitationCode.code,
       }
 
-      if (this.children.list !== null) {
+      if (this.children.list.length > 0) {
         postData["childrenAttributes"] = childrenAttributes
       }
 
