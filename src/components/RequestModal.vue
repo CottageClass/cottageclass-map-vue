@@ -33,12 +33,16 @@
     <option value="4">4 children</option>
    </select>
           <div class="avatar-and-cta-container">
-            <FacebookAvatar :facebookId="person.facebookId" class="image" />
-            <div class="text-block-4">Send a text message to<br><span class="text-span">{{ person.firstName}} {{ person.lastInitial }}.</span><span class="black-50"></span></div>
+            <FacebookAvatar :facebookId="provider.facebookId" class="image" /> 
+            <div class="text-block-4">Send a text message to<br><span class="text-span">{{ provider.firstName}} {{ provider.lastInitial }}.</span><span class="black-50"></span></div>
           </div>
-          <TextMessageLink :number="person.phone" :message="'Hi ' + person.firstName + '!! I\'m a parent from ' + network.name + ', I\'m looking for care for ' + numberOfChildren + ' ' + ((numberOfChildren > 1) ? 'children' : 'child') + ' ' + day + ' from ' + formatTime(startTime) + ' to ' + formatTime(endTime) + ', and I saw you were often available at these times. Would this work? Thanks! \ud83c\udf08\u26a1\ud83e\udd84'">
+          <TextMessageLink :number="provider.phone" :message="'Hi ' + provider.firstName + '!! I\'m a parent from ' + network.name + ', I\'m looking for care for ' + numberOfChildren + ' ' + ((numberOfChildren > 1) ? 'children' : 'child') + ' ' + day + ' from ' + formatTime(startTime) + ' to ' + formatTime(endTime) + ', and I saw you were often available at these times. Would this work? Thanks! \ud83c\udf08\u26a1\ud83e\udd84'">
         <!-- ^^ Those crazy unicode characters are emojis :) -->
-          	<button value="Send Text" class="button-small-3 w-button">Send Text</button>
+          	<button 
+            value="Send Text" 
+            class="button-small-3 w-button"
+            @click="submitRequest"
+            >Send Text</button>
           </TextMessageLink>
           <div class="small-text-black-40">You can edit it on the next screen.<br>Each booking costs ${{ network.price }}/hour<br> &amp; you only pay for what you use.</div>
         </div>
@@ -64,28 +68,56 @@ import * as api from '@/utils/api.js'
 import * as Token from '@/utils/tokens.js'
 import FacebookAvatar from './FacebookAvatar.vue'
 
+// import google sheets API service
+import sheetsu from 'sheetsu-node'
+
+// create a config file to identify which spreadsheet we push to.
+var client = sheetsu({ address: 'https://sheetsu.com/apis/v1.0su/62cd725d6088' })
+
 
 export default {
     name: 'RequestModal',
-    components: { TextMessageLink },
+    components: { TextMessageLink, FacebookAvatar },
     data () {
     	return {
           numberOfChildren: 1,
           day: "today",
           startTime: "19:00",
           endTime: "22:00",
-          /* to be able to use "people" that I'm importing */
           people: [],
           networks: networks,
-          userNetwork: "demo" // replace with user's own network
+          currentUserId: Token.currentUserId(this.$auth),
+          currentUser: {}
       }
   }, 
    mounted: function () {
     api.fetchUsersInNetwork(this.network.stub).then(res => {
       this.people = res
+      this.currentUser = res.find(person => person.id == this.currentUserId) 
     })
   },
   methods: {
+    submitRequest: function () {
+      client.create({
+        "Requester ID": this.currentUser.id, 
+        "Requester Name": this.currentUser.firstName + ' ' + this.currentUser.lastInitial,
+        "Requester Phone": this.currentUser.phone,
+        "Provider ID": this.provider.id,
+        "Provider Name": this.provider.firstName + ' ' + this.provider.lastInitial,
+        "Provider Phone #": this.provider.phone,
+        "Request Made": Date(),
+        "Request Day": this.day,
+        "Start Time": this.startTime,
+        "End Time": this.endTime,
+        "# Children": this.numberOfChildren,
+        "Network": this.network.name,
+        "Network Code": this.network.stub
+      }, "requests").then((data) => {
+        console.log(data)
+      }, (err) => {
+        console.log(err)
+      });
+    },
   	formatTime: function (time) {
   		var minutes = time.slice(-2);
   		var hours24 = time.substr(0, time.indexOf(':'));
@@ -102,7 +134,7 @@ export default {
       let networkId = Token.currentUserNetworkCode(this.$auth)
       return this.networks.find(network => network.stub == networkId)
     },
-    person: function () {
+    provider: function () {
       return this.people.find(person => person.id == this.$route.params.id)
     }
   }
