@@ -1,7 +1,5 @@
 <template>
 <div class="body">
-  <div class="title-bar-container"><router-link :to="{ name: 'MainView' }" class="title-bar-action-l w-inline-block"><img src="../assets/Close-X.svg"></router-link>
-    <h5 class="heading-3">Check-in children</h5><a href="#" class="title-bar-action-2 w-inline-block"></a></div>
   <div class="top-content-container">
     <div class="page-lead-text">Are you providing care? Simply check children in at drop-off, and check them out at pick-up. Click on the parent name for emergency information.</div>
     <router-link :to="{ name: 'HowItWorks' }" class="button-small-outline w-button">How it works</router-link>
@@ -54,6 +52,10 @@ export default {
   color: #333;
   font-size: 14px;
   line-height: 20px;
+}
+
+h5 {
+  text-align: center;
 }
 
 a {
@@ -400,19 +402,9 @@ a {
 }
 
 .title-bar-container {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
+  text-align: center;
   width: 100%;
   padding: 16px;
-  -webkit-box-pack: justify;
-  -webkit-justify-content: space-between;
-  -ms-flex-pack: justify;
-  justify-content: space-between;
-  -webkit-box-align: center;
-  -webkit-align-items: center;
-  -ms-flex-align: center;
   align-items: center;
   border-style: none none solid;
   border-width: 1px;
@@ -428,10 +420,6 @@ a {
   font-weight: 700;
   letter-spacing: 1.2px;
   text-transform: uppercase;
-}
-
-.heading-3 {
-  text-align: left;
 }
 
 .title-bar-action-2 {
@@ -502,7 +490,7 @@ a {
 }
 
 .page-lead-text {
-  margin-top: 0px;
+  margin-top: 8px;
   margin-bottom: 8px;
   text-align: center;
 }

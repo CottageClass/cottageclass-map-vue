@@ -12,6 +12,7 @@ import network from '../assets/network-info.json'
 import HowItWorks from '@/components/HowItWorks.vue'
 import DesktopWarningSplash from '@/components/DesktopWarningSplash.vue'
 import NewUser from '@/components/NewUser.vue'
+import TabNav from '@/components/TabNav.vue'
 
 Vue.use(Router)
 
@@ -37,7 +38,7 @@ export default new Router({
     {
       path: '/home',
       name: 'MainView',
-      component: MainView
+      component: TabNav
     },
     {
       path: '/enter-code',

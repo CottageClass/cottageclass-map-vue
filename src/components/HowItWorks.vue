@@ -1,8 +1,13 @@
 <template>
 <div class="body">
   <div class="title-bar-container">
-    <a href="javascript:history.go(-1)" class="title-bar-action-l w-inline-block"><img src="../assets/Close-X.svg"></a>
-    <h5 class="heading-3">How it works</h5><a href="#" class="title-bar-action-2 w-inline-block"></a></div>
+    <a title-bar-action-l w-inline-block>
+    <router-link 
+    :to="{ name: 'MainView', params: { tab: 'provide' }}">
+      <img src="../assets/Close-X.svg">
+    </router-link></a>
+    <h5 class="heading-3">How it works</h5>
+  </div>
   <div class="top-content-container">
     <div class="page-lead-text">
 
