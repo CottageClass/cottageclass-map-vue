@@ -64,9 +64,13 @@ import networks from '../assets/network-info.json'
 import * as Token from '@/utils/tokens.js'
 import * as api from '@/utils/api.js'
 
-var moment = require('moment');
+// import google sheets API service
+import sheetsu from 'sheetsu-node'
 
-// todo: use the token so that people get redirected to login screen if not logged in. either here or in vue router.
+// create a config file to identify which spreadsheet we push to.
+var client = sheetsu({ address: 'https://sheetsu.com/apis/v1.0su/62cd725d6088' })
+
+var moment = require('moment');
 
 export default {
   name: 'MainView',
@@ -82,6 +86,7 @@ export default {
       },
       currentUserId: Token.currentUserId(this.$auth),
       hideDateTimeInputOnMobile: true,
+      currentUser: {}
     }
   },
   watch: {
@@ -90,9 +95,24 @@ export default {
         top: 367,
         behavior: "smooth"
       });
+      this.submitTimeChosen()
     }
   },
   methods: {
+    submitTimeChosen: function () {
+      client.create({
+        "Requester ID": this.currentUser.id, 
+        "Requester Name": this.currentUser.firstName + ' ' + this.currentUser.lastInitial,
+        "Requester Phone": this.currentUser.phone,
+        "Time Chosen": this.dateTimeSelected,
+        "Network": this.network.name,
+        "Network Code": this.network.stub
+      }, "preRequests").then((data) => {
+        console.log(data)
+      }, (err) => {
+        console.log(err)
+      });
+    },
     toggleShowDatetimeInputOnDesktop: function () {
       if (!navigator.userAgent.match(/(iPad)|(iPhone)|(iPod)|(android)|(webOS)/i)) {
         this.hideDateTimeInputOnMobile = false
@@ -105,6 +125,7 @@ export default {
   mounted: function () {
     api.fetchUsersInNetwork(this.network.stub).then(res => {
       this.people = res.filter(person => person.id != this.currentUserId)
+      this.currentUser = res.find(person => person.id == this.currentUserId) 
     })
   },
   computed: {
