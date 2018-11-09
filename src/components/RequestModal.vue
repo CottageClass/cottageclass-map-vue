@@ -36,14 +36,17 @@
             <FacebookAvatar :facebookId="provider.facebookId" class="image" /> 
             <div class="text-block-4">Send a text message to<br><span class="text-span">{{ provider.firstName}} {{ provider.lastInitial }}.</span><span class="black-50"></span></div>
           </div>
-          <TextMessageLink :number="provider.phone" :message="'Hi ' + provider.firstName + '!! I\'m a parent from ' + network.name + ', I\'m looking for care for ' + numberOfChildren + ' ' + ((numberOfChildren > 1) ? 'children' : 'child') + ' ' + day + ' from ' + formatTime(startTime) + ' to ' + formatTime(endTime) + ', and I saw you were often available at these times. Would this work? Thanks! \ud83c\udf08\u26a1\ud83e\udd84'">
+          <TwilioProxyMessageLink
+          :currentUserId="currentUserId" 
+          :receivingUserId="provider.id" 
+          :message="'Hi ' + provider.firstName + '!! I\'m a parent from ' + network.name + ', I\'m looking for care for ' + numberOfChildren + ' ' + ((numberOfChildren > 1) ? 'children' : 'child') + ' ' + day + ' from ' + formatTime(startTime) + ' to ' + formatTime(endTime) + ', and I saw you were often available at these times. Would this work? Thanks! \ud83c\udf08\u26a1\ud83e\udd84'">
         <!-- ^^ Those crazy unicode characters are emojis :) -->
           	<button 
             value="Send Text" 
             class="button-small-3 w-button"
             @click="submitRequest"
             >Send Text</button>
-          </TextMessageLink>
+          </TwilioProxyMessageLink>
           <div class="small-text-black-40">You can edit it on the next screen.<br>Each booking costs ${{ network.price }}/hour<br> &amp; you only pay for what you use.</div>
         </div>
       </div>
@@ -62,7 +65,7 @@
 // consider putting avatar at the top.
 // try adding an animation so it fades in
 
-import TextMessageLink from './TextMessageLink.vue'
+import TwilioProxyMessageLink from './TwilioProxyMessageLink.vue'
 import networks from '../assets/network-info.json'
 import * as api from '@/utils/api.js'
 import * as Token from '@/utils/tokens.js'
@@ -77,7 +80,7 @@ var client = sheetsu({ address: 'https://sheetsu.com/apis/v1.0su/62cd725d6088' }
 
 export default {
     name: 'RequestModal',
-    components: { TextMessageLink, FacebookAvatar },
+    components: { TwilioProxyMessageLink, FacebookAvatar },
     data () {
     	return {
           numberOfChildren: 1,
