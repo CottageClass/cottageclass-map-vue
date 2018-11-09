@@ -1,8 +1,8 @@
 <template>
 <div class="onb-body-splash">
-  <div class="logo"><img src="@/assets/cc-logo-horiz-blue.svg" width="170" height="28" alt="" class="blockquote-container"></div>
+  <div class="logo"><a href="#about"><img src="@/assets/cc-logo-horiz-blue.svg" width="170" height="28" alt="" class="blockquote-container"></a></div>
   <div class="hero-container"><img src="@/assets/login-photo-2.jpg" width="640" alt="" class="hero-image"></div>
-  <div class="section">
+  <div class="section" id="about">
     <h1 class="heading">Book childcare with trusted parents near you</h1>
     <ul class="unordered-list w-list-unstyled">
       <li class="list-item"><img src="@/assets/save-money2-32.svg" alt="" class="bullet-image">
