@@ -16,12 +16,14 @@ export default {
       }      
       return this.axios.post(`${process.env.BASE_URL_API}/users/${userId}/messages`, postData).then(res => {
         console.log("submit Twilio message SUCCESS")
+        alert("Request sent. You'll get a reply in just a few minutes.")
         console.log(res)
         return res
     }).catch(err => {
     console.log("submit Twilio message FAILURE")
     console.log(err)
     console.log(Object.entries(err))
+    alert("Oops! There was a problem sending your request. Try again?")
     throw err
     })}
 }
