@@ -4,7 +4,8 @@
     <div class="page-lead-text">Are you providing care? Simply check children in at drop-off, and check them out at pick-up. Click on the parent name for emergency information.</div>
     <router-link :to="{ name: 'HowItWorks' }" class="button-small-outline w-button">How it works</router-link>
   </div>
-  <div class="list-container" v-for="person in parents">
+  <div class="list-container"
+  v-for="person in peopleWhoHaveMadeInquiriesToCurrentUser">
      <Parent :person="person" :currentUser="currentUser" :network="network" :key="person.id"/>
     </div>
   </div>
@@ -23,7 +24,7 @@ export default {
 	components: { Parent },
 	data () {
 		return {
-			people: [],
+      peopleWhoHaveMadeInquiriesToCurrentUser: [],
       networks: networks,
       currentUserId: Token.currentUserId(this.$auth),
       currentUser: {}
@@ -31,17 +32,16 @@ export default {
 	},
   mounted: function () {
     api.fetchUsersInNetwork(this.network.stub).then(res => {
-    this.people = res.filter(person => person.id != this.currentUserId)
-    this.currentUser = res.find(person => person.id == this.currentUserId)    })
+    this.currentUser = res.find(person => person.id == this.currentUserId)})
+    api.fetchUsersWhoHaveMadeInquiries(this.currentUserId).then(res => {
+      this.peopleWhoHaveMadeInquiriesToCurrentUser = res
+    })
   },
 	computed: {
     network: function () {
       let networkId = Token.currentUserNetworkCode(this.$auth)
       return this.networks.find(network => network.stub == networkId)
-    },
-		parents: function () {
-			return this.people.filter(person => person.children.length) // only return people in network who have kids.
-		}
+    }
 	}
 };
 </script>
