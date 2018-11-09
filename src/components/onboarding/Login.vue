@@ -70,7 +70,7 @@
         </div>
       </li>
       <li class="list-item-divider"></li>
-      <li class="testimonial-list-item"><img src="@/assets/photo-62x.png" srcset="images/photo-62x-p-500.png 500w, images/photo-62x-p-800.png 800w, images/photo-62x.png 908w" sizes="(max-width: 767px) 100vw, 250px" alt="" class="testimonial-desktop-image w-hidden-small w-hidden-tiny">
+      <li class="testimonial-list-item"><img src="@/assets/photo-62x.png" alt="" class="testimonial-desktop-image w-hidden-small w-hidden-tiny">
         <div class="blockquote-container w-clearfix"><img src="https://uploads-ssl.webflow.com/5ba3c28cff7d47030870c8e2/5ba561a9c21f1a20554cc9be_quotation-4.svg" alt="" class="quotation-mark-icon">
           <blockquote class="parents-love-us-blockquote">EMMETT LOVES LOVES LOVES this program. He is beaming when he walks out...thank you so much. Please let me know if there is anything I can do.&quot;</blockquote>
           <div class="testimonial-image-name-group"><img src="@/assets/eva-vandock-pinkley.jpg" alt="" class="testimonial-mobile-image w-hidden-main w-hidden-medium">
