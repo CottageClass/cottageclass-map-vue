@@ -3,7 +3,7 @@
   <div class="logo"><img src="@/assets/cc-logo-horiz-blue.svg" width="170" height="28" alt="" class="blockquote-container"></div>
   <div class="hero-container"><img src="@/assets/login-photo-2.jpg" width="640" alt="" class="hero-image"></div>
   <div class="section">
-    <h1 class="heading">Book childcare with trusted families near you</h1>
+    <h1 class="heading">Book childcare with trusted parents near you</h1>
     <ul class="unordered-list w-list-unstyled">
       <li class="list-item"><img src="@/assets/save-money2-32.svg" alt="" class="bullet-image">
         <div class="list-item-text">Save money on childcare.</div>
@@ -38,7 +38,7 @@
   </div>
   <div class="section">
     <h1 class="heading">As covered in</h1>
-    <div class="press-container"><a href="http://cottageclass.com" target="_blank" class="press-card w-inline-block"><img src="@/assets/bloomberg.png" alt="" class="press-logo"></a><a href="http://cottageclass.com" target="_blank" class="press-card w-inline-block"><img src="@/assets/thewallstreetjournal.png" alt="" class="press-logo"></a><a href="http://cottageclass.com" target="_blank" class="press-card w-inline-block"><img src="@/assets/thenewyorktimes.png" alt="" class="press-logo"></a><a href="http://cottageclass.com" target="_blank" class="press-card w-inline-block"><img src="@/assets/mommypoppins.png" alt="" class="press-logo"></a><a href="http://cottageclass.com" target="_blank" class="press-card w-inline-block"><img src="@/assets/gettingsmart.png" alt="" class="press-logo"></a><a href="http://cottageclass.com" target="_blank" class="press-card w-inline-block"><img src="@/assets/tinkeringschool.png" alt="" class="press-logo"></a></div>
+    <div class="press-container"><a href="https://www.bloomberg.com/company/announcements/bloomberg-and-ny-tech-meetup-spotlight-female-led-startups-at-winter-2016-womens-demo-night/" target="_blank" class="press-card w-inline-block"><img src="@/assets/bloomberg.png" alt="" class="press-logo"></a><a href="https://www.wsj.com/articles/haute-home-schools-designed-to-give-kids-a-bespoke-education-1455807796" target="_blank" class="press-card w-inline-block"><img src="@/assets/thewallstreetjournal.png" alt="" class="press-logo"></a><a href="https://www.nytimes.com/slideshow/2016/06/26/nyregion/not-just-the-teachers-pets/s/26PETCITY-slide-IKW9.html" target="_blank" class="press-card w-inline-block"><img src="@/assets/thenewyorktimes.png" alt="" class="press-logo"></a><a href="https://mommypoppins.com/new-york-city-kids/camps/8-new-summer-camps-for-nyc-kids-in-2017" target="_blank" class="press-card w-inline-block"><img src="@/assets/mommypoppins.png" alt="" class="press-logo"></a><a href="http://www.gettingsmart.com/2017/01/cottageclass-expanding-access-to-microschools-and-learning-experiences/" target="_blank" class="press-card w-inline-block"><img src="@/assets/gettingsmart.png" alt="" class="press-logo"></a></div>
   </div>
   <div class="section">
     <div class="parents-heart-us-title">
@@ -53,20 +53,18 @@
             <div class="testimonial-mobile-text-content">
               <div class="testimonial-list-item-name"><strong class="parent-name">Mary Summers</strong></div>
               <div class="parent-location p-small-black-50">Brooklyn</div>
-              <div class="parent-role p-small-black-50">Parent and Fitness Instructor</div>
             </div>
           </div>
         </div>
       </li>
       <li class="list-item-divider"></li>
-      <li class="testimonial-list-item"><img src="@/assets/photo-9.png" alt="" class="testimonial-desktop-image w-hidden-small w-hidden-tiny">
+      <li class="testimonial-list-item"><img src="@/assets/photo-62x.png" alt="" class="testimonial-desktop-image w-hidden-small w-hidden-tiny">
         <div class="blockquote-container w-clearfix"><img src="https://uploads-ssl.webflow.com/5ba3c28cff7d47030870c8e2/5ba561a9c21f1a20554cc9be_quotation-4.svg" alt="" class="quotation-mark-icon">
-          <blockquote class="parents-love-us-blockquote">I have loved the Waldorf model and Lava&#x27;s experience with you and your group in particular. I think the philosophy has been really good for her and so glad to have done it. She also speaks very highly of you and even though she cries at drop off, I know she has a good time because of how energized she is when I pick her up. Thank you for everything so far &quot;</blockquote>
-          <div class="testimonial-image-name-group"><img src="@/assets/photo-9.png" alt="" class="testimonial-mobile-image w-hidden-main w-hidden-medium">
+          <blockquote class="parents-love-us-blockquote">CottageClass has transformed our son's learning and life! We can now customize his education to his learning style. He has found teachers that embrace him as a student and a human being. He feels valued and is thriving. Middle school has been an awakening and not a chore. Thank you!</blockquote>
+          <div class="testimonial-image-name-group"><img src="@/assets/photo-62x.png" alt="" class="testimonial-mobile-image w-hidden-main w-hidden-medium">
             <div class="testimonial-mobile-text-content">
-              <div class="testimonial-list-item-name">Jessica Lastname</div>
+              <div class="testimonial-list-item-name">Sara Fitzpatrick</div>
               <div class="parent-location p-small-black-50">Brooklyn</div>
-              <div class="parent-role p-small-black-50">Parent and Fitness Instructor</div>
             </div>
           </div>
         </div>
@@ -74,12 +72,11 @@
       <li class="list-item-divider"></li>
       <li class="testimonial-list-item"><img src="@/assets/photo-62x.png" srcset="images/photo-62x-p-500.png 500w, images/photo-62x-p-800.png 800w, images/photo-62x.png 908w" sizes="(max-width: 767px) 100vw, 250px" alt="" class="testimonial-desktop-image w-hidden-small w-hidden-tiny">
         <div class="blockquote-container w-clearfix"><img src="https://uploads-ssl.webflow.com/5ba3c28cff7d47030870c8e2/5ba561a9c21f1a20554cc9be_quotation-4.svg" alt="" class="quotation-mark-icon">
-          <blockquote class="parents-love-us-blockquote">EMMETT LOVES LOVES LOVES this program. He is beaming when he walks out...thank you so much. Please let me know if there is anything i can do.&quot;</blockquote>
-          <div class="testimonial-image-name-group"><img src="@/assets/photo-62x.png" srcset="images/photo-62x-p-500.png 500w, images/photo-62x-p-800.png 800w, images/photo-62x.png 908w" sizes="(max-width: 767px) 60px, 100vw" alt="" class="testimonial-mobile-image w-hidden-main w-hidden-medium">
+          <blockquote class="parents-love-us-blockquote">EMMETT LOVES LOVES LOVES this program. He is beaming when he walks out...thank you so much. Please let me know if there is anything I can do.&quot;</blockquote>
+          <div class="testimonial-image-name-group"><img src="@/assets/eva-vandock-pinkley.jpg" alt="" class="testimonial-mobile-image w-hidden-main w-hidden-medium">
             <div class="testimonial-mobile-text-content">
-              <div class="testimonial-list-item-name">Eva Vandock</div>
+              <div class="testimonial-list-item-name">Eva van Dok Pinkley</div>
               <div class="parent-location p-small-black-50">Brooklyn</div>
-              <div class="parent-role p-small-black-50">Parent and Fitness Instructor</div>
             </div>
           </div>
         </div>
