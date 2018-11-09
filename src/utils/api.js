@@ -1,4 +1,4 @@
-import Vue from 'vue'
+  import Vue from 'vue'
 import * as Token from './tokens.js'
 var moment = require('moment');
 
@@ -7,7 +7,7 @@ var childrenInNetwork = [] // this should be a local variable in a larger functi
 function createPersonObject (personInApi) {
     var p = personInApi.attributes
     let hasAllRequiredFields = function () {
-      if (p.agree_tos && p.phone && p.facebook_id && p.latitude && p.longitude) {
+      if (p.agree_tos && p.phone && p.facebook_id && p.latitude && p.longitude && p.network_code) {
         return true
       } else {
         return false
@@ -54,7 +54,8 @@ function createPersonObject (personInApi) {
       employer: "",
       backgroundCheck: false, // add background check,
       phone: p.phone,
-      hasAllRequiredFields: hasAllRequiredFields() 
+      networkCode: p.network_code,
+      hasAllRequiredFields: hasAllRequiredFields(),
     }
   }
 
