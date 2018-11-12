@@ -6,6 +6,28 @@ var moment = require('moment');
 var childrenInNetwork = []
 
 /*
+ * PROXY SESSIONS
+ */
+export function initProxySession(currentUserId, receiverId) {
+  console.log("INITIATING PROXY WITH users " + currentUserId + ", " + receiverId)
+  // no postData currently
+  let postData = {}
+  return Vue.axios.post(
+    `${process.env.BASE_URL_API}/users/${receiverId}/proxy_sessions`,
+    postData,
+  ).then(res => {
+    console.log("proxy session init SUCCESS, returning proxy phone number for receiver")
+    console.log(res)
+    // return proxy number for receiver
+    return res.data.data.attributes.proxyIdentifierReceiver
+  }).catch(err => {
+    console.log("proxy session init FAILURE")
+    console.log(err)
+    throw err
+  })
+}
+
+/*
  * USERS
  */
 

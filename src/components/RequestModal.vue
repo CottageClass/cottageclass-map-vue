@@ -8,55 +8,64 @@
       </a>
       <h5 class="heading-3">Request Care</h5><a href="#" class="title-bar-action-2 w-inline-block"></a></div>
     <div class="form-container">
-       <div class="form-block w-form">
-       	<div id="email-form" class="form">
-   <select v-model="day" class="select-field w-select">
-   	<!-- this is silly but saves us from using natural date libraries right now--> 
-   	<option value="today" select="selected">Today</option>
-   	<option value="tomorrow" select="selected">Tomorrow</option>
-   	<option value="Monday" select="selected">Monday</option>
-   	<option value="Tuesday" select="selected">Tuesday</option>
-   	<option value="Wednesday" select="selected">Wednesday</option>
-   	<option value="Thursday" select="selected">Thursday</option>
-   	<option value="Friday" select="selected">Friday</option>
-   	<option value="Saturday" select="selected">Saturday</option>
-   	<option value="Sunday" select="selected">Sunday</option>
-   </select>
-   <label>Start time?</label>
-   <input type="time" v-model="startTime" class="select-field w-select">
-   <label>End time?</label>
-   <input type="time" v-model="endTime" class="select-field w-select">
-   <select v-model="numberOfChildren" class="select-field w-select">
-    <option value="1">1 child</option>
-    <option value="2">2 children</option>
-    <option value="3">3 children</option>
-    <option value="4">4 children</option>
-   </select>
+      <div class="form-block w-form">
+        <div id="email-form" class="form">
+          <select v-model="day" class="select-field w-select">
+            <!-- this is silly but saves us from using natural date libraries right now--> 
+            <option value="today" select="selected">Today</option>
+            <option value="tomorrow" select="selected">Tomorrow</option>
+            <option value="Monday" select="selected">Monday</option>
+            <option value="Tuesday" select="selected">Tuesday</option>
+            <option value="Wednesday" select="selected">Wednesday</option>
+            <option value="Thursday" select="selected">Thursday</option>
+            <option value="Friday" select="selected">Friday</option>
+            <option value="Saturday" select="selected">Saturday</option>
+            <option value="Sunday" select="selected">Sunday</option>
+          </select>
+          <label>Start time?</label>
+          <input type="time" v-model="startTime" class="select-field w-select">
+          <label>End time?</label>
+          <input type="time" v-model="endTime" class="select-field w-select">
+          <select v-model="numberOfChildren" class="select-field w-select">
+            <option value="1">1 child</option>
+            <option value="2">2 children</option>
+            <option value="3">3 children</option>
+            <option value="4">4 children</option>
+          </select>
+
           <div class="avatar-and-cta-container">
-            <FacebookAvatar :facebookId="provider.facebookId" class="image" /> 
-            <div class="text-block-4">Send a text message to<br><span class="text-span">{{ provider.firstName}} {{ provider.lastInitial }}.</span><span class="black-50"></span></div>
+            <FacebookAvatar :facebookId="provider.facebookId" class="image" />
+              <div class="text-block-4">
+                Send a text message to<br><span class="text-span">{{ provider.firstName}} {{ provider.lastInitial }}.</span><span class="black-50"></span>
+              </div>
+            </div>
+
+            <TextMessageLink
+              v-if="!!twilioProxyNumberForProvider"
+              :number="twilioProxyNumberForProvider"
+              :message="messageForPerson()"
+            >
+              <button
+                value="Send Text"
+                class="button-small-3 w-button"
+                @click="submitRequest"
+              >
+                Send Text
+              </button>
+            </TextMessageLink>
+            <div class="small-text-black-40">You can edit it on the next screen.<br>Each booking costs ${{ network.price }}/hour<br> &amp; you only pay for what you use.</div>
           </div>
-          <TextMessageLink :number="provider.phone" :message="'Hi ' + provider.firstName + '!! I\'m a parent from ' + network.name + ', I\'m looking for care for ' + numberOfChildren + ' ' + ((numberOfChildren > 1) ? 'children' : 'child') + ' ' + day + ' from ' + formatTime(startTime) + ' to ' + formatTime(endTime) + ', and I saw you were often available at these times. Would this work? Thanks! \ud83c\udf08\u26a1\ud83e\udd84'">
-        <!-- ^^ Those crazy unicode characters are emojis :) -->
-          	<button 
-            value="Send Text" 
-            class="button-small-3 w-button"
-            @click="submitRequest"
-            >Send Text</button>
-          </TextMessageLink>
-          <div class="small-text-black-40">You can edit it on the next screen.<br>Each booking costs ${{ network.price }}/hour<br> &amp; you only pay for what you use.</div>
         </div>
       </div>
     </div>
-  </div>
   </div>
 </div>
 </template>
 
 <script>
-// todo: 
+// todo:
 // make close work.
-// pass event back so that the main window has knowledge of this. 
+// pass event back so that the main window has knowledge of this.
 // format text message so that it gives a readable date and "tomorrow"
 // consider showing start / end on same line side by side to make more room for avatar
 // consider putting avatar at the top.
@@ -76,30 +85,50 @@ var client = sheetsu({ address: 'https://sheetsu.com/apis/v1.0su/62cd725d6088' }
 
 
 export default {
-    name: 'RequestModal',
-    components: { TextMessageLink, FacebookAvatar },
-    data () {
-    	return {
-          numberOfChildren: 1,
-          day: "today",
-          startTime: "19:00",
-          endTime: "22:00",
-          people: [],
-          networks: networks,
-          currentUserId: Token.currentUserId(this.$auth),
-          currentUser: {}
-      }
-  }, 
-   mounted: function () {
-    api.fetchUsersInNetwork(this.network.stub).then(res => {
-      this.people = res
-      this.currentUser = res.find(person => person.id == this.currentUserId) 
-    })
+  name: 'RequestModal',
+  components: { TextMessageLink, FacebookAvatar },
+  data () {
+    return {
+      numberOfChildren: 1,
+      day: "today",
+      startTime: "19:00",
+      endTime: "22:00",
+      people: [],
+      networks: networks,
+      currentUserId: Token.currentUserId(this.$auth),
+      currentUser: {},
+      providerId: this.$route.params.id,
+      twilioProxyNumberForProvider: null,
+    }
+  },
+  computed: {
+    network: function () {
+      let networkId = Token.currentUserNetworkCode(this.$auth)
+      return this.networks.find(network => network.stub === networkId)
+    },
+    provider: function () {
+      return this.people.find(person => person.id === this.providerId)
+    }
+  },
+  mounted: function () {
+    // fetch users in network
+    api.fetchUsersInNetwork(this.network.stub)
+      .then(res => {
+        this.people = res
+        this.currentUser = res.find(person => person.id == this.currentUserId)
+      })
+
+    // init twilio proxy session to obtain SMS number
+    api.initProxySession(this.currentUserId, this.providerId)
+      .then(proxyNumberReceiver => {
+        console.log("PROXY NUMBER RECEIVED: " + proxyNumberReceiver)
+        this.twilioProxyNumberForProvider = proxyNumberReceiver
+      })
   },
   methods: {
     submitRequest: function () {
       client.create({
-        "Requester ID": this.currentUser.id, 
+        "Requester ID": this.currentUser.id,
         "Requester Name": this.currentUser.firstName + ' ' + this.currentUser.lastInitial,
         "Requester Phone": this.currentUser.phone,
         "Provider ID": this.provider.id,
@@ -118,26 +147,22 @@ export default {
         console.log(err)
       });
     },
-  	formatTime: function (time) {
-  		var minutes = time.slice(-2);
-  		var hours24 = time.substr(0, time.indexOf(':'));
-  		var ampm = (hours24 >= 12) ? 'pm' : 'am';
-  		var hours12 = hours24 % 12;
-  		if (hours12 == 0) {
-  			hours12 = 12
-  		}
-  		return hours12 + ':' + minutes + ampm
-  	}
-  },
-  computed: {
-    network: function () {
-      let networkId = Token.currentUserNetworkCode(this.$auth)
-      return this.networks.find(network => network.stub == networkId)
+    formatTime: function (time) {
+      var minutes = time.slice(-2);
+      var hours24 = time.substr(0, time.indexOf(':'));
+      var ampm = (hours24 >= 12) ? 'pm' : 'am';
+      var hours12 = hours24 % 12;
+      if (hours12 == 0) {
+        hours12 = 12
+      }
+      return hours12 + ':' + minutes + ampm
     },
-    provider: function () {
-      return this.people.find(person => person.id == this.$route.params.id)
-    }
-  }
+    messageForPerson: function () {
+      // ^^ Those crazy unicode characters are emojis :)
+      let msg = 'Hi ' + this.provider.firstName + '!! I\'m a parent from ' + this.network.name + ', I\'m looking for care for ' + this.numberOfChildren + ' ' + ((this.numberOfChildren > 1) ? 'children' : 'child') + ' ' + this.day + ' from ' + this.formatTime(this.startTime) + ' to ' + this.formatTime(this.endTime) + ', and I saw you were often available at these times. Would this work? Thanks! \ud83c\udf08\u26a1\ud83e\udd84'
+      return msg
+    },
+  },
 };
 </script>
 

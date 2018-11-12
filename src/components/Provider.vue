@@ -17,10 +17,11 @@
       </div>
 
 <h5 class="caption" v-if="person.children.length">Parent to <span v-for="(child, index) in person.children"><span class="child">{{ child.firstName }} <span class="black-50">({{ child.age }})</span></span><span v-if="(index < person.children.length - 1)">, </span>
-        </span></h5>      
+</span>
+</h5>
 
       <!-- Background check --> 
-        
+
         <div class="providerp-background-check-badge-container2" v-if="person.backgroundCheck">
         <div class="providerp-background-check-badge"><img src="../assets/check-green.svg" alt="" class="checkmark-image">
           <div class="background-check-text">Background checked</div>
