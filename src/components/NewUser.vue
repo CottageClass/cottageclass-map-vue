@@ -51,7 +51,8 @@ export default {
       seekerOrProvider: {}, 
       bookingRequest: {
         dateTimeSelected: null,
-        description: ""
+        description: "",
+        err: "skippable"
       },
       location: {},
       phone: {},
@@ -198,7 +199,7 @@ export default {
         case 1:
           return this.seekerOrProvider.err
         case 2:
-          return "skippable" // todo: make this dynamic
+          return this.bookingRequest.err
         case 3:
           return this.phone.err
         case 4:

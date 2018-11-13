@@ -27,9 +27,22 @@ export default {
   data () {
     return {
       bookingRequest: this.value
+    }
+  },
+  watch: {
+    bookingRequest: {
+      handler: function () {
+        if (this.bookingRequest.description || this.bookingRequest.dateTimeSelected) {
+          this.bookingRequest.err = false
+        } else if (this.bookingRequest.description == "" && this.bookingRequest.dateTimeSelected == null) {
+          this.bookingRequest.err = "skippable"
+        }
+      },
+      deep: true
+    }
   }
-} // not sure why this works without emitting an event but it does. 
 };
+
 </script>
 
 <style scoped>
