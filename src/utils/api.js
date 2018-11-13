@@ -39,7 +39,7 @@ export function initProxySession(currentUserId, receiverId, requestMessage, ackn
 function createPersonObject (personInApi) {
   var p = personInApi.attributes
   let hasAllRequiredFields = function () {
-    if (p.agree_tos && p.phone && p.facebook_id && p.latitude && p.longitude && p.network_code) {
+    if (p.phone && p.facebook_id && p.latitude && p.longitude && p.network_code) {
       return true
     } else {
       return false
