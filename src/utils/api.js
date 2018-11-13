@@ -111,6 +111,21 @@ export function fetchUsersInNetwork(networkId) {
   })
 }
 
+export function fetchUsersWhoHaveMadeInquiries(currentUserId) {
+  return Vue.axios.get(
+    `${process.env.BASE_URL_API}/users/${currentUserId}/inquiries`
+    ).then(res => {
+      console.log("FETCH USERS WHO HAVE MADE INQUIRIES SUCCESS")
+      console.log(res.data)
+          childrenInNetwork = res.data.included.filter(obj => obj.type === "child")
+          // set this.people in the function that called us
+          return createPeopleObject(res.data)
+        }).catch(err => {
+          console.log("FETCH USERS WHO HAVE MADE INQUIRIES FAILURE")
+          console.log(err.errors)
+        })
+}
+
 export function fetchCurrentUser(userId) {
   return Vue.axios.get(
     `${process.env.BASE_URL_API}/users/${userId}`
