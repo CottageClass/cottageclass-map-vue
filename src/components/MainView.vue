@@ -23,19 +23,7 @@
 
     <div class="availability-container-v2">
       <h1 class="landing-page-v2-h1">When do you need childcare?</h1>
-      <label class="lpv2-choose-time-button w-inline-block" @click="toggleShowDatetimeInputOnDesktop">
-        <div class="div-block-8"><img src="../assets/time-outline-blue.svg" width="15" height="15" alt="">
-          <div  
-          class="lpv2-choose-time-button-text"
-          v-if="hideDateTimeInputOnMobile">{{ timePlaceholder }}</div>
-          <input type="datetime-local" 
-          v-model="dateTimeSelected"
-          class="timePlacholderText" 
-          :class="[{ hideDateTimeInput: hideDateTimeInputOnMobile }]"/>
-        </div>
-        <img v-if="hideDateTimeInputOnMobile" 
-        src="../assets/Dropdown-Arrows.svg">
-      </label>
+      <DateTimePicker v-model="dateTimeSelected"/>
     </div>
 
   <!-- the list -->
@@ -56,11 +44,12 @@
 </template>
 
 <script>
-import Provider from './Provider.vue'
-import RequestModal from './RequestModal.vue'
+import Provider from '@/components/Provider.vue'
+import RequestModal from '@/components/RequestModal.vue'
 import router from '../router'
-import ShareButton from './ShareButton.vue'
-import networks from '../assets/network-info.json'
+import ShareButton from '@/components/ShareButton.vue'
+import DateTimePicker from '@/components/DateTimePicker.vue'
+import networks from '@/assets/network-info.json'
 import * as Token from '@/utils/tokens.js'
 import * as api from '@/utils/api.js'
 
@@ -74,10 +63,10 @@ var moment = require('moment');
 
 export default {
   name: 'MainView',
-  components: { Provider, RequestModal, ShareButton },
+  components: { Provider, RequestModal, ShareButton, DateTimePicker },
   data () {
     return {
-      dateTimeSelected: null,  
+      dateTimeSelected: null,
       people: [], // gets updated on mount by fetchUsersInNetwork
       networks: networks, // to bring from import into vue model
       mapOptions: { // move this to map component when i separate it.
@@ -85,7 +74,6 @@ export default {
         "gestureHandling": "greedy", // allows one finger pan.
       },
       currentUserId: Token.currentUserId(this.$auth),
-      hideDateTimeInputOnMobile: true,
       currentUser: {}
     }
   },
@@ -112,14 +100,6 @@ export default {
       }, (err) => {
         console.log(err)
       });
-    },
-    toggleShowDatetimeInputOnDesktop: function () {
-      if (!navigator.userAgent.match(/(iPad)|(iPhone)|(iPod)|(android)|(webOS)/i)) {
-        this.hideDateTimeInputOnMobile = false
-        this.hideDateTimePlaceholderOnDesktop = true
-      } else {
-        console.log('HTML5 date picker should display on mobile, but it will not on desktop')
-      }
     }
   },
   mounted: function () {
@@ -176,13 +156,6 @@ export default {
         var time = aMoment.format("h:mm a")
         return "The following providers in \"" + this.network.name + "\" are typically available at " + time + " on " + day + "s."
       }
-    },
-    timePlaceholder: function () {
-      if (this.dateTimeSelected == null) {
-        return "Choose a time"
-      } else {
-        return moment(this.dateTimeSelected).format("dddd, h:mm a")
-      }
     }
   }
 };
@@ -191,11 +164,6 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 
 <style scoped>
-
-.hideDateTimeInput {
-  font-size: 1px; 
-  opacity: 0
-}
 
 .hideDateTimePlaceholder {
   display: none;
