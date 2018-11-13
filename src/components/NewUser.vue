@@ -9,20 +9,22 @@
       <div v-if="showError && error && error!='skippable'" class="onb-error-container">
         <div class="onb-error-text">{{ error }}</div>
       </div>
-      <Location v-if="step === 1" v-model="location"/>
-      <Phone v-if="step === 2" v-model="phone" />
-      <Children v-if="step === 3" v-model="children" />
-      <Availability v-if="step === 4" v-model="availability" />
-      <Activities v-if="step === 5" v-model="activities" />
-      <InvitationCode v-if="step === 6" v-model="invitationCode" />
-      <Invite v-if="step === 7" />
+      <SeekerOrProvider v-if="step === 1" v-model="seekerOrProvider"/>
+      <Location v-if="step === 2" v-model="location"/>
+      <Phone v-if="step === 3" v-model="phone" />
+      <Children v-if="step === 4" v-model="children" />
+      <Availability v-if="step === 5" v-model="availability" />
+      <Activities v-if="step === 6" v-model="activities" />
+      <InvitationCode v-if="step === 7" v-model="invitationCode" />
+      <Invite v-if="step === 8" />
     </div>
   </span>
 </template>
 
 <script>
-import Login from '@/components/onboarding/Login.vue'
 import Nav from '@/components/onboarding/Nav.vue'
+import Login from '@/components/onboarding/Login.vue'
+import SeekerOrProvider from '@/components/onboarding/SeekerOrProvider.vue'
 import Location from '@/components/onboarding/Location.vue'
 import Phone from '@/components/onboarding/Phone.vue'
 import Children from '@/components/onboarding/Children.vue'
@@ -34,16 +36,17 @@ import * as Token from '@/utils/tokens.js'
 
 export default {
   components: {
-    Login, Nav, Location, Phone, Children, Availability, Activities, Invite, InvitationCode
+    Nav, Login, SeekerOrProvider, Location, Phone, Children, Availability, Activities, Invite, InvitationCode
   },
   data () {
     return {
       step: 0,
-      lastStep: 6,
-      inviteStep: 7,
+      lastStep: 7,
+      inviteStep: 8,
       afterLastStep: '../demo/home/',
       showError: false,
-      name: {},
+      name: {}, // todo: remove if possible now this comes from FB
+      seekerOrProvider: {}, // is "", "seeker", "provider", or "both"
       location: {},
       phone: {},
       children: {
@@ -187,16 +190,18 @@ export default {
     error: function () {
       switch (this.step) {
         case 1:
-          return this.location.err
+          return this.seekerOrProvider.err
         case 2:
-          return this.phone.err
+          return this.location.err
         case 3:
-          return this.children.err
+          return this.phone.err
         case 4:
-          return this.availability.err
+          return this.children.err
         case 5:
-          return this.activities.err
+          return this.availability.err
         case 6:
+          return this.activities.err
+        case 7:
           return this.invitationCode.err
         default:
           return false
