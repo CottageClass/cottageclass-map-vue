@@ -109,12 +109,18 @@ export default {
       }
       // check if there's an error, if so show it, if not advance and clear the error.
       else if (!this.error || this.error === "skippable") {
-        this.step = this.step + 1
+        this.skipUnnecessarySteps() // skips any step not required for this user
         this.showError = false
         window.scrollTo(0,0)
       } else {
         this.showError = true
       }
+    },
+    skipUnnecessarySteps: function () {
+      if (this.step == 5 && this.seekerOrProvider.seekerProviderBoth == "seeker") { 
+        this.step = 8 // skips to enter network code
+      } else
+      this.step = this.step + 1
     },
     prevStep: function () {
       this.showError = false
