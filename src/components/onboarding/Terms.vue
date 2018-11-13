@@ -367,7 +367,7 @@
       <ul>
         <li>
           Complete and submit the General Liability Claim/Incident Form,
-          available upon request by emailing us at <a href="mailto:info@cottageclass.com">info@cottageclass.com</a>; and
+          available upon request by emailing us at <a href="mailto:contact@cottageclass.com">contact@cottageclass.com</a>; and
         </li>
         <li>
           Provide any other information or evidence that CottageClass or our
@@ -974,7 +974,7 @@
         Attn: CottageClass Terms of Service Issues
       </p>
       <p>
-        Email: <a href="mailto:info@cottageclass.com">info@cottageclass.com</a>
+        Email: <a href="mailto:contact@cottageclass.com">contact@cottageclass.com</a>
       </p>    <br/>
       <br/>
       <br/></div>

@@ -100,7 +100,7 @@
 
 <!-- Leave a review --> 
 
-  <div class="providerp-post-comment-container"><a :href="'mailto:info@cottageclass.com?subject=Great experience with ' + person.firstName + ' ' + person.lastInitial + '. (' + person.id + ')&body=(please%20describe%20your%20great%20experience%20here!)'" class="pprofile-compose-button w-inline-block"><img src="../assets/compose.svg" class="image-5"><div class="pprofile-comment-prompt-button-text">Post a great experience</div></a>
+  <div class="providerp-post-comment-container"><a :href="'mailto:contact@cottageclass.com?subject=Great experience with ' + person.firstName + ' ' + person.lastInitial + '. (' + person.id + ')&body=(please%20describe%20your%20great%20experience%20here!)'" class="pprofile-compose-button w-inline-block"><img src="../assets/compose.svg" class="image-5"><div class="pprofile-comment-prompt-button-text">Post a great experience</div></a>
     <div class="providerp-book-care-container">
       <router-link :to="{ name: 'RequestModal', params: { id: person.id }}" class="pprovider-book-care-button w-inline-block"><img src="../assets/chat.svg"><div class="pprovider-primary-action-text">Book Care</div>
       </router-link>
@@ -118,7 +118,7 @@
 
   <!-- concern link --> 
 
-  <div class="providerp-post-comment-container"><a :href="'mailto:info@cottageclass.com?subject=Concern re: ' + person.firstName + ' ' + person.lastInitial + '. (' + person.id + ')&body=(please%20detail%20your%20concern%20here)'" class="pprofile-compose-button w-inline-block"><img src="../assets/compose.svg" class="image-5"><div class="pprofile-comment-prompt-button-text">Post a concern</div></a></div>
+  <div class="providerp-post-comment-container"><a :href="'mailto:contact@cottageclass.com?subject=Concern re: ' + person.firstName + ' ' + person.lastInitial + '. (' + person.id + ')&body=(please%20detail%20your%20concern%20here)'" class="pprofile-compose-button w-inline-block"><img src="../assets/compose.svg" class="image-5"><div class="pprofile-comment-prompt-button-text">Post a concern</div></a></div>
 
   <div class="spacer-100px"></div>
 
