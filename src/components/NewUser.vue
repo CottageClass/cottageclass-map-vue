@@ -35,6 +35,12 @@ import Activities from '@/components/onboarding/Activities.vue'
 import Invite from '@/components/onboarding/Invite.vue'
 import InvitationCode from '@/components/onboarding/InvitationCode.vue'
 import * as Token from '@/utils/tokens.js'
+import * as api from '@/utils/api.js'
+import sheetsu from 'sheetsu-node'
+
+// create a config file to identify which spreadsheet we push to.
+var client = sheetsu({ address: 'https://sheetsu.com/apis/v1.0su/62cd725d6088' })
+
 
 export default {
   components: {
@@ -45,6 +51,7 @@ export default {
       step: 0,
       lastStep: 8,
       inviteStep: 9,
+      phoneStep: 3,
       afterLastStep: '../demo/home/',
       showError: false,
       name: {}, // todo: remove if possible now this comes from FB
@@ -97,7 +104,11 @@ export default {
       }
     },
     nextStep: function () {
-      if (this.step == this.lastStep) {
+      if (this.step == this.phoneStep && this.userRequestedCare) {
+        this.saveBookingRequestToSpreadsheet()
+        this.skipUnnecessarySteps()
+      }
+      else if (this.step == this.lastStep) {
         this.submitData()
           .then(res => {
             // only move to next page once we have saved user data
@@ -117,14 +128,30 @@ export default {
       }
     },
     skipUnnecessarySteps: function () {
-      if (this.step == 5 && this.seekerOrProvider.seekerProviderBoth == "seeker") { 
-        this.step = 8 // skips to enter network code
+      if (this.step == 1 && this.seekerOrProvider.status == "provider") {
+        this.step = 3
+      } // skips booking request screen if user is only a provider
+      else if (this.step == 5 && this.seekerOrProvider.status == "seeker") { 
+        this.step = 8 // skips to enter network code if user is not a provider
       } else
       this.step = this.step + 1
     },
     prevStep: function () {
       this.showError = false
       this.step = this.step - 1
+    },
+    saveBookingRequestToSpreadsheet: function () {
+      client.create({
+        "User ID": Token.currentUserId(this.$auth),
+        "Phone": this.phone.number,
+        "Request made on": Date(),
+        "Request for time": this.bookingRequest.dateTimeSelected,
+        "Request Description": this.bookingRequest.description,
+      }, "requestsInOnboarding").then((data) => {
+        console.log(data)
+      }, (err) => {
+        console.log(err)
+      });
     },
     submitData: function () {
       let userId = Token.currentUserId(this.$auth)
@@ -232,6 +259,11 @@ export default {
       } else {
         return "next"
       }
+    },
+    userRequestedCare: function () {
+      if (this.bookingRequest.err === false) {
+        return true
+      } else return false
     }
   }
 };

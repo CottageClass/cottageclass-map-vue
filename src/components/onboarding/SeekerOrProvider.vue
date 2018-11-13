@@ -7,15 +7,15 @@
     <div class="radio-form-block w-form">
       <form id="email-form" class="radio-form">
         <div class="radio-button-field w-radio">
-          <input type="radio" id="find" value="seeker" v-model="seekerProviderBoth" class="radio-button w-radio-input">
+          <input type="radio" id="find" value="seeker" v-model="status" class="radio-button w-radio-input">
           <label for="find" class="radio-button-label w-form-label">Find Childcare</label>
         </div>
         <div class="radio-button-field w-radio">
-          <input type="radio" id="provide" value="provider" v-model="seekerProviderBoth" class="radio-button w-radio-input">
+          <input type="radio" id="provide" value="provider" v-model="status" class="radio-button w-radio-input">
           <label for="provide" class="radio-button-label w-form-label">Provide Childcare</label>
         </div>
         <div class="radio-button-field w-radio">
-          <input type="radio" id="both" value="both" v-model="seekerProviderBoth" class="radio-button w-radio-input">
+          <input type="radio" id="both" value="both" v-model="status" class="radio-button w-radio-input">
           <label for="both" class="radio-button-label w-form-label">Both</label>
         </div>
       </form>
@@ -31,20 +31,20 @@ export default {
   props: ['value'],
   data () {
     return {
-      seekerProviderBoth: this.value.seekerProviderBoth ? this.value.seekerProviderBoth : "", // if it gets passed something, return that, otherwise return blank string.
+      status: this.value.status ? this.value.status : "", // if it gets passed something, return that, otherwise return blank string.
       errorMsg: 'Please choose if you want to find care, provide care, or both.',
     }
   },
   mounted: function () {
-    if (this.seekerProviderBoth == "") {
+    if (this.status == "") {
       this.$emit('input', {
-        seekerProviderBoth: "",
+        status: "",
         err: this.errorMsg
       })}
     },
   computed: {
     err: function () {
-      if (this.seekerProviderBoth != "") {
+      if (this.status != "") {
         return false
       } else {
         return this.errorMsg
@@ -52,10 +52,10 @@ export default {
     },
   },
   watch: {
-    seekerProviderBoth: function () {
+    status: function () {
       this.$emit('input', {
         err: this.err,
-        seekerProviderBoth: this.seekerProviderBoth
+        status: this.status
       })
      }
    }
