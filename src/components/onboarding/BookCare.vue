@@ -4,10 +4,7 @@
     <div class="title-container">
       <h1 class="title">When do you need care?</h1>
     </div>
-    <div class="radio-form-block w-form">
-        <input type="datetime-local" 
-          v-model="bookingRequest.dateTimeSelected">
-    </div>
+    <DateTimePicker v-model="bookingRequest.dateTimeSelected"/>
     <div class="form-describe-need w-form">
       <form v-on:submit.prevent id="email-form-2">
         <p class="describe-label">Need multiple days?</p>
@@ -21,11 +18,12 @@
 
 <script>
 import CountdownPromo from '@/components/onboarding/CountdownPromo.vue'
+import DateTimePicker from '@/components/DateTimePicker.vue'
 
 export default {
   name: 'BookCare',
   props: ['value'],
-  components: { CountdownPromo },
+  components: { CountdownPromo, DateTimePicker },
   data () {
     return {
       bookingRequest: this.value
