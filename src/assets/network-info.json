@@ -91,7 +91,7 @@
 	"name": "North Brooklyn",  
 	"location": {"lat": 40.670768, "lng": -73.930578},
 	"zoom": 13, 
-	"stub": "NorthBrooklyn",
+	"stub": "northbrooklyn",
 	"price": "12.50",
 	"percentage": 0.2
     },
@@ -132,7 +132,7 @@
 	"name": "Port Washington",  
 	"location": {"lat": 40.8400207, "lng": -73.6933107},
 	"zoom": 12, 
-	"stub": "PortWashington",
+	"stub": "portwashington",
 	"price": "12.50",
 	"percentage": 0.2
     },
@@ -140,7 +140,7 @@
 	"name": "The Mission",  
 	"location": {"lat": 37.7666452, "lng": -122.4296227}, 
 	"zoom": 12, 
-	"stub": "theMission",
+	"stub": "themission",
 	"price": "12.50",
 	"percentage": 0.2
     },
@@ -156,7 +156,7 @@
 	"name": "Hyde Park",  
 	"location": {"lat": 41.7974109, "lng": -87.5912157}, 
 	"zoom": 12, 
-	"stub": "HydePark",
+	"stub": "hydepark",
 	"price": "12.50",
 	"percentage": 0.2
     },
@@ -164,7 +164,7 @@
 	"name": "Sunny Side",  
 	"location": {"lat": 40.746347, "lng": -73.914718},   
 	"zoom": 12, 
-	"stub": "Sunnyside",
+	"stub": "sunnyside",
 	"price": "12.50",
 	"percentage": 0.2
     },
@@ -172,7 +172,7 @@
 	"name": "Brooklyn",  
 	"location": {"lat": 40.6743075, "lng": -73.9734987},  
 	"zoom": 12, 
-	"stub": "Brooklyn",
+	"stub": "brooklyn",
 	"price": "12.50",
 	"percentage": 0.2
     },
@@ -180,7 +180,7 @@
 	"name": "Henley",  
 	"location": {"lat": 51.5316145, "lng": -0.9193641}, 
 	"zoom": 12, 
-	"stub": "Henley",
+	"stub": "henley",
 	"price": "12.50",
 	"percentage": 0.2
     },
@@ -188,7 +188,7 @@
 	"name": "Dupont Circle",  
 	"location": {"lat": 38.9111048, "lng": -77.042613}, 
 	"zoom": 12, 
-	"stub": "DupontCircle",
+	"stub": "dupontcircle",
 	"price": "12.50",
 	"percentage": 0.2
     },
@@ -196,7 +196,7 @@
 	"name": "Harlem",  
 	"location": {"lat": 40.824667, "lng": -73.941749}, 
 	"zoom": 12, 
-	"stub": "Harlem",
+	"stub": "harlem",
 	"price": "12.50",
 	"percentage": 0.2
     },
@@ -204,7 +204,7 @@
 	"name": "Forest Hills",  
 	"location": {"lat": 40.7222902, "lng": -73.8615556}, 
 	"zoom": 12, 
-	"stub": "ForestHills",
+	"stub": "foresthills",
 	"price": "12.50",
 	"percentage": 0.2
     },
@@ -212,7 +212,7 @@
 	"name": "Dumbo",  
 	"location": {"lat": 40.7035132, "lng": -73.9939204}, 
 	"zoom": 12, 
-	"stub": "Dumbo",
+	"stub": "dumbo",
 	"price": "12.50",
 	"percentage": 0.2
     },
@@ -220,7 +220,7 @@
 	"name": "Cortelyou",  
 	"location": {"lat": 40.635011, "lng": -73.943780}, 
 	"zoom": 12, 
-	"stub": "Cortelyou",
+	"stub": "cortelyou",
 	"price": "12.50",
 	"percentage": 0.2
     },
@@ -228,7 +228,7 @@
 	"name": "NoeValley",  
 	"location": {"lat": 37.7490555, "lng": -122.4344773}, 
 	"zoom": 12, 
-	"stub": "NoeValley",
+	"stub": "noevalley",
 	"price": "12.50",
 	"percentage": 0.2
     },
@@ -236,7 +236,7 @@
 	"name": "AU Park",  
 	"location": {"lat": 38.9486599, "lng": -77.0880777}, 	
 	"zoom": 12, 
-	"stub": "AUpark",
+	"stub": "aupark",
 	"price": "12.50",
 	"percentage": 0.2
     },
@@ -244,7 +244,7 @@
 	"name": "Riverdale",  
 	"location": {"lat": 40.876798, "lng": -73.9198921}, 	
 	"zoom": 12, 
-	"stub": "Riverdale",
+	"stub": "riverdale",
 	"price": "12.50",
 	"percentage": 0.2
     },
@@ -252,7 +252,7 @@
 	"name": "FortGreene",  
 	"location": {"lat": 40.692324, "lng": -73.9833117}, 
 	"zoom": 12, 
-	"stub": "FortGreene",
+	"stub": "fortgreene",
 	"price": "12.50",
 	"percentage": 0.2
     },
@@ -260,7 +260,7 @@
 	"name": "Somerville",  
 	"location": {"lat": 42.427501, "lng": -71.1113899}, 
 	"zoom": 12, 
-	"stub": "Somerville",
+	"stub": "somerville",
 	"price": "12.50",
 	"percentage": 0.2
     },
@@ -268,7 +268,7 @@
 	"name": "Syracuse",  
 	"location": {"lat": 43.0367387, "lng": -76.1051214}, 
 	"zoom": 12, 
-	"stub": "Syracuse",
+	"stub": "syracuse",
 	"price": "12.50",
 	"percentage": 0.2
     },
@@ -284,7 +284,7 @@
 	"name": "Cambridge",  
 	"location": {"lat": 42.372713, "lng": -71.1088089}, 
 	"zoom": 12, 
-	"stub": "Cambridge",
+	"stub": "cambridge",
 	"price": "12.50",
 	"percentage": 0.2
     },
