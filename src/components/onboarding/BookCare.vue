@@ -7,7 +7,7 @@
     <DateTimePicker v-model="bookingRequest.dateTimeSelected"/>
     <div class="form-describe-need w-form">
       <form v-on:submit.prevent id="email-form-2">
-        <p class="describe-label">Need multiple days?</p>
+        <p class="describe-label">Need care on multiple days?</p>
         <textarea v-model="bookingRequest.description" id="field" name="field" placeholder="Describe your need and schedule here." maxlength="5000" class="text-area-decribe-need w-input"></textarea>
       </form>
     </div>
@@ -37,6 +37,11 @@ export default {
 html {
     -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
 }
+
+.describe-label {
+  padding-top: 16px;
+} 
+
 .body {
   font-family: soleil, sans-serif;
   color: #333;
