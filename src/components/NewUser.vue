@@ -10,13 +10,14 @@
         <div class="onb-error-text">{{ error }}</div>
       </div>
       <SeekerOrProvider v-if="step === 1" v-model="seekerOrProvider"/>
-      <Location v-if="step === 2" v-model="location"/>
+      <BookCare v-if="step === 2" v-model="seekerOrProvider"/>
       <Phone v-if="step === 3" v-model="phone" />
-      <Children v-if="step === 4" v-model="children" />
-      <Availability v-if="step === 5" v-model="availability" />
-      <Activities v-if="step === 6" v-model="activities" />
-      <InvitationCode v-if="step === 7" v-model="invitationCode" />
-      <Invite v-if="step === 8" />
+      <Location v-if="step === 4" v-model="location"/>
+      <Children v-if="step === 5" v-model="children" />
+      <Availability v-if="step === 6" v-model="availability" />
+      <Activities v-if="step === 7" v-model="activities" />
+      <InvitationCode v-if="step === 8" v-model="invitationCode" />
+      <Invite v-if="step === 9" />
     </div>
   </span>
 </template>
@@ -25,6 +26,7 @@
 import Nav from '@/components/onboarding/Nav.vue'
 import Login from '@/components/onboarding/Login.vue'
 import SeekerOrProvider from '@/components/onboarding/SeekerOrProvider.vue'
+import BookCare from '@/components/onboarding/BookCare.vue'
 import Location from '@/components/onboarding/Location.vue'
 import Phone from '@/components/onboarding/Phone.vue'
 import Children from '@/components/onboarding/Children.vue'
@@ -36,13 +38,13 @@ import * as Token from '@/utils/tokens.js'
 
 export default {
   components: {
-    Nav, Login, SeekerOrProvider, Location, Phone, Children, Availability, Activities, Invite, InvitationCode
+    Nav, Login, SeekerOrProvider, BookCare, Location, Phone, Children, Availability, Activities, Invite, InvitationCode
   },
   data () {
     return {
       step: 0,
-      lastStep: 7,
-      inviteStep: 8,
+      lastStep: 8,
+      inviteStep: 9,
       afterLastStep: '../demo/home/',
       showError: false,
       name: {}, // todo: remove if possible now this comes from FB
@@ -192,16 +194,18 @@ export default {
         case 1:
           return this.seekerOrProvider.err
         case 2:
-          return this.location.err
+          return "skippable"
         case 3:
           return this.phone.err
         case 4:
-          return this.children.err
+          return this.location.err
         case 5:
-          return this.availability.err
+          return this.children.err
         case 6:
-          return this.activities.err
+          return this.availability.err
         case 7:
+          return this.activities.err
+        case 8:
           return this.invitationCode.err
         default:
           return false
