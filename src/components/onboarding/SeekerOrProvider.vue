@@ -20,6 +20,7 @@
         </div>
       </form>
     </div>
+        <p class="onb-paragraph-small-50">Not sure? Pick &ldquo;both.&rdquo; Sharing childcare with other families can be delightful :)  </p>
   </div>
 </div>
 </template>
