@@ -60,6 +60,13 @@ export default {
   opacity: 0
 }
 
+
+@media (max-width: 479px){
+  .lpv2-choose-time-button {
+    min-width: 100%;
+  }
+}
+
 .lpv2-choose-time-button {
   background-color: #fff;
   display: -webkit-box;
