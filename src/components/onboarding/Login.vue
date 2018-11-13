@@ -83,7 +83,12 @@
       </li>
     </ul>
   </div>
-  <div class="fb-container"><a @click="authenticate('facebook')" class="fb-button w-inline-block"><img src="@/assets/facebook-button-icon.svg" width="24" height="24" alt="" /><div class="fb-button-text">Continue with Facebook</div></a></div>
+  <div class="fb-container">
+    <a @click="authenticate('facebook')" class="fb-button w-inline-block"><img src="@/assets/facebook-button-icon.svg" width="24" height="24" alt="" /><div class="fb-button-text">Continue with Facebook</div></a>
+        <div class="tos-acceptance">
+      (By signing in you agree to our <a href="https://cottageclass.com/terms-of-service">Terms of Service</a> and <a href="https://cottageclass.com/privacy-policy">Privacy Policy</a>)
+    </div>
+  </div>
 </div>
 </template>
 
@@ -152,6 +157,18 @@ export default {
 </script>
 
 <style scoped>
+
+.tos-acceptance {
+  text-align: center;
+  padding: 8px 16px 0 16px;
+  opacity: .5
+}
+
+.tos-acceptance a {
+  display: inline;
+  text-decoration: underline;
+  font-weight: bold;
+}
 
 .onb-login-top-image-container {
   text-align: center;
