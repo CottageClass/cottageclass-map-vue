@@ -10,7 +10,7 @@
         <div class="onb-error-text">{{ error }}</div>
       </div>
       <SeekerOrProvider v-if="step === 1" v-model="seekerOrProvider"/>
-      <BookCare v-if="step === 2" v-model="seekerOrProvider"/>
+      <BookCare v-if="step === 2" v-model="bookingRequest"/>
       <Phone v-if="step === 3" v-model="phone" />
       <Location v-if="step === 4" v-model="location"/>
       <Children v-if="step === 5" v-model="children" />
@@ -48,7 +48,11 @@ export default {
       afterLastStep: '../demo/home/',
       showError: false,
       name: {}, // todo: remove if possible now this comes from FB
-      seekerOrProvider: {}, // is "", "seeker", "provider", or "both"
+      seekerOrProvider: {}, 
+      bookingRequest: {
+        dateTimeSelected: null,
+        description: ""
+      },
       location: {},
       phone: {},
       children: {
@@ -194,7 +198,7 @@ export default {
         case 1:
           return this.seekerOrProvider.err
         case 2:
-          return "skippable"
+          return "skippable" // todo: make this dynamic
         case 3:
           return this.phone.err
         case 4:

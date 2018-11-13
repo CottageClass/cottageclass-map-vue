@@ -1,36 +1,43 @@
 <template>
-<div class="body">
-  <div class="content-container">
-    <div class="title-container">
-      <h1 class="title">When do you need care?</h1>
+  <div class="promo-container"><img src="@/assets/free.svg" alt="" class="image-free-tag">
+    <div class="counter-title">Book in 24 hours for a free first day!</div>
+    <div class="counter-subtitle">You're welcome! Offer expires in...</div>
+    <div class="counter">
+      <div class="counter-item">
+        <div id="hour-count" class="count">23</div>
+        <div class="label-time-interval">Hours</div>
+      </div>
+      <div class="counter-item">
+        <div id="min-count" class="count">{{ minutes }}</div>
+        <div class="label-time-interval">Minutes</div>
+      </div>
+      <div class="counter-item">
+        <div id="sec-count" class="count">{{ seconds }}</div>
+        <div class="label-time-interval">Seconds</div>
+      </div>
     </div>
-    <div class="radio-form-block w-form">
-        <input type="datetime-local" 
-          v-model="bookingRequest.dateTimeSelected">
-    </div>
-    <div class="form-describe-need w-form">
-      <form v-on:submit.prevent id="email-form-2">
-        <p class="describe-label">Need multiple days?</p>
-        <textarea v-model="bookingRequest.description" id="field" name="field" placeholder="Describe your need and schedule here." maxlength="5000" class="text-area-decribe-need w-input"></textarea>
-      </form>
-    </div>
-    <CountdownPromo/>
   </div>
-</div>
 </template>
 
 <script>
-import CountdownPromo from '@/components/onboarding/CountdownPromo.vue'
-
 export default {
-  name: 'BookCare',
-  props: ['value'],
-  components: { CountdownPromo },
+  name: 'CountdownPromo',
   data () {
     return {
-      bookingRequest: this.value
+      seconds: 59,
+      minutes: 59
+    }
+  },
+  mounted: function () {
+    setInterval(() => {
+      if (this.seconds > 0) {
+        this.seconds = this.seconds - 1
+      } else {
+        this.seconds = 59
+        this.minutes = this.minutes - 1
+      }
+    }, 1000)
   }
-} // not sure why this works without emitting an event but it does. 
 };
 </script>
 
