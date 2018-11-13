@@ -103,7 +103,6 @@ export default {
             // only move to next page once we have saved user data
             // - get back userId
             // - get back networkCode
-            console.log('calling continueorrunsharingask')
             this.continueOrShowSharingAsk()
           })
       }
@@ -112,6 +111,7 @@ export default {
         this.skipUnnecessarySteps() // skips any step not required for this user
         this.showError = false
         window.scrollTo(0,0)
+        this.submitData()
       } else {
         this.showError = true
       }
