@@ -8,10 +8,15 @@ var childrenInNetwork = []
 /*
  * PROXY SESSIONS
  */
-export function initProxySession(currentUserId, receiverId) {
+export function initProxySession(currentUserId, receiverId, requestMessage, acknowledgmentMessage) {
   console.log("INITIATING PROXY WITH users " + currentUserId + ", " + receiverId)
   // no postData currently
-  let postData = {}
+  let postData = {
+    twilioSession: {
+      requestMessage: requestMessage,
+      acknowledgmentMessage: acknowledgmentMessage,
+    }
+  }
   return Vue.axios.post(
     `${process.env.BASE_URL_API}/users/${receiverId}/proxy_sessions`,
     postData,

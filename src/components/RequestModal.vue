@@ -40,19 +40,13 @@
               </div>
             </div>
 
-            <TextMessageLink
-              v-if="!!twilioProxyNumberForProvider"
-              :number="twilioProxyNumberForProvider"
-              :message="messageForPerson()"
+            <button
+              value="Send Text"
+              class="button-small-3 w-button"
+              @click="submitRequest"
             >
-              <button
-                value="Send Text"
-                class="button-small-3 w-button"
-                @click="submitRequest"
-              >
-                Send Text
-              </button>
-            </TextMessageLink>
+              Send Text
+            </button>
             <div class="small-text-black-40">You can edit it on the next screen.<br>Each booking costs ${{ network.price }}/hour<br> &amp; you only pay for what you use.</div>
           </div>
         </div>
@@ -71,7 +65,6 @@
 // consider putting avatar at the top.
 // try adding an animation so it fades in
 
-import TextMessageLink from './TextMessageLink.vue'
 import networks from '../assets/network-info.json'
 import * as api from '@/utils/api.js'
 import * as Token from '@/utils/tokens.js'
@@ -86,7 +79,7 @@ var client = sheetsu({ address: 'https://sheetsu.com/apis/v1.0su/62cd725d6088' }
 
 export default {
   name: 'RequestModal',
-  components: { TextMessageLink, FacebookAvatar },
+  components: { FacebookAvatar },
   data () {
     return {
       numberOfChildren: 1,
@@ -107,26 +100,54 @@ export default {
       return this.networks.find(network => network.stub === networkId)
     },
     provider: function () {
-      return this.people.find(person => person.id === this.providerId)
+      return this.people.find(person => person.id === this.providerId) || {}
     }
   },
   mounted: function () {
     // fetch users in network
     api.fetchUsersInNetwork(this.network.stub)
-      .then(res => {
-        this.people = res
-        this.currentUser = res.find(person => person.id == this.currentUserId)
-      })
-
-    // init twilio proxy session to obtain SMS number
-    api.initProxySession(this.currentUserId, this.providerId)
-      .then(proxyNumberReceiver => {
-        console.log("PROXY NUMBER RECEIVED: " + proxyNumberReceiver)
-        this.twilioProxyNumberForProvider = proxyNumberReceiver
+      .then(people => {
+        this.people = people
+        this.currentUser = people.find(person => person.id == this.currentUserId)
       })
   },
   methods: {
     submitRequest: function () {
+      // these will be executed in parallel
+      // - if we want sequential execution, wrap in a promise
+      this.saveBookingRequestToSpreadsheet()
+      this.startProxySessionAndSendIntroMessages()
+    },
+    formatTime: function (time) {
+      var minutes = time.slice(-2);
+      var hours24 = time.substr(0, time.indexOf(':'));
+      var ampm = (hours24 >= 12) ? 'pm' : 'am';
+      var hours12 = hours24 % 12;
+      if (hours12 == 0) {
+        hours12 = 12
+      }
+      return hours12 + ':' + minutes + ampm
+    },
+    messageForProvider: function () {
+      // ^^ Those crazy unicode characters are emojis :)
+      let msg = 'Hi ' + this.provider.firstName + '!! I\'m a parent from ' + this.network.name + ', I\'m looking for care for ' + this.numberOfChildren + ' ' + ((this.numberOfChildren > 1) ? 'children' : 'child') + ' ' + this.day + ' from ' + this.formatTime(this.startTime) + ' to ' + this.formatTime(this.endTime) + ', and I saw you were often available at these times. Would this work? Thanks! \ud83c\udf08\u26a1\ud83e\udd84'
+      return msg
+    },
+    acknowledgmentMessage: function () {
+      let msg = `We've just sent your request for childcare to ${this.provider.firstName} and they'll respond soon! You can send them additional information about your booking by texting this number.`
+      return msg
+    },
+    startProxySessionAndSendIntroMessages: function () {
+      // init twilio proxy session
+      // - both provider and careseeker should get messages welcoming them to proxy session
+      return api.initProxySession(
+        this.currentUserId,
+        this.providerId,
+        this.messageForProvider(),
+        this.acknowledgmentMessage()
+      )
+    },
+    saveBookingRequestToSpreadsheet: function () {
       client.create({
         "Requester ID": this.currentUser.id,
         "Requester Name": this.currentUser.firstName + ' ' + this.currentUser.lastInitial,
@@ -146,21 +167,6 @@ export default {
       }, (err) => {
         console.log(err)
       });
-    },
-    formatTime: function (time) {
-      var minutes = time.slice(-2);
-      var hours24 = time.substr(0, time.indexOf(':'));
-      var ampm = (hours24 >= 12) ? 'pm' : 'am';
-      var hours12 = hours24 % 12;
-      if (hours12 == 0) {
-        hours12 = 12
-      }
-      return hours12 + ':' + minutes + ampm
-    },
-    messageForPerson: function () {
-      // ^^ Those crazy unicode characters are emojis :)
-      let msg = 'Hi ' + this.provider.firstName + '!! I\'m a parent from ' + this.network.name + ', I\'m looking for care for ' + this.numberOfChildren + ' ' + ((this.numberOfChildren > 1) ? 'children' : 'child') + ' ' + this.day + ' from ' + this.formatTime(this.startTime) + ' to ' + this.formatTime(this.endTime) + ', and I saw you were often available at these times. Would this work? Thanks! \ud83c\udf08\u26a1\ud83e\udd84'
-      return msg
     },
   },
 };
