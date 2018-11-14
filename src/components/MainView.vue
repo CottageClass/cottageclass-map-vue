@@ -92,7 +92,10 @@ export default {
         "Requester ID": this.currentUser.id, 
         "Requester Name": this.currentUser.firstName + ' ' + this.currentUser.lastInitial,
         "Requester Phone": this.currentUser.phone,
-        "Time Chosen": this.dateTimeSelected,
+        "Date requested": moment(this.dateTimeSelected).format("L"),
+        "Time requested": moment(this.dateTimeSelected).format("LT"),
+        "Date submitted": moment(Date()).format("L"),
+        "Time submitted": moment(Date()).format("LT"),
         "Network": this.network.name,
         "Network Code": this.network.stub
       }, "preRequests").then((data) => {
