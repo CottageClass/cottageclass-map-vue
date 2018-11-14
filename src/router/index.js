@@ -71,6 +71,11 @@ export default new Router({
       name: 'Root',
       component: OAuthCallback
     },
+    {
+      path: '/splash',
+      name: 'Splash',
+      component: Splash
+    }
   ],
   scrollBehavior (to, from, savedPosition) {
     if (savedPosition) {

@@ -96,9 +96,7 @@ export default {
   methods: {
     continueOrShowSharingAsk: function () {
       if (this.invitationCode.isValid) {
-        // send user into app (ultimately this logic should change so that the homepage checks to see if the user has been fully onboarded, correct?)
-        console.log(this.invitationCode.isValid)
-        this.$router.push({ name: 'MainView' })
+        this.$router.push({ name: 'Splash' })
       } else {
         // show sharing ask
         this.step = this.inviteStep
