@@ -160,13 +160,14 @@ export default {
       if (this.invitationCode.code != "demo") {
         client.create({
           "ID": userId,
+          "Date joined": Date(),
           "address": this.location.fullAddress,
           "phone": this.phone.number,
           "children": this.children.list,
           "availability": this.availability,
           "activities": this.activities,
           "network": this.invitationCode.code,
-          "Seeker or Provider": this.seekerOrProvider.status,
+          "Seeker or provider": this.seekerOrProvider.status,
           "bookingRequest": this.bookingRequest
         }, "newUsers").then((data) => {
           console.log(data)
