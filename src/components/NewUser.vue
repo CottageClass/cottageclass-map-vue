@@ -157,7 +157,7 @@ export default {
       let userId = Token.currentUserId(this.$auth)
 
       // submit to sheetsu for KPI tracking, unless network is "demo"
-      if (this.invitationCode != "demo") {
+      if (this.invitationCode.code != "demo") {
         client.create({
           "ID": userId,
           "address": this.location.fullAddress,
@@ -165,7 +165,7 @@ export default {
           "children": this.children.list,
           "availability": this.availability,
           "activities": this.activities,
-          "network": this.invitationCode,
+          "network": this.invitationCode.code,
           "Seeker or Provider": this.seekerOrProvider.status,
           "bookingRequest": this.bookingRequest
         }, "newUsers").then((data) => {
