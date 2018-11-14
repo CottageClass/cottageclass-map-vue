@@ -1,5 +1,6 @@
 <template>
   <div class="body body-splash-2">
+  	<h1>Loading...</h1>
   </div>
 </template>
 

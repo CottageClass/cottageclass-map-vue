@@ -19,6 +19,7 @@ Vue.use(Router)
 // '/:networkId/' is a temporary hack. This should get reworked once we add multiple networks.
 
 export default new Router({
+  mode: 'history',
   routes: [
     {
       path: '/',
