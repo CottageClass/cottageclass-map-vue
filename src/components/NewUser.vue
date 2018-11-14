@@ -156,22 +156,24 @@ export default {
     submitData: function () {
       let userId = Token.currentUserId(this.$auth)
 
-      // submit to sheetsu
-      client.create({
-        "ID": userId,
-        "address": this.location.fullAddress,
-        "phone": this.phone.number,
-        "children": this.children.list,
-        "availability": this.availability,
-        "activities": this.activities,
-        "network": this.invitationCode,
-        "Seeker or Provider": this.seekerOrProvider.status,
-        "bookingRequest": this.bookingRequest
-      }, "newUsers").then((data) => {
-        console.log(data)
-      }, (err) => {
-        console.log(err)
-      });
+      // submit to sheetsu for KPI tracking, unless network is "demo"
+      if (this.invitationCode != "demo") {
+        client.create({
+          "ID": userId,
+          "address": this.location.fullAddress,
+          "phone": this.phone.number,
+          "children": this.children.list,
+          "availability": this.availability,
+          "activities": this.activities,
+          "network": this.invitationCode,
+          "Seeker or Provider": this.seekerOrProvider.status,
+          "bookingRequest": this.bookingRequest
+        }, "newUsers").then((data) => {
+          console.log(data)
+        }, (err) => {
+          console.log(err)
+        });
+      }
 
       // in parallel, submit to backend
       let address = this.location.fullAddress
