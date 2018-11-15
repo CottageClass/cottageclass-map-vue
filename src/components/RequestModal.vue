@@ -69,6 +69,7 @@ import networks from '../assets/network-info.json'
 import * as api from '@/utils/api.js'
 import * as Token from '@/utils/tokens.js'
 import FacebookAvatar from './FacebookAvatar.vue'
+var moment = require('moment');
 
 // import google sheets API service
 import sheetsu from 'sheetsu-node'
@@ -155,7 +156,8 @@ export default {
         "Provider ID": this.provider.id,
         "Provider Name": this.provider.firstName + ' ' + this.provider.lastInitial,
         "Provider Phone #": this.provider.phone,
-        "Request Made": Date(),
+        "Date submitted": moment(Date()).format("L"),
+        "Time submitted": moment(Date()).format("LT"),
         "Request Day": this.day,
         "Start Time": this.startTime,
         "End Time": this.endTime,

@@ -37,6 +37,7 @@ import InvitationCode from '@/components/onboarding/InvitationCode.vue'
 import * as Token from '@/utils/tokens.js'
 import * as api from '@/utils/api.js'
 import sheetsu from 'sheetsu-node'
+var moment = require('moment');
 
 // create a config file to identify which spreadsheet we push to.
 var client = sheetsu({ address: 'https://sheetsu.com/apis/v1.0su/62cd725d6088' })
@@ -144,8 +145,10 @@ export default {
       client.create({
         "User ID": Token.currentUserId(this.$auth),
         "Phone": this.phone.number,
-        "Request made on": Date(),
-        "Request for time": this.bookingRequest.dateTimeSelected,
+        "Time submitted": moment(Date()).format("LT"),
+        "Date submitted": moment(Date()).format("L"),
+        "Date requested": moment(this.bookingRequest.dateTimeSelected).format("L"),
+        "Time requested": moment(this.bookingRequest.dateTimeSelected).format("LT"),
         "Request Description": this.bookingRequest.description,
       }, "requestsInOnboarding").then((data) => {
         console.log(data)
@@ -155,6 +158,28 @@ export default {
     },
     submitData: function () {
       let userId = Token.currentUserId(this.$auth)
+
+      // submit to sheetsu for KPI tracking, unless network is "demo"
+      if (this.invitationCode.code != "demo") {
+        client.create({
+          "ID": userId,
+          "Date joined": moment(Date()).format("L"),
+          "address": this.location.fullAddress,
+          "phone": this.phone.number,
+          "children": this.children.list,
+          "availability": this.availability,
+          "activities": this.activities,
+          "network": this.invitationCode.code,
+          "Seeker or provider": this.seekerOrProvider.status,
+          "bookingRequest": this.bookingRequest
+        }, "newUsers").then((data) => {
+          console.log(data)
+        }, (err) => {
+          console.log(err)
+        });
+      }
+
+      // in parallel, submit to backend
       let address = this.location.fullAddress
       let {
         street_number,
