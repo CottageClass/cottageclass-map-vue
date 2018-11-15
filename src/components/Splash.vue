@@ -3,7 +3,7 @@
   <div class="div-block-4">
     <div class="div-block-5"><img src="../assets/cc-logo-vert-inverse.svg">
       <div class="splash-content-1">
-        <div class="splash-text-50">Welcome to <strong>{{ network.name }}</strong> on CareShare by <a href="https://cottageclass.com">CottageClass</a>. We're testing out a new way to share childcare within a trusted networks of parents and friends. Just browse the list of parents available, then reach out to book care. Are you ready to try it?<br><br>(Parents pay ${{ network.price }}/hour for time used and providers receive ${{ (network.price - network.price * network.percentage).toFixed(2) }}/hour, with 50% off for siblings.)</div>
+        <div class="splash-text-50">Welcome to <strong>{{ network.name }}</strong> on CareShare by <a href="https://cottageclass.com">CottageClass</a>. We're testing out a new way to share childcare within a trusted network of parents and friends. Just browse the list of parents available, then reach out to book care. Are you ready to try it?<br><br>(Parents pay ${{ network.price }}/hour for time used and providers receive ${{ (network.price - network.price * network.percentage).toFixed(2) }}/hour, with 50% off for siblings.)</div>
       </div>
     </div>
     <a href="#" class="splash-button w-inline-block">
@@ -14,14 +14,14 @@
 </template>
 
 <script>
-import networks from '../assets/network-info.json'
+import networks from '@/assets/network-info.json'
+import * as Token from '@/utils/tokens.js'
 
 export default {
 	name: 'Splash',
   data () {
     return {
       networks: networks,
-      userNetwork: "demo" //eventually this will be user.network
     }
   },
   created: function () {
@@ -32,7 +32,8 @@ export default {
   },
   computed: {
     network: function () {
-      return this.networks.find(network => network.stub === this.userNetwork)
+      let networkId = Token.currentUserNetworkCode(this.$auth)
+      return this.networks.find(network => network.stub == networkId)
     }
   }
 };

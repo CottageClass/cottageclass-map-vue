@@ -3,7 +3,7 @@
   <div class="div-block-4">
     <div class="div-block-5"><img src="../assets/cc-logo-vert-inverse.svg">
       <div class="splash-content-1">
-        <div class="splash-text-50">Welcome to CareShare by <a href="https://cottageclass.com">CottageClass</a>. Unfortunately, it looks like you're accessing this site from a computer and not a phone. If you're really sure you'd like to continue that's okay with us, but things might look funny, and you won't be able to message folks. Is that okay?<br><br>
+        <div class="splash-text-50">Welcome to CareShare by <a href="https://cottageclass.com">CottageClass</a>. It looks like you're accessing this site from a computer and not a phone. If you're really sure you'd like to continue that's okay with us, but things might look funny and there might be some issues. Is that okay?<br><br>
         (P.S. If you'd like us to re-send the link to your phone, call or text ‭1-862-294-4859‬.)</div>
       </div>
     </div>
