@@ -1,3 +1,4 @@
+var sslRedirect = require('heroku-ssl-redirect');
 var express = require('express');
 var path = require('path');
 const history = require('connect-history-api-fallback')
@@ -5,6 +6,10 @@ const history = require('connect-history-api-fallback')
 var serveStatic = require('serve-static');
 
 app = express();
+
+// enable ssl redirect
+app.use(sslRedirect());
+
 const staticFileMiddleware = express.static(path.join(__dirname + "/dist"))
 // app.use(serveStatic(__dirname + "/dist"));
 
