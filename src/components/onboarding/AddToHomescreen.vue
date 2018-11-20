@@ -1,19 +1,9 @@
 <template>
-  <div class="onb-arrow-animation-container"><img src="../assets/Comp_2.gif" height="60" alt=""></div>
-
-  <div class="onb-title-bar"><a @click="prevStep" class="onb-title-bar-back-button w-inline-block"></a>
-    <span>
-    <a @click="nextStep" class="onb-title-bar-next-button w-inline-block">
-      <div class="onb-title-bar-next-button-text">NEXT</div>
-    </a>
-  </span>
-  </div>
-
-
   <div class="onb-content-container _100vh">
+      <div class="onb-arrow-animation-container"><img src="@/assets/Comp_2.gif" height="60" alt=""></div>
     <div class="onb-top-content-container">
       <h1 class="onb-heading-large">Add the App</h1>
-      <p class="onb-paragraph-subheading-2">Add CottageClass to your home screen</p>
+      <p class="onb-paragraph-subheading-2">Add the app to your homescreen, so that high quality childcare will be just a click away!</p>
     </div>
 
     <div class="onb-step-container">
@@ -38,3 +28,11 @@ export default {
   name: "AddToHomescreen",
 };
 </script>
+
+<style scoped>
+
+.onb-step-text {
+  color: #fff;
+}
+
+</style>
