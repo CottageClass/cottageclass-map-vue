@@ -17,8 +17,7 @@
       <Availability v-if="step === 6" v-model="availability" />
       <Activities v-if="step === 7" v-model="activities" />
       <InvitationCode v-if="step === 8" v-model="invitationCode" />
-      <AddToHomescreen v-if="step === 9" />
-      <Invite v-if="step === 10" />
+      <Invite v-if="step === 9" />
     </div>
   </span>
 </template>
@@ -35,7 +34,6 @@ import Availability from '@/components/onboarding/Availability.vue'
 import Activities from '@/components/onboarding/Activities.vue'
 import Invite from '@/components/onboarding/Invite.vue'
 import InvitationCode from '@/components/onboarding/InvitationCode.vue'
-import AddToHomescreen from '@/components/onboarding/AddToHomescreen.vue'
 import * as Token from '@/utils/tokens.js'
 import * as api from '@/utils/api.js'
 import sheetsu from 'sheetsu-node'
@@ -47,13 +45,13 @@ var client = sheetsu({ address: 'https://sheetsu.com/apis/v1.0su/62cd725d6088' }
 
 export default {
   components: {
-    Nav, Login, SeekerOrProvider, BookCare, Location, Phone, Children, Availability, Activities, Invite, InvitationCode, AddToHomescreen
+    Nav, Login, SeekerOrProvider, BookCare, Location, Phone, Children, Availability, Activities, Invite, InvitationCode
   },
   data () {
     return {
       step: 0,
-      lastStep: 9,
-      inviteStep: 10,
+      lastStep: 8,
+      inviteStep: 9,
       phoneStep: 3,
       afterLastStep: '../demo/home/',
       showError: false,
@@ -252,6 +250,12 @@ export default {
     }
   },
   computed: {
+    isMobileSafari: function () {
+      var ua = navigator.userAgent;
+      var iOS = !!ua.match(/iPad/i) || !!ua.match(/iPhone/i);
+      var webkitUa = !!ua.match(/WebKit/i);
+      return typeof webkit !== 'undefined' && iOS && webkit && !ua.match(/CriOS/i);
+    },
     error: function () {
       switch (this.step) {
         case 1:
