@@ -66,6 +66,8 @@ export default {
         "Request Description": this.bookingRequest.description,
       }, "generalRequests").then((data) => {
         console.log(data)
+        alert("Request sent. You'll hear from us shortly!")
+        this.$router.push('home')
       }, (err) => {
         console.log(err)
       });
