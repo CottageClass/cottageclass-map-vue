@@ -13,6 +13,7 @@ import HowItWorks from '@/components/HowItWorks.vue'
 import DesktopWarningSplash from '@/components/DesktopWarningSplash.vue'
 import NewUser from '@/components/NewUser.vue'
 import TabNav from '@/components/TabNav.vue'
+import AddToHomescreen from '@/components/AddToHomescreen.vue'
 
 Vue.use(Router)
 
@@ -75,6 +76,11 @@ export default new Router({
       path: '/splash',
       name: 'Splash',
       component: Splash
+    },
+    {
+      path: '/add-to-homescreen',
+      name: 'AddToHomescreen',
+      component: AddToHomescreen
     }
   ],
   scrollBehavior (to, from, savedPosition) {
