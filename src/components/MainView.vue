@@ -37,7 +37,7 @@
  <!-- request care button -->
 
    <div class="fb-container">
-    <a @click="requestCare" class="fb-button w-inline-block"><img src="@/assets/add.svg" width="24" height="24" alt="" /><div class="fb-button-text">Request care</div></a>
+    <a @click="requestCare" class="fb-button w-inline-block"><span><img src="@/assets/request-care-white.svg" width="24" height="24" alt="" /><span class="fb-button-text">Request care</span></span></a>
 <!--        <div class="tos-acceptance">
       (By signing in you agree to our <a href="https://cottageclass.com/terms-of-service">Terms of Service</a> and <a href="https://cottageclass.com/privacy-policy">Privacy Policy</a>)
     </div> --> 
@@ -143,17 +143,12 @@ export default {
 }
 
 .fb-button {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
+  text-align: center;
+  max-width: 500px;
+  width: 100%;
   padding: 12px 24px 12px 16px;
-  -webkit-box-align: center;
-  -webkit-align-items: center;
-  -ms-flex-align: center;
-  align-items: center;
   border-radius: 4px;
-  background-color: #1f88e9;
+  background-color: #64426B;
   color: #fff;
   text-decoration: none;
 }
