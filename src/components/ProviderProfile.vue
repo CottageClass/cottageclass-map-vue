@@ -102,7 +102,7 @@
 
   <div class="providerp-post-comment-container"><a :href="'mailto:contact@cottageclass.com?subject=Great experience with ' + person.firstName + ' ' + person.lastInitial + '. (' + person.id + ')&body=(please%20describe%20your%20great%20experience%20here!)'" class="pprofile-compose-button w-inline-block"><img src="../assets/compose.svg" class="image-5"><div class="pprofile-comment-prompt-button-text">Post a great experience</div></a>
     <div class="providerp-book-care-container">
-      <router-link :to="{ name: 'RequestModal', params: { id: person.id }}" class="pprovider-book-care-button w-inline-block"><img src="../assets/chat.svg"><div class="pprovider-primary-action-text">Book Care</div>
+      <router-link :to="{ name: 'RequestModal', params: { id: person.id }}" class="pprovider-book-care-button w-inline-block"><img src="../assets/request-care-white.svg"><div class="pprovider-primary-action-text">Ask {{ person.firstName }}</div>
       </router-link>
     </div>
   </div>
@@ -1811,8 +1811,7 @@ a {
   display: -ms-flexbox;
   display: flex;
   width: 100%;
-  padding-top: 10px;
-  padding-bottom: 10px;
+  padding: 10px 10px;
   -webkit-box-orient: horizontal;
   -webkit-box-direction: normal;
   -webkit-flex-direction: row;
@@ -1830,6 +1829,7 @@ a {
 }
 
 .pprovider-book-care-button {
+  height: 48px;
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -1849,18 +1849,18 @@ a {
   -ms-flex-align: center;
   align-items: center;
   border-radius: 4px;
-  background-color: #deedfc;
+  background-color: #64426B;
+  width: 100%;
 }
 
 .pprovider-primary-action-text {
   margin-left: 8px;
-  color: #1f88e9;
+  color: #fff;
   font-size: 13px;
   font-weight: 700;
   text-align: center;
   letter-spacing: 1.2px;
   text-decoration: none;
-  text-transform: uppercase;
 }
 
 .pprofile-compose-button {
