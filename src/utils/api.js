@@ -89,6 +89,7 @@ function createPersonObject (personInApi) {
     networkCode: p.network_code,
     dateCreated: p.date_created,
     hasAllRequiredFields: hasAllRequiredFields(),
+    blurb: p.profile_blurb
   }
 }
 
