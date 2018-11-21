@@ -10,7 +10,7 @@
         <div class="onb-error-text">{{ error }}</div>
       </div>
       <SeekerOrProvider v-if="step === 1" v-model="seekerOrProvider"/>
-      <BookCare v-if="step === 2" v-model="bookingRequest"/>
+      <RequestCare v-if="step === 2" v-model="bookingRequest"/>
       <Phone v-if="step === 3" v-model="phone" />
       <Location v-if="step === 4" v-model="location"/>
       <Children v-if="step === 5" v-model="children" />
@@ -26,7 +26,7 @@
 import Nav from '@/components/onboarding/Nav.vue'
 import Login from '@/components/onboarding/Login.vue'
 import SeekerOrProvider from '@/components/onboarding/SeekerOrProvider.vue'
-import BookCare from '@/components/onboarding/BookCare.vue'
+import RequestCare from '@/components/onboarding/RequestCare.vue'
 import Location from '@/components/onboarding/Location.vue'
 import Phone from '@/components/onboarding/Phone.vue'
 import Children from '@/components/onboarding/Children.vue'
@@ -45,7 +45,7 @@ var client = sheetsu({ address: 'https://sheetsu.com/apis/v1.0su/62cd725d6088' }
 
 export default {
   components: {
-    Nav, Login, SeekerOrProvider, BookCare, Location, Phone, Children, Availability, Activities, Invite, InvitationCode
+    Nav, Login, SeekerOrProvider, RequestCare, Location, Phone, Children, Availability, Activities, Invite, InvitationCode
   },
   data () {
     return {
@@ -60,7 +60,8 @@ export default {
       bookingRequest: {
         dateTimeSelected: null,
         description: "",
-        err: "skippable"
+        err: "skippable",
+        showCountdownPromo: true
       },
       location: {},
       phone: {},

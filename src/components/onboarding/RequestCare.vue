@@ -11,7 +11,7 @@
         <textarea v-model="bookingRequest.description" id="field" name="field" placeholder="Describe your need and schedule here." maxlength="5000" class="text-area-decribe-need w-input"></textarea>
       </form>
     </div>
-    <CountdownPromo/>
+    <CountdownPromo v-if="bookingRequest.showCountdownPromo" />
   </div>
 </div>
 </template>
@@ -21,7 +21,7 @@ import CountdownPromo from '@/components/onboarding/CountdownPromo.vue'
 import DateTimePicker from '@/components/DateTimePicker.vue'
 
 export default {
-  name: 'BookCare',
+  name: 'RequestCare',
   props: ['value'],
   components: { CountdownPromo, DateTimePicker },
   data () {
