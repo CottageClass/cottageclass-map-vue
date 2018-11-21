@@ -231,6 +231,7 @@ export default {
         availableEvenings: this.availability.evenings,
         availableWeekends: this.availability.weekends,
         networkCode: this.invitationCode.code,
+        profileBlurb: this.blurb.text
       }
 
       if (this.children.list && this.children.list.length > 0) {
