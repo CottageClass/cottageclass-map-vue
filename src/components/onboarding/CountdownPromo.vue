@@ -1,10 +1,10 @@
 <template>
-  <div class="promo-container"><img src="@/assets/free.svg" alt="" class="image-free-tag">
+  <div v-if="showPromo" class="promo-container"><img src="@/assets/free.svg" alt="" class="image-free-tag">
     <div class="counter-title">Book in 24 hours for a free first day!</div>
     <div class="counter-subtitle">You're welcome! Offer expires in...</div>
     <div class="counter">
       <div class="counter-item">
-        <div id="hour-count" class="count">23</div>
+        <div id="hour-count" class="count">{{ hours }}</div>
         <div class="label-time-interval">Hours</div>
       </div>
       <div class="counter-item">
@@ -20,24 +20,39 @@
 </template>
 
 <script>
+import * as Token from '@/utils/tokens.js'
+import * as api from '@/utils/api.js'
+var moment = require('moment');
+
 export default {
   name: 'CountdownPromo',
   data () {
     return {
-      seconds: 59,
-      minutes: 59
+      currentUser: {},
+      currentUserId: Token.currentUserId(this.$auth),
+      dateCreated: Date(),
+      showPromo: false,
+      hours: 23,
+      minutes: 59,
+      seconds: 59
     }
   },
   mounted: function () {
     setInterval(() => {
-      if (this.seconds > 0) {
-        this.seconds = this.seconds - 1
-      } else {
-        this.seconds = 59
-        this.minutes = this.minutes - 1
-      }
+      var now = new moment()
+      var promoExpires = new moment(this.currentUser.dateCreated).add(24, 'hours')
+      var duration = moment.duration(promoExpires.diff(now))
+      this.showPromo = moment().isBefore(promoExpires)
+      this.hours = duration.hours()
+      this.minutes = duration.minutes()
+      this.seconds = duration.seconds()
     }, 1000)
-  }
+    // fetch current user
+    api.fetchCurrentUser(this.currentUserId)
+      .then(person => {
+        this.currentUser = person
+      })
+  },
 };
 </script>
 

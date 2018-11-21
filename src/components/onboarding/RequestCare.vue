@@ -11,7 +11,7 @@
         <textarea v-model="bookingRequest.description" id="field" name="field" placeholder="Describe your need and schedule here." maxlength="5000" class="text-area-decribe-need w-input"></textarea>
       </form>
     </div>
-    <CountdownPromo v-if="bookingRequest.showCountdownPromo" />
+    <CountdownPromo />
   </div>
 </div>
 </template>
