@@ -34,11 +34,12 @@ export default {
       showPromo: false,
       hours: 23,
       minutes: 59,
-      seconds: 59
+      seconds: 59,
+      interval: null
     }
   },
   mounted: function () {
-    setInterval(() => {
+    this.interval = setInterval(() => {
       var now = new moment()
       var promoExpires = new moment(this.currentUser.dateCreated).add(24, 'hours')
       var duration = moment.duration(promoExpires.diff(now))
@@ -46,13 +47,17 @@ export default {
       this.hours = duration.hours()
       this.minutes = duration.minutes()
       this.seconds = duration.seconds()
-    }, 1000)
+      console.log(duration)
+    }, 1000);
     // fetch current user
     api.fetchCurrentUser(this.currentUserId)
       .then(person => {
         this.currentUser = person
       })
   },
+  beforeDestroy: function () {
+    clearInterval(this.interval)
+  }
 };
 </script>
 
