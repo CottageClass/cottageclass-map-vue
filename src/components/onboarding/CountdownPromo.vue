@@ -47,7 +47,6 @@ export default {
       this.hours = duration.hours()
       this.minutes = duration.minutes()
       this.seconds = duration.seconds()
-      console.log(duration)
     }, 1000);
     // fetch current user
     api.fetchCurrentUser(this.currentUserId)
