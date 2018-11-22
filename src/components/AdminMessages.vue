@@ -128,7 +128,15 @@ export default {
     fetchAllUsers: function () {
       return api.fetchAllUsers()
         .then(personObjects => {
-          this.users = personObjects
+          let sortedPeople = personObjects.sort((a,b) => {
+            if (a.lastInitial === b.lastInitial) {
+              return (a.firstName[0] >= b.firstName[0] ? 1 : -1)
+            }
+            else {
+              return (a.lastInitial >= b.lastInitial ? 1 : -1)
+            }
+          })
+          this.users = sortedPeople
         })
     },
     parseDate: function (datetime) {
