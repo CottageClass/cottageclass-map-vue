@@ -1,9 +1,8 @@
 import Vue from 'vue'
+import camelcaseKeys from 'camelcase-keys'
 import * as Token from './tokens.js'
-var moment = require('moment');
 
-// TODO: this should be a local variable in a larger function that combines createperson and create people.
-var childrenInNetwork = []
+var moment = require('moment');
 
 /*
  * PROXY SESSIONS
@@ -35,7 +34,7 @@ export function initProxySession(currentUserId, receiverId, requestMessage, ackn
  * USERS
  */
 
-function createPersonObject (personInApi) {
+function createPersonObject (personInApi, availableChildren = []) {
   var p = personInApi.attributes
   let hasAllRequiredFields = function () {
     if (p.phone && p.facebook_id && p.latitude && p.longitude && p.network_code) {
@@ -55,15 +54,19 @@ function createPersonObject (personInApi) {
         age: childAge(child.attributes.birthday)
       }
     }
-    return childrenInNetwork.filter(child => child.attributes.parent_id == personInApi.id).map(parseChild)
+    return availableChildren.filter(child => child.attributes.parent_id == personInApi.id).map(parseChild)
     // make sure this is an array.
   }
+
+  let activities = p.activities || []
+  activities = activities.map(activity => activity.replace(/_/g, " "))
+
   return {
     agreeTos: p.agree_tos,
     id: personInApi.id,
     firstName: p.first_name,
     lastInitial: p.last_name[0],
-    activities: p.activities.map(activity => activity.replace(/_/g, " ")),
+    activities: activities,
     availableMornings: p.available_mornings,
     availableEvenings: p.available_evenings,
     availableAfternoons: p.available_afternoons,
@@ -92,9 +95,12 @@ function createPersonObject (personInApi) {
   }
 }
 
-function createPeopleObject (data) {
-  let peopleDataArray = Object.values(data.data)
-  return peopleDataArray.map(createPersonObject)
+// parses responseData into peopleArray and childrenArray
+function createPeopleObject (responseData) {
+  let peopleDataArray = responseData.data
+  let included = responseData.included || []
+  let childrenArray = included.filter(obj => obj.type === "child")
+  return peopleDataArray.map(personInApi => createPersonObject(personInApi, childrenArray))
 }
 
 export function fetchUsersInNetwork(networkId) {
@@ -103,12 +109,11 @@ export function fetchUsersInNetwork(networkId) {
   ).then(res => {
     console.log("FETCH USERS IN NETWORK SUCCESS")
     console.log(res.data)
-    childrenInNetwork = res.data.included.filter(obj => obj.type === "child")
-    // set this.people in the function that called us
     return createPeopleObject(res.data)
   }).catch(err => {
     console.log("FETCH USERS IN NETWORK FAILURE")
     console.log(err.errors)
+    throw err
   })
 }
 
@@ -118,12 +123,11 @@ export function fetchUsersWhoHaveMadeInquiries(currentUserId) {
     ).then(res => {
       console.log("FETCH USERS WHO HAVE MADE INQUIRIES SUCCESS")
       console.log(res.data)
-          childrenInNetwork = res.data.included.filter(obj => obj.type === "child")
-          // set this.people in the function that called us
           return createPeopleObject(res.data)
         }).catch(err => {
           console.log("FETCH USERS WHO HAVE MADE INQUIRIES FAILURE")
           console.log(err.errors)
+          throw err
         })
 }
 
@@ -137,5 +141,6 @@ export function fetchCurrentUser(userId) {
   }).catch(err => {
     console.log("FETCH CURRENT USER FAILURE")
     console.log(err.errors)
+    throw err
   })
 }
