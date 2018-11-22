@@ -15,7 +15,7 @@ import NewUser from '@/components/NewUser.vue'
 import TabNav from '@/components/TabNav.vue'
 import RequestModal2 from '@/components/RequestModal2.vue'
 import RequestRecipients from '@/components/RequestRecipients.vue'
-
+import AdminMessages from '@/components/AdminMessages.vue'
 
 Vue.use(Router)
 
@@ -88,6 +88,13 @@ export default new Router({
       path: '/request-recipients',
       name: 'RequestRecipients',
       component: RequestRecipients
+    },
+    // Admin Routes
+    {
+      path: '/admin-messages',
+      name: 'AdminMessages',
+      component: AdminMessages,
+      // NB: this route has beforeRouteEnter redirect in the component
     }
   ],
   scrollBehavior (to, from, savedPosition) {
