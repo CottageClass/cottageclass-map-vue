@@ -144,3 +144,48 @@ export function fetchCurrentUser(userId) {
     throw err
   })
 }
+
+// backend requires user to be an admin
+export function fetchAllUsers() {
+  return Vue.axios.get(
+    `${process.env.BASE_URL_API}/users`
+  ).then(res => {
+    console.log("FETCH ALL USERS SUCCESS")
+    console.log(createPeopleObject(res.data))
+    return createPeopleObject(res.data)
+  }).catch(err => {
+    console.log("FETCH ALL USERS FAILURE")
+    console.log(err.errors)
+    throw err
+  })
+}
+
+/*
+ * MESSAGES
+ */
+
+function createMessagesObject(msgListFromApi) {
+  return msgListFromApi.map(createMessageObject)
+}
+
+function createMessageObject(msgFromApi) {
+  return {
+    id: msgFromApi.id,
+    ...camelcaseKeys(msgFromApi.attributes, {deep: true})
+  }
+}
+
+export function fetchMessagesForUserPair(participantId1, participantId2) {
+  return Vue.axios.get(
+    `${process.env.BASE_URL_API}/users/${participantId1}/messages/${participantId2}`
+  ).then(res => {
+    console.log("FETCH Messages for User Pair SUCCESS")
+    console.log(createMessagesObject(res.data.data))
+    return createMessagesObject(res.data.data)
+  }).catch(err => {
+    console.log("FETCH Messages for User Pair FAILURE")
+    console.log(err)
+    console.log(err.errors)
+    throw err
+  })
+}
