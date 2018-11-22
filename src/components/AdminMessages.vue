@@ -90,18 +90,23 @@ export default {
     }
   },
   mounted: function () {
-    this.fetchAllUsers()
-      .then(res => {
-        this.loading = false
-        this.possiblyFetchMessages()
-      })
+    // for some reason we don't have the token on mount
+    if (Token.isLoggedIn(this.$auth)) {
+      this.onMount()
+    } else {
+      setTimeout(this.onMount, 1000)
+    }
   },
   methods: {
+    onMount: function () {
+      this.fetchAllUsers()
+        .then(res => {
+          this.loading = false
+          this.possiblyFetchMessages()
+        })
+    },
     // fetch messages if have both pair IDs
     possiblyFetchMessages: function () {
-      console.log("POSSBLY FETCHING MESSAGES")
-      console.log(this.participantId1)
-      console.log(this.participantId2)
       if (
         this.participantId1 && this.participantId2 &&
         this.participantId1 > 0 &&
