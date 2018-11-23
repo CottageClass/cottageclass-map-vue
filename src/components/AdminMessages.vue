@@ -5,7 +5,7 @@
     </div>
     <div>
       <!-- populate a list here -->
-      <select
+      From: <select
         v-model="participantId1"
         @change="possiblyFetchMessages()"
       >
@@ -18,7 +18,7 @@
         </option>
       </select>
 
-      <select
+      &nbsp;To: &nbsp;<select
         v-model="participantId2"
         @change="possiblyFetchMessages()"
       >
