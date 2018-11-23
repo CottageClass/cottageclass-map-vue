@@ -6,7 +6,7 @@
       <div class="list-item-3-heading">
         <h5 class="heading">{{ person.firstName }} {{ person.lastInitial }}.</h5>
       </div>
-    </div><router-link :to="{ name: 'RequestModal', params: { id: person.id }}"  class="button-send-message w-inline-block"><img src="../assets/chat.svg" class="image-4"><div class="list-item-1-button">Book</div></router-link></div>
+    </div><router-link :to="{ name: 'RequestModal', params: { id: person.id }}"  class="button-send-message w-inline-block"><img src="../assets/request-care-blue.svg" class="image-4"><div class="list-item-1-button">Ask</div></router-link></div>
   <Images :person="person" />
   <div class="list-item-container-2">
     <div class="title-bar-and-action-v2">

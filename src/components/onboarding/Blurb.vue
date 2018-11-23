@@ -2,43 +2,55 @@
 <div class="body">
   <div class="content-container">
     <div class="title-container">
-      <h1 class="title">When do you need care?</h1>
+      <h1 class="title">Tell us a bit about yourself.</h1>
     </div>
-    <DateTimePicker v-model="bookingRequest.dateTimeSelected"/>
     <div class="form-describe-need w-form">
       <form v-on:submit.prevent id="email-form-2">
-        <p class="describe-label">Need care on multiple days?</p>
-        <textarea v-model="bookingRequest.description" id="field" name="field" placeholder="Describe your need and schedule here." maxlength="5000" class="text-area-decribe-need w-input"></textarea>
+        <p class="describe-label">{{ charsLeft }} characters left...</p>
+        <textarea v-model="blurb.text" id="field" name="field" placeholder="What makes you special as a parent or a caregiver?" maxlength="5000" class="text-area-decribe-need w-input"></textarea>
       </form>
     </div>
-    <CountdownPromo/>
   </div>
 </div>
 </template>
 
 <script>
-import CountdownPromo from '@/components/onboarding/CountdownPromo.vue'
-import DateTimePicker from '@/components/DateTimePicker.vue'
 
 export default {
-  name: 'BookCare',
+  name: 'Blurb',
   props: ['value'],
-  components: { CountdownPromo, DateTimePicker },
   data () {
     return {
-      bookingRequest: this.value
+      blurb: this.value,
+      charLimit: 288,
+      noTextErrorMsg: 'Please give us some description of yourself. It can be really short!'
     }
   },
+  mounted: function () {
+    this.$emit('input', { err: this.noTextErrorMsg })
+  },
   watch: {
-    bookingRequest: {
+    blurb: {
       handler: function () {
-        if (this.bookingRequest.description || this.bookingRequest.dateTimeSelected) {
-          this.bookingRequest.err = false
-        } else if (this.bookingRequest.description == "" && this.bookingRequest.dateTimeSelected == null) {
-          this.bookingRequest.err = "skippable"
+        if (this.blurb.text && this.blurb.text.length >= this.charLimit) {
+          this.blurb.err = 'Sorry! Your description needs to be shorter than ' + this.charLimit + ' characters. Can you make it shorter?'
+        } else if (this.blurb.text) {
+          this.blurb.err = false
+        } else {
+          this.blurb.err = this.noTextErrorMsg
         }
+        this.$emit('input', { err: this.blurb.err, text: this.blurb.text })
       },
       deep: true
+    }
+  },
+  computed: {
+    charsLeft: function () {
+      if (this.blurb.text) {
+      return this.charLimit - this.blurb.text.length
+    } else {
+      return this.charLimit
+    }
     }
   }
 };

@@ -19,13 +19,6 @@
     </GmapMap>
   </div>
 
-    <!-- availability -->
-
-    <div class="availability-container-v2">
-      <h1 class="landing-page-v2-h1">When do you need childcare?</h1>
-      <DateTimePicker v-model="dateTimeSelected"/>
-    </div>
-
   <!-- the list -->
 
   <div class="list-container">
@@ -37,10 +30,20 @@
 
   <!-- share button -->
 
-  <ShareButton/>
+  <ShareButton />
     <br><br>
     <h5 class="heading-2">Map data &#169; 2018 Google (<a href="https://www.google.com/intl/en-US_US/help/terms_maps.html">terms of use</a> - <a href="https://www.google.com/maps/@40.6782,-73.9442,12z/data=!10m2!1e3!2e10!12b1?rapsrc=apiv3">report a map error</a>)</h5>
+
+ <!-- request care button -->
+
+   <div class="fb-container">
+    <router-link to="/request" class="fb-button w-inline-block"><span><img src="@/assets/request-care-white.svg" width="24" height="24" alt="" /><span class="fb-button-text">Request care</span></span></router-link>
+<!--        <div class="tos-acceptance">
+      (By signing in you agree to our <a href="https://cottageclass.com/terms-of-service">Terms of Service</a> and <a href="https://cottageclass.com/privacy-policy">Privacy Policy</a>)
+    </div> --> 
   </div>
+</div>
+
 </template>
 
 <script>
@@ -66,7 +69,6 @@ export default {
   components: { Provider, RequestModal, ShareButton, DateTimePicker },
   data () {
     return {
-      dateTimeSelected: null,
       people: [], // gets updated on mount by fetchUsersInNetwork
       networks: networks, // to bring from import into vue model
       mapOptions: { // move this to map component when i separate it.
@@ -77,32 +79,10 @@ export default {
       currentUser: {}
     }
   },
-  watch: {
-    dateTimeSelected: function () {
-      window.scrollTo({
-        top: 367,
-        behavior: "smooth"
-      });
-      this.submitTimeChosen()
-    }
-  },
   methods: {
-    submitTimeChosen: function () {
-      client.create({
-        "Requester ID": this.currentUser.id, 
-        "Requester Name": this.currentUser.firstName + ' ' + this.currentUser.lastInitial,
-        "Requester Phone": this.currentUser.phone,
-        "Date requested": moment(this.dateTimeSelected).format("L"),
-        "Time requested": moment(this.dateTimeSelected).format("LT"),
-        "Date submitted": moment(Date()).format("L"),
-        "Time submitted": moment(Date()).format("LT"),
-        "Network": this.network.name,
-        "Network Code": this.network.stub
-      }, "preRequests").then((data) => {
-        console.log(data)
-      }, (err) => {
-        console.log(err)
-      });
+    requestCare: function () {
+      // stub
+      console.log("open request care screen")
     }
   },
   mounted: function () {
@@ -116,49 +96,11 @@ export default {
       let networkId = Token.currentUserNetworkCode(this.$auth)
       return this.networks.find(network => network.stub == networkId)
     },
-     daySelected: function () {
-      return moment(this.dateTimeSelected).day()
-    },
-    hourSelected: function () {
-      return moment(this.dateTimeSelected).hour()
-    },
-    timeSlotSelected: function () {
-      if (this.daySelected == 0 || this.daySelected == 6) {
-        return "weekends"
-      } else {
-        if (this.hourSelected < 15 && this.hourSelected >= 7) {
-          return "mornings"
-        } else if (this.hourSelected < 19 && this.hourSelected >= 14) {
-          return "afternoons"
-        } else if (this.hourSelected >= 19 || this.hourSelected < 7) {
-          return "evenings" 
-        } else {
-          return "allTimes"
-        }
-      }
-    },
     peopleAvailable: function () {
-      if (this.timeSlotSelected == "allTimes") {
-        return this.people.filter(person => person.availableMornings || person.availableAfternoons || person.availableEvenings || person.availableWeekends)
-      } else if (this.timeSlotSelected == "mornings") {
-        return this.people.filter(person => person.availableMornings)
-      } else if (this.timeSlotSelected == "afternoons") {
-        return this.people.filter(person => person.availableAfternoons)
-      } else if (this.timeSlotSelected == "evenings") {
-        return this.people.filter(person => person.availableEvenings)
-      } else if (this.timeSlotSelected == "weekends") {
-        return this.people.filter(person => person.availableWeekends)
-      }
+      return this.people.filter(person => person.availableMornings || person.availableAfternoons || person.availableEvenings || person.availableWeekends)
     },
     providersSectionTitle: function () {
-      if (this.dateTimeSelected == null) {
-        return "Providers in \"" + this.network.name + "\""
-      } else {
-        var aMoment = moment(this.dateTimeSelected)
-        var day = aMoment.format("dddd")
-        var time = aMoment.format("h:mm a")
-        return "The following providers in \"" + this.network.name + "\" are typically available at " + time + " on " + day + "s."
-      }
+      return "Providers in \"" + this.network.name + "\""
     }
   }
 };
@@ -167,6 +109,63 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 
 <style scoped>
+
+.group-title-container {
+  padding-top: 24px;
+}
+
+.fb-container {
+  position: fixed;
+  left: 0px;
+  right: 0px;
+  bottom: 0px;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  width: 100%;
+  padding: 10px;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+  -ms-flex-align: center;
+  align-items: center;
+  background-color: #fff;
+  box-shadow: 0 -1px 8px 0 rgba(0, 0, 0, .05);
+}
+
+.fb-button {
+  text-align: center;
+  max-width: 500px;
+  width: 100%;
+  padding: 12px 24px 12px 16px;
+  border-radius: 4px;
+  background-color: #64426B;
+  color: #fff;
+  text-decoration: none;
+}
+
+.fb-button:active {
+  background-image: -webkit-linear-gradient(270deg, rgba(0, 0, 0, .15), rgba(0, 0, 0, .15));
+  background-image: linear-gradient(180deg, rgba(0, 0, 0, .15), rgba(0, 0, 0, .15));
+}
+
+.fb-button-text {
+  margin-left: 12px;
+  font-size: 14px;
+  text-align: left;
+  letter-spacing: 0.4px;
+  text-decoration: none;
+}
+
 
 .hideDateTimePlaceholder {
   display: none;

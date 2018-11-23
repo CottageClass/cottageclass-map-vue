@@ -1,63 +1,48 @@
 <template>
-  <div v-if="showPromo" class="promo-container"><img src="@/assets/free.svg" alt="" class="image-free-tag">
-    <div class="counter-title">Book in 24 hours for a free first day!</div>
-    <div class="counter-subtitle">You're welcome! Offer expires in...</div>
-    <div class="counter">
-      <div class="counter-item">
-        <div id="hour-count" class="count">{{ hours }}</div>
-        <div class="label-time-interval">Hours</div>
-      </div>
-      <div class="counter-item">
-        <div id="min-count" class="count">{{ minutes }}</div>
-        <div class="label-time-interval">Minutes</div>
-      </div>
-      <div class="counter-item">
-        <div id="sec-count" class="count">{{ seconds }}</div>
-        <div class="label-time-interval">Seconds</div>
-      </div>
+<div class="body">
+  <div class="content-container">
+    <div class="title-container">
+      <h1 class="title">When do you need care?</h1>
     </div>
+    <DateTimePicker v-model="bookingRequest.dateTimeSelected"/>
+    <div class="form-describe-need w-form">
+      <form v-on:submit.prevent id="email-form-2">
+        <p class="describe-label">Need care on multiple days?</p>
+        <textarea v-model="bookingRequest.description" id="field" name="field" placeholder="Describe your need and schedule here." maxlength="5000" class="text-area-decribe-need w-input"></textarea>
+      </form>
+    </div>
+    <CountdownPromo />
   </div>
+</div>
 </template>
 
 <script>
-import * as Token from '@/utils/tokens.js'
-import * as api from '@/utils/api.js'
-var moment = require('moment');
+import CountdownPromo from '@/components/onboarding/CountdownPromo.vue'
+import DateTimePicker from '@/components/DateTimePicker.vue'
 
 export default {
-  name: 'CountdownPromo',
+  name: 'RequestCare',
+  props: ['value'],
+  components: { CountdownPromo, DateTimePicker },
   data () {
     return {
-      currentUser: {},
-      currentUserId: Token.currentUserId(this.$auth),
-      dateCreated: Date(),
-      showPromo: false,
-      hours: 23,
-      minutes: 59,
-      seconds: 59,
-      interval: null
+      bookingRequest: this.value
     }
   },
-  mounted: function () {
-    this.interval = setInterval(() => {
-      var now = new moment()
-      var promoExpires = new moment(this.currentUser.dateCreated).add(24, 'hours')
-      var duration = moment.duration(promoExpires.diff(now))
-      this.showPromo = moment().isBefore(promoExpires)
-      this.hours = duration.hours()
-      this.minutes = duration.minutes()
-      this.seconds = duration.seconds()
-    }, 1000);
-    // fetch current user
-    api.fetchCurrentUser(this.currentUserId)
-      .then(person => {
-        this.currentUser = person
-      })
-  },
-  beforeDestroy: function () {
-    clearInterval(this.interval)
+  watch: {
+    bookingRequest: {
+      handler: function () {
+        if (this.bookingRequest.description || this.bookingRequest.dateTimeSelected) {
+          this.bookingRequest.err = false
+        } else if (this.bookingRequest.description == "" && this.bookingRequest.dateTimeSelected == null) {
+          this.bookingRequest.err = "skippable"
+        }
+      },
+      deep: true
+    }
   }
 };
+
 </script>
 
 <style scoped>
@@ -65,11 +50,17 @@ export default {
 html {
     -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
 }
+
+.describe-label {
+  padding-top: 16px;
+} 
+
 .body {
   font-family: soleil, sans-serif;
   color: #333;
   font-size: 14px;
   line-height: 20px;
+  height: 100vh;
 }
 
 .body {

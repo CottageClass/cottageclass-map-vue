@@ -10,14 +10,15 @@
         <div class="onb-error-text">{{ error }}</div>
       </div>
       <SeekerOrProvider v-if="step === 1" v-model="seekerOrProvider"/>
-      <BookCare v-if="step === 2" v-model="bookingRequest"/>
+      <RequestCare v-if="step === 2" v-model="bookingRequest"/>
       <Phone v-if="step === 3" v-model="phone" />
       <Location v-if="step === 4" v-model="location"/>
       <Children v-if="step === 5" v-model="children" />
-      <Availability v-if="step === 6" v-model="availability" />
-      <Activities v-if="step === 7" v-model="activities" />
-      <InvitationCode v-if="step === 8" v-model="invitationCode" />
-      <Invite v-if="step === 9" />
+      <Blurb v-if="step == 6" v-model="blurb" />
+      <Availability v-if="step === 7" v-model="availability" />
+      <Activities v-if="step === 8" v-model="activities" />
+      <InvitationCode v-if="step === 9" v-model="invitationCode" />
+      <Invite v-if="step === 10" />
     </div>
   </span>
 </template>
@@ -26,9 +27,10 @@
 import Nav from '@/components/onboarding/Nav.vue'
 import Login from '@/components/onboarding/Login.vue'
 import SeekerOrProvider from '@/components/onboarding/SeekerOrProvider.vue'
-import BookCare from '@/components/onboarding/BookCare.vue'
+import RequestCare from '@/components/onboarding/RequestCare.vue'
 import Location from '@/components/onboarding/Location.vue'
 import Phone from '@/components/onboarding/Phone.vue'
+import Blurb from '@/components/onboarding/Blurb.vue'
 import Children from '@/components/onboarding/Children.vue'
 import Availability from '@/components/onboarding/Availability.vue'
 import Activities from '@/components/onboarding/Activities.vue'
@@ -45,13 +47,13 @@ var client = sheetsu({ address: 'https://sheetsu.com/apis/v1.0su/62cd725d6088' }
 
 export default {
   components: {
-    Nav, Login, SeekerOrProvider, BookCare, Location, Phone, Children, Availability, Activities, Invite, InvitationCode
+    Nav, Login, SeekerOrProvider, RequestCare, Location, Phone, Children, Availability, Activities, Invite, InvitationCode, Blurb
   },
   data () {
     return {
       step: 0,
-      lastStep: 8,
-      inviteStep: 9,
+      lastStep: 9,
+      inviteStep: 10,
       phoneStep: 3,
       afterLastStep: '../demo/home/',
       showError: false,
@@ -60,13 +62,17 @@ export default {
       bookingRequest: {
         dateTimeSelected: null,
         description: "",
-        err: "skippable"
+        err: "skippable",
+        showCountdownPromo: true
       },
       location: {},
       phone: {},
       children: {
         list: [{firstName: null, birthday: null}],
         err: "skippable"
+      },
+      blurb: {
+        text: ""
       },
       availability: {
         mornings: false,
@@ -130,7 +136,7 @@ export default {
       if (this.step == 1 && this.seekerOrProvider.status == "provider") {
         this.step = 3
       } // skips booking request screen if user is only a provider
-      else if (this.step == 5 && this.seekerOrProvider.status == "seeker") { 
+      else if (this.step == 6 && this.seekerOrProvider.status == "seeker") { 
         this.step = 8 // skips to enter network code if user is not a provider
       } else
       this.step = this.step + 1
@@ -225,6 +231,7 @@ export default {
         availableEvenings: this.availability.evenings,
         availableWeekends: this.availability.weekends,
         networkCode: this.invitationCode.code,
+        profileBlurb: this.blurb.text
       }
 
       if (this.children.list && this.children.list.length > 0) {
@@ -263,10 +270,12 @@ export default {
         case 5:
           return this.children.err
         case 6:
-          return this.availability.err
+          return this.blurb.err
         case 7:
-          return this.activities.err
+          return this.availability.err
         case 8:
+          return this.activities.err
+        case 9:
           return this.invitationCode.err
         default:
           return false

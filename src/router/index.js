@@ -13,6 +13,7 @@ import HowItWorks from '@/components/HowItWorks.vue'
 import DesktopWarningSplash from '@/components/DesktopWarningSplash.vue'
 import NewUser from '@/components/NewUser.vue'
 import TabNav from '@/components/TabNav.vue'
+import RequestModal2 from '@/components/RequestModal2.vue'
 
 Vue.use(Router)
 
@@ -75,6 +76,11 @@ export default new Router({
       path: '/splash',
       name: 'Splash',
       component: Splash
+    },
+    {
+      path: '/request',
+      name: 'RequestModal2',
+      component: RequestModal2
     }
   ],
   scrollBehavior (to, from, savedPosition) {
