@@ -45,7 +45,7 @@
               class="button-small-3 w-button"
               @click="submitRequest"
             >
-              Send Text
+              {{ sendButtonText }}
             </button>
             <div class="small-text-black-40">You can edit it on the next screen.<br>Each booking costs ${{ network.price }}/hour<br> &amp; you only pay for what you use.</div>
           </div>
@@ -93,6 +93,7 @@ export default {
       currentUser: {},
       providerId: this.$route.params.id,
       twilioProxyNumberForProvider: null,
+      sendButtonText: "Send Text"
     }
   },
   computed: {
@@ -116,8 +117,14 @@ export default {
     submitRequest: function () {
       // these will be executed in parallel
       // - if we want sequential execution, wrap in a promise
+      this.sendButtonText = "Sending..."
       this.saveBookingRequestToSpreadsheet()
-      this.startProxySessionAndSendIntroMessages()
+      this.startProxySessionAndSendIntroMessages().then((data) => {
+        this.sendButtonText = "\u2714 Sent"
+      }, (err) => {
+        alert("Oops! There was a problem sending your request. Try again?")
+        this.sendButtonText = "Send Text"
+      });
     },
     formatTime: function (time) {
       var minutes = time.slice(-2);
@@ -130,8 +137,8 @@ export default {
       return hours12 + ':' + minutes + ampm
     },
     messageForProvider: function () {
-      // ^^ Those crazy unicode characters are emojis :)
-      let msg = 'Hi ' + this.provider.firstName + '!! I\'m a parent from ' + this.network.name + ', I\'m looking for care for ' + this.numberOfChildren + ' ' + ((this.numberOfChildren > 1) ? 'children' : 'child') + ' ' + this.day + ' from ' + this.formatTime(this.startTime) + ' to ' + this.formatTime(this.endTime) + ', and I saw you were often available at these times. Would this work? Thanks! \ud83c\udf08\u26a1\ud83e\udd84'
+      // Those crazy unicode characters are emojis :)
+      let msg = 'Hi ' + this.provider.firstName + '!! I\'m ' + this.currentUser.firstName + ' from ' + this.network.name + ', I\'m looking for care for ' + this.numberOfChildren + ' ' + ((this.numberOfChildren > 1) ? 'children' : 'child') + ' ' + this.day + ' from ' + this.formatTime(this.startTime) + ' to ' + this.formatTime(this.endTime) + ', and I saw you were often available at these times. Would this work? Thanks! \ud83c\udf08\u26a1\ud83e\udd84'
       return msg
     },
     acknowledgmentMessage: function () {

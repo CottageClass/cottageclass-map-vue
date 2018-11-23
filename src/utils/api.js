@@ -10,7 +10,6 @@ var childrenInNetwork = []
  */
 export function initProxySession(currentUserId, receiverId, requestMessage, acknowledgmentMessage) {
   console.log("INITIATING PROXY WITH users " + currentUserId + ", " + receiverId)
-  // no postData currently
   let postData = {
     twilioSession: {
       requestMessage: requestMessage,
