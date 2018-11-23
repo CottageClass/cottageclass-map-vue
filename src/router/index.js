@@ -14,6 +14,8 @@ import DesktopWarningSplash from '@/components/DesktopWarningSplash.vue'
 import NewUser from '@/components/NewUser.vue'
 import TabNav from '@/components/TabNav.vue'
 import RequestModal2 from '@/components/RequestModal2.vue'
+import RequestRecipients from '@/components/RequestRecipients.vue'
+
 
 Vue.use(Router)
 
@@ -81,6 +83,11 @@ export default new Router({
       path: '/request',
       name: 'RequestModal2',
       component: RequestModal2
+    },
+    {
+      path: '/request-recipients',
+      name: 'RequestRecipients',
+      component: RequestRecipients
     }
   ],
   scrollBehavior (to, from, savedPosition) {

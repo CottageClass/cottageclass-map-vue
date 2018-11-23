@@ -1,7 +1,24 @@
 <template>
 <div class="body">
-<Nav :button="nextButtonState" @next="saveBookingRequestToSpreadsheet" @prev="$router.go(-1)" />
- <RequestCare class="request-container" v-model="bookingRequest" />
+
+<!-- user submits requests -->
+
+<span v-if="step == 1">
+  <Nav :button="nextButtonState" @next="saveBookingRequestToSpreadsheet" @prev="$router.go(-1)" />
+   <RequestCare class="request-container" v-model="bookingRequest" />
+</span>
+
+<!-- user chooses who to send request to --> 
+
+<RequestRecipients 
+  v-if="step == 2"
+  :dateTimeSelected="bookingRequest.dateTimeSelected"
+  @messagesSent="step = 3" />
+
+<!-- success message --> 
+
+<RequestSuccessful v-if="step == 3"/>
+
 </div>
 </template>
 
@@ -12,6 +29,9 @@ import * as Token from '@/utils/tokens.js'
 import * as api from '@/utils/api.js'
 import sheetsu from 'sheetsu-node'
 import networks from '@/assets/network-info.json'
+import RequestRecipients from '@/components/RequestRecipients.vue'
+import RequestSuccessful from '@/components/RequestSuccessful.vue'
+
 
 var moment = require('moment');
 
@@ -20,9 +40,10 @@ var client = sheetsu({ address: 'https://sheetsu.com/apis/v1.0su/62cd725d6088' }
 
 export default {
   name: 'RequestModal2',
-  components: { RequestCare, Nav },
+  components: { RequestCare, Nav, RequestRecipients, RequestSuccessful },
   data: function () {
     return {
+      step: 1,
       currentUser: {},
       currentUserId: Token.currentUserId(this.$auth),
       bookingRequest: {
@@ -66,12 +87,11 @@ export default {
         "Request Description": this.bookingRequest.description,
       }, "generalRequests").then((data) => {
         console.log(data)
-        alert("Request sent. You'll hear from us shortly!")
-        this.$router.push('home')
       }, (err) => {
         console.log(err)
       });
-    },
+      this.step = 2
+    }
   }
 };
 
