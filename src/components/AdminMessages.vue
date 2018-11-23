@@ -43,8 +43,8 @@
           :class="[
             {
               'message-row': true,
-              sender: (msg.senderId === participantId1),
-              receiver: (msg.senderId === participantId2),
+              sender: (msg.senderId.toString() === participantId1.toString()),
+              receiver: (msg.senderId.toString() === participantId2.toString()),
             }
           ]"
           >
