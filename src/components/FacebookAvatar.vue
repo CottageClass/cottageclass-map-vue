@@ -1,5 +1,6 @@
 <template>
-	<img :src="url" :class="className" />
+	<img v-if="facebookId" :src="url" :class="className" />
+	<img v-else src="@/assets/avatar-placeholder.png" :class="className" />
 </template>
 
 <script>
