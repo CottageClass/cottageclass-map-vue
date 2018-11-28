@@ -2,10 +2,11 @@
 
 This is the Vue.js frontend for https://app.cottageclass.com. Code for the Rails backend lives at: https://github.com/CottageClass/cottageclass-app-api
 
-## Setup
+## Running locally
+
+To run locally: 
 
  npm install
-
  npm run dev
 
 ## Deploying
