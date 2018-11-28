@@ -1,35 +1,20 @@
 # cottageclass-map
 
-This is a basic prototype of a mobile app for searching and finding CottageClass providers, and checking in parents. 
+This is the Vue.js frontend for app.cottageclass.com. Code for the Rails backend lives at: https://github.com/CottageClass/cottageclass-app-api
 
 ## Setup
-
-Setup:
 
  npm install
 
  npm run dev
 
-Deploy (to Github Pages)
+## Deploying
 
- npm run deploy
+Changes to master will auto deploy to https://cottageclass-app-staging.herokuapp.com/. Once staging has been QA'd, we use Heroku "pipelines" to push master to production with one click.   
 
-## Notes:
+## Testing locally with Express.js 
 
-We're requiring folks to navigate somewhere specific to access the app, to keep peoples' contact information private. These URLs open the app.
+If you need to test how the production server will behave without pushing to master and testing on staging, you can start the express server locally with
 
-Dev: 
-
-<http://localhost:8080/#/y723hz/>
-
-Deploy:
-
-<https://app.cottageclass.com/SmpPbG11MxptIUdcQWNCAyJu1IgvvtlPCTPkUCX1xqLo6uxK7v6fdqKWo/#/y723hz> (Currently waiting for DNS to get set up correctly.)
-
-Also: I had a problem getting google maps to resize avatar images, so it currently does not. So that needs to be fixed or done by hand. 
-
-To get the CNAME to work correctly, I changed line 101 of node_modules/vue-gh-pages to the following, so that those key files would get put someplace else. 
-
- const pathToBuild = '/'; 
-
-To add new networks see this commit: <https://github.com/CottageClass/cottageclass-map-vue/commit/dae3315597dc36ca874e1096360450ee224b64c8>
+ npm run start
+ 
