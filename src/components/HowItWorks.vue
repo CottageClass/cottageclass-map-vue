@@ -418,6 +418,7 @@ a {
 
 .heading-3 {
   text-align: left;
+  margin: 0 auto 0 auto;
 }
 
 .title-bar-action-2 {
