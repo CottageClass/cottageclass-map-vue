@@ -20,18 +20,19 @@ When children arrive check them in, and when they leave check them out. It's tha
 
 <script>
 import networks from '../assets/network-info.json'
+import * as Token from '@/utils/tokens.js'
 
 export default {
 	name: 'HowItWorks',
   data () {
     return {
-      networks: networks,
-      userNetwork: "demo" // todo: replace with user's own network
+      networks: networks
     }
   },
   computed: {
     network: function () {
-      return this.networks.find(network => network.stub === this.userNetwork)
+      let networkId = Token.currentUserNetworkCode(this.$auth)
+      return this.networks.find(network => network.stub === networkId)
     }
   }
 };
