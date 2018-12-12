@@ -2,25 +2,23 @@
   <div class="onb-body-splash">
     <input v-model="email" placeholder="email">
     <input type="password" v-model="password" placeholder="password">
-
     <a @click="login()">Login</a>
   </div>
 </template>
 
 <script>
-// nospam.sd@gmail.com
-import networks from "@/assets/network-info.json";
-import * as Token from "@/utils/tokens.js";
-import * as api from "@/utils/api.js";
+import networks from '@/assets/network-info.json';
+import * as Token from '@/utils/tokens.js';
+import * as api from '@/utils/api.js';
 
 export default {
-  name: "DirectLogin",
+  name: 'DirectLogin',
   data: function() {
     return {
       networks: networks,
       currentUser: {},
-      email: "",
-      password: ""
+      email: '',
+      password: ''
     };
   },
   mounted: function() {
@@ -31,22 +29,22 @@ export default {
           .fetchCurrentUser(current_user_identifier)
           .then(currentUser => {
             if (currentUser.hasAllRequiredFields) {
-              this.$emit("userAlreadyOnboarded");
+              this.$emit('userAlreadyOnboarded');
             } else if (currentUser.id) {
-              this.$emit("userNotYetOnboarded");
+              this.$emit('userNotYetOnboarded');
             } else {
               return false;
             }
           })
           .catch(function(error) {
-            console.log("auth FAILURE or user not onboarded yet");
+            console.log('auth FAILURE or user not onboarded yet');
             console.warn(error);
           });
       } else {
-        console.warn("current user does not exist");
+        console.warn('current user does not exist');
       }
     } else {
-      console.warn("this.$auth is blank");
+      console.warn('this.$auth is blank');
     }
   },
   methods: {
@@ -58,26 +56,26 @@ export default {
         this.$auth
           .login({ email, password })
           .then(res => {
-            console.log("auth success:", res);
+            console.log('auth success:', res);
           })
           .then(res =>
             api.fetchCurrentUser(Token.currentUserId(component.$auth))
           )
           .then(currentUser => {
             if (currentUser.hasAllRequiredFields) {
-              this.$emit("userAlreadyOnboarded");
+              this.$emit('userAlreadyOnboarded');
             } else if (currentUser.id) {
-              this.$emit("userNotYetOnboarded");
+              this.$emit('userNotYetOnboarded');
             } else {
               return false;
             }
           })
           .catch(function(err) {
-            console.log("auth FAILURE or user not onboarded yet");
+            console.log('auth FAILURE or user not onboarded yet');
             console.error(err);
           });
       } else {
-        console.log("email or password missing");
+        console.log('email or password missing');
       }
     },
 

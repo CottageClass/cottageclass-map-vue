@@ -84,8 +84,13 @@
     </ul>
   </div>
   <div class="fb-container">
-    <a @click="authenticate('facebook')" class="fb-button w-inline-block"><img src="@/assets/facebook-button-icon.svg" width="24" height="24" alt="" /><div class="fb-button-text">Continue with Facebook</div></a>
-    <router-link to="/login">Login with User Password</router-link>
+    <a @click="authenticate('facebook')" class="fb-button w-inline-block" v-if="!!facebookLogin">
+      <img src="@/assets/facebook-button-icon.svg" width="24" height="24" alt="" />
+      <div class="fb-button-text">Continue with Facebook</div>
+    </a>
+    <a @click="$emit('activateScreen', 'directLogin')" class="w-inline-block" v-if="!!directLogin">
+      <div>Continue with Email</div>
+    </a>
     <div class="tos-acceptance">
       (By signing in you agree to our <a href="https://cottageclass.com/terms-of-service">Terms of Service</a> and <a href="https://cottageclass.com/privacy-policy">Privacy Policy</a>)
     </div>
@@ -104,7 +109,9 @@ export default {
     data () {
       return {
         networks: networks,
-        currentUser: {}
+        currentUser: {},
+        facebookLogin: true,
+        directLogin: true
       }
     },
     mounted: function () {

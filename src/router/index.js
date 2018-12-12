@@ -31,11 +31,6 @@ export default new Router({
       component: NewUser
     },
     {
-      path: '/login',
-      name: 'DirectLogin',
-      component: DirectLogin
-    },
-    {
       path: '/bookings',
       name: 'Bookings',
       component: Bookings

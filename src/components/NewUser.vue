@@ -1,8 +1,14 @@
 <template>
   <span>
     <Login class="onb-body"
-    v-if="step === 0" 
-    v-on:userNotYetOnboarded="nextStep" 
+    v-if="activeScreen ==='facebook' && step === 0"
+    v-on:userNotYetOnboarded="nextStep"
+    v-on:activateScreen="activateScreen"
+    v-on:userAlreadyOnboarded="$router.push({name: 'MainView'})" />
+    <DirectLogin
+    v-if="activeScreen ==='directLogin' && step === 0"
+    v-on:userNotYetOnboarded="nextStep"
+    v-on:activateScreen="activateScreen"
     v-on:userAlreadyOnboarded="$router.push({name: 'MainView'})" />
     <div class="onb-body" v-if="step != 0">
       <Nav :button="nextButtonState" @next="nextStep" @prev="prevStep" />
@@ -26,6 +32,7 @@
 <script>
 import Nav from '@/components/onboarding/Nav.vue'
 import Login from '@/components/onboarding/Login.vue'
+import DirectLogin from '@/components/onboarding/DirectLogin.vue';
 import SeekerOrProvider from '@/components/onboarding/SeekerOrProvider.vue'
 import RequestCare from '@/components/onboarding/RequestCare.vue'
 import Location from '@/components/onboarding/Location.vue'
@@ -47,10 +54,11 @@ var client = sheetsu({ address: 'https://sheetsu.com/apis/v1.0su/62cd725d6088' }
 
 export default {
   components: {
-    Nav, Login, SeekerOrProvider, RequestCare, Location, Phone, Children, Availability, Activities, Invite, InvitationCode, Blurb
+    Nav, Login, DirectLogin, SeekerOrProvider, RequestCare, Location, Phone, Children, Availability, Activities, Invite, InvitationCode, Blurb
   },
   data () {
     return {
+      activeScreen: 'facebook',
       step: 0,
       lastStep: 9,
       inviteStep: 10,
@@ -58,7 +66,7 @@ export default {
       afterLastStep: '../demo/home/',
       showError: false,
       name: {}, // todo: remove if possible now this comes from FB
-      seekerOrProvider: {}, 
+      seekerOrProvider: {},
       bookingRequest: {
         dateTimeSelected: null,
         description: "",
@@ -100,6 +108,10 @@ export default {
   },
   name: 'NewUser',
   methods: {
+    activateScreen: function(name) {
+      console.log('activating:', name);
+      this.activeScreen = name;
+    },
     continueOrShowSharingAsk: function () {
       if (this.invitationCode.isValid) {
         this.$router.push({ name: 'Splash' })
@@ -136,7 +148,7 @@ export default {
       if (this.step == 1 && this.seekerOrProvider.status == "provider") {
         this.step = 3
       } // skips booking request screen if user is only a provider
-      else if (this.step == 6 && this.seekerOrProvider.status == "seeker") { 
+      else if (this.step == 6 && this.seekerOrProvider.status == "seeker") {
         this.step = 8 // skips to enter network code if user is not a provider
       } else
       this.step = this.step + 1
@@ -3221,7 +3233,7 @@ a {
   .time {
     clear: both;
   }
- 
+
   .name-and-caption {
     display: -webkit-box;
     display: -webkit-flex;
