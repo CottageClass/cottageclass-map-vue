@@ -85,7 +85,8 @@
   </div>
   <div class="fb-container">
     <a @click="authenticate('facebook')" class="fb-button w-inline-block"><img src="@/assets/facebook-button-icon.svg" width="24" height="24" alt="" /><div class="fb-button-text">Continue with Facebook</div></a>
-        <div class="tos-acceptance">
+    <router-link to="/login">Login with User Password</router-link>
+    <div class="tos-acceptance">
       (By signing in you agree to our <a href="https://cottageclass.com/terms-of-service">Terms of Service</a> and <a href="https://cottageclass.com/privacy-policy">Privacy Policy</a>)
     </div>
   </div>
@@ -148,7 +149,7 @@ export default {
     }
   }).catch(function(err) {
 	    console.log("auth FAILURE or user not onboarded yet")
-	    console.log(err) 
+	    console.log(err)
 	  })
 }
 }
@@ -186,7 +187,7 @@ export default {
 
 .image-8 {
   margin-bottom: 0;
-} 
+}
 
 .onb-paragraph-subheading-2-black-50 {
   margin-bottom: 8px;

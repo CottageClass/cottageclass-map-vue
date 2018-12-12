@@ -65,7 +65,7 @@ function createPersonObject (personInApi, availableChildren = []) {
     agreeTos: p.agree_tos,
     id: personInApi.id,
     firstName: p.first_name,
-    lastInitial: p.last_name[0],
+    lastInitial: p.last_name && p.last_name[0],
     activities: activities,
     availableMornings: p.available_mornings,
     availableEvenings: p.available_evenings,
@@ -81,7 +81,7 @@ function createPersonObject (personInApi, availableChildren = []) {
     backgroundCheck: false,
     facebookId: p.facebook_id,
     facebookMapIcon: 'https://graph.facebook.com/' + p.facebook_id + '/picture?width=30',
-    // todo: add children now somehow 
+    // todo: add children now somehow
     children: createChildrenList(),
     // todo: add these once I have them
     title: "",
