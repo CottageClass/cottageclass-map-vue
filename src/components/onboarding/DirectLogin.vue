@@ -78,33 +78,38 @@ export default {
       event.preventDefault();
       let component = this;
 
-      this.$validator.validateAll().then(function(result) {
-        if (result) {
-          let email = component.email && component.email.trim();
-          let password = component.password && component.password.trim();
-          component.$auth
-            .login({ email, password })
-            .then(res => {
-              console.log('auth success:', res);
-            })
-            .then(res =>
-              api.fetchCurrentUser(Token.currentUserId(component.$auth))
-            )
-            .then(currentUser => {
-              if (currentUser.hasAllRequiredFields) {
-                component.$emit('userAlreadyOnboarded');
-              } else if (currentUser.id) {
-                component.$emit('userNotYetOnboarded');
-              } else {
-                return false;
-              }
-            })
-            .catch(function(err) {
-              console.log('auth FAILURE or user not onboarded yet');
-              console.error(err);
-            });
-        }
-      });
+      this.$validator
+        .validateAll()
+        .then(function(result) {
+          if (result) {
+            let email = component.email && component.email.trim();
+            let password = component.password && component.password.trim();
+            component.$auth
+              .login({ email, password })
+              .then(res => {
+                console.log('auth success:', res);
+              })
+              .then(res =>
+                api.fetchCurrentUser(Token.currentUserId(component.$auth))
+              )
+              .then(currentUser => {
+                if (currentUser.hasAllRequiredFields) {
+                  component.$emit('userAlreadyOnboarded');
+                } else if (currentUser.id) {
+                  component.$emit('userNotYetOnboarded');
+                } else {
+                  return false;
+                }
+              })
+              .catch(function(err) {
+                console.log('auth FAILURE or user not onboarded yet');
+                console.error(err);
+              });
+          }
+        })
+        .catch(function(error) {
+          console.warn('validation error', error);
+        });
     }
   }
 };
@@ -121,5 +126,8 @@ input.invalid {
 }
 .form-grid button {
   border: 1px solid black;
+}
+.form-grid span {
+  color: red;
 }
 </style>
