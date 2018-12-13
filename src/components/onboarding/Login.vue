@@ -110,7 +110,7 @@ export default {
       return {
         networks: networks,
         currentUser: {},
-        facebookLogin: true,
+        facebookLogin: this.hideFacebookLogin(),
         directLogin: true
       }
     },
@@ -125,6 +125,11 @@ export default {
     }});
     },
     methods: {
+      hideFacebookLogin: () => {
+        return ['(iPhone|iPod|iPad)(?!.*Safari)'].every(expression => {
+          return !!navigator.userAgent.match(new RegExp(`(${expression})`, 'ig'));
+        });
+      },
       authenticate: function(provider) {
 	/*
 	 *  Logs in the user (Facebook)
