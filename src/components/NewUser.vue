@@ -10,6 +10,11 @@
     v-on:userNotYetOnboarded="nextStep"
     v-on:activateScreen="activateScreen"
     v-on:userAlreadyOnboarded="$router.push({name: 'MainView'})" />
+    <Signup
+    v-if="activeScreen ==='signup' && step === 0"
+    v-on:userNotYetOnboarded="nextStep"
+    v-on:activateScreen="activateScreen"
+    v-on:userAlreadyOnboarded="$router.push({name: 'MainView'})" />
     <div class="onb-body" v-if="step != 0">
       <Nav :button="nextButtonState" @next="nextStep" @prev="prevStep" />
       <div v-if="showError && error && error!='skippable'" class="onb-error-container">
@@ -33,6 +38,7 @@
 import Nav from '@/components/onboarding/Nav.vue'
 import Login from '@/components/onboarding/Login.vue'
 import DirectLogin from '@/components/onboarding/DirectLogin.vue';
+import Signup from '@/components/onboarding/Signup.vue';
 import SeekerOrProvider from '@/components/onboarding/SeekerOrProvider.vue'
 import RequestCare from '@/components/onboarding/RequestCare.vue'
 import Location from '@/components/onboarding/Location.vue'
@@ -54,7 +60,7 @@ var client = sheetsu({ address: 'https://sheetsu.com/apis/v1.0su/62cd725d6088' }
 
 export default {
   components: {
-    Nav, Login, DirectLogin, SeekerOrProvider, RequestCare, Location, Phone, Children, Availability, Activities, Invite, InvitationCode, Blurb
+    Nav, Login, DirectLogin, Signup, SeekerOrProvider, RequestCare, Location, Phone, Children, Availability, Activities, Invite, InvitationCode, Blurb
   },
   data () {
     return {
