@@ -1,71 +1,92 @@
 <template>
-  <div class="onb-body-splash">
-    <div v-if="!success">
-      <form v-on:submit.prevent="signup">
+  <span>
+  <div class="onb-body-full-height">
+    <div class="onb-title-bar">
+      <a @click="$emit('activateScreen', 'directLogin')" class="onb-title-bar-back-button w-inline-block"></a>
+      <a @click="signup" class="onb-title-bar-next-button w-inline-block">
+        <div class="onb-title-bar-next-button-text">NEXT</div>
+      </a>
+    </div>
+    <div class="onb-content-container-2" v-if="!success">
+      <div v-if="showError && errors.all()" class="onb-error-container">
+        <div class="onb-error-text">
+          <ul>
+            <li v-for="error in errors.all()">{{ error }}</li>
+          </ul>
+        </div>
+      </div>
+          <div class="onb-top-content-container">
+            <h1 class="onb-heading-large">Sign up</h1>
+            <p class="onb-paragraph-subheading-2">Already have an account? <a @click="$emit('activateScreen', 'directLogin')">Sign in here</a>.</p>            
+          </div>
+        </div>
+  <div class="onb-child-info-container">
+    <div class="form-block-3 w-form">
+      <form v-on:submit.prevent="signup" class="form-2">
         <fieldset :disabled="disableForm === true">
-          <div class="form-grid">
-            <div>
+          <div class="onb-child-group-2">
+              <label class="onb-field-label">First Name</label>
               <input
                 v-validate="'required'"
                 name="first_name"
                 v-model="first_name"
-                placeholder="first name"
+                placeholder="First Name"
                 :class="{'invalid': errors.has('first_name') }"
+                class="name-text-field w-input"
               >
-              <span>{{ errors.first('first_name') }}</span>
-            </div>
-            <div>
+              <label class="onb-field-label">Last Name</label>
               <input
                 v-validate="'required'"
                 name="last_name"
                 v-model="last_name"
-                placeholder="last name"
+                placeholder="Last Name"
                 :class="{'invalid': errors.has('last_name') }"
+                class="name-text-field w-input"
               >
-              <span>{{ errors.first('last_name') }}</span>
-            </div>
-            <div>
+              <label class="onb-field-label">Email</label>
               <input
                 v-validate="'required|email'"
                 name="email"
                 v-model="email"
-                placeholder="email"
+                placeholder="e.g. your-email@example.com"
                 :class="{'invalid': errors.has('email') }"
+                class="name-text-field w-input"
               >
-              <span>{{ errors.first('email') }}</span>
-            </div>
-            <div>
+              <label class="onb-field-label">Password</label>
               <input
                 type="password"
                 v-validate="'required'"
                 name="password"
                 v-model="password"
-                placeholder="password"
+                placeholder="Password"
                 :class="{'invalid': errors.has('password') }"
+                class="name-text-field w-input"
               >
-              <span>{{ errors.first('password') }}</span>
             </div>
-            <div>
+            <div class="avatar-photo" v-if="!!avatar_url">
+              <img :src="avatar_url" height="128">
+            </div>
+            <label for="avatar" class="onb-button-add-group w-inline-block"><img src="@/assets/add.svg" alt="" class="image-7">
+              <div 
+              class="onb-button-add-group-text" 
+              :class="{'invalid': errors.has('avatar') }">
+                <span v-if="!avatar_url">Add profile photo</span>
+                <span v-else>Replace photo</span>
+              </div>
+            </label>
               <input
                 type="file"
+                style="visibility:hidden;"
                 v-validate="'required'"
+                id="avatar"
                 name="avatar"
-                :class="{'invalid': errors.has('avatar') }"
                 v-on:change="upload"
                 accept="image/*"
               >
-              <span>{{ errors.first('avatar') }}</span>
-            </div>
-            <div v-if="!!avatar_url">
-              <img :src="avatar_url" height="128">
-            </div>
-            <button type="submit">Sign Up</button>
-          </div>
         </fieldset>
       </form>
-      <div>
-        <a @click="$emit('activateScreen', 'directLogin')">Go Back</a>
-      </div>
+    </div>
+  </div>
     </div>
     <p v-if="!!success">
       Your registration is complete! Click
@@ -73,6 +94,7 @@
       to sign in.
     </p>
   </div>
+</span>
 </template>
 
 <script>
@@ -91,6 +113,7 @@ export default {
       email: '',
       password: '',
       avatar_url: null,
+      showError: false,
       cloudinary: {
         uploadPreset: 'avatar',
         apiKey: '415594396214129',
@@ -103,6 +126,9 @@ export default {
       return `https://api.cloudinary.com/v1_1/${
         this.cloudinary.cloudName
       }/image/upload`;
+    },
+    formHasErrors: function () {
+      return this.errors
     }
   },
   methods: {
@@ -160,30 +186,68 @@ export default {
                 console.error('signup failure:', error);
                 component.disableForm = false;
               });
+          } else {
+            component.showError = true
           }
         })
         .catch(function(error) {
           console.error('validation error', error);
         });
     }
+  },
+  mounted: function () {
+    // override for better error messages
+    const dict = {
+      custom: {
+        email: {
+          required: 'Please enter your email address.',
+          email: 'Please enter a valid email address.'
+        },
+        first_name: {
+          required: 'Please enter your first name.'
+        },
+        last_name: {
+          required: 'Please enter your last name.'
+        },
+        password: {
+          required: 'Please choose a password.'
+        },
+        avatar: {
+          required: 'You must add a profile photo, below.'
+        }
+      }
+    };
+    // Override and merge the dictionaries
+    this.$validator.localize('en', dict);
   }
 };
 </script>
 
 <style scoped>
+
+.avatar-photo {
+  text-align: center;
+}
+
+.avatar-photo img {
+  height: 96px;
+  border-radius: ;
+}
+
+.onb-button-add-group-text.invalid {
+  border: red;
+}
+
+.onb-button-add-group {
+  margin-bottom: 16px;
+}
+
+p a {
+  text-decoration: underline
+}
+
 input.invalid {
   border: 1px solid red;
 }
-.form-grid {
-  display: inline-grid;
-  grid-template-columns: auto;
-  grid-row-gap: 10px;
-}
-.form-grid button {
-  border: 1px solid black;
-}
-.form-grid span {
-  display: block;
-  color: red;
-}
+
 </style>
