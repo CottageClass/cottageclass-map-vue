@@ -110,7 +110,7 @@ export default {
       return {
         networks: networks,
         currentUser: {},
-        facebookLogin: this.hideFacebookLogin(),
+        facebookLogin: !this.hideFacebookLogin(),
         directLogin: true
       }
     },

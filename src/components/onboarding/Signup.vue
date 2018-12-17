@@ -2,50 +2,66 @@
   <div class="onb-body-splash">
     <div v-if="!success">
       <form v-on:submit.prevent="signup">
-        <div class="form-grid">
-          <div>
-            <input
-              v-validate="'required'"
-              name="first_name"
-              v-model="first_name"
-              placeholder="first name"
-              :class="{'invalid': errors.has('first_name') }"
-            >
-            <span>{{ errors.first('first_name') }}</span>
+        <fieldset :disabled="disableForm === true">
+          <div class="form-grid">
+            <div>
+              <input
+                v-validate="'required'"
+                name="first_name"
+                v-model="first_name"
+                placeholder="first name"
+                :class="{'invalid': errors.has('first_name') }"
+              >
+              <span>{{ errors.first('first_name') }}</span>
+            </div>
+            <div>
+              <input
+                v-validate="'required'"
+                name="last_name"
+                v-model="last_name"
+                placeholder="last name"
+                :class="{'invalid': errors.has('last_name') }"
+              >
+              <span>{{ errors.first('last_name') }}</span>
+            </div>
+            <div>
+              <input
+                v-validate="'required|email'"
+                name="email"
+                v-model="email"
+                placeholder="email"
+                :class="{'invalid': errors.has('email') }"
+              >
+              <span>{{ errors.first('email') }}</span>
+            </div>
+            <div>
+              <input
+                type="password"
+                v-validate="'required'"
+                name="password"
+                v-model="password"
+                placeholder="password"
+                :class="{'invalid': errors.has('password') }"
+              >
+              <span>{{ errors.first('password') }}</span>
+            </div>
+            <div>
+              <input
+                type="file"
+                v-validate="'required'"
+                name="avatar"
+                :class="{'invalid': errors.has('avatar') }"
+                v-on:change="upload($event.target.files)"
+                accept="image/*"
+              >
+              <span>{{ errors.first('avatar') }}</span>
+            </div>
+            <div v-if="!!avatar_url">
+              <img :src="avatar_url" height="128"/>
+            </div>
+            <button type="submit">Sign Up</button>
           </div>
-          <div>
-            <input
-              v-validate="'required'"
-              name="last_name"
-              v-model="last_name"
-              placeholder="last name"
-              :class="{'invalid': errors.has('last_name') }"
-            >
-            <span>{{ errors.first('last_name') }}</span>
-          </div>
-          <div>
-            <input
-              v-validate="'required|email'"
-              name="email"
-              v-model="email"
-              placeholder="email"
-              :class="{'invalid': errors.has('email') }"
-            >
-            <span>{{ errors.first('email') }}</span>
-          </div>
-          <div>
-            <input
-              type="password"
-              v-validate="'required'"
-              name="password"
-              v-model="password"
-              placeholder="password"
-              :class="{'invalid': errors.has('password') }"
-            >
-            <span>{{ errors.first('password') }}</span>
-          </div>
-          <button type="submit">Sign Up</button>
-        </div>
+        </fieldset>
       </form>
       <div>
         <a @click="$emit('activateScreen', 'directLogin')">Go Back</a>
@@ -68,14 +84,45 @@ export default {
   data: function() {
     return {
       success: false,
+      disableForm: false,
       currentUser: {},
       first_name: '',
       last_name: '',
       email: '',
-      password: ''
+      password: '',
+      avatar_url: null,
+      cloudinary: {
+        uploadPreset: 'avatar',
+        apiKey: '415594396214129',
+        cloudName: 'cottageclass2'
+      }
     };
   },
+  computed: {
+    cloudinaryUploadUrl: function() {
+      return `https://api.cloudinary.com/v1_1/${
+        this.cloudinary.cloudName
+      }/image/upload`;
+    }
+  },
   methods: {
+    upload: function(files) {
+      this.disableForm = true;
+      let formData = new FormData();
+      formData.append('file', files[0]);
+      formData.append('upload_preset', this.cloudinary.uploadPreset);
+
+      this.axios
+        .post(this.cloudinaryUploadUrl, formData)
+        .then(response => {
+          this.avatar_url = response.data.secure_url;
+          this.disableForm = false;
+        })
+        .catch(function(error) {
+          console.error('error', error);
+          this.disableForm = false;
+        });
+    },
     signup: function() {
       let component = this;
 
@@ -83,25 +130,30 @@ export default {
         .validateAll()
         .then(function(result) {
           if (result) {
+            component.disableForm = true;
+
             let first_name =
               component.first_name && component.first_name.trim();
             let last_name = component.last_name && component.last_name.trim();
             let email = component.email && component.email.trim();
             let password = component.password && component.password.trim();
+            let avatar = component.avatar_url && component.avatar_url.trim();
 
             component.$auth
-              .register({ first_name, last_name, email, password })
+              .register({ first_name, last_name, email, password, avatar })
               .then(response => {
                 console.log('signup success:', response);
                 component.success = true;
+                component.disableForm = false;
               })
               .catch(function(error) {
                 console.error('signup failure:', error);
+                component.disableForm = false;
               });
           }
         })
         .catch(function(error) {
-          console.warn('validation error', error);
+          console.error('validation error', error);
         });
     }
   }

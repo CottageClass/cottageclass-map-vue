@@ -66,6 +66,7 @@ function createPersonObject (personInApi, availableChildren = []) {
     id: personInApi.id,
     firstName: p.first_name,
     lastInitial: p.last_name && p.last_name[0],
+    avatar: p.avatar,
     activities: activities,
     availableMornings: p.available_mornings,
     availableEvenings: p.available_evenings,

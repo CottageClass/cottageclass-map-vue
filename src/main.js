@@ -18,7 +18,7 @@ Vue.use(VueCookies)
  */
 import axios from 'axios';
 import VueAxios from 'vue-axios';
-Vue.use(VueAxios, axios)
+Vue.use(VueAxios, axios);
 
 // Form validation
 import VeeValidate from 'vee-validate';
