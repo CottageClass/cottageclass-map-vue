@@ -1,12 +1,26 @@
 <template>
-  <div class="onb-body-splash">
-    <form v-on:submit.prevent="login">
-      <div class="form-grid">
+<div>
+    <div class="onb-title-bar">
+      <a @click="$emit('activateScreen', 'facebook')" class="onb-title-bar-back-button w-inline-block"></a>
+    </div>
+  <div class="onb-content-container _100vh">
+        <div v-if="showError && (errors.first('email') || errors.first('password'))" class="onb-error-container">
+      <div class="onb-error-text">{{ errors.first('email') }}</div>
+      <div class="onb-error-text">{{ errors.first('password') }}</div>
+    </div>
+    <div class="onb-top-content-container">
+      <h1 class="onb-heading-large">Sign in</h1>
+      <p>Don't have an account? <a @click="$emit('activateScreen', 'signup')">Sign up here</a>.</p>
+    </div>
+    <div class="onb-location-search-container">
+      <div class="w-form">
+        <form id="email-form-2" v-on:submit.prevent="login">
         <input
           v-validate="'required|email'"
           name="email"
           v-model="email"
-          placeholder="email"
+          placeholder="Email"
+          class="location-text-field w-input"
           :class="{'invalid': errors.has('email') }"
         >
         <input
@@ -14,22 +28,17 @@
           type="password"
           name="password"
           v-model="password"
-          placeholder="password"
+          placeholder="Password"
           :class="{'invalid': errors.has('password') }"
+          class="location-text-field w-input"
         >
-        <button type="submit">Login</button>
-        <span>{{ errors.first('email') }}</span>
-        <span>{{ errors.first('password') }}</span>
-      </div>
-    </form>
-    <div>
-      Do not have an account?
-      <a @click="$emit('activateScreen', 'signup')">Sign Up</a>
-    </div>
-    <div>
-      <a @click="$emit('activateScreen', 'facebook')">Go Back</a>
+          <button type="submit" class="button-text splash-button w-inline-block">Login</button>
+      </form>
     </div>
   </div>
+
+    </div>
+    </div>
 </template>
 
 <script>
@@ -44,7 +53,8 @@ export default {
       // networks: networks,
       currentUser: {},
       email: '',
-      password: ''
+      password: '',
+      showError: false
     };
   },
   mounted: function() {
@@ -105,6 +115,8 @@ export default {
                 console.log('auth FAILURE or user not onboarded yet');
                 console.error(err);
               });
+          } else {
+            component.showError = true
           }
         })
         .catch(function(error) {
@@ -116,6 +128,23 @@ export default {
 </script>
 
 <style scoped>
+
+p a {
+  text-decoration: underline;
+}
+
+button {
+  background: none;
+}
+
+.splash-button {
+  background-color: white;
+  width: 100%;
+}
+.onb-content-container {
+  padding-top: 96px;
+}
+
 input.invalid {
   border: 1px solid red;
 }
