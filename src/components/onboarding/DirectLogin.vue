@@ -32,9 +32,10 @@
           :class="{'invalid': errors.has('password') }"
           class="location-text-field w-input"
         >
-          <button type="submit" class="button-text splash-button w-inline-block">Login</button>
+          <button type="submit" class="button-text splash-button w-inline-block">Sign in</button>
       </form>
     </div>
+    <p><a @click="$emit('activateScreen', 'facebook')">Sign in here</a> if you sign in using Facebook.</p>
   </div>
 
     </div>
@@ -153,6 +154,10 @@ export default {
 
 <style scoped>
 
+p {
+  text-align: center;
+  color: white;
+}
 p a {
   text-decoration: underline;
 }
