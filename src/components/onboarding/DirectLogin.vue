@@ -82,6 +82,30 @@ export default {
     } else {
       console.warn('this.$auth is blank');
     }
+    // override for better error messages on this screen and on signup screen.
+    // note: changes here affect all vee-validate error messages until page reload.
+    const dict = {
+      custom: {
+        email: {
+          required: 'Please enter your email address.',
+          email: 'Please enter a valid email address.'
+        },
+        first_name: {
+          required: 'Please enter your first name.'
+        },
+        last_name: {
+          required: 'Please enter your last name.'
+        },
+        password: {
+          required: 'Please choose a password.'
+        },
+        avatar: {
+          required: 'You must add a profile photo, below.'
+        }
+      }
+    };
+    // Override and merge the dictionaries
+    this.$validator.localize('en', dict);
   },
   methods: {
     login: function(event) {
