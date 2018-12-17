@@ -51,13 +51,13 @@
                 v-validate="'required'"
                 name="avatar"
                 :class="{'invalid': errors.has('avatar') }"
-                v-on:change="upload($event.target.files)"
+                v-on:change="upload"
                 accept="image/*"
               >
               <span>{{ errors.first('avatar') }}</span>
             </div>
             <div v-if="!!avatar_url">
-              <img :src="avatar_url" height="128"/>
+              <img :src="avatar_url" height="128">
             </div>
             <button type="submit">Sign Up</button>
           </div>
@@ -106,20 +106,30 @@ export default {
     }
   },
   methods: {
-    upload: function(files) {
-      this.disableForm = true;
+    upload: function(event) {
+      let files = event.target.files;
+
       let formData = new FormData();
       formData.append('file', files[0]);
       formData.append('upload_preset', this.cloudinary.uploadPreset);
 
-      this.axios
-        .post(this.cloudinaryUploadUrl, formData)
+      this.disableForm = true;
+
+      fetch(this.cloudinaryUploadUrl, { method: 'POST', body: formData })
         .then(response => {
-          this.avatar_url = response.data.secure_url;
-          this.disableForm = false;
+          if (response.ok) {
+            return response.json();
+          } else {
+            throw new Error('Network response was not ok');
+          }
         })
-        .catch(function(error) {
-          console.error('error', error);
+        .then(response => {
+          console.log('cloudinary upload success', response);
+          this.disableForm = false;
+          this.avatar_url = response.secure_url;
+        })
+        .catch(error => {
+          console.error('cloudinary upload error', error);
           this.disableForm = false;
         });
     },
