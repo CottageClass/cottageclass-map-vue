@@ -88,11 +88,13 @@
       <img src="@/assets/facebook-button-icon.svg" width="24" height="24" alt="" />
       <div class="fb-button-text">Continue with Facebook</div>
     </a>
-    <a @click="$emit('activateScreen', 'directLogin')" class="w-inline-block" v-if="!!directLogin">
-      <div>Continue with Email</div>
+    <div class="email-login">
+    Or <a @click="$emit('activateScreen', 'directLogin')" class="w-inline-block" v-if="!!directLogin">
+      use a password instead
     </a>
+  </div>
     <div class="tos-acceptance">
-      (By signing in you agree to our <a href="https://cottageclass.com/terms-of-service">Terms of Service</a> and <a href="https://cottageclass.com/privacy-policy">Privacy Policy</a>)
+      By signing in you agree to our <a href="https://cottageclass.com/terms-of-service">Terms of Service</a> and <a href="https://cottageclass.com/privacy-policy">Privacy Policy</a>
     </div>
   </div>
 </div>
@@ -170,6 +172,18 @@ export default {
 </script>
 
 <style scoped>
+
+.email-login {
+  text-align: center;
+  padding-top: 8px;
+  color: #32599c;
+}
+
+.email-login a {
+  display: inline;
+  text-decoration: underline;
+  font-weight: bold;
+}
 
 .tos-acceptance {
   text-align: center;
