@@ -26,9 +26,10 @@
       <Activities v-if="step === 4" v-model="activities" />
       <EventActivity v-if="step === 5" v-model="eventActivity" />
       <EventTime v-if="step === 6" v-model="eventTime" />
-      <Availability v-if="step === 7" v-model="availability" />
-      <Food v-if="step === 8" v-model="food" />
-      <Rules v-if="step === 9" v-model="rules" />
+      <EventDate v-if="step === 7" v-model="eventDate" />
+      <Availability v-if="step === 8" v-model="availability" />
+      <Food v-if="step === 9" v-model="food" />
+      <Rules v-if="step === 10" v-model="rules" />
 
     </div>
   </span>
@@ -48,7 +49,7 @@ import Activities from '@/components/onboarding/Activities.vue'
 import Food from '@/components/onboarding/Food.vue'
 import Rules from '@/components/onboarding/Rules.vue'
 import EventTime from '@/components/onboarding/EventTime.vue'
-
+import EventDate from '@/components/onboarding/EventDate.vue'
 import * as Token from '@/utils/tokens.js'
 import * as api from '@/utils/api.js'
 import sheetsu from 'sheetsu-node'
@@ -60,7 +61,7 @@ var client = sheetsu({ address: 'https://sheetsu.com/apis/v1.0su/62cd725d6088' }
 
 export default {
   components: {
-    Nav, Login, DirectLogin, Signup, Location, Phone, Children, Availability, Activities, Food, Rules, EventActivity, EventTime
+    Nav, Login, DirectLogin, Signup, Location, Phone, Children, Availability, Activities, Food, Rules, EventActivity, EventTime, EventDate
   },
   data () {
     return {
@@ -95,6 +96,7 @@ export default {
       food: {},
       eventActivity: {},
       eventTime: {},
+      eventDate: {},
       rules: {},
       invitationCode: {
         codeEntered: 'brooklyn-events' // this is now hard-coded
@@ -245,10 +247,12 @@ export default {
         case 6:
           return this.eventTime.err
         case 7:
-          return this.availability.err
+          return this.eventDate.err
         case 8:
-          return this.food.err
+          return this.availability.err
         case 9:
+          return this.food.err
+        case 10:
           return this.rules.err
         default:
           return false
