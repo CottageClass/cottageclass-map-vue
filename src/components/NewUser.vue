@@ -23,8 +23,8 @@
       <Phone v-if="step === 1" v-model="phone" />
       <Location v-if="step === 2" v-model="location"/>
       <Children v-if="step === 3" v-model="children" />
-      <Availability v-if="step === 4" v-model="availability" />
-      <Activities v-if="step === 5" v-model="activities" />
+      <Activities v-if="step === 4" v-model="activities" />
+      <Availability v-if="step === 5" v-model="availability" />
     </div>
   </span>
 </template>
@@ -81,16 +81,7 @@ export default {
         weekends: false,
         err: "skippable"
       },
-      activities: {
-        playingOutside: false,
-        artsAndCrafts: false,
-        fieldTrips: false,
-        cooking: false,
-        homeworkHelp: false,
-        bilingualImmersion: false,
-        bookClub: false,
-        err: "skippable"
-      },
+      activities: {},
       invitationCode: {
         codeEntered: 'brooklyn-events' // this is now hard-coded
       }
@@ -140,7 +131,8 @@ export default {
           "phone": this.phone.number,
           "children": this.children.list,
           "availability": this.availability,
-          "activities": this.activities,
+          "activities": this.activities.selected,
+          "activitiesAddtionalText": this.activities.additionalText,
           "network": this.invitationCode.code,
         }, "newUsers").then((data) => {
           console.log(data)
@@ -174,8 +166,8 @@ export default {
         ))
       }
 
-      let activities = Object.keys(this.activities)
-        .filter(k => this.activities[k])
+      let activities = Object.keys(this.activities.selected)
+        .filter(k => this.activities.selected[k])
         // convert activites to snake_case
         .map(activity => activity.replace( /([A-Z])/g, "_$1" ).toLowerCase())
 
@@ -232,9 +224,9 @@ export default {
         case 3:
           return this.children.err
         case 4:
-          return this.availability.err
+          return this.activities.err 
         case 5:
-          return this.activities.err
+          return this.availability.err
         default:
           return false
       }

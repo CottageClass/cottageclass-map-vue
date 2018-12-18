@@ -1,19 +1,38 @@
 <template>
   <div class="onb-content-container">
     <div class="onb-top-content-container">
-      <h1 class="onb-heading-large">Activities</h1>
-      <p class="onb-paragraph-subheading-2">What are the activities kids especially love doing with you?</p>
+      <h1 class="onb-heading-large">Special talents</h1>
+      <p class="onb-paragraph-subheading-2">Choose some things you're good at, or that your family loves. These will display on your profile so that other parents can get an idea of your interests &amp; vibe.</p>
     </div>
     <div class="onb-form-block-checkbox-list w-form">
       <form class="onb-form-checkbox-list">
-        <div class="checkbox-field-extra-space" :class="{'active-checkbox': activities.playingOutside}"><input v-model="activities.playingOutside" type="checkbox" id="checkbox" name="checkbox" data-name="Checkbox" class="onb-checkbox w-checkbox-input"><label for="checkbox" class="onb-checkbox-label w-form-label">Playing outside</label></div>
-        <div class="checkbox-field-extra-space" :class="{'active-checkbox': activities.artsAndCrafts}"><input v-model="activities.artsAndCrafts" type="checkbox" id="checkbox-1" name="checkbox-1" data-name="Checkbox 1" class="onb-checkbox w-checkbox-input"><label for="checkbox-1" class="onb-checkbox-label w-form-label">Arts &amp; crafts</label></div>
-        <div class="checkbox-field-extra-space" :class="{'active-checkbox': activities.fieldTrips}"><input v-model="activities.fieldTrips" type="checkbox" id="checkbox-2" name="checkbox-2" data-name="Checkbox 2" class="onb-checkbox w-checkbox-input"><label for="checkbox-2" class="onb-checkbox-label w-form-label">Field trips</label></div>
-        <div class="checkbox-field-extra-space" :class="{'active-checkbox': activities.cooking}"><input v-model="activities.cooking" type="checkbox" id="checkbox-3" name="checkbox-3" data-name="Checkbox 3" class="onb-checkbox w-checkbox-input"><label for="checkbox-3" class="onb-checkbox-label w-form-label">Cooking</label></div>
-        <div class="checkbox-field-extra-space" :class="{'active-checkbox': activities.homeworkHelp}"><input v-model="activities.homeworkHelp" type="checkbox" id="checkbox-4" name="checkbox-4" data-name="Checkbox 4" class="onb-checkbox w-checkbox-input"><label for="checkbox-4" class="onb-checkbox-label w-form-label">Homework help</label></div>
-        <div class="checkbox-field-extra-space" :class="{'active-checkbox': activities.bilingualImmersion}"><input v-model="activities.bilingualImmersion" type="checkbox" id="checkbox-5" name="checkbox-5" data-name="Checkbox 5" class="onb-checkbox w-checkbox-input"><label for="checkbox-5" class="onb-checkbox-label w-form-label">Bilingual immersion</label></div>
-        <div class="checkbox-field-extra-space" :class="{'active-checkbox': activities.music}"><input v-model="activities.music" type="checkbox" id="checkbox-6" name="checkbox-6" data-name="Checkbox 6" class="onb-checkbox w-checkbox-input"><label for="checkbox-6" class="onb-checkbox-label w-form-label">Music</label></div>
+        <div
+        v-for="activity in shuffledActivities" 
+        class="checkbox-field-extra-space" 
+        :class="{'active-checkbox': isSelected(activity)}">
+          <input 
+          @click="toggleSelected(activity)" 
+          type="checkbox" 
+          :id="activity" 
+          :name="activity" 
+          data-name="Checkbox" 
+          class="onb-checkbox w-checkbox-input"
+          :checked="isSelected(activity)"
+          >
+          <label 
+          :for="activity" 
+          class="onb-checkbox-label w-form-label"
+          >
+           {{ capitalizeFirstLetter(activity) }}
+         </label>
+        </div>
       </form>
+    <div class="form-describe-need w-form">
+      <form v-on:submit.prevent id="email-form-2">
+        <p class="describe-label">Anything else you'd like to share?</p>
+        <textarea v-model="additionalText" id="field" name="field" placeholder="(This won't appear on your profile but our staff will review it.)" maxlength="5000" class="text-area-decribe-need w-input"></textarea>
+      </form>
+    </div>
     </div>
     <p class="onb-paragraph-small-50"></p>
   </div>
@@ -25,18 +44,119 @@ export default {
   props: ['value'],
   data () {
     return {
-      activities: this.value
+      additionalText: "",
+      activitiesSelected: [],
+      errorMesg: 'Please choose at least one activity you like from the list.',
+      allActivities: [
+      'knitting',
+      'playing in snow',
+      'shopping',
+      'TV',
+      'computers',
+      'legos',
+      'puzzles',
+      'board games',
+      'movies',
+      'math',
+      'science',
+      'hiking',
+      'swimming',
+      'skiing',
+      'soccer',
+      'baseball',
+      'football',
+      'watching sports',
+      'baking',
+      'grilling food',
+      'arts & crafts',
+      'yoga',
+      'meditation'
+      ],
+      maxChoices: 4
+    }
+  },
+  mounted: function () {
+    this.$emit('input', {
+      err: this.errorMesg
+    })
+  },
+  computed: {
+    shuffledActivities: function () {
+      function shuffle(array) {
+        var currentIndex = array.length, temporaryValue, randomIndex;
+
+      // While there remain elements to shuffle...
+      while (0 !== currentIndex) {
+
+      // Pick a remaining element...
+      randomIndex = Math.floor(Math.random() * currentIndex);
+      currentIndex -= 1;
+
+      // And swap it with the current element.
+      temporaryValue = array[currentIndex];
+      array[currentIndex] = array[randomIndex];
+      array[randomIndex] = temporaryValue;
+      }
+      return array;
+    }
+    return shuffle(this.allActivities) 
+    },
+    err: function () {
+      if (this.activitiesSelected.length == 0) {
+        return this.errorMesg
+      } else {
+        return false
+      }
     }
   },
   watch: {
-    activities: {
-      handler: function () {
-        this.activities.err = false
-        this.$emit('input', this.activities)
+    activitiesSelected: function () {
+        this.$emit('input', {
+          additionalText: this.additionalText,
+          selected: this.activitiesSelected,
+          err: this.err
+        })
       },
-      deep: true
+    additionalText: function () {
+        this.$emit('input', {
+          additionalText: this.additionalText,
+          selected: this.activitiesSelected,
+          err: this.err
+        })
+      }
+    },
+  methods: {
+    isSelected: function (activity) {
+      return this.activitiesSelected.includes(activity)
+    },
+    toggleSelected: function (activity) {
+      if (this.isSelected(activity)) {
+        this.activitiesSelected = this.activitiesSelected.filter((anActivity) => anActivity != activity) 
+      } else {
+        this.activitiesSelected.push(activity)
+      }
+    },
+    capitalizeFirstLetter: function(string) {
+      return string.charAt(0).toUpperCase() + string.slice(1);
     }
   }
 };
 </script>
+
+<style scoped>
+
+.describe-label {
+  color: white;
+  padding-top: 16px;
+}
+
+textarea {
+  height: 96px;
+}
+
+.onb-content-container {
+  height: unset;
+}
+
+</style>
 
