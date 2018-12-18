@@ -32,7 +32,7 @@
 
 <script>
 export default {
-  name: "Activities",
+  name: "EventTime",
   props: ['value'],
   data () {
     return {

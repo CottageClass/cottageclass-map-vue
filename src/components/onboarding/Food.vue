@@ -32,7 +32,7 @@
 
 <script>
 export default {
-  name: "Activities",
+  name: "Food",
   props: ['value'],
   data () {
     return {
