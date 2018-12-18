@@ -15,7 +15,7 @@
         </form>
       </div>
     </div>
-    <p class="onb-paragraph-small-50">Other families will text you to request or offer care. (We may also send you text messages about special CottageClass  CareShare events or news. Message &amp; data rates apply.)</p>
+    <p class="onb-paragraph-small-50">Only members who RSVP to your event will see your phone number. (We may also send you text messages about your event or upcoming events. Message &amp; data rates apply.)</p>
   </div>
 </template>
 
