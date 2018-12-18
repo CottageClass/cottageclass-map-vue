@@ -28,8 +28,7 @@
       <Blurb v-if="step == 6" v-model="blurb" />
       <Availability v-if="step === 7" v-model="availability" />
       <Activities v-if="step === 8" v-model="activities" />
-      <InvitationCode v-if="step === 9" v-model="invitationCode" />
-      <Invite v-if="step === 10" />
+      <Invite v-if="step === 9" />
     </div>
   </span>
 </template>
@@ -48,7 +47,6 @@ import Children from '@/components/onboarding/Children.vue'
 import Availability from '@/components/onboarding/Availability.vue'
 import Activities from '@/components/onboarding/Activities.vue'
 import Invite from '@/components/onboarding/Invite.vue'
-import InvitationCode from '@/components/onboarding/InvitationCode.vue'
 import * as Token from '@/utils/tokens.js'
 import * as api from '@/utils/api.js'
 import sheetsu from 'sheetsu-node'
@@ -60,14 +58,14 @@ var client = sheetsu({ address: 'https://sheetsu.com/apis/v1.0su/62cd725d6088' }
 
 export default {
   components: {
-    Nav, Login, DirectLogin, Signup, SeekerOrProvider, RequestCare, Location, Phone, Children, Availability, Activities, Invite, InvitationCode, Blurb
+    Nav, Login, DirectLogin, Signup, SeekerOrProvider, RequestCare, Location, Phone, Children, Availability, Activities, Invite, Blurb
   },
   data () {
     return {
       activeScreen: 'facebook',
       step: 0,
-      lastStep: 9,
-      inviteStep: 10,
+      lastStep: 8,
+      inviteStep: 9,
       phoneStep: 3,
       afterLastStep: '../demo/home/',
       showError: false,
@@ -106,9 +104,7 @@ export default {
         err: "skippable"
       },
       invitationCode: {
-        codeEntered: null,
-        err: "skippable",
-        isValid: false
+        codeEntered: 'brooklyn-events' // this is now hard-coded
       }
     }
   },
