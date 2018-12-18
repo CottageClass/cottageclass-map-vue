@@ -20,14 +20,13 @@
       <div v-if="showError && error && error!='skippable'" class="onb-error-container">
         <div class="onb-error-text">{{ error }}</div>
       </div>
-      <SeekerOrProvider v-if="step === 1" v-model="seekerOrProvider"/>
-      <Phone v-if="step === 2" v-model="phone" />
-      <Location v-if="step === 3" v-model="location"/>
-      <Children v-if="step === 4" v-model="children" />
-      <Blurb v-if="step == 5" v-model="blurb" />
-      <Availability v-if="step === 6" v-model="availability" />
-      <Activities v-if="step === 7" v-model="activities" />
-      <Invite v-if="step === 8" />
+      <Phone v-if="step === 1" v-model="phone" />
+      <Location v-if="step === 2" v-model="location"/>
+      <Children v-if="step === 3" v-model="children" />
+      <Blurb v-if="step == 4" v-model="blurb" />
+      <Availability v-if="step === 5" v-model="availability" />
+      <Activities v-if="step === 6" v-model="activities" />
+      <Invite v-if="step === 7" />
     </div>
   </span>
 </template>
@@ -37,7 +36,6 @@ import Nav from '@/components/onboarding/Nav.vue'
 import Login from '@/components/onboarding/Login.vue'
 import DirectLogin from '@/components/onboarding/DirectLogin.vue';
 import Signup from '@/components/onboarding/Signup.vue';
-import SeekerOrProvider from '@/components/onboarding/SeekerOrProvider.vue'
 import Location from '@/components/onboarding/Location.vue'
 import Phone from '@/components/onboarding/Phone.vue'
 import Blurb from '@/components/onboarding/Blurb.vue'
@@ -56,19 +54,17 @@ var client = sheetsu({ address: 'https://sheetsu.com/apis/v1.0su/62cd725d6088' }
 
 export default {
   components: {
-    Nav, Login, DirectLogin, Signup, SeekerOrProvider, Location, Phone, Children, Availability, Activities, Invite, Blurb
+    Nav, Login, DirectLogin, Signup, Location, Phone, Children, Availability, Activities, Invite, Blurb
   },
   data () {
     return {
       activeScreen: 'facebook',
       step: 0,
-      lastStep: 7,
-      inviteStep: 8,
-      phoneStep: 2,
+      lastStep: 6,
+      inviteStep: 7,
       afterLastStep: '../demo/home/',
       showError: false,
       name: {}, // todo: remove if possible now this comes from FB
-      seekerOrProvider: {},
       bookingRequest: {
         dateTimeSelected: null,
         description: "",
@@ -121,11 +117,7 @@ export default {
       }
     },
     nextStep: function () {
-      if (this.step == this.phoneStep && this.userRequestedCare) {
-        this.saveBookingRequestToSpreadsheet()
-        this.skipUnnecessarySteps()
-      }
-      else if (this.step == this.lastStep) {
+      if (this.step == this.lastStep) {
         this.submitData()
           .then(res => {
             // only move to next page once we have saved user data
@@ -137,21 +129,12 @@ export default {
       }
       // check if there's an error, if so show it, if not advance and clear the error.
       else if (!this.error || this.error === "skippable") {
-        this.skipUnnecessarySteps() // skips any step not required for this user
         this.showError = false
+        this.step = this.step + 1
         window.scrollTo(0,0)
       } else {
         this.showError = true
       }
-    },
-    skipUnnecessarySteps: function () {
-      if (this.step == 1 && this.seekerOrProvider.status == "provider") {
-        this.step = 3
-      } // skips booking request screen if user is only a provider
-      else if (this.step == 6 && this.seekerOrProvider.status == "seeker") {
-        this.step = 8 // skips to enter network code if user is not a provider
-      } else
-      this.step = this.step + 1
     },
     prevStep: function () {
       this.showError = false
@@ -171,7 +154,6 @@ export default {
           "availability": this.availability,
           "activities": this.activities,
           "network": this.invitationCode.code,
-          "Seeker or provider": this.seekerOrProvider.status,
         }, "newUsers").then((data) => {
           console.log(data)
         }, (err) => {
