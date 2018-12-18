@@ -26,6 +26,7 @@
       <Activities v-if="step === 4" v-model="activities" />
       <Availability v-if="step === 5" v-model="availability" />
       <Food v-if="step === 6" v-model="food" />
+      <Rules v-if="step === 7" v-model="rules" />
     </div>
   </span>
 </template>
@@ -41,6 +42,8 @@ import Children from '@/components/onboarding/Children.vue'
 import Availability from '@/components/onboarding/Availability.vue'
 import Activities from '@/components/onboarding/Activities.vue'
 import Food from '@/components/onboarding/Food.vue'
+import Rules from '@/components/onboarding/Rules.vue'
+
 import * as Token from '@/utils/tokens.js'
 import * as api from '@/utils/api.js'
 import sheetsu from 'sheetsu-node'
@@ -52,13 +55,13 @@ var client = sheetsu({ address: 'https://sheetsu.com/apis/v1.0su/62cd725d6088' }
 
 export default {
   components: {
-    Nav, Login, DirectLogin, Signup, Location, Phone, Children, Availability, Activities, Food
+    Nav, Login, DirectLogin, Signup, Location, Phone, Children, Availability, Activities, Food, Rules
   },
   data () {
     return {
       activeScreen: 'facebook',
       step: 0,
-      lastStep: 7,
+      lastStep: 10,
       showError: false,
       name: {}, // todo: remove if possible now this comes from FB
       bookingRequest: {
@@ -85,6 +88,7 @@ export default {
       },
       activities: {},
       food: {},
+      rules: {},
       invitationCode: {
         codeEntered: 'brooklyn-events' // this is now hard-coded
       }
@@ -233,6 +237,8 @@ export default {
           return this.availability.err
         case 6:
           return this.food.err
+        case 7:
+          return this.rules.err
         default:
           return false
       }
