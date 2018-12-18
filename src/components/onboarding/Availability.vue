@@ -1,8 +1,8 @@
 <template>
  <div class="onb-content-container">
     <div class="onb-top-content-container">
-      <h1 class="onb-heading-large">Availability</h1>
-      <p class="onb-paragraph-subheading-2">When are you generally available to offer care or educational activities to other families? Select all that apply.</p>
+      <h1 class="onb-heading-large">When can you provide emergency care?</h1>
+      <p class="onb-paragraph-subheading-2">We'll text you if other parents need care during these times. There's never any obligation to respond, so just pick times when you're <em>usually</em> available.</p>
     </div>
     <div class="onb-form-block-checkbox-list w-form">
       <form id="email-form" name="email-form" data-name="Email Form" class="onb-form-checkbox-list">
@@ -12,7 +12,7 @@
         <div class="checkbox-field-extra-space" :class="{'active-checkbox': availability.weekends}"><input v-model="availability.weekends" type="checkbox" id="checkbox-3" name="checkbox-3" data-name="Checkbox 3" class="onb-checkbox w-checkbox-input"><label for="checkbox-3" class="onb-checkbox-label w-form-label">Weekends</label></div>
       </form>
     </div>
-    <p class="onb-paragraph-small-50">You&#x27;ll be able to accept or decline any requests. Most families list days and times that they are generally at home with their own children or are doing a fun or educational activity which they&#x27;d like to include other children in.</p>
+    <p class="onb-paragraph-small-50">You&#x27;ll be able to accept or decline any requests. Most families list days and times that they are generally at home with their own children or doing a fun or educational activity which they&#x27;d like to include other children in.</p>
   </div>
 </template>
 
@@ -38,4 +38,12 @@ export default {
   }
 };
 </script>
+
+<style scoped>
+
+.onb-content-container {
+  height: 100%;
+}
+
+</style>
 
