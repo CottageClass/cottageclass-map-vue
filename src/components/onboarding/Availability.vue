@@ -42,7 +42,8 @@ export default {
 <style scoped>
 
 .onb-content-container {
-  height: 100%;
+  height: unset;
+  min-height: 100%;
 }
 
 </style>
