@@ -31,6 +31,8 @@
       <Food v-if="step === 9" v-model="food" />
       <Rules v-if="step === 10" v-model="communityRules" />
       <HouseRules v-if="step === 11" v-model="houseRules" />
+      <PetsDescription v-if="step === 12" v-model="petsDescription" />
+
 
     </div>
   </span>
@@ -50,6 +52,7 @@ import Activities from '@/components/onboarding/Activities.vue'
 import Food from '@/components/onboarding/Food.vue'
 import Rules from '@/components/onboarding/Rules.vue'
 import HouseRules from '@/components/onboarding/HouseRules.vue'
+import PetsDescription from '@/components/onboarding/PetsDescription.vue'
 import EventTime from '@/components/onboarding/EventTime.vue'
 import EventDate from '@/components/onboarding/EventDate.vue'
 import * as Token from '@/utils/tokens.js'
@@ -63,36 +66,36 @@ var client = sheetsu({ address: 'https://sheetsu.com/apis/v1.0su/62cd725d6088' }
 
 export default {
   components: {
-    Nav, Login, DirectLogin, Signup, Location, Phone, Children, Availability, Activities, Food, Rules, EventActivity, EventTime, EventDate, HouseRules
+    Nav, Login, DirectLogin, Signup, Location, Phone, Children, Availability, Activities, Food, Rules, EventActivity, EventTime, EventDate, HouseRules, PetsDescription
   },
   data () {
     return {
       activeScreen: 'facebook',
       step: 0,
-      lastStep: 12,
+      lastStep: 14,
       showError: false,
       name: {}, // todo: remove if possible now this comes from FB
       bookingRequest: {
         dateTimeSelected: null,
-        description: "",
-        err: "skippable",
+        description: '',
+        err: 'skippable',
         showCountdownPromo: true
       },
       location: {},
       phone: {},
       children: {
         list: [{firstName: null, birthday: null}],
-        err: "skippable"
+        err: 'skippable'
       },
       blurb: {
-        text: ""
+        text: ''
       },
       availability: {
         mornings: false,
         afternoons: false,
         evenings: false,
         weekends: false,
-        err: "skippable"
+        err: 'skippable'
       },
       activities: {},
       food: {},
@@ -100,9 +103,12 @@ export default {
       eventTime: {},
       eventDate: {},
       houseRules: {
-        err: "skippable"
+        err: 'skippable'
       },
       communityRules: {},
+      petsDescription: {
+        text: ''
+      },
       invitationCode: {
         codeEntered: 'brooklyn-events' // this is now hard-coded
       }
@@ -261,6 +267,8 @@ export default {
           return this.communityRules.err  
         case 11:
           return this.houseRules.err
+        case 12:
+          return this.petsDescription.err
         default:
           return false
       }
