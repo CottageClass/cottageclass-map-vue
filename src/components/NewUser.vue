@@ -29,7 +29,8 @@
       <EventDate v-if="step === 7" v-model="eventDate" />
       <Availability v-if="step === 8" v-model="availability" />
       <Food v-if="step === 9" v-model="food" />
-      <Rules v-if="step === 10" v-model="rules" />
+      <Rules v-if="step === 10" v-model="communityRules" />
+      <HouseRules v-if="step === 11" v-model="houseRules" />
 
     </div>
   </span>
@@ -48,6 +49,7 @@ import Availability from '@/components/onboarding/Availability.vue'
 import Activities from '@/components/onboarding/Activities.vue'
 import Food from '@/components/onboarding/Food.vue'
 import Rules from '@/components/onboarding/Rules.vue'
+import HouseRules from '@/components/onboarding/HouseRules.vue'
 import EventTime from '@/components/onboarding/EventTime.vue'
 import EventDate from '@/components/onboarding/EventDate.vue'
 import * as Token from '@/utils/tokens.js'
@@ -61,13 +63,13 @@ var client = sheetsu({ address: 'https://sheetsu.com/apis/v1.0su/62cd725d6088' }
 
 export default {
   components: {
-    Nav, Login, DirectLogin, Signup, Location, Phone, Children, Availability, Activities, Food, Rules, EventActivity, EventTime, EventDate
+    Nav, Login, DirectLogin, Signup, Location, Phone, Children, Availability, Activities, Food, Rules, EventActivity, EventTime, EventDate, HouseRules
   },
   data () {
     return {
       activeScreen: 'facebook',
       step: 0,
-      lastStep: 10,
+      lastStep: 12,
       showError: false,
       name: {}, // todo: remove if possible now this comes from FB
       bookingRequest: {
@@ -97,7 +99,10 @@ export default {
       eventActivity: {},
       eventTime: {},
       eventDate: {},
-      rules: {},
+      houseRules: {
+        err: "skippable"
+      },
+      communityRules: {},
       invitationCode: {
         codeEntered: 'brooklyn-events' // this is now hard-coded
       }
@@ -253,7 +258,9 @@ export default {
         case 9:
           return this.food.err
         case 10:
-          return this.rules.err
+          return this.communityRules.err  
+        case 11:
+          return this.houseRules.err
         default:
           return false
       }
