@@ -21,14 +21,13 @@
         <div class="onb-error-text">{{ error }}</div>
       </div>
       <SeekerOrProvider v-if="step === 1" v-model="seekerOrProvider"/>
-      <RequestCare v-if="step === 2" v-model="bookingRequest"/>
-      <Phone v-if="step === 3" v-model="phone" />
-      <Location v-if="step === 4" v-model="location"/>
-      <Children v-if="step === 5" v-model="children" />
-      <Blurb v-if="step == 6" v-model="blurb" />
-      <Availability v-if="step === 7" v-model="availability" />
-      <Activities v-if="step === 8" v-model="activities" />
-      <Invite v-if="step === 9" />
+      <Phone v-if="step === 2" v-model="phone" />
+      <Location v-if="step === 3" v-model="location"/>
+      <Children v-if="step === 4" v-model="children" />
+      <Blurb v-if="step == 5" v-model="blurb" />
+      <Availability v-if="step === 6" v-model="availability" />
+      <Activities v-if="step === 7" v-model="activities" />
+      <Invite v-if="step === 8" />
     </div>
   </span>
 </template>
@@ -39,7 +38,6 @@ import Login from '@/components/onboarding/Login.vue'
 import DirectLogin from '@/components/onboarding/DirectLogin.vue';
 import Signup from '@/components/onboarding/Signup.vue';
 import SeekerOrProvider from '@/components/onboarding/SeekerOrProvider.vue'
-import RequestCare from '@/components/onboarding/RequestCare.vue'
 import Location from '@/components/onboarding/Location.vue'
 import Phone from '@/components/onboarding/Phone.vue'
 import Blurb from '@/components/onboarding/Blurb.vue'
@@ -58,15 +56,15 @@ var client = sheetsu({ address: 'https://sheetsu.com/apis/v1.0su/62cd725d6088' }
 
 export default {
   components: {
-    Nav, Login, DirectLogin, Signup, SeekerOrProvider, RequestCare, Location, Phone, Children, Availability, Activities, Invite, Blurb
+    Nav, Login, DirectLogin, Signup, SeekerOrProvider, Location, Phone, Children, Availability, Activities, Invite, Blurb
   },
   data () {
     return {
       activeScreen: 'facebook',
       step: 0,
-      lastStep: 8,
-      inviteStep: 9,
-      phoneStep: 3,
+      lastStep: 7,
+      inviteStep: 8,
+      phoneStep: 2,
       afterLastStep: '../demo/home/',
       showError: false,
       name: {}, // todo: remove if possible now this comes from FB
@@ -159,21 +157,6 @@ export default {
       this.showError = false
       this.step = this.step - 1
     },
-    saveBookingRequestToSpreadsheet: function () {
-      client.create({
-        "User ID": Token.currentUserId(this.$auth),
-        "Phone": this.phone.number,
-        "Time submitted": moment(Date()).format("LT"),
-        "Date submitted": moment(Date()).format("L"),
-        "Date requested": moment(this.bookingRequest.dateTimeSelected).format("L"),
-        "Time requested": moment(this.bookingRequest.dateTimeSelected).format("LT"),
-        "Request Description": this.bookingRequest.description,
-      }, "requestsInOnboarding").then((data) => {
-        console.log(data)
-      }, (err) => {
-        console.log(err)
-      });
-    },
     submitData: function () {
       let userId = Token.currentUserId(this.$auth)
 
@@ -189,7 +172,6 @@ export default {
           "activities": this.activities,
           "network": this.invitationCode.code,
           "Seeker or provider": this.seekerOrProvider.status,
-          "bookingRequest": this.bookingRequest
         }, "newUsers").then((data) => {
           console.log(data)
         }, (err) => {
