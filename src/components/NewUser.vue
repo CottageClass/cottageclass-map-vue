@@ -232,10 +232,8 @@ export default {
         case 3:
           return this.children.err
         case 4:
-          return this.blurb.err
-        case 5:
           return this.availability.err
-        case 6:
+        case 5:
           return this.activities.err
         default:
           return false
