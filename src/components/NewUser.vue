@@ -25,7 +25,6 @@
       <Children v-if="step === 3" v-model="children" />
       <Availability v-if="step === 4" v-model="availability" />
       <Activities v-if="step === 5" v-model="activities" />
-      <Invite v-if="step === 6" />
     </div>
   </span>
 </template>
@@ -40,7 +39,6 @@ import Phone from '@/components/onboarding/Phone.vue'
 import Children from '@/components/onboarding/Children.vue'
 import Availability from '@/components/onboarding/Availability.vue'
 import Activities from '@/components/onboarding/Activities.vue'
-import Invite from '@/components/onboarding/Invite.vue'
 import * as Token from '@/utils/tokens.js'
 import * as api from '@/utils/api.js'
 import sheetsu from 'sheetsu-node'
@@ -52,15 +50,13 @@ var client = sheetsu({ address: 'https://sheetsu.com/apis/v1.0su/62cd725d6088' }
 
 export default {
   components: {
-    Nav, Login, DirectLogin, Signup, Location, Phone, Children, Availability, Activities, Invite
+    Nav, Login, DirectLogin, Signup, Location, Phone, Children, Availability, Activities
   },
   data () {
     return {
       activeScreen: 'facebook',
       step: 0,
       lastStep: 5,
-      inviteStep: 6,
-      afterLastStep: '../demo/home/',
       showError: false,
       name: {}, // todo: remove if possible now this comes from FB
       bookingRequest: {
@@ -106,13 +102,8 @@ export default {
       console.log('activating:', name);
       this.activeScreen = name;
     },
-    continueOrShowSharingAsk: function () {
-      if (this.invitationCode.isValid) {
-        this.$router.push({ name: 'Splash' })
-      } else {
-        // show sharing ask
-        this.step = this.inviteStep
-      }
+    continueWhenComplete: function () {
+      this.$router.push({ name: 'MainView' })
     },
     nextStep: function () {
       if (this.step == this.lastStep) {
@@ -121,8 +112,7 @@ export default {
             // only move to next page once we have saved user data
             // - get back userId
             // - get back networkCode
-            console.log('calling continueorrunsharingask')
-            this.continueOrShowSharingAsk()
+            this.continueWhenComplete()
           })
       }
       // check if there's an error, if so show it, if not advance and clear the error.
@@ -247,8 +237,6 @@ export default {
           return this.availability.err
         case 6:
           return this.activities.err
-        case 7:
-          return this.invitationCode.err
         default:
           return false
       }
