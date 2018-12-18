@@ -1,7 +1,7 @@
 <template>
   <div class="onb-content-container">
     <div class="onb-top-content-container">
-      <h1 class="onb-heading-large">Community Rules</h1>
+      <h1 class="onb-heading-large">Our community rules</h1>
       <p class="onb-paragraph-subheading-2">These are the rules everyone in our community agrees to follow. Please read them carefully, along with our <a href="https://cottageclass.com/terms-of-service">Terms of Service</a>.</p>
     </div>
     <div class="onb-paragraph-align-left">
@@ -16,15 +16,17 @@
       </p>    <br/>
       <br/>
       <br/></div>
-    <div class="onb-fixed-bottom-actions-checkbox-container">
+    <label for="checkbox" class="checkbox-label w-form-label">
+      <div class="onb-fixed-bottom-actions-checkbox-container">
       <div class="form-block-2 w-form">
         <form id="email-form" name="email-form" data-name="Email Form">
           <div class="checkbox-field w-checkbox"><input type="checkbox" id="checkbox" name="checkbox" data-name="Checkbox" class="w-checkbox-input" v-model="checked">
-            <label for="checkbox" class="checkbox-label w-form-label">I agree to these rules</label>
+            I agree to these rules
           </div>
         </form>
       </div>
     </div>
+  </label>
   </div>
 </template>
 
