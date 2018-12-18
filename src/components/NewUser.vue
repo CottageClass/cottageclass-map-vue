@@ -23,10 +23,9 @@
       <Phone v-if="step === 1" v-model="phone" />
       <Location v-if="step === 2" v-model="location"/>
       <Children v-if="step === 3" v-model="children" />
-      <Blurb v-if="step == 4" v-model="blurb" />
-      <Availability v-if="step === 5" v-model="availability" />
-      <Activities v-if="step === 6" v-model="activities" />
-      <Invite v-if="step === 7" />
+      <Availability v-if="step === 4" v-model="availability" />
+      <Activities v-if="step === 5" v-model="activities" />
+      <Invite v-if="step === 6" />
     </div>
   </span>
 </template>
@@ -38,7 +37,6 @@ import DirectLogin from '@/components/onboarding/DirectLogin.vue';
 import Signup from '@/components/onboarding/Signup.vue';
 import Location from '@/components/onboarding/Location.vue'
 import Phone from '@/components/onboarding/Phone.vue'
-import Blurb from '@/components/onboarding/Blurb.vue'
 import Children from '@/components/onboarding/Children.vue'
 import Availability from '@/components/onboarding/Availability.vue'
 import Activities from '@/components/onboarding/Activities.vue'
@@ -54,14 +52,14 @@ var client = sheetsu({ address: 'https://sheetsu.com/apis/v1.0su/62cd725d6088' }
 
 export default {
   components: {
-    Nav, Login, DirectLogin, Signup, Location, Phone, Children, Availability, Activities, Invite, Blurb
+    Nav, Login, DirectLogin, Signup, Location, Phone, Children, Availability, Activities, Invite
   },
   data () {
     return {
       activeScreen: 'facebook',
       step: 0,
-      lastStep: 6,
-      inviteStep: 7,
+      lastStep: 5,
+      inviteStep: 6,
       afterLastStep: '../demo/home/',
       showError: false,
       name: {}, // todo: remove if possible now this comes from FB
