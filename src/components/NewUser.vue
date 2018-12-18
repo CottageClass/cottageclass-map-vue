@@ -24,9 +24,10 @@
       <Location v-if="step === 2" v-model="location"/>
       <Children v-if="step === 3" v-model="children" />
       <Activities v-if="step === 4" v-model="activities" />
-      <Availability v-if="step === 5" v-model="availability" />
-      <Food v-if="step === 6" v-model="food" />
-      <Rules v-if="step === 7" v-model="rules" />
+      <EventActivity v-if="step === 5" v-model="eventActivity" />
+      <Availability v-if="step === 6" v-model="availability" />
+      <Food v-if="step === 7" v-model="food" />
+      <Rules v-if="step === 8" v-model="rules" />
     </div>
   </span>
 </template>
@@ -39,6 +40,7 @@ import Signup from '@/components/onboarding/Signup.vue';
 import Location from '@/components/onboarding/Location.vue'
 import Phone from '@/components/onboarding/Phone.vue'
 import Children from '@/components/onboarding/Children.vue'
+import EventActivity from '@/components/onboarding/EventActivity.vue'
 import Availability from '@/components/onboarding/Availability.vue'
 import Activities from '@/components/onboarding/Activities.vue'
 import Food from '@/components/onboarding/Food.vue'
@@ -55,7 +57,7 @@ var client = sheetsu({ address: 'https://sheetsu.com/apis/v1.0su/62cd725d6088' }
 
 export default {
   components: {
-    Nav, Login, DirectLogin, Signup, Location, Phone, Children, Availability, Activities, Food, Rules
+    Nav, Login, DirectLogin, Signup, Location, Phone, Children, Availability, Activities, Food, Rules, EventActivity
   },
   data () {
     return {
@@ -88,6 +90,7 @@ export default {
       },
       activities: {},
       food: {},
+      eventActivity: {},
       rules: {},
       invitationCode: {
         codeEntered: 'brooklyn-events' // this is now hard-coded
@@ -232,12 +235,14 @@ export default {
         case 3:
           return this.children.err
         case 4:
-          return this.activities.err 
+          return this.activities.err
         case 5:
-          return this.availability.err
+          return this.eventActivity.err
         case 6:
-          return this.food.err
+          return this.availability.err
         case 7:
+          return this.food.err
+        case 8:
           return this.rules.err
         default:
           return false
