@@ -210,7 +210,6 @@ export default {
         availableWeekends: this.availability.weekends,
         networkCode: this.invitationCode.code,
         profileBlurb: this.blurb.text,
-        onboardingCareType: this.seekerOrProvider.status
       }
 
       if (this.children.list && this.children.list.length > 0) {
@@ -239,22 +238,18 @@ export default {
     error: function () {
       switch (this.step) {
         case 1:
-          return this.seekerOrProvider.err
-        case 2:
-          return this.bookingRequest.err
-        case 3:
           return this.phone.err
-        case 4:
+        case 2:
           return this.location.err
-        case 5:
+        case 3:
           return this.children.err
-        case 6:
+        case 4:
           return this.blurb.err
-        case 7:
+        case 5:
           return this.availability.err
-        case 8:
+        case 6:
           return this.activities.err
-        case 9:
+        case 7:
           return this.invitationCode.err
         default:
           return false
