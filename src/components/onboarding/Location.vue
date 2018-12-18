@@ -2,7 +2,7 @@
   <div class="onb-content-container _100vh">
     <div class="onb-top-content-container">
       <h1 class="onb-heading-large">Where do you live?</h1>
-      <p class="onb-paragraph-subheading-2">Please enter your address so we can find families near you.</p>
+      <p class="onb-paragraph-subheading-2">Please enter your address so we can list your event &amp; find events near you.</p>
     </div>
     <div class="onb-location-search-container">
       <div class="w-form">
@@ -19,7 +19,7 @@
 
       </div>
     </div>
-    <p class="onb-paragraph-small-50">Only those you invite to your home will see this.</p>
+    <p class="onb-paragraph-small-50">Only members who RSVP to your event will see your address. Non-members will see an approximate location within a few blocks.</p>
   </div>
 </template>
 
