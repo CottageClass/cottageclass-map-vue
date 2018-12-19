@@ -64,7 +64,7 @@ export default {
   watch: {
     timeSelected: function () {
         this.$emit('input', {
-          selected: formatTime(this.timeSelected),
+          selected: this.formatTime(this.timeSelected),
           err: this.err
         })
       }
