@@ -46,9 +46,6 @@ export default {
     }
   },
   computed: {
-    noChildren: function() {
-      return (this.children.length === 0 || (this.children[0].firstName === null && this.children[0].birthday === null))
-    },
     childrenValidates: function () {
       // child has name and birthday
       let childValidates = function (child) {
@@ -59,7 +56,7 @@ export default {
           child.firstName.length > 0
         )
       }
-      if (this.noChildren ||
+      if (this.children.length > 0 &&
         // validate that each child has name, birthday
         (this.children.reduce((soFar, child) => soFar && childValidates(child), true))) {
         return true
@@ -74,6 +71,12 @@ export default {
         return this.errorMesg
       }
     }
+  },
+  mounted: function () {
+    this.$emit('input', {
+      list: this.children,
+      err: this.error
+    })
   },
   watch: {
     children: {
