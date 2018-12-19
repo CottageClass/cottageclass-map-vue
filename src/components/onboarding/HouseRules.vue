@@ -2,8 +2,8 @@
 <div class="body">
   <div class="content-container">
     <div class="title-container">
-      <h1 class="title">House rules?</h1>
-      <p class="onb-paragraph-subheading-2">Are there any house rules you'd like guests to be aware of?</p>
+      <h1 class="title">House rules</h1>
+      <p class="onb-paragraph-subheading-2">Are there any specific house rules you'd like guests to be aware of?</p>
     </div>
     <div class="form-describe-need w-form">
       <form v-on:submit.prevent id="email-form-2">

@@ -25,14 +25,38 @@
       <Children v-if="step === 3" v-model="children" />
       <Activities v-if="step === 4" v-model="activities" />
       <EventActivity v-if="step === 5" v-model="eventActivity" />
-      <EventTime v-if="step === 6" v-model="eventTime" />
-      <EventDate v-if="step === 7" v-model="eventDate" />
-      <Availability v-if="step === 8" v-model="availability" />
-      <Food v-if="step === 9" v-model="food" />
-      <Rules v-if="step === 10" v-model="communityRules" />
-      <HouseRules v-if="step === 11" v-model="houseRules" />
-      <PetsDescription v-if="step === 12" v-model="petsDescription" />
-      <OtherAdultsPresent v-if="step === 13" v-model="otherAdultsPresent" />
+      <Food v-if="step === 6" v-model="food" />
+      <EventTime v-if="step === 7" v-model="eventTime" />
+      <EventDate v-if="step === 8" v-model="eventDate" />
+      <YesOrNo 
+      v-if="step === 9" 
+      v-model="canProvideEmergencyCare" 
+      question="Can you provide emergency care at other times?" 
+      description="This is entirely optional, but often parents need emergency care at times not covered by our events. Would you be interested in this?" 
+      />
+      <Availability v-if="step === 10" v-model="availability" />
+      <Rules v-if="step === 11" v-model="communityRules" />
+      <HouseRules v-if="step === 12" v-model="houseRules" />
+      <YesOrNo 
+      v-if="step === 13" 
+      v-model="hasPets" 
+      question="Do you have pets?" 
+      description="This is often very important for parents (and children) to know." 
+      />
+      <PetsDescription v-if="step === 14" v-model="petsDescription" />
+      <YesOrNo 
+      v-if="step === 15" 
+      v-model="acceptsBackgroundCheck" 
+      question="Can you complete a background check?" 
+      description="To ensure the safety of all our kids, we require all members to complete a background check. Are you okay with that? (We'll email you a link to our background check provider.)" 
+      />
+      <YesOrNo 
+      v-if="step === 16" 
+      v-model="isOtherAdultPresent" 
+      question="Will any other adults be present at your home?" 
+      description="If it's just you, say 'no.' If your husband, wife, friends, roomates or any adult family members may be in the house, let us know." 
+      />
+      <OtherAdultsPresent v-if="step === 17" v-model="otherAdultsPresent" />
     </div>
   </span>
 </template>
@@ -55,6 +79,7 @@ import PetsDescription from '@/components/onboarding/PetsDescription.vue'
 import OtherAdultsPresent from '@/components/onboarding/OtherAdultsPresent.vue'
 import EventTime from '@/components/onboarding/EventTime.vue'
 import EventDate from '@/components/onboarding/EventDate.vue'
+import YesOrNo from '@/components/onboarding/YesOrNo.vue'
 import * as Token from '@/utils/tokens.js'
 import * as api from '@/utils/api.js'
 import sheetsu from 'sheetsu-node'
@@ -66,13 +91,13 @@ var client = sheetsu({ address: 'https://sheetsu.com/apis/v1.0su/62cd725d6088' }
 
 export default {
   components: {
-    Nav, Login, DirectLogin, Signup, Location, Phone, Children, Availability, Activities, Food, Rules, EventActivity, EventTime, EventDate, HouseRules, PetsDescription, OtherAdultsPresent
+    Nav, Login, DirectLogin, Signup, Location, Phone, Children, Availability, Activities, Food, Rules, EventActivity, EventTime, EventDate, HouseRules, PetsDescription, OtherAdultsPresent, YesOrNo
   },
   data () {
     return {
       activeScreen: 'facebook',
       step: 0,
-      lastStep: 14,
+      lastStep: 17,
       showError: false,
       name: {}, // todo: remove if possible now this comes from FB
       bookingRequest: {
@@ -87,6 +112,7 @@ export default {
         list: [{firstName: null, birthday: null}],
         err: 'skippable'
       },
+      isOtherAdultPresent: '',
       otherAdultsPresent: {
         list: [{fullName: null, email: null, phone: null}],
       },
@@ -109,12 +135,15 @@ export default {
         err: 'skippable'
       },
       communityRules: {},
+      hasPets: '',
       petsDescription: {
-        text: ''
+        text: '',
       },
       invitationCode: {
         codeEntered: 'brooklyn-events' // this is now hard-coded
-      }
+      },
+      acceptsBackgroundCheck: '',
+      canProvideEmergencyCare: '',
     }
   },
   name: 'NewUser',
@@ -259,20 +288,28 @@ export default {
         case 5:
           return this.eventActivity.err
         case 6:
-          return this.eventTime.err
-        case 7:
-          return this.eventDate.err
-        case 8:
-          return this.availability.err
-        case 9:
           return this.food.err
+        case 7:
+          return this.eventTime.err
+        case 8:
+          return this.eventDate.err
+        case 9:
+          return this.canProvideEmergencyCare.err
         case 10:
-          return this.communityRules.err  
+          return this.availability.err
         case 11:
-          return this.houseRules.err
+          return this.communityRules.err  
         case 12:
-          return this.PetsDescription.err
+          return this.houseRules.err
         case 13:
+          return this.hasPets.err
+        case 14:
+          return this.petsDescription.err
+        case 15:
+          return this.acceptsBackgroundCheck.err
+        case 16:
+          return this.isOtherAdultPresent.err
+        case 17:
           return this.otherAdultsPresent.err
         default:
           return false

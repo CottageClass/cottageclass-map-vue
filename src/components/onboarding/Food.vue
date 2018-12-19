@@ -1,7 +1,7 @@
 <template>
   <div class="onb-content-container">
     <div class="onb-top-content-container">
-      <h1 class="onb-heading-large">What kind of food will you serve?</h1>
+      <h1 class="onb-heading-large">What kind of food will you serve at your activity?</h1>
       <p class="onb-paragraph-subheading-2">All hosts must provide a healthy food option, but it doesn't have to be fancy or time-consuming. Choose one of these tried-and-true options.</p>
     </div>
     <div class="onb-form-block-checkbox-list w-form">

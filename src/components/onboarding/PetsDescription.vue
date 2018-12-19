@@ -8,7 +8,7 @@
     <div class="form-describe-need w-form">
       <form v-on:submit.prevent id="email-form-2">
         <p class="describe-label">{{ charsLeft }} characters left...</p>
-        <textarea v-model="blurb.text" id="field" name="field" placeholder="e.g. 'Our dog Cerberus is loud &amp; a little scary but he's very accustomed to children and loves music!'" class="text-area-decribe-need w-input"></textarea>
+        <textarea v-model="blurb.text" id="field" name="field" placeholder="e.g. 'Our dog Cerberus is kinda scary but he's great with kids!'" class="text-area-decribe-need w-input"></textarea>
       </form>
     </div>
   </div>

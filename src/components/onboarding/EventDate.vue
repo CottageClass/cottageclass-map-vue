@@ -48,7 +48,7 @@ export default {
   data () {
     return {
       dateSelected: '',
-      errorMesg: 'Please choose a day for your event.',
+      errorMesg: 'Please choose a day for your activity.',
       dates: [ // this is hardcoded for now but we'll automatically populate this soon. 
       'Friday, January 11th',
       'Friday, January 18th',
