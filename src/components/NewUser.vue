@@ -32,8 +32,7 @@
       <Rules v-if="step === 10" v-model="communityRules" />
       <HouseRules v-if="step === 11" v-model="houseRules" />
       <PetsDescription v-if="step === 12" v-model="petsDescription" />
-
-
+      <OtherAdultsPresent v-if="step === 13" v-model="otherAdultsPresent" />
     </div>
   </span>
 </template>
@@ -53,6 +52,7 @@ import Food from '@/components/onboarding/Food.vue'
 import Rules from '@/components/onboarding/Rules.vue'
 import HouseRules from '@/components/onboarding/HouseRules.vue'
 import PetsDescription from '@/components/onboarding/PetsDescription.vue'
+import OtherAdultsPresent from '@/components/onboarding/OtherAdultsPresent.vue'
 import EventTime from '@/components/onboarding/EventTime.vue'
 import EventDate from '@/components/onboarding/EventDate.vue'
 import * as Token from '@/utils/tokens.js'
@@ -66,7 +66,7 @@ var client = sheetsu({ address: 'https://sheetsu.com/apis/v1.0su/62cd725d6088' }
 
 export default {
   components: {
-    Nav, Login, DirectLogin, Signup, Location, Phone, Children, Availability, Activities, Food, Rules, EventActivity, EventTime, EventDate, HouseRules, PetsDescription
+    Nav, Login, DirectLogin, Signup, Location, Phone, Children, Availability, Activities, Food, Rules, EventActivity, EventTime, EventDate, HouseRules, PetsDescription, OtherAdultsPresent
   },
   data () {
     return {
@@ -86,6 +86,9 @@ export default {
       children: {
         list: [{firstName: null, birthday: null}],
         err: 'skippable'
+      },
+      otherAdultsPresent: {
+        list: [{fullName: null, email: null, phone: null}],
       },
       blurb: {
         text: ''
@@ -268,7 +271,9 @@ export default {
         case 11:
           return this.houseRules.err
         case 12:
-          return this.petsDescription.err
+          return this.PetsDescription.err
+        case 13:
+          return this.otherAdultsPresent.err
         default:
           return false
       }
