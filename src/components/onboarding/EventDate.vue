@@ -13,7 +13,7 @@
           <input 
           type="radio" 
           :id="date" 
-          :value="formatDate(date)"
+          :value="date"
           :name="date" 
           class="onb-checkbox w-checkbox-input"
           v-model="dateSelected"
@@ -22,7 +22,7 @@
           :for="date" 
           class="onb-checkbox-label w-form-label"
           >
-           {{ date }}
+           {{ displayDate(date) }}
          </label>
         </div>
       </form>
@@ -42,6 +42,8 @@
 </template>
 
 <script>
+var moment = require('moment');
+
 export default {
   name: "EventDate",
   props: ['value'],
@@ -50,10 +52,10 @@ export default {
       dateSelected: '',
       errorMesg: 'Please choose a day for your activity.',
       dates: [ // this is hardcoded for now but we'll automatically populate this soon. 
-      'Friday, January 11th',
-      'Friday, January 18th',
-      'Saturday, January 19th',
-      'Saturday, January 26th',
+      '2019-01-11',
+      '2019-01-18',
+      '2019-01-19',
+      '2019-01-20',
       'Other'
       ],
       otherDate: null
@@ -88,9 +90,9 @@ export default {
     emitDate: function () {
       let date = null
       if (this.otherSelected) {
-        date = this.formatOtherDate(this.otherDate)
+        date = this.otherDate
       } else {
-        date = this.formatDate(this.dateSelected)
+        date = this.dateSelected
       }
         this.$emit('input', {
           selected: date,
@@ -101,13 +103,12 @@ export default {
     // for now we just make them enter something
       return !!date
     },
-    formatDate: function (date) {
-      // todo: format date properly
-      return date
-    },
-    formatOtherDate: function (otherDate) {
-      // todo: format 'other' date properly
-      return otherDate
+    displayDate: function (date) {
+      if (date == 'Other') {
+        return 'Other'
+      } else {
+      return moment(date).format('dddd, MMMM Do')
+    }
     }
   }
 };

@@ -13,7 +13,7 @@
           <input 
           type="radio" 
           :id="time" 
-          :value="formatTime(time)"
+          :value="time"
           :name="time" 
           class="onb-checkbox w-checkbox-input"
           v-model="timeSelected"
@@ -31,6 +31,8 @@
 </template>
 
 <script>
+var moment = require('moment');
+
 export default {
   name: "EventTime",
   props: ['value'],
@@ -59,18 +61,29 @@ export default {
       } else {
         return false
       }
+    },
+    startTimeUnparsed: function () {
+      return this.timeSelected.substring(0,this.timeSelected.indexOf(' '))
+    },
+    startTime: function () {
+      return moment(this.startTimeUnparsed, 'h mm a').format('HH:mm')
+    },
+    endTime: function () {
+      return moment(this.startTime, 'HH:mm').add(3, 'hours').format('HH:mm')
     }
   },
   watch: {
     timeSelected: function () {
         this.$emit('input', {
-          selected: this.formatTime(this.timeSelected),
+          start: this.startTime,
+          end: this.endTime,
           err: this.err
         })
       }
     },
   methods: {
     formatTime: function (time) {
+      // isolate the start time
       // placeholder
       return time
     }
