@@ -9,93 +9,13 @@
           <div class="date-title"><strong class="bold-text">Today</strong>, Tue, Dec 18</div>
         </div>
         <ul class="unordered-list-events">
-          <li class="event-list-item">
-            <div class="event-list-item-graphic color-1"><img src="@/assets/movie.png" width="100" height="100" alt=""></div>
-            <div class="event-list-item-content">
-              <a href="event-detail.html" class="link-block-4 w-inline-block">
-                <h2 class="event-heading">Movie night &amp; pizza 🍕 with Jordana</h2>
-              </a>
-              <div class="event-summary">
-                <div class="event-time">4:00 PM–9:00 PM</div>
-                <div class="event-location">Park Slope</div>
-              </div>
-              <div class="action-bar">
-                <div class="host-info"><img src="@/assets/sq-avatar-5.png" width="40" height="40" alt="" class="avatar-small">
-                  <div class="text-block">Hosted by <a href="#" class="link">Jordana</a></div>
-                </div><a href="#" class="button w-button">RSVP</a></div>
-            </div>
-          </li>
-          <li class="event-list-item">
-            <div class="event-list-item-graphic color-2"><img src="@/assets/paint.png" width="100" height="100" alt=""></div>
-            <div class="event-list-item-content">
-              <a href="event-detail.html" class="link-block-4 w-inline-block">
-                <h2 class="event-heading">Movie night &amp; pizza 🍕 with Jordana</h2>
-              </a>
-              <div class="event-summary">
-                <div class="event-time">4:00 PM–9:00 PM</div>
-                <div class="event-location">Park Slope</div>
-              </div>
-              <div class="action-bar">
-                <div class="host-info"><img src="@/assets/sq-avatar-1.png" width="40" height="40" alt="" class="avatar-small">
-                  <div class="text-block">Hosted by <a href="#" class="link">Jordana</a></div>
-                </div><a href="#" class="button w-button">RSVP</a></div>
-            </div>
-          </li>
-          <li class="event-list-item">
-            <div class="event-list-item-graphic color-3"><img src="@/assets/chess.png" width="100" height="100" alt=""></div>
-            <div class="event-list-item-content">
-              <a href="event-detail.html" class="link-block-4 w-inline-block">
-                <h2 class="event-heading">Movie night &amp; pizza 🍕 with Jordana</h2>
-              </a>
-              <div class="event-summary">
-                <div class="event-time">4:00 PM–9:00 PM</div>
-                <div class="event-location">Park Slope</div>
-              </div>
-              <div class="action-bar">
-                <div class="host-info"><img src="@/assets/sq-avatar-5.png" width="40" height="40" alt="" class="avatar-small">
-                  <div class="text-block">Hosted by <a href="#" class="link">Jordana</a></div>
-                </div><a href="#" class="button w-button">RSVP</a></div>
-            </div>
-          </li>
+        	<EventListItem 
+        	v-for="(event, index) in events"
+        	:event="event"
+        	:index="index"
+        	/>
         </ul>
-        <div class="event-date-section-tittle">
-          <div class="date-title">Wed, Dec 19</div>
-        </div>
-        <ul class="unordered-list-events">
-          <li class="event-list-item">
-            <div class="event-list-item-graphic color-4"><img src="@/assets/cake.png" width="100" height="100" alt=""></div>
-            <div class="event-list-item-content">
-              <a href="event-detail.html" class="link-block-4 w-inline-block">
-                <h2 class="event-heading">Testing a longer title. 🍕 Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna </h2>
-              </a>
-              <div class="event-summary">
-                <div class="event-time">4:00 PM–9:00 PM</div>
-                <div class="event-location">Park Slope</div>
-              </div>
-              <div class="action-bar">
-                <div class="host-info"><img src="@/assets/sq-avatar-2.png" width="40" height="40" alt="" class="avatar-small">
-                  <div class="text-block">Hosted by <a href="#" class="link">Jordana</a></div>
-                </div><a href="#" class="button w-button">RSVP</a></div>
-            </div>
-          </li>
-          <li class="event-list-item">
-            <div class="event-list-item-graphic color-5"><img src="@/assets/movie.png" width="100" height="100" alt=""></div>
-            <div class="event-list-item-content">
-              <a href="event-detail.html" class="link-block-4 w-inline-block">
-                <h2 class="event-heading">Movie night &amp; pizza 🍕 with Jordana</h2>
-              </a>
-              <div class="event-summary">
-                <div class="event-time">4:00 PM–9:00 PM</div>
-                <div class="event-location">Park Slope</div>
-              </div>
-              <div class="action-bar">
-                <div class="host-info"><img src="@/assets/sq-avatar-5.png" width="40" height="40" alt="" class="avatar-small">
-                  <div class="text-block">Hosted by <a href="#" class="link">Jordana</a></div>
-                </div><a href="#" class="button w-button">RSVP</a></div>
-            </div>
-          </li>
-        </ul>
-        <div class="event-date-section-tittle"><a href="events.html" class="more-link">All Events</a></div>
+<!--        <div class="event-date-section-tittle"><a href="events.html" class="more-link">All Events</a></div> -->
       </div>
     </div>
   </div>
@@ -104,8 +24,28 @@
 </template>
 
 <script>
+import EventListItem from '@/components/EventListItem.vue'
+
+import sheetsu from 'sheetsu-node'
+
 export default {
-  name: 'Events'
+  name: 'Events',
+  components: { EventListItem },
+  data () {
+  	return {
+  	  events: null
+  	}
+  },
+  mounted: function () {
+  	let component = this
+  	var client = sheetsu({ address: 'https://sheetsu.com/apis/v1.0su/b7670db140c9' })
+  	client.read({ limit: 16, sheet: "Public" }).then(function(data) {
+  		console.log(data);
+      component.events = JSON.parse(data)
+  	}, function(err){
+  		console.log(err);
+  	});
+  }
 };
 </script>
 
