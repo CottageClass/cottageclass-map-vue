@@ -46,17 +46,17 @@
       <PetsDescription v-if="step === 14" v-model="petsDescription" />
       <YesOrNo 
       v-if="step === 15" 
-      v-model="acceptsBackgroundCheck" 
-      question="Can you complete a background check?" 
-      description="To ensure the safety of all our kids, we require all members to complete a background check. Are you okay with that? (We'll email you a link to our background check provider.)" 
-      />
-      <YesOrNo 
-      v-if="step === 16" 
       v-model="isOtherAdultPresent" 
       question="Will any other adults be present at your home?" 
       description="If it's just you, say 'no.' If your husband, wife, friends, roomates or any adult family members may be in the house, let us know." 
       />
-      <OtherAdultsPresent v-if="step === 17" v-model="otherAdultsPresent" />
+      <OtherAdultsPresent v-if="step === 16" v-model="otherAdultsPresent" />
+      <YesOrNo 
+      v-if="step === 17" 
+      v-model="acceptsBackgroundCheck" 
+      question="Can you complete a background check?" 
+      description="To ensure the safety of all our kids, we require all members to complete a background check. Are you okay with that? (We'll email you a link to our background check provider.)" 
+      />
     </div>
   </span>
 </template>
@@ -201,7 +201,7 @@ export default {
     submitData: function () {
       let userId = Token.currentUserId(this.$auth)
 
-      // submit to sheetsu for KPI tracking, unless network is "demo"
+      // submit user to sheetsu for KPI tracking, unless network is "demo"
       if (this.invitationCode.code != "demo") {
         client.create({
           "ID": userId,
@@ -276,6 +276,25 @@ export default {
         postData["childrenAttributes"] = childrenAttributes
       }
 
+
+      // I think this is necessary but I'm not sure.
+      let component = this
+      // test data from documentation
+      let eventData = {
+        "event_series": {
+          "name": "NONE", // I think we should simply remove this field?
+          "start_date": this.eventDate.selected,
+          "starts_at": this.eventTime.start,
+          "ends_at": this.eventTime.end,
+          "has_pet": this.hasPets.isTrue,
+          "activity_names": [this.eventActivity.selected],
+          "foods": [this.food.selected],
+          "house_rules": this.houseRules.text,
+          "pet_description": this.petsDescription.text,
+          "event_hosts_attributes": this.otherAdultsPresent.list
+        }
+      }
+
       return this.axios.post(
         `${process.env.BASE_URL_API}/users/${userId}`,
         postData
@@ -291,7 +310,20 @@ export default {
           console.log(Object.entries(err))
           throw err
         })
-
+        .then(() => {
+          component.axios.post(`${process.env.BASE_URL_API}/api/event_series`, eventData)
+        })
+        .then(res => {
+          console.log('event creation SUCCESS')
+          console.log(res)
+          return res
+        })
+        .catch(err => {
+          console.log('event update FAILURE')
+          console.log(err)
+          console.log(Object.entries(err))
+          throw err
+        })
     }
   },
   computed: {
@@ -326,11 +358,11 @@ export default {
         case 14:
           return this.petsDescription.err
         case 15:
-          return this.acceptsBackgroundCheck.err
-        case 16:
           return this.isOtherAdultPresent.err
-        case 17:
+        case 16:
           return this.otherAdultsPresent.err
+        case 17:
+          return this.acceptsBackgroundCheck.err
         default:
           return false
       }
