@@ -20,16 +20,43 @@
       <div v-if="showError && error && error!='skippable'" class="onb-error-container">
         <div class="onb-error-text">{{ error }}</div>
       </div>
-      <SeekerOrProvider v-if="step === 1" v-model="seekerOrProvider"/>
-      <RequestCare v-if="step === 2" v-model="bookingRequest"/>
-      <Phone v-if="step === 3" v-model="phone" />
-      <Location v-if="step === 4" v-model="location"/>
-      <Children v-if="step === 5" v-model="children" />
-      <Blurb v-if="step == 6" v-model="blurb" />
-      <Availability v-if="step === 7" v-model="availability" />
-      <Activities v-if="step === 8" v-model="activities" />
-      <InvitationCode v-if="step === 9" v-model="invitationCode" />
-      <Invite v-if="step === 10" />
+      <Phone v-if="step === 1" v-model="phone" />
+      <Location v-if="step === 2" v-model="location"/>
+      <Children v-if="step === 3" v-model="children" />
+      <Activities v-if="step === 4" v-model="activities" />
+      <EventActivity v-if="step === 5" v-model="eventActivity" />
+      <Food v-if="step === 6" v-model="food" />
+      <EventTime v-if="step === 7" v-model="eventTime" />
+      <EventDate v-if="step === 8" v-model="eventDate" />
+      <YesOrNo 
+      v-if="step === 9" 
+      v-model="canProvideEmergencyCare" 
+      question="Can you provide emergency care at other times?" 
+      description="This is entirely optional, but often parents need emergency care at times not covered by our events. Would you be interested in this?" 
+      />
+      <Availability v-if="step === 10" v-model="availability" />
+      <Rules v-if="step === 11" v-model="communityRules" />
+      <HouseRules v-if="step === 12" v-model="houseRules" />
+      <YesOrNo 
+      v-if="step === 13" 
+      v-model="hasPets" 
+      question="Do you have pets?" 
+      description="This is often very important for parents (and children) to know." 
+      />
+      <PetsDescription v-if="step === 14" v-model="petsDescription" />
+      <YesOrNo 
+      v-if="step === 15" 
+      v-model="isOtherAdultPresent" 
+      question="Will any other adults be present at your home?" 
+      description="If it's just you, say 'no.' If your husband, wife, friends, roomates or any adult family members may be in the house, let us know." 
+      />
+      <OtherAdultsPresent v-if="step === 16" v-model="otherAdultsPresent" />
+      <YesOrNo 
+      v-if="step === 17" 
+      v-model="acceptsBackgroundCheck" 
+      question="Can you complete a background check?" 
+      description="To ensure the safety of all our kids, we require all members to complete a background check. Are you okay with that? (We'll email you a link to our background check provider.)" 
+      />
     </div>
   </span>
 </template>
@@ -39,16 +66,20 @@ import Nav from '@/components/onboarding/Nav.vue'
 import Login from '@/components/onboarding/Login.vue'
 import DirectLogin from '@/components/onboarding/DirectLogin.vue';
 import Signup from '@/components/onboarding/Signup.vue';
-import SeekerOrProvider from '@/components/onboarding/SeekerOrProvider.vue'
-import RequestCare from '@/components/onboarding/RequestCare.vue'
 import Location from '@/components/onboarding/Location.vue'
 import Phone from '@/components/onboarding/Phone.vue'
-import Blurb from '@/components/onboarding/Blurb.vue'
 import Children from '@/components/onboarding/Children.vue'
+import EventActivity from '@/components/onboarding/EventActivity.vue'
 import Availability from '@/components/onboarding/Availability.vue'
 import Activities from '@/components/onboarding/Activities.vue'
-import Invite from '@/components/onboarding/Invite.vue'
-import InvitationCode from '@/components/onboarding/InvitationCode.vue'
+import Food from '@/components/onboarding/Food.vue'
+import Rules from '@/components/onboarding/Rules.vue'
+import HouseRules from '@/components/onboarding/HouseRules.vue'
+import PetsDescription from '@/components/onboarding/PetsDescription.vue'
+import OtherAdultsPresent from '@/components/onboarding/OtherAdultsPresent.vue'
+import EventTime from '@/components/onboarding/EventTime.vue'
+import EventDate from '@/components/onboarding/EventDate.vue'
+import YesOrNo from '@/components/onboarding/YesOrNo.vue'
 import * as Token from '@/utils/tokens.js'
 import * as api from '@/utils/api.js'
 import sheetsu from 'sheetsu-node'
@@ -60,56 +91,65 @@ var client = sheetsu({ address: 'https://sheetsu.com/apis/v1.0su/62cd725d6088' }
 
 export default {
   components: {
-    Nav, Login, DirectLogin, Signup, SeekerOrProvider, RequestCare, Location, Phone, Children, Availability, Activities, Invite, InvitationCode, Blurb
+    Nav, Login, DirectLogin, Signup, Location, Phone, Children, Availability, Activities, Food, Rules, EventActivity, EventTime, EventDate, HouseRules, PetsDescription, OtherAdultsPresent, YesOrNo
   },
   data () {
     return {
       activeScreen: 'facebook',
       step: 0,
-      lastStep: 9,
-      inviteStep: 10,
-      phoneStep: 3,
-      afterLastStep: '../demo/home/',
+      lastStep: 17,
       showError: false,
       name: {}, // todo: remove if possible now this comes from FB
-      seekerOrProvider: {},
       bookingRequest: {
         dateTimeSelected: null,
-        description: "",
-        err: "skippable",
+        description: '',
+        err: 'skippable',
         showCountdownPromo: true
       },
       location: {},
       phone: {},
       children: {
         list: [{firstName: null, birthday: null}],
-        err: "skippable"
+        err: 'skippable'
+      },
+      isOtherAdultPresent: '',
+      otherAdultsPresent: {
+        list: [{fullName: null, email: null, phone: null}],
       },
       blurb: {
-        text: ""
+        text: ''
       },
       availability: {
         mornings: false,
         afternoons: false,
         evenings: false,
         weekends: false,
-        err: "skippable"
+        err: 'skippable'
       },
-      activities: {
-        playingOutside: false,
-        artsAndCrafts: false,
-        fieldTrips: false,
-        cooking: false,
-        homeworkHelp: false,
-        bilingualImmersion: false,
-        bookClub: false,
-        err: "skippable"
+      activities: {},
+      food: {},
+      eventActivity: {},
+      eventTime: {},
+      eventDate: {},
+      houseRules: {
+        err: 'skippable'
+      },
+      communityRules: {},
+      hasPets: {
+        yesOrNo: ''
+      },
+      petsDescription: {
+        text: '',
       },
       invitationCode: {
-        codeEntered: null,
-        err: "skippable",
-        isValid: false
-      }
+        code: 'brooklyn-events' // this is now hard-coded
+      },
+      acceptsBackgroundCheck: {
+        yesOrNo: ''
+      },
+      canProvideEmergencyCare: {
+        yesOrNo: ''
+      },
     }
   },
   name: 'NewUser',
@@ -118,70 +158,53 @@ export default {
       console.log('activating:', name);
       this.activeScreen = name;
     },
-    continueOrShowSharingAsk: function () {
-      if (this.invitationCode.isValid) {
-        this.$router.push({ name: 'Splash' })
+    capitalize: function(string) {
+      return string.charAt(0).toUpperCase() + string.slice(1);
+    },
+    continueWhenComplete: function () {
+      this.$router.push({ name: 'MainView' })
+    },
+    skipSkippableSteps: function () {
+      if (
+        (this.step === 9 && !this.canProvideEmergencyCare.isTrue) ||
+        (this.step === 13 && !this.hasPets.isTrue) || 
+        (this.step === 15 && !this.isOtherAdultPresent.isTrue)) {
+          this.setStep(this.step + 2)
       } else {
-        // show sharing ask
-        this.step = this.inviteStep
+        this.setStep(this.step = this.step + 1)
       }
     },
+    setStep: function (destinationStep) {
+      // this.step = 'limbo' // this is an attempt to get the YesOrNo component to unmount when they appear back to back in the sequence. It did not work. 
+      this.step = destinationStep
+    },
     nextStep: function () {
-      if (this.step == this.phoneStep && this.userRequestedCare) {
-        this.saveBookingRequestToSpreadsheet()
-        this.skipUnnecessarySteps()
-      }
-      else if (this.step == this.lastStep) {
+      if (this.step == this.lastStep) {
         this.submitData()
           .then(res => {
             // only move to next page once we have saved user data
             // - get back userId
             // - get back networkCode
-            console.log('calling continueorrunsharingask')
-            this.continueOrShowSharingAsk()
+            this.continueWhenComplete()
           })
       }
       // check if there's an error, if so show it, if not advance and clear the error.
       else if (!this.error || this.error === "skippable") {
-        this.skipUnnecessarySteps() // skips any step not required for this user
         this.showError = false
+        this.skipSkippableSteps()
         window.scrollTo(0,0)
       } else {
         this.showError = true
       }
     },
-    skipUnnecessarySteps: function () {
-      if (this.step == 1 && this.seekerOrProvider.status == "provider") {
-        this.step = 3
-      } // skips booking request screen if user is only a provider
-      else if (this.step == 6 && this.seekerOrProvider.status == "seeker") {
-        this.step = 8 // skips to enter network code if user is not a provider
-      } else
-      this.step = this.step + 1
-    },
     prevStep: function () {
       this.showError = false
       this.step = this.step - 1
     },
-    saveBookingRequestToSpreadsheet: function () {
-      client.create({
-        "User ID": Token.currentUserId(this.$auth),
-        "Phone": this.phone.number,
-        "Time submitted": moment(Date()).format("LT"),
-        "Date submitted": moment(Date()).format("L"),
-        "Date requested": moment(this.bookingRequest.dateTimeSelected).format("L"),
-        "Time requested": moment(this.bookingRequest.dateTimeSelected).format("LT"),
-        "Request Description": this.bookingRequest.description,
-      }, "requestsInOnboarding").then((data) => {
-        console.log(data)
-      }, (err) => {
-        console.log(err)
-      });
-    },
     submitData: function () {
       let userId = Token.currentUserId(this.$auth)
 
-      // submit to sheetsu for KPI tracking, unless network is "demo"
+      // submit user to sheetsu for KPI tracking, unless network is "demo"
       if (this.invitationCode.code != "demo") {
         client.create({
           "ID": userId,
@@ -190,10 +213,10 @@ export default {
           "phone": this.phone.number,
           "children": this.children.list,
           "availability": this.availability,
-          "activities": this.activities,
+          "activities": this.activities.selected,
+          "activitiesAddtionalText": this.activities.additionalText,
           "network": this.invitationCode.code,
-          "Seeker or provider": this.seekerOrProvider.status,
-          "bookingRequest": this.bookingRequest
+          "food": this.food.selected
         }, "newUsers").then((data) => {
           console.log(data)
         }, (err) => {
@@ -226,8 +249,8 @@ export default {
         ))
       }
 
-      let activities = Object.keys(this.activities)
-        .filter(k => this.activities[k])
+      let activities = Object.keys(this.activities.selected)
+        .filter(k => this.activities.selected[k])
         // convert activites to snake_case
         .map(activity => activity.replace( /([A-Z])/g, "_$1" ).toLowerCase())
 
@@ -250,11 +273,29 @@ export default {
         availableWeekends: this.availability.weekends,
         networkCode: this.invitationCode.code,
         profileBlurb: this.blurb.text,
-        onboardingCareType: this.seekerOrProvider.status
       }
 
       if (this.children.list && this.children.list.length > 0) {
         postData["childrenAttributes"] = childrenAttributes
+      }
+
+
+      // I think this is necessary but I'm not sure.
+      let component = this
+      // test data from documentation
+      let eventData = {
+        "event_series": {
+          "name": this.capitalize(this.eventActivity.selected) + ' & ' + this.food.selected, 
+          "start_date": this.eventDate.selected,
+          "starts_at": this.eventTime.start,
+          "ends_at": this.eventTime.end,
+          "has_pet": this.hasPets.isTrue,
+          "activity_names": [this.eventActivity.selected],
+          "foods": [this.food.selected],
+          "house_rules": this.houseRules.text,
+          "pet_description": this.petsDescription.text,
+          "event_hosts_attributes": this.otherAdultsPresent.list
+        }
       }
 
       return this.axios.post(
@@ -272,30 +313,59 @@ export default {
           console.log(Object.entries(err))
           throw err
         })
-
+        .then(() => {
+          component.axios.post(`${process.env.BASE_URL_API}/api/event_series`, eventData)
+        })
+        .then(res => {
+          console.log('event creation SUCCESS')
+          console.log(res)
+          return res
+        })
+        .catch(err => {
+          console.log('event update FAILURE')
+          console.log(err)
+          console.log(Object.entries(err))
+          throw err
+        })
     }
   },
   computed: {
     error: function () {
       switch (this.step) {
         case 1:
-          return this.seekerOrProvider.err
-        case 2:
-          return this.bookingRequest.err
-        case 3:
           return this.phone.err
-        case 4:
+        case 2:
           return this.location.err
-        case 5:
+        case 3:
           return this.children.err
-        case 6:
-          return this.blurb.err
-        case 7:
-          return this.availability.err
-        case 8:
+        case 4:
           return this.activities.err
+        case 5:
+          return this.eventActivity.err
+        case 6:
+          return this.food.err
+        case 7:
+          return this.eventTime.err
+        case 8:
+          return this.eventDate.err
         case 9:
-          return this.invitationCode.err
+          return this.canProvideEmergencyCare.err
+        case 10:
+          return this.availability.err
+        case 11:
+          return this.communityRules.err  
+        case 12:
+          return this.houseRules.err
+        case 13:
+          return this.hasPets.err
+        case 14:
+          return this.petsDescription.err
+        case 15:
+          return this.isOtherAdultPresent.err
+        case 16:
+          return this.otherAdultsPresent.err
+        case 17:
+          return this.acceptsBackgroundCheck.err
         default:
           return false
       }

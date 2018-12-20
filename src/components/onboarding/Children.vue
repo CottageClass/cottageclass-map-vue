@@ -3,7 +3,7 @@
   <div class="onb-children-info-container onb-content-container-2">
     <div class="onb-top-content-container">
       <h1 class="onb-heading-large">Child Info</h1>
-      <p class="onb-paragraph-subheading-2">Have kids? Please enter their first names (or nicknames) and birthdays.</p>
+      <p class="onb-paragraph-subheading-2">We need some basic info about your children. Their ages will appear on your public profile, but only hosts of events you RSVP to will see their names.</p>
     </div>
   </div>
   <div class="onb-child-info-container">
@@ -46,9 +46,6 @@ export default {
     }
   },
   computed: {
-    noChildren: function() {
-      return (this.children.length === 0 || (this.children[0].firstName === null && this.children[0].birthday === null))
-    },
     childrenValidates: function () {
       // child has name and birthday
       let childValidates = function (child) {
@@ -59,7 +56,7 @@ export default {
           child.firstName.length > 0
         )
       }
-      if (this.noChildren ||
+      if (this.children.length > 0 &&
         // validate that each child has name, birthday
         (this.children.reduce((soFar, child) => soFar && childValidates(child), true))) {
         return true
@@ -74,6 +71,12 @@ export default {
         return this.errorMesg
       }
     }
+  },
+  mounted: function () {
+    this.$emit('input', {
+      list: this.children,
+      err: this.error
+    })
   },
   watch: {
     children: {
