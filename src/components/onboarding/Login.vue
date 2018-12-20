@@ -84,9 +84,17 @@
     </ul>
   </div>
   <div class="fb-container">
-    <a @click="authenticate('facebook')" class="fb-button w-inline-block"><img src="@/assets/facebook-button-icon.svg" width="24" height="24" alt="" /><div class="fb-button-text">Continue with Facebook</div></a>
-        <div class="tos-acceptance">
-      (By signing in you agree to our <a href="https://cottageclass.com/terms-of-service">Terms of Service</a> and <a href="https://cottageclass.com/privacy-policy">Privacy Policy</a>)
+    <a @click="authenticate('facebook')" class="fb-button w-inline-block" v-if="!!facebookLogin">
+      <img src="@/assets/facebook-button-icon.svg" width="24" height="24" alt="" />
+      <div class="fb-button-text">Continue with Facebook</div>
+    </a>
+    <div class="email-login">
+    Or <a @click="$emit('activateScreen', 'directLogin')" class="w-inline-block" v-if="!!directLogin">
+      use a password instead
+    </a>
+  </div>
+    <div class="tos-acceptance">
+      By signing in you agree to our <a href="https://cottageclass.com/terms-of-service">Terms of Service</a> and <a href="https://cottageclass.com/privacy-policy">Privacy Policy</a>
     </div>
   </div>
 </div>
@@ -103,7 +111,9 @@ export default {
     data () {
       return {
         networks: networks,
-        currentUser: {}
+        currentUser: {},
+        facebookLogin: !this.hideFacebookLogin(),
+        directLogin: true
       }
     },
     mounted: function () {
@@ -117,6 +127,11 @@ export default {
     }});
     },
     methods: {
+      hideFacebookLogin: () => {
+        return ['(iPhone|iPod|iPad)(?!.*Safari)'].every(expression => {
+          return !!navigator.userAgent.match(new RegExp(`(${expression})`, 'ig'));
+        });
+      },
       authenticate: function(provider) {
 	/*
 	 *  Logs in the user (Facebook)
@@ -148,7 +163,7 @@ export default {
     }
   }).catch(function(err) {
 	    console.log("auth FAILURE or user not onboarded yet")
-	    console.log(err) 
+	    console.log(err)
 	  })
 }
 }
@@ -157,6 +172,18 @@ export default {
 </script>
 
 <style scoped>
+
+.email-login {
+  text-align: center;
+  padding-top: 8px;
+  color: #32599c;
+}
+
+.email-login a {
+  display: inline;
+  text-decoration: underline;
+  font-weight: bold;
+}
 
 .tos-acceptance {
   text-align: center;
@@ -186,7 +213,7 @@ export default {
 
 .image-8 {
   margin-bottom: 0;
-} 
+}
 
 .onb-paragraph-subheading-2-black-50 {
   margin-bottom: 8px;

@@ -12,6 +12,7 @@ import network from '../assets/network-info.json'
 import HowItWorks from '@/components/HowItWorks.vue'
 import DesktopWarningSplash from '@/components/DesktopWarningSplash.vue'
 import NewUser from '@/components/NewUser.vue'
+import DirectLogin from '@/components/onboarding/DirectLogin.vue';
 import TabNav from '@/components/TabNav.vue'
 import RequestModal2 from '@/components/RequestModal2.vue'
 import RequestRecipients from '@/components/RequestRecipients.vue'
