@@ -319,5 +319,13 @@
 	"stub": "ps29",
 	"price": "25.00",
 	"percentage": 0.2
+    },
+    {
+	"name": "Brooklyn CareShare",
+	"location": {"lat": 40.6869221, "lng": -73.9978474},
+	"zoom": 14,
+	"stub": "brooklyn-events",
+	"price": "25.00",
+	"percentage": 0.2
     }
 ]
