@@ -135,15 +135,21 @@ export default {
         err: 'skippable'
       },
       communityRules: {},
-      hasPets: '',
+      hasPets: {
+        yesOrNo: ''
+      },
       petsDescription: {
         text: '',
       },
       invitationCode: {
         codeEntered: 'brooklyn-events' // this is now hard-coded
       },
-      acceptsBackgroundCheck: '',
-      canProvideEmergencyCare: '',
+      acceptsBackgroundCheck: {
+        yesOrNo: ''
+      },
+      canProvideEmergencyCare: {
+        yesOrNo: ''
+      },
     }
   },
   name: 'NewUser',
@@ -154,6 +160,20 @@ export default {
     },
     continueWhenComplete: function () {
       this.$router.push({ name: 'MainView' })
+    },
+    skipSkippableSteps: function () {
+      if (
+        (this.step === 9 && !this.canProvideEmergencyCare.isTrue) ||
+        (this.step === 13 && !this.hasPets.isTrue) || 
+        (this.step === 15 && !this.isOtherAdultPresent.isTrue)) {
+          this.setStep(this.step + 2)
+      } else {
+        this.setStep(this.step = this.step + 1)
+      }
+    },
+    setStep: function (destinationStep) {
+      // this.step = 'limbo' // this is an attempt to get the YesOrNo component to unmount when they appear back to back in the sequence. It did not work. 
+      this.step = destinationStep
     },
     nextStep: function () {
       if (this.step == this.lastStep) {
@@ -168,7 +188,7 @@ export default {
       // check if there's an error, if so show it, if not advance and clear the error.
       else if (!this.error || this.error === "skippable") {
         this.showError = false
-        this.step = this.step + 1
+        this.skipSkippableSteps()
         window.scrollTo(0,0)
       } else {
         this.showError = true

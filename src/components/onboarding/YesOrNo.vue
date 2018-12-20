@@ -53,7 +53,7 @@ export default {
   props: ['value', 'question', 'description'],
   data () {
     return {
-      yesOrNo: null,
+      yesOrNo: this.value.yesOrNo,
       errorMesg: 'Please answer yes or no.',
     }
   },
