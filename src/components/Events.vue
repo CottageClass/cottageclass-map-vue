@@ -24,6 +24,10 @@
 </template>
 
 <script>
+// todo:
+// add section dividers for date
+// make sure colors still rotate nicely
+
 import EventListItem from '@/components/EventListItem.vue'
 
 import sheetsu from 'sheetsu-node'
