@@ -1,22 +1,31 @@
 <template>
 <div class="body">
     <div class="tabs-menu w-tab-menu">
+      <span 
+      @click="tab='events'"
+      class="tab-button w-inline-block w-tab-link"
+      :class="{ active: eventsTabSelected }">
+        <div>Events</div>
+      </span>
       <span
-      @click="care='find'"
+      @click="tab='find'"
       :class="{ active: findTabSelected}"
       class="tab-button w-inline-block w-tab-link">
-        <div>Find Care</div>
+        <div>Request</div>
       </span>
       <span 
-      @click="care='provide'"
+      @click="tab='provide'"
       class="tab-button w-inline-block w-tab-link"
       :class="{ active: provideTabSelected }">
-        <div>Provide Care</div>
+        <div>Offer</div>
       </span>
     </div>
     <div class="content">
       <MainView v-if="findTabSelected" />
       <Bookings v-if="provideTabSelected" />
+      <div v-if="eventsTabSelected">
+      Events go here!
+    </div>
     </div>
 </div>
 </template>
@@ -30,15 +39,18 @@ export default {
   components: { MainView, Bookings },
   data () {
     return {
-      care: this.$route.params.tab || 'find'
+      tab: this.$route.params.tab || 'events'
     }
   },
   computed: {
     findTabSelected: function () {
-      return this.care == 'find'
+      return this.tab == 'find'
     },
     provideTabSelected: function () {
-      return this.care == 'provide'
+      return this.tab == 'provide'
+    },
+    eventsTabSelected: function () {
+      return this.tab == 'events'
     }
   }
 };
