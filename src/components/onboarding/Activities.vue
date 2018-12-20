@@ -51,7 +51,6 @@ export default {
       'knitting',
       'playing in snow',
       'shopping',
-      'TV',
       'computers',
       'legos',
       'puzzles',
