@@ -142,7 +142,7 @@ export default {
         text: '',
       },
       invitationCode: {
-        codeEntered: 'brooklyn-events' // this is now hard-coded
+        code: 'brooklyn-events' // this is now hard-coded
       },
       acceptsBackgroundCheck: {
         yesOrNo: ''
