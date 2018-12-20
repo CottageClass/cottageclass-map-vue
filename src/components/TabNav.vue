@@ -23,9 +23,7 @@
     <div class="content">
       <MainView v-if="findTabSelected" />
       <Bookings v-if="provideTabSelected" />
-      <div v-if="eventsTabSelected">
-      Events go here!
-    </div>
+      <Events v-if="eventsTabSelected" />
     </div>
 </div>
 </template>
@@ -33,10 +31,11 @@
 <script>
 import MainView from '@/components/MainView.vue'
 import Bookings from '@/components/Bookings.vue'
+import Events from '@/components/Events.vue'
 
 export default {
   name: 'TabNav',
-  components: { MainView, Bookings },
+  components: { MainView, Bookings, Events },
   data () {
     return {
       tab: this.$route.params.tab || 'events'
