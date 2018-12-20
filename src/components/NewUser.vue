@@ -158,6 +158,9 @@ export default {
       console.log('activating:', name);
       this.activeScreen = name;
     },
+    capitalize: function(string) {
+      return string.charAt(0).toUpperCase() + string.slice(1);
+    },
     continueWhenComplete: function () {
       this.$router.push({ name: 'MainView' })
     },
@@ -282,7 +285,7 @@ export default {
       // test data from documentation
       let eventData = {
         "event_series": {
-          "name": "NONE", // I think we should simply remove this field?
+          "name": this.capitalize(this.eventActivity.selected) + ' & ' + this.food.selected, 
           "start_date": this.eventDate.selected,
           "starts_at": this.eventTime.start,
           "ends_at": this.eventTime.end,
