@@ -100,7 +100,7 @@ export default {
       return this.people.filter(person => person.availableMornings || person.availableAfternoons || person.availableEvenings || person.availableWeekends)
     },
     providersSectionTitle: function () {
-      return "Providers in \"" + this.network.name + "\""
+      return "People in \"" + this.network.name + "\""
     }
   }
 };

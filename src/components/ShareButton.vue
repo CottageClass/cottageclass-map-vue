@@ -1,6 +1,6 @@
 <template>
   <div class="invite-friends-container">
-    <h5 class="heading">Want more providers you know?</h5>
+    <h5 class="heading">Want more people you know?</h5>
     <div class="spacer-16"></div><a v-on:click="share" class="button w-button share-button">Invite Friends</a>
   </div>
 </template>
