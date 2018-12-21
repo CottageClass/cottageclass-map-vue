@@ -17,6 +17,7 @@ import TabNav from '@/components/TabNav.vue'
 import RequestModal2 from '@/components/RequestModal2.vue'
 import RequestRecipients from '@/components/RequestRecipients.vue'
 import AdminMessages from '@/components/AdminMessages.vue'
+import EventPage from '@/components/EventPage.vue'
 
 Vue.use(Router)
 
@@ -54,6 +55,11 @@ export default new Router({
       path: '/provider-profile/:id',
       name: 'ProviderProfile',
       component: ProviderProfile
+    },
+    {
+      path: '/event/:id',
+      name: 'EventPage',
+      component: EventPage
     },
     {
       path: '/request/:id',
