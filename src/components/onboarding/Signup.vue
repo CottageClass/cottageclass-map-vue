@@ -1,5 +1,5 @@
 <template>
-  <span>
+  <div class="full-height-background">
   <div class="onb-body-full-height">
     <div class="onb-title-bar">
       <a @click="$emit('activateScreen', 'directLogin')" class="onb-title-bar-back-button w-inline-block"></a>
@@ -7,7 +7,8 @@
         <div class="onb-title-bar-next-button-text">NEXT</div>
       </a>
     </div>
-    <div class="onb-content-container-2" v-if="!success">
+    <div v-if="!success">
+    <div class="onb-content-container-2">
       <div v-if="showError && errors.all()" class="onb-error-container">
         <div class="onb-error-text">
           <ul>
@@ -87,14 +88,19 @@
       </form>
     </div>
   </div>
-    </div>
-    <p v-if="!!success">
-      Your registration is complete! Click
-      <a @click="$emit('activateScreen', 'directLogin')">here</a>
-      to sign in.
-    </p>
   </div>
-</span>
+    </div>
+     <div v-if="!!success" class="onb-content-container-2" >
+       <div class="onb-top-content-container">
+        <br><br><br>
+         <h1 class="onb-heading-large">Registration complete!</h1>
+           <p class="onb-paragraph-subheading-2">Sign in to continue.</p>            
+       </div>
+       <button @click="$emit('activateScreen', 'directLogin')" class="button-text splash-button w-inline-block">Sign in</button>
+     </div>
+    </div>
+  </div>
+</div>
 </template>
 
 <script>
@@ -199,6 +205,16 @@ export default {
 </script>
 
 <style scoped>
+
+.full-height-background {
+  min-height: 100vh;
+  background-color: #1d8be7;
+}
+
+.splash-button {
+  background-color: white;
+  width: 100%;
+}
 
 .avatar-photo {
   text-align: center;
