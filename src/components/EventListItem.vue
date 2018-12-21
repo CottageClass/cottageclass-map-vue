@@ -1,4 +1,5 @@
 <template>
+  <router-link :to="{ name: 'EventPage', params: { id: event.id }}">
   <li class="event-list-item">
     <div class="event-list-item-graphic" 
     :style="{ backgroundColor: backgroundColor(index)}">
@@ -22,9 +23,11 @@
         </div><a href="#" class="button w-button">RSVP</a></div>
       </div>
     </li>
+  </router-link>
 </template>
 
 <script>
+
 export default {
   name: 'EventListItem',
   props: ['event', 'index'],
@@ -57,3 +60,9 @@ export default {
 };
 
 </script>
+
+<style scoped>
+a {
+  text-decoration: none;
+}
+</style>

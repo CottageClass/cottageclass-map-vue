@@ -1,68 +1,171 @@
 <template>
-	<div class="body">
-  <div class="content-section background-01">
-    <div class="divider-2px"></div>
-    <div class="content-container-4 w-container">
-     <h1 class="h1-display">Upcoming Events</h1>
-     <div class="events-list-wrapper">
-      <div 
-      v-for="(event, index) in events">
-        <div 
-        v-if="index === 0 || (event.date != (events[index - 1]).date)" class="event-date-section-tittle">
-          <div class="date-title">
-            <span v-if="isToday(event.date)">
-              <strong class="bold-text">Today</strong>,
-            </span> 
-          {{ formatDate(event.date) }}</div>
+<div class="body-2">
+  <div class="event-detail-container w-container">
+    <div class="event-detail-graphic"><img :src="iconUrl(iconImage(event.activityCategory))" 
+ width="150" height="150" alt=""></div>
+    <div class="div-block-36">
+      <h1 class="event-detail-heading">{{ event.title }}</h1>
+      <div class="action-bar">
+        <div class="host-info"><FacebookAvatar className="avatar-large" facebookId="9805558"/>
+          <div class="host-info-wrapper">
+            <div class="hosted-by">Hosted by <a href="#" class="link">{{ event.hostFirstName }}</a></div>
+            <div v-if="event.hostBackgroundChecked" class="background-checked-wrapper"><img src="@/assets/check-green.svg" alt="">
+              <div class="background-checked">Background Checked</div>
+            </div>
+          </div>
+        </div><a href="#" class="button w-button">RSVP</a></div>
+      <ul class="summary-info">
+        <li class="summary-list-item"><img src="@/assets/time-black.svg" alt="" class="summary-icon">
+          <div class="summary-text">{{ formatDate(event.date) }} at {{ formatTime(event.startTime) }}–{{ formatTime(event.endTime) }}</div>
+        </li>
+        <li class="summary-list-item"><img src="@/assets/cake-outline-black.svg" alt="" class="summary-icon">
+          <div class="summary-text">Ages {{ event.minChildAge }}-{{ event.maxChildAge}} ({{ event.maxChildren }} kids total)</div>
+        </li>
+        <li class="summary-list-item"><img src="@/assets/location.svg" alt="" class="summary-icon">
+          <div class="summary-text">New York, NY</div>
+        </li>
+      </ul>
+    </div>
+  <div class="map">
+  <GmapMap
+    :disableDefaultUI="true"
+    :center="locationPlaceholder"
+    :zoom="13"
+    :options="mapOptions"
+    style="width: 100%; height: 100%;">
+    <GmapMarker
+      :key="index"
+      :position="locationPlaceholder"
+      title="Test"
+      icon="https://storage.googleapis.com/cottageclass-prod/images/map-radius.png"
+      />
+    </GmapMap>
+  </div>    
+  <div class="mobile-cards-wrapper">
+      <div class="event-specifics-card"><img src="@/assets/about.svg" width="100" height="100" alt="">
+        <div class="card-small-text">About</div>
+        <div class="card-large-text">Who doesn’t love pizza 🍕 and a movie? </div>
+      </div>
+      <div v-if="event.houseRules" class="event-specifics-card"><img src="@/assets/house-rules.svg" width="100" height="100" alt="">
+        <div class="card-small-text">House Rules</div>
+        <div class="card-large-text">{{ event.houseRules }}.</div>
+      </div>
+      <div v-if="event.hasPets" class="event-specifics-card"><img src="@/assets/pets.svg" width="100" height="100" alt="">
+        <div class="card-small-text">Pets</div>
+        <div class="card-large-text">{{ event.petsDescription }}</div>
+      </div>
+      <div class="event-specifics-card"><FacebookAvatar className="avatar-x-large" facebookId="9805558" />
+        <div class="card-small-text">Host</div>
+        <div class="card-large-text">{{ event.hostFirstName }}</div>
+        <div v-if="event.hostChildAges" class="card-large-text-gray">Parent to 
+          <span v-if="event.hostChildAges.length == 1">one child age {{  event.hostChildAges[0] }}.</span>
+          <span v-if="event.hostChildAges.length == 2">two children ages {{ event.hostChildAges[0] }} and {{ event.hostChildAges[1] }}.</span>
+          <span v-else>{{ event.hostChildAges.length }} children ages 
+            <span v-for="(age, index) in event.hostChildAges">
+              <span v-if="index == event.hostChildAges.length - 1"> and {{ age }}.</span>
+              <span v-else> {{ age}},</span>
+            </span>
+          </span>
         </div>
-        <ul class="unordered-list-events">
-        	<EventListItem 
-        	:event="event"
-        	:index="index"
-          :key="index"
-          />
+      </div>
+      <div class="event-specifics-card">
+        <div class="card-large-text">Interested in this event?</div><a href="#" class="button-bottom-event w-button">RSVP</a></div>
+    </div>
+  </div>
+  <div class="footer">
+    <div class="divider-2px"></div>
+    <div class="footer-container w-container">
+      <div class="div-block-33">
+        <ul class="footer-unordered-list">
+          <li class="footer-link-list-item"><a href="mailto:contact@cottageclass.com">contact@cottageclass.com</a></li>
+          <li class="footer-link-list-item"><a href="tel:+18622944859">(862) 294-4859</a></li>
         </ul>
-<!--        <div class="event-date-section-tittle"><a href="events.html" class="more-link">All Events</a></div> -->
+        <ul class="footer-social-unordered-list">
+          <li class="footer-social-list-item"><a href="https://twitter.com/cottageclass" class="link-block-2 w-inline-block"><img src="@/assets/social---twitter---gray.svg" width="32" height="32" alt=""></a></li>
+          <li class="footer-social-list-item"><a href="https://instagram.com/cottageclass" class="link-block-2 w-inline-block"><img src="@/assets/social---instagram---gray.svg" width="32" height="32" alt=""></a></li>
+          <li class="footer-social-list-item"><a href="https://cottageclass.tumblr.com/" class="link-block-2 w-inline-block"><img src="@/assets/social---tumblr---gray.svg" width="32" height="32" alt=""></a></li>
+          <li class="footer-social-list-item"><a href="https://pinterest.com/cottageclass" class="link-block-2 w-inline-block"><img src="@/assets/social---pinterest---gray.svg" width="32" height="32" alt=""></a></li>
+          <li class="footer-social-list-item"><a href="https://facebook.com/cottageclass" class="link-block-2 w-inline-block"><img src="@/assets/social---facebook---gray.svg" width="32" height="32" alt=""></a></li>
+        </ul>
+      </div>
+      <div>
+        <ul class="terms-unordered-list">
+          <li class="terms-list-item"><a href="#" class="terms-link">© CottageClass 2018</a></li>
+          <li class="terms-list-item"><a href="https://cottageclass.com/terms-of-service" class="terms-link">Terms of Service</a></li>
+          <li class="terms-list-item"><a href="https://cottageclass.com/privacy-policy" class="terms-link">Privacy Policy</a></li>
+        </ul>
       </div>
     </div>
-    </div>
   </div>
- 
-  </div>
+</div>
 </template>
-
 <script>
-import EventListItem from '@/components/EventListItem.vue'
 
-import sheetsu from 'sheetsu-node'
 var moment = require('moment');
+import sheetsu from 'sheetsu-node'
+import FacebookAvatar from './FacebookAvatar.vue'
 
 export default {
-  name: 'Events',
-  components: { EventListItem },
+  name: 'EventPage',
+  components: { FacebookAvatar },
   data () {
-  	return {
-  	  events: null
-  	}
+    return {
+      events: [],
+      mapOptions: { 
+      "disableDefaultUI": true, // turns off map controls
+      "gestureHandling": "none" // prevents any kind of scrolling
+    },
+      locationPlaceholder: {"lat": 40.6869221, "lng": -73.9978474} // todo: pull from actual location
+      } 
   },
   methods: {
     isToday: function (date) {
       return moment(0,"HH").diff(date, "days") == 0;
     },
     formatDate: function (date) {
-      return moment(date).format('dddd, MMM Do' )
-    }
+      return moment(date).format('ddd, MMM D, YYYY' )
+    },
+    backgroundColor: function (id) {
+      let colors = ['#e82d55', '#0cba52', '#aff0fc', '#fd6f77', '#64426b']
+      return colors[id % colors.length]
+    },
+    formatTime: function (time24) {
+      return time24
+    },
+    iconUrl: function (imageName) {
+            return require('@/assets/' + imageName)
+    },
+    iconImage: function (category) {
+        switch(category) {
+          case 'movie night':
+            return 'movie-camera.svg'
+          case 'arts & crafts':
+            return 'artist-palette.svg'
+          case 'board games':
+            return 'chess-pawn.svg'
+          case 'baking':
+            return 'birthday-cake.svg'
+          default:
+            return 'birthday-cake.svg'
+        }
+      }
   },
   mounted: function () {
-  	let component = this
-  	var client = sheetsu({ address: 'https://sheetsu.com/apis/v1.0su/b7670db140c9' })
-  	client.read({ limit: 15, sheet: "Public" }).then(function(data) {
-  		console.log(data);
+    let component = this
+    var client = sheetsu({ address: 'https://sheetsu.com/apis/v1.0su/b7670db140c9' })
+    client.read({ limit: 15, sheet: "Public" }).then(function(data) {
+      console.log(data);
       component.events = JSON.parse(data)
-  	}, function(err){
-  		console.log(err);
-  	});
+    }, function(err){
+      console.log(err);
+    });
+  },
+  computed: {
+    event: function () {
+      return this.events.find(event => event.id == this.$route.params.id) // computes event. this isn't efficient but simplifies interaction with the API.
   }
+  }
+
 };
 </script>
 
@@ -476,7 +579,7 @@ h1 {
 
 .footer {
   background-color: #fff;
-  background-image: url('../assets/footer-bottom-image-2.svg');
+  background-image: url('https://storage.googleapis.com/cottageclass-prod/images/footer-bottom-image-2.svg');
   background-position: 50% -82%;
   background-size: auto;
   background-repeat: no-repeat;
@@ -1055,6 +1158,8 @@ h1 {
 
 .avatar-large {
   border-radius: 50%;
+  height: 60px;
+  width: 60px;
 }
 
 .summary-info {
@@ -1149,6 +1254,8 @@ h1 {
 
 .avatar-x-large {
   border-radius: 50%;
+  height: 100px;
+  width: 100px;
 }
 
 .mobile-cards-wrapper {
@@ -1430,8 +1537,8 @@ h1 {
 
 @media (max-width: 767px) {
 
-	.content-container-3 {
-	padding-top: 0px;
+  .content-container-3 {
+  padding-top: 0px;
 }
 
   .nav-menu {
@@ -1702,6 +1809,7 @@ h1 {
   .footer {
     background-position: 50% 268%;
     background-size: auto;
+    display: none;
   }
   .footer-link-list-item {
     margin-bottom: 7px;
@@ -1742,8 +1850,8 @@ h1 {
     line-height: 2.112rem;
   }
   .h1-display {
-  	margin-top: 24px;
-  	margin-bottom: 0px;
+    margin-top: 24px;
+    margin-bottom: 0px;
   }
   .testimonial-list-item-divider {
     margin-bottom: 32px;
