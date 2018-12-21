@@ -2,21 +2,29 @@
 	<div class="body">
   <div class="content-section background-01">
     <div class="divider-2px"></div>
-    <div class="content-container-3 w-container">
+    <div class="content-container-4 w-container">
      <h1 class="h1-display">Upcoming Events</h1>
-      <div class="events-list-wrapper">
-        <div class="event-date-section-tittle">
-          <div class="date-title"><strong class="bold-text">Today</strong>, Tue, Dec 18</div>
+     <div class="events-list-wrapper">
+      <div 
+      v-for="(event, index) in events">
+        <div 
+        v-if="index === 0 || (event.date != (events[index - 1]).date)" class="event-date-section-tittle">
+          <div class="date-title">
+            <span v-if="isToday(event.date)">
+              <strong class="bold-text">Today</strong>,
+            </span> 
+          {{ formatDate(event.date) }}</div>
         </div>
         <ul class="unordered-list-events">
         	<EventListItem 
-        	v-for="(event, index) in events"
         	:event="event"
         	:index="index"
-        	/>
+          :key="index"
+          />
         </ul>
 <!--        <div class="event-date-section-tittle"><a href="events.html" class="more-link">All Events</a></div> -->
       </div>
+    </div>
     </div>
   </div>
  
@@ -24,13 +32,10 @@
 </template>
 
 <script>
-// todo:
-// add section dividers for date
-// make sure colors still rotate nicely
-
 import EventListItem from '@/components/EventListItem.vue'
 
 import sheetsu from 'sheetsu-node'
+var moment = require('moment');
 
 export default {
   name: 'Events',
@@ -40,10 +45,18 @@ export default {
   	  events: null
   	}
   },
+  methods: {
+    isToday: function (date) {
+      return moment(0,"HH").diff(date, "days") == 0;
+    },
+    formatDate: function (date) {
+      return moment(date).format('dddd, MMM Do' )
+    }
+  },
   mounted: function () {
   	let component = this
   	var client = sheetsu({ address: 'https://sheetsu.com/apis/v1.0su/b7670db140c9' })
-  	client.read({ limit: 16, sheet: "Public" }).then(function(data) {
+  	client.read({ limit: 15, sheet: "Public" }).then(function(data) {
   		console.log(data);
       component.events = JSON.parse(data)
   	}, function(err){
