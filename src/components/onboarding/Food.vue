@@ -2,7 +2,7 @@
   <div class="onb-content-container">
     <div class="onb-top-content-container">
       <h1 class="onb-heading-large">What kind of food will you serve at your activity?</h1>
-      <p class="onb-paragraph-subheading-2">All hosts must provide a healthy food option, but it doesn't have to be fancy or time-consuming. Choose one of these tried-and-true options.</p>
+      <p class="onb-paragraph-subheading-2">All hosts must provide a dinner for kids. We may ask you to accommodate allergies and dietary restrictions, but it doesn't have to be time-consuming. Choose one of these tried-and-true options.</p>
     </div>
     <div class="onb-form-block-checkbox-list w-form">
       <form class="onb-form-checkbox-list">

@@ -31,8 +31,8 @@
       <YesOrNo 
       v-if="step === 9" 
       v-model="canProvideEmergencyCare" 
-      question="Can you provide emergency care at other times?" 
-      description="This is entirely optional, but often parents need emergency care at times not covered by our events. Would you be interested in this?" 
+      question="Childcare in a Pinch?" 
+      description="Parents often need care at times not covered by our events. Would you like to be able to request childcare from other members when you need it and receive requests (by text message) in return?" 
       />
       <Availability v-if="step === 10" v-model="availability" />
       <Rules v-if="step === 11" v-model="communityRules" />

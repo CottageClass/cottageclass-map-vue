@@ -1,8 +1,8 @@
 <template>
  <div class="onb-content-container">
     <div class="onb-top-content-container">
-      <h1 class="onb-heading-large">When can you provide emergency care?</h1>
-      <p class="onb-paragraph-subheading-2">We'll text you if other parents need care during these times. There's never any obligation to respond, so just pick times when you're <em>usually</em> available.</p>
+      <h1 class="onb-heading-large">When are you available?</h1>
+      <p class="onb-paragraph-subheading-2">Other parents may text you to request care during the times you choose. There's never any obligation to respond, so just pick times when you're <em>usually</em> available to provide care.</p>
     </div>
     <div class="onb-form-block-checkbox-list w-form">
       <form id="email-form" name="email-form" data-name="Email Form" class="onb-form-checkbox-list">

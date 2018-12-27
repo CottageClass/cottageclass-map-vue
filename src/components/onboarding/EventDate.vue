@@ -1,8 +1,8 @@
 <template>
   <div class="onb-content-container">
     <div class="onb-top-content-container">
-      <h1 class="onb-heading-large">Choose a day for your activity</h1>
-      <p class="onb-paragraph-subheading-2">New members must offer a first activty within 6 weeks of joining. Your activity repeats every 4 weeks on this day, so please pick a day when you're usually available—you can reschedule if needed. These are the days we need most:</p>
+      <h1 class="onb-heading-large">Choose a day for your monthly activity</h1>
+      <p class="onb-paragraph-subheading-2">Activities repeat every 4 weeks on the same weekday, unless you change or cancel, so please pick a day when you're usually available. These are the days we need most:</p>
     </div>
     <div class="onb-form-block-checkbox-list w-form">
       <form class="onb-form-checkbox-list">
