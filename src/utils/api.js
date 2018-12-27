@@ -68,8 +68,8 @@ function createPersonObject (personInApi, availableChildren = []) {
     availableAfternoons: p.available_afternoons,
     availableWeekends: p.available_weekends,
     location: {
-      lat: parseFloat(p.latitude),
-      lng: parseFloat(p.longitude)
+      lat: parseFloat(p.fuzzy_latitude),
+      lng: parseFloat(p.fuzzy_longitude)
     },
     // todo: add these once API has them
     title: "",

@@ -82,8 +82,7 @@
       :key="index"
       :position="person.location"
       :title="person.firstName"
-      :icon="person.facebookMapIcon"
-      @click="getDirections(person.location)"      
+      icon="https://storage.googleapis.com/cottageclass-prod/images/map-radius.png"
       />
     </GmapMap>
   </div>
