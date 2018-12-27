@@ -6,7 +6,7 @@
     <div class="div-block-36">
       <h1 class="event-detail-heading">{{ event.title }}</h1>
       <div class="action-bar">
-        <div class="host-info"><FacebookAvatar className="avatar-large" facebookId="9805558"/>
+        <div class="host-info"><AvatarImage className="avatar-large" facebookId="9805558"/>
           <div class="host-info-wrapper">
             <div class="hosted-by">Hosted by <a href="#" class="link">{{ event.hostFirstName }}</a></div>
             <div v-if="event.hostBackgroundChecked" class="background-checked-wrapper"><img src="@/assets/check-green.svg" alt="">
@@ -54,7 +54,7 @@
         <div class="card-small-text">Pets</div>
         <div class="card-large-text">{{ event.petsDescription }}</div>
       </div>
-      <div class="event-specifics-card"><FacebookAvatar className="avatar-x-large" facebookId="9805558" />
+      <div class="event-specifics-card"><AvatarImage className="avatar-x-large"/>
         <div class="card-small-text">Host</div>
         <div class="card-large-text">{{ event.hostFirstName }}</div>
         <div v-if="event.hostChildAges" class="card-large-text-gray">Parent to 
@@ -100,14 +100,16 @@
 </div>
 </template>
 <script>
+// todo: pass "person" object to AvatarImage
+
 
 var moment = require('moment');
 import sheetsu from 'sheetsu-node'
-import FacebookAvatar from './FacebookAvatar.vue'
+import AvatarImage from './AvatarImage.vue'
 
 export default {
   name: 'EventPage',
-  components: { FacebookAvatar },
+  components: { AvatarImage },
   data () {
     return {
       events: [],

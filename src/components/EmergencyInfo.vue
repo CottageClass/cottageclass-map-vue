@@ -9,7 +9,7 @@
     <h5 class="heading-3">Emergency Contacts</h5><a href="#" class="title-bar-action-2 w-inline-block"></a></div>
 
  <!-- Note $route.params for pulling in data. I guess I can pull in people again. --> 
-  <div class="emergency-contact-parent-summary"><FacebookAvatar :facebookId="person.facebookId" className="ec-parent-avatar" />
+  <div class="emergency-contact-parent-summary"><AvatarImage :person="person" className="ec-parent-avatar" />
     <h5 class="heading">{{ person.firstName}} {{ person.lastInitial }}.</h5>
     <div class="ec-parent-summary-phone"><a :href="'tel:' + person.phone">{{ person.phone }}</a></div>
     <div class="list-info-1">
@@ -72,13 +72,13 @@
 // add live data here
 
 import * as Token from '@/utils/tokens.js'
-import FacebookAvatar from './FacebookAvatar'
+import AvatarImage from './AvatarImage'
 import * as api from '@/utils/api.js'
 import networks from '@/assets/network-info.json'
 
 export default {
 	name: 'EmergencyInfo',
-  components: { FacebookAvatar },
+  components: { AvatarImage },
 	data () {
 		return {
 			people: [],

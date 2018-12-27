@@ -34,7 +34,7 @@
           </select>
 
           <div class="avatar-and-cta-container">
-            <FacebookAvatar :facebookId="provider.facebookId" class="image" />
+            <AvatarImage person="provider" class="image" />
               <div class="text-block-4">
                 Send a text message to<br><span class="text-span">{{ provider.firstName}} {{ provider.lastInitial }}.</span><span class="black-50"></span>
               </div>
@@ -68,7 +68,7 @@
 import networks from '../assets/network-info.json'
 import * as api from '@/utils/api.js'
 import * as Token from '@/utils/tokens.js'
-import FacebookAvatar from './FacebookAvatar.vue'
+import AvatarImage from './AvatarImage.vue'
 var moment = require('moment');
 
 // import google sheets API service
@@ -80,7 +80,7 @@ var client = sheetsu({ address: 'https://sheetsu.com/apis/v1.0su/62cd725d6088' }
 
 export default {
   name: 'RequestModal',
-  components: { FacebookAvatar },
+  components: { AvatarImage },
   data () {
     return {
       numberOfChildren: 1,

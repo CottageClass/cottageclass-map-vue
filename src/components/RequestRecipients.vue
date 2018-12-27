@@ -12,7 +12,7 @@
      class="list-item"
      @click="toggleSelected(person.id)" 
      >
-      <div class="avatar-container"><FacebookAvatar :facebookId="person.facebookId" className="image-2" /></div>
+      <div class="avatar-container"><AvatarImage :person="person" className="image-2" /></div>
       <div class="info-container">
         <h5 class="heading">{{ person.firstName }} {{ person.lastInitial}}. </h5>
         <div class="text-block-3">
@@ -58,11 +58,11 @@ import networks from '@/assets/network-info.json'
 import * as Token from '@/utils/tokens.js'
 import * as api from '@/utils/api.js'
 import router from '../router'
-import FacebookAvatar from '@/components/FacebookAvatar.vue'
+import AvatarImage from '@/components/AvatarImage.vue'
 var moment = require('moment');
 
 export default {
-  components: { FacebookAvatar },
+  components: { AvatarImage },
   props: ['dateTimeSelected'],
   data () {
     return {

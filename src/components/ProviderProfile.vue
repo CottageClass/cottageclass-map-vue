@@ -2,7 +2,7 @@
 <div class="body">
     <div class="providerp-provider-info-section">
       <router-link :to="{ name: 'MainView' }" class="providerp-button-back w-inline-block"><img src="../assets/Arrow-Back-2.svg">
-    </router-link><FacebookAvatar :facebookId="person.facebookId" class="providerp-avatar" />
+    </router-link><AvatarImage :person="person" class="providerp-avatar" />
     <h1 class="providerp-h1">{{ person.firstName }} {{ person.lastInitial }}.</h1>
 
 
@@ -126,14 +126,14 @@
 import Images from './Images.vue'
 import ReviewItem from './ReviewItem.vue'
 import * as Token from '@/utils/tokens.js'
-import FacebookAvatar from './FacebookAvatar'
+import AvatarImage from './AvatarImage'
 import * as api from '@/utils/api.js'
 import networks from '@/assets/network-info.json' 
 import ChildInfo from '@/components/ChildInfo.vue'
 
 
 export default {
-  components: { ReviewItem, Images, FacebookAvatar, ChildInfo },
+  components: { ReviewItem, Images, AvatarImage, ChildInfo },
   name: 'ProviderProfile',
   methods: {
     getDirections: function (location) {

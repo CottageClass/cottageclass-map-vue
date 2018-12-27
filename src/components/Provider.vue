@@ -2,7 +2,7 @@
 	<router-link :to="{ name: 'ProviderProfile', params: { id: person.id }}">
 	<span class="body">
 		  <div class="landing-page-list-item-header">
-    <div class="avatar-name-container"><FacebookAvatar :facebookId="person.facebookId" className="image" />
+    <div class="avatar-name-container"><AvatarImage :person="person" className="image" />
       <div class="list-item-3-heading">
         <h5 class="heading">{{ person.firstName }} {{ person.lastInitial }}.</h5>
       </div>
@@ -61,13 +61,13 @@
 
 <script>
 import Images from './Images.vue'
-import FacebookAvatar from './FacebookAvatar.vue'
+import AvatarImage from './AvatarImage.vue'
 import ChildInfo from '@/components/ChildInfo.vue'
 
 export default {
   name: 'Provider',
   props: ['person', 'id'],
-  components: { Images, FacebookAvatar, ChildInfo },
+  components: { Images, AvatarImage, ChildInfo },
 };
 </script>
 

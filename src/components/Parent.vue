@@ -1,7 +1,7 @@
 <template>
  <div class="list-item-3-container">
    <router-link :to="{ name: 'emergencyInfo', params: { id: person.id }}" class="list-item-3-title-bar">
-    <FacebookAvatar :facebookId="person.facebookId" class="image" />
+    <AvatarImage :person="person" class="image" />
        <div class="list-item-3-heading">
          <h5 class="heading">{{ person.firstName}} {{ person.lastInitial }}. </h5> 
        </div>
@@ -35,7 +35,7 @@
 
 <script>
 import TextMessageLink from './TextMessageLink.vue'
-import FacebookAvatar from './FacebookAvatar.vue'
+import AvatarImage from './AvatarImage.vue'
 import ChildInfo from '@/components/ChildInfo.vue'
 import * as api from '@/utils/api.js'
 import networks from '@/assets/network-info.json'
@@ -50,7 +50,7 @@ var client = sheetsu({ address: 'https://sheetsu.com/apis/v1.0su/62cd725d6088' }
 export default {
         name: 'Parent',
         props: ['person', 'currentUser', 'network'],
-        components: { TextMessageLink, FacebookAvatar, ChildInfo },
+        components: { TextMessageLink, AvatarImage, ChildInfo },
         data () {
           return {
             checkState: "unknown" // "unknown", "checking in", "checked in", "checking out", "checked out", "error"
