@@ -9,9 +9,9 @@
 
     <div class="providerp-occupation" v-if="person.title && person.employer">{{ person.title }} at {{ person.employer }}</div>
     <div v-if="person.children.length > 0" class="providerp-children">Parent to 
-      <span v-for="(child, index) in person.children">
-        {{ child.firstName }} <span class="text-span-2">({{ child.age }})</span><span v-if="index < person.children.length - 1">, </span>
-      </span>
+  <span v-for="(child, index) in person.children">
+    <span>{{ child.age }}</span><span v-if="(index < person.children.length - 1)">, </span>
+</span>
       </div>
     <div v-if="person.blurb" class="providerp-chat-bubble-container">
       <div class="providerp-chat-bubble-caret"><img src="../assets/chat-bubble-caret.svg"></div>

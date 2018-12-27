@@ -45,13 +45,8 @@ function createPersonObject (personInApi, availableChildren = []) {
   }
   let createChildrenList = function () {
     let parseChild = function (child) {
-      let childAge = function (birthdayDateTime) {
-        return moment().diff(birthdayDateTime, 'years')
-      }
       return {
-        birthday: moment(child.attributes.birthday).format('l'),
-        firstName: child.attributes.first_name,
-        age: childAge(child.attributes.birthday)
+        age: child.attributes.age
       }
     }
     return availableChildren.filter(child => child.attributes.parent_id == personInApi.id).map(parseChild)

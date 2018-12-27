@@ -16,7 +16,9 @@
         </div>
       </div>
 
-<h5 class="caption" v-if="person.children.length">Parent to <span v-for="(child, index) in person.children"><span class="child">{{ child.firstName }} <span class="black-50">({{ child.age }})</span></span><span v-if="(index < person.children.length - 1)">, </span>
+<h5 class="caption" v-if="person.children.length">Kids ages: 
+  <span v-for="(child, index) in person.children">
+    <span>{{ child.age }}</span><span v-if="(index < person.children.length - 1)">, </span>
 </span>
 </h5>
 
