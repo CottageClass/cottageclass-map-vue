@@ -16,10 +16,8 @@
         </div>
       </div>
 
-<h5 class="caption" v-if="person.children.length">Kids ages: 
-  <span v-for="(child, index) in person.children">
-    <span>{{ child.age }}</span><span v-if="(index < person.children.length - 1)">, </span>
-</span>
+<h5 class="caption" v-if="person.children.length">
+        <ChildInfo :children="person.children" />
 </h5>
 
       <!-- Background check --> 
@@ -64,11 +62,12 @@
 <script>
 import Images from './Images.vue'
 import FacebookAvatar from './FacebookAvatar.vue'
+import ChildInfo from '@/components/ChildInfo.vue'
 
 export default {
   name: 'Provider',
   props: ['person', 'id'],
-  components: { Images, FacebookAvatar },
+  components: { Images, FacebookAvatar, ChildInfo },
 };
 </script>
 

@@ -8,9 +8,8 @@
      </router-link>
      <div class="list-item-3-child-list">
        <div class="text-block">
-         <span v-for="(child, index) in person.children">{{ child.firstName }} 
-           <span class="black-50">({{ child.age }})</span><span v-if="(index < person.children.length - 1)">, </span>
-       </span></div> 
+        <ChildInfo :children="person.children" />
+</span></div> 
    </div>
      <div v-if="checkState != 'error'" class="list-item-3-actions">
       <!-- check in button -->
@@ -37,6 +36,7 @@
 <script>
 import TextMessageLink from './TextMessageLink.vue'
 import FacebookAvatar from './FacebookAvatar.vue'
+import ChildInfo from '@/components/ChildInfo.vue'
 import * as api from '@/utils/api.js'
 import networks from '@/assets/network-info.json'
 import * as Token from '@/utils/tokens.js'
@@ -50,7 +50,7 @@ var client = sheetsu({ address: 'https://sheetsu.com/apis/v1.0su/62cd725d6088' }
 export default {
         name: 'Parent',
         props: ['person', 'currentUser', 'network'],
-        components: { TextMessageLink, FacebookAvatar },
+        components: { TextMessageLink, FacebookAvatar, ChildInfo },
         data () {
           return {
             checkState: "unknown" // "unknown", "checking in", "checked in", "checking out", "checked out", "error"

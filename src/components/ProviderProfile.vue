@@ -8,10 +8,8 @@
 
 
     <div class="providerp-occupation" v-if="person.title && person.employer">{{ person.title }} at {{ person.employer }}</div>
-    <div v-if="person.children.length > 0" class="providerp-children">Parent to 
-  <span v-for="(child, index) in person.children">
-    <span>{{ child.age }}</span><span v-if="(index < person.children.length - 1)">, </span>
-</span>
+    <div v-if="person.children.length > 0" class="providerp-children">
+        <ChildInfo :children="person.children" />
       </div>
     <div v-if="person.blurb" class="providerp-chat-bubble-container">
       <div class="providerp-chat-bubble-caret"><img src="../assets/chat-bubble-caret.svg"></div>
@@ -132,9 +130,11 @@ import * as Token from '@/utils/tokens.js'
 import FacebookAvatar from './FacebookAvatar'
 import * as api from '@/utils/api.js'
 import networks from '@/assets/network-info.json' 
+import ChildInfo from '@/components/ChildInfo.vue'
+
 
 export default {
-  components: { ReviewItem, Images, FacebookAvatar },
+  components: { ReviewItem, Images, FacebookAvatar, ChildInfo },
   name: 'ProviderProfile',
   methods: {
     getDirections: function (location) {
