@@ -33,7 +33,7 @@
 
 <script>
 import EventListItem from '@/components/EventListItem.vue'
-
+import * as api from '@/utils/api.js'
 import sheetsu from 'sheetsu-node'
 var moment = require('moment');
 
@@ -42,7 +42,8 @@ export default {
   components: { EventListItem },
   data () {
   	return {
-  	  events: null
+  	  events: null,
+      eventsFromApi: null
   	}
   },
   methods: {
@@ -61,7 +62,12 @@ export default {
       component.events = JSON.parse(data)
   	}, function(err){
   		console.log(err);
-  	});
+  	})
+    // fetch events from API
+    api.fetchUpcomingEvents().then(
+      (res) => { 
+        this.eventsFromApi = JSON.parse(data)
+      })
   }
 };
 </script>

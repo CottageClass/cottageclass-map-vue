@@ -127,6 +127,20 @@ export function fetchUsersWhoHaveMadeInquiries(currentUserId) {
         })
 }
 
+export function fetchUpcomingEvents() {
+  return Vue.axios.get(
+    `${process.env.BASE_URL_API}/api/events/upcoming`
+    ).then(res => {
+      console.log("FETCH UPCOMING EVENTS SUCCESS")
+      console.log(res.data)
+          return res.data
+        }).catch(err => {
+          console.log("FETCH UPCOMING EVENTS FAILURE")
+          console.log(err.errors)
+          throw err
+        })
+}
+
 export function fetchCurrentUser(userId) {
   return Vue.axios.get(
     `${process.env.BASE_URL_API}/users/${userId}`
