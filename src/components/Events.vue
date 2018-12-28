@@ -6,14 +6,14 @@
      <h1 class="h1-display">Upcoming Events</h1>
      <div class="events-list-wrapper">
       <div 
-      v-for="(event, index) in events">
+      v-for="(event, index) in eventsByDate">
         <div 
-        v-if="index === 0 || (event.date != (events[index - 1]).date)" class="event-date-section-tittle">
+        v-if="index === 0 || (formatDate(event.startsAt) != formatDate(eventsByDate[index - 1]).startsAt)" class="event-date-section-tittle">
           <div class="date-title">
-            <span v-if="isToday(event.date)">
+            <span v-if="isToday(event.startsAt)">
               <strong class="bold-text">Today</strong>,
             </span> 
-          {{ formatDate(event.date) }}</div>
+          {{ formatDate(event.startsAt) }}</div>
         </div>
         <ul class="unordered-list-events">
         	<EventListItem 
@@ -34,8 +34,13 @@
 <script>
 import EventListItem from '@/components/EventListItem.vue'
 import * as api from '@/utils/api.js'
-import sheetsu from 'sheetsu-node'
 var moment = require('moment');
+
+// todo:
+// work on event page until it's complete for one event, so I get all the data I need
+// try to get as far as possible without transforming the data in any way? or possibly go through each one by one as before.
+// change logic for "is today"
+// sort events by date so that current date display logic will work
 
 export default {
   name: 'Events',
@@ -43,8 +48,16 @@ export default {
   data () {
   	return {
   	  events: null,
-      eventsFromApi: null
   	}
+  },
+  computed: {
+    eventsByDate: function () {
+      if (this.events) {
+        return this.events.sort((eventA, eventB) => {
+          return moment(eventA.startsAt).diff(moment(eventB.startsAt))
+        })
+      }
+    }
   },
   methods: {
     isToday: function (date) {
@@ -55,18 +68,10 @@ export default {
     }
   },
   mounted: function () {
-  	let component = this
-  	var client = sheetsu({ address: 'https://sheetsu.com/apis/v1.0su/b7670db140c9' })
-  	client.read({ limit: 15, sheet: "Public" }).then(function(data) {
-  		console.log(data);
-      component.events = JSON.parse(data)
-  	}, function(err){
-  		console.log(err);
-  	})
     // fetch events from API
     api.fetchUpcomingEvents().then(
       (res) => { 
-        this.eventsFromApi = JSON.parse(data)
+        this.events = res
       })
   }
 };

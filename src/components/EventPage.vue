@@ -1,12 +1,12 @@
 <template>
 <div class="body-2">
   <div class="event-detail-container w-container">
-    <div class="event-detail-graphic"><img :src="iconUrl(iconImage(event.activityCategory))" 
+    <div class="event-detail-graphic"><img :src="iconUrl(iconImage(event.activityName))" 
  width="150" height="150" alt=""></div>
     <div class="div-block-36">
-      <h1 class="event-detail-heading">{{ event.title }}</h1>
+      <h1 class="event-detail-heading">{{ event.name }}</h1>
       <div class="action-bar">
-        <div class="host-info"><AvatarImage className="avatar-large" facebookId="9805558"/>
+        <div class="host-info"><AvatarImage className="avatar-large" :person="{facebookId: event.hostFacebookUid, avatar: event.hostAvatar}"/>
           <div class="host-info-wrapper">
             <div class="hosted-by">Hosted by <a href="#" class="link">{{ event.hostFirstName }}</a></div>
             <div v-if="event.hostBackgroundChecked" class="background-checked-wrapper"><img src="@/assets/check-green.svg" alt="">
@@ -16,26 +16,26 @@
         </div><a href="#" class="button w-button">RSVP</a></div>
       <ul class="summary-info">
         <li class="summary-list-item"><img src="@/assets/time-black.svg" alt="" class="summary-icon">
-          <div class="summary-text">{{ formatDate(event.date) }} at {{ formatTime(event.startTime) }}–{{ formatTime(event.endTime) }}</div>
+          <div class="summary-text">{{ formatDate(event.startsAt) }} at {{ formatTime(event.startsAt) }}–{{ formatTime(event.endsAt) }}</div>
         </li>
-        <li class="summary-list-item"><img src="@/assets/cake-outline-black.svg" alt="" class="summary-icon">
-          <div class="summary-text">Ages {{ event.minChildAge }}-{{ event.maxChildAge}} ({{ event.maxChildren }} kids total)</div>
+        <li v-if="(event.childAgeMinimum || event.childAgeMaximum) && event.maximumChildren" class="summary-list-item"><img src="@/assets/cake-outline-black.svg" alt="" class="summary-icon">
+          <div class="summary-text">Ages {{ event.childAgeMinimum }}-{{ event.childAgeMaximum}} ({{ event.maximumChildren }} kids total)</div>
         </li>
         <li class="summary-list-item"><img src="@/assets/location.svg" alt="" class="summary-icon">
-          <div class="summary-text">New York, NY</div>
+          <div class="summary-text">{{ event.hostLocality }}<span v-if="event.hostAdminAreaLevel1 && event.hostLocality">,</span> {{ event.hostAdminAreaLevel1 }}</div>
         </li>
       </ul>
     </div>
   <div class="map">
   <GmapMap
     :disableDefaultUI="true"
-    :center="locationPlaceholder"
+    :center="{ lat: event.hostFuzzyLatitude, lng: event.hostFuzzyLongitude }"
     :zoom="13"
     :options="mapOptions"
     style="width: 100%; height: 100%;">
     <GmapMarker
-      :key="index"
-      :position="locationPlaceholder"
+      key="1"
+      :position="{ lat: event.hostFuzzyLatitude, lng: event.hostFuzzyLongitude }"
       title="Test"
       icon="https://storage.googleapis.com/cottageclass-prod/images/map-radius.png"
       />
@@ -44,20 +44,20 @@
   <div class="mobile-cards-wrapper">
       <div class="event-specifics-card"><img src="@/assets/about.svg" width="100" height="100" alt="">
         <div class="card-small-text">About</div>
-        <div class="card-large-text">Who doesn’t love pizza 🍕 and a movie? </div>
+        <div class="card-large-text">Who doesn’t love {{ event.activityName }} &amp; {{ event.food }}? </div>
       </div>
       <div v-if="event.houseRules" class="event-specifics-card"><img src="@/assets/house-rules.svg" width="100" height="100" alt="">
         <div class="card-small-text">House Rules</div>
         <div class="card-large-text">{{ event.houseRules }}.</div>
       </div>
-      <div v-if="event.hasPets" class="event-specifics-card"><img src="@/assets/pets.svg" width="100" height="100" alt="">
+      <div v-if="event.hasPet" class="event-specifics-card"><img src="@/assets/pets.svg" width="100" height="100" alt="">
         <div class="card-small-text">Pets</div>
-        <div class="card-large-text">{{ event.petsDescription }}</div>
+        <div class="card-large-text">{{ event.petDescription }}</div>
       </div>
-      <div class="event-specifics-card"><AvatarImage className="avatar-x-large"/>
+      <div class="event-specifics-card"><AvatarImage className="avatar-x-large" :person="{facebookId: event.hostFacebookUid, avatar: event.hostAvatar}"/>
         <div class="card-small-text">Host</div>
         <div class="card-large-text">{{ event.hostFirstName }}</div>
-        <div v-if="event.hostChildAges" class="card-large-text-gray">Parent to 
+        <div v-if="event.hostChildAges.length > 0" class="card-large-text-gray">Parent to 
           <span v-if="event.hostChildAges.length == 1">one child age {{  event.hostChildAges[0] }}.</span>
           <span v-if="event.hostChildAges.length == 2">two children ages {{ event.hostChildAges[0] }} and {{ event.hostChildAges[1] }}.</span>
           <span v-else>{{ event.hostChildAges.length }} children ages 
@@ -102,9 +102,8 @@
 <script>
 // todo: pass "person" object to AvatarImage
 
-
+import * as api from '@/utils/api.js'
 var moment = require('moment');
-import sheetsu from 'sheetsu-node'
 import AvatarImage from './AvatarImage.vue'
 
 export default {
@@ -132,7 +131,7 @@ export default {
       return colors[id % colors.length]
     },
     formatTime: function (time24) {
-      return time24
+      return moment(time24).format('LT')
     },
     iconUrl: function (imageName) {
             return require('@/assets/' + imageName)
@@ -148,19 +147,15 @@ export default {
           case 'baking':
             return 'birthday-cake.svg'
           default:
-            return 'birthday-cake.svg'
+            return 'grinning-face-with-smiling-eyes.svg'
         }
       }
   },
   mounted: function () {
-    let component = this
-    var client = sheetsu({ address: 'https://sheetsu.com/apis/v1.0su/b7670db140c9' })
-    client.read({ limit: 15, sheet: "Public" }).then(function(data) {
-      console.log(data);
-      component.events = JSON.parse(data)
-    }, function(err){
-      console.log(err);
-    });
+    api.fetchUpcomingEvents().then(
+      (res) => { 
+        this.events = res
+      })
   },
   computed: {
     event: function () {
@@ -172,6 +167,10 @@ export default {
 </script>
 
 <style>
+
+.first-name {
+  text-transform: capitalize;
+}
 
 body {
   font-family: soleil, sans-serif;

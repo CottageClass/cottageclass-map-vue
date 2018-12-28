@@ -19,6 +19,7 @@
     "connect-history-api-fallback": "^1.5.0",
     "express": "^4.16.4",
     "heroku-ssl-redirect": "0.0.4",
+    "json-api-normalizer": "^0.4.14",
     "libphonenumber-js": "^1.5.1",
     "moment": "^2.22.2",
     "node-sass": "^4.10.0",

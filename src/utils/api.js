@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import camelcaseKeys from 'camelcase-keys'
 import * as Token from './tokens.js'
+import normalize from 'json-api-normalizer';
 
 var moment = require('moment');
 
@@ -127,20 +128,6 @@ export function fetchUsersWhoHaveMadeInquiries(currentUserId) {
         })
 }
 
-export function fetchUpcomingEvents() {
-  return Vue.axios.get(
-    `${process.env.BASE_URL_API}/api/events/upcoming`
-    ).then(res => {
-      console.log("FETCH UPCOMING EVENTS SUCCESS")
-      console.log(res.data)
-          return res.data
-        }).catch(err => {
-          console.log("FETCH UPCOMING EVENTS FAILURE")
-          console.log(err.errors)
-          throw err
-        })
-}
-
 export function fetchCurrentUser(userId) {
   return Vue.axios.get(
     `${process.env.BASE_URL_API}/users/${userId}`
@@ -198,4 +185,35 @@ export function fetchMessagesForUserPair(participantId1, participantId2) {
     console.log(err.errors)
     throw err
   })
+}
+
+/*
+ * EVENTS
+ */
+
+export function fetchUpcomingEvents() {
+  return Vue.axios.get(
+    `${process.env.BASE_URL_API}/api/events/upcoming`
+    ).then(res => {
+      console.log("FETCH UPCOMING EVENTS SUCCESS")
+      console.log(res.data)
+      return Object.values(normalize(res.data).event).map(obj => {
+      var e = obj.attributes
+      e["id"] = obj.id
+      e.hostFirstName = capitalize(e.hostFirstName)
+      e.hostFuzzyLatitude = parseFloat(e.hostFuzzyLatitude)
+      e.hostFuzzyLongitude = parseFloat(e.hostFuzzyLongitude)
+      e.activityName = e.activityNames.length > 0 && e.activityNames[0]
+      e.food = e.foods.length > 0 && e.foods[0]
+      return e
+      })
+        }).catch(err => {
+          console.log("FETCH UPCOMING EVENTS FAILURE")
+          console.log(err.errors)
+          throw err
+        })
+}
+
+function capitalize(string) {
+  return string.charAt(0).toUpperCase() + string.slice(1);  
 }
