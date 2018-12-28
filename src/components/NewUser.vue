@@ -282,6 +282,12 @@ export default {
 
       // I think this is necessary but I'm not sure.
       let component = this
+
+      // set default values for the time being
+      const defaultMaximumChildren = 2
+      const defaultChildAgeMaximum = 11
+      const defaultChildAgeMinimum = 3
+
       // test data from documentation
       let eventData = {
         "event_series": {
@@ -294,7 +300,10 @@ export default {
           "foods": [this.food.selected],
           "house_rules": this.houseRules.text,
           "pet_description": this.petsDescription.text,
-          "event_hosts_attributes": this.otherAdultsPresent.list
+          "event_hosts_attributes": this.otherAdultsPresent.list,
+          "maximum_children": defaultMaximumChildren,
+          "child_age_minimum": defaultChildAgeMinimum,
+          "child_age_maximum": defaultChildAgeMaximum
         }
       }
 
