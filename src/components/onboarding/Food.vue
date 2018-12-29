@@ -39,16 +39,16 @@ export default {
       foodSelected: "",
       errorMesg: 'Please choose a food option from the list.',
       foods: [
-      'pizza',
-      'tacos',
-      'soup',
-      'pancakes',
-      'rice & beans',
-      'mac \'n\' cheese',
-      'pasta',
-      'chili',
-      'hot dogs',
-      'sandwiches'
+      'pizza \ud83c\udf55',
+      'tacos \ud83c\udf2e',
+      'soup \ud83c\udf5c',
+      'pancakes \ud83e\udd5e',
+      'rice & beans \ud83c\udf5a',
+      'mac \'n\' cheese \ud83e\uddc0',
+      'pasta \ud83c\udf5d',
+      'chili \ud83c\udf36\ufe0f',
+      'hot dogs \ud83c\udf2d',
+      'sandwiches \ud83e\udd6a'
       ]
     }
   },
