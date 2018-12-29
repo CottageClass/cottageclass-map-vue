@@ -23,11 +23,11 @@
       <Phone v-if="step === 1" v-model="phone" />
       <Location v-if="step === 2" v-model="location"/>
       <Children v-if="step === 3" v-model="children" />
-      <Activities v-if="step === 4" v-model="activities" />
-      <EventActivity v-if="step === 5" v-model="eventActivity" />
-      <Food v-if="step === 6" v-model="food" />
-      <EventTime v-if="step === 7" v-model="eventTime" />
-      <EventDate v-if="step === 8" v-model="eventDate" />
+      <EventActivity v-if="step === 4" v-model="eventActivity" />
+      <Food v-if="step === 5" v-model="food" />
+      <EventTime v-if="step === 6" v-model="eventTime" />
+      <EventDate v-if="step === 7" v-model="eventDate" />
+      <MaxChildren v-if="step === 8" v-model="maxChildren" />
       <YesOrNo 
       v-if="step === 9" 
       v-model="canProvideEmergencyCare" 
@@ -35,28 +35,14 @@
       description="Parents often need care at times not covered by our events. Would you like to be able to request childcare from other members when you need it and receive requests (by text message) in return?" 
       />
       <Availability v-if="step === 10" v-model="availability" />
-      <Rules v-if="step === 11" v-model="communityRules" />
-      <HouseRules v-if="step === 12" v-model="houseRules" />
       <YesOrNo 
-      v-if="step === 13" 
+      v-if="step === 11" 
       v-model="hasPets" 
       question="Do you have pets?" 
       description="This is often very important for parents (and children) to know." 
       />
-      <PetsDescription v-if="step === 14" v-model="petsDescription" />
-      <YesOrNo 
-      v-if="step === 15" 
-      v-model="isOtherAdultPresent" 
-      question="Will any other adults be present at your home?" 
-      description="If it's just you, say 'no.' If your husband, wife, friends, roomates or any adult family members may be in the house, let us know." 
-      />
-      <OtherAdultsPresent v-if="step === 16" v-model="otherAdultsPresent" />
-      <YesOrNo 
-      v-if="step === 17" 
-      v-model="acceptsBackgroundCheck" 
-      question="Can you complete a background check?" 
-      description="To ensure the safety of all our kids, we require all members to complete a background check. Are you okay with that? (We'll email you a link to our background check provider.)" 
-      />
+      <PetsDescription v-if="step === 12" v-model="petsDescription" />
+      <HouseRules v-if="step === 13" v-model="houseRules" />
     </div>
   </span>
 </template>
@@ -71,14 +57,12 @@ import Phone from '@/components/onboarding/Phone.vue'
 import Children from '@/components/onboarding/Children.vue'
 import EventActivity from '@/components/onboarding/EventActivity.vue'
 import Availability from '@/components/onboarding/Availability.vue'
-import Activities from '@/components/onboarding/Activities.vue'
 import Food from '@/components/onboarding/Food.vue'
-import Rules from '@/components/onboarding/Rules.vue'
 import HouseRules from '@/components/onboarding/HouseRules.vue'
 import PetsDescription from '@/components/onboarding/PetsDescription.vue'
-import OtherAdultsPresent from '@/components/onboarding/OtherAdultsPresent.vue'
 import EventTime from '@/components/onboarding/EventTime.vue'
 import EventDate from '@/components/onboarding/EventDate.vue'
+import MaxChildren from '@/components/onboarding/MaxChildren.vue'
 import YesOrNo from '@/components/onboarding/YesOrNo.vue'
 import * as Token from '@/utils/tokens.js'
 import * as api from '@/utils/api.js'
@@ -91,13 +75,14 @@ var client = sheetsu({ address: 'https://sheetsu.com/apis/v1.0su/62cd725d6088' }
 
 export default {
   components: {
-    Nav, Login, DirectLogin, Signup, Location, Phone, Children, Availability, Activities, Food, Rules, EventActivity, EventTime, EventDate, HouseRules, PetsDescription, OtherAdultsPresent, YesOrNo
+    Nav, Login, DirectLogin, Signup, Location, Phone, Children, Availability, Food, EventActivity, EventTime, EventDate, HouseRules, PetsDescription, YesOrNo, MaxChildren
   },
   data () {
     return {
       activeScreen: 'facebook',
+      currentUser: {},
       step: 0,
-      lastStep: 17,
+      lastStep: 13,
       showError: false,
       name: {}, // todo: remove if possible now this comes from FB
       bookingRequest: {
@@ -150,6 +135,7 @@ export default {
       canProvideEmergencyCare: {
         yesOrNo: ''
       },
+      maxChildren: null
     }
   },
   name: 'NewUser',
@@ -167,8 +153,7 @@ export default {
     skipSkippableSteps: function () {
       if (
         (this.step === 9 && !this.canProvideEmergencyCare.isTrue) ||
-        (this.step === 13 && !this.hasPets.isTrue) || 
-        (this.step === 15 && !this.isOtherAdultPresent.isTrue)) {
+        (this.step === 11 && !this.hasPets.isTrue)) {
           this.setStep(this.step + 2)
       } else {
         this.setStep(this.step = this.step + 1)
@@ -291,7 +276,7 @@ export default {
       // test data from documentation
       let eventData = {
         "event_series": {
-          "name": this.capitalize(this.eventActivity.selected) + ' & ' + this.food.selected, 
+          "name": this.eventName, 
           "start_date": this.eventDate.selected,
           "starts_at": this.eventTime.start,
           "ends_at": this.eventTime.end,
@@ -301,7 +286,7 @@ export default {
           "house_rules": this.houseRules.text,
           "pet_description": this.petsDescription.text,
           "event_hosts_attributes": this.otherAdultsPresent.list,
-          "maximum_children": defaultMaximumChildren,
+          "maximum_children": this.maxChildren,
           "child_age_minimum": defaultChildAgeMinimum,
           "child_age_maximum": defaultChildAgeMaximum
         }
@@ -348,33 +333,23 @@ export default {
         case 3:
           return this.children.err
         case 4:
-          return this.activities.err
-        case 5:
           return this.eventActivity.err
-        case 6:
+        case 5:
           return this.food.err
-        case 7:
+        case 6:
           return this.eventTime.err
-        case 8:
+        case 7:
           return this.eventDate.err
         case 9:
           return this.canProvideEmergencyCare.err
         case 10:
           return this.availability.err
         case 11:
-          return this.communityRules.err  
-        case 12:
-          return this.houseRules.err
-        case 13:
           return this.hasPets.err
-        case 14:
+        case 12:
           return this.petsDescription.err
-        case 15:
-          return this.isOtherAdultPresent.err
-        case 16:
-          return this.otherAdultsPresent.err
-        case 17:
-          return this.acceptsBackgroundCheck.err
+        case 13:
+          return this.houseRules.err
         default:
           return false
       }
@@ -394,6 +369,21 @@ export default {
       if (this.bookingRequest.err === false) {
         return true
       } else return false
+    },
+    eventName: function () {
+      // this is not a great place to put this because it will get executed whenever activity or food change.  
+      let userId = Token.currentUserId(this.$auth)
+      if (userId) {
+        api.fetchCurrentUser(this.currentUserId)
+        .then(person => {
+          this.currentUser = person
+        })
+      }
+      if (this.currentUser.firstName) {
+        return this.capitalize(this.eventActivity.selected) + ' & ' + this.food.selected + ' with ' + this.capitalize(this.currentUser.firstName)
+      } else {
+        return this.capitalize(this.eventActivity.selected) + ' & ' + this.food.selected
+      }
     }
   }
 };
