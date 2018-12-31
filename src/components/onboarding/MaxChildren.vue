@@ -18,6 +18,7 @@
         </select>
       </div>
     </div>
+    <br>
         <p class="onb-paragraph-small-50">For each child you host, you receive points that you can use to attend others' activities.</p>
   </div>
 </template>
@@ -47,6 +48,10 @@ select {
 .dropdown-container {
   text-align: center;
   font-size: 24px;
+  background-color: hsla(0, 0%, 100%, .7);
+  height: 56px;
+  padding: 16px 12px 0px 18px;
+  border-radius: 4px;
 }
 
 </style>
