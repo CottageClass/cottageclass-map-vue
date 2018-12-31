@@ -22,9 +22,6 @@
   <!-- the list -->
 
   <div class="list-container">
-    <div class="group-title-container">
-      <h5 class="heading-2">{{ providersSectionTitle }}</h5>
-    </div>
     <Provider v-for="person in peopleAvailable" :person="person" :key="person.id"></Provider>
   </div>
 
@@ -105,8 +102,6 @@ export default {
   }
 };
 </script>
-
-<!-- Add "scoped" attribute to limit CSS to this component only -->
 
 <style scoped>
 

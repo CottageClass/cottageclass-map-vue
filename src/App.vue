@@ -13,5 +13,4 @@ export default {
 <style>
 @import './assets/css/normalize.css';
 @import './assets/css/webflow.css';
-@import './assets/css/cc-mvp.webflow.css';
 </style>
