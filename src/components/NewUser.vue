@@ -3090,6 +3090,17 @@ a {
   color: #c73200;
 }
 
+
+.onb-error-label {
+  margin-bottom: 6px;
+  font-weight: 700;
+}
+
+.onb-error-text {
+  font-size: 13px;
+}
+
+
 .onb-title-bar-next-button-inactive {
   position: static;
   display: block;
@@ -3115,15 +3126,6 @@ a {
   background-color: hsla(0, 0%, 100%, .3);
   box-shadow: none;
   color: rgba(1, 1, 1, .2);
-}
-
-.onb-error-text {
-  font-size: 13px;
-}
-
-.onb-error-label {
-  margin-bottom: 6px;
-  font-weight: 700;
 }
 
 .image-8 {
