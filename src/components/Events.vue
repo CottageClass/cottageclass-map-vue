@@ -65,7 +65,6 @@ export default {
   },
   methods: {
     limitNumberOfEvents: function (events) {
-      console.log('limit to this many: ' + this.limitTo)
       if (!!this.limitTo) {
         return events.slice(0, parseInt(this.limitTo))
       } else {
