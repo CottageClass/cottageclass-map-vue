@@ -21,7 +21,7 @@
               <div class="background-checked">Background Checked</div>
             </div>
           </div>
-        </div><a href="#" class="button w-button">RSVP</a></div>
+        </div><RsvpButton :userParticipating="event.participated" :full="event.full" /></div>
       <ul class="summary-info">
         <li class="summary-list-item"><img src="@/assets/time-black.svg" alt="" class="summary-icon">
           <div class="summary-text">{{ formatDate(event.startsAt) }} at {{ formatTime(event.startsAt) }}–{{ formatTime(event.endsAt) }}</div>
@@ -76,7 +76,7 @@
           </span>
         </div>
       </div>
-      <div class="event-specifics-card">
+      <div class="event-specifics-card" v-if="!event.full && !event.participated">
         <div class="card-large-text">Interested in this event?</div><a href="#" class="button-bottom-event w-button">RSVP</a></div>
     </div>
   </div>
@@ -113,10 +113,11 @@
 import * as api from '@/utils/api.js'
 var moment = require('moment');
 import AvatarImage from './AvatarImage.vue'
+import RsvpButton from './RsvpButton.vue'
 
 export default {
   name: 'EventPage',
-  components: { AvatarImage },
+  components: { AvatarImage, RsvpButton },
   data () {
     return {
       events: [],
