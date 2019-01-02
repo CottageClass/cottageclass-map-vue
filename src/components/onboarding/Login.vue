@@ -17,14 +17,14 @@
       <div class="menu-button w-nav-button"><a href="#signup" class="button-nav menu w-button">SIGN IN</a></div>
     </div>
     <div class="tag-container-mobile w-hidden-main w-hidden-medium w-container">
-      <div class="nav-tag w-hidden-main w-hidden-medium w-hidden-small w-hidden-tiny">free kids&#x27; activities</div>
+      <div class="nav-tag w-hidden-main w-hidden-medium w-hidden-small w-hidden-tiny">free kids&rsquo; activities</div>
     </div>
   </div>
   <div class="hero-section">
     <div class="hero-container w-container">
       <div class="hero-content">
-        <h1 class="h1-display">The best kids&#x27; activities in Brooklyn are now <span class="highlight">free</span></h1>
-        <div class="hero-subtitle">Host kids once a month at your home to get free, unlimited access to Brooklyn’s best sitters: other experienced parents like you.</div>
+        <h1 class="h1-display">The best kids&rsquo; activities in Brooklyn are now <span class="highlight">free</span></h1>
+        <div class="hero-subtitle">Host kids once a month at your home to get free, unlimited access to Brooklyn&rsquo;s best sitters: other experienced parents like you.</div>
         <div class="how-wrapper">
           <ul class="unordered-list">
             <li class="list-item"><img src="@/assets/give-care.svg" alt="" class="image-262">
