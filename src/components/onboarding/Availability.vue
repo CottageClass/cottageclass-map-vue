@@ -1,7 +1,7 @@
 <template>
  <div class="onb-content-container">
     <div class="onb-top-content-container">
-      <h1 class="onb-heading-large">When are you available?</h1>
+      <h1 class="onb-heading-large">When are you available for childcare in a pinch?</h1>
       <p class="onb-paragraph-subheading-2">Other parents may text you to request care during the times you choose. There's never any obligation to respond, so just pick times when you're <em>usually</em> available to provide care.</p>
     </div>
     <div class="onb-form-block-checkbox-list w-form">
