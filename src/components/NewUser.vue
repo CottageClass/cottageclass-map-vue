@@ -111,7 +111,6 @@ export default {
         weekends: false,
         err: 'skippable'
       },
-      activities: {},
       food: {},
       eventActivity: {},
       eventTime: {},
@@ -198,8 +197,6 @@ export default {
           "phone": this.phone.number,
           "children": this.children.list,
           "availability": this.availability,
-          "activities": this.activities.selected,
-          "activitiesAddtionalText": this.activities.additionalText,
           "network": this.invitationCode.code,
           "food": this.food.selected
         }, "newUsers").then((data) => {
@@ -234,11 +231,6 @@ export default {
         ))
       }
 
-      let activities = Object.keys(this.activities.selected)
-        .filter(k => this.activities.selected[k])
-        // convert activites to snake_case
-        .map(activity => activity.replace( /([A-Z])/g, "_$1" ).toLowerCase())
-
       let postData = {
         streetNumber: street_number,
         route: route,
@@ -251,7 +243,6 @@ export default {
         longitude: this.location.lng,
         phoneAreaCode: phoneAreaCode,
         phoneNumber: phoneNumber,
-        activities: activities,
         availableMornings: this.availability.mornings,
         availableAfternoons: this.availability.afternoons,
         availableEvenings: this.availability.evenings,
