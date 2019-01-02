@@ -4,6 +4,14 @@
     <div class="event-detail-graphic"><img :src="iconUrl(iconImage(event.activityName))" 
  width="150" height="150" alt=""></div>
     <div class="div-block-36">
+      <!--
+      <div class="alert-container alert-success" id="alert">
+        RSVP complete! You will receive a confirmation email shortly. 
+      </div>
+      <div class="alert-container alert-failure" id="alert">
+        Sorry, this event is full &amp; not accepting any more RSVPs. 
+      </div>
+    -->
       <h1 class="event-detail-heading">{{ event.name }}</h1>
       <div class="action-bar">
         <div class="host-info"><AvatarImage className="avatar-large" :person="{facebookId: event.hostFacebookUid, avatar: event.hostAvatar}"/>
@@ -167,6 +175,44 @@ export default {
 </script>
 
 <style>
+
+
+.alert-container {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  width: 100%;
+  min-height: 60px;
+  margin-bottom: 16px;
+  padding: 16px 16px 18px;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  -webkit-box-align: start;
+  -webkit-align-items: flex-start;
+  -ms-flex-align: start;
+  align-items: center;
+  color: #17c700;
+}
+
+.alert-success {
+  background-color: #c1ffda;
+  border: 1px solid rgb(12, 186, 82);
+  color: rgb(12, 186, 82);
+}
+
+.alert-failure {
+  background-color: #ffbebe;
+  border: 1px solid #c73200;
+  color: #c73200;
+}
 
 .first-name {
   text-transform: capitalize;
@@ -993,6 +1039,10 @@ h1 {
   border-radius: 4px;
   background-color: #1f88e9;
   text-align: center;
+}
+
+.button-inactive {
+  background-color: #99999957;
 }
 
 .button:hover {

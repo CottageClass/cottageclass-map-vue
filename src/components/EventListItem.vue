@@ -20,7 +20,7 @@
       <div class="action-bar">
         <div class="host-info"><AvatarImage className="avatar-small" :person="{facebookId: event.hostFacebookUid, avatar: event.hostAvatar}"/>
           <div class="text-block">Hosted by <a href="#" class="host-name link">{{ event.hostFirstName }}</a></div>
-        </div><a href="#" class="button w-button">RSVP</a></div>
+        </div><RsvpButton :userParticipating="event.participated" :full="event.full" /></div>
       </div>
     </li>
   </router-link>
@@ -30,12 +30,14 @@
 // todo: pass "person" object to AvatarImage
 
 import AvatarImage from './AvatarImage.vue'
+import RsvpButton from './RsvpButton.vue'
+
 var moment = require('moment');
 
 export default {
   name: 'EventListItem',
   props: ['event', 'index'],
-  components: { AvatarImage },
+  components: { AvatarImage, RsvpButton },
   methods: {
     backgroundColor: function (index) {
       let colors = ['#e82d55', '#0cba52', '#aff0fc', '#fd6f77', '#64426b']
