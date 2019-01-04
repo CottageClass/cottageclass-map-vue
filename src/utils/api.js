@@ -214,6 +214,35 @@ export function fetchUpcomingEvents() {
         })
 }
 
+export function submitEventParticipant(eventId, participantChildIds) {
+  let createChild = function (childId) {
+    return {
+      "child_id": childId
+    }
+  };
+  let participantData = {
+    "participant": {
+    "participant_children_attributes": participantChildIds.map(createChild)
+    }
+  }
+  return Vue.axios.post(`${process.env.BASE_URL_API}/api/events/${eventId}/participants`, participantData)
+        .then(res => {
+          console.log('SUBMIT EVENT PARTICIPANT SUCCESS')
+          console.log(res)
+          return res
+        })
+        .catch(err => {
+          console.log('SUBMIT EVENT PARTICIPANT FAILURE')
+          console.log(err)
+          console.log(Object.entries(err))
+          throw err
+        })
+}
+
+/*
+ * UTILS
+ */
+
 function capitalize(string) {
   return string.charAt(0).toUpperCase() + string.slice(1);  
 }

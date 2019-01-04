@@ -1,14 +1,19 @@
 <template>
 	<div v-if="userParticipating" class="button w-button user-participating">&check; RSVP REQUESTED</div>
 	<div v-else-if="full" class="button w-button full">&check; EVENT IS FULL</div>
-  <div v-else class="button w-button">RSVP</div>
+  <router-link
+  v-else
+	:to="{ name: 'RsvpInfoCollection', params: { eventId: eventId }}"
+	class="button w-button"
+	>RSVP
+  </router-link>
 </template>
 
 <script>
 
 export default {
   name: 'RsvpButton',
-  props: ['full', 'userParticipating']
+  props: ['full', 'userParticipating', 'eventId']
 };
 
 </script>

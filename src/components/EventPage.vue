@@ -21,7 +21,18 @@
               <div class="background-checked">Background Checked</div>
             </div>
           </div>
-        </div><RsvpButton :userParticipating="event.participated" :full="event.full" /></div>
+        </div>
+        
+        <!-- RSVP button -->
+
+        <RsvpButton 
+        :userParticipating="event.participated" 
+        :full="event.full" 
+        :eventId="eventId"
+        /></div>
+
+        <!-- Summary info --> 
+
       <ul class="summary-info">
         <li class="summary-list-item"><img src="@/assets/time-black.svg" alt="" class="summary-icon">
           <div class="summary-text">{{ formatDate(event.startsAt) }} at {{ formatTime(event.startsAt) }}–{{ formatTime(event.endsAt) }}</div>
@@ -34,6 +45,9 @@
         </li>
       </ul>
     </div>
+
+        <!-- Map --> 
+
   <div class="map">
   <GmapMap
     :disableDefaultUI="true"
@@ -167,6 +181,9 @@ export default {
       })
   },
   computed: {
+    eventId: function () {
+      return this.event.id
+    },
     event: function () {
       return this.events.find(event => event.id == this.$route.params.id) // computes event. this isn't efficient but simplifies interaction with the API.
   }
