@@ -4,10 +4,12 @@
     <div class="event-detail-graphic"><img :src="iconUrl(iconImage(event.activityName))" 
  width="150" height="150" alt=""></div>
     <div class="div-block-36">
-      <!--
-      <div class="alert-container alert-success" id="alert">
-        RSVP complete! You will receive a confirmation email shortly. 
+      <div
+      v-if="event.participated" 
+      class="alert-container alert-success" id="alert">
+        Congratulations, you have RSVP&apos;ed to this event! If you haven't yet, please fill out our <a href="https://cottageclass1.typeform.com/to/Z6pwkl">emergency information form</a>.  
       </div>
+   <!--
       <div class="alert-container alert-failure" id="alert">
         Sorry, this event is full &amp; not accepting any more RSVPs. 
       </div>
@@ -21,7 +23,18 @@
               <div class="background-checked">Background Checked</div>
             </div>
           </div>
-        </div><RsvpButton :userParticipating="event.participated" :full="event.full" /></div>
+        </div>
+        
+        <!-- RSVP button -->
+
+        <RsvpButton 
+        :userParticipating="event.participated" 
+        :full="event.full" 
+        :eventId="eventId"
+        /></div>
+
+        <!-- Summary info --> 
+
       <ul class="summary-info">
         <li class="summary-list-item"><img src="@/assets/time-black.svg" alt="" class="summary-icon">
           <div class="summary-text">{{ formatDate(event.startsAt) }} at {{ formatTime(event.startsAt) }}–{{ formatTime(event.endsAt) }}</div>
@@ -34,6 +47,9 @@
         </li>
       </ul>
     </div>
+
+        <!-- Map --> 
+
   <div class="map">
   <GmapMap
     :disableDefaultUI="true"
@@ -167,6 +183,9 @@ export default {
       })
   },
   computed: {
+    eventId: function () {
+      return this.event.id
+    },
     event: function () {
       return this.events.find(event => event.id == this.$route.params.id) // computes event. this isn't efficient but simplifies interaction with the API.
   }
@@ -177,12 +196,7 @@ export default {
 
 <style>
 
-
 .alert-container {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
   width: 100%;
   min-height: 60px;
   margin-bottom: 16px;
@@ -1986,4 +2000,11 @@ h1 {
     padding: 64px 16px;
   }
 }
+
+.alert-success a {
+  display: inline;
+  font-weight: bold;
+  color: inherit;
+}
+
 </style>

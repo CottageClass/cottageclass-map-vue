@@ -18,6 +18,7 @@ import RequestModal2 from '@/components/RequestModal2.vue'
 import RequestRecipients from '@/components/RequestRecipients.vue'
 import AdminMessages from '@/components/AdminMessages.vue'
 import EventPage from '@/components/EventPage.vue'
+import RsvpInfoCollection from '@/components/RsvpInfoCollection.vue'
 
 Vue.use(Router)
 
@@ -60,6 +61,11 @@ export default new Router({
       path: '/event/:id',
       name: 'EventPage',
       component: EventPage
+    },
+    {
+      path: '/rsvp/:eventId',
+      name: 'RsvpInfoCollection',
+      component: RsvpInfoCollection
     },
     {
       path: '/request/:id',
