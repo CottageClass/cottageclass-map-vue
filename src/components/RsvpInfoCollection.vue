@@ -52,10 +52,12 @@
 <script>
 
 // todo:
+// add logic where this section is skipped. 
 // get list of real user's children from api
 // figure out why maximum children is 0 on event 73. am I submitting it correctly? 
 // add sheetsu submit 
 // confirm that api submit works
+// todo: replace all page content with loading icon until we know that the current user has more than one kid. 
 
 import * as Token from '@/utils/tokens.js'
 import * as api from '@/utils/api.js'
@@ -89,6 +91,11 @@ export default {
     api.fetchCurrentUser(Token.currentUserId(this.$auth)).then(currentUser => {
       console.log(currentUser)
       this.currentUser = currentUser
+      // if user only has one child, skip this step.  
+      if (this.currentUser.children.length = 1) {
+        this.childrenSelected = [this.currentUser.children[0].id]
+        this.submitRsvp()
+      }  
     })
     // get data about the current event to determine max attendees.  
     api.fetchUpcomingEvents().then(
