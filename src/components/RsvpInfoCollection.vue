@@ -7,7 +7,14 @@
   <div v-if="error" class="onb-error-container">
     <div class="onb-error-text">{{ error }}</div>
   </div>
-  <div>
+
+<!-- Show loading indicator until we know how many children there are and there is more than one. If there is an error, show the error only. -->
+
+  <OAuthCallback v-if="children.length <= 1 && !error"/>
+
+<!-- If there is more than one child, ask user which child/children they want to RSVP -->
+  
+  <div v-if="children.length > 1">
     <div class="onb-top-content-container">
       <h1 class="onb-heading-large">Which children would you like to RSVP?</h1>
       <p 
@@ -52,16 +59,19 @@
 <script>
 
 // todo:
-// add logic where this section is skipped. 
-// get list of real user's children from api
 // figure out why maximum children is 0 on event 73. am I submitting it correctly? 
-// confirm that api submit will work properly once i have correct child id's
+// confirm that child info gets acquired correctly and that api submit will work properly once i have it. 
 // todo: replace all page content with loading icon until we know that the current user has more than one kid. 
 
 import * as Token from '@/utils/tokens.js'
 import * as api from '@/utils/api.js'
 import Nav from '@/components/onboarding/Nav.vue'
 import sheetsu from 'sheetsu-node'
+
+// this component has a working loading indicator and no other logic. todo: break out and rename. 
+
+import OAuthCallback from '@/components/OAuthCallback.vue'
+
 var moment = require('moment');
 
 // create a config file to identify which spreadsheet we push to.
@@ -70,20 +80,10 @@ var client = sheetsu({ address: 'https://sheetsu.com/apis/v1.0su/62cd725d6088' }
 
 export default {
   name: "RsvpInfoCollection",
-  components: { Nav },
+  components: { Nav, OAuthCallback },
   data () {
     return {
-      children: [ // placeholder data 
-      { 'id': '555',
-        'name': 'Alice',
-        'age': '2'
-      }, 
-      {
-        'id': '444',
-        'name': 'Bob',
-        'age': '7'
-      }
-      ], // [],
+      children: [],
       currentUser: {},
       childrenSelected: [],
       error: "",
@@ -96,6 +96,11 @@ export default {
     api.fetchCurrentUser(Token.currentUserId(this.$auth)).then(currentUser => {
       console.log(currentUser)
       this.currentUser = currentUser
+      this.children = currentUser.children
+      // if we don't have children for this user (which should never be true) show an error. (Todo: let user enter child info here in this case.) 
+      if (!this.children || this.children.length == 0) {
+        this.error = 'Sorry, but we cannot retrieve your children\'s information. To resolve this, please email us: contact@cottageclass.com.'
+      }
       // if user only has one child, skip this step.  
       if (this.currentUser.children.length = 1) {
         this.childrenSelected = [this.currentUser.children[0].id]
@@ -199,10 +204,8 @@ textarea {
 }
 
 .onb-content-container {
-  height: unset;
+  height: 100%;
 }
-
-<style>
 
   /* child birthdate selector */
 ::-webkit-datetime-edit-text { color: rgba(0, 0, 0, .3); padding: 0 0.3em; }
