@@ -1,8 +1,8 @@
 <template>
   <div class="onb-content-container body">
   <Nav 
-  button="next" 
-  @next="submitRsvp" 
+  :button="nextButtonState" 
+  @next="next" 
   @prev="$router.go(-1)" />
   <div v-if="error" class="onb-error-container">
     <div class="onb-error-text">{{ error }}</div>
@@ -10,9 +10,9 @@
   <div>
     <div class="onb-top-content-container">
       <h1 class="onb-heading-large">Which children would you like to RSVP?</h1>
-      <!--
-      <p class="onb-paragraph-subheading-2">Choose some things you're good at, or that your family loves. These will display on your profile so that other parents can get an idea of your interests &amp; vibe.</p>
-    -->
+      <p 
+      class="onb-paragraph-subheading-2" 
+      v-if="event">There <span v-if="spotsRemaining == 1">is</span><span v-else>are</span> {{ spotsRemaining }} spot<span v-if="spotsRemaining != 1">s</span> remaining.</p>
     </div>
     <div class="onb-form-block-checkbox-list w-form">
       <form class="onb-form-checkbox-list">
@@ -25,7 +25,6 @@
           type="checkbox" 
           :id="child.id" 
           :name="child.id" 
-          data-name="Checkbox" 
           class="onb-checkbox w-checkbox-input"
           :checked="isSelected(child.id)"
           >
@@ -54,12 +53,9 @@
 
 // todo:
 // get list of real user's children from api
-// add success message (possibly )
+// figure out why maximum children is 0 on event 73. am I submitting it correctly? 
 // add sheetsu submit 
 // confirm that api submit works
-// add logic to tell user if there's not space for all their kids, tell them what the number of spots is, and/or throw error if they RSVP more than two children. 
-
-// consider adding emergency info etc to API now, write up backend ticket. 
 
 import * as Token from '@/utils/tokens.js'
 import * as api from '@/utils/api.js'
@@ -84,7 +80,8 @@ export default {
       currentUser: {},
       childrenSelected: [],
       error: "",
-      eventId: this.$route.params.eventId
+      eventId: this.$route.params.eventId,
+      event: {}
     }
   },
   mounted: function () {
@@ -93,17 +90,39 @@ export default {
       console.log(currentUser)
       this.currentUser = currentUser
     })
+    // get data about the current event to determine max attendees.  
+    api.fetchUpcomingEvents().then(
+      (res) => { 
+        this.event = res.find(event => event.id == this.$route.params.eventId)
+        if (this.event.full) {
+          this.error = "We're sorry, this event is full!"
+          // consider setting checkboxes to inactive.
+        }
+      })
   },
   computed: {
-    err: function () {
-      if (this.childrenSelected.length == 0) {
-        return this.errorMesg
+    tooManyChildren: function () {
+      return this.childrenSelected.length > this.event.maximumChildren - this.event.participantsCount
+    },
+    nextButtonState: function () {
+      if (this.tooManyChildren) {
+        return "inactive"
       } else {
-        return false
+        return "next"
       }
+    },
+    spotsRemaining: function () {
+      return Math.max(0, this.event.maximumChildren - this.event.participantsCount - this.childrenSelected.length)
     }
   },
   methods: {
+    next: function () {
+      if (this.tooManyChildren) {
+        this.error = 'Sorry, but there are not enough spots available for ' + this.childrenSelected.length + ' children.'
+      } else {
+        this.submitRsvp()
+      }
+    },
     submitRsvp: function () {
       if (this.childrenSelected.length == 0) {
         this.error = 'Please choose at least one child to RSVP.'
