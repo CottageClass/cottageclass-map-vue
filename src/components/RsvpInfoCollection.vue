@@ -43,25 +43,12 @@
          </label>
         </div>
       </form>
-  <!-- possibly useful notes section:
-    <div class="form-describe-need w-form">
-      <form v-on:submit.prevent id="email-form-2">
-        <p class="describe-label">Anything else you'd like to share?</p>
-        <textarea v-model="additionalText" id="field" name="field" placeholder="(This won't appear on your profile but our staff will review it.)" maxlength="5000" class="text-area-decribe-need w-input"></textarea>
-      </form>
-    </div>
-  -->
     </div>
   </div>
 </div>
 </template>
 
 <script>
-
-// todo:
-// figure out why maximum children is 0 on event 73. am I submitting it correctly? 
-// confirm that child info gets acquired correctly and that api submit will work properly once i have it. 
-// todo: replace all page content with loading icon until we know that the current user has more than one kid. 
 
 import * as Token from '@/utils/tokens.js'
 import * as api from '@/utils/api.js'
