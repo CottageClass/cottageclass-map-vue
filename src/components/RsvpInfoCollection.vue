@@ -57,6 +57,7 @@
 // add success message (possibly )
 // add sheetsu submit 
 // confirm that api submit works
+// add logic to tell user if there's not space for all their kids, tell them what the number of spots is, and/or throw error if they RSVP more than two children. 
 
 // consider adding emergency info etc to API now, write up backend ticket. 
 
@@ -110,7 +111,8 @@ export default {
       this.error = ""
       console.log('rsvping children ' + this.childrenSelected + ' to event ID' + this.eventId)
       api.submitEventParticipant(this.eventId, this.childrenSelected).then(res => {
-        console.log('reload page / show success message')
+        // open event page where user will see success message
+        $router.push({name: 'EventPage', params: { id: this.eventId }})
       }).catch(err => {
         console.log(err)
         this.error = 'Sorry, there was a problem submittting your RSVP. Try again?'
