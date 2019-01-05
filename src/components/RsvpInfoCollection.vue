@@ -55,13 +55,18 @@
 // add logic where this section is skipped. 
 // get list of real user's children from api
 // figure out why maximum children is 0 on event 73. am I submitting it correctly? 
-// add sheetsu submit 
-// confirm that api submit works
+// confirm that api submit work properly
 // todo: replace all page content with loading icon until we know that the current user has more than one kid. 
 
 import * as Token from '@/utils/tokens.js'
 import * as api from '@/utils/api.js'
 import Nav from '@/components/onboarding/Nav.vue'
+import sheetsu from 'sheetsu-node'
+var moment = require('moment');
+
+// create a config file to identify which spreadsheet we push to.
+var client = sheetsu({ address: 'https://sheetsu.com/apis/v1.0su/62cd725d6088' })
+
 
 export default {
   name: "RsvpInfoCollection",
@@ -134,16 +139,38 @@ export default {
       if (this.childrenSelected.length == 0) {
         this.error = 'Please choose at least one child to RSVP.'
       } else {
-      this.error = ""
-      console.log('rsvping children ' + this.childrenSelected + ' to event ID' + this.eventId)
-      api.submitEventParticipant(this.eventId, this.childrenSelected).then(res => {
+        this.error = ""
+        console.log('rsvping children ' + this.childrenSelected + ' to event ID' + this.eventId)
+        this.submitToSheetsu()
+        api.submitEventParticipant(this.eventId, this.childrenSelected).then(res => {
         // open event page where user will see success message
-        $router.push({name: 'EventPage', params: { id: this.eventId }})
-      }).catch(err => {
+          $router.push({name: 'EventPage', params: { id: this.eventId }})
+        }).catch(err => {
+          console.log(err)
+          this.error = 'Sorry, there was a problem submittting your RSVP. Try again?'
+        })
+      }
+    },
+    submitToSheetsu: function () {
+      let userId = Token.currentUserId(this.$auth)
+      // submit user to sheetsu which gives us notifications of new RSVPs
+      client.create({
+        "Event ID": this.eventId,
+        "Event title": this.event.name,
+        "Event host": this.event.hostFirstName,
+        "Event date": this.event.startsAt,
+        "Date submitted": moment(Date()).format("L"),
+        "Parent first name": this.currentUser.firstName,
+        "Parent last name": this.currentUser.lastInitial,          
+        "Parent phone": this.currentUser.phone,
+        "Parent email": this.currentUser.email,
+        "IDs of RSVPed children": this.childrenSelected,
+        "All children": this.currentUser.children
+      }, "RSVPs").then((data) => {
+        console.log('Successfully submitted RSVP to Sheetsu: ' + data)
+      }, (err) => {
         console.log(err)
-        this.error = 'Sorry, there was a problem submittting your RSVP. Try again?'
-      })
-    }
+      });
     },
     isSelected: function (id) {
       return this.childrenSelected.includes(id)
