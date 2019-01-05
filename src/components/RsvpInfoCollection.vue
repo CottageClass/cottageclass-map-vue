@@ -55,7 +55,7 @@
 // add logic where this section is skipped. 
 // get list of real user's children from api
 // figure out why maximum children is 0 on event 73. am I submitting it correctly? 
-// confirm that api submit work properly
+// confirm that api submit will work properly once i have correct child id's
 // todo: replace all page content with loading icon until we know that the current user has more than one kid. 
 
 import * as Token from '@/utils/tokens.js'
@@ -201,9 +201,6 @@ textarea {
 .onb-content-container {
   height: unset;
 }
-
-
-<!-- this is a giant jumble of all app styles. Would be great to separate it out -->
 
 <style>
 
