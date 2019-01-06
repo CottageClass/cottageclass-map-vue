@@ -43,12 +43,24 @@
          </label>
         </div>
       </form>
+  <!-- possibly useful notes section:
+    <div class="form-describe-need w-form">
+      <form v-on:submit.prevent id="email-form-2">
+        <p class="describe-label">Anything else you'd like to share?</p>
+        <textarea v-model="additionalText" id="field" name="field" placeholder="(This won't appear on your profile but our staff will review it.)" maxlength="5000" class="text-area-decribe-need w-input"></textarea>
+      </form>
+    </div>
+  -->
     </div>
   </div>
 </div>
 </template>
 
 <script>
+
+// todo:
+// figure out why maximum children is 0 on event 73. am I submitting it correctly? 
+// confirm that child info gets acquired correctly and that api submit will work properly once i have it. 
 
 import * as Token from '@/utils/tokens.js'
 import * as api from '@/utils/api.js'
@@ -86,7 +98,7 @@ export default {
       this.children = currentUser.children
       // if we don't have children for this user (which should never be true) show an error. (Todo: let user enter child info here in this case.) 
       if (!this.children || this.children.length == 0) {
-        this.error = 'Sorry, but we cannot retrieve your children\'s information. To resolve this, please email us: contact@cottageclass.com.'
+        this.error = 'Sorry, but we cannot retrieve your children\'s information. To resolve this, please email us at: contact@cottageclass.com.'
       }
       // if user only has one child, skip this step.  
       if (this.currentUser.children.length = 1) {
@@ -95,14 +107,7 @@ export default {
       }  
     })
     // get data about the current event to determine max attendees.  
-    api.fetchUpcomingEvents().then(
-      (res) => { 
-        this.event = res.find(event => event.id == this.$route.params.eventId)
-        if (this.event.full) {
-          this.error = "We're sorry, this event is full!"
-          // consider setting checkboxes to inactive.
-        }
-      })
+    this.fetchEventInformation()
   },
   computed: {
     tooManyChildren: function () {
@@ -120,6 +125,19 @@ export default {
     }
   },
   methods: {
+    fetchEventInformation: function () {
+      api.fetchUpcomingEvents().then(
+        (res) => { 
+          this.event = res.find(event => event.id == this.$route.params.eventId)
+          if (this.event.full) {
+            this.error = 'We\'re sorry, this event is full!'
+          // consider setting checkboxes to inactive.
+        }
+      }).catch(
+      (err) => {
+        this.error = 'Sorry, there was a problem retrieving information about the event. Go back and try again?'
+      })
+    },
     next: function () {
       if (this.tooManyChildren) {
         this.error = 'Sorry, but there are not enough spots available for ' + this.childrenSelected.length + ' children.'
@@ -140,6 +158,8 @@ export default {
         }).catch(err => {
           console.log(err)
           this.error = 'Sorry, there was a problem submittting your RSVP. Try again?'
+          // fetch event information again, which will update the error message if the event is full, e.g. in the case where another user RSVP'ed a the same time, just before this user did.
+          this.fetchEventInformation()
         })
       }
     },
