@@ -1,9 +1,9 @@
 <template>
-  <div class="onb-content-container _100vh">
-    <div class="onb-top-content-container">
-      <h1 class="onb-heading-large">What's your phone number?</h1>
+  <div class="content-container _100vh">
+    <div class="title-container">
+      <h1 class="title">What's your phone number?</h1>
     </div>
-    <div class="onb-location-search-container">
+    <div class="location-search-container">
       <div class="w-form">
         <form v-on:submit.prevent id="email-form-2" name="email-form-2" data-name="Email Form 2">
           <input 
@@ -15,7 +15,7 @@
         </form>
       </div>
     </div>
-    <p class="onb-paragraph-small-50">Only members who RSVP to your event will see your phone number. (We may also send you text messages about your event or upcoming events. Message &amp; data rates apply.)</p>
+    <p class="paragraph-small-50">Only members who RSVP to your event will see your phone number. (We may also send you text messages about your event or upcoming events. Message &amp; data rates apply.)</p>
   </div>
 </template>
 
@@ -88,3 +88,8 @@ export default {
 };
 </script>
 
+<style lang="scss" scoped>
+
+@import '../../assets/css/onboarding-and-forms.css'
+
+</style>
