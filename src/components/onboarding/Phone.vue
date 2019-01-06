@@ -7,6 +7,7 @@
       <div class="w-form">
         <form v-on:submit.prevent id="email-form-2" name="email-form-2" data-name="Email Form 2">
           <input 
+          @keyup.enter="$emit('pressedEnter')"
           v-model="number"
           type="tel" 
           class="location-text-field w-input" 
@@ -45,11 +46,6 @@ export default {
        err: this.error
       })
     }
-  },
-  methods: {
-      pressedEnter: function () {
-        this.$emit('pressedEnter')
-      }
   },
   computed: {
     phone: function () {

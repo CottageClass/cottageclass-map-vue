@@ -34,7 +34,7 @@
   
   <!-- steps in form --> 
        
-      <Phone v-if="step === 1" v-model="phone" />
+      <Phone v-if="step === 1" v-model="phone" @pressedEnter="nextStep" />
       <Location v-if="step === 2" v-model="location"/>
       <Children v-if="step === 3" v-model="children" />
       <EventActivity v-if="step === 4" v-model="eventActivity" />
