@@ -26,7 +26,43 @@ export default {
 </script>
 
 <style scoped>
+
 .share-button {
   background-color: #1f88e9;
 }
+
+.button {
+  border-radius: 4px;
+  color: white;
+  font-size: 13px;
+  font-weight: 400;
+  text-align: left;
+  letter-spacing: 1.2px;
+  text-transform: uppercase;
+}
+
+
+.invite-friends-container {
+  font-family: soleil;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  margin: 24px 16px;
+  padding: 40px 24px;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+  -ms-flex-align: center;
+  align-items: center;
+  border-radius: 4px;
+  background-color: #fff;
+  text-align: left;
+}
+
+
 </style>
