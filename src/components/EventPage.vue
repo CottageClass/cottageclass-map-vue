@@ -187,8 +187,8 @@ export default {
       return this.event.id
     },
     event: function () {
-      return this.events.find(event => event.id == this.$route.params.id) // computes event. this isn't efficient but simplifies interaction with the API.
-  }
+      return this.events.find(event => event.id == this.$route.params.id)
+    }
   }
 
 };
