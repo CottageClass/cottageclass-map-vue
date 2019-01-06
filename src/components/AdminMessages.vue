@@ -158,7 +158,7 @@ export default {
 
 </script>
 
-<style>
+<style scoped>
   .admin-messages {
     padding: 0 15%;
   }

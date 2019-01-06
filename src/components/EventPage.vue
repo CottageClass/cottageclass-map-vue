@@ -194,7 +194,11 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
+
+.body-2 {
+  font-family: soleil;
+}
 
 .alert-container {
   width: 100%;
