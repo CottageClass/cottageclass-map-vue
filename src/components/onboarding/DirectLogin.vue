@@ -1,9 +1,17 @@
 <template>
-<div>
-    <div class="onb-title-bar">
-      <a @click="$emit('activateScreen', 'facebook')" class="onb-title-bar-back-button w-inline-block"></a>
+
+  <!-- wrapper for desktop screens -->  
+
+    <div class="onb-body">
+      <div class="body">
+        <div class="content-wrapper">
+
+  <!-- nav -->           
+    <div class="title-bar">
+      <a @click="$emit('activateScreen', 'facebook')" class="title-bar-back-button w-inline-block"></a>
     </div>
-  <div class="onb-content-container _100vh">
+
+    <div class="content-container">
         <div v-if="showError && (errors.first('email') || errors.first('password'))" class="onb-error-container">
       <div class="onb-error-text">{{ errors.first('email') }}</div>
       <div class="onb-error-text">{{ errors.first('password') }}</div>
@@ -37,7 +45,8 @@
     </div>
     <p><a @click="$emit('activateScreen', 'facebook')">Sign in here</a> if you sign in using Facebook. Forgot your password? <br><a href="mailto:info@cottageclass.com">Email us</a></p>
   </div>
-
+</div>
+</div>
     </div>
     </div>
 </template>
@@ -152,7 +161,17 @@ export default {
 };
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
+@import '../../assets/css/onboarding-and-forms.css';
+
+.body {
+  font-family: soleil
+}
+
+.content-wrapper {
+  position: 0px;
+  padding-top: 0px;
+}
 
 p {
   text-align: center;

@@ -76,7 +76,9 @@ export default {
 };
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
+@import '../../assets/css/onboarding-and-forms.css';
+
 /* Remove inner shadow from inputs on mobile iOS */
 textarea, input[type="text"] {
 -webkit-appearance: none;

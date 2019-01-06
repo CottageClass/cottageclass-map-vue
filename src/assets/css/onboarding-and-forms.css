@@ -1,407 +1,5 @@
-<template>
-  <span>
-    <Login class="onb-body"
-    v-if="activeScreen ==='facebook' && step === 0"
-    v-on:userNotYetOnboarded="nextStep"
-    v-on:activateScreen="activateScreen"
-    v-on:userAlreadyOnboarded="$router.push({name: 'MainView'})" />
-    <DirectLogin
-    v-if="activeScreen ==='directLogin' && step === 0"
-    v-on:userNotYetOnboarded="nextStep"
-    v-on:activateScreen="activateScreen"
-    v-on:userAlreadyOnboarded="$router.push({name: 'MainView'})" />
-    <Signup
-    v-if="activeScreen ==='signup' && step === 0"
-    v-on:userNotYetOnboarded="nextStep"
-    v-on:activateScreen="activateScreen"
-    v-on:userAlreadyOnboarded="$router.push({name: 'MainView'})" />
+/* ORIGINAL CSS */ 
 
-  <!-- wrapper for desktop screens -->  
-
-    <div class="onb-body" v-if="step != 0">
-      <div class="body">
-        <div class="content-wrapper">
-
-  <!-- nav --> 
-
-      <Nav :button="nextButtonState" @next="nextStep" @prev="prevStep" />
-
-  <!-- error message -->
-      
-      <div v-if="showError && error && error!='skippable'" class="onb-error-container">
-        <div class="onb-error-text">{{ error }}</div>
-      </div>
-  
-  <!-- steps in form --> 
-       
-      <Phone v-if="step === 1" v-model="phone" />
-      <Location v-if="step === 2" v-model="location"/>
-      <Children v-if="step === 3" v-model="children" />
-      <EventActivity v-if="step === 4" v-model="eventActivity" />
-      <Food v-if="step === 5" v-model="food" />
-      <EventTime v-if="step === 6" v-model="eventTime" />
-      <EventDate v-if="step === 7" v-model="eventDate" />
-      <MaxChildren v-if="step === 8" v-model="maxChildren" />
-      <YesOrNo 
-      v-if="step === 9" 
-      v-model="canProvideEmergencyCare" 
-      question="Childcare in a Pinch?" 
-      description="Parents often need care at times not covered by our events. Would you like to be able to request childcare from other members when you need it and receive requests (by text message) in return?" 
-      />
-      <Availability v-if="step === 10" v-model="availability" />
-      <YesOrNo 
-      v-if="step === 11" 
-      v-model="hasPets" 
-      question="Do you have pets?" 
-      description="This is often very important for parents (and children) to know." 
-      />
-      <PetsDescription v-if="step === 12" v-model="petsDescription" />
-      <HouseRules v-if="step === 13" v-model="houseRules" />
-
-   <!-- close wrapper -->  
- </div>
-</div>
-    </div>
-  </span>
-</template>
-
-<script>
-import Nav from '@/components/onboarding/Nav.vue'
-import Login from '@/components/onboarding/Login.vue'
-import DirectLogin from '@/components/onboarding/DirectLogin.vue';
-import Signup from '@/components/onboarding/Signup.vue';
-import Location from '@/components/onboarding/Location.vue'
-import Phone from '@/components/onboarding/Phone.vue'
-import Children from '@/components/onboarding/Children.vue'
-import EventActivity from '@/components/onboarding/EventActivity.vue'
-import Availability from '@/components/onboarding/Availability.vue'
-import Food from '@/components/onboarding/Food.vue'
-import HouseRules from '@/components/onboarding/HouseRules.vue'
-import PetsDescription from '@/components/onboarding/PetsDescription.vue'
-import EventTime from '@/components/onboarding/EventTime.vue'
-import EventDate from '@/components/onboarding/EventDate.vue'
-import MaxChildren from '@/components/onboarding/MaxChildren.vue'
-import YesOrNo from '@/components/onboarding/YesOrNo.vue'
-import * as Token from '@/utils/tokens.js'
-import * as api from '@/utils/api.js'
-import sheetsu from 'sheetsu-node'
-var moment = require('moment');
-
-// create a config file to identify which spreadsheet we push to.
-var client = sheetsu({ address: 'https://sheetsu.com/apis/v1.0su/62cd725d6088' })
-
-
-export default {
-  components: {
-    Nav, Login, DirectLogin, Signup, Location, Phone, Children, Availability, Food, EventActivity, EventTime, EventDate, HouseRules, PetsDescription, YesOrNo, MaxChildren
-  },
-  data () {
-    return {
-      activeScreen: 'facebook',
-      currentUser: {},
-      step: 0,
-      lastStep: 13,
-      showError: false,
-      name: {}, // todo: remove if possible now this comes from FB
-      bookingRequest: {
-        dateTimeSelected: null,
-        description: '',
-        err: 'skippable',
-        showCountdownPromo: true
-      },
-      location: {},
-      phone: {},
-      children: {
-        list: [{firstName: null, birthday: null}],
-        err: 'skippable'
-      },
-      isOtherAdultPresent: '',
-      otherAdultsPresent: {
-        list: [{fullName: null, email: null, phone: null}],
-      },
-      blurb: {
-        text: ''
-      },
-      availability: {
-        mornings: false,
-        afternoons: false,
-        evenings: false,
-        weekends: false,
-        err: 'skippable'
-      },
-      food: {},
-      eventActivity: {},
-      eventTime: {},
-      eventDate: {},
-      houseRules: {
-        err: 'skippable'
-      },
-      communityRules: {},
-      hasPets: {
-        yesOrNo: ''
-      },
-      petsDescription: {
-        text: '',
-      },
-      invitationCode: {
-        code: 'brooklyn-events' // this is now hard-coded
-      },
-      acceptsBackgroundCheck: {
-        yesOrNo: ''
-      },
-      canProvideEmergencyCare: {
-        yesOrNo: ''
-      },
-      maxChildren: null
-    }
-  },
-  name: 'NewUser',
-  methods: {
-    activateScreen: function(name) {
-      console.log('activating:', name);
-      this.activeScreen = name;
-    },
-    capitalize: function(string) {
-      return string.charAt(0).toUpperCase() + string.slice(1);
-    },
-    continueWhenComplete: function () {
-      this.$router.push({ name: 'MainView' })
-    },
-    skipSkippableSteps: function () {
-      if (
-        (this.step === 9 && !this.canProvideEmergencyCare.isTrue) ||
-        (this.step === 11 && !this.hasPets.isTrue)) {
-          this.setStep(this.step + 2)
-      } else {
-        this.setStep(this.step = this.step + 1)
-      }
-    },
-    setStep: function (destinationStep) {
-      // this.step = 'limbo' // this is an attempt to get the YesOrNo component to unmount when they appear back to back in the sequence. It did not work. 
-      this.step = destinationStep
-    },
-    nextStep: function () {
-      if (this.step == this.lastStep) {
-        this.submitData()
-          .then(res => {
-            // only move to next page once we have saved user data
-            // - get back userId
-            // - get back networkCode
-            this.continueWhenComplete()
-          })
-      }
-      // check if there's an error, if so show it, if not advance and clear the error.
-      else if (!this.error || this.error === "skippable") {
-        this.showError = false
-        this.skipSkippableSteps()
-        window.scrollTo(0,0)
-      } else {
-        this.showError = true
-      }
-    },
-    prevStep: function () {
-      this.showError = false
-      this.step = this.step - 1
-    },
-    submitData: function () {
-      let userId = Token.currentUserId(this.$auth)
-
-      // submit user to sheetsu for KPI tracking, unless network is "demo"
-      if (this.invitationCode.code != "demo") {
-        client.create({
-          "ID": userId,
-          "Date joined": moment(Date()).format("L"),
-          "address": this.location.fullAddress,
-          "phone": this.phone.number,
-          "children": this.children.list,
-          "availability": this.availability,
-          "network": this.invitationCode.code,
-          "food": this.food.selected
-        }, "newUsers").then((data) => {
-          console.log(data)
-        }, (err) => {
-          console.log(err)
-        });
-      }
-
-      // in parallel, submit to backend
-      let address = this.location.fullAddress
-      let {
-        street_number,
-        route,
-        locality,
-        administrative_area_level_1,
-        country,
-        postal_code,
-      } = address
-
-      let phoneAreaCode = this.phone.number.match(/(\(\d+\))/)[0].replace(/[^\d]/g,'')
-      let phoneNumber = this.phone.number.match(/\d{3}-\d{4}/)[0].replace(/[^\d]/g,'')
-
-      // set child attributes, plus the parentId
-      let childrenAttributes = []
-      if (this.children.list && this.children.list.length > 0) {
-        let childrenAttributes = this.children.list.map(childAttrs => (
-          {
-            ...childAttrs,
-            parentId: userId,
-          }
-        ))
-      }
-
-      let postData = {
-        streetNumber: street_number,
-        route: route,
-        locality: locality,
-        // snake_case key name is ugly but necessary for backend to recognize attr with trailing 1
-        admin_area_level_1: administrative_area_level_1,
-        country: country,
-        postalCode: postal_code,
-        latitude: this.location.lat,
-        longitude: this.location.lng,
-        phoneAreaCode: phoneAreaCode,
-        phoneNumber: phoneNumber,
-        availableMornings: this.availability.mornings,
-        availableAfternoons: this.availability.afternoons,
-        availableEvenings: this.availability.evenings,
-        availableWeekends: this.availability.weekends,
-        networkCode: this.invitationCode.code,
-        profileBlurb: this.blurb.text,
-      }
-
-      if (this.children.list && this.children.list.length > 0) {
-        postData["childrenAttributes"] = childrenAttributes
-      }
-
-
-      // I think this is necessary but I'm not sure.
-      let component = this
-
-      // set default values for the time being
-      const defaultMaximumChildren = 2
-      const defaultChildAgeMaximum = 11
-      const defaultChildAgeMinimum = 3
-
-      // test data from documentation
-      let eventData = {
-        "event_series": {
-          "name": this.eventName, 
-          "start_date": this.eventDate.selected,
-          "starts_at": this.eventTime.start,
-          "ends_at": this.eventTime.end,
-          "has_pet": this.hasPets.isTrue,
-          "activity_names": [this.eventActivity.selected],
-          "foods": [this.food.selected],
-          "house_rules": this.houseRules.text,
-          "pet_description": this.petsDescription.text,
-          "event_hosts_attributes": this.otherAdultsPresent.list,
-          "maximum_children": this.maxChildren,
-          "child_age_minimum": defaultChildAgeMinimum,
-          "child_age_maximum": defaultChildAgeMaximum
-        }
-      }
-
-      return this.axios.post(
-        `${process.env.BASE_URL_API}/users/${userId}`,
-        postData
-      )
-        .then(res => {
-          console.log("user update SUCCESS")
-          console.log(res)
-          return res
-        })
-        .catch(err => {
-          console.log("user update FAILURE")
-          console.log(err)
-          console.log(Object.entries(err))
-          throw err
-        })
-        .then(() => {
-          component.axios.post(`${process.env.BASE_URL_API}/api/event_series`, eventData)
-        })
-        .then(res => {
-          console.log('event creation SUCCESS')
-          console.log(res)
-          return res
-        })
-        .catch(err => {
-          console.log('event update FAILURE')
-          console.log(err)
-          console.log(Object.entries(err))
-          throw err
-        })
-    }
-  },
-  computed: {
-    error: function () {
-      switch (this.step) {
-        case 1:
-          return this.phone.err
-        case 2:
-          return this.location.err
-        case 3:
-          return this.children.err
-        case 4:
-          return this.eventActivity.err
-        case 5:
-          return this.food.err
-        case 6:
-          return this.eventTime.err
-        case 7:
-          return this.eventDate.err
-        case 9:
-          return this.canProvideEmergencyCare.err
-        case 10:
-          return this.availability.err
-        case 11:
-          return this.hasPets.err
-        case 12:
-          return this.petsDescription.err
-        case 13:
-          return this.houseRules.err
-        default:
-          return false
-      }
-    },
-    nextButtonState: function () {
-      if (this.step > this.lastStep) {
-        return "none"
-      } else if (this.error === "skippable") {
-        return "skip"
-      } else if (this.error) {
-        return "inactive"
-      } else {
-        return "next"
-      }
-    },
-    userRequestedCare: function () {
-      if (this.bookingRequest.err === false) {
-        return true
-      } else return false
-    },
-    eventName: function () {
-      // this is not a great place to put this because it will get executed whenever activity or food change.  
-      let userId = Token.currentUserId(this.$auth)
-      if (userId) {
-        api.fetchCurrentUser(this.currentUserId)
-        .then(person => {
-          this.currentUser = person
-        })
-      }
-      if (this.currentUser.firstName) {
-        return this.capitalize(this.eventActivity.selected) + ' & ' + this.food.selected + ' with ' + this.capitalize(this.currentUser.firstName)
-      } else {
-        return this.capitalize(this.eventActivity.selected) + ' & ' + this.food.selected
-      }
-    }
-  }
-};
-
-</script>
-
-<!-- this is a giant jumble of all app styles. Would be great to separate it out -->
-
-<style scoped>
 
   /* child birthdate selector */
 ::-webkit-datetime-edit-text { color: rgba(0, 0, 0, .3); padding: 0 0.3em; }
@@ -412,11 +10,6 @@ export default {
 ::-webkit-calendar-picker-indicator { color: rgba(0, 0, 0, .3); }
 
 /* background color state on checkbox list items */
-
-
-.body {
-  background-color: #0d73c7;
-}
 
 .active-checkbox {
   background-color: #fff !important;
@@ -463,6 +56,11 @@ html {
 
 a {
   text-decoration: none;
+  color: #fff;
+}
+
+a:visited {
+  color: #fff;
 }
 
 .list-container {
@@ -2491,6 +2089,59 @@ a {
   margin-bottom: 0px;
 }
 
+.onb-body {
+  overflow: visible;
+  padding-top: 53px;
+  padding-bottom: 0px;
+  background-color: #0d73c7;
+}
+
+.onb-top-content-container {
+  margin-bottom: 32px;
+  color: #fff;
+}
+
+.onb-checkbox-label {
+  width: 100%;
+  padding-top: 18px;
+  padding-bottom: 18px;
+  padding-left: 6px;
+  color: #1d8ae7;
+}
+
+.onb-invitation-code-container {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  -webkit-box-align: start;
+  -webkit-align-items: flex-start;
+  -ms-flex-align: start;
+  align-items: flex-start;
+}
+
+.onb-paragraph-small-50 {
+  margin-bottom: 8px;
+  color: hsla(0, 0%, 100%, .5);
+  font-size: 11px;
+  line-height: 19px;
+  text-align: center;
+  letter-spacing: 0.2px;
+}
+
+.paragraph-small-50 {
+  margin-bottom: 8px;
+  color: hsla(0, 0%, 100%, .5);
+  font-size: 11px;
+  line-height: 19px;
+  text-align: center;
+  letter-spacing: 0.2px;
+}
+
 .invite-code-form {
   border-radius: 4px;
   box-shadow: 0 0 0 4px #1d8ce7;
@@ -2525,6 +2176,13 @@ a {
   color: rgba(0, 0, 0, .1);
 }
 
+.onb-body-full-height {
+  overflow: visible;
+  padding-top: 51px;
+  padding-bottom: 0px;
+  background-color: #1d8ae7;
+  color: #fff;
+}
 
 .onb-joined-community-avatar {
   border-radius: 1000px;
@@ -2671,7 +2329,7 @@ a {
   -webkit-align-items: center;
   -ms-flex-align: center;
   align-items: center;
-  background-image: url('../assets/splash-bg.svg');
+  background-image: url('../splash-bg.svg');
   background-position: 50% 50%;
   background-size: cover;
   background-repeat: no-repeat;
@@ -3041,18 +2699,6 @@ a {
   text-align: center;
 }
 
-
-.content-wrapper {
-  width: 720px;
-  min-height: 100vh;
-  margin-right: auto;
-  margin-left: auto;
-  padding-top: 50px;
-  padding-bottom: 50px;
-  background-color: #1c8be7;
-}
-
-
 @media (max-width: 767px) {
   .components-container-1 {
     padding-right: 16px;
@@ -3140,6 +2786,669 @@ a {
   }
 }
 
+/* NEW THINGS, CLEAN UP */
+
+.title-bar-next-button {
+  position: static;
+  display: block;
+  margin-top: 0px;
+  margin-right: 10px;
+  margin-bottom: 0px;
+  padding: 10px 12px;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+  -webkit-flex-direction: row;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+  -ms-flex-align: center;
+  align-items: center;
+  border: 1px none #000;
+  border-radius: 4px;
+  background-color: #fff;
+  box-shadow: none;
+  color: #64426b;
+}
+
+.title-bar-next-button:active {
+  background-color: #64426b;
+  color: #fff;
+}
+
+.title-bar-next-button-text {
+  margin-bottom: 2px;
+  font-size: 14px;
+  line-height: 14px;
+  font-weight: 700;
+  letter-spacing: 1.2px;
+  text-transform: uppercase;
+}
+
+.title-bar-back-button {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  margin-top: 7px;
+  margin-bottom: 8px;
+  margin-left: 10px;
+  padding: 18px;
+  -webkit-box-pack: justify;
+  -webkit-justify-content: space-between;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+  -ms-flex-align: center;
+  align-items: center;
+  border-radius: 4px;
+  background-color: transparent;
+  background-image: url('../arrow-back-white.svg');
+  background-position: 50% 50%;
+  background-size: 24px 24px;
+  background-repeat: no-repeat;
+  color: #1f88e9;
+}
+
+.title-bar-back-button:active {
+  background-color: hsla(0, 0%, 100%, .2);
+  background-image: url('../arrow-back-white.svg');
+  background-size: 24px;
+}
+
+.title-bar-next-button-inactive {
+  position: static;
+  display: block;
+  margin-top: 0px;
+  margin-right: 10px;
+  margin-bottom: 0px;
+  padding: 10px 12px;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+  -webkit-flex-direction: row;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+  -ms-flex-align: center;
+  align-items: center;
+  border: 1px none #000;
+  border-radius: 4px;
+  background-color: hsla(0, 0%, 100%, .3);
+  box-shadow: none;
+  color: rgba(1, 1, 1, .2);
+}
+
+
+/* EXISTING WORK FROM WEBFLOW MOCK */ 
+
+.body {
+  font-family: soleil, sans-serif;
+  color: #333;
+  font-size: 14px;
+  line-height: 20px;
+}
+
+a {
+  text-decoration: none;
+}
+
+.navbar {
+  z-index: 5000;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+  -ms-flex-align: center;
+  align-items: center;
+  background-color: #ffc8c8;
+}
+
+.menu-button {
+  position: fixed;
+  left: 14px;
+  top: 16px;
+  z-index: 1000;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  margin-right: 0px;
+  margin-bottom: 0px;
+  padding: 8px;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+  -webkit-flex-direction: row;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+  -ms-flex-align: center;
+  align-items: center;
+  border-radius: 1000px;
+  background-color: #fff;
+  box-shadow: 0 1px 20px 0 rgba(0, 0, 0, .2);
+  -webkit-transform: rotate(0deg);
+  -ms-transform: rotate(0deg);
+  transform: rotate(0deg);
+  -webkit-transition: all 200ms ease;
+  transition: all 200ms ease;
+}
+
+.menu-button.w--open {
+  z-index: 1000;
+  border-radius: 1000px;
+  background-color: #fff;
+  box-shadow: 0 -1px 2px 0 rgba(0, 0, 0, .08);
+  -webkit-transform: rotate(180deg);
+  -ms-transform: rotate(180deg);
+  transform: rotate(180deg);
+  -webkit-transition: all 300ms ease;
+  transition: all 300ms ease;
+}
+
+.top-line {
+  height: 2px;
+  background-color: #000;
+}
+
+.nav-menu {
+  z-index: 0;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  margin-top: 0px;
+  padding: 72px 0px 3px;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  -webkit-box-pack: start;
+  -webkit-justify-content: flex-start;
+  -ms-flex-pack: start;
+  justify-content: flex-start;
+  -webkit-box-align: end;
+  -webkit-align-items: flex-end;
+  -ms-flex-align: end;
+  align-items: flex-end;
+  background-color: #fff;
+  background-image: url('../cc-logo-horiz-blue.svg');
+  background-position: 50% 23px;
+  background-size: 130px;
+  background-repeat: no-repeat;
+  box-shadow: 0 1px 20px 0 rgba(0, 0, 0, .2);
+  opacity: 0.96;
+}
+
+.menu-icon-container {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  width: 24px;
+  height: 24px;
+  padding: 6px 4px;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  -webkit-box-pack: justify;
+  -webkit-justify-content: space-between;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+  -webkit-box-flex: 0;
+  -webkit-flex: 0 auto;
+  -ms-flex: 0 auto;
+  flex: 0 auto;
+  background-color: transparent;
+}
+
+.nav-link {
+  position: static;
+  width: 100%;
+  margin-top: 1px;
+  padding: 24px 16px 24px 24px;
+  border-top: 1px solid rgba(0, 0, 0, .04);
+  color: #1f88e9;
+}
+
+.nav-link:active {
+  background-color: #1f88e9;
+  color: #fff;
+}
+
+.nav-link-2 {
+  position: static;
+  padding-left: 17px;
+}
+
+.nav-link-3 {
+  position: static;
+  width: 100%;
+  padding-top: 12px;
+  padding-bottom: 12px;
+}
+
+.mid-line {
+  height: 2px;
+  background-color: #000;
+}
+
+.bottom-line {
+  height: 2px;
+  background-color: #000;
+}
+
+.bottom-divider {
+  width: 100%;
+  height: 1px;
+  background-color: rgba(0, 0, 0, .04);
+}
+
+.map-container {
+  position: relative;
+}
+
+.div-spacer {
+  height: 45px;
+}
+
+.text-block {
+  margin-top: 113px;
+  font-size: 50px;
+  text-align: center;
+}
+
+.body {
+  background-color: #0d73c7;
+}
+
+.content-wrapper {
+  width: 720px;
+  min-height: 100vh;
+  margin-right: auto;
+  margin-left: auto;
+  padding-top: 50px;
+  padding-bottom: 50px;
+  background-color: #1c8be7;
+}
+
+.title-bar {
+  position: fixed;
+  left: 0px;
+  top: 0px;
+  right: 0px;
+  z-index: 1000;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  overflow: visible;
+  width: 720px;
+  margin-right: auto;
+  margin-left: auto;
+  -webkit-box-pack: justify;
+  -webkit-justify-content: space-between;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+  -ms-flex-align: center;
+  align-items: center;
+  border-style: none;
+  border-width: 1px;
+  border-color: hsla(0, 0%, 100%, .1);
+  background-color: rgba(108, 200, 255, .93);
+  background-image: url('../cclogo-house-blue.svg');
+  background-position: 50% 13px;
+  background-size: 24px 24px;
+  background-repeat: no-repeat;
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, .08);
+}
+
+.button-back {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  margin-top: 7px;
+  margin-bottom: 8px;
+  margin-left: 10px;
+  padding: 18px;
+  -webkit-box-pack: justify;
+  -webkit-justify-content: space-between;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+  -ms-flex-align: center;
+  align-items: center;
+  border-radius: 4px;
+  background-color: transparent;
+  background-image: url('../arrow-back-white.svg');
+  background-position: 50% 50%;
+  background-size: 24px 24px;
+  background-repeat: no-repeat;
+  color: #1f88e9;
+}
+
+.button-back:active {
+  background-color: hsla(0, 0%, 100%, .2);
+  background-image: url('../arrow-back-white.svg');
+  background-size: 24px;
+}
+
+.button-next {
+  position: static;
+  display: block;
+  margin-top: 0px;
+  margin-right: 10px;
+  margin-bottom: 0px;
+  padding: 10px 12px;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+  -webkit-flex-direction: row;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+  -ms-flex-align: center;
+  align-items: center;
+  border: 1px none #000;
+  border-radius: 4px;
+  background-color: #fff;
+  box-shadow: none;
+  color: #64426b;
+}
+
+.button-next:active {
+  background-color: #64426b;
+  color: #fff;
+}
+
+.button-next-text {
+  margin-bottom: 2px;
+  font-size: 14px;
+  line-height: 14px;
+  font-weight: 700;
+  letter-spacing: 1.2px;
+  text-transform: uppercase;
+}
+
+.fb-container {
+  position: fixed;
+  left: 0px;
+  right: 0px;
+  bottom: 0px;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  width: 720px;
+  margin-right: auto;
+  margin-left: auto;
+  padding: 10px;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+  -ms-flex-align: center;
+  align-items: center;
+  background-color: #fff;
+  box-shadow: 0 -1px 8px 0 rgba(0, 0, 0, .05);
+}
+
+.fb-button {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  padding: 12px 24px 12px 16px;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+  -ms-flex-align: center;
+  align-items: center;
+  border-radius: 4px;
+  background-color: #3b5998;
+  color: #fff;
+  text-decoration: none;
+}
+
+.fb-button:active {
+  background-image: -webkit-gradient(linear, left top, left bottom, from(rgba(0, 0, 0, .15)), to(rgba(0, 0, 0, .15)));
+  background-image: linear-gradient(180deg, rgba(0, 0, 0, .15), rgba(0, 0, 0, .15));
+}
+
+.fb-button-text {
+  margin-left: 12px;
+  font-size: 14px;
+  text-align: left;
+  letter-spacing: 0.4px;
+  text-decoration: none;
+}
+
+.form-i-agree {
+  margin-bottom: 32px;
+}
+
+.form-describe-need {
+  margin-bottom: 24px;
+}
+
+.counter-title {
+  margin-bottom: 8px;
+  color: #fff;
+  font-size: 25px;
+  line-height: 32.5px;
+  font-weight: 400;
+  text-align: center;
+}
+
+.link {
+  color: hsla(0, 0%, 100%, .6);
+}
+
+.counter {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.title {
+  margin-top: 0px;
+  margin-bottom: 10px;
+  color: #fff;
+  font-size: 24px;
+  line-height: 34px;
+  text-align: center;
+  letter-spacing: -0.3px;
+}
+
+.checkbox-i-agree {
+  margin-top: 22px;
+}
+
+.radio-button {
+  margin-top: 22px;
+}
+
+.describe-label {
+  margin-bottom: 8px;
+  color: #fff;
+  line-height: 21px;
+  text-align: left;
+}
+
+.radio-form-block {
+  width: 100%;
+  margin-bottom: 32px;
+}
+
+.label-checkbox {
+  width: 100%;
+  padding: 18px 16px 18px 6px;
+  color: #fff;
+}
+
+.title-container {
+  margin-bottom: 32px;
+  color: #fff;
+}
+
+.content-container {
+  margin-bottom: 0px;
+  padding: 32px;
+  background-color: #1d8be7;
+}
+
+.text-area-decribe-need {
+  min-height: 120px;
+  padding-top: 16px;
+  padding-bottom: 16px;
+  padding-left: 18px;
+  border: 1px none #000;
+  border-radius: 4px;
+  background-color: hsla(0, 0%, 100%, .7);
+  font-size: 16px;
+}
+
+.text-area-decribe-need:active {
+  background-color: #fff;
+}
+
+.text-area-decribe-need:focus {
+  background-color: #fff;
+}
+
+.text-area-decribe-need::-webkit-input-placeholder {
+  color: rgba(0, 0, 0, .3);
+}
+
+.text-area-decribe-need:-ms-input-placeholder {
+  color: rgba(0, 0, 0, .3);
+}
+
+.text-area-decribe-need::-ms-input-placeholder {
+  color: rgba(0, 0, 0, .3);
+}
+
+.text-area-decribe-need::placeholder {
+  color: rgba(0, 0, 0, .3);
+}
+
+.counter-subtitle {
+  margin-bottom: 4px;
+  color: hsla(0, 0%, 100%, .7);
+  line-height: 18.2px;
+  text-align: center;
+}
+
+.count {
+  color: #fff;
+  font-size: 60px;
+  line-height: 68px;
+  font-weight: 300;
+  text-align: center;
+}
+
+.promo-container {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  margin-bottom: 32px;
+  padding: 24px 16px;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  border-radius: 4px;
+  background-color: #fff;
+  background-image: linear-gradient(343deg, #0cba52, rgba(12, 186, 82, .7));
+}
+
+.counter-item {
+  width: 33.33333333%;
+}
+
+.radio-button-field {
+  margin-bottom: 8px;
+  padding-left: 35px;
+  border-radius: 4px;
+  background-color: hsla(0, 0%, 100%, .7);
+}
+
+.radio-button-field:active {
+  background-color: #fff;
+}
+
+.radio-button-field:focus {
+  background-color: #fff;
+}
+
+.radio-button-label {
+  width: 100%;
+  padding-top: 18px;
+  padding-bottom: 18px;
+  padding-left: 6px;
+  color: #1d8ae7;
+  font-weight: 400;
+}
+
+.label-time-interval {
+  color: #fff;
+  font-size: 10px;
+  text-align: center;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+.field-i-agree {
+  display: block;
+  padding-left: 35px;
+  border-radius: 4px;
+  background-color: hsla(0, 0%, 100%, .05);
+}
+
+.image-free-tag {
+  height: 40px;
+  margin-bottom: 8px;
+}
 
 @media (max-width: 991px) {
   .content-wrapper {
@@ -3190,5 +3499,3 @@ a {
   }
 }
 
-
-</style>

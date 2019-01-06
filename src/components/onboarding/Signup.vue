@@ -1,12 +1,22 @@
 <template>
-  <div class="full-height-background">
-  <div class="onb-body-full-height">
-    <div class="onb-title-bar">
-      <a @click="$emit('activateScreen', 'directLogin')" class="onb-title-bar-back-button w-inline-block"></a>
-      <a @click="signup" class="onb-title-bar-next-button w-inline-block">
-        <div class="onb-title-bar-next-button-text">NEXT</div>
+
+  <!-- wrapper for desktop screens -->  
+
+    <div class="onb-body">
+      <div class="body">
+        <div class="content-wrapper">
+
+<!-- nav -->
+
+    <div class="title-bar">
+      <a @click="$emit('activateScreen', 'directLogin')" class="title-bar-back-button w-inline-block"></a>
+      <a @click="signup" class="title-bar-next-button w-inline-block">
+        <div class="title-bar-next-button-text">NEXT</div>
       </a>
     </div>
+
+<!-- title & form --> 
+
     <div v-if="!success">
     <div class="onb-content-container-2">
       <div v-if="showError && errors.all()" class="onb-error-container">
@@ -204,7 +214,13 @@ export default {
 };
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
+@import '../../assets/css/onboarding-and-forms.css';
+
+.content-wrapper {
+  position: 0px;
+  padding-top: 0px;
+}
 
 .full-height-background {
   min-height: 100vh;
@@ -222,7 +238,6 @@ export default {
 
 .avatar-photo img {
   height: 96px;
-  border-radius: ;
 }
 
 .onb-button-add-group-text.invalid {

@@ -39,7 +39,9 @@ export default {
 };
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
+
+@import '../../assets/css/onboarding-and-forms.css';
 
 .onb-content-container {
   height: unset;

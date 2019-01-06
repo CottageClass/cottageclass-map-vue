@@ -1,9 +1,19 @@
 <template>
-  <div class="onb-content-container body">
+  <!-- wrapper for desktop screens -->  
+
+    <div class="onb-body">
+      <div class="body">
+        <div class="content-wrapper">
+
+  <!-- nav --> 
+
   <Nav 
   :button="nextButtonState" 
   @next="next" 
   @prev="$router.go(-1)" />
+
+  <!-- error message --> 
+
   <div v-if="error" class="onb-error-container">
     <div class="onb-error-text">{{ error }}</div>
   </div>
@@ -14,7 +24,7 @@
 
 <!-- If there is more than one child, ask user which child/children they want to RSVP -->
   
-  <div v-if="children.length > 1">
+  <div v-if="children.length > 1" class="onb-content-container">
     <div class="onb-top-content-container">
       <h1 class="onb-heading-large">Which children would you like to RSVP?</h1>
       <p 
@@ -54,6 +64,8 @@
     </div>
   </div>
 </div>
+</div>
+</div>
 </template>
 
 <script>
@@ -82,7 +94,18 @@ export default {
   components: { Nav, OAuthCallback },
   data () {
     return {
-      children: [],
+      children: [
+      { 
+        'id': 2,
+        'name': 'Alice',
+        'age': 5
+      },
+            { 
+        'id': 3,
+        'name': 'Bob',
+        'age': 2
+      },
+      ],
       currentUser: {},
       childrenSelected: [],
       error: "",
@@ -92,7 +115,7 @@ export default {
   },
   mounted: function () {
     // get info about current user to display list of children
-    api.fetchCurrentUser(Token.currentUserId(this.$auth)).then(currentUser => {
+    /* api.fetchCurrentUser(Token.currentUserId(this.$auth)).then(currentUser => {
       console.log(currentUser)
       this.currentUser = currentUser
       this.children = currentUser.children
@@ -105,7 +128,7 @@ export default {
         this.childrenSelected = [this.currentUser.children[0].id]
         this.submitRsvp()
       }  
-    })
+    })*/
     // get data about the current event to determine max attendees.  
     this.fetchEventInformation()
   },
@@ -114,7 +137,7 @@ export default {
       return this.childrenSelected.length > this.event.maximumChildren - this.event.participantsCount
     },
     nextButtonState: function () {
-      if (this.tooManyChildren) {
+      if (this.tooManyChildren || this.childrenSelected.length == 0) {
         return "inactive"
       } else {
         return "next"
@@ -199,7 +222,8 @@ export default {
 };
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
+@import '../assets/css/onboarding-and-forms.css';
 
 .describe-label {
   color: white;
@@ -474,10 +498,6 @@ a {
   top: 131px;
   z-index: 3;
   box-shadow: none;
-}
-
-.body {
-  background-color: #fff;
 }
 
 .map {
@@ -2296,7 +2316,7 @@ a {
 
 .onb-content-container {
   margin-bottom: 0px;
-  padding: 96px 32px 72px;
+  padding: 32px 32px 72px;
   background-color: #1d8be7;
 }
 
@@ -2415,7 +2435,7 @@ a {
 
 .onb-body {
   overflow: visible;
-  padding-top: 53px;
+  padding-top: 0px;
   padding-bottom: 0px;
   background-color: #1d8ae7;
 }

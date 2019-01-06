@@ -1,5 +1,10 @@
 <template>
-<div class="body">
+  <!-- wrapper for desktop screens -->  
+
+    <div class="onb-body">
+      <div class="body">
+        <div class="content-wrapper">
+
   <div class="content-container">
     <div class="title-container">
       <h1 class="title">When do you need care?</h1>
@@ -13,6 +18,8 @@
     </div>
     <CountdownPromo />
   </div>
+</div>
+</div>
 </div>
 </template>
 
@@ -45,10 +52,15 @@ export default {
 
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
+@import '../../assets/css/onboarding-and-forms.css';
 
 html {
     -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+}
+
+.content-wrapper {
+  padding-top: 0px;
 }
 
 .describe-label {
@@ -61,10 +73,6 @@ html {
   font-size: 14px;
   line-height: 20px;
   height: 100vh;
-}
-
-.body {
-  background-color: #1d8ae7;
 }
 
 .title-container {

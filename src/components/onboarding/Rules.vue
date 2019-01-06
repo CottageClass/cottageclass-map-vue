@@ -74,7 +74,8 @@
 
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
+@import '../../assets/css/onboarding-and-forms.css';
 
   p a {
     text-decoration: underline
