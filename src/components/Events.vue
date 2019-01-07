@@ -1227,7 +1227,7 @@ a {
   display: flex;
   margin-top: 0px;
   margin-bottom: 0px;
-  padding: 64px 32px 112px;
+  padding: 32px 32px 112px;
   -webkit-box-orient: vertical;
   -webkit-box-direction: normal;
   -webkit-flex-direction: column;
