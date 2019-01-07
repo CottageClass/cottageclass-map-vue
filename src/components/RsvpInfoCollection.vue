@@ -94,18 +94,7 @@ export default {
   components: { Nav, OAuthCallback },
   data () {
     return {
-      children: [
-      { 
-        'id': 2,
-        'name': 'Alice',
-        'age': 5
-      },
-            { 
-        'id': 3,
-        'name': 'Bob',
-        'age': 2
-      },
-      ],
+      children: [],
       currentUser: {},
       childrenSelected: [],
       error: "",
@@ -115,7 +104,7 @@ export default {
   },
   mounted: function () {
     // get info about current user to display list of children
-    /* api.fetchCurrentUser(Token.currentUserId(this.$auth)).then(currentUser => {
+      api.fetchCurrentUserNew(Token.currentUserId(this.$auth)).then(currentUser => {
       console.log(currentUser)
       this.currentUser = currentUser
       this.children = currentUser.children
@@ -128,7 +117,7 @@ export default {
         this.childrenSelected = [this.currentUser.children[0].id]
         this.submitRsvp()
       }  
-    })*/
+    })
     // get data about the current event to determine max attendees.  
     this.fetchEventInformation()
   },

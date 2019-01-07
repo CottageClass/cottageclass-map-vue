@@ -142,6 +142,32 @@ export function fetchCurrentUser(userId) {
   })
 }
 
+
+// same as above but using 'normalize' json normalizer to correctly extract children
+export function fetchCurrentUserNew(userId) {
+  return Vue.axios.get(
+    `${process.env.BASE_URL_API}/users/${userId}`
+  ).then(res => {
+    console.log("FETCH CURRENT USER SUCCESS")
+    console.log(res)
+    let normalizedData = normalize(res.data)
+    let user = normalizedData.user[userId].attributes
+    let childrenById = normalizedData.child
+    let childIds = Object.keys(childrenById)
+    let generateChild = function (aChildId) {
+      let child = childrenById[aChildId].attributes
+      child.id = aChildId
+      return child
+    } 
+    user.children = childIds.map(generateChild)
+    return user
+  }).catch(err => {
+    console.log("FETCH CURRENT USER FAILURE")
+    console.log(err.errors)
+    throw err
+  })
+}
+
 // backend requires user to be an admin
 export function fetchAllUsers() {
   return Vue.axios.get(
