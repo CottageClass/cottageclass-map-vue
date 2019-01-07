@@ -63,24 +63,24 @@
   <div class="content-section">
     <div class="divider-2px"></div>
     <div class="content-container-2 w-container">
-      <h1 class="h1-display">CottageClass is...</h1>
+      <h1 class="h1-display">Why kids club?</h1>
       <ul class="cottage-class-is-list">
         <li class="cottageclass-is-list-item"><img src="@/assets/easy-to-start.svg" alt="" class="cottageclass-is-list-item-image">
           <div class="cottageclass-is-list-item-text">
-            <h2 class="heading-2">Easy to start, anywhere</h2>
-            <p class="p-center-black desktop-align-left">All you need to get a successful series of activites going near you is a group of 5-10 parents to join. Join today to get started in your neighborhood!</p>
+            <h2 class="heading-2">Build a village to raise your child.</h2>
+            <p class="p-center-black desktop-align-left">Being a parent is hard, so why should you have to do it alone? On Kidsclub, you can share parenting with friends and neighbors. Your child will make new friends...and you will too!</p>
           </div>
         </li>
-        <li class="cottageclass-is-list-item"><img src="@/assets/always-unique.svg" alt="" class="cottageclass-is-list-item-image">
+        <li class="cottageclass-is-list-item"><img src="@/assets/pay-nothing.svg" alt="" class="cottageclass-is-list-item-image">
           <div class="cottageclass-is-list-item-text">
-            <h2 class="heading-2">Always unique</h2>
-            <p class="p-center-black desktop-align-left">Every parent brings unique talents and interests to their activity. It’s an amazing opportunity for your child to get new mentors in their lives to nurture their talents and support them throughout their childhood.</p>
+            <h2 class="heading-2">Pay nothing for childcare.</h2>
+            <p class="p-center-black desktop-align-left">Childcare is expensive, but at KidsClub, it’s always free! Parents spend more than 20% of their income on childcare. What would you buy if you got 20% of your income back? A boat, a family trip to Paris?</p>
           </div>
         </li>
-        <li class="cottageclass-is-list-item"><img src="@/assets/easy-to-start.svg" alt="" class="cottageclass-is-list-item-image">
+        <li class="cottageclass-is-list-item"><img src="https://uploads-ssl.webflow.com/5ba3c28cff7d47030870c8e2/5ba5420373b5d2f4e4a03438_heart%202.svg" alt="" class="cottageclass-is-list-item-image">
           <div class="cottageclass-is-list-item-text">
-            <h2 class="heading-2">A loving place to learn and grow</h2>
-            <p class="p-center-black desktop-align-left">More and more studies show that play-based learning is core to successful childhood development. Our community is full of wonderful families with welcoming home environments. Your child will learn so much engaging in activities with new friends and building up a diverse and supportive community of peers and mentors.</p>
+            <h2 class="heading-2">Get quality care when you need it.</h2>
+            <p class="p-center-black desktop-align-left">Finding a good sitter is hard, but on KidsClub all the “sitters” are amazing parents like you! KidsClub will help you find reliable care with parents you trust, even if it's at the last minute.</p>
           </div>
         </li>
       </ul>
