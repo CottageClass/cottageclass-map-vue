@@ -49,7 +49,7 @@
           :for="child.id" 
           class="onb-checkbox-label w-form-label"
           >
-           {{ child.name }}, {{ child.age }} 
+           {{ child.firstName }}, {{ calculateAge(child.birthday) }} 
          </label>
         </div>
       </form>
@@ -78,13 +78,9 @@ import * as Token from '@/utils/tokens.js'
 import * as api from '@/utils/api.js'
 import Nav from '@/components/onboarding/Nav.vue'
 import sheetsu from 'sheetsu-node'
-
 // this component has a working loading indicator and no other logic. todo: break out and rename. 
-
 import OAuthCallback from '@/components/OAuthCallback.vue'
-
 var moment = require('moment');
-
 // create a config file to identify which spreadsheet we push to.
 var client = sheetsu({ address: 'https://sheetsu.com/apis/v1.0su/62cd725d6088' })
 
@@ -112,11 +108,11 @@ export default {
       if (!this.children || this.children.length == 0) {
         this.error = 'Sorry, but we cannot retrieve your children\'s information. To resolve this, please email us at: contact@cottageclass.com.'
       }
-      // if user only has one child, skip this step.  
-      if (this.currentUser.children.length = 1) {
+      // if user has one child, and the user has only one child, don't require user to select which child.  
+      if (this.currentUser.children[0].firstName && this.currentUser.children.length == 1) {
         this.childrenSelected = [this.currentUser.children[0].id]
         this.submitRsvp()
-      }  
+      }
     })
     // get data about the current event to determine max attendees.  
     this.fetchEventInformation()
@@ -137,6 +133,9 @@ export default {
     }
   },
   methods: {
+    calculateAge: function (birthdate) {
+      return moment().diff(birthdate, 'years')
+    },
     fetchEventInformation: function () {
       api.fetchUpcomingEvents().then(
         (res) => { 
