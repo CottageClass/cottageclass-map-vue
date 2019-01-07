@@ -241,12 +241,12 @@ export default {
       // set child attributes, plus the parentId
       let childrenAttributes = []
       if (this.children.list && this.children.list.length > 0) {
-        let childrenAttributes = this.children.list.map(childAttrs => (
-          {
+        childrenAttributes = this.children.list.map(function (childAttrs) {
+          return {
             ...childAttrs,
             parentId: userId,
           }
-        ))
+        })
       }
 
       let postData = {
@@ -270,9 +270,8 @@ export default {
       }
 
       if (this.children.list && this.children.list.length > 0) {
-        postData["childrenAttributes"] = childrenAttributes
+        postData.childrenAttributes = childrenAttributes
       }
-
 
       // I think this is necessary but I'm not sure.
       let component = this
