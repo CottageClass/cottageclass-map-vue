@@ -313,6 +313,7 @@ export default {
           console.log("user update FAILURE")
           console.log(err)
           console.log(Object.entries(err))
+          component.houseRules.err = 'Sorry, there was a problem saving your information. Try again?'
           throw err
         })
         .then(() => {
@@ -327,6 +328,7 @@ export default {
           console.log('event update FAILURE')
           console.log(err)
           console.log(Object.entries(err))
+          component.houseRules.err = 'Sorry, there was a problem saving your activity information. Try again?'
           throw err
         })
     }
