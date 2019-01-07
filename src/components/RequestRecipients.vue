@@ -381,12 +381,6 @@ a {
   height: 45px;
 }
 
-.text-block {
-  margin-top: 113px;
-  font-size: 50px;
-  text-align: center;
-}
-
 .title-bar {
   position: fixed;
   left: 0px;
