@@ -99,6 +99,9 @@ export default {
     }
   },
   mounted: function () {
+    if (!Token.currentUserId(this.$auth)) {
+      this.error = 'Sorry, there was a problem retrieving your information. Note: you must be signed in to RSVP, so please sign in at www.kidsclub.io if you haven\'t yet.'
+    } else {
     // get info about current user to display list of children
       api.fetchCurrentUserNew(Token.currentUserId(this.$auth)).then(currentUser => {
       console.log(currentUser)
@@ -116,6 +119,7 @@ export default {
     })
     // get data about the current event to determine max attendees.  
     this.fetchEventInformation()
+  }
   },
   computed: {
     tooManyChildren: function () {
