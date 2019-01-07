@@ -10,21 +10,21 @@
         <div class="nav-tag">Free childcare, fun events.</div>
       </div>
       <div class="nav-flex-space"></div>
-      <div class="menu-button">
+      <div class="nav-menu-item">
         <a 
         href="#signup" 
         class="menu-link" 
         :class="{ menulinkactive: eventsTabSelected }" 
         @click="tab='events'"
         >EVENTS</a></div>
-      <div class="menu-button">
+      <div class="nav-menu-item">
         <a 
         href="#signup" 
         class="menu-link" 
         :class="{ menulinkactive: findTabSelected }"
         @click="tab='find'"
         >REQUEST</a></div>
-      <div class="menu-button">
+      <div class="nav-menu-item">
         <a href="#signup" 
         class="menu-link" 
         :class="{ menulinkactive: provideTabSelected }"
@@ -1598,10 +1598,10 @@ a {
     box-shadow: 0 1px 3px 0 rgba(0, 0, 0, .1);
     opacity: 1;
   }
-  .menu-button {
+  .nav-menu-item {
     padding: 0px 0px 0px 12px;
   }
-  .menu-button.w--open {
+  .nav-menu-item.w--open {
     background-color: #fff;
   }
   .div-block-32 {
