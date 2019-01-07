@@ -3,21 +3,9 @@
   <div data-collapse="medium" data-animation="default" data-duration="400" class="nav-section w-nav">
     <div class="nav-container w-container"><a href="#" class="brand w-clearfix w-nav-brand"><img src="@/assets/cottageclass-logo.svg" alt="" class="image-2"></a>
       <div class="tag-container-desktop w-hidden-medium w-hidden-small w-hidden-tiny">
-        <div class="nav-tag">free kids&#x27; activities</div>
+        <div class="nav-tag">Free childcare, fun events.</div>
       </div>
       <div class="nav-flex-space"></div>
-      <nav role="navigation" class="nav-menu w-nav-menu">
-        <div class="nav-links w-container">
-          <!-- Additional nav links go here
-          <div class="div-block-32"><a href="#" class="nav-link w-nav-link">Sign In</a><a href="#" class="nav-link w-nav-link">Sign up</a></div>
-        -->
-        </div>
-      </nav>
-      <div class="chat-action-container"><a href="#" class="button-nav w-hidden-main w-hidden-medium w-hidden-small w-hidden-tiny w-button">Chat</a></div>
-      <div class="menu-button w-nav-button"><a href="#signup" class="button-nav menu w-button">SIGN IN</a></div>
-    </div>
-    <div class="tag-container-mobile w-hidden-main w-hidden-medium w-container">
-      <div class="nav-tag w-hidden-main w-hidden-medium w-hidden-small w-hidden-tiny">free kids&rsquo; activities</div>
     </div>
   </div>
   <div class="hero-section">
@@ -185,7 +173,7 @@ import networks from '@/assets/network-info.json'
 import * as Token from '@/utils/tokens.js'
 import * as api from '@/utils/api.js'
 import Events from '@/components/Events.vue'
-
+import TavNav from '@/components/Events.vue'
 
 export default {
     name: 'Login',
