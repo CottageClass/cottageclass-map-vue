@@ -164,9 +164,10 @@ export default {
         this.error = ""
         console.log('rsvping children ' + this.childrenSelected + ' to event ID' + this.eventId)
         this.submitToSheetsu()
+        let component = this
         api.submitEventParticipant(this.eventId, this.childrenSelected).then(res => {
         // open event page where user will see success message
-          $router.push({name: 'EventPage', params: { id: this.eventId }})
+          component.$router.push({name: 'EventPage', params: { id: this.eventId }})
         }).catch(err => {
           console.log(err)
           this.error = 'Sorry, there was a problem submittting your RSVP. Try again?'
