@@ -83,7 +83,7 @@ function createPersonObject (personInApi, availableChildren = []) {
     // todo: add these once I have them
     title: "",
     employer: "",
-    backgroundCheck: false, // add background check,
+    verified: p.verified,
     phone: p.phone,
     networkCode: p.network_code,
     dateCreated: p.date_created,

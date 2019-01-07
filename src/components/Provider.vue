@@ -22,7 +22,7 @@
 
       <!-- Background check --> 
 
-        <div class="providerp-background-check-badge-container2" v-if="person.backgroundCheck">
+        <div class="providerp-background-check-badge-container2" v-if="person.verified">
         <div class="providerp-background-check-badge"><img src="../assets/check-green.svg" alt="" class="checkmark-image">
           <div class="background-check-text">Background checked</div>
         </div>
