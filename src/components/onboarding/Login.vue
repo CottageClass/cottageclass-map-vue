@@ -342,6 +342,7 @@
           <li class="terms-list-item"><a href="#" class="links footer-bottom">© CottageClass 2018</a></li>
           <li class="terms-list-item"><a href="https://cottageclass.com/terms-of-service" class="links footer-bottom">Terms of Service</a></li>
           <li class="terms-list-item"><a href="https://cottageclass.com/privacy-policy" class="links footer-bottom">Privacy Policy</a></li>
+          <li class="terms-list-item"><router-link to="/admin-html-css-utils" class="links footer-bottom">Utils</router-link></li>
         </ul>
       </div>
     </div>

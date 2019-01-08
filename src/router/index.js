@@ -19,6 +19,8 @@ import RequestRecipients from '@/components/RequestRecipients.vue'
 import AdminMessages from '@/components/AdminMessages.vue'
 import EventPage from '@/components/EventPage.vue'
 import RsvpInfoCollection from '@/components/RsvpInfoCollection.vue'
+import HtmlCssUtils from '@/components/HtmlCssUtils.vue'
+
 
 Vue.use(Router)
 
@@ -108,6 +110,12 @@ export default new Router({
       name: 'AdminMessages',
       component: AdminMessages,
       // NB: this route has beforeRouteEnter redirect in the component
+    },
+    // Admin util for preparing and cleaning html/css
+    {
+      path: '/admin-html-css-utils',
+      name: 'HtmlCssUtils',
+      component: HtmlCssUtils
     }
   ],
   scrollBehavior (to, from, savedPosition) {
