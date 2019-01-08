@@ -54,40 +54,6 @@
     <div class="content-container-3 w-container">
       <h1 class="h1-display">Upcoming Events</h1>
       <div class="events-list-wrapper">
-        <div class="event-date-section-tittle cancel-top-margin"><img src="@/assets/date-outline-white-oval.svg" alt="" class="image-264">
-          <div class="date-text-wrapper">
-            <div class="date-title">Sunday, January 6</div>
-          </div>
-        </div>
-        <ul class="unordered-list-events">
-          <li class="event-list-item">
-            <div class="event-list-item-graphic color-hot-pink"><img src="@/assets/film-projector.svg" alt="" class="emoji"></div>
-            <div class="event-list-item-content">
-              <div class="spacer w-hidden-main w-hidden-medium"></div>
-              <a href="event-detail.html" class="link-block-4 w-inline-block">
-                <h2 class="event-heading">Movie night &amp; pizza 🍕 with Rima</h2>
-              </a>
-              <div class="event-summary">
-                <div class="event-time">Sun, Jan 6, 2019 at 6:00 PM–9:00 PM</div>
-                <div class="event-ages">Ages 4-11 (4 kids total)</div>
-                <div class="event-location">Carroll Gardens</div>
-              </div>
-              <div class="scrolling-wrapper"><img src="@/assets/rima8.jpg" alt="" class="event-household-photo"><img src="@/assets/rima5.jpg" alt="" class="event-household-photo"><img src="@/assets/rima12.jpg" alt="" class="event-household-photo"><img src="@/assets/rima4.jpg" alt="" class="event-household-photo"><img src="@/assets/rima7.jpg" alt="" class="event-household-photo"><img src="@/assets/rima6.jpg" alt="" class="event-household-photo"></div>
-              <div class="action-bar">
-                <div class="host-container">
-                  <div class="host-info"><img src="@/assets/rima.png" width="40" height="40" alt="" class="avatar-small">
-                    <div class="text-block">Hosted by Rima and Yuri (age 5)</div>
-                  </div>
-                  <div class="host-meta">
-                    <div class="host-occupation">Festival Coordinator &amp; Project Manager</div>
-                    <div class="background-checked-wrapper"><img src="@/assets/check-green.svg" alt="">
-                      <div class="background-checked">Background Checked</div>
-                    </div>
-                  </div>
-                </div><a href="#" class="button w-button">RSVP</a></div>
-            </div>
-          </li>
-        </ul>
         <div class="event-date-section-tittle"><img src="@/assets/date-outline-white-oval.svg" alt="" class="image-265">
           <div class="date-text-wrapper">
             <div class="date-title">Wednesday, January 7</div>
@@ -129,14 +95,14 @@
         </div>
         <ul class="unordered-list-events">
           <li class="event-list-item">
-            <div class="event-list-item-graphic color-light-blue"><img src="@/assets/film-projector.svg" alt="" class="emoji"></div>
+            <div class="event-list-item-graphic color-light-blue"><img src="@/assets/artist-palette.svg" alt="" class="emoji"></div>
             <div class="event-list-item-content">
               <div class="spacer w-hidden-main w-hidden-medium"></div>
               <a href="event-detail.html" class="link-block-4 w-inline-block">
-                <h2 class="event-heading">Movie night &amp; pizza 🍕 with Jordana</h2>
+                <h2 class="event-heading">Eggs &amp; Painting with Jordana</h2>
               </a>
               <div class="event-summary">
-                <div class="event-time">Fri, Jan 11, 2019 at 6:00 PM–8:30 PM</div>
+                <div class="event-time">Sun, Feb 3, 2019 at 10:00 AM - 12:00 PM</div>
                 <div class="event-ages">Ages 2-5 (4 kids total)</div>
                 <div class="event-location">Red Hook</div>
               </div>
@@ -144,7 +110,7 @@
               <div class="action-bar">
                 <div class="host-container">
                   <div class="host-info"><img src="@/assets/jordana.png" width="40" height="40" alt="" class="avatar-small">
-                    <div class="text-block">Hosted by Jordana and Bastian (age 2).</div>
+                    <div class="text-block">Hosted by Jordana &amp; Bastian (age 2).</div>
                   </div>
                   <div class="host-meta">
                     <div class="host-occupation">Psychiatric Nurse Practitioner, the Midtown Practice</div>
@@ -155,36 +121,26 @@
                 </div><a href="#" class="button w-button">RSVP</a></div>
             </div>
           </li>
-        </ul>
-          <!--
-        <div class="event-date-section-tittle"><img src="@/assets/date-outline-white-oval.svg" alt="" class="image-265">
-          <div class="date-text-wrapper">
-            <div class="date-title">Wednesday, January 13</div>
-          </div>
-        </div>
-        <ul class="unordered-list-events">
-
-
           <li class="event-list-item">
             <div class="event-list-item-graphic color-purple"><img src="@/assets/artist-palette.svg" alt="" class="emoji"></div>
             <div class="event-list-item-content">
               <div class="spacer w-hidden-main w-hidden-medium"></div>
               <a href="event-detail.html" class="link-block-4 w-inline-block">
-                <h2 class="event-heading">Arts &amp; Crafts &amp; Pizza 🍕 with Allison</h2>
+                <h2 class="event-heading">Arts &amp; Crafts &amp; Pizza 🍕 with Manisha</h2>
               </a>
               <div class="event-summary">
-                <div class="event-time">Wed, Jan 13, 2019 at 1:00 PM–4:00 PM</div>
+                <div class="event-time">Fri, Jan 11, 2019 at 5:30 PM–8::30 PM</div>
                 <div class="event-ages">Ages 0-5 (2 kids total)</div>
-                <div class="event-location">Clinton Hill</div>
+                <div class="event-location">Carroll Gardens</div>
               </div>
-              <div class="scrolling-wrapper"><img src="@/assets/allison1.jpg" alt="" class="event-household-photo"><img src="@/assets/allison2.jpg" alt="" class="event-household-photo"><img src="@/assets/Allison---553327_10151543444564813_460976232_n.jpg" alt="" class="event-household-photo"><img src="@/assets/Allison---995652_10152730729479813_6015285443666980410_n.jpg" alt="" class="event-household-photo"></div>
+              <div class="scrolling-wrapper"><img src="@/assets/manisha1.jpg" alt="" class="event-household-photo"><img src="@/assets/manisha2.jpg" alt="" class="event-household-photo"><img src="@/assets/manisha3.jpg" alt="" class="event-household-photo"><img src="@/assets/manisha4.jpg" alt="" class="event-household-photo"></div>
               <div class="action-bar">
                 <div class="host-container">
                   <div class="host-info"><img src="@/assets/allison.png" width="40" height="40" alt="" class="avatar-small">
-                    <div class="text-block">Hosted by Allison and Nina (age 3).</div>
+                    <div class="text-block">Hosted by Manisha &amp; Clark (age 1).</div>
                   </div>
                   <div class="host-meta">
-                    <div class="host-occupation">Editor in Digital, Broadcast and Print Media</div>
+                    <div class="host-occupation">CEO/co-founder, CottageClass</div>
                     <div class="background-checked-wrapper"><img src="@/assets/check-green.svg" alt="">
                       <div class="background-checked">Background Checked</div>
                     </div>
@@ -193,8 +149,40 @@
             </div>
           </li>
         </ul>
-                -->
-
+        <div class="event-date-section-tittle cancel-top-margin"><img src="@/assets/date-outline-white-oval.svg" alt="" class="image-264">
+          <div class="date-text-wrapper">
+            <div class="date-title">Saturday, January 19</div>
+          </div>
+        </div>
+        <ul class="unordered-list-events">
+          <li class="event-list-item">
+            <div class="event-list-item-graphic color-hot-pink"><img src="@/assets/film-projector.svg" alt="" class="emoji"></div>
+            <div class="event-list-item-content">
+              <div class="spacer w-hidden-main w-hidden-medium"></div>
+              <a href="event-detail.html" class="link-block-4 w-inline-block">
+                <h2 class="event-heading">Movie night &amp; pizza 🍕 with Rima</h2>
+              </a>
+              <div class="event-summary">
+                <div class="event-time">Sat, Jan 19, 2019 at 5:00 PM–8:00 PM</div>
+                <div class="event-ages">Ages 4-11 (4 kids total)</div>
+                <div class="event-location">Carroll Gardens</div>
+              </div>
+              <div class="scrolling-wrapper"><img src="@/assets/rima8.jpg" alt="" class="event-household-photo"><img src="@/assets/rima5.jpg" alt="" class="event-household-photo"><img src="@/assets/rima12.jpg" alt="" class="event-household-photo"><img src="@/assets/rima4.jpg" alt="" class="event-household-photo"><img src="@/assets/rima7.jpg" alt="" class="event-household-photo"><img src="@/assets/rima6.jpg" alt="" class="event-household-photo"></div>
+              <div class="action-bar">
+                <div class="host-container">
+                  <div class="host-info"><img src="@/assets/rima.png" width="40" height="40" alt="" class="avatar-small">
+                    <div class="text-block">Hosted by Rima &amp; Yuri (age 5), PS58</div>
+                  </div>
+                  <div class="host-meta">
+                    <div class="host-occupation">Festival Coordinator &amp; Project Manager</div>
+                    <div class="background-checked-wrapper"><img src="@/assets/check-green.svg" alt="">
+                      <div class="background-checked">Background Checked</div>
+                    </div>
+                  </div>
+                </div><a href="#" class="button w-button">RSVP</a></div>
+            </div>
+          </li>
+        </ul>
         <div class="event-date-section-tittle"><img src="@/assets/date-outline-white-oval.svg" alt="" class="image-265">
           <div class="date-text-wrapper">
             <div class="date-title">Wednesday, January 24</div>
@@ -206,14 +194,15 @@
             <div class="event-list-item-content">
               <div class="spacer w-hidden-main w-hidden-medium"></div>
               <a href="event-detail.html" class="link-block-4 w-inline-block">
-                <h2 class="event-heading">Develop your mindfulness superpower workshop + dinner with Julie</h2>
+                <h2 class="event-heading">Develop your mindfulness superpower workshop &amp; dinner with Julie</h2>
               </a>
               <div class="event-summary">
                 <div class="event-time">Wed, Jan 24, 2019 at 6:00 PM–9:00 PM</div>
                 <div class="event-ages">Ages 4-11 (4 kids total)</div>
                 <div class="event-location">Cobble Hill</div>
               </div>
-              <div class="scrolling-wrapper"><img src="@/assets/Julie-Screen-Shot-2019-01-04-at-3.47.06-PM.png" alt="" class="event-household-photo"><img src="@/assets/Julie-Screen-Shot-2019-01-04-at-3.46.43-PM.png" alt="" class="event-household-photo"><img src="@/assets/Julie-Screen-Shot-2019-01-04-at-3.45.57-PM.png" alt="" class="event-household-photo"><img src="@/assets/Julie-Screen-Shot-2019-01-04-at-3.45.40-PM.png" alt="" class="event-household-photo"><img src="@/assets/Julie-Screen-Shot-2019-01-04-at-3.44.52-PM.png" alt="" class="event-household-photo"><img src="@/assets/Julie-Screen-Shot-2019-01-04-at-3.45.27-PM.png" alt="" class="event-household-photo"><img src="@/assets/Julie-Screen-Shot-2019-01-04-at-3.45.13-PM.png" alt="" class="event-household-photo"></div>
+              <div class="scrolling-wrapper">
+                <img src="@/assets/Julie-Screen-Shot-2019-01-04-at-3.46.43-PM.png" alt="" class="event-household-photo"><img src="@/assets/Julie-Screen-Shot-2019-01-04-at-3.45.40-PM.png" alt="" class="event-household-photo"><img src="@/assets/Julie-Screen-Shot-2019-01-04-at-3.44.52-PM.png" alt="" class="event-household-photo"><img src="@/assets/Julie-Screen-Shot-2019-01-04-at-3.45.13-PM.png" alt="" class="event-household-photo"><img src="@/assets/JulieNEW.png" alt="" class="event-household-photo"></div>
               <div class="action-bar">
                 <div class="host-container">
                   <div class="host-info"><img src="@/assets/julie.png" height="40" width="40" alt="" class="avatar-small">
@@ -244,7 +233,7 @@
   <div class="content-section">
     <div class="divider-2px"></div>
     <div class="content-container-2 w-container">
-      <h1 class="h1-display">Why kids club?</h1>
+      <h1 class="h1-display">Why KidsClub?</h1>
       <ul class="cottage-class-is-list">
         <li class="cottageclass-is-list-item"><img src="@/assets/easy-to-start.svg" alt="" class="cottageclass-is-list-item-image">
           <div class="cottageclass-is-list-item-text">
@@ -4853,7 +4842,32 @@ a {
   }
 }
 
+/* For scrolling images */ 
 
+  html {
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+}
+/* Remove inner shadow from inputs on mobile iOS */
+textarea, input[type="text"] {
+-webkit-appearance: none;
+}
+html {
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+}
+.scrolling-wrapper {
+  overflow-x: auto;
+}
+.scrolling-wrapper {
+  -webkit-overflow-scrolling: touch;
+}
+.scrolling-wrapper {
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+.scrolling-wrapper::-webkit-scrollbar { width: 0 !important }
+.scrolling-wrapper { overflow: -moz-scrollbars-none; }
+.scrolling-wrapper { -ms-overflow-style: none; }
 
 
 </style>
