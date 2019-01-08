@@ -56,40 +56,6 @@
       <div class="events-list-wrapper">
         <div class="event-date-section-tittle"><img src="@/assets/date-outline-white-oval.svg" alt="" class="image-265">
           <div class="date-text-wrapper">
-            <div class="date-title">Wednesday, January 7</div>
-          </div>
-        </div>
-        <ul class="unordered-list-events">
-          <li class="event-list-item">
-            <div class="event-list-item-graphic color-green"><img src="@/assets/film-projector.svg" alt="" class="emoji"></div>
-            <div class="event-list-item-content">
-              <div class="spacer w-hidden-main w-hidden-medium"></div>
-              <a href="event-detail.html" class="link-block-4 w-inline-block">
-                <h2 class="event-heading">Movie night &amp; pizza 🍕 with Charlice</h2>
-              </a>
-              <div class="event-summary">
-                <div class="event-time">Wed, Jan 7, 2019 at 6:00 PM–9:00 PM</div>
-                <div class="event-ages">Ages 2-11 (5 kids total)</div>
-                <div class="event-location">Dumbo</div>
-              </div>
-              <div class="scrolling-wrapper"><img src="@/assets/charlice2.jpg" alt="" class="event-household-photo"><img src="@/assets/charlice3.jpg" alt="" class="event-household-photo"><img src="@/assets/charlice4.jpg" alt="" class="event-household-photo"><img src="@/assets/charlice6.jpg" alt="" class="event-household-photo"><img src="@/assets/charlice5.jpg" alt="" class="event-household-photo"><img src="@/assets/charlice8.jpg" alt="" class="event-household-photo"></div>
-              <div class="action-bar">
-                <div class="host-container">
-                  <div class="host-info"><img src="@/assets/charlice.png" width="40" height="40" alt="" class="avatar-small">
-                    <div class="text-block">Hosted by Charlice and 4 kids–ages (11, 6, 2 and 2).</div>
-                  </div>
-                  <div class="host-meta">
-                    <div class="host-occupation">Shift Supervisor, Starbucks</div>
-                    <div class="background-checked-wrapper"><img src="@/assets/check-green.svg" alt="">
-                      <div class="background-checked">Background Checked</div>
-                    </div>
-                  </div>
-                </div><a href="#" class="button w-button">RSVP</a></div>
-            </div>
-          </li>
-        </ul>
-        <div class="event-date-section-tittle"><img src="@/assets/date-outline-white-oval.svg" alt="" class="image-265">
-          <div class="date-text-wrapper">
             <div class="date-title">Friday, January 11</div>
           </div>
         </div>
@@ -210,6 +176,40 @@
                   </div>
                   <div class="host-meta">
                     <div class="host-occupation">Partner Lead, Google</div>
+                    <div class="background-checked-wrapper"><img src="@/assets/check-green.svg" alt="">
+                      <div class="background-checked">Background Checked</div>
+                    </div>
+                  </div>
+                </div><a href="#" class="button w-button">RSVP</a></div>
+            </div>
+          </li>
+        </ul>
+        <div class="event-date-section-tittle"><img src="@/assets/date-outline-white-oval.svg" alt="" class="image-265">
+          <div class="date-text-wrapper">
+            <div class="date-title">Monday, February 4</div>
+          </div>
+        </div>
+        <ul class="unordered-list-events">
+          <li class="event-list-item">
+            <div class="event-list-item-graphic color-green"><img src="@/assets/film-projector.svg" alt="" class="emoji"></div>
+            <div class="event-list-item-content">
+              <div class="spacer w-hidden-main w-hidden-medium"></div>
+              <a href="event-detail.html" class="link-block-4 w-inline-block">
+                <h2 class="event-heading">Movie night &amp; pizza 🍕 with Charlice</h2>
+              </a>
+              <div class="event-summary">
+                <div class="event-time">Mon, Feb 4, 2019 at 6:00 PM–9:00 PM</div>
+                <div class="event-ages">Ages 2-11 (5 kids total)</div>
+                <div class="event-location">Dumbo</div>
+              </div>
+              <div class="scrolling-wrapper"><img src="@/assets/charlice2.jpg" alt="" class="event-household-photo"><img src="@/assets/charlice3.jpg" alt="" class="event-household-photo"><img src="@/assets/charlice4.jpg" alt="" class="event-household-photo"><img src="@/assets/charlice6.jpg" alt="" class="event-household-photo"><img src="@/assets/charlice5.jpg" alt="" class="event-household-photo"><img src="@/assets/charlice8.jpg" alt="" class="event-household-photo"></div>
+              <div class="action-bar">
+                <div class="host-container">
+                  <div class="host-info"><img src="@/assets/charlice.png" width="40" height="40" alt="" class="avatar-small">
+                    <div class="text-block">Hosted by Charlice and 4 kids–ages (11, 6, 2 and 2).</div>
+                  </div>
+                  <div class="host-meta">
+                    <div class="host-occupation">Shift Supervisor, Starbucks</div>
                     <div class="background-checked-wrapper"><img src="@/assets/check-green.svg" alt="">
                       <div class="background-checked">Background Checked</div>
                     </div>
