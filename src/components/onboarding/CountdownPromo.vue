@@ -61,10 +61,10 @@ export default {
 </script>
 
 <style scoped>
-
 html {
-    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
 }
+
 .body {
   font-family: soleil, sans-serif;
   color: #333;
@@ -89,71 +89,6 @@ html {
   line-height: 34px;
   text-align: center;
   letter-spacing: -0.3px;
-}
-
-
-.content-container {
-  margin-bottom: 0px;
-  padding: 32px 32px 8px;
-  background-color: #1d8be7;
-}
-
-.radio-form-block {
-  width: 100%;
-  margin-bottom: 32px;
-}
-
-.radio-button-field {
-  margin-bottom: 8px;
-  padding-left: 35px;
-  border-radius: 4px;
-  background-color: hsla(0, 0%, 100%, .7);
-}
-
-.radio-button-field:active {
-  background-color: #fff;
-}
-
-.radio-button-field:focus {
-  background-color: #fff;
-}
-
-.radio-button {
-  margin-top: 22px;
-}
-
-.radio-button-label {
-  width: 100%;
-  padding-top: 18px;
-  padding-bottom: 18px;
-  padding-left: 6px;
-  color: #1d8ae7;
-  font-weight: 400;
-}
-
-.field-i-agree {
-  display: block;
-  padding-left: 35px;
-  border-radius: 4px;
-  background-color: hsla(0, 0%, 100%, .05);
-}
-
-.label-checkbox {
-  width: 100%;
-  padding: 18px 16px 18px 6px;
-  color: #fff;
-}
-
-.form-i-agree {
-  margin-bottom: 32px;
-}
-
-.link {
-  color: hsla(0, 0%, 100%, .6);
-}
-
-.checkbox-i-agree {
-  margin-top: 22px;
 }
 
 .promo-container {
@@ -220,61 +155,4 @@ html {
   height: 40px;
   margin-bottom: 8px;
 }
-
-.text-area-decribe-need {
-  min-height: 120px;
-  padding-top: 16px;
-  padding-bottom: 16px;
-  padding-left: 18px;
-  border: 1px none #000;
-  border-radius: 4px;
-  background-color: hsla(0, 0%, 100%, .7);
-  font-size: 16px;
-}
-
-.text-area-decribe-need:active {
-  background-color: #fff;
-}
-
-.text-area-decribe-need:focus {
-  background-color: #fff;
-}
-
-.text-area-decribe-need::-webkit-input-placeholder {
-  color: rgba(0, 0, 0, .3);
-}
-
-.text-area-decribe-need:-ms-input-placeholder {
-  color: rgba(0, 0, 0, .3);
-}
-
-.text-area-decribe-need::-ms-input-placeholder {
-  color: rgba(0, 0, 0, .3);
-}
-
-.text-area-decribe-need::placeholder {
-  color: rgba(0, 0, 0, .3);
-}
-
-.describe-label {
-  margin-bottom: 8px;
-  color: #fff;
-  line-height: 21px;
-  text-align: left;
-}
-
-.form-describe-need {
-  margin-bottom: 24px;
-}
-
-@media (max-width: 479px) {
-  .title-bar {
-    -webkit-box-align: center;
-    -webkit-align-items: center;
-    -ms-flex-align: center;
-    align-items: center;
-  }
-}
-
-
 </style>
