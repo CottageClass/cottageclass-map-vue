@@ -4,7 +4,6 @@ import MainView from '@/components/MainView.vue'
 import Bookings from '@/components/Bookings'
 import EmergencyInfo from '@/components/EmergencyInfo'
 import Splash from '@/components/Splash.vue'
-import EnterCode from '@/components/EnterCode.vue'
 import ProviderProfile from '@/components/ProviderProfile.vue'
 import RequestModal from '@/components/RequestModal.vue'
 import OAuthCallback from '@/components/OAuthCallback.vue'
@@ -46,11 +45,6 @@ export default new Router({
       path: '/home',
       name: 'MainView',
       component: TabNav
-    },
-    {
-      path: '/enter-code',
-      name: 'EnterCode',
-      component: EnterCode
     },
     {
       path: '/provider-profile/:id',
