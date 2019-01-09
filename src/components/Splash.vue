@@ -1299,7 +1299,7 @@ a {
   display: -webkit-flex;
   display: -ms-flexbox;
   display: flex;
-  height: 100vh;
+  min-height: 100vh;
   margin-top: 0px;
   padding-top: 32px;
   padding-right: 32px;

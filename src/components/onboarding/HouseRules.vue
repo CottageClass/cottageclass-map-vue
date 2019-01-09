@@ -53,7 +53,7 @@ html {
   color: #333;
   font-size: 14px;
   line-height: 20px;
-  height: 100vh;
+  min-height: 100vh;
 }
 
 .body {

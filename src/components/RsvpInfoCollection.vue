@@ -251,7 +251,7 @@ textarea {
 .onb-content-container {
   margin: 0 auto;
   max-width: 600px;
-  height: 100vh;
+  min-height: 100vh;
 }
 
 textarea, input[type="text"] {

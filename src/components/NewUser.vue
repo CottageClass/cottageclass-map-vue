@@ -426,7 +426,7 @@ export default {
 .onb-content-container {
   margin: 0 auto;
   max-width: 600px;
-  height: 100vh;
+  min-height: 100vh;
 }
 
 textarea, input[type="text"] {
@@ -2393,7 +2393,7 @@ a {
   -webkit-align-items: center;
   -ms-flex-align: center;
   align-items: center;
-  height: 100vh;
+  min-height: 100vh;
 }
 
 .onb-heading-large {
