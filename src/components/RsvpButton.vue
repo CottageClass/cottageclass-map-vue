@@ -39,12 +39,12 @@ export default {
 }
 
 .user-participating {
-	background-color: transparent;
+	background-color: transparent !important;
   color: rgb(12, 186, 82);
 }
 
 .full {
-	background-color: transparent;
+	background-color: transparent !important;
   color: #ff672f;
 }
 
