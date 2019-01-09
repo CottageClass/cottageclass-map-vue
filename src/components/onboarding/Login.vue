@@ -1,7 +1,7 @@
 <template>
 <div class="body-homepage">
   <div data-collapse="medium" data-animation="default" data-duration="400" class="nav-section w-nav">
-    <div class="nav-container w-container"><a href="#" class="brand w-clearfix w-nav-brand"><img src="@/assets/cottageclass-logo.svg" alt="" class="image-2"></a>
+    <div class="nav-container w-container"><a href="#" class="brand w-clearfix w-nav-brand"><img src="@/assets/kc-logo-landscape.svg" alt="" class="image-2"></a>
       <div class="tag-container-desktop w-hidden-medium w-hidden-small w-hidden-tiny">
         <div class="nav-tag">Free childcare, fun events.</div>
       </div>

@@ -5,7 +5,7 @@
 <!-- nav on wide screens --> 
 
     <div class="nav-section w-nav hidden-on-phones">
-    <div class="nav-container w-container"><a href="#" class="brand w-clearfix w-nav-brand"><img src="@/assets/cottageclass-logo.svg" alt="" class="image-2"></a>
+    <div class="nav-container w-container"><a href="#" class="brand w-clearfix w-nav-brand"><img src="@/assets/kc-logo-landscape.svg" alt="" class="image-2"></a>
       <div class="tag-container-desktop hide-tagline-on-small-screens">
         <div class="nav-tag">Free childcare, fun events.</div>
       </div>
