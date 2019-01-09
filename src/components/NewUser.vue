@@ -57,6 +57,8 @@
       />
       <PetsDescription v-if="step === 12" v-model="petsDescription" />
       <HouseRules v-if="step === 13" v-model="houseRules" />
+      <!-- OAuthCallback is just used for the loading animation --> 
+      <OAuthCallback v-if="step > lastStep && !error" />
 
    <!-- close wrapper -->  
  </div>
@@ -82,6 +84,7 @@ import EventTime from '@/components/onboarding/EventTime.vue'
 import EventDate from '@/components/onboarding/EventDate.vue'
 import MaxChildren from '@/components/onboarding/MaxChildren.vue'
 import YesOrNo from '@/components/onboarding/YesOrNo.vue'
+import OAuthCallback from '@/components/OAuthCallback.vue' 
 import * as Token from '@/utils/tokens.js'
 import * as api from '@/utils/api.js'
 import sheetsu from 'sheetsu-node'
@@ -93,7 +96,7 @@ var client = sheetsu({ address: 'https://sheetsu.com/apis/v1.0su/62cd725d6088' }
 
 export default {
   components: {
-    Nav, Login, DirectLogin, Signup, Location, Phone, Children, Availability, Food, EventActivity, EventTime, EventDate, HouseRules, PetsDescription, YesOrNo, MaxChildren
+    Nav, Login, DirectLogin, Signup, Location, Phone, Children, Availability, Food, EventActivity, EventTime, EventDate, HouseRules, PetsDescription, YesOrNo, MaxChildren, OAuthCallback
   },
   data () {
     return {
@@ -200,6 +203,8 @@ export default {
       this.step = this.step - 1
     },
     submitData: function () {
+      // advance to loading indicator
+      this.step = this.step + 1
       let userId = Token.currentUserId(this.$auth)
 
       // submit user to sheetsu for KPI tracking, unless network is "demo"
