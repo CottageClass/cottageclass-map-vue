@@ -115,10 +115,6 @@ export default {
         list: [{firstName: null, birthday: null}],
         err: 'skippable'
       },
-      isOtherAdultPresent: '',
-      otherAdultsPresent: {
-        list: [{fullName: null, email: null, phone: null}],
-      },
       blurb: {
         text: ''
       },
@@ -293,7 +289,6 @@ export default {
           "foods": [this.food.selected],
           "house_rules": this.houseRules.text,
           "pet_description": this.petsDescription.text,
-          "event_hosts_attributes": this.otherAdultsPresent.list,
           "maximum_children": this.maxChildren,
           "child_age_minimum": defaultChildAgeMinimum,
           "child_age_maximum": defaultChildAgeMaximum
