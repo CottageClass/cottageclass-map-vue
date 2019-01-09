@@ -33,7 +33,7 @@
         </div>
 
         <div class="signup-wrapper"><a @click="authenticate('facebook')" class="fb-button w-inline-block" v-if="!!facebookLogin"><img src="@/assets/facebook-button-icon.svg" width="24" height="24" alt=""><div class="fb-button-text">Continue with Facebook</div></a>
-          <div class="use-password-text" v-if="!!directLogin">Or <a href="#" class="links" @click="$emit('activateScreen', 'directLogin')">use a password instead</a></div>
+          <div class="use-password-text" v-if="!!directLogin">Or <a href="#" class="links" @click="$emit('activateScreen', 'signup')">use a password instead</a></div>
           <div class="terms-text">By signing in you agree to our <a href="https://cottageclass.com/terms-of-service">Terms of Service</a> and <a href="https://cottageclass.com/privacy-policy">Privacy Policy</a>.</div>
         </div>
       </div>
