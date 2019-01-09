@@ -39,15 +39,19 @@ export default {
   		})
   	},
   methods: {
-    getAddressData: function (addressData, placeResultData, id) {
-         this.address = addressData
-         this.$emit('input', {
-      	   fullAddress: this.address,
-      	   lat: this.address.latitude,
-      	   lng: this.address.longitude,
-      	   error: false
-        })
-     }
+    getAddressData: function(addressData, placeResultData, id) {
+      let placeResultObject = {};
+      placeResultData.address_components.forEach(e =>
+        e.types.forEach(type => (placeResultObject[type] = e.long_name))
+      );
+      this.address = { ...addressData, ...placeResultObject };
+      this.$emit('input', {
+        fullAddress: this.address,
+        lat: this.address.latitude,
+        lng: this.address.longitude,
+        error: false
+      });
+    }
  }
 };
 </script>
