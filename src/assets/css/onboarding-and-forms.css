@@ -2065,7 +2065,6 @@ a:visited {
 
 .onb-body {
   overflow: visible;
-  padding-top: 53px;
   padding-bottom: 0px;
   background-color: #0d73c7;
 }
@@ -2152,7 +2151,6 @@ a:visited {
 
 .onb-body-full-height {
   overflow: visible;
-  padding-top: 51px;
   padding-bottom: 0px;
   background-color: #1d8ae7;
   color: #fff;
