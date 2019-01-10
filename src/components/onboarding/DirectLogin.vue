@@ -189,8 +189,9 @@ button {
   background-color: white;
   width: 100%;
 }
-.onb-content-container {
-  padding-top: 96px;
+
+.content-container {
+  padding-top: 83px;
 }
 
 input.invalid {

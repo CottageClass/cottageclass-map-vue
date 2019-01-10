@@ -253,6 +253,10 @@ export default {
   background-color: #1d8be7;
 }
 
+.onb-content-container-2 {
+  padding-top: 83px;
+}
+
 .splash-button {
   background-color: white;
   width: 100%;
