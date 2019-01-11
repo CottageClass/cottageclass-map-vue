@@ -9,8 +9,8 @@
 <!-- nav -->
 
     <div class="title-bar">
-      <a @click="$emit('activateScreen', 'directLogin')" class="title-bar-back-button w-inline-block"></a>
-      <a @click="signup" class="title-bar-next-button w-inline-block">
+      <a @click="$emit('activateScreen', 'facebook')" class="title-bar-back-button w-inline-block"></a>
+      <a @click="signup" :class="nextButtonClassObject">
         <div class="title-bar-next-button-text">NEXT</div>
       </a>
     </div>
@@ -27,8 +27,9 @@
         </div>
       </div>
           <div class="onb-top-content-container">
-            <h1 class="onb-heading-large">Sign up</h1>
-            <p class="onb-paragraph-subheading-2">Already have an account? <a @click="$emit('activateScreen', 'directLogin')">Sign in here</a>.</p>            
+            <h1 class="onb-heading-large">Join KidsClub</h1>
+            <button v-if="showFacebookLogin" class="button-text splash-button w-inline-block facebook-sign-in-button">Continue with Facebook</button>
+            <p class="onb-paragraph-subheading-2"><span v-if="showFacebookLogin">Or enter</span><span v-else>Enter</span> your information below. Already have an account? <a @click="$emit('activateScreen', 'directLogin')">Sign in here</a>.</p>         
           </div>
         </div>
   <div class="onb-child-info-container">
@@ -134,7 +135,8 @@ export default {
         uploadPreset: 'avatar',
         apiKey: '415594396214129',
         cloudName: 'cottageclass2'
-      }
+      },
+      showFacebookLogin: false // !this.hideFacebookLogin()
     };
   },
   computed: {
@@ -145,6 +147,21 @@ export default {
     },
     formHasErrors: function () {
       return this.errors
+    },
+    nextButtonClassObject: function () {
+      return {
+        "title-bar-next-button-inactive": this.button === 'inactive',
+        "title-bar-next-button": !(this.button === 'inactive'),
+        "w-inline-block": true
+      }
+    },
+    button: function () {
+      // todo: should show errors until avatar upload
+      if (this.first_name && this.last_name && this.email && this.password && this.avatar_url && this.errors.items.length == 0 ) {
+        return 'next'
+      } else {
+        return 'inactive'
+      }
     }
   },
   mounted: function () {
@@ -174,6 +191,11 @@ export default {
     this.$validator.localize('en', dict);
   },
   methods: {
+    hideFacebookLogin: () => {
+        return ['(iPhone|iPod|iPad)(?!.*Safari)'].every(expression => {
+          return !!navigator.userAgent.match(new RegExp(`(${expression})`, 'ig'));
+        });
+      },
     upload: function(event) {
       let files = event.target.files;
 
@@ -257,9 +279,11 @@ export default {
   padding-top: 83px;
 }
 
-.splash-button {
+.facebook-sign-in-button {
   background-color: white;
-  width: 100%;
+  max-width: 256px;
+  padding: 16px;
+  margin: 32px auto 16px auto;
 }
 
 .avatar-photo {
@@ -285,5 +309,22 @@ p a {
 input.invalid {
   border: 1px solid red;
 }
+
+button {
+  background: none;
+}
+
+.splash-button {
+  background-color: white;
+  width: 100%;
+}
+
+@media (max-width: 479px) {
+  .facebook-sign-in-button {
+    max-width: none;
+    width: 100%;
+  }
+}
+
 
 </style>
