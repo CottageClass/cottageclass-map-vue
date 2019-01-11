@@ -81,13 +81,13 @@
       <div class="event-specifics-card"><AvatarImage className="avatar-x-large" :person="{facebookId: event.hostFacebookUid, avatar: event.hostAvatar}"/>
         <div class="card-small-text">Host</div>
         <div class="card-large-text">{{ event.hostFirstName }}</div>
-        <div v-if="event.hostChildAges.length > 0" class="card-large-text-gray">Parent to 
-          <span v-if="event.hostChildAges.length == 1">one child age {{  event.hostChildAges[0] }}.</span>
-          <span v-if="event.hostChildAges.length == 2">two children ages {{ event.hostChildAges[0] }} and {{ event.hostChildAges[1] }}.</span>
-          <span v-else>{{ event.hostChildAges.length }} children ages 
-            <span v-for="(age, index) in event.hostChildAges">
-              <span v-if="index == event.hostChildAges.length - 1"> and {{ age }}.</span>
-              <span v-else> {{ age}},</span>
+        <div v-if="childAgesSorted.length > 0" class="card-large-text-gray">Parent to 
+          <span v-if="childAgesSorted.length == 1">one child age {{  childAgesSorted[0] }}.</span>
+          <span v-if="childAgesSorted.length == 2">two children ages {{ childAgesSorted[0] }} and {{ childAgesSorted[1] }}.</span>
+          <span v-if="childAgesSorted.length > 2">{{ childAgesSorted.length }} children ages 
+            <span v-for="(age, index) in childAgesSorted">
+              <span v-if="index == childAgesSorted.length - 1"> and {{ age }}.</span>
+              <span v-else> {{ age}}<span v-if="index != childAgesSorted.length - 2">,</span></span>
             </span>
           </span>
         </div>
@@ -194,6 +194,9 @@ export default {
   computed: {
     eventId: function () {
       return this.event.id
+    },
+    childAgesSorted: function () {
+      return this.event.hostChildAges.sort((a,b) => a - b)
     },
     event: function () {
       return this.events.find(event => event.id == this.$route.params.id)
