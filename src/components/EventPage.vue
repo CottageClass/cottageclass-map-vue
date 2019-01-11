@@ -92,9 +92,12 @@
           </span>
         </div>
       </div>
+
+      <!-- second RSVP button --> 
+
       <div class="event-specifics-card" v-if="!event.full && !event.participated">
         <div class="card-large-text">Interested in this event?</div>
-        <RsvpButton 
+        <RsvpButton class="rsvp-button-bottom"
         :userParticipating="event.participated" 
         :full="event.full" 
         :eventId="eventId"
@@ -201,6 +204,10 @@ export default {
 </script>
 
 <style scoped>
+
+.rsvp-button-bottom {
+  margin-top: 16px;
+}
 
 .body-2 {
   font-family: soleil;
