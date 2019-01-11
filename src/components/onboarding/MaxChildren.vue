@@ -31,6 +31,9 @@ export default {
   		maxChildren: 2
   	}
   },
+  mounted: function () {
+    this.$emit('input', this.maxChildren)
+  },
   watch: {
     maxChildren: function () {
       this.$emit('input', this.maxChildren)
