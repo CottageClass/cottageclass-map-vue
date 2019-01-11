@@ -18,10 +18,10 @@
 
 <!-- Show loading indicator until we can show the event info we're confirming.  there are and there is more than one. If there is an error, show the error only. -->
 
-  <OAuthCallback v-if="events.length == 0 && !(error && showError)"/>
+  <OAuthCallback v-if="!event && !(error && showError)"/>
 
 
-  <div v-if="events.length > 0" class="onb-content-container">
+  <div v-if="!!event" class="onb-content-container">
     <div class="onb-top-content-container">
       <h1 class="onb-heading-large">Welcome!</h1>
       <p class="onb-paragraph-subheading-2">Would you still like to RSVP to the event below?</p>
@@ -88,7 +88,7 @@ export default {
     return {
       eventId: this.$route.params.eventId,
       errorMesg: 'Please answer yes or no.',
-      events: [],
+      event: null,
       yesOrNo: '',
       showError: false
     }
@@ -96,7 +96,7 @@ export default {
   mounted: function () {
     api.fetchUpcomingEvents().then(
       (res) => { 
-        this.events = res
+        this.event = res.find(event => event.id == this.eventId)
       })
   },
   methods: {
@@ -128,10 +128,7 @@ export default {
         this.showError = false
         return false
       }
-    },
-    event: function () {
-      return this.events.find(event => event.id == this.eventId)
-    }    
+    }
   }
 };
 </script>
