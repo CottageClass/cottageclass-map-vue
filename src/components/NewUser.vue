@@ -100,7 +100,7 @@ export default {
   },
   data () {
     return {
-      activeScreen: 'facebook',
+      activeScreen: this.$route.query.activeScreen || 'facebook',
       currentUser: {},
       step: 0,
       lastStep: 13,
