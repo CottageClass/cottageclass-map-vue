@@ -157,7 +157,8 @@ export default {
       canProvideEmergencyCare: {
         yesOrNo: ''
       },
-      maxChildren: null
+      maxChildren: null,
+      rsvpAttempted: this.$cookies.get('rsvpAttempted')
     }
   },
   name: 'NewUser',
@@ -170,7 +171,11 @@ export default {
       return string.charAt(0).toUpperCase() + string.slice(1);
     },
     continueWhenComplete: function () {
-      this.$router.push({ name: 'MainView' })
+      if (!this.rsvpAttempted) {
+        this.$router.push({ name: 'MainView' })
+      } else {
+        this.$router.push({ name: 'RsvpConfirmation', params: { eventId: this.rsvpAttempted }})
+      }
     },
     skipSkippableSteps: function () {
       if (
@@ -230,13 +235,16 @@ export default {
   .then(res => {
     console.log("auth SUCCESS")
   }).then(res => api.fetchCurrentUser(Token.currentUserId(component.$auth))).then(currentUser => {
-    if (currentUser.hasAllRequiredFields) {
-      // redirect to home screen
-      this.$router.push({name: 'MainView'})
-    } else if (currentUser.id) {
-      // begin onboarding
-      this.nextStep()
-    } else {
+    if (currentUser.hasAllRequiredFields && !this.rsvpAttempted) {
+    // redirect to home screen if they haven't attempted an RSVP
+    this.$router.push({name: 'MainView'})
+  } else if (currentUser.hasAllRequiredFields && this.rsvpAttempted) {
+    // confirm that they want to RSVP if they have attempted an RSVP
+    this.$router.push({ name: 'RsvpConfirmation', params: { eventId: this.rsvpAttempted }})
+  } else if (currentUser.id) {
+  // begin onboarding
+  this.nextStep()
+} else {
       return false
     }
   }).catch(function(err) {

@@ -35,7 +35,7 @@
         <div class="signup-wrapper">
           <a 
           v-if="!!facebookLogin" 
-          @click="authenticate('facebook')" 
+          @click="$emit('authenticateFacebook')"
           class="fb-button w-inline-block">
           <img src="@/assets/facebook-button-icon.svg" width="24" height="24" alt=""><div class="fb-button-text">Continue with Facebook</div></a>
           <a 
@@ -413,40 +413,6 @@ export default {
           return !!navigator.userAgent.match(new RegExp(`(${expression})`, 'ig'));
         });
       },
-      authenticate: function(provider) {
-	/*
-	 *  Logs in the user (Facebook)
-	 * - follows OAuth flow using VueAuth to get OAuth code
-	 * - sends code to backend to exchange for access_token
-	 * - backend fetches access_token, stores it in DB, and sends back JWT for user
-	 * - VueAuthenticate stores JWT for future API access authorization
-	 */
-
-	/* TODO: Refactor front and backend to authenticate via the following:
-	 * - use FB library to obtain access token and store in cookies
-	 * - send FB access_token to backend
-	 * - backend decodes token using Koala, finds user by fbId or email, and sends back JWT for future API access
-	 * - VueAuthenticate or other JWT auth library stores JWT token in localStorage or otherwise for us
-	 */
-
-	// store value of this to access this.$emit during callback
-	let component = this
-	this.$auth.authenticate(provider)
-	  .then(res => {
-	    console.log("auth SUCCESS")
-  }).then(res => api.fetchCurrentUser(Token.currentUserId(component.$auth))).then(currentUser => {
-    if (currentUser.hasAllRequiredFields) {
-      this.$emit('userAlreadyOnboarded')
-    } else if (currentUser.id) {
-      this.$emit('userNotYetOnboarded')
-    } else {
-      return false
-    }
-  }).catch(function(err) {
-	    console.log("auth FAILURE or user not onboarded yet")
-	    console.log(err)
-	  })
-}
 }
 };
 

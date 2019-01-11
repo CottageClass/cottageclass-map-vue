@@ -152,11 +152,13 @@ export function fetchCurrentUserNew(userId) {
     console.log(res)
     let normalizedData = normalize(res.data)
     let user = normalizedData.user[userId].attributes
+    user.hasAllRequiredFields = user.phone && user.latitude && user.longitude && user.networkCode
     let childrenById = normalizedData.child
     let childIds = Object.keys(childrenById)
     let generateChild = function (aChildId) {
       let child = childrenById[aChildId].attributes
       child.id = aChildId
+      child.firstName = capitalize(child.firstName)
       return child
     } 
     user.children = childIds.map(generateChild)

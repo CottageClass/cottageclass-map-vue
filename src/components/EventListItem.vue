@@ -22,6 +22,7 @@
           <div class="text-block">Hosted by <a href="#" class="host-name link">{{ event.hostFirstName }}</a></div>
         </div>
           <RsvpButton 
+          v-if="showRsvpButton"
           :userParticipating="event.participated" 
           :full="event.full"
           :eventId="event.id" />
@@ -41,7 +42,7 @@ var moment = require('moment');
 
 export default {
   name: 'EventListItem',
-  props: ['event', 'index'],
+  props: ['event', 'index', 'showRsvpButton'],
   components: { AvatarImage, RsvpButton },
   methods: {
     backgroundColor: function (index) {
@@ -68,7 +69,7 @@ export default {
             return 'grinning-face-with-smiling-eyes.svg' // party-popper.svg 
         }
       }
-  },
+  }
 };
 
 </script>
@@ -889,6 +890,15 @@ a {
   -webkit-align-items: center;
   -ms-flex-align: center;
   align-items: center;
+  color: #333;
+}
+
+.event-time {
+  color: #333;
+}
+
+.event-summary {
+  color: #333;
 }
 
 .avatar-small {

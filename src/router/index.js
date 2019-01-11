@@ -16,6 +16,7 @@ import RequestRecipients from '@/components/RequestRecipients.vue'
 import AdminMessages from '@/components/AdminMessages.vue'
 import EventPage from '@/components/EventPage.vue'
 import RsvpInfoCollection from '@/components/RsvpInfoCollection.vue'
+import RsvpConfirmation from '@/components/RsvpConfirmation.vue'
 
 Vue.use(Router)
 
@@ -58,6 +59,11 @@ export default new Router({
       path: '/rsvp/:eventId',
       name: 'RsvpInfoCollection',
       component: RsvpInfoCollection
+    },
+    {
+      path: '/rsvp-confirmation/:eventId',
+      name: 'RsvpConfirmation',
+      component: RsvpConfirmation
     },
     {
       path: '/request/:id',

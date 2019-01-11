@@ -9,7 +9,7 @@
 
   <Nav 
   :button="nextButtonState" 
-  @next="next" 
+  @next="nextStep" 
   @prev="$router.go(-1)" />
 
   <!-- error message --> 
@@ -18,18 +18,18 @@
     <div class="onb-error-text">{{ error }}</div>
   </div>
 
-<!-- Show loading indicator until we know how many children there are and there is more than one. If there is an error, show the error only. -->
+<!-- Show loading indicator until we know how many children there are. If there is an error, show the error only. -->
 
-  <OAuthCallback v-if="children.length <= 1 && !error"/>
+  <OAuthCallback v-if="!allInformationLoaded"/>
 
-<!-- If there is more than one child, ask user which child/children they want to RSVP -->
+<!-- Once we have child and event information, ask user which child/children they want to RSVP -->
   
-  <div v-if="children.length > 1" class="onb-content-container">
+  <div v-if="allInformationLoaded" class="onb-content-container">
     <div class="onb-top-content-container">
       <h1 class="onb-heading-large">Which children would you like to RSVP?</h1>
       <p 
       class="onb-paragraph-subheading-2" 
-      v-if="event">There <span v-if="spotsRemaining == 1">is</span><span v-else>are</span> {{ spotsRemaining }} spot<span v-if="spotsRemaining != 1">s</span> remaining.</p>
+      v-if="Number.isInteger(spotsRemaining)">There <span v-if="spotsRemaining == 1">is</span><span v-else>are</span> {{ spotsRemaining }} spot<span v-if="spotsRemaining != 1">s</span> remaining.</p>
     </div>
     <div class="onb-form-block-checkbox-list w-form">
       <form class="onb-form-checkbox-list">
@@ -91,41 +91,25 @@ export default {
   data () {
     return {
       children: [],
-      currentUser: {},
+      currentUser: false,
       childrenSelected: [],
       error: "",
       eventId: this.$route.params.eventId,
-      event: {},
+      event: false,
       isAuthenticated: this.$auth.isAuthenticated()
     }
   },
   mounted: function () {
-    // make sure user is logged in
-     if(!this.$auth.isAuthenticated() || !this.currentUser.hasAllRequiredFields) {
-      this.error = 'Sorry, you must be logged in to RSVP. Please go back, sign in, and try again.'
-      this.$router.push('/?activeScreen=signup')
-     } 
+    this.redirectToSignupIfNotAuthenticated()
     // get info about current user to display list of children
-      api.fetchCurrentUserNew(Token.currentUserId(this.$auth)).then(currentUser => {
-      console.log(currentUser)
-      this.currentUser = currentUser
-      this.children = currentUser.children
-      // if we don't have children for this user (which should never be true) show an error. (Todo: let user enter child info here in this case.) 
-      if (!this.children || this.children.length == 0) {
-        this.error = 'Sorry, but we cannot retrieve your children\'s information. Are you sure you have signed in? To resolve this, please email us at: contact@cottageclass.com.'
-      }
-      // if user has one child, and the user has only one child, don't require user to select which child.  
-      if (this.currentUser.children[0].firstName && this.currentUser.children.length == 1) {
-        this.childrenSelected = [this.currentUser.children[0].id]
-        this.submitRsvp()
-      }
-    }).catch(err => {
-      console.log('Error fetching user info', err)
-    })
-    // get data about the current event to determine max attendees.  
+    this.fetchUserInformation()
+    // get data about the current event to determine max attendees.
     this.fetchEventInformation()
   },
   computed: {
+    allInformationLoaded: function () {
+      return this.currentUser && this.event
+    },
     tooManyChildren: function () {
       return this.childrenSelected.length > this.event.maximumChildren - this.event.participantsCount
     },
@@ -141,6 +125,37 @@ export default {
     }
   },
   methods: {
+    fetchUserInformation: function () {
+      api.fetchCurrentUserNew(Token.currentUserId(this.$auth)).then(currentUser => {
+        console.log(currentUser)
+        this.currentUser = currentUser
+        this.children = currentUser.children
+        this.redirectToOnboardingIfNotOnboarded()
+        // if we don't have children for this user (which should never be true) show an error. (Todo: let user enter child info here in this case.) 
+        if (!this.children || this.children.length == 0){
+          this.error = 'Sorry, but we cannot retrieve your children\'s information. Are you sure you have signed in? To resolve this, please email us at: contact@cottageclass.com.'
+        }
+      }).catch(err => {
+      console.log('Error fetching user info', err)
+    })
+    },
+    redirectToSignupIfNotAuthenticated: function () {
+      if(!this.$auth.isAuthenticated()) {
+        console.log('User attempted to RSVP without being authenticated')
+        this.$cookies.set('rsvpAttempted', this.eventId)
+        this.$router.push('/?activeScreen=signup')
+      }
+    },
+    redirectToOnboardingIfNotOnboarded: function () {
+      if (!this.currentUser.hasAllRequiredFields) {
+      // send them back to onboarding.
+      console.log('user doesnt have required fields on rsvpinfocollection step, sending them back to onboarding', this.currentUser)
+      this.$cookies.set('rsvpAttempted', this.eventId)
+      this.$router.push('/')
+     } else {
+      console.log('user already onboarded, not redirecting')
+     }
+    },
     calculateAge: function (birthdate) {
       return moment().diff(birthdate, 'years')
     },
@@ -148,40 +163,43 @@ export default {
       api.fetchUpcomingEvents().then(
         (res) => { 
           this.event = res.find(event => event.id == this.$route.params.eventId)
-          if (this.event.full) {
+           if (this.event.full || this.event.maximumChildren == 0) {
             this.error = 'We\'re sorry, this event is full!'
-          // consider setting checkboxes to inactive.
         }
       }).catch(
       (err) => {
         this.error = 'Sorry, there was a problem retrieving information about the event. Go back and try again?'
       })
     },
-    next: function () {
+    nextStep: function () {
       if (this.tooManyChildren) {
-        this.error = 'Sorry, but there are not enough spots available for ' + this.childrenSelected.length + ' children.'
+        let numChildren = this.childrenSelected.length
+        let childrenSingularOrPlural = numChildren == 1 ? 'child' : 'children' 
+        this.error = 'Sorry, but there are not enough spots available for ' + numChildren + ' ' + childrenSingularOrPlural + '.'
+      } else if (this.childrenSelected.length == 0) {
+        this.error = 'Please choose at least one child to RSVP.'
       } else {
         this.submitRsvp()
       }
     },
+    forgetRsvpAttempted: function () {
+      this.$cookies.remove('rsvpAttempted')
+    },
     submitRsvp: function () {
-      if (this.childrenSelected.length == 0) {
-        this.error = 'Please choose at least one child to RSVP.'
-      } else {
-        this.error = ""
-        console.log('rsvping children ' + this.childrenSelected + ' to event ID' + this.eventId)
-        this.submitToSheetsu()
-        let component = this
-        api.submitEventParticipant(this.eventId, this.childrenSelected).then(res => {
-        // open event page where user will see success message
-          component.$router.push({name: 'EventPage', params: { id: this.eventId }})
-        }).catch(err => {
-          console.log(err)
-          this.error = 'Sorry, there was a problem submittting your RSVP. Try again?'
-          // fetch event information again, which will update the error message if the event is full, e.g. in the case where another user RSVP'ed a the same time, just before this user did.
-          this.fetchEventInformation()
-        })
-      }
+      this.error = ""
+      console.log('rsvping children ' + this.childrenSelected + ' to event ID' + this.eventId)
+      this.submitToSheetsu()
+      let component = this
+      api.submitEventParticipant(this.eventId, this.childrenSelected).then(res => {
+      // open event page where user will see success message
+        component.forgetRsvpAttempted()
+        component.$router.push({name: 'EventPage', params: { id: this.eventId }})
+      }).catch(err => {
+        console.log(err)
+        this.error = 'Sorry, there was a problem submittting your RSVP. Try again?'
+        // fetch event information again, which will update the error message if the event is full, e.g. in the case where another user RSVP'ed a the same time, just before this user did.
+        this.fetchEventInformation()
+      })
     },
     submitToSheetsu: function () {
       let userId = Token.currentUserId(this.$auth)

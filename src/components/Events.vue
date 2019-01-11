@@ -23,6 +23,7 @@
         	:event="event"
         	:index="index"
           :key="index"
+          showRsvpButton="true"
           />
         </ul>
 <!--        <div class="event-date-section-tittle"><a href="events.html" class="more-link">All Events</a></div> -->
