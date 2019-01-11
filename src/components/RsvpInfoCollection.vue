@@ -103,6 +103,7 @@ export default {
     // make sure user is logged in
      if(!this.$auth.isAuthenticated()) {
       this.error = 'Sorry, you must be logged in to RSVP. Please go back, sign in, and try again.'
+      this.$router.push('/?activeScreen=signup')
      } 
     // get info about current user to display list of children
       api.fetchCurrentUserNew(Token.currentUserId(this.$auth)).then(currentUser => {
