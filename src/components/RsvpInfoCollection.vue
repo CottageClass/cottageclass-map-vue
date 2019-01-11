@@ -101,7 +101,7 @@ export default {
   },
   mounted: function () {
     // make sure user is logged in
-     if(!this.$auth.isAuthenticated()) {
+     if(!this.$auth.isAuthenticated() || !this.currentUser.hasAllRequiredFields) {
       this.error = 'Sorry, you must be logged in to RSVP. Please go back, sign in, and try again.'
       this.$router.push('/?activeScreen=signup')
      } 

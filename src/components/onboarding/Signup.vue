@@ -28,7 +28,11 @@
       </div>
           <div class="onb-top-content-container">
             <h1 class="onb-heading-large">Join KidsClub</h1>
-            <button v-if="showFacebookLogin" class="button-text splash-button w-inline-block facebook-sign-in-button">Continue with Facebook</button>
+            <button 
+            v-if="showFacebookLogin" 
+            class="button-text splash-button w-inline-block facebook-sign-in-button"
+            @click="$emit('authenticateFacebook')"
+            >Continue with Facebook</button>
             <p class="onb-paragraph-subheading-2"><span v-if="showFacebookLogin">Or enter</span><span v-else>Enter</span> your information below. Already have an account? <a @click="$emit('activateScreen', 'directLogin')">Sign in here</a>.</p>         
           </div>
         </div>
@@ -136,7 +140,7 @@ export default {
         apiKey: '415594396214129',
         cloudName: 'cottageclass2'
       },
-      showFacebookLogin: false // !this.hideFacebookLogin()
+      showFacebookLogin: !this.hideFacebookLogin()
     };
   },
   computed: {

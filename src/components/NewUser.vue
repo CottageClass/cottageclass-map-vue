@@ -4,17 +4,23 @@
     v-if="activeScreen ==='facebook' && step === 0"
     v-on:userNotYetOnboarded="nextStep"
     v-on:activateScreen="activateScreen"
-    v-on:userAlreadyOnboarded="$router.push({name: 'MainView'})" />
+    v-on:userAlreadyOnboarded="$router.push({name: 'MainView'})"
+    v-on:authenticateFacebook="authenticate('facebook')"
+     />
     <DirectLogin
     v-if="activeScreen ==='directLogin' && step === 0"
     v-on:userNotYetOnboarded="nextStep"
     v-on:activateScreen="activateScreen"
-    v-on:userAlreadyOnboarded="$router.push({name: 'MainView'})" />
+    v-on:userAlreadyOnboarded="$router.push({name: 'MainView'})"
+    v-on:authenticateFacebook="authenticate('facebook')"
+     />
     <Signup
     v-if="activeScreen ==='signup' && step === 0"
     v-on:userNotYetOnboarded="nextStep"
     v-on:activateScreen="activateScreen"
-    v-on:userAlreadyOnboarded="$router.push({name: 'MainView'})" />
+    v-on:userAlreadyOnboarded="$router.push({name: 'MainView'})"
+    v-on:authenticateFacebook="authenticate('facebook')"
+     />
 
   <!-- wrapper for desktop screens -->  
 
@@ -202,7 +208,43 @@ export default {
       this.showError = false
       this.step = this.step - 1
     },
-    submitData: function () {
+    authenticate: function(provider) {
+  /*
+   *  Logs in the user (Facebook)
+   * - follows OAuth flow using VueAuth to get OAuth code
+   * - sends code to backend to exchange for access_token
+   * - backend fetches access_token, stores it in DB, and sends back JWT for user
+   * - VueAuthenticate stores JWT for future API access authorization
+   */
+
+  /* TODO: Refactor front and backend to authenticate via the following:
+   * - use FB library to obtain access token and store in cookies
+   * - send FB access_token to backend
+   * - backend decodes token using Koala, finds user by fbId or email, and sends back JWT for future API access
+   * - VueAuthenticate or other JWT auth library stores JWT token in localStorage or otherwise for us
+   */
+
+  // store value of this to access this.$emit during callback
+  let component = this
+  this.$auth.authenticate(provider)
+  .then(res => {
+    console.log("auth SUCCESS")
+  }).then(res => api.fetchCurrentUser(Token.currentUserId(component.$auth))).then(currentUser => {
+    if (currentUser.hasAllRequiredFields) {
+      // redirect to home screen
+      this.$router.push({name: 'MainView'})
+    } else if (currentUser.id) {
+      // begin onboarding
+      this.nextStep()
+    } else {
+      return false
+    }
+  }).catch(function(err) {
+    console.log("auth FAILURE or user not onboarded yet")
+    console.log(err)
+  })
+},
+  submitData: function () {
       // advance to loading indicator
       this.step = this.step + 1
       let userId = Token.currentUserId(this.$auth)

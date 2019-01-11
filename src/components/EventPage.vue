@@ -93,7 +93,13 @@
         </div>
       </div>
       <div class="event-specifics-card" v-if="!event.full && !event.participated">
-        <div class="card-large-text">Interested in this event?</div><a href="#" class="button-bottom-event w-button">RSVP</a></div>
+        <div class="card-large-text">Interested in this event?</div>
+        <RsvpButton 
+        :userParticipating="event.participated" 
+        :full="event.full" 
+        :eventId="eventId"
+        />
+      </div>
     </div>
   </div>
   <div class="footer">
