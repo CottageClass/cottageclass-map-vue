@@ -43,7 +43,7 @@
           <div class="summary-text">Ages {{ event.childAgeMinimum }}-{{ event.childAgeMaximum}} ({{ event.maximumChildren }} kids total)</div>
         </li>
         <li class="summary-list-item"><img src="@/assets/location.svg" alt="" class="summary-icon">
-          <div class="summary-text">{{ event.hostLocality }}<span v-if="event.hostAdminAreaLevel1 && event.hostLocality">,</span> {{ event.hostAdminAreaLevel1 }} <span v-if="distance"> - {{ distance }} miles away</span></div>
+          <div class="summary-text"><span  v-if="event.hostNeighborhood">{{ event.hostNeighborhood }} - {{ event.hostLocality || event.hostSublocality }}, </span>{{ event.hostAdminAreaLevel1 }} <span v-if="distance"> - {{ distance }} miles away</span></div>
         </li>
       </ul>
     </div>
