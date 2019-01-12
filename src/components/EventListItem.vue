@@ -15,7 +15,7 @@
       </a>
       <div class="event-summary">
         <div class="event-time">{{ formatTime(event.startsAt) }} – {{ formatTime(event.endsAt) }}</div>
-        <!-- <div class="event-location">Park Slope</div> NO NEIGHBORHOOD YET-->
+        <div class="event-location"><span v-if="event.hostLocality && event.hostAdminAreaLevel1">{{ event.hostLocality}} {{ event.hostAdminAreaLevel1 }} - </span>{{ distance }} mi.</span></div>
       </div>
       <div class="action-bar">
         <div class="host-info"><AvatarImage className="avatar-small" :person="{facebookId: event.hostFacebookUid, avatar: event.hostAvatar}"/>
@@ -42,7 +42,7 @@ var moment = require('moment');
 
 export default {
   name: 'EventListItem',
-  props: ['event', 'index', 'showRsvpButton'],
+  props: ['event', 'index', 'showRsvpButton', 'distance'],
   components: { AvatarImage, RsvpButton },
   methods: {
     backgroundColor: function (index) {

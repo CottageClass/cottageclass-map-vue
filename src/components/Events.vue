@@ -24,6 +24,7 @@
         	:index="index"
           :key="index"
           showRsvpButton="true"
+          :distance="distanceFromCurrentUser(event.hostFuzzyLatitude, event.hostFuzzyLongitude)"
           />
         </ul>
 <!--        <div class="event-date-section-tittle"><a href="events.html" class="more-link">All Events</a></div> -->
@@ -37,6 +38,7 @@
 
 <script>
 import EventListItem from '@/components/EventListItem.vue'
+import * as Token from '@/utils/tokens.js'
 import * as api from '@/utils/api.js'
 var moment = require('moment');
 
@@ -53,6 +55,8 @@ export default {
   data () {
   	return {
   	  events: null,
+      currentUser: null,
+      isAuthenticated: this.$auth.isAuthenticated()
   	}
   },
   computed: {
@@ -77,14 +81,46 @@ export default {
     },
     formatDate: function (date) {
       return moment(date).format('dddd, MMM Do' )
-    }
-  },
-  mounted: function () {
-    // fetch events from API
-    api.fetchUpcomingEvents().then(
+    },
+    fetchEvents: function () {
+      api.fetchUpcomingEvents().then(
       (res) => { 
         this.events = res
       })
+    },
+    fetchCurrentUser: function () {
+      api.fetchCurrentUserNew(Token.currentUserId(this.$auth)).then(currentUser => {
+        this.currentUser = currentUser
+        })
+    },
+    distanceFromCurrentUser: function (lat, lon) {
+      let distanceHaversine = function (lat1, lon1, lat2, lon2, unit) {
+        var radlat1 = Math.PI * lat1/180
+        var radlat2 = Math.PI * lat2/180
+        var radlon1 = Math.PI * lon1/180
+        var radlon2 = Math.PI * lon2/180
+        var theta = lon1-lon2
+        var radtheta = Math.PI * theta/180
+        var dist = Math.sin(radlat1) * Math.sin(radlat2) + Math.cos(radlat1) * Math.cos(radlat2) * Math.cos(radtheta);
+        dist = Math.acos(dist)
+        dist = dist * 180/Math.PI
+        dist = dist * 60 * 1.1515
+        if (unit=="K") { dist = dist * 1.609344 }
+        if (unit=="N") { dist = dist * 0.8684 }
+        return dist
+    }
+    if (this.currentUser) {
+      return distanceHaversine(lat, lon, this.currentUser.latitude, this.currentUser.longitude, 'N').toFixed(1)
+    } else {
+      return null
+    }
+  }
+  },
+  mounted: function () {
+    this.fetchEvents()
+    if (this.isAuthenticated) {
+      this.fetchCurrentUser()
+    }
   }
 };
 </script>
