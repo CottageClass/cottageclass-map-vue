@@ -228,7 +228,7 @@ export default {
 </script>
 
 <style scoped>
-
+ 
 .rsvp-button-bottom {
   margin-top: 16px;
 }

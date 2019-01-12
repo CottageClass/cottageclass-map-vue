@@ -4,6 +4,17 @@
     <div class="divider-2px"></div>
     <div class="content-container-4 w-container">
      <h1 class="h1-display">Upcoming Events</h1>
+     <p v-if="isAuthenticated">Within 
+      <select v-model="maximumDistanceFromUserInMiles">
+        <option>0.2</option>
+        <option>0.5</option>
+        <option>1</option>
+        <option>2</option>
+        <option>5</option>
+        <option>10</option>
+        <option>20</option>
+        <option>50</option>
+      </select> miles</p>
      <div class="events-list-wrapper">
       <div 
       v-for="(event, index) in limitNumberOfEvents(eventsByDate)">
@@ -20,6 +31,7 @@
       </div>
         <ul class="unordered-list-events">
         	<EventListItem 
+          v-if="distanceFromCurrentUser(event.hostFuzzyLatitude, event.hostFuzzyLongitude) <= parseFloat(maximumDistanceFromUserInMiles)"
         	:event="event"
         	:index="index"
           :key="index"
@@ -56,7 +68,8 @@ export default {
   	return {
   	  events: null,
       currentUser: null,
-      isAuthenticated: this.$auth.isAuthenticated()
+      isAuthenticated: this.$auth.isAuthenticated(),
+      maximumDistanceFromUserInMiles: '5'
   	}
   },
   computed: {
@@ -111,6 +124,11 @@ export default {
 </script>
 
 <style scoped>
+
+select {
+  appearance: menulist;
+  --webkit-appearance: menulist;
+}
 
 .onb-body {
   all: unset;
