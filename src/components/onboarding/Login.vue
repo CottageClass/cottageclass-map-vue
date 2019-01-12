@@ -66,6 +66,42 @@
     <div class="content-container-3 w-container">
       <h1 class="h1-display">Upcoming Events</h1>
       <div class="events-list-wrapper">
+        <div class="event-date-section-tittle"><img src="@/assets/date-outline-white-oval.svg" alt="" class="image-265">
+          <div class="date-text-wrapper">
+            <div class="date-title">Friday, January 11</div>
+          </div>
+        </div>
+        <ul class="unordered-list-events">
+          <li class="event-list-item">
+            <div class="event-list-item-graphic color-purple"><img src="@/assets/artist-palette.svg" alt="" class="emoji"></div>
+            <div class="event-list-item-content">
+              <div class="spacer w-hidden-main w-hidden-medium"></div>
+              <router-link 
+              :to="{ name: 'EventPage', params: { id: 85 }}" 
+              class="link-block-4 w-inline-block">
+                <h2 class="event-heading">Arts &amp; Crafts &amp; Pizza 🍕 with Manisha</h2>
+              </router-link>
+              <div class="event-summary">
+                <div class="event-time">Fri, Jan 11, 2019 at 5:30 PM–8::30 PM</div>
+                <div class="event-ages">Ages 0-5 (2 kids total)</div>
+                <div class="event-location">Carroll Gardens</div>
+              </div>
+              <div class="scrolling-wrapper"><img src="@/assets/manisha1.jpg" alt="" class="event-household-photo"><img src="@/assets/manisha2.jpg" alt="" class="event-household-photo"><img src="@/assets/manisha3.jpg" alt="" class="event-household-photo"><img src="@/assets/manisha4.jpg" alt="" class="event-household-photo"></div>
+              <div class="action-bar">
+                <div class="host-container">
+                  <div class="host-info"><img src="@/assets/allison.png" width="40" height="40" alt="" class="avatar-small">
+                    <div class="text-block">Hosted by Manisha &amp; Clark (age 1).</div>
+                  </div>
+                  <div class="host-meta">
+                    <div class="host-occupation">CEO/co-founder, CottageClass</div>
+                    <div class="background-checked-wrapper"><img src="@/assets/check-green.svg" alt="">
+                      <div class="background-checked">Background Checked</div>
+                    </div>
+                  </div>
+                </div><RsvpButton eventId="85" /></div>
+            </div>
+          </li>
+        </ul>
         <div class="event-date-section-tittle cancel-top-margin"><img src="@/assets/date-outline-white-oval.svg" alt="" class="image-264">
           <div class="date-text-wrapper">
             <div class="date-title">Saturday, January 19</div>
