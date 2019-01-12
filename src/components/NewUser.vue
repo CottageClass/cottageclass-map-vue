@@ -282,6 +282,9 @@ export default {
         route,
         locality,
         administrative_area_level_1,
+        administrative_area_level_2,
+        sublocality,
+        neighborhood,
         country,
         postal_code,
       } = address
@@ -306,6 +309,9 @@ export default {
         locality: locality,
         // snake_case key name is ugly but necessary for backend to recognize attr with trailing 1
         admin_area_level_1: administrative_area_level_1,
+        admin_area_level_2: administrative_area_level_2,
+        sublocality,
+        neighborhood,
         country: country,
         postalCode: postal_code,
         latitude: this.location.lat,
