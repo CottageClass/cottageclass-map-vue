@@ -99,7 +99,6 @@
     </div>
   </div>
   </div>
-    </div>
      <div v-if="!!success" class="onb-content-container-2" >
        <div class="onb-top-content-container">
         <br><br><br>
@@ -108,6 +107,7 @@
        </div>
        <button @click="$emit('activateScreen', 'directLogin')" class="button-text splash-button w-inline-block">Sign in</button>
      </div>
+    </div>
     </div>
   </div>
 </div>

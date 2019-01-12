@@ -57,6 +57,8 @@
       />
       <PetsDescription v-if="step === 12" v-model="petsDescription" />
       <HouseRules v-if="step === 13" v-model="houseRules" />
+      <!-- OAuthCallback is just used for the loading animation --> 
+      <OAuthCallback v-if="step > lastStep && !error" />
 
    <!-- close wrapper -->  
  </div>
@@ -82,6 +84,7 @@ import EventTime from '@/components/onboarding/EventTime.vue'
 import EventDate from '@/components/onboarding/EventDate.vue'
 import MaxChildren from '@/components/onboarding/MaxChildren.vue'
 import YesOrNo from '@/components/onboarding/YesOrNo.vue'
+import OAuthCallback from '@/components/OAuthCallback.vue' 
 import * as Token from '@/utils/tokens.js'
 import * as api from '@/utils/api.js'
 import sheetsu from 'sheetsu-node'
@@ -93,7 +96,7 @@ var client = sheetsu({ address: 'https://sheetsu.com/apis/v1.0su/62cd725d6088' }
 
 export default {
   components: {
-    Nav, Login, DirectLogin, Signup, Location, Phone, Children, Availability, Food, EventActivity, EventTime, EventDate, HouseRules, PetsDescription, YesOrNo, MaxChildren
+    Nav, Login, DirectLogin, Signup, Location, Phone, Children, Availability, Food, EventActivity, EventTime, EventDate, HouseRules, PetsDescription, YesOrNo, MaxChildren, OAuthCallback
   },
   data () {
     return {
@@ -114,10 +117,6 @@ export default {
       children: {
         list: [{firstName: null, birthday: null}],
         err: 'skippable'
-      },
-      isOtherAdultPresent: '',
-      otherAdultsPresent: {
-        list: [{fullName: null, email: null, phone: null}],
       },
       blurb: {
         text: ''
@@ -204,6 +203,8 @@ export default {
       this.step = this.step - 1
     },
     submitData: function () {
+      // advance to loading indicator
+      this.step = this.step + 1
       let userId = Token.currentUserId(this.$auth)
 
       // submit user to sheetsu for KPI tracking, unless network is "demo"
@@ -231,6 +232,9 @@ export default {
         route,
         locality,
         administrative_area_level_1,
+        administrative_area_level_2,
+        sublocality,
+        neighborhood,
         country,
         postal_code,
       } = address
@@ -255,6 +259,9 @@ export default {
         locality: locality,
         // snake_case key name is ugly but necessary for backend to recognize attr with trailing 1
         admin_area_level_1: administrative_area_level_1,
+        admin_area_level_2: administrative_area_level_2,
+        sublocality,
+        neighborhood,
         country: country,
         postalCode: postal_code,
         latitude: this.location.lat,
@@ -293,7 +300,6 @@ export default {
           "foods": [this.food.selected],
           "house_rules": this.houseRules.text,
           "pet_description": this.petsDescription.text,
-          "event_hosts_attributes": this.otherAdultsPresent.list,
           "maximum_children": this.maxChildren,
           "child_age_minimum": defaultChildAgeMinimum,
           "child_age_maximum": defaultChildAgeMaximum
@@ -426,7 +432,7 @@ export default {
 .onb-content-container {
   margin: 0 auto;
   max-width: 600px;
-  height: 100vh;
+  min-height: 100vh;
 }
 
 textarea, input[type="text"] {
@@ -2393,7 +2399,7 @@ a {
   -webkit-align-items: center;
   -ms-flex-align: center;
   align-items: center;
-  height: 100vh;
+  min-height: 100vh;
 }
 
 .onb-heading-large {

@@ -3,14 +3,11 @@ import Router from 'vue-router'
 import MainView from '@/components/MainView.vue'
 import Bookings from '@/components/Bookings'
 import EmergencyInfo from '@/components/EmergencyInfo'
-import Splash from '@/components/Splash.vue'
-import EnterCode from '@/components/EnterCode.vue'
 import ProviderProfile from '@/components/ProviderProfile.vue'
 import RequestModal from '@/components/RequestModal.vue'
 import OAuthCallback from '@/components/OAuthCallback.vue'
 import network from '../assets/network-info.json'
 import HowItWorks from '@/components/HowItWorks.vue'
-import DesktopWarningSplash from '@/components/DesktopWarningSplash.vue'
 import NewUser from '@/components/NewUser.vue'
 import DirectLogin from '@/components/onboarding/DirectLogin.vue';
 import TabNav from '@/components/TabNav.vue'
@@ -48,11 +45,6 @@ export default new Router({
       component: TabNav
     },
     {
-      path: '/enter-code',
-      name: 'EnterCode',
-      component: EnterCode
-    },
-    {
       path: '/provider-profile/:id',
       name: 'ProviderProfile',
       component: ProviderProfile
@@ -78,19 +70,9 @@ export default new Router({
       component: HowItWorks
     },
     {
-      path:'/desktop-warning',
-      name: 'DesktopWarningSplash',
-      component: DesktopWarningSplash
-    },
-    {
       path: '/oauth-callback',
       name: 'Root',
       component: OAuthCallback
-    },
-    {
-      path: '/splash',
-      name: 'Splash',
-      component: Splash
     },
     {
       path: '/request',

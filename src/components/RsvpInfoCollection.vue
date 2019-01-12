@@ -95,10 +95,15 @@ export default {
       childrenSelected: [],
       error: "",
       eventId: this.$route.params.eventId,
-      event: {}
+      event: {},
+      isAuthenticated: this.$auth.isAuthenticated()
     }
   },
   mounted: function () {
+    // make sure user is logged in
+     if(!this.$auth.isAuthenticated()) {
+      this.error = 'Sorry, you must be logged in to RSVP. Please go back, sign in, and try again.'
+     } 
     // get info about current user to display list of children
       api.fetchCurrentUserNew(Token.currentUserId(this.$auth)).then(currentUser => {
       console.log(currentUser)
@@ -106,13 +111,15 @@ export default {
       this.children = currentUser.children
       // if we don't have children for this user (which should never be true) show an error. (Todo: let user enter child info here in this case.) 
       if (!this.children || this.children.length == 0) {
-        this.error = 'Sorry, but we cannot retrieve your children\'s information. To resolve this, please email us at: contact@cottageclass.com.'
+        this.error = 'Sorry, but we cannot retrieve your children\'s information. Are you sure you have signed in? To resolve this, please email us at: contact@cottageclass.com.'
       }
       // if user has one child, and the user has only one child, don't require user to select which child.  
       if (this.currentUser.children[0].firstName && this.currentUser.children.length == 1) {
         this.childrenSelected = [this.currentUser.children[0].id]
         this.submitRsvp()
       }
+    }).catch(err => {
+      console.log('Error fetching user info', err)
     })
     // get data about the current event to determine max attendees.  
     this.fetchEventInformation()
@@ -244,7 +251,7 @@ textarea {
 .onb-content-container {
   margin: 0 auto;
   max-width: 600px;
-  height: 100vh;
+  min-height: 100vh;
 }
 
 textarea, input[type="text"] {

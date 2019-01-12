@@ -1,7 +1,7 @@
 <template>
 <div class="body-homepage">
   <div data-collapse="medium" data-animation="default" data-duration="400" class="nav-section w-nav">
-    <div class="nav-container w-container"><a href="#" class="brand w-clearfix w-nav-brand"><img src="@/assets/cottageclass-logo.svg" alt="" class="image-2"></a>
+    <div class="nav-container w-container"><a href="#" class="brand w-clearfix w-nav-brand"><img src="@/assets/kc-logo-landscape.svg" alt="" class="image-2"></a>
       <div class="tag-container-desktop w-hidden-medium w-hidden-small w-hidden-tiny">
         <div class="nav-tag">Free childcare, fun events.</div>
       </div>
@@ -32,8 +32,20 @@
           </ul>
         </div>
 
-        <div class="signup-wrapper"><a @click="authenticate('facebook')" class="fb-button w-inline-block" v-if="!!facebookLogin"><img src="@/assets/facebook-button-icon.svg" width="24" height="24" alt=""><div class="fb-button-text">Continue with Facebook</div></a>
-          <div class="use-password-text" v-if="!!directLogin">Or <a href="#" class="links" @click="$emit('activateScreen', 'directLogin')">use a password instead</a></div>
+        <div class="signup-wrapper">
+          <a 
+          v-if="!!facebookLogin" 
+          @click="authenticate('facebook')" 
+          class="fb-button w-inline-block">
+          <img src="@/assets/facebook-button-icon.svg" width="24" height="24" alt=""><div class="fb-button-text">Continue with Facebook</div></a>
+          <a 
+          v-else
+          @click="$emit('activateScreen', 'signup')"
+          class="fb-button w-inline-block">
+          <img src="@/assets/add.svg" width="24" height="24" alt="">
+          <div class="fb-button-text">Create your account</div></a>
+          <div v-if="facebookLogin" class="use-password-text">Or <a href="#" class="links" @click="$emit('activateScreen', 'signup')">use a password instead</a></div>
+          <div v-else class="use-password-text">Or <a href="#" class="links" @click="$emit('activateScreen', 'directLogin')">sign in now</a></div>          
           <div class="terms-text">By signing in you agree to our <a href="https://cottageclass.com/terms-of-service">Terms of Service</a> and <a href="https://cottageclass.com/privacy-policy">Privacy Policy</a>.</div>
         </div>
       </div>
@@ -61,39 +73,14 @@
         </div>
         <ul class="unordered-list-events">
           <li class="event-list-item">
-            <div class="event-list-item-graphic color-light-blue"><img src="@/assets/artist-palette.svg" alt="" class="emoji"></div>
-            <div class="event-list-item-content">
-              <div class="spacer w-hidden-main w-hidden-medium"></div>
-              <a href="event-detail.html" class="link-block-4 w-inline-block">
-                <h2 class="event-heading">Eggs &amp; Painting with Jordana</h2>
-              </a>
-              <div class="event-summary">
-                <div class="event-time">Sun, Feb 3, 2019 at 10:00 AM - 12:00 PM</div>
-                <div class="event-ages">Ages 2-5 (4 kids total)</div>
-                <div class="event-location">Red Hook</div>
-              </div>
-              <div class="scrolling-wrapper"><img src="@/assets/jordanacotton10.jpg" alt="" class="event-household-photo"><img src="@/assets/jordanacotton9.jpg" alt="" class="event-household-photo"><img src="@/assets/jordanacotton5.jpg" alt="" class="event-household-photo"><img src="@/assets/jordanacotton2.jpg" alt="" class="event-household-photo"><img src="@/assets/jordanacotton6.jpg" alt="" class="event-household-photo"><img src="@/assets/jordanacotton7.jpg" alt="" class="event-household-photo"></div>
-              <div class="action-bar">
-                <div class="host-container">
-                  <div class="host-info"><img src="@/assets/jordana.png" width="40" height="40" alt="" class="avatar-small">
-                    <div class="text-block">Hosted by Jordana &amp; Bastian (age 2).</div>
-                  </div>
-                  <div class="host-meta">
-                    <div class="host-occupation">Psychiatric Nurse Practitioner, the Midtown Practice</div>
-                    <div class="background-checked-wrapper"><img src="@/assets/check-green.svg" alt="">
-                      <div class="background-checked">Background Checked</div>
-                    </div>
-                  </div>
-                </div><a href="#" class="button w-button">RSVP</a></div>
-            </div>
-          </li>
-          <li class="event-list-item">
             <div class="event-list-item-graphic color-purple"><img src="@/assets/artist-palette.svg" alt="" class="emoji"></div>
             <div class="event-list-item-content">
               <div class="spacer w-hidden-main w-hidden-medium"></div>
-              <a href="event-detail.html" class="link-block-4 w-inline-block">
+              <router-link 
+              :to="{ name: 'EventPage', params: { id: 85 }}" 
+              class="link-block-4 w-inline-block">
                 <h2 class="event-heading">Arts &amp; Crafts &amp; Pizza 🍕 with Manisha</h2>
-              </a>
+              </router-link>
               <div class="event-summary">
                 <div class="event-time">Fri, Jan 11, 2019 at 5:30 PM–8::30 PM</div>
                 <div class="event-ages">Ages 0-5 (2 kids total)</div>
@@ -111,7 +98,7 @@
                       <div class="background-checked">Background Checked</div>
                     </div>
                   </div>
-                </div><a href="#" class="button w-button">RSVP</a></div>
+                </div><RsvpButton eventId="85" /></div>
             </div>
           </li>
         </ul>
@@ -125,9 +112,11 @@
             <div class="event-list-item-graphic color-hot-pink"><img src="@/assets/film-projector.svg" alt="" class="emoji"></div>
             <div class="event-list-item-content">
               <div class="spacer w-hidden-main w-hidden-medium"></div>
-              <a href="event-detail.html" class="link-block-4 w-inline-block">
+              <router-link 
+              :to="{ name: 'EventPage', params: { id: 97 }}" 
+              class="link-block-4 w-inline-block">
                 <h2 class="event-heading">Movie night &amp; pizza 🍕 with Rima</h2>
-              </a>
+              </router-link>
               <div class="event-summary">
                 <div class="event-time">Sat, Jan 19, 2019 at 5:00 PM–8:00 PM</div>
                 <div class="event-ages">Ages 4-11 (4 kids total)</div>
@@ -145,13 +134,13 @@
                       <div class="background-checked">Background Checked</div>
                     </div>
                   </div>
-                </div><a href="#" class="button w-button">RSVP</a></div>
+                </div><RsvpButton eventId="97" /></div>
             </div>
           </li>
         </ul>
         <div class="event-date-section-tittle"><img src="@/assets/date-outline-white-oval.svg" alt="" class="image-265">
           <div class="date-text-wrapper">
-            <div class="date-title">Wednesday, January 24</div>
+            <div class="date-title">Thursday, January 24</div>
           </div>
         </div>
         <ul class="unordered-list-events">
@@ -159,11 +148,13 @@
             <div class="event-list-item-graphic color-pink"><img src="@/assets/butterfly.svg" alt="" class="emoji"></div>
             <div class="event-list-item-content">
               <div class="spacer w-hidden-main w-hidden-medium"></div>
-              <a href="event-detail.html" class="link-block-4 w-inline-block">
+              <router-link 
+              :to="{ name: 'EventPage', params: { id: 109 }}" 
+              class="link-block-4 w-inline-block">
                 <h2 class="event-heading">Develop your mindfulness superpower workshop &amp; dinner with Julie</h2>
-              </a>
+              </router-link>
               <div class="event-summary">
-                <div class="event-time">Wed, Jan 24, 2019 at 6:00 PM–9:00 PM</div>
+                <div class="event-time">Thu, Jan 24, 2019 at 6:00 PM–9:00 PM</div>
                 <div class="event-ages">Ages 4-11 (4 kids total)</div>
                 <div class="event-location">Cobble Hill</div>
               </div>
@@ -180,10 +171,46 @@
                       <div class="background-checked">Background Checked</div>
                     </div>
                   </div>
-                </div><a href="#" class="button w-button">RSVP</a></div>
+                </div><RsvpButton eventId="109" /></div>
             </div>
           </li>
         </ul>
+        <div class="event-date-section-tittle"><img src="@/assets/date-outline-white-oval.svg" alt="" class="image-265">
+          <div class="date-text-wrapper">
+            <div class="date-title">Sunday, Febuary 3</div>
+          </div>
+        </div>
+        <ul class="unordered-list-events">
+          <li class="event-list-item">
+            <div class="event-list-item-graphic color-light-blue"><img src="@/assets/artist-palette.svg" alt="" class="emoji"></div>
+            <div class="event-list-item-content">
+              <div class="spacer w-hidden-main w-hidden-medium"></div>
+              <router-link 
+              :to="{ name: 'EventPage', params: { id: 91 }}" 
+              class="link-block-4 w-inline-block">
+                <h2 class="event-heading">Eggs &amp; Painting with Jordana</h2>
+              </router-link>
+              <div class="event-summary">
+                <div class="event-time">Sun, Feb 3, 2019 at 10:00 AM - 12:00 PM</div>
+                <div class="event-ages">Ages 2-5 (4 kids total)</div>
+                <div class="event-location">Red Hook</div>
+              </div>
+              <div class="scrolling-wrapper"><img src="@/assets/jordanacotton10.jpg" alt="" class="event-household-photo"><img src="@/assets/jordanacotton9.jpg" alt="" class="event-household-photo"><img src="@/assets/jordanacotton5.jpg" alt="" class="event-household-photo"><img src="@/assets/jordanacotton2.jpg" alt="" class="event-household-photo"><img src="@/assets/jordanacotton6.jpg" alt="" class="event-household-photo"><img src="@/assets/jordanacotton7.jpg" alt="" class="event-household-photo"></div>
+              <div class="action-bar">
+                <div class="host-container">
+                  <div class="host-info"><img src="@/assets/jordana.png" width="40" height="40" alt="" class="avatar-small">
+                    <div class="text-block">Hosted by Jordana &amp; Bastian (age 2).</div>
+                  </div>
+                  <div class="host-meta">
+                    <div class="host-occupation">Psychiatric Nurse Practitioner, the Midtown Practice</div>
+                    <div class="background-checked-wrapper"><img src="@/assets/check-green.svg" alt="">
+                      <div class="background-checked">Background Checked</div>
+                    </div>
+                  </div>
+                </div><RsvpButton eventId="91" /></div>
+            </div>
+          </li>
+        </ul>        
         <div class="event-date-section-tittle"><img src="@/assets/date-outline-white-oval.svg" alt="" class="image-265">
           <div class="date-text-wrapper">
             <div class="date-title">Monday, February 4</div>
@@ -194,9 +221,11 @@
             <div class="event-list-item-graphic color-green"><img src="@/assets/film-projector.svg" alt="" class="emoji"></div>
             <div class="event-list-item-content">
               <div class="spacer w-hidden-main w-hidden-medium"></div>
-              <a href="event-detail.html" class="link-block-4 w-inline-block">
+              <router-link 
+              :to="{ name: 'EventPage', params: { id: 103 }}" 
+              class="link-block-4 w-inline-block">
                 <h2 class="event-heading">Movie night &amp; pizza 🍕 with Charlice</h2>
-              </a>
+              </router-link>
               <div class="event-summary">
                 <div class="event-time">Mon, Feb 4, 2019 at 6:00 PM–9:00 PM</div>
                 <div class="event-ages">Ages 2-11 (5 kids total)</div>
@@ -214,7 +243,7 @@
                       <div class="background-checked">Background Checked</div>
                     </div>
                   </div>
-                </div><a href="#" class="button w-button">RSVP</a></div>
+                </div><RsvpButton eventId="103" /></div>
             </div>
           </li>
         </ul>
@@ -355,17 +384,17 @@ import networks from '@/assets/network-info.json'
 import * as Token from '@/utils/tokens.js'
 import * as api from '@/utils/api.js'
 import Events from '@/components/Events.vue'
-import TavNav from '@/components/Events.vue'
+import RsvpButton from '@/components/RsvpButton.vue'
+
 
 export default {
     name: 'Login',
-    components: { Events },
+    components: { Events, RsvpButton },
     data () {
       return {
         networks: networks,
         currentUser: {},
         facebookLogin: !this.hideFacebookLogin(),
-        directLogin: true
       }
     },
     mounted: function () {

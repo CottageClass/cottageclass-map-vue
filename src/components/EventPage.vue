@@ -18,7 +18,7 @@
       <div class="action-bar">
         <div class="host-info"><AvatarImage className="avatar-large" :person="{facebookId: event.hostFacebookUid, avatar: event.hostAvatar}"/>
           <div class="host-info-wrapper">
-            <div class="hosted-by">Hosted by <a href="#" class="link">{{ event.hostFirstName }}</a></div>
+            <div class="hosted-by">Hosted by <a href="#" class="host">{{ event.hostFirstName }}</a></div>
             <div v-if="event.hostVerified" class="background-checked-wrapper"><img src="@/assets/check-green.svg" alt="">
               <div class="background-checked">Background Checked</div>
             </div>
@@ -198,6 +198,15 @@ export default {
 
 .body-2 {
   font-family: soleil;
+}
+
+a.host {
+  color: #1f88e9;
+  text-decoration: none;
+}
+
+a.host:hover {
+  text-decoration: underline;
 }
 
 .alert-container {
