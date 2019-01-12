@@ -43,7 +43,7 @@
           <div class="summary-text">Ages {{ event.childAgeMinimum }}-{{ event.childAgeMaximum}} ({{ event.maximumChildren }} kids total)</div>
         </li>
         <li class="summary-list-item"><img src="@/assets/location.svg" alt="" class="summary-icon">
-          <div class="summary-text">{{ event.hostLocality }}<span v-if="event.hostAdminAreaLevel1 && event.hostLocality">,</span> {{ event.hostAdminAreaLevel1 }}</div>
+          <div class="summary-text">{{ event.hostLocality }}<span v-if="event.hostAdminAreaLevel1 && event.hostLocality">,</span> {{ event.hostAdminAreaLevel1 }} <span v-if="distance"> - {{ distance }} miles away</span></div>
         </li>
       </ul>
     </div>
@@ -136,6 +136,7 @@
 // todo: pass "person" object to AvatarImage
 
 import * as api from '@/utils/api.js'
+import * as Token from '@/utils/tokens.js'
 var moment = require('moment');
 import AvatarImage from './AvatarImage.vue'
 import RsvpButton from './RsvpButton.vue'
@@ -146,6 +147,8 @@ export default {
   data () {
     return {
       events: [],
+      currentUser: null,
+      isAuthenticated: this.$auth.isAuthenticated(),
       mapOptions: { 
       "disableDefaultUI": true, // turns off map controls
       "gestureHandling": "none" // prevents any kind of scrolling
@@ -183,18 +186,36 @@ export default {
           default:
             return 'grinning-face-with-smiling-eyes.svg'
         }
-      }
-  },
-  mounted: function () {
-    api.fetchUpcomingEvents().then(
+      },
+    fetchCurrentUser: function () {
+      api.fetchCurrentUserNew(Token.currentUserId(this.$auth)).then(currentUser => {
+        this.currentUser = currentUser
+        })
+    },
+    fetchAllEvents: function () {
+      api.fetchUpcomingEvents().then(
       (res) => { 
         this.events = res
-      })
+      })      
+    }
+  },
+  mounted: function () {
+    this.fetchAllEvents()
+    if (this.isAuthenticated) {
+      this.fetchCurrentUser()
+    }
   },
   computed: {
     eventId: function () {
       return this.event.id
     },
+    distance: function () {
+    if (this.currentUser) {
+      return api.distanceHaversine(this.event.hostFuzzyLatitude, this.event.hostFuzzyLongitude, this.currentUser.latitude, this.currentUser.longitude)
+    } else {
+      return null
+    }
+  },
     childAgesSorted: function () {
       return this.event.hostChildAges.sort((a,b) => a - b)
     },
