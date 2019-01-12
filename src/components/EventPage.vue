@@ -193,7 +193,7 @@ export default {
         })
     },
     fetchAllEvents: function () {
-      api.fetchUpcomingEvents().then(
+      api.fetchUpcomingEvents('upcoming').then(
       (res) => { 
         this.events = res
       })      
