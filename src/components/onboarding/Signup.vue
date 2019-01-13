@@ -19,8 +19,9 @@
 
     <div v-if="!success">
     <div class="onb-content-container-2">
-      <div v-if="showError && errors.all()" class="onb-error-container">
+      <div v-if="showError && (errors.all().length > 0 || error)" class="onb-error-container">
         <div class="onb-error-text">
+          <span> {{ error }}</span>
           <ul>
             <li v-for="error in errors.all()">{{ error }}</li>
           </ul>
@@ -140,7 +141,8 @@ export default {
         apiKey: '415594396214129',
         cloudName: 'cottageclass2'
       },
-      showFacebookLogin: !this.hideFacebookLogin()
+      showFacebookLogin: !this.hideFacebookLogin(),
+      error: null
     };
   },
   computed: {
@@ -249,10 +251,22 @@ export default {
                 console.log('signup success:', response);
                 component.success = true;
                 component.disableForm = false;
+                component.$auth
+              .login({ email, password })
+              .then(res => {
+                console.log('auth success:', res);
+                component.$emit('userNotYetOnboarded')
+              })
+              .catch(function(err) {
+                console.log('auth FAILURE or user not onboarded yet');
+                console.error(err);
+              });
               })
               .catch(function(error) {
                 console.error('signup failure:', error);
                 component.disableForm = false;
+                component.showError = true
+                component.error = 'Sorry, there was a problem creating your account. Please try again?'
               });
           } else {
             component.showError = true
