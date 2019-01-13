@@ -26,8 +26,16 @@
   </div>
 
   <!-- share button -->
+  <div class="invite-friends-container">
+    <h5 class="heading">Want more people you know?</h5>
+    <div class="spacer-16"></div>
+  <ShareButton 
+  buttonText="Invite Friends" 
+  shareTitle="Want to share childcare with me?"
+  shareText="I'm sharing childcare with a small circle of parents and friends. If you'd like to join sign up here!"
+  shareUrl="https://www.kidsclub.io/"/>
+  </div>
 
-  <ShareButton />
     <br><br>
     <h5 class="heading-2">Map data &#169; 2018 Google (<a href="https://www.google.com/intl/en-US_US/help/terms_maps.html">terms of use</a> - <a href="https://www.google.com/maps/@40.6782,-73.9442,12z/data=!10m2!1e3!2e10!12b1?rapsrc=apiv3">report a map error</a>)</h5>
 
@@ -104,6 +112,28 @@ export default {
 </script>
 
 <style scoped>
+
+.invite-friends-container {
+  font-family: soleil;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  margin: 24px 16px;
+  padding: 40px 24px;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+  -ms-flex-align: center;
+  align-items: center;
+  border-radius: 4px;
+  background-color: #fff;
+  text-align: left;
+}
 
 .group-title-container {
   padding-top: 24px;
