@@ -18,8 +18,7 @@
      <div class="events-list-wrapper">
       <div 
       v-for="(event, index) in eventsWithinDistance">
-        <div 
-        v-if="index === 0 || (formatDate(event.startsAt) != formatDate(eventsWithinDistance[index - 1]).startsAt)" class="event-date-section-tittle cancel-top-margin">
+        <div v-if="index === 0 || (formatDate(event.startsAt) != formatDate(eventsWithinDistance[index - 1].startsAt))" class="event-date-section-tittle">
         <img src="@/assets/date-outline-white-oval.svg" alt="" class="image-264">
         <div class="date-text-wrapper">
           <div class="date-title">
@@ -29,7 +28,6 @@
           {{ formatDate(event.startsAt) }}</div>
         </div>
       </div>
-        <ul class="unordered-list-events">
         	<EventListItem 
         	:event="event"
         	:index="index"
@@ -37,7 +35,6 @@
           showRsvpButton="true"
           :distance="distanceFromCurrentUser(event.hostFuzzyLatitude, event.hostFuzzyLongitude)"
           />
-        </ul>
 <!--        <div class="event-date-section-tittle"><a href="events.html" class="more-link">All Events</a></div> -->
       </div>
     </div>
@@ -992,7 +989,6 @@ a {
 
 .events-list-wrapper {
   width: 100%;
-  margin-top: 60px;
 }
 
 .event-date-section-tittle {
@@ -1997,6 +1993,9 @@ a {
   .body {
     padding-bottom: 110px;
   }
+  .event-date-section-tittle {
+    margin-top: 52px;
+  }
   .nav-menu {
     position: absolute;
     margin-top: 0px;
@@ -2169,7 +2168,6 @@ a {
     margin-top: 20px;
   }
   .events-list-wrapper {
-    margin-top: 32px;
   }
   .date-title {
     font-size: 18px;
