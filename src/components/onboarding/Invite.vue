@@ -70,15 +70,24 @@ export default {
   },
   computed: {
     shareUrl: function () {
-      return 'www.kidsclub.com/events/' + this.nextEventInSeries.id
+      if (!!this.nextEventInSeries) {
+        return 'www.kidsclub.io/events/' + this.nextEventInSeries.id
+      } else {
+        return 'www.kidsclub.io' 
+      }
     },
     nextEventInSeries: function () {
-      let events = this.eventData.event
-      let eventIds = Object.keys(events)
-      let eventId = eventIds[0]
-      let event = events[eventId].attributes
-      event.id = eventId
-      return event
+      if (!!this.eventData) {
+        let events = this.eventData.event
+        let eventIds = Object.keys(events)
+        let eventId = eventIds[0]
+        let event = events[eventId].attributes
+        event.id = eventId
+        event.activityName = event.activityNames.length > 0 && event.activityNames[0]
+        return event
+      } else {
+        return null
+      }
     },
   	textMessage: function () {
   		return "Hey! I'm hosting this event for kids as part of a new way to share childcare. Want to come? " + this.link  
