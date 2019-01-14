@@ -103,6 +103,19 @@
         :eventId="eventId"
         />
       </div>
+
+      <!-- Sharing ask --> 
+
+      <div class="event-specifics-card" v-if="!event.full && !event.participated">
+        <div class="card-large-text">Want to help spread the word?</div>
+          <ShareButton 
+          class="rsvp-button-bottom"
+          buttonText="Invite friends" 
+          shareTitle="Want to do this with me?"
+          shareText="It's a new way of sharing childcare with other parents. Want to join?"
+          :shareUrl="'https://www.kidsclub.io/event/' + eventId" />
+      </div>
+
     </div>
   </div>
   <div class="footer">
@@ -140,10 +153,11 @@ import * as Token from '@/utils/tokens.js'
 var moment = require('moment');
 import AvatarImage from './AvatarImage.vue'
 import RsvpButton from './RsvpButton.vue'
+import ShareButton from './ShareButton.vue'
 
 export default {
   name: 'EventPage',
-  components: { AvatarImage, RsvpButton },
+  components: { AvatarImage, RsvpButton, ShareButton },
   data () {
     return {
       events: [],

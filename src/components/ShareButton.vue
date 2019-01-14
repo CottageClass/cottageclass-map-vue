@@ -33,7 +33,7 @@ export default {
   color: white;
   font-size: 13px;
   font-weight: 400;
-  text-align: left;
+  text-align: center;
   letter-spacing: 1.2px;
   text-transform: uppercase;
 }
