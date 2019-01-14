@@ -17,9 +17,9 @@
       </select> miles</p>
      <div class="events-list-wrapper">
       <div 
-      v-for="(event, index) in limitNumberOfEvents(eventsByDate)">
+      v-for="(event, index) in eventsWithinDistance">
         <div 
-        v-if="index === 0 || (formatDate(event.startsAt) != formatDate(eventsByDate[index - 1]).startsAt)" class="event-date-section-tittle cancel-top-margin">
+        v-if="index === 0 || (formatDate(event.startsAt) != formatDate(eventsWithinDistance[index - 1]).startsAt)" class="event-date-section-tittle cancel-top-margin">
         <img src="@/assets/date-outline-white-oval.svg" alt="" class="image-264">
         <div class="date-text-wrapper">
           <div class="date-title">
@@ -31,7 +31,6 @@
       </div>
         <ul class="unordered-list-events">
         	<EventListItem 
-          v-if="distanceFromCurrentUser(event.hostFuzzyLatitude, event.hostFuzzyLongitude) <= parseFloat(maximumDistanceFromUserInMiles)"
         	:event="event"
         	:index="index"
           :key="index"
@@ -78,6 +77,13 @@ export default {
         return this.events.sort((eventA, eventB) => {
           return moment(eventA.startsAt).diff(moment(eventB.startsAt))
         })
+      }
+    },
+    eventsWithinDistance: function () {
+      if (this.isAuthenticated && !!this.eventsByDate) {
+        return this.eventsByDate.filter(event => this.distanceFromCurrentUser(event.hostFuzzyLatitude, event.hostFuzzyLongitude) <= parseFloat(this.maximumDistanceFromUserInMiles))
+      } else {
+        return this.eventsByDate
       }
     }
   },
