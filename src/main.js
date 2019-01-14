@@ -5,7 +5,8 @@ import App from './App';
 import router from './router'
 import * as VueGoogleMaps from 'vue2-google-maps'
 import './registerServiceWorker'
-
+import VueClipboard from 'vue-clipboard2'
+ 
 /*
  * Cookie setup
  */
@@ -19,6 +20,13 @@ Vue.use(VueCookies)
 import axios from 'axios';
 import VueAxios from 'vue-axios';
 Vue.use(VueAxios, axios);
+
+/*
+ * Copy to clipboard
+ */
+
+Vue.use(VueClipboard)
+
 
 // Form validation
 import VeeValidate from 'vee-validate';

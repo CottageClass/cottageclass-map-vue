@@ -12,25 +12,30 @@
 
   <div class="onb-content-container">
     <div class="onb-top-content-container">
-      <h1 class="onb-heading-large">Welcome!</h1>
-      <p class="onb-paragraph-subheading-2">We've created your monthly event. Now, to make your event a success, can you invite some friends using the options below?</p>
+      <h1 class="onb-heading-large">Last step: Build your village</h1>
+      <p class="onb-paragraph-subheading-2">Invite a few friends to attend your activity. When they join, they'll be prompted to host their own activity and invite a few more friends. Before you know it, you'll have a thriving community of parents sharing activities and childcare!</p>
     </div>
     <div class="onb-copy-link-container">
-    	<!-- 
       <div class="onb-copy-link-form-block w-form">
-        <form id="email-form" name="email-form" data-name="Email Form" class="onb-copy-link-form"><input type="text" class="copy-text-link-field w-input" maxlength="256" name="name" data-name="Name" placeholder="goo.gl/gbXHjw" id="name"><a href="#" class="onb-button-copy-link w-button">Copy Link</a></form>
+        <form id="email-form" name="email-form" data-name="Email Form" class="onb-copy-link-form"><input type="text" class="copy-text-link-field w-input" maxlength="256" name="name" data-name="Name" :placeholder="shareUrl" id="name">
+          <a 
+          v-clipboard:copy="link"
+          v-clipboard:success="onCopy"
+          class="onb-button-copy-link w-button"
+          >{{ copyButtonText }}</a>
+        </form>
       </div>
-  -->
     </div>
     <ul class="onb-social-button-list">
-      <li class="onb-button-social-list-item"><TextMessageLink :message="textMessage" number="" class="onb-button-social w-inline-block"><img src="@/assets/mms.svg" width="32" height="32" alt=""><div class="onb-button-social-text">Text message</div></TextMessageLink></li>
-      <li class="onb-button-social-list-item"><a :href="fbMessengerLink" class="onb-button-social w-inline-block"><img src="@/assets/messenger.svg" width="32" height="32" alt=""><div class="onb-button-social-text">Facebook Messenger</div></a></li>
-      <li class="onb-button-social-list-item"><a :href="fbLink" target="_blank" class="onb-button-social w-inline-block"><img src="@/assets/facebook-hover.svg" width="32" height="32" alt=""><div class="onb-button-social-text">Facebook timeline</div></a></li>
-      <li class="onb-button-social-list-item"><a :href="tweetLink" target="_blank" class="onb-button-social w-inline-block"><img src="@/assets/twitter-hover.svg" width="32" height="32" alt=""><div class="onb-button-social-text">Twitter</div></a></li>
+      <li v-if="isMobileDevice" class="onb-button-social-list-item"><TextMessageLink :message="textMessage" number="" class="onb-button-social w-inline-block"><img src="@/assets/mms.svg" width="32" height="32" alt=""><div class="onb-button-social-text">Text message</div></TextMessageLink></li>
+      <li v-if="isMobileDevice" class="onb-button-social-list-item"><a :href="fbMessengerLink" class="onb-button-social w-inline-block"><img src="@/assets/messenger.svg" width="32" height="32" alt=""><div class="onb-button-social-text">Facebook Messenger</div></a></li>
+      <li v-if="!isMobileDevice" class="onb-button-social-list-item"><a :href="fbLink" target="_blank" class="onb-button-social w-inline-block"><img src="@/assets/facebook-hover.svg" width="32" height="32" alt=""><div class="onb-button-social-text">Facebook</div></a></li>
+      <li v-if="!isMobileDevice" class="onb-button-social-list-item"><a :href="tweetLink" target="_blank" class="onb-button-social w-inline-block"><img src="@/assets/twitter-hover.svg" width="32" height="32" alt=""><div class="onb-button-social-text">Twitter</div></a></li>
       <li class="onb-button-social-list-item"><a :href="emailLink" class="onb-button-social w-inline-block"><img src="@/assets/email.svg" width="32" height="32" alt=""><div class="onb-button-social-text">Email</div></a></li>
     </ul>
     <br/>
     <EventListItem 
+    v-if="nextEventInSeries" 
     :event="nextEventInSeries"
     :index="nextEventInSeries.id"
     showRsvpButton="" 
@@ -61,11 +66,12 @@ export default {
   props: [ 'eventData', 'currentUser' ],
   data () {
   	return {
+      copyButtonText: 'copy link',
   		prefix: "https://",
   		tweetText: "Everyone I know should come to this event I\'m hosting to start a local network for childcare sharing!",
       emailBody: "Hi%20everyone!%0A%0AI%20hope%20you%20can%20all%20join%20me%20at%20this%20event%20we%20are%20hosting%20to%20start%20a%20new%20local%20network%20for%20sharing%20childcare!%20Can%20you%20come%3F%0A%0A",
-      emailSubject: "Sharing%20childcare%20(we%20should%20do%20this!)"
-
+      emailSubject: "Sharing%20childcare%20(we%20should%20do%20this!)",
+      isMobileDevice: typeof window.orientation != "undefined"
   	}
   },
   computed: {
@@ -109,9 +115,8 @@ export default {
     }
   },
   methods: {
-  	copy: function () {
-  		return true
-  		// not sure how to do this. uncomment copy section later.
+  	onCopy: function () {
+  		this.copyButtonText = 'copied!'
   }
 }
 };
