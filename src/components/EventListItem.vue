@@ -19,7 +19,16 @@
       </div>
       <div class="action-bar">
         <div class="host-info"><AvatarImage className="avatar-small" :person="{facebookId: event.hostFacebookUid, avatar: event.hostAvatar}"/>
-          <div class="text-block">Hosted by <a href="#" class="host-name link">{{ event.hostFirstName }}</a></div>
+          <div class="text-block">Hosted by <a href="#" class="host-name link">{{ event.hostFirstName }}</a> &amp; 
+            <span v-if="childAgesSorted.length == 1">1 kid&mdash;age {{  childAgesSorted[0] }}.</span>
+          <span v-if="childAgesSorted.length == 2">2 kids&mdash;ages {{ childAgesSorted[0] }} and {{ childAgesSorted[1] }}.</span>
+          <span v-if="childAgesSorted.length > 2">{{ childAgesSorted.length }} kids&mdash;ages 
+            <span v-for="(age, index) in childAgesSorted">
+              <span v-if="index == childAgesSorted.length - 1"> and {{ age }}.</span>
+              <span v-else> {{ age}}<span v-if="index != childAgesSorted.length - 2">,</span></span>
+            </span>
+          </span>
+        </div>
         </div>
           <RsvpButton 
           v-if="showRsvpButton"
@@ -44,6 +53,11 @@ export default {
   name: 'EventListItem',
   props: ['event', 'index', 'showRsvpButton', 'distance'],
   components: { AvatarImage, RsvpButton },
+  computed: {
+    childAgesSorted: function () {
+      return this.event.hostChildAges.sort((a,b) => a - b)
+    }
+  },
   methods: {
     backgroundColor: function (index) {
       let colors = ['#e82d55', '#0cba52', '#aff0fc', '#fd6f77', '#64426b']

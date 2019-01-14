@@ -18,7 +18,15 @@
       <div class="action-bar">
         <div class="host-info"><AvatarImage className="avatar-large" :person="{facebookId: event.hostFacebookUid, avatar: event.hostAvatar}"/>
           <div class="host-info-wrapper">
-            <div class="hosted-by">Hosted by <a href="#" class="host">{{ event.hostFirstName }}</a></div>
+            <div class="hosted-by">Hosted by <a href="#" class="host">{{ event.hostFirstName }}</a> &amp; 
+            <span v-if="childAgesSorted.length == 1">1 kid&mdash;age {{  childAgesSorted[0] }}.</span>
+          <span v-if="childAgesSorted.length == 2">2 kids&mdash;ages {{ childAgesSorted[0] }} and {{ childAgesSorted[1] }}.</span>
+          <span v-if="childAgesSorted.length > 2">{{ childAgesSorted.length }} kids&mdash;ages 
+            <span v-for="(age, index) in childAgesSorted">
+              <span v-if="index == childAgesSorted.length - 1"> and {{ age }}.</span>
+              <span v-else> {{ age}}<span v-if="index != childAgesSorted.length - 2">,</span></span>
+            </span>
+          </span></div>
             <div v-if="event.hostVerified" class="background-checked-wrapper"><img src="@/assets/check-green.svg" alt="">
               <div class="background-checked">Background Checked</div>
             </div>
