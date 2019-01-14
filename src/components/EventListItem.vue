@@ -14,7 +14,7 @@
         <h2 class="event-heading">{{ event.name }}</h2>
       </a>
       <div class="event-summary">
-        <div class="event-time">{{ formatTime(event.startsAt) }} – {{ formatTime(event.endsAt) }}</div>
+        <div class="event-time">{{ formatDate(event.startsAt) }}, {{ formatTime(event.startsAt) }} – {{ formatTime(event.endsAt) }}</div>
         <div class="event-location">{{ event.hostNeighborhood || event.hostLocality || event.hostAdminAreaLevel1 }} <span v-if="distance">- {{ distance }} miles from you</span></div>
       </div>
       <div class="action-bar">
@@ -49,8 +49,11 @@ export default {
       let colors = ['#e82d55', '#0cba52', '#aff0fc', '#fd6f77', '#64426b']
       return colors[index % colors.length]
     },
-    formatTime: function (time24) {
-      return moment(time24).format('LT')
+    formatTime: function (date) {
+      return moment(date).format('LT')
+    },
+    formatDate: function (date) {
+      return moment(date).format('MMM D')
     },
     iconUrl: function (imageName) {
       return require('@/assets/' + imageName)
