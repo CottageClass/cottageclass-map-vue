@@ -160,7 +160,7 @@ export default {
       return moment().diff(birthdate, 'years')
     },
     fetchEventInformation: function () {
-      api.fetchUpcomingEvents().then(
+      api.fetchEvents().then(
         (res) => { 
           this.event = res.find(event => event.id == this.$route.params.eventId)
            if (this.event.full || this.event.maximumChildren == 0) {

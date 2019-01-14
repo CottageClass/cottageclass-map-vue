@@ -94,7 +94,7 @@ export default {
     }
   },
   mounted: function () {
-    api.fetchUpcomingEvents().then(
+    api.fetchEvents().then(
       (res) => { 
         this.event = res.find(event => event.id == this.eventId)
       })

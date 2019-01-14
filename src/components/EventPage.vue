@@ -207,7 +207,7 @@ export default {
         })
     },
     fetchAllEvents: function () {
-      api.fetchUpcomingEvents('upcoming').then(
+      api.fetchEvents().then(
       (res) => { 
         this.events = res
       })      

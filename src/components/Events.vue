@@ -95,8 +95,8 @@ export default {
     formatDate: function (date) {
       return moment(date).format('dddd, MMM Do' )
     },
-    fetchEvents: function () {
-      api.fetchUpcomingEvents().then(
+    fetchUpcomingEvents: function () {
+      api.fetchEvents('upcoming').then(
       (res) => { 
         this.events = res
       })
@@ -115,7 +115,7 @@ export default {
   }
   },
   mounted: function () {
-    this.fetchEvents()
+    this.fetchUpcomingEvents()
     if (this.isAuthenticated) {
       this.fetchCurrentUser()
     }

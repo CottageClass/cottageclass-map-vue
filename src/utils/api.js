@@ -219,13 +219,11 @@ export function fetchMessagesForUserPair(participantId1, participantId2) {
  * EVENTS
  */
 
-export function fetchUpcomingEvents(scope) {
-  console.log(scope)
-  console.log(`${process.env.BASE_URL_API}/api/events/${scope || 'upcoming'}`)
+export function fetchEvents(scope) {
   return Vue.axios.get(
-    `${process.env.BASE_URL_API}/api/events/${scope || 'upcoming'}`
+    `${process.env.BASE_URL_API}/api/events/${scope || ''}`
     ).then(res => {
-      console.log("FETCH UPCOMING EVENTS SUCCESS")
+      console.log("FETCH EVENTS SUCCESS")
       console.log(res.data)
       return Object.values(normalize(res.data).event).map(obj => {
       var e = obj.attributes
@@ -238,7 +236,7 @@ export function fetchUpcomingEvents(scope) {
       return e
       })
         }).catch(err => {
-          console.log("FETCH UPCOMING EVENTS FAILURE")
+          console.log("FETCH EVENTS FAILURE")
           console.log(err.errors)
           throw err
         })
