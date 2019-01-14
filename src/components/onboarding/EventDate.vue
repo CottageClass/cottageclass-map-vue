@@ -52,10 +52,10 @@ export default {
       dateSelected: '',
       errorMesg: 'Please choose a day for your activity.',
       dates: [ // this is hardcoded for now but we'll automatically populate this soon. 
-      '2019-01-11',
-      '2019-01-18',
-      '2019-01-19',
-      '2019-01-20',
+      '2019-02-15',
+      '2019-02-16',
+      '2019-02-22',
+      '2019-02-23',
       'Other'
       ],
       otherDate: null
