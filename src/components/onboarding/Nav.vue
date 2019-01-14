@@ -19,7 +19,9 @@ export default {
 	    text: function () {
 			if (this.button === 'skip') {
 				return "SKIP"
-			} else {
+			} else if (this.button === 'done') {
+        return "DONE"
+      } else {
 				return "NEXT"
 			}
 		},

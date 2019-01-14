@@ -21,6 +21,12 @@
     v-on:userAlreadyOnboarded="$router.push({name: 'MainView'})"
     v-on:authenticateFacebook="authenticate('facebook')"
      />
+    <Invite 
+    v-if="activeScreen === 'inviteOthers'"
+    :eventData="createdEventData"
+    :currentUser="currentUser"
+    @prev="backFromInviteStep"
+    /> 
 
   <!-- wrapper for desktop screens -->  
 
@@ -91,10 +97,12 @@ import EventDate from '@/components/onboarding/EventDate.vue'
 import MaxChildren from '@/components/onboarding/MaxChildren.vue'
 import YesOrNo from '@/components/onboarding/YesOrNo.vue'
 import OAuthCallback from '@/components/OAuthCallback.vue' 
+import Invite from '@/components/onboarding/Invite.vue' 
 import * as Token from '@/utils/tokens.js'
 import * as api from '@/utils/api.js'
 import sheetsu from 'sheetsu-node'
 var moment = require('moment');
+import normalize from 'json-api-normalizer';
 
 // create a config file to identify which spreadsheet we push to.
 var client = sheetsu({ address: 'https://sheetsu.com/apis/v1.0su/62cd725d6088' })
@@ -102,10 +110,11 @@ var client = sheetsu({ address: 'https://sheetsu.com/apis/v1.0su/62cd725d6088' }
 
 export default {
   components: {
-    Nav, Login, DirectLogin, Signup, Location, Phone, Children, Availability, Food, EventActivity, EventTime, EventDate, HouseRules, PetsDescription, YesOrNo, MaxChildren, OAuthCallback
+    Nav, Login, DirectLogin, Signup, Location, Phone, Children, Availability, Food, EventActivity, EventTime, EventDate, HouseRules, PetsDescription, YesOrNo, MaxChildren, OAuthCallback, Invite
   },
   data () {
     return {
+      createdEventData: null,
       activeScreen: this.$route.query.activeScreen || 'facebook',
       currentUser: {},
       step: 0,
@@ -171,10 +180,11 @@ export default {
       return string.charAt(0).toUpperCase() + string.slice(1);
     },
     continueWhenComplete: function () {
-      if (!this.rsvpAttempted) {
-        this.$router.push({ name: 'MainView' })
-      } else {
+      if (this.rsvpAttempted) {
         this.$router.push({ name: 'RsvpConfirmation', params: { eventId: this.rsvpAttempted }})
+      } else {
+        this.activateScreen('inviteOthers')
+        this.step = 0
       }
     },
     skipSkippableSteps: function () {
@@ -187,16 +197,12 @@ export default {
       }
     },
     setStep: function (destinationStep) {
-      // this.step = 'limbo' // this is an attempt to get the YesOrNo component to unmount when they appear back to back in the sequence. It did not work. 
       this.step = destinationStep
     },
     nextStep: function () {
       if (this.step == this.lastStep) {
         this.submitData()
           .then(res => {
-            // only move to next page once we have saved user data
-            // - get back userId
-            // - get back networkCode
             this.continueWhenComplete()
           })
       }
@@ -212,6 +218,10 @@ export default {
     prevStep: function () {
       this.showError = false
       this.step = this.step - 1
+    },
+    backFromInviteStep: function () {
+      this.step = this.lastStep
+      this.activeScreen = null
     },
     authenticate: function(provider) {
   /*
@@ -338,7 +348,6 @@ export default {
       const defaultChildAgeMaximum = 11
       const defaultChildAgeMinimum = 3
 
-      // test data from documentation
       let eventData = {
         "event_series": {
           "name": this.eventName, 
@@ -373,8 +382,11 @@ export default {
           throw err
         })
         .then(() => {
-          component.axios.post(`${process.env.BASE_URL_API}/api/event_series`, eventData)
-        })
+          component.axios.post(`${process.env.BASE_URL_API}/api/event_series`, eventData).then(res => {
+            component.createdEventData = normalize(res.data)
+            console.log('axios put returns', component.createdEventData)
+          })
+        }) // I might be attaching this .then to the wrong function. It's possible I should be attaching it to the axios call itself. 
         .then(res => {
           console.log('event creation SUCCESS')
           console.log(res)

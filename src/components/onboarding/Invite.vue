@@ -1,8 +1,19 @@
 <template>
+
+  <!-- wrapper for desktop screens -->  
+
+    <div class="onb-body">
+      <div class="body">
+        <div class="content-wrapper">
+
+ <!-- nav --> 
+
+      <Nav button="done" @next="router.push({name: 'MainView'})" @prev="console.log('cant go back')" />
+
   <div class="onb-content-container">
     <div class="onb-top-content-container">
-      <h1 class="onb-heading-large">Thank you!</h1>
-      <p class="onb-paragraph-subheading-2">We're still invitation only. But if you can find enough parents in your school or neighborhood we'll give you your own network code. Here are some ways to invite other families...</p>
+      <h1 class="onb-heading-large">Welcome!</h1>
+      <p class="onb-paragraph-subheading-2">We've created your monthly event. Now, to make your event a success, can you invite some friends using the options below?</p>
     </div>
     <div class="onb-copy-link-container">
     	<!-- 
@@ -18,7 +29,16 @@
       <li class="onb-button-social-list-item"><a :href="tweetLink" target="_blank" class="onb-button-social w-inline-block"><img src="@/assets/twitter-hover.svg" width="32" height="32" alt=""><div class="onb-button-social-text">Twitter</div></a></li>
       <li class="onb-button-social-list-item"><a :href="emailLink" class="onb-button-social w-inline-block"><img src="@/assets/email.svg" width="32" height="32" alt=""><div class="onb-button-social-text">Email</div></a></li>
     </ul>
+    <br/>
+    <EventListItem 
+    :event="nextEventInSeries"
+    :index="nextEventInSeries.id"
+    showRsvpButton="" 
+    />
   </div>
+</div>
+</div>
+</div>
 </template>
 
 <script>
@@ -32,24 +52,36 @@
 // add facebook meta tags to page
 
 import TextMessageLink from '@/components/TextMessageLink.vue'
+import EventListItem from '@/components/EventListItem.vue'
+import Nav from '@/components/onboarding/Nav.vue'
 
 export default {
   name: "Invite",
-  components: { TextMessageLink },
+  components: { TextMessageLink, EventListItem, Nav },
+  props: [ 'eventData', 'currentUser' ],
   data () {
   	return {
-  		shareUrl: "app.cottageclass.com/",
   		prefix: "https://",
-  		shareMessage: "Hey! I wanted to invite you share childcare in my network on CottageClass! Can you join?",
-  		tweetText: "Everyone I know should join the network I\'m starting for sharing childcare on CottageClass!",
-      emailBody: "Hi%20everyone!%0A%0AWe%20should%20all%20join%20my%20network%20on%20this%20new%20app%20for%20sharing%20childcare!%20Can%20you%20join%3F%0A%0A",
+  		tweetText: "Everyone I know should come to this event I\'m hosting to start a local network for childcare sharing!",
+      emailBody: "Hi%20everyone!%0A%0AI%20hope%20you%20can%20all%20join%20me%20at%20this%20event%20we%20are%20hosting%20to%20start%20a%20new%20local%20network%20for%20sharing%20childcare!%20Can%20you%20come%3F%0A%0A",
       emailSubject: "Sharing%20childcare%20(we%20should%20do%20this!)"
 
   	}
   },
   computed: {
+    shareUrl: function () {
+      return 'www.kidsclub.com/events/' + this.nextEventInSeries.id
+    },
+    nextEventInSeries: function () {
+      let events = this.eventData.event
+      let eventIds = Object.keys(events)
+      let eventId = eventIds[0]
+      let event = events[eventId].attributes
+      event.id = eventId
+      return event
+    },
   	textMessage: function () {
-  		return "Hey! I wanted to invite you to share childcare in my network on CottageClass! Can you join? " + this.link  
+  		return "Hey! I'm hosting this event for kids as part of a new way to share childcare. Want to come? " + this.link  
   	},
   	link: function() {
   		return this.prefix + this.shareUrl
@@ -78,6 +110,10 @@ export default {
 
 <style lang="scss" scoped>
 @import '../../assets/css/onboarding-and-forms.css';
+
+.onb-content-container {
+  font-family: soleil;
+}
 
 /* Remove inner shadow from inputs on mobile iOS */
 textarea, input[type="text"] {
