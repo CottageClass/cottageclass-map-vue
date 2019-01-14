@@ -25,9 +25,10 @@
           </div>
         </div>
         
-        <!-- RSVP button -->
+        <!-- RSVP button or share button-->
 
         <RsvpButton 
+        v-if="!hostIsCurrentUser"
         :userParticipating="event.participated" 
         :full="event.full" 
         :eventId="eventId"
@@ -95,9 +96,10 @@
 
       <!-- second RSVP button --> 
 
-      <div class="event-specifics-card" v-if="!event.full && !event.participated">
+      <div class="event-specifics-card" v-if="!event.full && !event.participated && !hostIsCurrentUser">
         <div class="card-large-text">Interested in this event?</div>
-        <RsvpButton class="rsvp-button-bottom"
+        <RsvpButton 
+        class="rsvp-button-bottom"
         :userParticipating="event.participated" 
         :full="event.full" 
         :eventId="eventId"
@@ -107,7 +109,8 @@
       <!-- Sharing ask --> 
 
       <div class="event-specifics-card" v-if="!event.full && !event.participated">
-        <div class="card-large-text">Want to help spread the word?</div>
+        <div v-if="!hostIsCurrentUser" class="card-large-text">Want to help spread the word?</div>
+        <div v-else class="card-large-text">Invite others to your event!</div>
           <ShareButton 
           class="rsvp-button-bottom"
           buttonText="Invite friends" 
@@ -162,6 +165,7 @@ export default {
     return {
       events: [],
       currentUser: null,
+      currentUserId: Token.currentUserId(this.$auth),
       isAuthenticated: this.$auth.isAuthenticated(),
       mapOptions: { 
       "disableDefaultUI": true, // turns off map controls
@@ -220,6 +224,9 @@ export default {
     }
   },
   computed: {
+    hostIsCurrentUser: function () {
+      return this.event.hostId == this.currentUserId
+    },
     eventId: function () {
       return this.event.id
     },

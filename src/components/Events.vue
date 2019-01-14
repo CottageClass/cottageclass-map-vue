@@ -32,7 +32,7 @@
         	:event="event"
         	:index="index"
           :key="index"
-          showRsvpButton="true"
+          :showRsvpButton="!isAuthenticated || currentUserId != event.hostId"
           :distance="distanceFromCurrentUser(event.hostFuzzyLatitude, event.hostFuzzyLongitude)"
           />
 <!--        <div class="event-date-section-tittle"><a href="events.html" class="more-link">All Events</a></div> -->
@@ -65,7 +65,8 @@ export default {
   	  events: null,
       currentUser: null,
       isAuthenticated: this.$auth.isAuthenticated(),
-      maximumDistanceFromUserInMiles: '5'
+      maximumDistanceFromUserInMiles: '5',
+      currentUserId: Token.currentUserId(this.$auth),
   	}
   },
   computed: {
