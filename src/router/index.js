@@ -17,10 +17,9 @@ import AdminMessages from '@/components/AdminMessages.vue'
 import EventPage from '@/components/EventPage.vue'
 import RsvpInfoCollection from '@/components/RsvpInfoCollection.vue'
 import RsvpConfirmation from '@/components/RsvpConfirmation.vue'
+import Faq from '@/components/Faq.vue'
 
 Vue.use(Router)
-
-// '/:networkId/' is a temporary hack. This should get reworked once we add multiple networks.
 
 export default new Router({
   mode: 'history',
@@ -95,6 +94,12 @@ export default new Router({
       path: '/admin-messages',
       name: 'AdminMessages',
       component: AdminMessages,
+      // NB: this route has beforeRouteEnter redirect in the component
+    },
+    {
+      path: '/faq',
+      name: 'Faq',
+      component: Faq,
       // NB: this route has beforeRouteEnter redirect in the component
     }
   ],
