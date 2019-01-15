@@ -331,31 +331,6 @@ a {
   background-color: transparent;
 }
 
-.nav-link {
-  position: static;
-  width: 100%;
-  margin-top: 1px;
-  padding: 24px 16px 24px 24px;
-  border-top: 1px solid rgba(0, 0, 0, .04);
-  color: #1f88e9;
-}
-
-.nav-link:active {
-  background-color: #1f88e9;
-  color: #fff;
-}
-
-.nav-link-2 {
-  position: static;
-  padding-left: 17px;
-}
-
-.nav-link-3 {
-  position: static;
-  width: 100%;
-  padding-top: 12px;
-  padding-bottom: 12px;
-}
 
 .mid-line {
   height: 2px;

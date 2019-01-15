@@ -268,38 +268,6 @@ a {
   padding-top: 0px;
 }
 
-.nav-links {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  padding: 0px;
-  -webkit-box-pack: end;
-  -webkit-justify-content: flex-end;
-  -ms-flex-pack: end;
-  justify-content: flex-end;
-  -webkit-box-align: center;
-  -webkit-align-items: center;
-  -ms-flex-align: center;
-  align-items: center;
-}
-
-.nav-link {
-  display: block;
-  padding: 16px 10px;
-  -webkit-box-pack: justify;
-  -webkit-justify-content: space-between;
-  -ms-flex-pack: justify;
-  justify-content: space-between;
-  font-size: 0.89rem;
-  letter-spacing: 0.12rem;
-  text-transform: uppercase;
-}
-
-.nav-link:hover {
-  color: #7e7e7e;
-}
-
 .nav-tag {
   padding-top: 2px;
   color: #a6a6a6;
@@ -1549,16 +1517,7 @@ a {
     -ms-flex: 0 auto;
     flex: 0 auto;
   }
-  .nav-link {
-    margin-right: 0px;
-    margin-bottom: 8px;
-    margin-left: 0px;
-    padding: 8px 0px;
-    -webkit-box-flex: 0;
-    -webkit-flex: 0 auto;
-    -ms-flex: 0 auto;
-    flex: 0 auto;
-  }
+
   .nav-section {
     position: relative;
     padding-bottom: 0px;
