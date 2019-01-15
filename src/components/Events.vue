@@ -64,9 +64,9 @@ export default {
   	return {
   	  events: null,
       currentUser: null,
-      isAuthenticated: this.$auth.isAuthenticated(),
+      isAuthenticated: false,
       maximumDistanceFromUserInMiles: '5',
-      currentUserId: Token.currentUserId(this.$auth),
+      currentUserId: null,
   	}
   },
   computed: {
@@ -120,6 +120,11 @@ export default {
   },
   mounted: function () {
     this.fetchUpcomingEvents()
+    if (this.$auth && this.$auth.isAuthenticated()) {
+      this.isAuthenticated = true
+      this.currentUserId = Token.currentUserId(this.$auth)
+    } 
+
     if (this.isAuthenticated) {
       this.fetchCurrentUser()
     }
