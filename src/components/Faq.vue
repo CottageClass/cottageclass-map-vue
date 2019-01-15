@@ -206,6 +206,7 @@ export default {
   color: #333;
   font-size: 14px;
   line-height: 20px;
+  background-color: #fff;
 }
 
 h1 {
