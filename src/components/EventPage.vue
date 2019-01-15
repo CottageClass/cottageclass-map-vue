@@ -1,5 +1,6 @@
 <template>
 <div class="body-2">
+  <MainNav />
   <div class="event-detail-container w-container">
     <div class="event-detail-graphic"><img :src="iconUrl(iconImage(event.activityName))" 
  width="150" height="150" alt=""></div>
@@ -165,16 +166,17 @@ var moment = require('moment');
 import AvatarImage from './AvatarImage.vue'
 import RsvpButton from './RsvpButton.vue'
 import ShareButton from './ShareButton.vue'
+import MainNav from './MainNav.vue'
 
 export default {
   name: 'EventPage',
-  components: { AvatarImage, RsvpButton, ShareButton },
+  components: { AvatarImage, RsvpButton, ShareButton, MainNav },
   data () {
     return {
       events: [],
       currentUser: null,
-      currentUserId: Token.currentUserId(this.$auth),
-      isAuthenticated: this.$auth.isAuthenticated(),
+      currentUserId: null,
+      isAuthenticated: false,
       mapOptions: { 
       "disableDefaultUI": true, // turns off map controls
       "gestureHandling": "none" // prevents any kind of scrolling
@@ -227,9 +229,11 @@ export default {
   },
   mounted: function () {
     this.fetchAllEvents()
-    if (this.isAuthenticated) {
-      this.fetchCurrentUser()
-    }
+    if (this.$auth && this.$auth.isAuthenticated()) {
+      this.isAuthenticated = true
+      this.currentUserId = Token.currentUserId(this.$auth)
+      this.fetchCurrentUser()      
+    } 
   },
   computed: {
     hostIsCurrentUser: function () {
