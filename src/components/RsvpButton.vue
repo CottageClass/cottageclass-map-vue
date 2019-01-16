@@ -26,6 +26,7 @@ export default {
   border-radius: 4px;
   background-color: #1f88e9;
   text-align: center;
+  color: #fff;
 }
 
 .button:hover {
