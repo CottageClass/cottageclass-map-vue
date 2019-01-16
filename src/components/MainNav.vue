@@ -39,6 +39,11 @@
               <div class="text-block">Logout</div>
             </a>
           </li>
+          <li class="nav-link" v-if="!isAuthenticated">
+            <router-link to="/" class="link-block w-inline-block">
+              <div class="text-block">Sign in</div>
+            </router-link>
+          </li>          
         </ul>
       </div>
     </div>
