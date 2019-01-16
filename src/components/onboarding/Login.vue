@@ -25,7 +25,7 @@
           <ul class="unordered-list">
             <li class="list-item"><img src="@/assets/give-care.svg" alt="" class="image-262">
               <div class="hero-list-item-heading">Give Care.</div>
-              <div class="hero-list-item-subtitle">Host an activity once a month at your home for kids age 3 to 11.</div>
+              <div class="hero-list-item-subtitle">Host an activity once a month at your home for kids age 3 to 11. <router-link to="/faq">How it works.</router-link></div>
             </li>
             <li class="list-item"><img src="@/assets/get-care.svg" alt="" class="image-262">
               <div class="hero-list-item-heading">Get Care.</div>
