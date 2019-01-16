@@ -43,7 +43,7 @@
           <button type="submit" class="button-text splash-button w-inline-block">Sign in</button>
       </form>
     </div>
-    <p><a @click="$emit('activateScreen', 'facebook')">Sign in here</a> if you sign in using Facebook. Forgot your password? <br><a href="mailto:info@cottageclass.com">Email us</a></p>
+    <p><a @click="$emit('activateScreen', 'facebook')">Sign in here</a> if you sign in using Facebook. Forgot your password? <br><a href="mailto:contact@cottageclass.com">Email us</a></p>
   </div>
 </div>
 </div>
