@@ -34,6 +34,11 @@
               <div class="text-block">FAQ</div>
             </router-link>
           </li>
+          <li class="nav-link" v-if="isAuthenticated">
+            <a @click="logout" class="link-block w-inline-block">
+              <div class="text-block">Logout</div>
+            </a>
+          </li>
         </ul>
       </div>
     </div>
@@ -50,10 +55,16 @@ export default {
   mixins: [ clickaway ],	
   props: ['user'],
   menuButtonText: 'Menu',
+  isAuthenticated: null,
   data () {
   	return {
   		showMenu: false,
   	}
+  },
+  mounted: function () {
+    if (this.$auth && this.$auth.isAuthenticated()) {
+      this.isAuthenticated = true
+    }
   },
   methods: {
   	toggleMenu: function () {
@@ -61,7 +72,11 @@ export default {
   	},
   	clickedAway: function () {
   		this.showMenu = false
-  	}
+  	},
+    logout: function () {
+      this.$auth.logout()
+      this.$router.push('/')
+    }
   }
 };
 </script>
