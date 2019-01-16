@@ -19,7 +19,7 @@
               <div class="text-block">Activities</div>
             </router-link>
           </li>
-          <li class="nav-link">
+          <!-- <li class="nav-link">
             <router-link to="/home/find" class="link-block w-inline-block">
               <div class="text-block">Request Care</div>
             </router-link>
@@ -28,7 +28,7 @@
             <router-link to="/home/provide" class="link-block w-inline-block">
               <div class="text-block">Offer Care</div>
             </router-link>
-          </li>
+          </li> -->
           <li class="nav-link">
             <router-link to="/faq" class="link-block w-inline-block">
               <div class="text-block">FAQ</div>
