@@ -29,7 +29,7 @@
             </li>
             <li class="list-item"><img src="@/assets/get-care.svg" alt="" class="image-262">
               <div class="hero-list-item-heading">Get Care.</div>
-              <div class="hero-list-item-subtitle">For each child you host (how many is up to you) you get 1 point to spend on <a href="#events" class="links">activities like these</a>.</div>
+              <div class="hero-list-item-subtitle">For each child you host (how many is up to you) you get 1 point to spend on <router-link to="/home" class="links">activities like these</router-link>.</div>
             </li>
             <li class="list-item"><img src="@/assets/socially.svg" alt="" class="image-262">
               <div class="hero-list-item-heading">Socially.</div>
