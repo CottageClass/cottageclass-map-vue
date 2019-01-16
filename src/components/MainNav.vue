@@ -5,8 +5,8 @@
       </div>
       <div class="actions-wrapper">
       	<AvatarImage
-      	v-if="user" 
-      	:person="user" 
+      	v-if="currentUser" 
+      	:person="currentUser" 
       	className="image" />
       	<a @click="toggleMenu" class="button w-button">Menu</a></div>
       <div 
@@ -19,16 +19,16 @@
               <div class="text-block">Activities</div>
             </router-link>
           </li>
-          <!-- <li class="nav-link">
-            <router-link to="/home/find" class="link-block w-inline-block">
+          <li class="nav-link" v-if="isAuthenticated">
+            <router-link to="/request" class="link-block w-inline-block">
               <div class="text-block">Request Care</div>
             </router-link>
           </li>
-          <li class="nav-link">
-            <router-link to="/home/provide" class="link-block w-inline-block">
+          <li class="nav-link" v-if="isAuthenticated">
+            <router-link to="/offer" class="link-block w-inline-block">
               <div class="text-block">Offer Care</div>
             </router-link>
-          </li> -->
+          </li>
           <li class="nav-link">
             <router-link to="/faq" class="link-block w-inline-block">
               <div class="text-block">FAQ</div>
@@ -48,23 +48,29 @@
 <script>
 import { mixin as clickaway } from 'vue-clickaway';
 import AvatarImage from '@/components/AvatarImage.vue'
+import * as Token from '@/utils/tokens.js'
+import * as api from '@/utils/api.js'
 
 export default {
 	name: 'MainNav',
 	components: { AvatarImage },
   mixins: [ clickaway ],	
   props: ['user'],
-  menuButtonText: 'Menu',
-  isAuthenticated: null,
   data () {
   	return {
   		showMenu: false,
+      menuButtonText: 'Menu',
+      currentUser: null,
+      currentUserId: null,
+      isAuthenticated: null
   	}
   },
   mounted: function () {
     if (this.$auth && this.$auth.isAuthenticated()) {
       this.isAuthenticated = true
-    }
+      this.currentUserId = Token.currentUserId(this.$auth)
+      this.fetchCurrentUser()      
+    } 
   },
   methods: {
   	toggleMenu: function () {
@@ -76,6 +82,11 @@ export default {
     logout: function () {
       this.$auth.logout()
       this.$router.push('/')
+    },
+    fetchCurrentUser: function () {
+      api.fetchCurrentUserNew(Token.currentUserId(this.$auth)).then(currentUser => {
+        this.currentUser = currentUser
+        })
     }
   }
 };
@@ -198,6 +209,7 @@ a {
   border-top: 1px solid #f4f4f4;
   background-color: #fff;
   box-shadow: 0 17px 30px 0 rgba(0, 0, 0, .04);
+  z-index: 99999999;
 }
 
 .unordered-list-2 {

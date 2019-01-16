@@ -1,5 +1,6 @@
 <template>
 <div>
+   <MainNav />  
 <!-- the map! -->
   <div class="map-container">
   <GmapMap
@@ -52,6 +53,7 @@
 </template>
 
 <script>
+import MainNav from './MainNav.vue'
 import Provider from '@/components/Provider.vue'
 import RequestModal from '@/components/RequestModal.vue'
 import router from '../router'
@@ -71,7 +73,7 @@ var moment = require('moment');
 
 export default {
   name: 'MainView',
-  components: { Provider, RequestModal, ShareButton, DateTimePicker },
+  components: { Provider, RequestModal, ShareButton, DateTimePicker, MainNav},
   data () {
     return {
       people: [], // gets updated on mount by fetchUsersInNetwork

@@ -1,5 +1,6 @@
 <template>
 <div class="body">
+ <MainNav />  
   <div class="top-content-container">
     <div class="page-lead-text">Are you providing care? Simply check children in at drop-off, and check them out at pick-up. Click on the parent name for emergency information.</div>
     <router-link :to="{ name: 'HowItWorks' }" class="button-small-outline w-button">How it works</router-link>
@@ -15,13 +16,14 @@
 <script>
 
 import Parent from './Parent.vue'
+import MainNav from './MainNav.vue'
 import * as api from '@/utils/api.js'
 import networks from '@/assets/network-info.json'
 import * as Token from '@/utils/tokens.js'
 
 export default {
   name: 'Bookings',
-  components: { Parent },
+  components: { Parent, MainNav },
   data () {
     return {
       peopleWhoHaveMadeInquiriesToCurrentUser: [],

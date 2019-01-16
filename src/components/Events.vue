@@ -1,5 +1,6 @@
 <template>
 	<div class="body">
+    <MainNav />
   <div class="content-section background-01">
     <div class="divider-2px"></div>
     <div class="content-container-4 w-container">
@@ -46,6 +47,8 @@
 
 <script>
 import EventListItem from '@/components/EventListItem.vue'
+import MainNav from '@/components/MainNav.vue'
+
 import * as Token from '@/utils/tokens.js'
 import * as api from '@/utils/api.js'
 var moment = require('moment');
@@ -58,7 +61,7 @@ var moment = require('moment');
 
 export default {
   name: 'Events',
-  components: { EventListItem },
+  components: { EventListItem, MainNav },
   props: ['limitTo'],
   data () {
   	return {

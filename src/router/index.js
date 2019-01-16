@@ -10,11 +10,11 @@ import network from '../assets/network-info.json'
 import HowItWorks from '@/components/HowItWorks.vue'
 import NewUser from '@/components/NewUser.vue'
 import DirectLogin from '@/components/onboarding/DirectLogin.vue';
-import TabNav from '@/components/TabNav.vue'
 import RequestModal2 from '@/components/RequestModal2.vue'
 import RequestRecipients from '@/components/RequestRecipients.vue'
 import AdminMessages from '@/components/AdminMessages.vue'
 import EventPage from '@/components/EventPage.vue'
+import Events from '@/components/Events.vue'
 import RsvpInfoCollection from '@/components/RsvpInfoCollection.vue'
 import RsvpConfirmation from '@/components/RsvpConfirmation.vue'
 import Faq from '@/components/Faq.vue'
@@ -30,10 +30,19 @@ export default new Router({
       component: NewUser
     },
     {
-      path: '/bookings',
+      path: '/offer',
       name: 'Bookings',
       component: Bookings
     },
+    {
+      path: '/request',
+      name: 'Request',
+      component: MainView
+    },  
+    {
+      path: '/bookings',
+      redirect: '/offer'
+    },      
     {
       path: '/emergency-info/:id',
       name: 'emergencyInfo',
@@ -42,7 +51,7 @@ export default new Router({
     {
       path: '/home',
       name: 'MainView',
-      component: TabNav
+      component: Events
     },
     {
       path: '/provider-profile/:id',
