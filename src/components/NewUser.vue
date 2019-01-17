@@ -346,7 +346,7 @@ export default {
       // set default values for the time being
       const defaultMaximumChildren = 2
       const defaultChildAgeMaximum = 11
-      const defaultChildAgeMinimum = 3
+      const defaultChildAgeMinimum = 2
 
       let eventData = {
         "event_series": {
