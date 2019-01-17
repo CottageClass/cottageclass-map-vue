@@ -19,7 +19,7 @@
       </div>
     </div>
     <br>
-        <p class="onb-paragraph-small-50">For each child you host, you receive points that you can use to attend others' activities.</p>
+        <p class="onb-paragraph-small-50">For each child you host, you receive points that you can use to attend others' playdates.</p>
   </div>
 </template>
 

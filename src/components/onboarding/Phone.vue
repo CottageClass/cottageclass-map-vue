@@ -16,7 +16,7 @@
         </form>
       </div>
     </div>
-    <p class="paragraph-small-50">Only members who RSVP to your event will see your phone number. (We may also send you text messages about your event or upcoming events. Message &amp; data rates apply.)</p>
+    <p class="paragraph-small-50">Only members who RSVP to your playdate will see your phone number. (We may also send you text messages about your playdate or upcoming playdates. Message &amp; data rates apply.)</p>
   </div>
 </template>
 

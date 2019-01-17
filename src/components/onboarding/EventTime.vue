@@ -39,7 +39,7 @@ export default {
   data () {
     return {
       timeSelected: '',
-      errorMesg: 'Please choose a time for your event.',
+      errorMesg: 'Please choose a time for your playdate.',
       times: [
       '5:00pm - 8:00pm',
       '5:30pm - 8:30pm',
