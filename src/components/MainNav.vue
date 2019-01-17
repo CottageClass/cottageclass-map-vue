@@ -16,7 +16,7 @@
         <ul class="unordered-list-2 w-list-unstyled">
           <li class="nav-link">
             <router-link to="/home" class="link-block w-inline-block">
-              <div class="text-block">Activities</div>
+              <div class="text-block">Upcoming Playdates</div>
             </router-link>
           </li>
           <li class="nav-link" v-if="isAuthenticated">

@@ -25,7 +25,7 @@
           <ul class="unordered-list">
             <li class="list-item"><img src="@/assets/give-care.svg" alt="" class="image-262">
               <div class="hero-list-item-heading">Give Care.</div>
-              <div class="hero-list-item-subtitle">Host an activity once a month at your home for kids age 2 to 11. <router-link to="/faq">How it works.</router-link></div>
+              <div class="hero-list-item-subtitle">Host a playdate once a month at your home for kids age 2 to 11. <router-link to="/faq">How it works.</router-link></div>
             </li>
             <li class="list-item"><img src="@/assets/get-care.svg" alt="" class="image-262">
               <div class="hero-list-item-heading">Get Care.</div>
@@ -72,7 +72,7 @@
   <div class="content-section background-01">
     <div class="divider-2px"></div>
     <div class="content-container-3 w-container">
-      <h1 class="h1-display">Upcoming Events</h1>
+      <h1 class="h1-display">Upcoming Playdates</h1>
       <div class="events-list-wrapper">
         <div class="event-date-section-tittle cancel-top-margin"><img src="@/assets/date-outline-white-oval.svg" alt="" class="image-264">
           <div class="date-text-wrapper">

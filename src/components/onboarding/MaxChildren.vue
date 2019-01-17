@@ -1,7 +1,7 @@
 <template>
   <div class="onb-content-container _100vh">
     <div class="onb-top-content-container">
-      <h1 class="onb-heading-large">How many children can you host at your activity?</h1>
+      <h1 class="onb-heading-large">How many children can you host at your playdate?</h1>
     </div>
     <div class="dropdown-container">
       <div class="w-form">

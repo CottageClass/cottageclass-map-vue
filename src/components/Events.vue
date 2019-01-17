@@ -4,7 +4,7 @@
   <div class="content-section background-01">
     <div class="divider-2px"></div>
     <div class="content-container-4 w-container">
-     <h1 class="h1-display">Upcoming Events</h1>
+     <h1 class="h1-display">Upcoming Playdates</h1>
      <p v-if="isAuthenticated">Within 
       <select v-model="maximumDistanceFromUserInMiles">
         <option>0.2</option>
