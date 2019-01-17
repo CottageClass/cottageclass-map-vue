@@ -4,12 +4,13 @@ var path = require('path');
 const history = require('connect-history-api-fallback')
 // ^ middleware to redirect all URLs to index.html
 var serveStatic = require('serve-static');
+var compression = require('compression')
 
 app = express();
 
 // enable ssl redirect
 app.use(sslRedirect());
-
+app.use(compression())
 const staticFileMiddleware = express.static(path.join(__dirname + "/dist"))
 // app.use(serveStatic(__dirname + "/dist"));
 

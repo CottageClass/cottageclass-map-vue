@@ -10,6 +10,13 @@ const HtmlWebpackPlugin = require('html-webpack-plugin')
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
 const OptimizeCSSPlugin = require('optimize-css-assets-webpack-plugin')
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
+const ImageminPlugin = require('imagemin-webpack-plugin').default;
+
+
+const imageminGifsicle = require("imagemin-gifsicle");
+var imageminMozjpeg = require('imagemin-mozjpeg'); //need to run 'brew install libpng'
+const imageminSvgo = require("imagemin-svgo");
+var imageminPngquant = require('imagemin-pngquant');
 
 const env = process.env.NODE_ENV === 'testing'
   ? require('../config/test.env')
@@ -120,7 +127,32 @@ const webpackConfig = merge(baseWebpackConfig, {
         to: config.build.assetsSubDirectory,
         ignore: ['.*']
       }
-    ])
+    ]),
+
+    new ImageminPlugin({
+      test: /\.(jpe?g|png|gif|svg)$/i,
+      /* other ImageMin configs */
+      cache: true,
+      optipng: {
+        optimizationLevel: 7,
+      },
+      pngquant: {
+        quality: '65-90',
+        speed: 4,
+      },      
+      plugins: [
+      imageminGifsicle({
+        interlaced: true,
+        optimizationLevel: 3
+      }),
+      imageminSvgo({
+        removeViewBox: false
+      }),
+      imageminMozjpeg({
+        quality: 80
+      })      
+      ]      
+    })
   ]
 })
 
