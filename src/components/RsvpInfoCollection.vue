@@ -1963,14 +1963,6 @@ a {
   text-transform: uppercase;
 }
 
-.div-fake-map {
-  height: 200px;
-  background-image: url('../assets/Screenshot-2018-09-18-15.26.16.png');
-  background-position: 50% 50%;
-  background-size: 1500px;
-  background-repeat: no-repeat;
-}
-
 .check-in-button-2 {
   position: absolute;
   top: 16px;
