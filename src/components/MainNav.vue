@@ -40,9 +40,10 @@
             </a>
           </li>
           <li class="nav-link" v-if="!isAuthenticated">
-            <router-link to="/" class="link-block w-inline-block">
+            <!-- Can't use router link here because it won't refresh on frontpage --> 
+            <a href="/?activeScreen=directLogin" class="link-block w-inline-block">
               <div class="text-block">Sign in</div>
-            </router-link>
+            </a>
           </li>          
         </ul>
       </div>
