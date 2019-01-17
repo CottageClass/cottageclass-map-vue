@@ -76,7 +76,7 @@ export default {
   computed: {
     shareUrl: function () {
       if (!!this.nextEventInSeries) {
-        return 'www.kidsclub.io/events/' + this.nextEventInSeries.id
+        return 'www.kidsclub.io/event/' + this.nextEventInSeries.id
       } else {
         return 'www.kidsclub.io' 
       }
