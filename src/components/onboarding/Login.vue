@@ -256,10 +256,8 @@
           </li>
         </ul>
 
-<!--         
-        <div class="event-date-section-more-events"><a href="events.html" class="button w-button">View events near you</a></div>
+        <div class="event-date-section-more-events"><router-link to='/home' class="button w-button">Show all playdates</router-link></div>
 
---> 
       </div>
     </div>
   </div>
