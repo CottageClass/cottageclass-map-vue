@@ -202,6 +202,7 @@ export default {
         })
     },
     fetchAllEvents: function () {
+      this.events = window.globalEventList
       api.fetchEvents().then(
       (res) => { 
         this.events = res
@@ -234,7 +235,11 @@ export default {
       return this.event.hostChildAges.sort((a,b) => a - b)
     },
     event: function () {
-      return this.events.find(event => event.id == this.$route.params.id)
+      if (Array.isArray(this.events)) {
+        return this.events.find(event => event.id == this.$route.params.id)
+      } else {
+        return {}
+      }
     }
   }
 

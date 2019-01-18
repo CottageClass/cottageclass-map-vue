@@ -107,9 +107,11 @@ export default {
       return moment(date).format('dddd, MMM Do' )
     },
     fetchUpcomingEvents: function () {
+      this.events = window.globalEventList
       api.fetchEvents('upcoming').then(
       (res) => { 
         this.events = res
+        window.globalEventList = res
       })
     },
     fetchCurrentUser: function () {
