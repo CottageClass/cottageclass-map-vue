@@ -357,32 +357,11 @@
       </div>
     </div>
     </div>
-  <div class="footer">
-    <div class="divider-2px"></div>
-    <div class="footer-container w-container">
-      <div class="div-block-33">
-        <ul class="footer-unordered-list">
-          <li class="footer-link-list-item"><a href="mailto:contact@cottageclass.com" class="links footer-link">contact@cottageclass.com</a></li>
-          <li class="footer-link-list-item"><a href="tel:+18622944859" class="links footer-link">‭(862) 294-4859‬</a></li>
-          <!-- Additional footer links here -->
-        </ul>
-        <ul class="footer-social-unordered-list">
-          <li class="footer-social-list-item"><a href="https://twitter.com/cottageclass" class="link-block-2 w-inline-block"><img src="@/assets/social---twitter---gray.svg" width="32" height="32" alt=""></a></li>
-          <li class="footer-social-list-item"><a href="https://instagram.com/cottageclass" class="link-block-2 w-inline-block"><img src="@/assets/social---instagram---gray.svg" width="32" height="32" alt=""></a></li>
-          <li class="footer-social-list-item"><a href="https://cottageclass.tumblr.com/" class="link-block-2 w-inline-block"><img src="@/assets/social---tumblr---gray.svg" width="32" height="32" alt=""></a></li>
-          <li class="footer-social-list-item"><a href="https://pinterest.com/cottageclass" class="link-block-2 w-inline-block"><img src="@/assets/social---pinterest---gray.svg" width="32" height="32" alt=""></a></li>
-          <li class="footer-social-list-item"><a href="https://facebook.com/cottageclass" class="link-block-2 w-inline-block"><img src="@/assets/social---facebook---gray.svg" width="32" height="32" alt=""></a></li>
-        </ul>
-      </div>
-      <div>
-        <ul class="terms-unordered-list">
-          <li class="terms-list-item"><a href="#" class="links footer-bottom">© CottageClass 2018</a></li>
-          <li class="terms-list-item"><a href="https://cottageclass.com/terms-of-service" class="links footer-bottom">Terms of Service</a></li>
-          <li class="terms-list-item"><a href="https://cottageclass.com/privacy-policy" class="links footer-bottom">Privacy Policy</a></li>
-        </ul>
-      </div>
-    </div>
-  </div>
+
+<!-- Footer --> 
+
+<Footer />
+
 </div>
 </template>
 
@@ -394,10 +373,11 @@ import * as api from '@/utils/api.js'
 import Events from '@/components/Events.vue'
 import RsvpButton from '@/components/RsvpButton.vue'
 import MainNav from '@/components/MainNav.vue'
+import Footer from '@/components/Footer.vue'
 
 export default {
     name: 'Login',
-    components: { Events, RsvpButton, MainNav },
+    components: { Events, RsvpButton, MainNav, Footer },
     data () {
       return {
         networks: networks,
@@ -731,76 +711,6 @@ a {
 
 .image-261 {
   max-width: 90%;
-}
-
-.footer-container {
-  position: relative;
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  padding: 112px 32px 0px;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-  -webkit-flex-direction: column;
-  -ms-flex-direction: column;
-  flex-direction: column;
-  -webkit-box-pack: justify;
-  -webkit-justify-content: space-between;
-  -ms-flex-pack: justify;
-  justify-content: space-between;
-  -webkit-box-align: center;
-  -webkit-align-items: center;
-  -ms-flex-align: center;
-  align-items: center;
-}
-
-.footer {
-  background-color: #fff;
-  background-image: url('../../assets/footer-bottom-image-2.svg');
-  background-position: 50% -82%;
-  background-size: auto;
-  background-repeat: no-repeat;
-}
-
-.footer-link {
-  color: grey;
-  text-decoration: none;
-}
-
-.footer-link-list-item {
-  margin-right: 6px;
-  margin-bottom: 0px;
-  margin-left: 6px;
-  color: #818181;
-  list-style-type: none;
-}
-
-.footer-unordered-list {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  margin-bottom: 21px;
-  padding-left: 0px;
-  -webkit-box-pack: center;
-  -webkit-justify-content: center;
-  -ms-flex-pack: center;
-  justify-content: center;
-}
-
-.footer-social-unordered-list {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  padding-left: 0px;
-}
-
-.footer-social-list-item {
-  margin-right: 6px;
-  margin-left: 6px;
-  list-style-type: none;
 }
 
 .terms-list-item {
@@ -1336,26 +1246,6 @@ a {
   line-height: 20px;
 }
 
-.card-small-text-gray {
-  margin-top: 0px;
-  color: #969696;
-  font-size: 13px;
-  line-height: 20px;
-}
-
-.button-bottom-event {
-  margin-top: 24px;
-  padding: 12px 91px;
-  border-radius: 4px;
-  background-color: #1f88e9;
-  text-align: center;
-}
-
-.button-bottom-event:hover {
-  background-image: -webkit-gradient(linear, left top, left bottom, from(rgba(0, 0, 0, .1)), to(rgba(0, 0, 0, .1)));
-  background-image: linear-gradient(180deg, rgba(0, 0, 0, .1), rgba(0, 0, 0, .1));
-}
-
 .link-block-4 {
   color: #000;
   text-decoration: none;
@@ -1457,14 +1347,6 @@ a {
 
 .links:hover {
   text-decoration: underline;
-}
-
-.links.footer-bottom {
-  color: #fff;
-}
-
-.links.footer-link {
-  text-align: center;
 }
 
 .cottageclass-is-list-item {
@@ -1688,11 +1570,6 @@ a {
     padding: 8px;
   }
 
-  .footer {
-    background-position: 50% -84%;
-    background-size: auto;
-  }
-
   .unordered-list {
     -webkit-box-align: start;
     -webkit-align-items: flex-start;
@@ -1884,21 +1761,6 @@ a {
   .featured-card {
     width: 50%;
     padding: 16px;
-  }
-
-  .footer-container {
-    padding-right: 20px;
-    padding-left: 20px;
-    -webkit-box-orient: vertical;
-    -webkit-box-direction: normal;
-    -webkit-flex-direction: column;
-    -ms-flex-direction: column;
-    flex-direction: column;
-  }
-
-  .footer {
-    background-position: 50% -80%;
-    background-size: auto;
   }
 
   .list-item {
@@ -2173,30 +2035,6 @@ a {
     max-width: 100%;
   }
 
-  .footer-container {
-    padding-top: 80px;
-    padding-bottom: 80px;
-  }
-
-  .footer {
-    background-position: 50% 153px;
-    background-size: cover;
-  }
-
-  .footer-link-list-item {
-    margin-bottom: 16px;
-    text-align: center;
-  }
-
-  .footer-unordered-list {
-    margin-bottom: 26px;
-    -webkit-box-orient: vertical;
-    -webkit-box-direction: normal;
-    -webkit-flex-direction: column;
-    -ms-flex-direction: column;
-    flex-direction: column;
-  }
-
   .terms-list-item {
     text-align: center;
   }
@@ -2307,11 +2145,6 @@ a {
 
   .div-block-36 {
     padding: 24px;
-  }
-
-  .button-bottom-event {
-    width: 100%;
-    margin-top: 20px;
   }
 
   .content-container-3 {
@@ -2722,68 +2555,6 @@ a {
 
 .image-261 {
   max-width: 90%;
-}
-
-.footer-container {
-  position: relative;
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  padding: 112px 32px 0px;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-  -webkit-flex-direction: column;
-  -ms-flex-direction: column;
-  flex-direction: column;
-  -webkit-box-pack: justify;
-  -webkit-justify-content: space-between;
-  -ms-flex-pack: justify;
-  justify-content: space-between;
-  -webkit-box-align: center;
-  -webkit-align-items: center;
-  -ms-flex-align: center;
-  align-items: center;
-}
-
-.footer-link {
-  color: grey;
-  text-decoration: none;
-}
-
-.footer-link-list-item {
-  margin-right: 6px;
-  margin-bottom: 0px;
-  margin-left: 6px;
-  color: #818181;
-  list-style-type: none;
-}
-
-.footer-unordered-list {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  margin-bottom: 21px;
-  padding-left: 0px;
-  -webkit-box-pack: center;
-  -webkit-justify-content: center;
-  -ms-flex-pack: center;
-  justify-content: center;
-}
-
-.footer-social-unordered-list {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  padding-left: 0px;
-}
-
-.footer-social-list-item {
-  margin-right: 6px;
-  margin-left: 6px;
-  list-style-type: none;
 }
 
 .terms-list-item {
@@ -3306,26 +3077,6 @@ a {
   line-height: 20px;
 }
 
-.card-small-text-gray {
-  margin-top: 0px;
-  color: #969696;
-  font-size: 13px;
-  line-height: 20px;
-}
-
-.button-bottom-event {
-  margin-top: 24px;
-  padding: 12px 91px;
-  border-radius: 4px;
-  background-color: #1f88e9;
-  text-align: center;
-}
-
-.button-bottom-event:hover {
-  background-image: -webkit-gradient(linear, left top, left bottom, from(rgba(0, 0, 0, .1)), to(rgba(0, 0, 0, .1)));
-  background-image: linear-gradient(180deg, rgba(0, 0, 0, .1), rgba(0, 0, 0, .1));
-}
-
 .link-block-4 {
   color: #000;
   text-decoration: none;
@@ -3427,14 +3178,6 @@ a {
 
 .links:hover {
   text-decoration: underline;
-}
-
-.links.footer-bottom {
-  color: #fff;
-}
-
-.links.footer-link {
-  text-align: center;
 }
 
 .cottageclass-is-list-item {
@@ -3796,11 +3539,6 @@ a {
     padding: 8px;
   }
 
-  .footer {
-    background-position: 50% -84%;
-    background-size: auto;
-  }
-
   .unordered-list {
     -webkit-box-align: start;
     -webkit-align-items: flex-start;
@@ -4031,21 +3769,6 @@ a {
   .featured-card {
     width: 50%;
     padding: 16px;
-  }
-
-  .footer-container {
-    padding-right: 20px;
-    padding-left: 20px;
-    -webkit-box-orient: vertical;
-    -webkit-box-direction: normal;
-    -webkit-flex-direction: column;
-    -ms-flex-direction: column;
-    flex-direction: column;
-  }
-
-  .footer {
-    background-position: 50% -80%;
-    background-size: auto;
   }
 
   .list-item {
@@ -4344,30 +4067,6 @@ a {
     max-width: 100%;
   }
 
-  .footer-container {
-    padding-top: 80px;
-    padding-bottom: 80px;
-  }
-
-  .footer {
-    background-position: 50% 153px;
-    background-size: cover;
-  }
-
-  .footer-link-list-item {
-    margin-bottom: 16px;
-    text-align: center;
-  }
-
-  .footer-unordered-list {
-    margin-bottom: 26px;
-    -webkit-box-orient: vertical;
-    -webkit-box-direction: normal;
-    -webkit-flex-direction: column;
-    -ms-flex-direction: column;
-    flex-direction: column;
-  }
-
   .terms-list-item {
     text-align: center;
   }
@@ -4478,11 +4177,6 @@ a {
 
   .div-block-36 {
     padding: 24px;
-  }
-
-  .button-bottom-event {
-    width: 100%;
-    margin-top: 20px;
   }
 
   .content-container-3 {
