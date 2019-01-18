@@ -266,7 +266,7 @@ export default {
                 console.error('signup failure:', error);
                 component.disableForm = false;
                 component.showError = true
-                component.error = 'Sorry, there was a problem creating your account. Please try again?'
+                component.error = 'Sorry, there was a problem creating your account. Did you already create an account with this email address directly or via Facebook?'
               });
           } else {
             component.showError = true
