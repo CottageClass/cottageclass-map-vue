@@ -41,14 +41,18 @@
     </div>
     </div>
   </div>
- 
+
+<!-- Footer --> 
+
+ <Footer />
+
   </div>
 </template>
 
 <script>
 import EventListItem from '@/components/EventListItem.vue'
 import MainNav from '@/components/MainNav.vue'
-
+import Footer from '@/components/Footer.vue'
 import * as Token from '@/utils/tokens.js'
 import * as api from '@/utils/api.js'
 var moment = require('moment');
@@ -61,7 +65,7 @@ var moment = require('moment');
 
 export default {
   name: 'Events',
-  components: { EventListItem, MainNav },
+  components: { EventListItem, MainNav, Footer },
   props: ['limitTo'],
   data () {
   	return {

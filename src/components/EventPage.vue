@@ -130,31 +130,11 @@
 
     </div>
   </div>
-  <div class="footer">
-    <div class="divider-2px"></div>
-    <div class="footer-container w-container">
-      <div class="div-block-33">
-        <ul class="footer-unordered-list">
-          <li class="footer-link-list-item"><a href="mailto:contact@cottageclass.com">contact@cottageclass.com</a></li>
-          <li class="footer-link-list-item"><a href="tel:+18622944859">(862) 294-4859</a></li>
-        </ul>
-        <ul class="footer-social-unordered-list">
-          <li class="footer-social-list-item"><a href="https://twitter.com/cottageclass" class="link-block-2 w-inline-block"><img src="@/assets/social---twitter---gray.svg" width="32" height="32" alt=""></a></li>
-          <li class="footer-social-list-item"><a href="https://instagram.com/cottageclass" class="link-block-2 w-inline-block"><img src="@/assets/social---instagram---gray.svg" width="32" height="32" alt=""></a></li>
-          <li class="footer-social-list-item"><a href="https://cottageclass.tumblr.com/" class="link-block-2 w-inline-block"><img src="@/assets/social---tumblr---gray.svg" width="32" height="32" alt=""></a></li>
-          <li class="footer-social-list-item"><a href="https://pinterest.com/cottageclass" class="link-block-2 w-inline-block"><img src="@/assets/social---pinterest---gray.svg" width="32" height="32" alt=""></a></li>
-          <li class="footer-social-list-item"><a href="https://facebook.com/cottageclass" class="link-block-2 w-inline-block"><img src="@/assets/social---facebook---gray.svg" width="32" height="32" alt=""></a></li>
-        </ul>
-      </div>
-      <div>
-        <ul class="terms-unordered-list">
-          <li class="terms-list-item"><a href="#" class="terms-link">© CottageClass 2018</a></li>
-          <li class="terms-list-item"><a href="https://cottageclass.com/terms-of-service" class="terms-link">Terms of Service</a></li>
-          <li class="terms-list-item"><a href="https://cottageclass.com/privacy-policy" class="terms-link">Privacy Policy</a></li>
-        </ul>
-      </div>
-    </div>
-  </div>
+ 
+<!-- Footer --> 
+
+ <Footer />
+
 </div>
 </template>
 <script>
@@ -167,10 +147,11 @@ import AvatarImage from './AvatarImage.vue'
 import RsvpButton from './RsvpButton.vue'
 import ShareButton from './ShareButton.vue'
 import MainNav from './MainNav.vue'
+import Footer from '@/components/Footer.vue'
 
 export default {
   name: 'EventPage',
-  components: { AvatarImage, RsvpButton, ShareButton, MainNav },
+  components: { AvatarImage, RsvpButton, ShareButton, MainNav, Footer },
   data () {
     return {
       events: [],

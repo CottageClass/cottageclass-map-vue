@@ -183,21 +183,20 @@
       <p class="paragraph">It is our mission to bring diverse communities closer together through supporting each other in this challenging and rewarding process of raising our children. Our <strong>Nondiscrimination Policy </strong>prohibits discrimination based on race, gender, national origin, marital status or sexual orientation. If any user is found in violation of this Policy, KidsClub will take steps to enforce this Policy, which steps may include suspending or removing the user from the platform.</p>
     </div>
   </div>
-<!--
-  <div class="placeholder-box">
-    <div>Footer Placeholder</div>
-  </div>
--->
+<!-- Footer --> 
+
+ <Footer />
 
 </div>
 </template>
 
 <script>
 import MainNav from '@/components/MainNav.vue'
+import Footer from '@/components/Footer.vue'
 
 export default {
 	name: 'Faq',
-	components: { MainNav },
+	components: { MainNav, Footer },
 };
 </script>
 
