@@ -583,9 +583,7 @@ a {
 }
 
 @media (max-width: 479px) {
-  .content-wrapper {
-    position: fixed;
-  }
+
   .content-container {
     overflow: visible;
   }
