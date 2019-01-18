@@ -76,6 +76,7 @@
 
 import * as Token from '@/utils/tokens.js'
 import * as api from '@/utils/api.js'
+import * as utils from '@/utils/utils.js'
 import Nav from '@/components/onboarding/Nav.vue'
 import sheetsu from 'sheetsu-node'
 // this component has a working loading indicator and no other logic. todo: break out and rename. 
@@ -122,6 +123,18 @@ export default {
     },
     spotsRemaining: function () {
       return Math.max(0, this.event.maximumChildren - this.event.participantsCount - this.childrenSelected.length)
+    },
+    guestChildrenNamesAgesFormatted: function () {
+      return utils.arrayToSentence(this.children.filter(child => this.childrenSelected.includes(child.id)).map(child => child.firstName + ' (age ' + this.calculateAge(child.birthday) + ')')) // 'Suzie (5)'
+    },
+    eventDateFormattedMonthDay: function () {
+      return moment(this.event.startsAt).format('MMMM D')
+    },
+    notificationToHost: function () {
+      return 'Congratulations, ' + this.event.hostFirstName + '! ' + this.currentUser.firstName + ' booked a playdate with you for ' + this.guestChildrenNamesAgesFormatted + ' on ' + this.eventDateFormattedMonthDay + '! Visit https://kidsclub.io/faq or reply with any questions!'
+    },
+    notificationBackToUser: function () {
+      return 'Congratulations ' + this.currentUser.firstName + '! You\'ve booked a playdate with ' + this.event.hostFirstName + ' for ' + this.guestChildrenNamesAgesFormatted + ' on ' + this.eventDateFormattedMonthDay + '. We\'ll email you shortly to confirm your RSVP.'
     }
   },
   methods: {
@@ -192,6 +205,7 @@ export default {
       let component = this
       api.submitEventParticipant(this.eventId, this.childrenSelected).then(res => {
       // open event page where user will see success message
+        component.sendNotifications()
         component.forgetRsvpAttempted()
         component.$router.push({name: 'EventPage', params: { id: this.eventId }})
       }).catch(err => {
@@ -232,7 +246,11 @@ export default {
       } else {
         this.childrenSelected.push(id)
       }
-    }
+    },
+    sendNotifications: function () {
+        api.submitNotification(this.event.hostId, this.notificationToHost)
+        api.submitNotification(Token.currentUserId(this.$auth), this.notificationBackToUser)
+      },
   }
 };
 </script>

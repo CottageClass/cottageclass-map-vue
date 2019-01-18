@@ -216,6 +216,29 @@ export function fetchMessagesForUserPair(participantId1, participantId2) {
 }
 
 /*
+ * NOTIFICATIONS
+ */
+
+export function submitNotification(participantId, notificationBodyText) {
+  let notificationData = {
+  'notification': {
+    'body': notificationBodyText
+  }
+}
+  return Vue.axios.post(
+    `${process.env.BASE_URL_API}/api/users/${participantId}/notifications/`, notificationData
+  ).then(res => {
+    console.log("NOTIFICATION submission SUCCESS")
+    return res
+  }).catch(err => {
+    console.log("NOTIFICATION submission FAILURE")
+    console.log(err)
+    throw err
+  })
+}
+
+
+/*
  * EVENTS
  */
 
