@@ -171,7 +171,16 @@ export default {
     }
   },
   name: 'NewUser',
+  mounted: function () {
+    this.fetchUpcomingEvents()
+  },
   methods: {
+    fetchUpcomingEvents: function () {
+      api.fetchEvents('upcoming').then(
+      (res) => { 
+        window.globalEventList = res
+      })
+    },    
     activateScreen: function(name) {
       console.log('activating:', name);
       this.activeScreen = name;
@@ -463,7 +472,7 @@ export default {
       } else {
         return this.capitalize(this.eventActivity.selected) + ' & ' + this.food.selected
       }
-    }
+    },    
   }
 };
 
