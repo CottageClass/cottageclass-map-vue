@@ -90,8 +90,10 @@ export default {
       this.$router.push('/')
     },
     fetchCurrentUser: function () {
+      this.currentUser = window.globalCurrentUser
       api.fetchCurrentUserNew(Token.currentUserId(this.$auth)).then(currentUser => {
         this.currentUser = currentUser
+        window.globalCurrentUser = currentUser
         })
     }
   }
