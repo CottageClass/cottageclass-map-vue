@@ -12,9 +12,11 @@
     </div>
 
     <div class="content-container">
-        <div v-if="showError && (errors.first('email') || errors.first('password'))" class="onb-error-container">
+
+        <div v-if="showError && (errors.first('email') || errors.first('password')) || errorMessage" class="onb-error-container">
       <div class="onb-error-text">{{ errors.first('email') }}</div>
       <div class="onb-error-text">{{ errors.first('password') }}</div>
+      <div class="onb-error-text">{{ errorMessage }}</div>
     </div>
     <div class="onb-top-content-container">
       <h1 class="onb-heading-large">Sign in</h1>
@@ -64,7 +66,8 @@ export default {
       currentUser: {},
       email: '',
       password: '',
-      showError: false
+      showError: false,
+      errorMessage: null
     };
   },
   mounted: function() {
@@ -132,6 +135,10 @@ export default {
               .login({ email, password })
               .then(res => {
                 console.log('auth success:', res);
+              }).catch(err => {
+                component.showError = true
+                component.errorMessage = 'There was a problem signing you in. If you forgot your password, email  contact@cottageclass.com for help.'
+                console.log('auth failure', err)
               })
               .then(res =>
                 api.fetchCurrentUser(Token.currentUserId(component.$auth))
