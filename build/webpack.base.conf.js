@@ -8,7 +8,7 @@ function resolve (dir) {
   return path.join(__dirname, '..', dir)
 }
 
-
+const VueLoaderPlugin = require('vue-loader/lib/plugin')
 
 module.exports = {
   context: path.resolve(__dirname, '../'),
@@ -20,6 +20,7 @@ module.exports = {
     filename: '[name].js',
     publicPath: '',
   },
+
   resolve: {
     extensions: ['.js', '.vue', '.json'],
     alias: {
@@ -29,6 +30,12 @@ module.exports = {
   },
   module: {
     rules: [
+    {
+      test: /\.js$/,
+      loader: 'babel-loader',
+      // Include vue2-google-maps for transpiling
+      exclude: /node_modules\/(?!(vue2-google-maps)\/).*/,
+    },
       {
         test: /\.vue$/,
         loader: 'vue-loader',
@@ -76,5 +83,8 @@ module.exports = {
     net: 'empty',
     tls: 'empty',
     child_process: 'empty'
-  }
+  },
+  plugins: [
+    new VueLoaderPlugin()
+  ]  
 }
