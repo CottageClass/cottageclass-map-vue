@@ -70,12 +70,24 @@ export default {
         lat: this.address.latitude,
         lng: this.address.longitude,
         apartmentNumber: this.apartmentNumber,
-        error: false
+        err: this.error
       });
+    }
+  },
+  computed: {
+    error: function () {
+      if (!this.address.latitude || !this.address.longitude) {
+        return 'There was a problem processing your street address. Try again?'
+      } else {
+        return false
+      }
     }
   },
   watch: {
     apartmentNumber: function () {
+      this.emitAddress()
+    },
+    error: function () {
       this.emitAddress()
     }
   }
