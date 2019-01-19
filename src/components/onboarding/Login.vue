@@ -97,7 +97,7 @@
               <div class="scrolling-wrapper"><img src="@/assets/rima8.jpg" alt="" class="event-household-photo"><img src="@/assets/rima5.jpg" alt="" class="event-household-photo"><img src="@/assets/rima12.jpg" alt="" class="event-household-photo"><img src="@/assets/rima4.jpg" alt="" class="event-household-photo"><img src="@/assets/rima7.jpg" alt="" class="event-household-photo"><img src="@/assets/rima6.jpg" alt="" class="event-household-photo"></div>
               <div class="action-bar">
                 <div class="host-container">
-                  <div class="host-info"><img src="@/assets/rima.png" width="40" height="40" alt="" class="avatar-small">
+                  <div class="host-info"><img src="@/assets/rima.jpg" width="40" height="40" alt="" class="avatar-small">
                     <div class="text-block">Hosted by Rima &amp; Yuri (age 5), PS58</div>
                   </div>
                   <div class="host-meta">
@@ -131,10 +131,10 @@
                 <div class="event-location">Cobble Hill</div>
               </div>
               <div class="scrolling-wrapper">
-                <img src="@/assets/Julie-Screen-Shot-2019-01-04-at-3.46.43-PM.png" alt="" class="event-household-photo"><img src="@/assets/Julie-Screen-Shot-2019-01-04-at-3.45.40-PM.png" alt="" class="event-household-photo"><img src="@/assets/Julie-Screen-Shot-2019-01-04-at-3.44.52-PM.png" alt="" class="event-household-photo"><img src="@/assets/Julie-Screen-Shot-2019-01-04-at-3.45.13-PM.png" alt="" class="event-household-photo"><img src="@/assets/JulieNEW.png" alt="" class="event-household-photo"></div>
+                <img src="@/assets/Julie-Screen-Shot-2019-01-04-at-3.46.43-PM.jpg" alt="" class="event-household-photo"><img src="@/assets/Julie-Screen-Shot-2019-01-04-at-3.45.40-PM.jpg" alt="" class="event-household-photo"><img src="@/assets/Julie-Screen-Shot-2019-01-04-at-3.44.52-PM.jpg" alt="" class="event-household-photo"><img src="@/assets/Julie-Screen-Shot-2019-01-04-at-3.45.13-PM.jpg" alt="" class="event-household-photo"><img src="@/assets/JulieNEW.jpg" alt="" class="event-household-photo"></div>
               <div class="action-bar">
                 <div class="host-container">
-                  <div class="host-info"><img src="@/assets/julie.png" height="40" width="40" alt="" class="avatar-small">
+                  <div class="host-info"><img src="@/assets/julie.jpg" height="40" width="40" alt="" class="avatar-small">
                     <div class="text-block">Hosted by Julie and 2 kids–age 4 and 7, PS29.</div>
                   </div>
                   <div class="host-meta">
@@ -170,7 +170,7 @@
               <div class="scrolling-wrapper"><img src="@/assets/jordanacotton10.jpg" alt="" class="event-household-photo"><img src="@/assets/jordanacotton9.jpg" alt="" class="event-household-photo"><img src="@/assets/jordanacotton5.jpg" alt="" class="event-household-photo"><img src="@/assets/jordanacotton2.jpg" alt="" class="event-household-photo"><img src="@/assets/jordanacotton6.jpg" alt="" class="event-household-photo"><img src="@/assets/jordanacotton7.jpg" alt="" class="event-household-photo"></div>
               <div class="action-bar">
                 <div class="host-container">
-                  <div class="host-info"><img src="@/assets/jordana.png" width="40" height="40" alt="" class="avatar-small">
+                  <div class="host-info"><img src="@/assets/jordana.jpg" width="40" height="40" alt="" class="avatar-small">
                     <div class="text-block">Hosted by Jordana &amp; Bastian (age 2).</div>
                   </div>
                   <div class="host-meta">
@@ -206,7 +206,7 @@
               <div class="scrolling-wrapper"><img src="@/assets/charlice2.jpg" alt="" class="event-household-photo"><img src="@/assets/charlice3.jpg" alt="" class="event-household-photo"><img src="@/assets/charlice4.jpg" alt="" class="event-household-photo"><img src="@/assets/charlice6.jpg" alt="" class="event-household-photo"><img src="@/assets/charlice5.jpg" alt="" class="event-household-photo"><img src="@/assets/charlice8.jpg" alt="" class="event-household-photo"></div>
               <div class="action-bar">
                 <div class="host-container">
-                  <div class="host-info"><img src="@/assets/charlice.png" width="40" height="40" alt="" class="avatar-small">
+                  <div class="host-info"><img src="@/assets/charlice.jpg" width="40" height="40" alt="" class="avatar-small">
                     <div class="text-block">Hosted by Charlice and 4 kids–ages (11, 6, 2 and 2).</div>
                   </div>
                   <div class="host-meta">
@@ -295,7 +295,7 @@
     <div class="divider-2px"></div>
     <div class="content-container-2 w-container">
       <h1 class="h1-display">Our Story</h1>
-      <div class="photo-group-container"><img src="@/assets/manishaholmes-2.png" alt="" class="our-story-photo">
+      <div class="photo-group-container"><img src="@/assets/manishaholmes-2.jpg" alt="" class="our-story-photo">
         <p class="p-center-black">Manisha is a teaching artist and learning specialist with 15 years of experience teaching over 1,000 kids in three countries. Holmes is a techie/activist step-dad who was never satisfied with the educational options available to his bilingual family. Together, they’re working to build a new network that respects the uniqueness of each family and the creative passion of every child.</p>
       </div>
     </div>
