@@ -1327,7 +1327,10 @@ a {
   text-align: left;
   letter-spacing: 0.4px;
   text-decoration: none;
+  color: #FFFFFF;
+  -webkit-text-fill-color: rgba(255, 255, 255, 1); 
 }
+
 
 .use-password-text {
   margin-top: 16px;
