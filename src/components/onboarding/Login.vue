@@ -1339,11 +1339,19 @@ a {
   text-decoration: none;
 }
 
+.use-password-text a {
+  -webkit-text-fill-color: #1f88e9;  
+}
+
 .terms-text {
   margin-top: 10px;
   color: #b3b3b3;
   font-size: 12px;
   text-align: center;
+}
+
+.terms-text a {
+  -webkit-text-fill-color: #1f88e9;  
 }
 
 .links:hover {
