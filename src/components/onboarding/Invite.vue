@@ -12,7 +12,7 @@
 
   <div class="onb-content-container">
     <div class="onb-top-content-container">
-      <h1 class="onb-heading-large">Last step: Build your village</h1>
+      <h1 class="onb-heading-large"><span v-if="!!eventData">Last step: </span>Build your village</h1>
       <p class="onb-paragraph-subheading-2">Invite a few friends to attend your activity. When they join, they'll be prompted to host their own activity and invite a few more friends. Before you know it, you'll have a thriving community of parents sharing activities and childcare!</p>
     </div>
     <ul class="onb-social-button-list">
@@ -34,9 +34,9 @@
       </div>
     </div>
     <EventListItem 
-    v-if="nextEventInSeries" 
-    :event="nextEventInSeries"
-    :index="nextEventInSeries.id"
+    v-if="eventToShare" 
+    :event="eventToShare"
+    :index="eventToShare.id"
     showRsvpButton="" 
     />
   </div>
@@ -58,6 +58,7 @@
 import TextMessageLink from '@/components/TextMessageLink.vue'
 import EventListItem from '@/components/EventListItem.vue'
 import Nav from '@/components/onboarding/Nav.vue'
+import * as api from '@/utils/api.js'
 
 export default {
   name: "Invite",
@@ -70,13 +71,19 @@ export default {
   		tweetText: "Everyone I know should come to this event I\'m hosting to start a local network for childcare sharing!",
       emailBody: "Hi%20everyone!%0A%0AI%20hope%20you%20can%20all%20join%20me%20at%20this%20event%20we%20are%20hosting%20to%20start%20a%20new%20local%20network%20for%20sharing%20childcare!%20Can%20you%20come%3F%0A%0A",
       emailSubject: "Sharing%20childcare%20(we%20should%20do%20this!)",
-      isMobileDevice: typeof window.orientation != "undefined"
+      isMobileDevice: typeof window.orientation != "undefined",
+      events: null,
   	}
+  },
+  mounted: function () {
+    this.fetchAllEvents()
   },
   computed: {
     shareUrl: function () {
       if (!!this.nextEventInSeries) {
         return 'www.kidsclub.io/event/' + this.nextEventInSeries.id
+      } else if (this.$route.params.id) {
+        return 'www.kidsclub.io/event/' + this.$route.params.id
       } else {
         return 'www.kidsclub.io' 
       }
@@ -92,6 +99,13 @@ export default {
         return event
       } else {
         return null
+      }
+    },
+    eventToShare: function () {
+      if (this.nextEventInSeries) {
+        return this.nextEventInSeries
+      } else {
+        return this.eventFromParams 
       }
     },
   	textMessage: function () {
@@ -111,12 +125,26 @@ export default {
   	},
     emailLink: function () {
       return 'mailto:?subject=' + this.emailSubject + '&body=' + this.emailBody + 'https%3A%2F%2F' + this.shareUrl + '%2F%0A%0AThanks!%0A%3C3'
-    }
+    },
+    eventFromParams: function () {
+      if (Array.isArray(this.events)) {
+        return this.events.find(event => event.id == this.$route.params.id)
+      } else {
+        return {}
+      }
+    }    
   },
   methods: {
   	onCopy: function () {
   		this.copyButtonText = 'copied!'
-  }
+  },
+    fetchAllEvents: function () {
+      this.events = window.globalEventList
+      api.fetchEvents().then(
+      (res) => { 
+        this.events = res
+      })      
+    }
 }
 };
 </script>

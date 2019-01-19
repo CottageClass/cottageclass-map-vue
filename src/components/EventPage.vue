@@ -120,12 +120,9 @@
       <div class="event-specifics-card" v-if="!event.full && !event.participated">
         <div v-if="!hostIsCurrentUser" class="card-large-text">Want to help spread the word?</div>
         <div v-else class="card-large-text">Invite others to your playdate!</div>
-          <ShareButton 
-          class="rsvp-button-bottom"
-          buttonText="Invite friends" 
-          shareTitle="Want to do this with me?"
-          shareText="It's a new way of sharing childcare with other parents. Want to join?"
-          :shareUrl="'https://www.kidsclub.io/event/' + eventId" />
+          <router-link :to="'/event/' + $route.params.id + '/share'" class="rsvp-button-bottom">
+            <a class="button w-button">INVITE FRIENDS</a>
+          </router-link>
       </div>
 
     </div>

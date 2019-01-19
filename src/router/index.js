@@ -18,6 +18,7 @@ import Events from '@/components/Events.vue'
 import RsvpInfoCollection from '@/components/RsvpInfoCollection.vue'
 import RsvpConfirmation from '@/components/RsvpConfirmation.vue'
 import Faq from '@/components/Faq.vue'
+import Invite from '@/components/onboarding/Invite.vue'
 
 Vue.use(Router)
 
@@ -59,7 +60,12 @@ export default new Router({
       component: ProviderProfile
     },
     {
-      path: '/event/:id',
+      path: '/event/:id/share',
+      name: 'Invite',
+      component: Invite
+    },    
+    {
+      path: '/event/:id/',
       name: 'EventPage',
       component: EventPage
     },
