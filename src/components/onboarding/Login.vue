@@ -320,12 +320,12 @@
         </div>
       </li>
       <li class="list-item-divider"></li>
-      <li class="testimonial-list-item"><img src="@/assets/photo-62x.png" alt="" class="testimonial-desktop-image w-hidden-small w-hidden-tiny">
+      <li class="testimonial-list-item"><img src="@/assets/rima4.jpg" alt="" class="testimonial-desktop-image w-hidden-small w-hidden-tiny">
         <div class="blockquote-container w-clearfix"><img src="@/assets/quotation.svg" alt="" class="quotation-mark-icon">
-          <blockquote class="parents-love-us-blockquote">CottageClass has transformed our son's learning and life! We can now customize his education to his learning style. He has found teachers that embrace him as a student and a human being. He feels valued and is thriving.</blockquote>
-          <div class="testimonial-image-name-group"><img src="@/assets/photo-62x.png" alt="" class="testimonial-mobile-image w-hidden-main w-hidden-medium">
+          <blockquote class="parents-love-us-blockquote">The playdate went really well! Millie was so nice and sweet and I think Yuri and Lexi had a lot of fun. They ended up playing all evening and didn&rsquo;t even watch the movie :) We are so happy with our experience and I had some really nice time together with my husband!</blockquote>
+          <div class="testimonial-image-name-group"><img src="@/assets/rima4.jpg" alt="" class="testimonial-mobile-image w-hidden-main w-hidden-medium">
             <div class="testimonial-mobile-text-content">
-              <div class="testimonial-list-item-name">Sara Fitzpatrick</div>
+              <div class="testimonial-list-item-name">Rima Khusainova</div>
               <div class="parent-location p-small-black-50">Brooklyn</div>
             </div>
           </div>
