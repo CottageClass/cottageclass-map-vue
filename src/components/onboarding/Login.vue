@@ -1424,7 +1424,7 @@ a {
   display: -ms-flexbox;
   display: flex;
   margin-bottom: 16px;
-  padding: 16px 16px 16px 0px;
+  padding: 16px 16px 16px 16px;
   -webkit-box-pack: center;
   -webkit-justify-content: center;
   -ms-flex-pack: center;
@@ -3247,26 +3247,6 @@ a {
 
 .date-text-wrapper {
   padding-left: 16px;
-}
-
-.event-date-section-more-events {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  margin-bottom: 16px;
-  padding-top: 16px;
-  padding-bottom: 16px;
-  padding-left: 0px;
-  -webkit-box-pack: center;
-  -webkit-justify-content: center;
-  -ms-flex-pack: center;
-  justify-content: center;
-  -webkit-box-align: center;
-  -webkit-align-items: center;
-  -ms-flex-align: center;
-  align-items: center;
-  border-radius: 4px;
 }
 
 .image-264 {

@@ -8,38 +8,38 @@
       	v-if="currentUser" 
       	:person="currentUser" 
       	className="image" />
-      	<a @click="toggleMenu" class="button w-button">Menu</a></div>
+      	<a @click="toggleMenu" class="nav-menu-button button w-button">Menu</a></div>
       <div 
       v-if="showMenu" 
       v-on-clickaway="clickedAway"
       class="nav-links-expanded">
         <ul class="unordered-list-2 w-list-unstyled">
-          <li class="nav-link">
+          <li>
             <router-link to="/home" class="link-block w-inline-block">
               <div class="text-block">Upcoming Playdates</div>
             </router-link>
           </li>
-          <li class="nav-link" v-if="isAuthenticated">
+          <li v-if="isAuthenticated">
             <router-link to="/request" class="link-block w-inline-block">
               <div class="text-block">Request Care</div>
             </router-link>
           </li>
-          <li class="nav-link" v-if="isAuthenticated">
+          <li v-if="isAuthenticated">
             <router-link to="/offer" class="link-block w-inline-block">
               <div class="text-block">Offer Care</div>
             </router-link>
           </li>
-          <li class="nav-link">
+          <li>
             <router-link to="/faq" class="link-block w-inline-block">
               <div class="text-block">FAQ</div>
             </router-link>
           </li>
-          <li class="nav-link" v-if="isAuthenticated">
+          <li v-if="isAuthenticated">
             <a @click="logout" class="link-block w-inline-block">
               <div class="text-block">Logout</div>
             </a>
           </li>
-          <li class="nav-link" v-if="!isAuthenticated">
+          <li v-if="!isAuthenticated">
             <!-- Can't use router link here because it won't refresh on frontpage --> 
             <a href="/?activeScreen=directLogin" class="link-block w-inline-block">
               <div class="text-block">Sign in</div>
@@ -120,6 +120,11 @@ a {
   text-decoration: none;
 }
 
+.nav-menu-button:active {
+  background-color: #fff !important;
+  color: #000;
+  border: 1px solid black;
+}
 
 .main-nav {
   position: relative;
@@ -204,11 +209,6 @@ a {
   background-color: #f5f5f5;
 }
 
-.nav-link {
-  border-bottom: 1px solid rgba(0, 0, 0, .04);
-  border-top-width: 1px;
-}
-
 .nav-links-expanded {
   position: absolute;
   top: 88px;
@@ -226,17 +226,13 @@ a {
 }
 
 .link-block {
+  font-weight: normal;
   width: 100%;
   padding: 14px 16px 14px 24px;
 }
 
 .link-block:hover {
   background-color: rgba(0, 0, 0, .04);
-}
-
-.link-block:active {
-  background-color: #1f88e9;
-  color: #fff;
 }
 
 .temporary-spacer-between-navs {
