@@ -125,15 +125,17 @@ export default {
     },
     fetchUpcomingEvents: function () {
       this.events = window.globalEventList
-      api.fetchEvents('upcoming/page/1/page_size/50').then(
-      (res) => { 
-        this.events = res
-        window.globalEventList = res
-        this.showShowAllButton = true
-        if (this.eventsWithinDistance.length < 10) {
+      if (!(this.events && this.events.length > 50)) { 
+        api.fetchEvents('upcoming/page/1/page_size/50').then(
+          (res) => { 
+            this.events = res
+            window.globalEventList = res
+            this.showShowAllButton = true
+            if (this.eventsWithinDistance.length < 10) {
           this.fetchAllEvents()
         }
       })
+      } 
     },
     fetchCurrentUser: function () {
       api.fetchCurrentUserNew(Token.currentUserId(this.$auth)).then(currentUser => {
