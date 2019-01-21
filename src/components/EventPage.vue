@@ -185,8 +185,10 @@ export default {
             return 'movie-camera.svg'
           case 'arts & crafts':
             return 'artist-palette.svg'
-          case 'board games':
+          case 'games & puzzles':
             return 'chess-pawn.svg'
+          case 'board games':
+            return 'chess-pawn.svg'  
           case 'baking':
             return 'birthday-cake.svg'
           default:

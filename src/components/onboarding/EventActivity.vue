@@ -41,7 +41,7 @@ export default {
       activities: [
       'movie night',
       'arts & crafts',
-      'board games',
+      'games & puzzles',
       'baking'
       ]
     }
