@@ -94,7 +94,7 @@ export default {
     }
   },
   mounted: function () {
-    api.fetchEvents().then(
+    api.fetchEvents(this.$route.params.eventId).then(
       (res) => { 
         this.event = res.find(event => event.id == this.eventId)
       })

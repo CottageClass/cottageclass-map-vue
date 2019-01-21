@@ -173,9 +173,9 @@ export default {
       return moment().diff(birthdate, 'years')
     },
     fetchEventInformation: function () {
-      api.fetchEvents().then(
+      api.fetchEvents(this.$route.params.eventId).then(
         (res) => { 
-          this.event = res.find(event => event.id == this.$route.params.eventId)
+          this.event = res[0]
            if (this.event.full || this.event.maximumChildren == 0) {
             this.error = 'We\'re sorry, this event is full!'
         }
