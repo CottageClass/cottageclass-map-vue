@@ -76,7 +76,7 @@ export default {
   	}
   },
   mounted: function () {
-    this.fetchAllEvents()
+    this.fetchEvent()
   },
   computed: {
     shareUrl: function () {
@@ -138,9 +138,9 @@ export default {
   	onCopy: function () {
   		this.copyButtonText = 'copied!'
   },
-    fetchAllEvents: function () {
+    fetchEvent: function () {
       this.events = window.globalEventList
-      api.fetchEvents().then(
+      api.fetchEvents(this.$route.params.id).then(
       (res) => { 
         this.events = res
       })      

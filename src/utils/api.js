@@ -242,9 +242,9 @@ export function submitNotification(participantId, notificationBodyText) {
  * EVENTS
  */
 
-export function fetchEvents(scope) {
+export function fetchEvents(scopeOrEventId) {
   return Vue.axios.get(
-    `${process.env.BASE_URL_API}/api/events/${scope || ''}`
+    `${process.env.BASE_URL_API}/api/events/${scopeOrEventId || ''}`
     ).then(res => {
       console.log("FETCH EVENTS SUCCESS")
       console.log(res.data)

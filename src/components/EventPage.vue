@@ -198,16 +198,16 @@ export default {
         this.currentUser = currentUser
         })
     },
-    fetchAllEvents: function () {
+    fetchEvent: function () {
       this.events = window.globalEventList
-      api.fetchEvents().then(
+      api.fetchEvents(this.$route.params.id).then(
       (res) => { 
         this.events = res
       })      
     }
   },
   mounted: function () {
-    this.fetchAllEvents()
+    this.fetchEvent()
     if (this.$auth && this.$auth.isAuthenticated()) {
       this.isAuthenticated = true
       this.currentUserId = Token.currentUserId(this.$auth)
