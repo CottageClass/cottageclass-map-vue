@@ -36,6 +36,7 @@
     "vue-cookies": "^1.5.12",
     "vue-google-autocomplete": "^1.1.0",
     "vue-router": "^3.0.1",
+    "vue-scrollto": "^2.13.0",
     "vue2-google-maps": "^0.10.2"
   },
   "devDependencies": {
