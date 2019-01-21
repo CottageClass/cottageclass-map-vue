@@ -191,6 +191,8 @@ export default {
             return 'chess-pawn.svg'  
           case 'baking':
             return 'birthday-cake.svg'
+          case 'book club':
+            return 'books.svg'            
           default:
             return 'grinning-face-with-smiling-eyes.svg'
         }

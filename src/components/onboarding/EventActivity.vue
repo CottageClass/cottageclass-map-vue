@@ -42,7 +42,8 @@ export default {
       'movie night',
       'arts & crafts',
       'games & puzzles',
-      'baking'
+      'baking',
+      'book club'
       ]
     }
   },
