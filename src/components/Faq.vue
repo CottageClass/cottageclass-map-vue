@@ -7,37 +7,37 @@
       <p class="intro-paragraph">Welcome to KidsClub! KidsClub is a community for parents to share childcare and educational activities with other parents for free! Our mission is to give you access to an amazing support network of parents to share childcare, advice and fun-filled times! Every parent is asked to host a playdate at least once a month. In exchange, you’ll get access to incredible events, activities and childcare led by other parents. In addition to the listed activities, you’ll also be able to request childcare from other parents in the community at specific times.</p>
       <ul class="ul-menu">
         <li class="ul-menu-item">
-          <a href="#General-Questions" class="w-inline-block">
+          <a v-scroll-to="'#General-Questions'" class="w-inline-block">
             <div>General Questions</div>
           </a>
         </li>
         <li class="ul-menu-item">
-          <a href="#Points" class="w-inline-block">
+          <a v-scroll-to="'#Points'" class="w-inline-block">
             <div>Points</div>
           </a>
         </li>
         <li class="ul-menu-item">
-          <a href="#Hosting-Playdates" class="w-inline-block">
+          <a v-scroll-to="'#Hosting-Playdates'" class="w-inline-block">
             <div>Hosting Playdates</div>
           </a>
         </li>
         <li class="ul-menu-item">
-          <a href="#Attending-Playdates" class="w-inline-block">
+          <a v-scroll-to="'#Attending-Playdates'" class="w-inline-block">
             <div>Attending Playdates</div>
           </a>
         </li>
         <li class="ul-menu-item">
-          <a href="#Childcare-in-a-Pinch" class="w-inline-block">
+          <a v-scroll-to="'#Childcare-in-a-Pinch'" class="w-inline-block">
             <div>Childcare in a Pinch</div>
           </a>
         </li>
         <li class="ul-menu-item">
-          <a href="#Trust-Safety" class="w-inline-block">
+          <a v-scroll-to="'#Trust-Safety'" class="w-inline-block">
             <div>Trust &amp; Safety</div>
           </a>
         </li>
         <li class="ul-menu-item">
-          <a href="#Community-Rules" class="w-inline-block">
+          <a v-scroll-to="'#Community-Rules'" class="w-inline-block">
             <div>Community Rules</div>
           </a>
         </li>

@@ -27,6 +27,13 @@ Vue.use(VueAxios, axios);
 
 Vue.use(VueClipboard)
 
+/* 
+ * Scrolling to anchor links
+ */ 
+
+var VueScrollTo = require('vue-scrollto');
+ 
+Vue.use(VueScrollTo) 
 
 // Form validation
 import VeeValidate from 'vee-validate';
