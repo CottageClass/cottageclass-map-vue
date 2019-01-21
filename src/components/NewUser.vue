@@ -176,7 +176,7 @@ export default {
   },
   methods: {
     fetchUpcomingEvents: function () {
-      api.fetchEvents('upcoming').then(
+      api.fetchEvents('upcoming/page/1/page_size/50').then(
       (res) => { 
         window.globalEventList = res
       })

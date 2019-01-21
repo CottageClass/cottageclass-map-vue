@@ -36,8 +36,14 @@
           :showRsvpButton="!isAuthenticated || currentUserId != event.hostId"
           :distance="distanceFromCurrentUser(event.hostFuzzyLatitude, event.hostFuzzyLongitude)"
           />
-<!--        <div class="event-date-section-tittle"><a href="events.html" class="more-link">All Events</a></div> -->
       </div>
+            <div 
+            class="event-date-section-more-events" 
+            v-if="showShowAllButton"
+            @click="fetchAllEvents"
+            >
+              <a class="button w-button">{{ showAllButtonText }}</a>
+            </div>
     </div>
     </div>
   </div>
@@ -74,6 +80,8 @@ export default {
       isAuthenticated: false,
       maximumDistanceFromUserInMiles: '5',
       currentUserId: null,
+      showAllButtonText: 'Show all playdates',
+      showShowAllButton: false
   	}
   },
   computed: {
@@ -106,12 +114,25 @@ export default {
     formatDate: function (date) {
       return moment(date).format('dddd, MMM Do' )
     },
-    fetchUpcomingEvents: function () {
-      this.events = window.globalEventList
+    fetchAllEvents: function () {
+      this.showAllButtonText = 'Loading more...'
       api.fetchEvents('upcoming').then(
       (res) => { 
         this.events = res
         window.globalEventList = res
+        this.showShowAllButton = false
+      })
+    },
+    fetchUpcomingEvents: function () {
+      this.events = window.globalEventList
+      api.fetchEvents('upcoming/page/1/page_size/50').then(
+      (res) => { 
+        this.events = res
+        window.globalEventList = res
+        this.showShowAllButton = true
+        if (this.eventsWithinDistance.length < 10) {
+          this.fetchAllEvents()
+        }
       })
     },
     fetchCurrentUser: function () {
@@ -180,6 +201,24 @@ h2 {
 a {
   color: #000;
   text-decoration: none;
+}
+
+.button {
+  padding: 12px 32px;
+  border-radius: 4px;
+  background-color: #1f88e9;
+  text-align: center;
+  color: white;
+}
+
+.button:hover {
+  background-image: -webkit-gradient(linear, left top, left bottom, from(rgba(0, 0, 0, .1)), to(rgba(0, 0, 0, .1)));
+  background-image: linear-gradient(180deg, rgba(0, 0, 0, .1), rgba(0, 0, 0, .1));
+}
+
+.button:active {
+  background-image: -webkit-gradient(linear, left top, left bottom, from(rgba(0, 0, 0, .1)), to(rgba(0, 0, 0, .1)));
+  background-image: linear-gradient(180deg, rgba(0, 0, 0, .1), rgba(0, 0, 0, .1));
 }
 
 .body {
