@@ -149,7 +149,7 @@ const webpackConfig = merge(baseWebpackConfig, {
         removeViewBox: false
       }),
       imageminMozjpeg({
-        quality: 80
+        quality: 50
       })      
       ]      
     })
