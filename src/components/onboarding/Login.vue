@@ -308,10 +308,10 @@
         <h1 class="h1-display-parents-align-l">Us</h1>
       </div>
     <ul class="testimonial-list-group">
-      <li class="testimonial-list-item"><img src="@/assets/photo-12.png" alt="" class="testimonial-desktop-image w-hidden-small w-hidden-tiny">
+      <li class="testimonial-list-item"><img src="@/assets/photo-12.jpg" alt="" class="testimonial-desktop-image w-hidden-small w-hidden-tiny">
         <div class="blockquote-container w-clearfix"><img src="@/assets/quotation.svg" alt="" class="quotation-mark-icon">
           <blockquote class="parents-love-us-blockquote">William has been very excited ...and often comes home singing a new song or talking about an activity he did that day. More than anything we&#x27;re hoping interacting with multiple children will get him better at being gentle, sharing and taking turns... things that he&#x27;s been trying very hard to understand :) &quot;</blockquote>
-          <div class="testimonial-image-name-group"><img src="@/assets/photo-12.png" alt="" class="testimonial-mobile-image w-hidden-main w-hidden-medium">
+          <div class="testimonial-image-name-group"><img src="@/assets/photo-12.jpg" alt="" class="testimonial-mobile-image w-hidden-main w-hidden-medium">
             <div class="testimonial-mobile-text-content">
               <div class="testimonial-list-item-name"><strong class="parent-name">Mary Summers</strong></div>
               <div class="parent-location p-small-black-50">Brooklyn</div>
