@@ -3,11 +3,10 @@
   <li class="event-list-item">
     <div class="event-list-item-graphic" 
     :style="{ backgroundColor: backgroundColor(index)}">
-      <img 
-      :src="iconUrl(iconImage(event.activityName))" 
-      width="100" 
-      height="100" 
-      alt="">
+    <EventCategoryIcon 
+    :category="event.activityName"  
+    width="100" 
+    height="100" />
     </div>
     <div class="event-list-item-content">
       <a href="event-detail.html" class="link-block-4 w-inline-block">
@@ -46,13 +45,14 @@
 
 import AvatarImage from './AvatarImage.vue'
 import RsvpButton from './RsvpButton.vue'
+import EventCategoryIcon from '@/components/EventCategoryIcon.vue'
 
 var moment = require('moment');
 
 export default {
   name: 'EventListItem',
   props: ['event', 'index', 'showRsvpButton', 'distance'],
-  components: { AvatarImage, RsvpButton },
+  components: { AvatarImage, RsvpButton, EventCategoryIcon },
   computed: {
     childAgesSorted: function () {
       return this.event.hostChildAges.sort((a,b) => a - b)
@@ -84,6 +84,8 @@ export default {
             return 'chess-pawn.svg'
           case 'baking':
             return 'birthday-cake.svg'
+          case 'book club':
+            return 'books.svg'  
           default:
             return 'grinning-face-with-smiling-eyes.svg' // party-popper.svg 
         }

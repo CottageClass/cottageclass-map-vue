@@ -2,8 +2,8 @@
 <div class="body-2">
   <MainNav />
   <div class="event-detail-container w-container">
-    <div class="event-detail-graphic"><img :src="iconUrl(iconImage(event.activityName))" 
- width="150" height="150" alt=""></div>
+    <div class="event-detail-graphic"><EventCategoryIcon :category="event.activityName"  
+ width="150" height="150" /></div>
     <div class="div-block-36">
       <div
       v-if="event.participated" 
@@ -145,10 +145,11 @@ import RsvpButton from './RsvpButton.vue'
 import ShareButton from './ShareButton.vue'
 import MainNav from './MainNav.vue'
 import Footer from '@/components/Footer.vue'
+import EventCategoryIcon from '@/components/EventCategoryIcon.vue'
 
 export default {
   name: 'EventPage',
-  components: { AvatarImage, RsvpButton, ShareButton, MainNav, Footer },
+  components: { AvatarImage, RsvpButton, ShareButton, MainNav, Footer, EventCategoryIcon },
   data () {
     return {
       events: [],
@@ -176,27 +177,6 @@ export default {
     formatTime: function (time24) {
       return moment(time24).format('LT')
     },
-    iconUrl: function (imageName) {
-            return require('@/assets/' + imageName)
-    },
-    iconImage: function (category) {
-        switch(category) {
-          case 'movie night':
-            return 'movie-camera.svg'
-          case 'arts & crafts':
-            return 'artist-palette.svg'
-          case 'games & puzzles':
-            return 'chess-pawn.svg'
-          case 'board games':
-            return 'chess-pawn.svg'  
-          case 'baking':
-            return 'birthday-cake.svg'
-          case 'book club':
-            return 'books.svg'            
-          default:
-            return 'grinning-face-with-smiling-eyes.svg'
-        }
-      },
     fetchCurrentUser: function () {
       api.fetchCurrentUserNew(Token.currentUserId(this.$auth)).then(currentUser => {
         this.currentUser = currentUser
