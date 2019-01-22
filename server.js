@@ -1,3 +1,4 @@
+require('newrelic');
 var sslRedirect = require('heroku-ssl-redirect');
 var express = require('express');
 var path = require('path');
