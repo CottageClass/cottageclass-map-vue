@@ -19,6 +19,7 @@ import RsvpInfoCollection from '@/components/RsvpInfoCollection.vue'
 import RsvpConfirmation from '@/components/RsvpConfirmation.vue'
 import Faq from '@/components/Faq.vue'
 import Invite from '@/components/onboarding/Invite.vue'
+import EventEdit from '@/components/EventEdit.vue'
 
 Vue.use(Router)
 
@@ -63,6 +64,11 @@ export default new Router({
       path: '/event/:id/share',
       name: 'Invite',
       component: Invite
+    },
+    {
+      path: '/event/:id/edit',
+      name: 'EventEdit',
+      component: EventEdit
     },    
     {
       path: '/event/:id/',
