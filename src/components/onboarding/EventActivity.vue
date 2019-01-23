@@ -77,8 +77,7 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped>
-@import '../../assets/css/onboarding-and-forms.css';
+<style scoped>
 
 .describe-label {
   color: white;

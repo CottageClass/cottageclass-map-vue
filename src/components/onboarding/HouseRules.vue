@@ -43,7 +43,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '../../assets/css/onboarding-and-forms.css';
+
 html {
   -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
 }

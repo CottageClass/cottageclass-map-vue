@@ -41,8 +41,6 @@ export default {
 
 <style lang="scss" scoped>
 
-@import '../../assets/css/onboarding-and-forms.css';
-
 .onb-content-container {
   height: unset;
   min-height: 100%;
