@@ -45,7 +45,7 @@
       </div>
   
   <!-- steps in form --> 
-  <OnboardingStyleWrapper>
+  <OnboardingStyleWrapper styleIs="onboarding">
       <Phone v-if="step === 1" v-model="phone" @pressedEnter="nextStep" />
       <Location v-if="step === 2" v-model="location" @pressedEnter="nextStep"/>
       <Children v-if="step === 3" v-model="children" />
@@ -112,7 +112,7 @@ var client = sheetsu({ address: 'https://sheetsu.com/apis/v1.0su/62cd725d6088' }
 
 export default {
   components: {
-    Nav, Login, DirectLogin, Signup, Location, Phone, Children, Availability, Food, EventActivity, EventTime, EventDate, HouseRules, PetsDescription, YesOrNo, MaxChildren, OAuthCallback, Invite
+    Nav, Login, DirectLogin, Signup, Location, Phone, Children, Availability, Food, EventActivity, EventTime, EventDate, HouseRules, PetsDescription, YesOrNo, MaxChildren, OAuthCallback, Invite, OnboardingStyleWrapper
   },
   data () {
     return {
