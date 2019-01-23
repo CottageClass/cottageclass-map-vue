@@ -1,139 +1,61 @@
 <template>
-	<div class="body">
-    <MainNav />
-  <div class="content-section background-01">
-    <div class="divider-2px"></div>
-    <div class="content-container-4 w-container">
-     <h1 class="h1-display">Upcoming Playdates</h1>
-     <p v-if="isAuthenticated">Within 
-      <select v-model="maximumDistanceFromUserInMiles">
-        <option>0.2</option>
-        <option>0.5</option>
-        <option>1</option>
-        <option>2</option>
-        <option>5</option>
-        <option>10</option>
-        <option>20</option>
-        <option>50</option>
-      </select> miles</p>
-			<EventList :events="eventsWithinDistance" />
+  <div class="events-list-wrapper">
+    <div v-for="(event, index) in events">
+      <div v-if="index === 0 || (formatDate(event.startsAt) != formatDate(events[index - 1].startsAt))" class="event-date-section-tittle">
+        <img src="@/assets/date-outline-white-oval.svg" alt="" class="image-264">
+        <div class="date-text-wrapper">
+          <div class="date-title">
+            <span v-if="isToday(event.startsAt)">
+              <strong class="bold-text">Today</strong>,
+            </span>
+            {{ formatDate(event.startsAt) }}
+          </div>
+        </div>
+      </div>
+      <EventListItem
+        :event="event"
+        :index="index"
+        :key="index"
+        :showRsvpButton="!isAuthenticated || currentUserId != event.hostId"
+        :distance="distanceFromCurrentUser(event.hostFuzzyLatitude, event.hostFuzzyLongitude)"
+      />
     </div>
-  </div>
-
-<!-- Footer --> 
-
- <Footer />
-
+    </div>
   </div>
 </template>
 
 <script>
-import EventList from '@/components/EventList.vue'
-import MainNav from '@/components/MainNav.vue'
-import Footer from '@/components/Footer.vue'
-import * as Token from '@/utils/tokens.js'
-import * as api from '@/utils/api.js'
+import EventListItem from '@/components/EventListItem.vue'
 var moment = require('moment');
 
-// todo:
-// work on event page until it's complete for one event, so I get all the data I need
-// try to get as far as possible without transforming the data in any way? or possibly go through each one by one as before.
-// change logic for "is today"
-// sort events by date so that current date display logic will work
-
+console.log('eventlist')
 export default {
-  name: 'Events',
-  components: { EventList, MainNav, Footer },
-  props: ['limitTo'],
+  name: 'EventList',
+  components: { EventListItem },
+  props : ['events'],
   data () {
   	return {
-  	  events: null,
       currentUser: null,
       isAuthenticated: false,
-      maximumDistanceFromUserInMiles: '5',
-      currentUserId: null,
-      showAllButtonText: 'Show all playdates',
-      showShowAllButton: false
+      currentUserId: null
   	}
   },
-  computed: {
-    eventsByDate: function () {
-      if (this.events) {
-        return this.events.sort((eventA, eventB) => {
-          return moment(eventA.startsAt).diff(moment(eventB.startsAt))
-        })
-      }
-    },
-    eventsWithinDistance: function () {
-      if (this.isAuthenticated && !!this.eventsByDate) {
-        return this.eventsByDate.filter(event => this.distanceFromCurrentUser(event.hostFuzzyLatitude, event.hostFuzzyLongitude) <= parseFloat(this.maximumDistanceFromUserInMiles))
-      } else {
-        return this.eventsByDate
-      }
-    }
-  },
   methods: {
-    limitNumberOfEvents: function (events) {
-      if (!!this.limitTo) {
-        return events.slice(0, parseInt(this.limitTo))
-      } else {
-        return events
-      }
-    },
-    isToday: function (date) {
-      return moment(0,"HH").diff(date, "days") == 0;
-    },
     formatDate: function (date) {
       return moment(date).format('dddd, MMM Do' )
     },
-    fetchAllEvents: function () {
-      this.showAllButtonText = 'Loading more...'
-      api.fetchEvents('upcoming').then(
-      (res) => { 
-        this.events = res
-        window.globalEventList = res
-        this.showShowAllButton = false
-      })
-    },
-    fetchUpcomingEvents: function () {
-      this.events = window.globalEventList
-      if (!(this.events && this.events.length > 50)) { 
-        api.fetchEvents('upcoming/page/1/page_size/50').then(
-          (res) => { 
-            this.events = res
-            window.globalEventList = res
-            this.showShowAllButton = true
-            if (this.eventsWithinDistance.length < 10) {
-          this.fetchAllEvents()
-        }
-      })
-      } 
-    },
-    fetchCurrentUser: function () {
-      api.fetchCurrentUserNew(Token.currentUserId(this.$auth)).then(currentUser => {
-        this.currentUser = currentUser
-        })
-    },
+		isToday: function (date) {
+			return moment(0,"HH").diff(date, "days") == 0;
+		},
     distanceFromCurrentUser: function (lat, lon) {
-    if (this.currentUser) {
-      return api.distanceHaversine(lat, lon, this.currentUser.latitude, this.currentUser.longitude)
-    } else {
-      return null
+      if (this.currentUser) {
+        return api.distanceHaversine(lat, lon, this.currentUser.latitude, this.currentUser.longitude)
+      } else {
+        return null
+      }
     }
   }
-  },
-  mounted: function () {
-    this.fetchUpcomingEvents()
-    if (this.$auth && this.$auth.isAuthenticated()) {
-      this.isAuthenticated = true
-      this.currentUserId = Token.currentUserId(this.$auth)
-    } 
-
-    if (this.isAuthenticated) {
-      this.fetchCurrentUser()
-    }
-  }
-};
+}
 </script>
 
 <style scoped>
