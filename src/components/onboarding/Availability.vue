@@ -46,4 +46,8 @@ export default {
   min-height: 100%;
 }
 
+.onb-checkbox {
+    margin-top: 22px;
+}
+
 </style>

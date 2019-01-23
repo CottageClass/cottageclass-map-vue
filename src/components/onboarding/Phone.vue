@@ -12,7 +12,7 @@
           type="tel" 
           class="location-text-field w-input" 
           maxlength="30" 
-          placeholder="e.g. 2125551212">
+          :placeholder="placeholder">
         </form>
       </div>
     </div>
@@ -32,11 +32,12 @@ import {
 
 export default {
   name: "Phone",
-  props: ['value'],
+  props: ['value', 'currentPhone'],
   data () {
     return {
       number: "",
-      errorMesg: 'Please enter a valid US phone number.'
+      errorMesg: 'Please enter a valid US phone number.',
+      placeholder: this.currentPhone || 'e.g. 2125551212'
     }
   },
   mounted: function () {

@@ -11,7 +11,7 @@
             ref="address"
             id="map"
             classname="email-form-2 w-form location-text-field w-input"
-            placeholder="Street address (not apt #)"
+            :placeholder="placeholder"
             v-on:placechanged="getAddressData"
             country="us"
         >
@@ -38,11 +38,13 @@
 import VueGoogleAutocomplete from 'vue-google-autocomplete'
 export default {
   name: "Location",
+  props: ['currentAddress'],
   data () {
   	return {
   		textEntered: '',
       showApartmentField: false,
       apartmentNumber: '',
+      placeholder: this.currentAddress || 'Street address (not apt #)',
       address: {}
   	}
   },
