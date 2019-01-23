@@ -45,7 +45,7 @@
       </div>
   
   <!-- steps in form --> 
-       
+  <OnboardingStyleWrapper>
       <Phone v-if="step === 1" v-model="phone" @pressedEnter="nextStep" />
       <Location v-if="step === 2" v-model="location" @pressedEnter="nextStep"/>
       <Children v-if="step === 3" v-model="children" />
@@ -71,8 +71,9 @@
       <HouseRules v-if="step === 13" v-model="houseRules" />
       <!-- OAuthCallback is just used for the loading animation --> 
       <OAuthCallback v-if="step > lastStep && !error" />
+  </OnboardingStyleWrapper>
 
-   <!-- close wrapper -->  
+   <!-- close desktop wrapper -->  
  </div>
 </div>
     </div>
@@ -98,6 +99,7 @@ import MaxChildren from '@/components/onboarding/MaxChildren.vue'
 import YesOrNo from '@/components/onboarding/YesOrNo.vue'
 import OAuthCallback from '@/components/OAuthCallback.vue' 
 import Invite from '@/components/onboarding/Invite.vue' 
+import OnboardingStyleWrapper from '@/components/onboarding/OnboardingStyleWrapper.vue' 
 import * as Token from '@/utils/tokens.js'
 import * as api from '@/utils/api.js'
 import sheetsu from 'sheetsu-node'
