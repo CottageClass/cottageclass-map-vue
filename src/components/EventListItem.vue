@@ -55,7 +55,7 @@ export default {
   components: { AvatarImage, RsvpButton, EventCategoryIcon },
   computed: {
     childAgesSorted: function () {
-      return this.event.hostChildAges.sort((a, b) => a - b)
+      return this.event.hostChildAges.concat().sort((a, b) => a - b)
     }
   },
   methods: {

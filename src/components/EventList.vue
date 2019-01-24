@@ -20,14 +20,14 @@
         :distance="distanceFromCurrentUser(event.hostFuzzyLatitude, event.hostFuzzyLongitude)"
       />
     </div>
-    </div>
   </div>
 </template>
 
 <script>
 import EventListItem from '@/components/EventListItem.vue'
-var moment = require('moment')
+import * as api from '@/utils/api.js'
 
+var moment = require('moment')
 console.log('eventlist')
 export default {
   name: 'EventList',

@@ -59,10 +59,11 @@ export default {
   computed: {
     eventsByDate: function () {
       if (this.events) {
-        return this.events.sort((eventA, eventB) => {
+        return this.events.concat().sort((eventA, eventB) => {
           return moment(eventA.startsAt).diff(moment(eventB.startsAt))
         })
       }
+      return []
     },
     eventsWithinDistance: function () {
       if (this.isAuthenticated && !!this.eventsByDate) {

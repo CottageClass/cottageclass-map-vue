@@ -8,7 +8,6 @@
   <div class="list-container"
   v-for="person in peopleWhoHaveMadeInquiriesToCurrentUser">
      <Parent :person="person" :currentUser="currentUser" :network="network" :key="person.id"/>
-    </div>
   </div>
 </div>
 </template>

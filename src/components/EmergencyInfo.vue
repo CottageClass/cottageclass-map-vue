@@ -46,7 +46,7 @@
   </div>
   <div class="list-item-5" v-for="child in person.children">
     <h5 class="heading">{{ child.firstName }}</h5>
-    <h5 class="caption-2">Age {{ child.age }} | Born {{ child.birthday }}</h5>
+    <h5 class="caption-2">Age {{ child.age }} | Born {{ child.birthday }}</h5>
     <div class="label-description-block" v-if="child.allergies">
       <div class="text-block-5">Allergies</div>
       <div class="text-block-6">{{ child.allergies }}</div>

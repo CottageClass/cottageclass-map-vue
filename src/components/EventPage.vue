@@ -141,7 +141,6 @@ import * as api from '@/utils/api.js'
 import * as Token from '@/utils/tokens.js'
 import AvatarImage from './AvatarImage.vue'
 import RsvpButton from './RsvpButton.vue'
-import ShareButton from './ShareButton.vue'
 import MainNav from './MainNav.vue'
 import Footer from '@/components/Footer.vue'
 import EventCategoryIcon from '@/components/EventCategoryIcon.vue'
@@ -149,7 +148,7 @@ var moment = require('moment')
 
 export default {
   name: 'EventPage',
-  components: { AvatarImage, RsvpButton, ShareButton, MainNav, Footer, EventCategoryIcon },
+  components: { AvatarImage, RsvpButton, MainNav, Footer, EventCategoryIcon },
   data () {
     return {
       events: [],
@@ -213,7 +212,7 @@ export default {
       }
     },
     childAgesSorted: function () {
-      return this.event.hostChildAges.sort((a, b) => a - b)
+      return this.event.hostChildAges.concat().sort((a, b) => a - b)
     },
     event: function () {
       if (Array.isArray(this.events)) {
