@@ -68,13 +68,19 @@ export function submitUserInfo(userId, phone, location, availability, children) 
         neighborhood,
         country: country,
         postalCode: postal_code,
-        apartmentNumber: location.apartmentNumber,
         latitude: location.lat,
         longitude: location.lng,
     }
   }
 
-  if (!!phone) {
+  if (!!location.apartmentNumber) {
+    postData = {
+      ...postData,
+      apartmentNumber: location.apartmentNumber,
+    }
+  }
+
+  if (!!phone.number) {
       let phoneAreaCode = phone.number.match(/(\(\d+\))/)[0].replace(/[^\d]/g,'')
       let phoneNumber = phone.number.match(/\d{3}-\d{4}/)[0].replace(/[^\d]/g,'')
       postData = {

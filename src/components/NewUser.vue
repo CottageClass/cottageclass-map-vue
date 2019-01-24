@@ -46,7 +46,7 @@
   
   <!-- steps in form --> 
   <OnboardingStyleWrapper styleIs="onboarding">
-      <Phone v-if="step === 1" v-model="phone" @pressedEnter="nextStep" />
+      <Phone v-if="step === 1" v-model="phone" @pressedEnter="nextStep" required="true" />
       <Location v-if="step === 2" v-model="location" @pressedEnter="nextStep"/>
       <Children v-if="step === 3" v-model="children" />
       <EventActivity v-if="step === 4" v-model="eventActivity" />

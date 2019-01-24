@@ -1,20 +1,24 @@
 <template>
-<div class="body">
+<div class="body" id="top-of-form">
 	<MainNav />
 	<div class="container w-container">
 	<h1 class="heading-1">Edit profile</h1>
   <OnboardingStyleWrapper styleIs="editing" class="cards" v-if="currentUser">
-      <div v-if="error" class="onb-error-container"><div class="onb-error-text">This is an error</div></div>	
-	  <Phone v-model="phone" :currentPhone="currentUser.phone" />
-      <div v-if="error" class="onb-error-container"><div class="onb-error-text">This is an error</div></div>		  
-	  <Location :currentAddress="currentUser.fullAddress" :currentApartment="currentUser.apartment" v-model="location" />
-      <div v-if="error" class="onb-error-container"><div class="onb-error-text">This is an error</div></div>		  
-	  <Availability v-model="availability" />
-      <div v-if="error" class="onb-error-container"><div class="onb-error-text">This is an error</div></div>		  
-	  <Children v-model="children"/>
+      <div v-if="showError && error" class="onb-error-container"><div class="onb-error-text">Your form has errors. Please fix them to continue...</div></div>  
+      <div v-if="showError && error" id="error" class="onb-error-container"><div class="onb-error-text">{{ phone.err}}</div></div>	
+	  <Phone v-model="phone" :currentPhone="currentUser.phone" :required="false" />
+      <div v-if="showError && error" id="error" class="onb-error-container"><div class="onb-error-text">{{ location.err }}</div></div>		  
+	  <Location :currentAddress="currentUser.fullAddress" :currentApartment="currentUser.apartment" v-model="location" :required="false" />
+      <div v-if="showError && error" id="error" class="onb-error-container"><div class="onb-error-text">{{ availability.err }}</div></div>		  
+	  <Availability v-model="availability" :required="false"/>
+
+    <!--
+      <div v-if="showError && error" id="error" class="onb-error-container"><div class="onb-error-text">{{ children.err }}</div></div>      
+	  <Children v-model="children" :required="false" />
+  -->
   </OnboardingStyleWrapper>
      <div class="page-actions-wrapper">
-     	<a @click="submitUserInformation" class="button-primary w-button">Save</a></div>	
+     	<a @click="submitUserInformation" class="button-primary w-button">{{ saveButtonText }}</a></div>	
   </div>	
 </div>
 
@@ -29,6 +33,7 @@ import MainNav from '@/components/MainNav.vue'
 import OnboardingStyleWrapper from '@/components/onboarding/OnboardingStyleWrapper.vue'
 import * as Token from '@/utils/tokens.js'
 import * as api from '@/utils/api.js'
+var VueScrollTo = require('vue-scrollto');
 
 
 export default {
@@ -39,8 +44,12 @@ export default {
       currentUser: null,
       currentUserId: null,
       isAuthenticated: null,
-      location: null,
-      phone: null
+      location: {},
+      phone: {},
+      availability: {},
+      showError: false,
+      children: {},
+      saveButtonText: 'Save'
 		}
 	},
   mounted: function () {
@@ -51,35 +60,45 @@ export default {
     } 
   },
   computed: {
-  	children: function () {
-  		return {
-  			list: this.currentUser.children
-  		}
+    error: function () {
+      if (!!this.phone.err || !!this.availability.err || !!this.location.err || !!this.children.err) { 
+        return true
+      } else {
+        return false
+      }
   	},
-  	availability: function () {
-  		return {
-  			availableAfternoons: this.currentUser.availableAfternoons,
-  			availableMornings: this.currentUser.availableMornings,
-  			availableEvenings: this.currentUser.availableEvenings,
-  			availableWeekends: this.currentUser.availableWeekends,
-  			never: false
-  		}
-  	}
   },
   methods: {
     fetchCurrentUser: function () {
       this.currentUser = window.globalCurrentUser
       api.fetchCurrentUserNew(Token.currentUserId(this.$auth)).then(currentUser => {
         this.currentUser = currentUser
+        this.children.list = this.currentUser.children
+        this.availability = {
+        availableAfternoons: this.currentUser.availableAfternoons,
+        availableMornings: this.currentUser.availableMornings,
+        availableEvenings: this.currentUser.availableEvenings,
+        availableWeekends: this.currentUser.availableWeekends,
+        }
         window.globalCurrentUser = currentUser
         })
     },
     submitUserInformation: function () {
+      if (!this.error) {
+       this.saveButtonText = 'Saving...' 
     	 api.submitUserInfo(this.currentUserId, this.phone, this.location, this.availability, this.children).then(res => {
+          this.saveButtonText = ' \u2714 Saved'
           console.log("user update SUCCESS")
           console.log(res)
           return res
+        }).catch(err => {
+          console.log('Error saving', err)
+          this.saveButtonText = 'Problem saving. Click to try again.'
         })
+      } else {
+        this.showError = true
+        VueScrollTo.scrollTo('#top-of-form')
+      }
     }  	
   }
 };
