@@ -139,10 +139,10 @@ export default {
         text: ''
       },
       availability: {
-        mornings: false,
-        afternoons: false,
-        evenings: false,
-        weekends: false,
+        availableMornings: false,
+        availableAfternoons: false,
+        availableEvenings: false,
+        availableWeekends: false,
         err: 'skippable'
       },
       food: {},
