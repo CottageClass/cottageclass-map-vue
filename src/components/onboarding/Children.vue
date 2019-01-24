@@ -14,10 +14,14 @@
             <h2 class="onb-child-group-heading">Child {{ index + 1}}</h2>
             <a @click="removeChild(index)" class="onb-button-delete-child w-inline-block"><img src="@/assets/remove.svg" width="24" height="24" alt="" class="image-6"></a>
           </div>
-          <label for="birthday-2" class="onb-field-label">First Name</label>
+          <label for="name-2" class="onb-field-label">First Name</label>
           <input type="text" class="name-text-field w-input" maxlength="256" name="name-2" data-name="Name 2" placeholder="First Name" id="name-2" v-model="children[index].firstName" />
-          <label for="birthday-3" class="onb-field-label">Birthday</label>
+
+          <label for="birthday-2" class="onb-field-label">Birthday</label>
           <input type="date" min="1980-01-01" class="basic-text-field w-input" maxlength="256" name="birthday-2" data-name="Birthday 2" placeholder="MM / DD / YYYY" id="birthday-2" v-model="children[index].birthday" />
+
+          <label for="school-2" class="onb-field-label">School Name</label>
+          <input type="text" class="name-text-field w-input" maxlength="256" name="school-2" data-name="School 2" placeholder="Name of School" id="school-2" v-model="children[index].schoolName" />
         </div>
       </form><a @click="addChild" class="onb-button-add-group w-inline-block"><img src="@/assets/add.svg" alt="" class="image-7"><div class="onb-button-add-group-text">Add Another child</div></a>
     </div>
@@ -39,7 +43,7 @@ export default {
   },
   methods: {
     addChild: function () {
-      this.children.push({firstName: null, birthday: null})
+      this.children.push({firstName: null, birthday: null, schoolName: null})
     },
     removeChild: function (index) {
       this.children.splice(index, 1);
