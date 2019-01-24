@@ -1,5 +1,5 @@
 <template>
-	<div class="body">
+  <div class="body">
     <MainNav />
   <div class="content-section background-01">
     <div class="divider-2px"></div>
@@ -16,7 +16,7 @@
         <option>20</option>
         <option>50</option>
       </select> miles</p>
-			<EventList :events="eventsWithinDistance" />
+      <EventList :events="eventsWithinDistance" />
     </div>
   </div>
 
@@ -46,15 +46,15 @@ export default {
   components: { EventList, MainNav, Footer },
   props: ['limitTo'],
   data () {
-  	return {
-  	  events: null,
+    return {
+      events: null,
       currentUser: null,
       isAuthenticated: false,
       maximumDistanceFromUserInMiles: '5',
       currentUserId: null,
       showAllButtonText: 'Show all playdates',
       showShowAllButton: false
-  	}
+    }
   },
   computed: {
     eventsByDate: function () {

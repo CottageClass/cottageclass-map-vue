@@ -1,55 +1,52 @@
 <template>
-
 <div class="modal-wrapper">
+  <div class="title-bar-container">
+    <a href="javascript:history.go(-1)">
+      <img src="../assets/Close-X.svg">
+    </a>
+    <h5 class="heading-3">Request Care</h5><a href="#" class="title-bar-action-2 w-inline-block"></a>
+  </div>
+  <div class="form-container">
+    <div class="form-block w-form">
+      <div id="email-form" class="form">
+        <select v-model="day" class="select-field w-select">
+          <!-- this is silly but saves us from using natural date libraries right now-->
+          <option value="today" select="selected">Today</option>
+          <option value="tomorrow" select="selected">Tomorrow</option>
+          <option value="Monday" select="selected">Monday</option>
+          <option value="Tuesday" select="selected">Tuesday</option>
+          <option value="Wednesday" select="selected">Wednesday</option>
+          <option value="Thursday" select="selected">Thursday</option>
+          <option value="Friday" select="selected">Friday</option>
+          <option value="Saturday" select="selected">Saturday</option>
+          <option value="Sunday" select="selected">Sunday</option>
+        </select>
+        <label>Start time?</label>
+        <input type="time" v-model="startTime" class="select-field w-select">
+        <label>End time?</label>
+        <input type="time" v-model="endTime" class="select-field w-select">
+        <select v-model="numberOfChildren" class="select-field w-select">
+          <option value="1">1 child</option>
+          <option value="2">2 children</option>
+          <option value="3">3 children</option>
+          <option value="4">4 children</option>
+        </select>
 
-    <div class="title-bar-container">
-      <a href="javascript:history.go(-1)">
-        <img src="../assets/Close-X.svg">
-      </a>
-      <h5 class="heading-3">Request Care</h5><a href="#" class="title-bar-action-2 w-inline-block"></a></div>
-    <div class="form-container">
-      <div class="form-block w-form">
-        <div id="email-form" class="form">
-          <select v-model="day" class="select-field w-select">
-            <!-- this is silly but saves us from using natural date libraries right now-->
-            <option value="today" select="selected">Today</option>
-            <option value="tomorrow" select="selected">Tomorrow</option>
-            <option value="Monday" select="selected">Monday</option>
-            <option value="Tuesday" select="selected">Tuesday</option>
-            <option value="Wednesday" select="selected">Wednesday</option>
-            <option value="Thursday" select="selected">Thursday</option>
-            <option value="Friday" select="selected">Friday</option>
-            <option value="Saturday" select="selected">Saturday</option>
-            <option value="Sunday" select="selected">Sunday</option>
-          </select>
-          <label>Start time?</label>
-          <input type="time" v-model="startTime" class="select-field w-select">
-          <label>End time?</label>
-          <input type="time" v-model="endTime" class="select-field w-select">
-          <select v-model="numberOfChildren" class="select-field w-select">
-            <option value="1">1 child</option>
-            <option value="2">2 children</option>
-            <option value="3">3 children</option>
-            <option value="4">4 children</option>
-          </select>
-
-          <div class="avatar-and-cta-container">
-            <AvatarImage person="provider" class="image" />
-              <div class="text-block-4">
-                Send a text message to<br><span class="text-span">{{ provider.firstName}} {{ provider.lastInitial }}.</span><span class="black-50"></span>
-              </div>
-            </div>
-
-            <button
-              value="Send Text"
-              class="button-small-3 w-button"
-              @click="submitRequest"
-            >
-              {{ sendButtonText }}
-            </button>
-            <div class="small-text-black-40">You can edit it on the next screen.<br>Each booking costs ${{ network.price }}/hour<br> &amp; you only pay for what you use.</div>
+        <div class="avatar-and-cta-container">
+          <AvatarImage person="provider" class="image" />
+          <div class="text-block-4">
+            Send a text message to<br><span class="text-span">{{ provider.firstName}} {{ provider.lastInitial }}.</span><span class="black-50"></span>
           </div>
         </div>
+
+        <button
+          value="Send Text"
+          class="button-small-3 w-button"
+          @click="submitRequest"
+        >
+          {{ sendButtonText }}
+        </button>
+        <div class="small-text-black-40">You can edit it on the next screen.<br>Each booking costs ${{ network.price }}/hour<br> &amp; you only pay for what you use.</div>
       </div>
     </div>
   </div>
@@ -123,6 +120,7 @@ export default {
       }, (err) => {
         alert('Oops! There was a problem sending your request. Try again?')
         this.sendButtonText = 'Send Text'
+        console.log(err.stack)
       })
     },
     formatTime: function (time) {
@@ -782,15 +780,15 @@ a {
 }
 
 /*
-	.avatar-and-cta-container {
-		display: none;
-	}
-	*/
+  .avatar-and-cta-container {
+    display: none;
+  }
+  */
 /* This isn't working on android so I've hidden that thumbnail with the line above */
 
 @media(max-height:600px) {
-	.avatar-and-cta-container {
-		display: none;
-	}
+  .avatar-and-cta-container {
+    display: none;
+  }
 }
 </style>

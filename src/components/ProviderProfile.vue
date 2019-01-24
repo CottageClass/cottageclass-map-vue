@@ -89,8 +89,8 @@
   <div class="group-title-container-2">
     <h5 class="list-title-2">Great Experiences</h5>
   </div>
-  <span v-for="review in person.reviews">
-</span>
+  <!-- <span v-for="review in person.reviews">
+</span> -->
 
 <!-- Leave a review -->
 
@@ -106,8 +106,8 @@
   <div class="group-title-container-2">
     <h5 class="list-title-2">Concerns</h5>
   </div>
-  <span v-for="review in person.concerns">
-</span>
+  <!-- <span v-for="review in person.concerns">
+</span> -->
 
   <!-- concern link -->
 

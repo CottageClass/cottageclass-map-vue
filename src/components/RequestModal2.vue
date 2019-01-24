@@ -28,7 +28,6 @@ import RequestCare from '@/components/onboarding/RequestCare.vue'
 import * as Token from '@/utils/tokens.js'
 import * as api from '@/utils/api.js'
 import sheetsu from 'sheetsu-node'
-import networks from '@/assets/network-info.json'
 import RequestRecipients from '@/components/RequestRecipients.vue'
 import RequestSuccessful from '@/components/RequestSuccessful.vue'
 

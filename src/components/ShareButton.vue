@@ -5,7 +5,7 @@
 <script>
 export default {
   name: 'ShareButton',
-  props: [ 'buttonText', 'shareTitle', 'shareText', 'shareUrl'],
+  props: ['buttonText', 'shareTitle', 'shareText', 'shareUrl'],
   methods: {
     share: function () {
       if (navigator.share) {

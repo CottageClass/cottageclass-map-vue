@@ -1,6 +1,6 @@
 <template>
-	<div class="onb-body">
-	<div class="loading-container">
+  <div class="onb-body">
+  <div class="loading-container">
   <div v-bind:style="styles" class="spinner spinner--circle-8">
     <div v-bind:style="innerStyles" class="spinner-inner">
       <div class="ball-container">
@@ -43,15 +43,15 @@ export default {
 <style lang="scss" scoped>
   .onb-body
   {
-  	background-color: #1d8be7;
-  	height: 100vh;
+    background-color: #1d8be7;
+    height: 100vh;
   }
   .loading-container
   {
-  	position: fixed;
-  	top: 50%;
-  	left: 50%;
-  	transform: translate(-50%, -50%);
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
   }
   .spinner{
     * {

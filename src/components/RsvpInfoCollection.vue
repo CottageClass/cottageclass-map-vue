@@ -29,7 +29,7 @@
       <h1 class="onb-heading-large">Which children would you like to RSVP?</h1>
       <p
       class="onb-paragraph-subheading-2"
-      v-if="Number.isInteger(spotsRemaining)">There <span v-if="spotsRemaining === 1">is</span><span v-else>are</span> {{ spotsRemaining }} spot<span v-if="spotsRemaining != 1">s</span> remaining.</p>
+      v-if="Number.isInteger(spotsRemaining)">There <span v-if="spotsRemaining === 1">is</span><span v-else>are</span> {{ spotsRemaining }} spot<span v-if="spotsRemaining !== 1">s</span> remaining.</p>
     </div>
     <div class="onb-form-block-checkbox-list w-form">
       <form class="onb-form-checkbox-list">
@@ -180,6 +180,7 @@ export default {
           }
         }).catch(
         (err) => {
+          console.log(err.stack)
           this.error = 'Sorry, there was a problem retrieving information about the event. Go back and try again?'
         })
     },
@@ -215,7 +216,6 @@ export default {
       })
     },
     submitToSheetsu: function () {
-      let userId = Token.currentUserId(this.$auth)
       // submit user to sheetsu which gives us notifications of new RSVPs
       client.create({
         'Event ID': this.eventId,
@@ -241,7 +241,7 @@ export default {
     toggleSelected: function (id) {
       this.error = ''
       if (this.isSelected(id)) {
-        this.childrenSelected = this.childrenSelected.filter((aChildId) => aChildId != id)
+        this.childrenSelected = this.childrenSelected.filter((aChildId) => aChildId !== id)
       } else {
         this.childrenSelected.push(id)
       }

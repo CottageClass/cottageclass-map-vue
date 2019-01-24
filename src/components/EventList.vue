@@ -1,7 +1,7 @@
 <template>
   <div class="events-list-wrapper">
     <div v-for="(event, index) in events">
-      <div v-if="index === 0 || (formatDate(event.startsAt) != formatDate(events[index - 1].startsAt))" class="event-date-section-tittle">
+      <div v-if="index === 0 || (formatDate(event.startsAt) !== formatDate(events[index - 1].startsAt))" class="event-date-section-tittle">
         <img src="@/assets/date-outline-white-oval.svg" alt="" class="image-264">
         <div class="date-text-wrapper">
           <div class="date-title">
@@ -16,7 +16,7 @@
         :event="event"
         :index="index"
         :key="index"
-        :showRsvpButton="!isAuthenticated || currentUserId != event.hostId"
+        :showRsvpButton="!isAuthenticated || currentUserId !== event.hostId"
         :distance="distanceFromCurrentUser(event.hostFuzzyLatitude, event.hostFuzzyLongitude)"
       />
     </div>
@@ -34,11 +34,11 @@ export default {
   components: { EventListItem },
   props: ['events'],
   data () {
-  	return {
+    return {
       currentUser: null,
       isAuthenticated: false,
       currentUserId: null
-  	}
+    }
   },
   methods: {
     formatDate: function (date) {

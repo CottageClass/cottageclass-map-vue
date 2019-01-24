@@ -30,7 +30,7 @@
 
   <!-- wrapper for desktop screens -->
 
-    <div class="onb-body" v-if="step != 0">
+    <div class="onb-body" v-if="step !== 0">
       <div class="body">
         <div class="content-wrapper">
 
@@ -215,9 +215,8 @@ export default {
           .then(res => {
             this.continueWhenComplete()
           })
-      }
-      // check if there's an error, if so show it, if not advance and clear the error.
-      else if (!this.error || this.error === 'skippable') {
+      } else if (!this.error || this.error === 'skippable') {
+        // check if there's an error, if so show it, if not advance and clear the error.
         this.showError = false
         this.skipSkippableSteps()
         window.scrollTo(0, 0)
@@ -278,7 +277,7 @@ export default {
       let userId = Token.currentUserId(this.$auth)
 
       // submit user to sheetsu for KPI tracking, unless network is "demo"
-      if (this.invitationCode.code != 'demo') {
+      if (this.invitationCode.code !== 'demo') {
         client.create({
           'ID': userId,
           'Date joined': moment(Date()).format('L'),
@@ -299,7 +298,6 @@ export default {
       let component = this
 
       // set default values for the time being
-      const defaultMaximumChildren = 2
       const defaultChildAgeMaximum = 11
       const defaultChildAgeMinimum = 2
 

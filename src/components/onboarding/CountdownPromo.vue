@@ -22,7 +22,7 @@
 <script>
 import * as Token from '@/utils/tokens.js'
 import * as api from '@/utils/api.js'
-var moment = require('moment')
+var Moment = require('moment')
 
 export default {
   name: 'CountdownPromo',
@@ -40,10 +40,10 @@ export default {
   },
   mounted: function () {
     this.interval = setInterval(() => {
-      var now = new moment()
-      var promoExpires = new moment(this.currentUser.dateCreated).add(24, 'hours')
-      var duration = moment.duration(promoExpires.diff(now))
-      this.showPromo = moment().isBefore(promoExpires)
+      var now = new Moment()
+      var promoExpires = new Moment(this.currentUser.dateCreated).add(24, 'hours')
+      var duration = Moment.duration(promoExpires.diff(now))
+      this.showPromo = Moment().isBefore(promoExpires)
       this.hours = duration.hours()
       this.minutes = duration.minutes()
       this.seconds = duration.seconds()

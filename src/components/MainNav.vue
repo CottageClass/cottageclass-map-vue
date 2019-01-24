@@ -4,11 +4,11 @@
       <div class="logo-wrapper"><router-link :to="{ name: 'NewUser' }" class="w-inline-block"><img src="@/assets/kc-logo-landscape.svg" alt="" class="logo"></router-link>
       </div>
       <div class="actions-wrapper">
-      	<AvatarImage
-      	v-if="currentUser"
-      	:person="currentUser"
-      	className="image" />
-      	<a @click="toggleMenu" class="nav-menu-button button w-button">Menu</a></div>
+        <AvatarImage
+        v-if="currentUser"
+        :person="currentUser"
+        className="image" />
+        <a @click="toggleMenu" class="nav-menu-button button w-button">Menu</a></div>
       <div
       v-if="showMenu"
       v-on-clickaway="clickedAway"
@@ -68,13 +68,13 @@ export default {
   mixins: [ clickaway ],
   props: ['user'],
   data () {
-  	return {
-  		showMenu: false,
+    return {
+      showMenu: false,
       menuButtonText: 'Menu',
       currentUser: null,
       currentUserId: null,
       isAuthenticated: null
-  	}
+    }
   },
   mounted: function () {
     if (this.$auth && this.$auth.isAuthenticated()) {
@@ -84,12 +84,12 @@ export default {
     }
   },
   methods: {
-  	toggleMenu: function () {
-  		this.showMenu = !this.showMenu
-  	},
-  	clickedAway: function () {
-  		this.showMenu = false
-  	},
+    toggleMenu: function () {
+      this.showMenu = !this.showMenu
+    },
+    clickedAway: function () {
+      this.showMenu = false
+    },
     logout: function () {
       this.$auth.logout()
       this.$router.push('/')

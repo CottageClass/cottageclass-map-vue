@@ -1,45 +1,41 @@
 <template>
- <div class="list-item-3-container">
-   <router-link :to="{ name: 'emergencyInfo', params: { id: person.id }}" class="list-item-3-title-bar">
-    <AvatarImage :person="person" class="image" />
-       <div class="list-item-3-heading">
-         <h5 class="heading">{{ person.firstName}} {{ person.lastInitial }}. </h5>
-       </div>
-     </router-link>
-     <div class="list-item-3-child-list">
-       <div class="text-block">
-        <ChildInfo :children="person.children" />
-</span></div>
-   </div>
-     <div v-if="checkState != 'error'" class="list-item-3-actions">
-      <!-- check in button -->
-         <a class="list-item-3-link-block w-inline-block" @click="check('in')">
-           <div v-if="checkState=='checking in'"class="list-item-3-button-text">Checking in...</div>
-            <div v-if="checkState=='checked in'"class="list-item-3-button-text">&#10004; Checked in</div>
-           <div v-if="checkState=='checked out' || checkState=='unknown' || checkState=='checking out'" class="list-item-3-button-text">Check In</div>
-         </a>
-      <!-- check out button -->
-         <a class="list-item-3b-link-block w-inline-block" @click="check('out')">
-            <div v-if="checkState=='checking out'"class="list-item-3-button-text">Checking out...</div>
-            <div v-if="checkState=='checked out'"class="list-item-3-button-text">&#10004; Checked out</div>
-           <div v-if="checkState=='checked in' || checkState=='unknown' || checkState=='checking in'" class="list-item-3-button-text">Check Out</div>
-         </a>
-   </div>
-      <div class="note-container" v-if="checkState=='error'">
-        <div class="note">
-          <div>We're sorry! There was a problem saving your check-in. To make sure it's recorded properly, call or text us right away at <a href="tel:‭+1-862-294-4859‬">862-294-4859‬</a>.</div>
-        </div>
+  <div class="list-item-3-container">
+    <router-link :to="{ name: 'emergencyInfo', params: { id: person.id }}" class="list-item-3-title-bar">
+      <AvatarImage :person="person" class="image" />
+      <div class="list-item-3-heading">
+        <h5 class="heading">{{ person.firstName}} {{ person.lastInitial }}. </h5>
       </div>
- </div>
+    </router-link>
+    <div class="list-item-3-child-list">
+      <div class="text-block">
+        <ChildInfo :children="person.children" />
+    </div>
+  </div>
+  <div v-if="checkState !== 'error'" class="list-item-3-actions">
+    <!-- check in button -->
+    <a class="list-item-3-link-block w-inline-block" @click="check('in')">
+      <div v-if="checkState=='checking in'" class="list-item-3-button-text">Checking in...</div>
+      <div v-if="checkState=='checked in'" class="list-item-3-button-text">&#10004; Checked in</div>
+      <div v-if="checkState=='checked out' || checkState=='unknown' || checkState=='checking out'" class="list-item-3-button-text">Check In</div>
+    </a>
+    <!-- check out button -->
+    <a class="list-item-3b-link-block w-inline-block" @click="check('out')">
+      <div v-if="checkState=='checking out'" class="list-item-3-button-text">Checking out...</div>
+      <div v-if="checkState=='checked out'" class="list-item-3-button-text">&#10004; Checked out</div>
+      <div v-if="checkState=='checked in' || checkState=='unknown' || checkState=='checking in'" class="list-item-3-button-text">Check Out</div>
+    </a>
+  </div>
+  <div class="note-container" v-if="checkState=='error'">
+    <div class="note">
+      <div>We're sorry! There was a problem saving your check-in. To make sure it's recorded properly, call or text us right away at <a href="tel:‭+1-862-294-4859‬">862-294-4859‬</a>.</div>
+    </div>
+  </div>
+</div>
 </template>
 
 <script>
-import TextMessageLink from './TextMessageLink.vue'
 import AvatarImage from './AvatarImage.vue'
 import ChildInfo from '@/components/ChildInfo.vue'
-import * as api from '@/utils/api.js'
-import networks from '@/assets/network-info.json'
-import * as Token from '@/utils/tokens.js'
 
 // import google sheets API service
 import sheetsu from 'sheetsu-node'
@@ -50,7 +46,7 @@ var client = sheetsu({ address: 'https://sheetsu.com/apis/v1.0su/62cd725d6088' }
 export default {
   name: 'Parent',
   props: ['person', 'currentUser', 'network'],
-  components: { TextMessageLink, AvatarImage, ChildInfo },
+  components: { AvatarImage, ChildInfo },
   data () {
     return {
       checkState: 'unknown' // "unknown", "checking in", "checked in", "checking out", "checked out", "error"

@@ -65,15 +65,15 @@ export default {
   components: { TextMessageLink, EventListItem, Nav },
   props: [ 'eventData', 'currentUser' ],
   data () {
-  	return {
+    return {
       copyButtonText: 'copy link',
-  		prefix: 'https://',
-  		tweetText: "Everyone I know should come to this event I\'m hosting to start a local network for childcare sharing!",
+      prefix: 'https://',
+      tweetText: "Everyone I know should come to this event I'm hosting to start a local network for childcare sharing!",
       emailBody: 'Hi%20everyone!%0A%0AI%20hope%20you%20can%20all%20join%20me%20at%20this%20event%20we%20are%20hosting%20to%20start%20a%20new%20local%20network%20for%20sharing%20childcare!%20Can%20you%20come%3F%0A%0A',
       emailSubject: 'Sharing%20childcare%20(we%20should%20do%20this!)',
       isMobileDevice: typeof window.orientation !== 'undefined',
       events: null
-  	}
+    }
   },
   mounted: function () {
     this.fetchEvent()
@@ -108,21 +108,21 @@ export default {
         return this.eventFromParams
       }
     },
-  	textMessage: function () {
-  		return "Hey! I'm hosting this event for kids as part of a new way to share childcare. Want to come? " + this.link
-  	},
-  	link: function () {
-  		return this.prefix + this.shareUrl
-  	},
-  	fbMessengerLink: function () {
-  		return 'fb-messenger://share/?link=' + this.link
-  	},
-  	fbLink: function () {
-  		return 'https://www.facebook.com/sharer/sharer.php?u=' + this.link
-  	},
-  	tweetLink: function () {
-  		return 'https://twitter.com/intent/tweet?text=' + this.tweetText + ' ' + this.link
-  	},
+    textMessage: function () {
+      return "Hey! I'm hosting this event for kids as part of a new way to share childcare. Want to come? " + this.link
+    },
+    link: function () {
+      return this.prefix + this.shareUrl
+    },
+    fbMessengerLink: function () {
+      return 'fb-messenger://share/?link=' + this.link
+    },
+    fbLink: function () {
+      return 'https://www.facebook.com/sharer/sharer.php?u=' + this.link
+    },
+    tweetLink: function () {
+      return 'https://twitter.com/intent/tweet?text=' + this.tweetText + ' ' + this.link
+    },
     emailLink: function () {
       return 'mailto:?subject=' + this.emailSubject + '&body=' + this.emailBody + 'https%3A%2F%2F' + this.shareUrl + '%2F%0A%0AThanks!%0A%3C3'
     },
@@ -135,8 +135,8 @@ export default {
     }
   },
   methods: {
-  	onCopy: function () {
-  		this.copyButtonText = 'copied!'
+    onCopy: function () {
+      this.copyButtonText = 'copied!'
     },
     fetchEvent: function () {
       this.events = window.globalEventList

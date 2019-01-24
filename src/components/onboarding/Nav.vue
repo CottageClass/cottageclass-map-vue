@@ -1,7 +1,7 @@
 <template>
   <div class="body onb-body">
   <div class="title-bar"><a @click="$emit('prev')" class="button-back w-inline-block"></a>
-  <a v-if="button != 'none'" @click="$emit('next')" :class="classObject">
+  <a v-if="button !== 'none'" @click="$emit('next')" :class="classObject">
     <div class="button-next-text">{{ text }}</div>
   </a>
 </div>
@@ -16,7 +16,7 @@ export default {
   name: 'Nav',
   props: ['button'],
   computed: {
-	    text: function () {
+    text: function () {
       if (this.button === 'skip') {
         return 'SKIP'
       } else if (this.button === 'done') {

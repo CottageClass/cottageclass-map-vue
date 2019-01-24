@@ -40,20 +40,20 @@ export default {
   name: 'Location',
   props: ['currentAddress'],
   data () {
-  	return {
-  		textEntered: '',
+    return {
+      textEntered: '',
       showApartmentField: false,
       apartmentNumber: '',
       placeholder: this.currentAddress || 'Street address (not apt #)',
       address: {}
-  	}
+    }
   },
   components: { VueGoogleAutocomplete },
   mounted: function () {
-  		this.$emit('input', {
-  			err: 'Please enter your street address.'
-  		})
-  	},
+    this.$emit('input', {
+      err: 'Please enter your street address.'
+    })
+  },
   methods: {
     toggleApartmentField: function () {
       this.showApartmentField = true

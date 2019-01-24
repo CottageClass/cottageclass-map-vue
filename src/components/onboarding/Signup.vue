@@ -1,97 +1,94 @@
 <template>
-
   <!-- wrapper for desktop screens -->
+  <div class="onb-body">
+    <div class="body">
+      <div class="content-wrapper">
 
-    <div class="onb-body">
-      <div class="body">
-        <div class="content-wrapper">
+        <!-- nav -->
 
-<!-- nav -->
-
-    <div class="title-bar">
-      <a @click="$emit('activateScreen', 'facebook')" class="title-bar-back-button w-inline-block"></a>
-      <a @click="signup" :class="nextButtonClassObject">
-        <div class="title-bar-next-button-text">NEXT</div>
-      </a>
-    </div>
-
-<!-- title & form -->
-
-    <div v-if="!success">
-    <div class="onb-content-container-2">
-      <div v-if="showError && (errors.all().length > 0 || error)" class="onb-error-container">
-        <div class="onb-error-text">
-          <span> {{ error }}</span>
-          <ul>
-            <li v-for="error in errors.all()">{{ error }}</li>
-          </ul>
+        <div class="title-bar">
+          <a @click="$emit('activateScreen', 'facebook')" class="title-bar-back-button w-inline-block"></a>
+          <a @click="signup" :class="nextButtonClassObject">
+            <div class="title-bar-next-button-text">NEXT</div>
+          </a>
         </div>
-      </div>
-          <div class="onb-top-content-container">
-            <h1 class="onb-heading-large">Join KidsClub</h1>
-            <button
-            v-if="showFacebookLogin"
-            class="button-text splash-button w-inline-block facebook-sign-in-button"
-            @click="$emit('authenticateFacebook')"
-            >Continue with Facebook</button>
-            <p class="onb-paragraph-subheading-2"><span v-if="showFacebookLogin">Or enter</span><span v-else>Enter</span> your information below. Already have an account? <a @click="$emit('activateScreen', 'directLogin')">Sign in here</a>.</p>
-          </div>
-        </div>
-  <div class="onb-child-info-container">
-    <div class="form-block-3 w-form">
-      <form v-on:submit.prevent="signup" class="form-2">
-        <fieldset :disabled="disableForm === true">
-          <div class="onb-child-group-2">
-              <label class="onb-field-label">First Name</label>
-              <input
-                v-validate="'required'"
-                name="first_name"
-                v-model="first_name"
-                placeholder="First Name"
-                :class="{'invalid': errors.has('first_name') }"
-                class="name-text-field w-input"
-              >
-              <label class="onb-field-label">Last Name</label>
-              <input
-                v-validate="'required'"
-                name="last_name"
-                v-model="last_name"
-                placeholder="Last Name"
-                :class="{'invalid': errors.has('last_name') }"
-                class="name-text-field w-input"
-              >
-              <label class="onb-field-label">Email</label>
-              <input
-                v-validate="'required|email'"
-                name="email"
-                v-model="email"
-                placeholder="e.g. your-email@example.com"
-                :class="{'invalid': errors.has('email') }"
-                class="name-text-field w-input"
-              >
-              <label class="onb-field-label">Password</label>
-              <input
-                type="password"
-                v-validate="'required'"
-                name="password"
-                v-model="password"
-                placeholder="Password"
-                :class="{'invalid': errors.has('password') }"
-                class="name-text-field w-input"
-              >
-            </div>
-            <div class="avatar-photo" v-if="!!avatar_url">
-              <img :src="avatar_url" height="128">
-            </div>
-            <label for="avatar" class="onb-button-add-group w-inline-block"><img src="@/assets/add.svg" alt="" class="image-7">
-              <div
-              class="onb-button-add-group-text"
-              :class="{'invalid': errors.has('avatar') }">
-                <span v-if="!avatar_url">Add profile photo</span>
-                <span v-else>Replace photo</span>
+
+        <!-- title & form -->
+
+        <div v-if="!success">
+          <div class="onb-content-container-2">
+            <div v-if="showError && (errors.all().length > 0 || error)" class="onb-error-container">
+              <div class="onb-error-text">
+                <span> {{ error }}</span>
+                <ul>
+                  <li v-for="error in errors.all()">{{ error }}</li>
+                </ul>
               </div>
-            </label>
-              <input
+            </div>
+            <div class="onb-top-content-container">
+              <h1 class="onb-heading-large">Join KidsClub</h1>
+              <button
+              v-if="showFacebookLogin"
+              class="button-text splash-button w-inline-block facebook-sign-in-button"
+              @click="$emit('authenticateFacebook')"
+              >Continue with Facebook</button>
+              <p class="onb-paragraph-subheading-2"><span v-if="showFacebookLogin">Or enter</span><span v-else>Enter</span> your information below. Already have an account? <a @click="$emit('activateScreen', 'directLogin')">Sign in here</a>.</p>
+            </div>
+          </div>
+          <div class="onb-child-info-container">
+            <div class="form-block-3 w-form">
+              <form v-on:submit.prevent="signup" class="form-2">
+                <fieldset :disabled="disableForm === true">
+                  <div class="onb-child-group-2">
+                    <label class="onb-field-label">First Name</label>
+                    <input
+                    v-validate="'required'"
+                    name="first_name"
+                    v-model="first_name"
+                    placeholder="First Name"
+                    :class="{'invalid': errors.has('first_name') }"
+                    class="name-text-field w-input"
+                    >
+                    <label class="onb-field-label">Last Name</label>
+                    <input
+                    v-validate="'required'"
+                    name="last_name"
+                    v-model="last_name"
+                    placeholder="Last Name"
+                    :class="{'invalid': errors.has('last_name') }"
+                    class="name-text-field w-input"
+                    >
+                    <label class="onb-field-label">Email</label>
+                    <input
+                    v-validate="'required|email'"
+                    name="email"
+                    v-model="email"
+                    placeholder="e.g. your-email@example.com"
+                    :class="{'invalid': errors.has('email') }"
+                    class="name-text-field w-input"
+                    >
+                    <label class="onb-field-label">Password</label>
+                    <input
+                    type="password"
+                    v-validate="'required'"
+                    name="password"
+                    v-model="password"
+                    placeholder="Password"
+                    :class="{'invalid': errors.has('password') }"
+                    class="name-text-field w-input"
+                    >
+                  </div>
+                  <div class="avatar-photo" v-if="!!avatar_url">
+                    <img :src="avatar_url" height="128">
+                  </div>
+                  <label for="avatar" class="onb-button-add-group w-inline-block">
+                    <img src="@/assets/add.svg" alt="" class="image-7">
+                    <div class="onb-button-add-group-text" :class="{'invalid': errors.has('avatar') }">
+                      <span v-if="!avatar_url">Add profile photo</span>
+                      <span v-else>Replace photo</span>
+                    </div>
+                  </label>
+                <input
                 type="file"
                 style="visibility:hidden;"
                 v-validate="'required'"
@@ -99,29 +96,26 @@
                 name="avatar"
                 v-on:change="upload"
                 accept="image/*"
-              >
-        </fieldset>
-      </form>
-    </div>
-  </div>
-  </div>
-     <div v-if="!!success" class="onb-content-container-2" >
-       <div class="onb-top-content-container">
-        <br><br><br>
-         <h1 class="onb-heading-large">Registration complete!</h1>
-           <p class="onb-paragraph-subheading-2">Sign in to continue.</p>
-       </div>
-       <button @click="$emit('activateScreen', 'directLogin')" class="button-text splash-button w-inline-block">Sign in</button>
-     </div>
-    </div>
+                >
+              </fieldset>
+            </form>
+          </div>
+        </div>
+      </div>
+      <div v-if="!!success" class="onb-content-container-2" >
+        <div class="onb-top-content-container">
+          <br><br><br>
+          <h1 class="onb-heading-large">Registration complete!</h1>
+          <p class="onb-paragraph-subheading-2">Sign in to continue.</p>
+        </div>
+        <button @click="$emit('activateScreen', 'directLogin')" class="button-text splash-button w-inline-block">Sign in</button>
+      </div>
     </div>
   </div>
 </div>
 </template>
 
 <script>
-import * as Token from '@/utils/tokens.js'
-import * as api from '@/utils/api.js'
 
 export default {
   name: 'Signup',

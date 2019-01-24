@@ -27,9 +27,9 @@
 export default {
   name: 'MaxChildren',
   data () {
-  	return {
-  		maxChildren: 2
-  	}
+    return {
+      maxChildren: 2
+    }
   },
   mounted: function () {
     this.$emit('input', this.maxChildren)

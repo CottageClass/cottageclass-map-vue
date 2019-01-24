@@ -13,8 +13,8 @@
     <h5 class="heading">{{ person.firstName}} {{ person.lastInitial }}.</h5>
     <div class="ec-parent-summary-phone"><a :href="'tel:' + person.phone">{{ person.phone }}</a></div>
     <div class="list-info-1">
-    	<!-- List children, possibly re-use this component-->
-    	<span v-for="(child, index) in person.children">{{ child.firstName }} <span class="black-50">{{ child.age }}</span><span v-if="(index < person.children.length - 1)">, </span></span>
+      <!-- List children, possibly re-use this component-->
+      <span v-for="(child, index) in person.children">{{ child.firstName }} <span class="black-50">{{ child.age }}</span><span v-if="(index < person.children.length - 1)">, </span></span>
     </div>
     <div class="ec-parent-summary-action-button-container">
       <a :href="'sms:' + person.phone" class="ec-parent-summary-button w-inline-block"><img src="../assets/chat.svg"><div class="ec-parent-summary-button-text">Text</div></a>

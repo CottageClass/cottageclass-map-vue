@@ -1,7 +1,7 @@
 <template>
-	<router-link :to="{ name: 'ProviderProfile', params: { id: person.id }}">
-	<span class="body">
-		  <div class="landing-page-list-item-header">
+  <router-link :to="{ name: 'ProviderProfile', params: { id: person.id }}">
+  <span class="body">
+      <div class="landing-page-list-item-header">
     <div class="avatar-name-container"><AvatarImage :person="person" className="image" />
       <div class="list-item-3-heading">
         <h5 class="heading">{{ person.firstName }} {{ person.lastInitial }}.</h5>
@@ -54,7 +54,7 @@
       <div class="list-item-content-container"></div>
     </div>
   </div>
-	</span>
+  </span>
 </router-link>
 </template>
 

@@ -25,7 +25,7 @@
           <span v-if="childAgesSorted.length > 2">{{ childAgesSorted.length }} kids&mdash;ages
             <span v-for="(age, index) in childAgesSorted">
               <span v-if="index === childAgesSorted.length - 1"> and {{ age }}.</span>
-              <span v-else> {{ age}}<span v-if="index != childAgesSorted.length - 2">,</span></span>
+              <span v-else> {{ age}}<span v-if="index !== childAgesSorted.length - 2">,</span></span>
             </span>
           </span></div>
             <div v-if="event.hostVerified" class="background-checked-wrapper"><img src="@/assets/check-green.svg" alt="">
@@ -97,7 +97,7 @@
           <span v-if="childAgesSorted.length > 2">{{ childAgesSorted.length }} children ages
             <span v-for="(age, index) in childAgesSorted">
               <span v-if="index === childAgesSorted.length - 1"> and {{ age }}.</span>
-              <span v-else> {{ age}}<span v-if="index != childAgesSorted.length - 2">,</span></span>
+              <span v-else> {{ age}}<span v-if="index !== childAgesSorted.length - 2">,</span></span>
             </span>
           </span>
         </div>

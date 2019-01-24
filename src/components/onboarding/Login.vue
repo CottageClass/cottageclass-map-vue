@@ -364,14 +364,13 @@
 import networks from '@/assets/network-info.json'
 import * as Token from '@/utils/tokens.js'
 import * as api from '@/utils/api.js'
-import Events from '@/components/Events.vue'
 import RsvpButton from '@/components/RsvpButton.vue'
 import MainNav from '@/components/MainNav.vue'
 import Footer from '@/components/Footer.vue'
 
 export default {
   name: 'Login',
-  components: { Events, RsvpButton, MainNav, Footer },
+  components: { RsvpButton, MainNav, Footer },
   data () {
     return {
       networks: networks,

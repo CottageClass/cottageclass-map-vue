@@ -1740,7 +1740,7 @@ a {
 }
 
 .onb-checkbox {
-	margin-top: 22px !important;
+  margin-top: 22px !important;
 }
 
 .describe-label {
@@ -1873,11 +1873,11 @@ body {
 }
 
 .image-7 {
-	display: none;
+  display: none;
 }
 
 .onb-button-add-group {
-	padding-bottom: 16px;
+  padding-bottom: 16px;
 }
 
 a {
@@ -1902,7 +1902,7 @@ a:hover {
   display: -webkit-flex;
   display: -ms-flexbox;
   display: flex;
-	flex-wrap: wrap;
+  flex-wrap: wrap;
   width: 100%;
   margin-top: 16px;
   padding: 0 32px 40px 32px;
@@ -1931,11 +1931,11 @@ a:hover {
 /* TODO: Make all these one style in the components themselves! */
 
 .onb-child-info-container {
-	width: 100%;
+  width: 100%;
 }
 
 .onb-child-group-2 {
-	width: 100%;
+  width: 100%;
 }
 
 .card-title, .title, .onb-heading-large, .onb-child-group-heading {
@@ -1946,16 +1946,16 @@ a:hover {
 }
 
 .w-input {
-	width: 100%
+  width: 100%
 }
 
 .location-search-container {
-	width: 100%;
+  width: 100%;
 }
 
 .onb-error-text {
-	color: #ff7575;
-	margin-top: 16px;
+  color: #ff7575;
+  margin-top: 16px;
 }
 .card-subtitle {
   margin-bottom: 16px;

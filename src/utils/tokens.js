@@ -1,5 +1,3 @@
-import Vue from 'vue'
-
 const ADMIN_WHITELIST = [
   'holmes@cottageclass.com',
   'manisha@cottageclass.com',

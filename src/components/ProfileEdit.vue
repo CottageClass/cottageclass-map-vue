@@ -1,20 +1,20 @@
 <template>
 <div class="body">
-	<MainNav />
-	<div class="container w-container">
-	<h1 class="heading-1">Edit profile</h1>
+  <MainNav />
+  <div class="container w-container">
+  <h1 class="heading-1">Edit profile</h1>
   <OnboardingStyleWrapper styleIs="editing" class="cards" v-if="currentUser">
       <div v-if="error" class="onb-error-container"><div class="onb-error-text">This is an error</div></div>
-	  <Phone v-model="phone" :currentPhone="currentUser.phone" />
+    <Phone v-model="phone" :currentPhone="currentUser.phone" />
       <div v-if="error" class="onb-error-container"><div class="onb-error-text">This is an error</div></div>
-	  <Location :currentAddress="currentUser.fullAddress" :currentApartment="currentUser.apartment" v-model="location" />
+    <Location :currentAddress="currentUser.fullAddress" :currentApartment="currentUser.apartment" v-model="location" />
       <div v-if="error" class="onb-error-container"><div class="onb-error-text">This is an error</div></div>
-	  <Availability v-model="availability" />
+    <Availability v-model="availability" />
       <div v-if="error" class="onb-error-container"><div class="onb-error-text">This is an error</div></div>
-	  <Children v-model="children"/>
+    <Children v-model="children"/>
   </OnboardingStyleWrapper>
      <div class="page-actions-wrapper">
-     	<a @click="submitUserInformation" class="button-primary w-button">Save</a></div>
+       <a @click="submitUserInformation" class="button-primary w-button">Save</a></div>
   </div>
 </div>
 
@@ -50,20 +50,20 @@ export default {
     }
   },
   computed: {
-  	children: function () {
-  		return {
-  			list: this.currentUser.children
-  		}
-  	},
-  	availability: function () {
-  		return {
-  			availableAfternoons: this.currentUser.availableAfternoons,
-  			availableMornings: this.currentUser.availableMornings,
-  			availableEvenings: this.currentUser.availableEvenings,
-  			availableWeekends: this.currentUser.availableWeekends,
-  			never: false
-  		}
-  	}
+    children: function () {
+      return {
+        list: this.currentUser.children
+      }
+    },
+    availability: function () {
+      return {
+        availableAfternoons: this.currentUser.availableAfternoons,
+        availableMornings: this.currentUser.availableMornings,
+        availableEvenings: this.currentUser.availableEvenings,
+        availableWeekends: this.currentUser.availableWeekends,
+        never: false
+      }
+    }
   },
   methods: {
     fetchCurrentUser: function () {
@@ -74,7 +74,7 @@ export default {
       })
     },
     submitUserInformation: function () {
-    	 api.submitUserInfo(this.currentUserId, this.phone, this.location, this.availability, this.children).then(res => {
+      api.submitUserInfo(this.currentUserId, this.phone, this.location, this.availability, this.children).then(res => {
         console.log('user update SUCCESS')
         console.log(res)
         return res

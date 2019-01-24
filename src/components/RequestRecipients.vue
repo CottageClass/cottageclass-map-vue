@@ -57,7 +57,6 @@
 import networks from '@/assets/network-info.json'
 import * as Token from '@/utils/tokens.js'
 import * as api from '@/utils/api.js'
-import router from '../router'
 import AvatarImage from '@/components/AvatarImage.vue'
 var moment = require('moment')
 
@@ -79,7 +78,7 @@ export default {
   methods: {
     toggleSelected: function (id) {
       if (this.isSelected(id)) {
-        this.peopleSelected = this.peopleSelected.filter((anId) => anId != id)
+        this.peopleSelected = this.peopleSelected.filter((anId) => anId !== id)
       } else if (this.peopleSelected.length < this.maxRecipients) {
         this.peopleSelected.push(id)
       }
@@ -103,6 +102,7 @@ export default {
       this.startProxySessionAndSendIntroMessage(person).then(data => {
         this.messagesUnsent = this.messagesUnsent - 1
       }, err => {
+        console.log(err.stack)
         this.errorSending = true
       })
     },
@@ -129,7 +129,7 @@ export default {
   },
   mounted: function () {
     api.fetchUsersInNetwork(this.network.stub).then(res => {
-      this.people = res.filter(person => person.id != this.currentUserId)
+      this.people = res.filter(person => person.id !== this.currentUserId)
       this.currentUser = res.find(person => person.id === this.currentUserId)
     })
   },
@@ -188,6 +188,8 @@ export default {
         return this.people.filter(person => person.availableAfternoons)
       } else if (h > 18 || h <= 7) {
         return this.people.filter(person => person.availableEvenings)
+      } else {
+        return []
       }
     }
   }

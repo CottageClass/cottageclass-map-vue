@@ -55,25 +55,14 @@
 <script>
 import MainNav from './MainNav.vue'
 import Provider from '@/components/Provider.vue'
-import RequestModal from '@/components/RequestModal.vue'
-import router from '../router'
 import ShareButton from '@/components/ShareButton.vue'
-import DateTimePicker from '@/components/DateTimePicker.vue'
 import networks from '@/assets/network-info.json'
 import * as Token from '@/utils/tokens.js'
 import * as api from '@/utils/api.js'
 
-// import google sheets API service
-import sheetsu from 'sheetsu-node'
-
-// create a config file to identify which spreadsheet we push to.
-var client = sheetsu({ address: 'https://sheetsu.com/apis/v1.0su/62cd725d6088' })
-
-var moment = require('moment')
-
 export default {
   name: 'MainView',
-  components: { Provider, RequestModal, ShareButton, DateTimePicker, MainNav },
+  components: { Provider, ShareButton, MainNav },
   data () {
     return {
       people: [], // gets updated on mount by fetchUsersInNetwork
@@ -94,7 +83,7 @@ export default {
   },
   mounted: function () {
     api.fetchUsersInNetwork(this.network.stub).then(res => {
-      this.people = res.filter(person => person.id != this.currentUserId)
+      this.people = res.filter(person => person.id !== this.currentUserId)
       this.currentUser = res.find(person => person.id === this.currentUserId)
     })
   },

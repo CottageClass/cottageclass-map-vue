@@ -110,6 +110,14 @@ export default {
     },
     prevStep: function () {
       this.$router.go(-1)
+    },
+    error: function () {
+      if (this.yesOrNo === '') {
+        return this.errorMesg
+      } else {
+        this.showError = false
+        return false
+      }
     }
   },
   computed: {
@@ -118,14 +126,6 @@ export default {
         return 'inactive'
       } else {
         return 'next'
-      }
-    },
-    error: function () {
-      if (this.yesOrNo === '') {
-        return this.errorMesg
-      } else {
-        this.showError = false
-        return false
       }
     }
   }

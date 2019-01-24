@@ -24,8 +24,8 @@ export default {
   }
 
 .card img {
-	height: 100%;
-	width: auto;
+  height: 100%;
+  width: auto;
 }
 
 .scrolling-wrapper {
@@ -43,7 +43,7 @@ export default {
 }
 
 .child {
-	white-space:nowrap;
+  white-space:nowrap;
 }
 
 .scrolling-wrapper {
