@@ -38,6 +38,12 @@ export function initProxySession(currentUserId, receiverId, requestMessage, ackn
 export function submitUserInfo(userId, phone, location, availability, children) {
   console.log('attempting to submit', userId, phone, location, availability, children)
 
+  let postData = {
+          networkCode: 'brooklyn-events', // this is hardcoded until we make it unnecessary. 
+//        profileBlurb: this.blurb.text,
+  }
+
+  if (!!location.fullAddress) {
       let address = location.fullAddress
       let {
         street_number,
@@ -50,22 +56,8 @@ export function submitUserInfo(userId, phone, location, availability, children) 
         country,
         postal_code,
       } = address
-
-      let phoneAreaCode = phone.number.match(/(\(\d+\))/)[0].replace(/[^\d]/g,'')
-      let phoneNumber = phone.number.match(/\d{3}-\d{4}/)[0].replace(/[^\d]/g,'')
-
-      // set child attributes, plus the parentId
-      let childrenAttributes = []
-      if (children.list && children.list.length > 0) {
-        childrenAttributes = children.list.map(function (childAttrs) {
-          return {
-            ...childAttrs,
-            parentId: userId,
-          }
-        })
-      }
-
-      let postData = {
+      
+      postData = {
         streetNumber: street_number,
         route: route,
         locality: locality,
@@ -79,22 +71,42 @@ export function submitUserInfo(userId, phone, location, availability, children) 
         apartmentNumber: location.apartmentNumber,
         latitude: location.lat,
         longitude: location.lng,
+    }
+  }
+
+  if (!!phone) {
+      let phoneAreaCode = phone.number.match(/(\(\d+\))/)[0].replace(/[^\d]/g,'')
+      let phoneNumber = phone.number.match(/\d{3}-\d{4}/)[0].replace(/[^\d]/g,'')
+      postData = {
+        ...postData,
         phoneAreaCode: phoneAreaCode,
         phoneNumber: phoneNumber,
-        availableMornings: availability.mornings,
-        availableAfternoons: availability.afternoons,
-        availableEvenings: availability.evenings,
-        availableWeekends: availability.weekends,
-        networkCode: 'brooklyn-events', // this is hardcoded until we make it unnecessary. 
-//        profileBlurb: this.blurb.text,
+    }
+  }
+
+      // set child attributes, plus the parentId
+      let childrenAttributes = []
+      if (children.list && children.list.length > 0) {
+        childrenAttributes = children.list.map(function (childAttrs) {
+          return {
+            ...childAttrs,
+            parentId: userId,
+          }
+        })
       }
 
-      console.log('postdata', postData)
+  if (!!availability) {
+    postData = {
+      ...postData,
+      ...availability
+    }
+  }   
 
-      if (children.list && children.list.length > 0) {
+  if (children.list && children.list.length > 0) {
         postData.childrenAttributes = childrenAttributes
       }
 
+  console.log('postdata', postData)
   return Vue.axios.post(
     `${process.env.BASE_URL_API}/users/${userId}`, 
     postData

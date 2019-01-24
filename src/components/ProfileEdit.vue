@@ -13,7 +13,8 @@
       <div v-if="error" class="onb-error-container"><div class="onb-error-text">This is an error</div></div>		  
 	  <Children v-model="children"/>
   </OnboardingStyleWrapper>
-     <div class="page-actions-wrapper"><a href="#" class="button-primary w-button">Save</a></div>	
+     <div class="page-actions-wrapper">
+     	<a @click="submitUserInformation" class="button-primary w-button">Save</a></div>	
   </div>	
 </div>
 
@@ -71,6 +72,13 @@ export default {
       api.fetchCurrentUserNew(Token.currentUserId(this.$auth)).then(currentUser => {
         this.currentUser = currentUser
         window.globalCurrentUser = currentUser
+        })
+    },
+    submitUserInformation: function () {
+    	 api.submitUserInfo(this.currentUserId, this.phone, this.location, this.availability, this.children).then(res => {
+          console.log("user update SUCCESS")
+          console.log(res)
+          return res
         })
     }  	
   }
