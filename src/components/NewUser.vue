@@ -296,62 +296,6 @@ export default {
         });
       }
 
-      // in parallel, submit to backend
-      let address = this.location.fullAddress
-      let {
-        street_number,
-        route,
-        locality,
-        administrative_area_level_1,
-        administrative_area_level_2,
-        sublocality,
-        neighborhood,
-        country,
-        postal_code,
-      } = address
-
-      let phoneAreaCode = this.phone.number.match(/(\(\d+\))/)[0].replace(/[^\d]/g,'')
-      let phoneNumber = this.phone.number.match(/\d{3}-\d{4}/)[0].replace(/[^\d]/g,'')
-
-      // set child attributes, plus the parentId
-      let childrenAttributes = []
-      if (this.children.list && this.children.list.length > 0) {
-        childrenAttributes = this.children.list.map(function (childAttrs) {
-          return {
-            ...childAttrs,
-            parentId: userId,
-          }
-        })
-      }
-
-      let postData = {
-        streetNumber: street_number,
-        route: route,
-        locality: locality,
-        // snake_case key name is ugly but necessary for backend to recognize attr with trailing 1
-        admin_area_level_1: administrative_area_level_1,
-        admin_area_level_2: administrative_area_level_2,
-        sublocality,
-        neighborhood,
-        country: country,
-        postalCode: postal_code,
-        apartmentNumber: this.location.apartmentNumber,
-        latitude: this.location.lat,
-        longitude: this.location.lng,
-        phoneAreaCode: phoneAreaCode,
-        phoneNumber: phoneNumber,
-        availableMornings: this.availability.mornings,
-        availableAfternoons: this.availability.afternoons,
-        availableEvenings: this.availability.evenings,
-        availableWeekends: this.availability.weekends,
-        networkCode: this.invitationCode.code,
-        profileBlurb: this.blurb.text,
-      }
-
-      if (this.children.list && this.children.list.length > 0) {
-        postData.childrenAttributes = childrenAttributes
-      }
-
       // I think this is necessary but I'm not sure.
       let component = this
 
@@ -376,12 +320,11 @@ export default {
           "child_age_maximum": defaultChildAgeMaximum
         }
       }
-
-      return this.axios.post(
-        `${process.env.BASE_URL_API}/users/${userId}`,
-        postData
-      )
-        .then(res => {
+      let phone = this.phone
+      let location = this.location
+      let availability = this.availability
+      let children = this.children
+      return api.submitUserInfo(userId, phone, location, availability, children).then(res => {
           console.log("user update SUCCESS")
           console.log(res)
           return res
