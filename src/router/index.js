@@ -20,6 +20,7 @@ import RsvpConfirmation from '@/components/RsvpConfirmation.vue'
 import Faq from '@/components/Faq.vue'
 import Invite from '@/components/onboarding/Invite.vue'
 import EventEdit from '@/components/EventEdit.vue'
+import ProfileEdit from '@/components/ProfileEdit.vue'
 
 Vue.use(Router)
 
@@ -54,6 +55,11 @@ export default new Router({
       path: '/home',
       name: 'MainView',
       component: Events
+    },
+    {
+      path: '/profile/edit',
+      name: 'ProfileEdit',
+      component: ProfileEdit
     },
     {
       path: '/provider-profile/:id',

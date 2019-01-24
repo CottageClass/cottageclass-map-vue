@@ -9,7 +9,7 @@
 <!-- nav -->
 
     <div class="title-bar">
-      <a @click="$emit('activateScreen', 'facebook')" class="title-bar-back-button w-inline-block"></a>
+      <a @click="$emit('activateScreen', 'facebook')" class="button-back w-inline-block"></a>
       <a @click="signup" :class="nextButtonClassObject">
         <div class="title-bar-next-button-text">NEXT</div>
       </a>
@@ -282,6 +282,106 @@ export default {
 
 <style lang="scss" scoped>
 @import '../../assets/css/onboarding-and-forms.css';
+
+.title-bar-next-button {
+  position: static;
+  display: block;
+  margin-top: 0px;
+  margin-right: 10px;
+  margin-bottom: 0px;
+  padding: 10px 12px;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+  -webkit-flex-direction: row;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+  -ms-flex-align: center;
+  align-items: center;
+  border: 1px none #000;
+  border-radius: 4px;
+  background-color: #fff;
+  box-shadow: none;
+  color: #64426b;
+}
+
+.title-bar-next-button:active {
+  background-color: #64426b;
+  color: #fff;
+}
+
+.title-bar-next-button-text {
+  margin-bottom: 2px;
+  font-size: 14px;
+  line-height: 14px;
+  font-weight: 700;
+  letter-spacing: 1.2px;
+  text-transform: uppercase;
+}
+
+.title-bar-next-button-inactive {
+  position: static;
+  display: block;
+  margin-top: 0px;
+  margin-right: 10px;
+  margin-bottom: 0px;
+  padding: 10px 12px;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+  -webkit-flex-direction: row;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+  -ms-flex-align: center;
+  align-items: center;
+  border: 1px none #000;
+  border-radius: 4px;
+  background-color: hsla(0, 0%, 100%, .3);
+  box-shadow: none;
+  color: rgba(1, 1, 1, .2);
+}
+
+.button-back {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  margin-top: 7px;
+  margin-bottom: 8px;
+  margin-left: 10px;
+  padding: 18px;
+  -webkit-box-pack: justify;
+  -webkit-justify-content: space-between;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+  -ms-flex-align: center;
+  align-items: center;
+  border-radius: 4px;
+  background-color: transparent;
+  background-image: url('../../assets/arrow-back-white.svg');
+  background-position: 50% 50%;
+  background-size: 24px 24px;
+  background-repeat: no-repeat;
+  color: #1f88e9;
+}
+
+.button-back:active {
+  background-color: hsla(0, 0%, 100%, .2);
+  background-image: url('../../assets/arrow-back-white.svg');
+  background-size: 24px;
+}
 
 .content-wrapper {
   position: 0px;

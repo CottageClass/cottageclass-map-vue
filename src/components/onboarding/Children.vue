@@ -1,8 +1,8 @@
 <template>
-  <div>
   <div class="onb-children-info-container onb-content-container-2">
+  <div>
     <div class="onb-top-content-container">
-      <h1 class="onb-heading-large">Child Info</h1>
+      <h1 class="title">Child Information</h1>
       <p class="onb-paragraph-subheading-2">We need some basic info about your children. Their ages will appear on your public profile, but only hosts of events you RSVP to will see their names.</p>
     </div>
   </div>
