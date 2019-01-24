@@ -97,7 +97,7 @@ export default {
     submitRequests: function () {
       this.messagesUnsent = this.peopleSelected.length
       this.buttonText = 'Sending...'
-      this.peopleSelected.map(id => this.submitRequestTo(this.people.find(person => person.id == id)))
+      this.peopleSelected.map(id => this.submitRequestTo(this.people.find(person => person.id === id)))
     },
     submitRequestTo: function (person) {
       this.startProxySessionAndSendIntroMessage(person).then(data => {
@@ -130,7 +130,7 @@ export default {
   mounted: function () {
     api.fetchUsersInNetwork(this.network.stub).then(res => {
       this.people = res.filter(person => person.id != this.currentUserId)
-      this.currentUser = res.find(person => person.id == this.currentUserId)
+      this.currentUser = res.find(person => person.id === this.currentUserId)
     })
   },
   watch: {
@@ -140,7 +140,7 @@ export default {
       }
     },
     errorSending: function () {
-      if (this.errorSending == true) {
+      if (this.errorSending === true) {
         alert('Oops, there was an error sending your requests. Try again?')
       }
     }
@@ -175,12 +175,12 @@ export default {
     },
     network: function () {
       let networkId = Token.currentUserNetworkCode(this.$auth)
-      return this.networks.find(network => network.stub == networkId)
+      return this.networks.find(network => network.stub === networkId)
     },
     peopleAvailable: function () {
       let h = moment(this.dateTimeSelected).hour()
       let d = moment(this.dateTimeSelected).day()
-      if (d == 6 || d == 0) {
+      if (d === 6 || d === 0) {
         return this.people.filter(person => person.availableWeekends)
       } else if (h > 7 && h <= 14) {
         return this.people.filter(person => person.availableMornings)

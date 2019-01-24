@@ -60,7 +60,7 @@ export default {
     calculateHourlyRate: function (numChildren) {
       const siblingDiscount = 0.5
       const price = parseFloat(this.network.price)
-      if (numChildren == 1) {
+      if (numChildren === 1) {
         return price
       } else if (numChildren > 1) {
         return price + (siblingDiscount * price * (parseInt(numChildren) - 1))
@@ -71,7 +71,7 @@ export default {
     check: function (inOrOut) {
       let numChildren = 1
       this.checkState = 'checking ' + inOrOut
-      if (inOrOut == 'in') {
+      if (inOrOut === 'in') {
         if (this.person.children.length > 1) {
           numChildren = parseInt(prompt('How many children are checking in?', this.person.children.length))
         }

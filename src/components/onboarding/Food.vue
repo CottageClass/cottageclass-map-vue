@@ -9,7 +9,7 @@
         <div
         v-for="food in foods"
         class="checkbox-field-extra-space"
-        :class="{'active-checkbox': food == foodSelected}">
+        :class="{'active-checkbox': food === foodSelected}">
           <input
           type="radio"
           :id="food"
@@ -59,7 +59,7 @@ export default {
   },
   computed: {
     err: function () {
-      if (this.foods == '') {
+      if (this.foods === '') {
         return this.errorMesg
       } else {
         return false

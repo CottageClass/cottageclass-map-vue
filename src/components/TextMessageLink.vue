@@ -12,7 +12,7 @@ export default {
     },
     numberOrNothing: function () {
       // if no number, or number is already international
-      if (!this.number || this.number == '') {
+      if (!this.number || this.number === '') {
         return ''
       }
       // number is already international

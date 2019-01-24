@@ -9,7 +9,7 @@
         <div
         v-for="time in times"
         class="checkbox-field-extra-space"
-        :class="{'active-checkbox': time == timeSelected}">
+        :class="{'active-checkbox': time === timeSelected}">
           <input
           type="radio"
           :id="time"
@@ -56,7 +56,7 @@ export default {
   },
   computed: {
     err: function () {
-      if (this.timeSelected == '') {
+      if (this.timeSelected === '') {
         return this.errorMesg
       } else {
         return false

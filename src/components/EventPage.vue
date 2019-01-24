@@ -20,11 +20,11 @@
         <div class="host-info"><AvatarImage className="avatar-large" :person="{facebookId: event.hostFacebookUid, avatar: event.hostAvatar}"/>
           <div class="host-info-wrapper">
             <div class="hosted-by">Hosted by <a href="#" class="host">{{ event.hostFirstName }}</a> &amp;
-            <span v-if="childAgesSorted.length == 1">1 kid&mdash;age {{  childAgesSorted[0] }}.</span>
-          <span v-if="childAgesSorted.length == 2">2 kids&mdash;ages {{ childAgesSorted[0] }} and {{ childAgesSorted[1] }}.</span>
+            <span v-if="childAgesSorted.length === 1">1 kid&mdash;age {{  childAgesSorted[0] }}.</span>
+          <span v-if="childAgesSorted.length === 2">2 kids&mdash;ages {{ childAgesSorted[0] }} and {{ childAgesSorted[1] }}.</span>
           <span v-if="childAgesSorted.length > 2">{{ childAgesSorted.length }} kids&mdash;ages
             <span v-for="(age, index) in childAgesSorted">
-              <span v-if="index == childAgesSorted.length - 1"> and {{ age }}.</span>
+              <span v-if="index === childAgesSorted.length - 1"> and {{ age }}.</span>
               <span v-else> {{ age}}<span v-if="index != childAgesSorted.length - 2">,</span></span>
             </span>
           </span></div>
@@ -92,11 +92,11 @@
         <div class="card-small-text">Host</div>
         <div class="card-large-text">{{ event.hostFirstName }}</div>
         <div v-if="childAgesSorted.length > 0" class="card-large-text-gray">Parent to
-          <span v-if="childAgesSorted.length == 1">one child age {{  childAgesSorted[0] }}.</span>
-          <span v-if="childAgesSorted.length == 2">two children ages {{ childAgesSorted[0] }} and {{ childAgesSorted[1] }}.</span>
+          <span v-if="childAgesSorted.length === 1">one child age {{  childAgesSorted[0] }}.</span>
+          <span v-if="childAgesSorted.length === 2">two children ages {{ childAgesSorted[0] }} and {{ childAgesSorted[1] }}.</span>
           <span v-if="childAgesSorted.length > 2">{{ childAgesSorted.length }} children ages
             <span v-for="(age, index) in childAgesSorted">
-              <span v-if="index == childAgesSorted.length - 1"> and {{ age }}.</span>
+              <span v-if="index === childAgesSorted.length - 1"> and {{ age }}.</span>
               <span v-else> {{ age}}<span v-if="index != childAgesSorted.length - 2">,</span></span>
             </span>
           </span>
@@ -165,7 +165,7 @@ export default {
   },
   methods: {
     isToday: function (date) {
-      return moment(0, 'HH').diff(date, 'days') == 0
+      return moment(0, 'HH').diff(date, 'days') === 0
     },
     formatDate: function (date) {
       return moment(date).format('ddd, MMM D, YYYY')
@@ -200,7 +200,7 @@ export default {
   },
   computed: {
     hostIsCurrentUser: function () {
-      return this.event.hostId == this.currentUserId
+      return this.event.hostId === this.currentUserId
     },
     eventId: function () {
       return this.event.id
@@ -217,7 +217,7 @@ export default {
     },
     event: function () {
       if (Array.isArray(this.events)) {
-        return this.events.find(event => event.id == this.$route.params.id)
+        return this.events.find(event => event.id === this.$route.params.id)
       } else {
         return {}
       }

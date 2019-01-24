@@ -1,9 +1,9 @@
 import Vue from 'vue'
 import camelcaseKeys from 'camelcase-keys'
-import * as Token from './tokens.js'
+// import * as Token from './tokens.js'
 import normalize from 'json-api-normalizer'
 
-var moment = require('moment')
+// var moment = require('moment')
 
 /*
  * PROXY SESSIONS
@@ -128,7 +128,7 @@ function createPersonObject (personInApi, availableChildren = []) {
         age: child.attributes.age
       }
     }
-    return availableChildren.filter(child => child.attributes.parent_id == personInApi.id).map(parseChild)
+    return availableChildren.filter(child => child.attributes.parent_id === personInApi.id).map(parseChild)
     // make sure this is an array.
   }
 
@@ -382,8 +382,8 @@ export function distanceHaversine (lat1, lon1, lat2, lon2) {
   dist = Math.acos(dist)
   dist = dist * 180 / Math.PI
   dist = dist * 60 * 1.1515
-  if (unit == 'K') { dist = dist * 1.609344 }
-  if (unit == 'N') { dist = dist * 0.8684 }
+  if (unit === 'K') { dist = dist * 1.609344 }
+  if (unit === 'N') { dist = dist * 0.8684 }
   return dist.toFixed(1)
 }
 

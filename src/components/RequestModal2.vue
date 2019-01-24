@@ -3,7 +3,7 @@
 
 <!-- user submits requests -->
 
-<span v-if="step == 1">
+<span v-if="step === 1">
   <Nav :button="nextButtonState" @next="saveBookingRequestToSpreadsheet" @prev="$router.go(-1)" />
    <RequestCare class="request-container" v-model="bookingRequest" />
 </span>
@@ -11,13 +11,13 @@
 <!-- user chooses who to send request to -->
 
 <RequestRecipients
-  v-if="step == 2"
+  v-if="step === 2"
   :dateTimeSelected="bookingRequest.dateTimeSelected"
   @messagesSent="step = 3" />
 
 <!-- success message -->
 
-<RequestSuccessful v-if="step == 3"/>
+<RequestSuccessful v-if="step === 3"/>
 
 </div>
 </template>
@@ -66,7 +66,7 @@ export default {
       return this.networks.find(network => network.stub === networkId)
     },
     nextButtonState: function () {
-      if (this.bookingRequest.dateTimeSelected == null) {
+      if (this.bookingRequest.dateTimeSelected === null) {
         return 'inactive'
       } else {
         return 'next'

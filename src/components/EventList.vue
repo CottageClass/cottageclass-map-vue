@@ -45,7 +45,7 @@ export default {
       return moment(date).format('dddd, MMM Do')
     },
     isToday: function (date) {
-      return moment(0, 'HH').diff(date, 'days') == 0
+      return moment(0, 'HH').diff(date, 'days') === 0
     },
     distanceFromCurrentUser: function (lat, lon) {
       if (this.currentUser) {

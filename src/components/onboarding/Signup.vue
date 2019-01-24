@@ -163,7 +163,7 @@ export default {
     },
     button: function () {
       // todo: should show errors until avatar upload
-      if (this.first_name && this.last_name && this.email && this.password && this.avatar_url && this.errors.items.length == 0) {
+      if (this.first_name && this.last_name && this.email && this.password && this.avatar_url && this.errors.items.length === 0) {
         return 'next'
       } else {
         return 'inactive'

@@ -9,7 +9,7 @@
         <div
         v-for="activity in activities"
         class="checkbox-field-extra-space"
-        :class="{'active-checkbox': activity == activitySelected}">
+        :class="{'active-checkbox': activity === activitySelected}">
           <input
           type="radio"
           :id="activity"
@@ -54,7 +54,7 @@ export default {
   },
   computed: {
     err: function () {
-      if (this.activitySelected == '') {
+      if (this.activitySelected === '') {
         return this.errorMesg
       } else {
         return false

@@ -29,7 +29,7 @@
       <h1 class="onb-heading-large">Which children would you like to RSVP?</h1>
       <p
       class="onb-paragraph-subheading-2"
-      v-if="Number.isInteger(spotsRemaining)">There <span v-if="spotsRemaining == 1">is</span><span v-else>are</span> {{ spotsRemaining }} spot<span v-if="spotsRemaining != 1">s</span> remaining.</p>
+      v-if="Number.isInteger(spotsRemaining)">There <span v-if="spotsRemaining === 1">is</span><span v-else>are</span> {{ spotsRemaining }} spot<span v-if="spotsRemaining != 1">s</span> remaining.</p>
     </div>
     <div class="onb-form-block-checkbox-list w-form">
       <form class="onb-form-checkbox-list">
@@ -114,7 +114,7 @@ export default {
       return this.childrenSelected.length > this.event.maximumChildren - this.event.participantsCount
     },
     nextButtonState: function () {
-      if (this.tooManyChildren || this.childrenSelected.length == 0) {
+      if (this.tooManyChildren || this.childrenSelected.length === 0) {
         return 'inactive'
       } else {
         return 'next'
@@ -144,7 +144,7 @@ export default {
         this.children = currentUser.children
         this.redirectToOnboardingIfNotOnboarded()
         // if we don't have children for this user (which should never be true) show an error. (Todo: let user enter child info here in this case.)
-        if (!this.children || this.children.length == 0) {
+        if (!this.children || this.children.length === 0) {
           this.error = 'Sorry, but we cannot retrieve your children\'s information. Are you sure you have signed in? To resolve this, please email us at: contact@cottageclass.com.'
         }
       }).catch(err => {
@@ -175,7 +175,7 @@ export default {
       api.fetchEvents(this.$route.params.eventId).then(
         (res) => {
           this.event = res[0]
-          if (this.event.full || this.event.maximumChildren == 0) {
+          if (this.event.full || this.event.maximumChildren === 0) {
             this.error = 'We\'re sorry, this event is full!'
           }
         }).catch(
@@ -186,9 +186,9 @@ export default {
     nextStep: function () {
       if (this.tooManyChildren) {
         let numChildren = this.childrenSelected.length
-        let childrenSingularOrPlural = numChildren == 1 ? 'child' : 'children'
+        let childrenSingularOrPlural = numChildren === 1 ? 'child' : 'children'
         this.error = 'Sorry, but there are not enough spots available for ' + numChildren + ' ' + childrenSingularOrPlural + '.'
-      } else if (this.childrenSelected.length == 0) {
+      } else if (this.childrenSelected.length === 0) {
         this.error = 'Please choose at least one child to RSVP.'
       } else {
         this.submitRsvp()

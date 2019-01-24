@@ -128,7 +128,7 @@ export default {
     },
     eventFromParams: function () {
       if (Array.isArray(this.events)) {
-        return this.events.find(event => event.id == this.$route.params.id)
+        return this.events.find(event => event.id === this.$route.params.id)
       } else {
         return {}
       }

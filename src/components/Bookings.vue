@@ -34,7 +34,7 @@ export default {
   },
   mounted: function () {
     api.fetchUsersInNetwork(this.network.stub).then(res => {
-      this.currentUser = res.find(person => person.id == this.currentUserId)
+      this.currentUser = res.find(person => person.id === this.currentUserId)
     })
     api.fetchUsersWhoHaveMadeInquiries(this.currentUserId).then(res => {
       this.peopleWhoHaveMadeInquiriesToCurrentUser = res
@@ -43,7 +43,7 @@ export default {
   computed: {
     network: function () {
       let networkId = Token.currentUserNetworkCode(this.$auth)
-      return this.networks.find(network => network.stub == networkId)
+      return this.networks.find(network => network.stub === networkId)
     }
   }
 }

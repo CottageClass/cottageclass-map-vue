@@ -43,7 +43,7 @@ export default {
     },
     myEventsByDate: function () {
       if (this.eventsByDate) {
-        return this.eventsByDate.filter(event => this.currentUserId == event.hostId)
+        return this.eventsByDate.filter(event => this.currentUserId === event.hostId)
       }
     }
   },
@@ -56,7 +56,7 @@ export default {
       }
     },
     isToday: function (date) {
-      return moment(0, 'HH').diff(date, 'days') == 0
+      return moment(0, 'HH').diff(date, 'days') === 0
     },
     formatDate: function (date) {
       return moment(date).format('dddd, MMM Do')

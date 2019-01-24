@@ -41,7 +41,7 @@ export default {
       handler: function () {
         if (this.bookingRequest.description || this.bookingRequest.dateTimeSelected) {
           this.bookingRequest.err = false
-        } else if (this.bookingRequest.description == '' && this.bookingRequest.dateTimeSelected == null) {
+        } else if (this.bookingRequest.description === '' && this.bookingRequest.dateTimeSelected === null) {
           this.bookingRequest.err = 'skippable'
         }
       },

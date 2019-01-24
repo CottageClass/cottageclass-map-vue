@@ -95,13 +95,13 @@ export default {
   mounted: function () {
     api.fetchUsersInNetwork(this.network.stub).then(res => {
       this.people = res.filter(person => person.id != this.currentUserId)
-      this.currentUser = res.find(person => person.id == this.currentUserId)
+      this.currentUser = res.find(person => person.id === this.currentUserId)
     })
   },
   computed: {
     network: function () {
       let networkId = Token.currentUserNetworkCode(this.$auth)
-      return this.networks.find(network => network.stub == networkId)
+      return this.networks.find(network => network.stub === networkId)
     },
     peopleAvailable: function () {
       return this.people.filter(person => person.availableMornings || person.availableAfternoons || person.availableEvenings || person.availableWeekends)

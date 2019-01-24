@@ -8,7 +8,7 @@
       <form class="onb-form-checkbox-list">
         <div
         class="checkbox-field-extra-space"
-        :class="{'active-checkbox': yesOrNo == 'yes'}">
+        :class="{'active-checkbox': yesOrNo === 'yes'}">
           <input
           type="radio"
           id="yes"
@@ -26,7 +26,7 @@
         </div>
         <div
         class="checkbox-field-extra-space"
-        :class="{'active-checkbox': yesOrNo == 'no'}">
+        :class="{'active-checkbox': yesOrNo === 'no'}">
           <input
           type="radio"
           id="no"
@@ -64,7 +64,7 @@ export default {
   },
   computed: {
     err: function () {
-      if (this.trueOrFalse == null) {
+      if (this.trueOrFalse === null) {
         return this.errorMesg
       } else {
         return false

@@ -9,7 +9,7 @@
         <div
         v-for="date in dates"
         class="checkbox-field-extra-space"
-        :class="{'active-checkbox': date == dateSelected}">
+        :class="{'active-checkbox': date === dateSelected}">
           <input
           type="radio"
           :id="date"
@@ -68,14 +68,14 @@ export default {
   },
   computed: {
     err: function () {
-      if (!this.dateSelected || (this.dateSelected == 'Other' && !this.dateIsValid(this.otherDate))) {
+      if (!this.dateSelected || (this.dateSelected === 'Other' && !this.dateIsValid(this.otherDate))) {
         return this.errorMesg
       } else {
         return false
       }
     },
     otherSelected: function () {
-      return (this.dateSelected == 'Other')
+      return (this.dateSelected === 'Other')
     }
   },
   watch: {
@@ -104,7 +104,7 @@ export default {
       return !!date
     },
     displayDate: function (date) {
-      if (date == 'Other') {
+      if (date === 'Other') {
         return 'Other'
       } else {
         return moment(date).format('dddd, MMMM Do')

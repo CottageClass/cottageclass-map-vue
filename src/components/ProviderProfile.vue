@@ -153,10 +153,10 @@ export default {
   computed: {
     network: function () {
       let networkId = Token.currentUserNetworkCode(this.$auth)
-      return this.networks.find(network => network.stub == networkId)
+      return this.networks.find(network => network.stub === networkId)
     },
     person: function () {
-      return this.people.find(person => person.id == this.$route.params.id) // computes person. this isn't efficient but simplifies interaction with the API.
+      return this.people.find(person => person.id === this.$route.params.id) // computes person. this isn't efficient but simplifies interaction with the API.
     }
   }
 }

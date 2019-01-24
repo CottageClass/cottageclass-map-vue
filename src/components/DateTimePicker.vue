@@ -38,7 +38,7 @@ export default {
   },
   computed: {
     timePlaceholder: function () {
-      if (this.dateTimeSelected == null) {
+      if (this.dateTimeSelected === null) {
         return 'Choose a time'
       } else {
         return moment(this.dateTimeSelected).format('dddd, h:mm a')

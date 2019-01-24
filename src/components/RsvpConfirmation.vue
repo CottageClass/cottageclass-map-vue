@@ -29,7 +29,7 @@
       <form class="onb-form-checkbox-list">
         <div
         class="checkbox-field-extra-space"
-        :class="{'active-checkbox': yesOrNo == 'yes'}">
+        :class="{'active-checkbox': yesOrNo === 'yes'}">
           <input
           type="radio"
           id="yes"
@@ -47,7 +47,7 @@
         </div>
         <div
         class="checkbox-field-extra-space"
-        :class="{'active-checkbox': yesOrNo == 'no'}">
+        :class="{'active-checkbox': yesOrNo === 'no'}">
           <input
           type="radio"
           id="no"
@@ -95,14 +95,14 @@ export default {
   mounted: function () {
     api.fetchEvents(this.$route.params.eventId).then(
       (res) => {
-        this.event = res.find(event => event.id == this.eventId)
+        this.event = res.find(event => event.id === this.eventId)
       })
   },
   methods: {
     nextStep: function () {
-      if (this.yesOrNo == 'yes') {
+      if (this.yesOrNo === 'yes') {
         this.$router.push({ name: 'RsvpInfoCollection', params: { eventId: this.eventId } })
-      } else if (this.yesOrNo == 'no') {
+      } else if (this.yesOrNo === 'no') {
         this.$router.push({ name: 'MainView' })
       } else {
         this.showError = true
@@ -121,7 +121,7 @@ export default {
       }
     },
     error: function () {
-      if (this.yesOrNo == '') {
+      if (this.yesOrNo === '') {
         return this.errorMesg
       } else {
         this.showError = false

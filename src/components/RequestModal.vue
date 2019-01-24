@@ -109,7 +109,7 @@ export default {
     api.fetchUsersInNetwork(this.network.stub)
       .then(people => {
         this.people = people
-        this.currentUser = people.find(person => person.id == this.currentUserId)
+        this.currentUser = people.find(person => person.id === this.currentUserId)
       })
   },
   methods: {
@@ -130,7 +130,7 @@ export default {
       var hours24 = time.substr(0, time.indexOf(':'))
       var ampm = (hours24 >= 12) ? 'pm' : 'am'
       var hours12 = hours24 % 12
-      if (hours12 == 0) {
+      if (hours12 === 0) {
         hours12 = 12
       }
       return hours12 + ':' + minutes + ampm

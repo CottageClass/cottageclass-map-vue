@@ -210,7 +210,7 @@ export default {
       this.step = destinationStep
     },
     nextStep: function () {
-      if (this.step == this.lastStep) {
+      if (this.step === this.lastStep) {
         this.submitData()
           .then(res => {
             this.continueWhenComplete()
