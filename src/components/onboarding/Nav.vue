@@ -13,27 +13,27 @@
 // states are: skip, next, none, inactive
 
 export default {
-	name: 'Nav',
-	props: ['button'],
-	computed: {
+  name: 'Nav',
+  props: ['button'],
+  computed: {
 	    text: function () {
-			if (this.button === 'skip') {
-				return "SKIP"
-			} else if (this.button === 'done') {
-        return "DONE"
+      if (this.button === 'skip') {
+        return 'SKIP'
+      } else if (this.button === 'done') {
+        return 'DONE'
       } else {
-				return "NEXT"
-			}
-		},
-		classObject: function () {
-			return {
-				"title-bar-next-button-inactive": this.button === 'inactive',
-				"title-bar-next-button": !(this.button === 'inactive'),
-				"w-inline-block": true
-			}
-		}
-	}
-};
+        return 'NEXT'
+      }
+    },
+    classObject: function () {
+      return {
+        'title-bar-next-button-inactive': this.button === 'inactive',
+        'title-bar-next-button': !(this.button === 'inactive'),
+        'w-inline-block': true
+      }
+    }
+  }
+}
 
 </script>
 

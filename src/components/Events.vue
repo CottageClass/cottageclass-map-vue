@@ -5,7 +5,7 @@
     <div class="divider-2px"></div>
     <div class="content-container-4 w-container">
      <h1 class="h1-display">Upcoming Playdates</h1>
-     <p v-if="isAuthenticated">Within 
+     <p v-if="isAuthenticated">Within
       <select v-model="maximumDistanceFromUserInMiles">
         <option>0.2</option>
         <option>0.5</option>
@@ -20,7 +20,7 @@
     </div>
   </div>
 
-<!-- Footer --> 
+<!-- Footer -->
 
  <Footer />
 
@@ -33,7 +33,7 @@ import MainNav from '@/components/MainNav.vue'
 import Footer from '@/components/Footer.vue'
 import * as Token from '@/utils/tokens.js'
 import * as api from '@/utils/api.js'
-var moment = require('moment');
+var moment = require('moment')
 
 // todo:
 // work on event page until it's complete for one event, so I get all the data I need
@@ -74,66 +74,66 @@ export default {
   },
   methods: {
     limitNumberOfEvents: function (events) {
-      if (!!this.limitTo) {
+      if (this.limitTo) {
         return events.slice(0, parseInt(this.limitTo))
       } else {
         return events
       }
     },
     isToday: function (date) {
-      return moment(0,"HH").diff(date, "days") == 0;
+      return moment(0, 'HH').diff(date, 'days') == 0
     },
     formatDate: function (date) {
-      return moment(date).format('dddd, MMM Do' )
+      return moment(date).format('dddd, MMM Do')
     },
     fetchAllEvents: function () {
       this.showAllButtonText = 'Loading more...'
       api.fetchEvents('upcoming').then(
-      (res) => { 
-        this.events = res
-        window.globalEventList = res
-        this.showShowAllButton = false
-      })
+        (res) => {
+          this.events = res
+          window.globalEventList = res
+          this.showShowAllButton = false
+        })
     },
     fetchUpcomingEvents: function () {
       this.events = window.globalEventList
-      if (!(this.events && this.events.length > 50)) { 
+      if (!(this.events && this.events.length > 50)) {
         api.fetchEvents('upcoming/page/1/page_size/50').then(
-          (res) => { 
+          (res) => {
             this.events = res
             window.globalEventList = res
             this.showShowAllButton = true
             if (this.eventsWithinDistance.length < 10) {
-          this.fetchAllEvents()
-        }
-      })
-      } 
+              this.fetchAllEvents()
+            }
+          })
+      }
     },
     fetchCurrentUser: function () {
       api.fetchCurrentUserNew(Token.currentUserId(this.$auth)).then(currentUser => {
         this.currentUser = currentUser
-        })
+      })
     },
     distanceFromCurrentUser: function (lat, lon) {
-    if (this.currentUser) {
-      return api.distanceHaversine(lat, lon, this.currentUser.latitude, this.currentUser.longitude)
-    } else {
-      return null
+      if (this.currentUser) {
+        return api.distanceHaversine(lat, lon, this.currentUser.latitude, this.currentUser.longitude)
+      } else {
+        return null
+      }
     }
-  }
   },
   mounted: function () {
     this.fetchUpcomingEvents()
     if (this.$auth && this.$auth.isAuthenticated()) {
       this.isAuthenticated = true
       this.currentUserId = Token.currentUserId(this.$auth)
-    } 
+    }
 
     if (this.isAuthenticated) {
       this.fetchCurrentUser()
     }
   }
-};
+}
 </script>
 
 <style scoped>

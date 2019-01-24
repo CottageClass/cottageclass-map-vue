@@ -5,12 +5,12 @@
       </div>
       <div class="actions-wrapper">
       	<AvatarImage
-      	v-if="currentUser" 
-      	:person="currentUser" 
+      	v-if="currentUser"
+      	:person="currentUser"
       	className="image" />
       	<a @click="toggleMenu" class="nav-menu-button button w-button">Menu</a></div>
-      <div 
-      v-if="showMenu" 
+      <div
+      v-if="showMenu"
       v-on-clickaway="clickedAway"
       class="nav-links-expanded">
         <ul class="unordered-list-2 w-list-unstyled">
@@ -45,11 +45,11 @@
             </a>
           </li>
           <li v-if="!isAuthenticated">
-            <!-- Can't use router link here because it won't refresh on frontpage --> 
+            <!-- Can't use router link here because it won't refresh on frontpage -->
             <a href="/?activeScreen=directLogin" class="link-block w-inline-block">
               <div class="text-block">Sign in</div>
             </a>
-          </li>          
+          </li>
         </ul>
       </div>
     </div>
@@ -57,15 +57,15 @@
 </template>
 
 <script>
-import { mixin as clickaway } from 'vue-clickaway';
+import { mixin as clickaway } from 'vue-clickaway'
 import AvatarImage from '@/components/AvatarImage.vue'
 import * as Token from '@/utils/tokens.js'
 import * as api from '@/utils/api.js'
 
 export default {
-	name: 'MainNav',
-	components: { AvatarImage },
-  mixins: [ clickaway ],	
+  name: 'MainNav',
+  components: { AvatarImage },
+  mixins: [ clickaway ],
   props: ['user'],
   data () {
   	return {
@@ -80,8 +80,8 @@ export default {
     if (this.$auth && this.$auth.isAuthenticated()) {
       this.isAuthenticated = true
       this.currentUserId = Token.currentUserId(this.$auth)
-      this.fetchCurrentUser()      
-    } 
+      this.fetchCurrentUser()
+    }
   },
   methods: {
   	toggleMenu: function () {
@@ -99,10 +99,10 @@ export default {
       api.fetchCurrentUserNew(Token.currentUserId(this.$auth)).then(currentUser => {
         this.currentUser = currentUser
         window.globalCurrentUser = currentUser
-        })
+      })
     }
   }
-};
+}
 </script>
 
 <style scoped>
@@ -137,7 +137,7 @@ a {
   font-family: soleil, sans-serif;
   color: #333;
   font-size: 14px;
-  line-height: 20px;  
+  line-height: 20px;
 }
 
 .container {
@@ -282,6 +282,5 @@ a {
     top: 56px;
   }
 }
-
 
 </style>

@@ -22,7 +22,7 @@
 <script>
 import * as Token from '@/utils/tokens.js'
 import * as api from '@/utils/api.js'
-var moment = require('moment');
+var moment = require('moment')
 
 export default {
   name: 'CountdownPromo',
@@ -47,7 +47,7 @@ export default {
       this.hours = duration.hours()
       this.minutes = duration.minutes()
       this.seconds = duration.seconds()
-    }, 1000);
+    }, 1000)
     // fetch current user
     api.fetchCurrentUser(this.currentUserId)
       .then(person => {
@@ -57,7 +57,7 @@ export default {
   beforeDestroy: function () {
     clearInterval(this.interval)
   }
-};
+}
 </script>
 
 <style scoped>

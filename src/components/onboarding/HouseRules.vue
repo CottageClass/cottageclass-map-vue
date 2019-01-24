@@ -21,13 +21,13 @@ export default {
   props: ['value'],
   data () {
     return {
-      rules: this.value.text,
+      rules: this.value.text
     }
   },
   computed: {
     err: function () {
       if (!this.rules) {
-        return "skippable"
+        return 'skippable'
       } else {
         return false
       }
@@ -35,10 +35,10 @@ export default {
   },
   watch: {
     rules: function () {
-        this.$emit('input', { err: this.err, text: this.rules })
-      }
+      this.$emit('input', { err: this.err, text: this.rules })
+    }
   }
-};
+}
 
 </script>
 
@@ -119,6 +119,5 @@ html {
 .form-describe-need {
   margin-bottom: 24px;
 }
-
 
 </style>

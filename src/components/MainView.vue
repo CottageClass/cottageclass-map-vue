@@ -1,6 +1,6 @@
 <template>
 <div>
-   <MainNav />  
+   <MainNav />
 <!-- the map! -->
   <div class="map-container">
   <GmapMap
@@ -30,8 +30,8 @@
   <div class="invite-friends-container">
     <h5 class="heading">Want more people you know?</h5>
     <div class="spacer-16"></div>
-  <ShareButton 
-  buttonText="Invite Friends" 
+  <ShareButton
+  buttonText="Invite Friends"
   shareTitle="Want to share childcare with me?"
   shareText="I'm sharing childcare with a small circle of parents and friends. If you'd like to join sign up here!"
   shareUrl="https://www.kidsclub.io/"/>
@@ -46,7 +46,7 @@
     <router-link to="/request" class="fb-button w-inline-block"><span><img src="@/assets/request-care-white.svg" width="24" height="24" alt="" /><span class="fb-button-text">Request care</span></span></router-link>
 <!--        <div class="tos-acceptance">
       (By signing in you agree to our <a href="https://cottageclass.com/terms-of-service">Terms of Service</a> and <a href="https://cottageclass.com/privacy-policy">Privacy Policy</a>)
-    </div> --> 
+    </div> -->
   </div>
 </div>
 
@@ -69,18 +69,18 @@ import sheetsu from 'sheetsu-node'
 // create a config file to identify which spreadsheet we push to.
 var client = sheetsu({ address: 'https://sheetsu.com/apis/v1.0su/62cd725d6088' })
 
-var moment = require('moment');
+var moment = require('moment')
 
 export default {
   name: 'MainView',
-  components: { Provider, RequestModal, ShareButton, DateTimePicker, MainNav},
+  components: { Provider, RequestModal, ShareButton, DateTimePicker, MainNav },
   data () {
     return {
       people: [], // gets updated on mount by fetchUsersInNetwork
       networks: networks, // to bring from import into vue model
       mapOptions: { // move this to map component when i separate it.
-        "disableDefaultUI": true, // turns off map controls
-        "gestureHandling": "greedy", // allows one finger pan.
+        'disableDefaultUI': true, // turns off map controls
+        'gestureHandling': 'greedy' // allows one finger pan.
       },
       currentUserId: Token.currentUserId(this.$auth),
       currentUser: {}
@@ -89,13 +89,13 @@ export default {
   methods: {
     requestCare: function () {
       // stub
-      console.log("open request care screen")
+      console.log('open request care screen')
     }
   },
   mounted: function () {
     api.fetchUsersInNetwork(this.network.stub).then(res => {
       this.people = res.filter(person => person.id != this.currentUserId)
-      this.currentUser = res.find(person => person.id == this.currentUserId) 
+      this.currentUser = res.find(person => person.id == this.currentUserId)
     })
   },
   computed: {
@@ -107,10 +107,10 @@ export default {
       return this.people.filter(person => person.availableMornings || person.availableAfternoons || person.availableEvenings || person.availableWeekends)
     },
     providersSectionTitle: function () {
-      return "People in \"" + this.network.name + "\""
+      return 'People in "' + this.network.name + '"'
     }
   }
-};
+}
 </script>
 
 <style scoped>
@@ -193,7 +193,6 @@ export default {
   text-decoration: none;
 }
 
-
 .hideDateTimePlaceholder {
   display: none;
 }
@@ -255,7 +254,7 @@ select {
   white-space: nowrap;
   background-color: transparent;
   height: 30px;
-  z-index: 1; 
+  z-index: 1;
   margin-left: auto;
   margin-right: 2px;
   text-transform: uppercase;

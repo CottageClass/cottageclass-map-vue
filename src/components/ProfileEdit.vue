@@ -4,18 +4,18 @@
 	<div class="container w-container">
 	<h1 class="heading-1">Edit profile</h1>
   <OnboardingStyleWrapper styleIs="editing" class="cards" v-if="currentUser">
-      <div v-if="error" class="onb-error-container"><div class="onb-error-text">This is an error</div></div>	
+      <div v-if="error" class="onb-error-container"><div class="onb-error-text">This is an error</div></div>
 	  <Phone v-model="phone" :currentPhone="currentUser.phone" />
-      <div v-if="error" class="onb-error-container"><div class="onb-error-text">This is an error</div></div>		  
+      <div v-if="error" class="onb-error-container"><div class="onb-error-text">This is an error</div></div>
 	  <Location :currentAddress="currentUser.fullAddress" :currentApartment="currentUser.apartment" v-model="location" />
-      <div v-if="error" class="onb-error-container"><div class="onb-error-text">This is an error</div></div>		  
+      <div v-if="error" class="onb-error-container"><div class="onb-error-text">This is an error</div></div>
 	  <Availability v-model="availability" />
-      <div v-if="error" class="onb-error-container"><div class="onb-error-text">This is an error</div></div>		  
+      <div v-if="error" class="onb-error-container"><div class="onb-error-text">This is an error</div></div>
 	  <Children v-model="children"/>
   </OnboardingStyleWrapper>
      <div class="page-actions-wrapper">
-     	<a @click="submitUserInformation" class="button-primary w-button">Save</a></div>	
-  </div>	
+     	<a @click="submitUserInformation" class="button-primary w-button">Save</a></div>
+  </div>
 </div>
 
 </template>
@@ -30,25 +30,24 @@ import OnboardingStyleWrapper from '@/components/onboarding/OnboardingStyleWrapp
 import * as Token from '@/utils/tokens.js'
 import * as api from '@/utils/api.js'
 
-
 export default {
-	name: 'ProfileEdit',
-	components: { Location, Phone, Children, Availability, MainNav, OnboardingStyleWrapper },
-	data () {
-		return {
+  name: 'ProfileEdit',
+  components: { Location, Phone, Children, Availability, MainNav, OnboardingStyleWrapper },
+  data () {
+    return {
       currentUser: null,
       currentUserId: null,
       isAuthenticated: null,
       location: null,
       phone: null
-		}
-	},
+    }
+  },
   mounted: function () {
     if (this.$auth && this.$auth.isAuthenticated()) {
       this.isAuthenticated = true
       this.currentUserId = Token.currentUserId(this.$auth)
       this.fetchCurrentUser()
-    } 
+    }
   },
   computed: {
   	children: function () {
@@ -72,21 +71,20 @@ export default {
       api.fetchCurrentUserNew(Token.currentUserId(this.$auth)).then(currentUser => {
         this.currentUser = currentUser
         window.globalCurrentUser = currentUser
-        })
+      })
     },
     submitUserInformation: function () {
     	 api.submitUserInfo(this.currentUserId, this.phone, this.location, this.availability, this.children).then(res => {
-          console.log("user update SUCCESS")
-          console.log(res)
-          return res
-        })
-    }  	
+        console.log('user update SUCCESS')
+        console.log(res)
+        return res
+      })
+    }
   }
-};
+}
 </script>
 
 <style scoped>
-
 
 .body {
   font-family: soleil;
@@ -137,7 +135,6 @@ export default {
     line-height: 44px;
   }
 }
-
 
 .button-primary {
   margin-right: 4px;
@@ -204,7 +201,6 @@ export default {
 }
 
 @media (max-width: 767px) {
-
 
   .button-primary {
     display: block;

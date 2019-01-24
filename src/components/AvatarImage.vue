@@ -13,13 +13,12 @@ export default {
   		  if (this.person.avatar) {
   	      return this.person.avatar
   	    } else if (this.person.facebookId) {
-  	  	  return "https://graph.facebook.com/" + this.person.facebookId + "/picture?width=200"
+  	  	  return 'https://graph.facebook.com/' + this.person.facebookId + '/picture?width=200'
   	    } else {
-  	  	  return placeholder 
+  	  	  return placeholder
   	    }
-  	  } else
-  	  return placeholder
+  	  } else { return placeholder }
     }
+  }
 }
-};
 </script>

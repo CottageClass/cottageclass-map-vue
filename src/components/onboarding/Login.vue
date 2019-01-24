@@ -1,11 +1,11 @@
 <template>
 <div class="body-homepage">
 
-    <!-- Nav --> 
+    <!-- Nav -->
 
     <MainNav />
-  
-  <!--  
+
+  <!--
   <div data-collapse="medium" data-animation="default" data-duration="400" class="nav-section w-nav">
     <div class="nav-container w-container"><a href="#" class="brand w-clearfix w-nav-brand"><img src="@/assets/kc-logo-landscape.svg" alt="" class="image-2"></a>
       <div class="tag-container-desktop w-hidden-medium w-hidden-small w-hidden-tiny">
@@ -35,39 +35,37 @@
               <div class="hero-list-item-heading">Socially.</div>
               <div class="hero-list-item-subtitle">Every activity is a playdate led by a local parent, so you can make new friends too!</div>
             </li>
-            <!-- So we can direct link to the sign in button--> 
+            <!-- So we can direct link to the sign in button-->
             <span id="signup"></span>
           </ul>
         </div>
 
         <div class="signup-wrapper">
-          <a 
-          v-if="!!facebookLogin" 
+          <a
+          v-if="!!facebookLogin"
           @click="$emit('authenticateFacebook')"
           class="fb-button w-inline-block">
           <img src="@/assets/facebook-button-icon.svg" width="24" height="24" alt=""><div class="fb-button-text">Continue with Facebook</div></a>
-          <a 
+          <a
           v-else
           @click="$emit('activateScreen', 'signup')"
           class="fb-button w-inline-block">
           <img src="@/assets/add.svg" width="24" height="24" alt="">
           <div class="fb-button-text">Create your account</div></a>
           <div v-if="facebookLogin" class="use-password-text">Or <a href="#" class="links" @click="$emit('activateScreen', 'signup')">use a password instead</a></div>
-          <div v-else class="use-password-text">Or <a href="#" class="links" @click="$emit('activateScreen', 'directLogin')">sign in now</a></div>          
+          <div v-else class="use-password-text">Or <a href="#" class="links" @click="$emit('activateScreen', 'directLogin')">sign in now</a></div>
           <div class="terms-text">By signing in you agree to our <a href="https://cottageclass.com/terms-of-service">Terms of Service</a> and <a href="https://cottageclass.com/privacy-policy">Privacy Policy</a>.</div>
         </div>
       </div>
     </div>
   </div>
 
+<!-- Events -->
 
-<!-- Events --> 
-
-  <!-- <Events limitTo="5" id="events" /> --> 
-  <!-- 
+  <!-- <Events limitTo="5" id="events" /> -->
+  <!--
       <div class="event-date-section-more-events"><a href="events.html" class="links more-link">All Events</a></div>
   -->
-
 
   <div class="content-section background-01">
     <div class="divider-2px"></div>
@@ -84,8 +82,8 @@
             <div class="event-list-item-graphic color-pink"><img src="@/assets/butterfly.svg" alt="" class="emoji"></div>
             <div class="event-list-item-content">
               <div class="spacer w-hidden-main w-hidden-medium"></div>
-              <router-link 
-              :to="{ name: 'EventPage', params: { id: 109 }}" 
+              <router-link
+              :to="{ name: 'EventPage', params: { id: 109 }}"
               class="link-block-4 w-inline-block">
                 <h2 class="event-heading">Develop your mindfulness superpower workshop &amp; dinner with Julie</h2>
               </router-link>
@@ -121,8 +119,8 @@
             <div class="event-list-item-graphic color-light-blue"><img src="@/assets/artist-palette.svg" alt="" class="emoji"></div>
             <div class="event-list-item-content">
               <div class="spacer w-hidden-main w-hidden-medium"></div>
-              <router-link 
-              :to="{ name: 'EventPage', params: { id: 91 }}" 
+              <router-link
+              :to="{ name: 'EventPage', params: { id: 91 }}"
               class="link-block-4 w-inline-block">
                 <h2 class="event-heading">Eggs &amp; Painting with Jordana</h2>
               </router-link>
@@ -146,7 +144,7 @@
                 </div><RsvpButton eventId="91" /></div>
             </div>
           </li>
-        </ul>        
+        </ul>
         <div class="event-date-section-tittle"><img src="@/assets/date-outline-white-oval.svg" alt="" class="image-265">
           <div class="date-text-wrapper">
             <div class="date-title">Monday, February 4</div>
@@ -157,8 +155,8 @@
             <div class="event-list-item-graphic color-green"><img src="@/assets/film-projector.svg" alt="" class="emoji"></div>
             <div class="event-list-item-content">
               <div class="spacer w-hidden-main w-hidden-medium"></div>
-              <router-link 
-              :to="{ name: 'EventPage', params: { id: 103 }}" 
+              <router-link
+              :to="{ name: 'EventPage', params: { id: 103 }}"
               class="link-block-4 w-inline-block">
                 <h2 class="event-heading">Movie night &amp; pizza 🍕 with Charlice</h2>
               </router-link>
@@ -193,8 +191,8 @@
             <div class="event-list-item-graphic color-purple"><img src="@/assets/artist-palette.svg" alt="" class="emoji"></div>
             <div class="event-list-item-content">
               <div class="spacer w-hidden-main w-hidden-medium"></div>
-              <router-link 
-              :to="{ name: 'EventPage', params: { id: 86 }}" 
+              <router-link
+              :to="{ name: 'EventPage', params: { id: 86 }}"
               class="link-block-4 w-inline-block">
                 <h2 class="event-heading">Arts &amp; Crafts &amp; Pizza 🍕 with Manisha</h2>
               </router-link>
@@ -229,8 +227,8 @@
             <div class="event-list-item-graphic color-hot-pink"><img src="@/assets/film-projector.svg" alt="" class="emoji"></div>
             <div class="event-list-item-content">
               <div class="spacer w-hidden-main w-hidden-medium"></div>
-              <router-link 
-              :to="{ name: 'EventPage', params: { id: 98 }}" 
+              <router-link
+              :to="{ name: 'EventPage', params: { id: 98 }}"
               class="link-block-4 w-inline-block">
                 <h2 class="event-heading">Movie night &amp; pizza 🍕 with Rima</h2>
               </router-link>
@@ -261,8 +259,7 @@
     </div>
   </div>
 
-
-  <!-- End events --> 
+  <!-- End events -->
 
   <div class="content-section">
     <div class="divider-2px"></div>
@@ -355,7 +352,7 @@
     </div>
     </div>
 
-<!-- Footer --> 
+<!-- Footer -->
 
 <Footer />
 
@@ -373,33 +370,34 @@ import MainNav from '@/components/MainNav.vue'
 import Footer from '@/components/Footer.vue'
 
 export default {
-    name: 'Login',
-    components: { Events, RsvpButton, MainNav, Footer },
-    data () {
-      return {
-        networks: networks,
-        currentUser: {},
-        facebookLogin: !this.hideFacebookLogin(),
+  name: 'Login',
+  components: { Events, RsvpButton, MainNav, Footer },
+  data () {
+    return {
+      networks: networks,
+      currentUser: {},
+      facebookLogin: !this.hideFacebookLogin()
+    }
+  },
+  mounted: function () {
+    api.fetchCurrentUser(Token.currentUserId(this.$auth)).then(currentUser => {
+      if (currentUser.hasAllRequiredFields) {
+        this.$emit('userAlreadyOnboarded')
+      } else if (currentUser.id) {
+        this.$emit('userNotYetOnboarded')
+      } else {
+        return false
       }
-    },
-    mounted: function () {
-      api.fetchCurrentUser(Token.currentUserId(this.$auth)).then(currentUser => {
-    if (currentUser.hasAllRequiredFields) {
-      this.$emit('userAlreadyOnboarded')
-    } else if (currentUser.id) {
-      this.$emit('userNotYetOnboarded')
-    } else {
-      return false
-    }});
-    },
-    methods: {
-      hideFacebookLogin: () => {
-        return ['(iPhone|iPod|iPad)(?!.*Safari)'].every(expression => {
-          return !!navigator.userAgent.match(new RegExp(`(${expression})`, 'ig'));
-        });
-      },
+    })
+  },
+  methods: {
+    hideFacebookLogin: () => {
+      return ['(iPhone|iPod|iPad)(?!.*Safari)'].every(expression => {
+        return !!navigator.userAgent.match(new RegExp(`(${expression})`, 'ig'))
+      })
+    }
+  }
 }
-};
 
 </script>
 
@@ -1327,9 +1325,8 @@ a {
   letter-spacing: 0.4px;
   text-decoration: none;
   color: #FFFFFF;
-  -webkit-text-fill-color: rgba(255, 255, 255, 1); 
+  -webkit-text-fill-color: rgba(255, 255, 255, 1);
 }
-
 
 .use-password-text {
   margin-top: 16px;
@@ -1339,7 +1336,7 @@ a {
 }
 
 .use-password-text a {
-  -webkit-text-fill-color: #1f88e9;  
+  -webkit-text-fill-color: #1f88e9;
 }
 
 .terms-text {
@@ -1350,7 +1347,7 @@ a {
 }
 
 .terms-text a {
-  -webkit-text-fill-color: #1f88e9;  
+  -webkit-text-fill-color: #1f88e9;
 }
 
 .links:hover {

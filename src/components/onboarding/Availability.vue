@@ -20,7 +20,7 @@
 
 export default {
 
-  name: "Availability",
+  name: 'Availability',
   props: ['value'],
   data () {
     return {
@@ -36,7 +36,7 @@ export default {
       deep: true
     }
   }
-};
+}
 </script>
 
 <style lang="scss" scoped>

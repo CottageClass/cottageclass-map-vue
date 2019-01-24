@@ -33,7 +33,7 @@
 
 export default {
 
-  name: "Children",
+  name: 'Children',
   props: ['value'],
   data () {
     return {
@@ -43,10 +43,10 @@ export default {
   },
   methods: {
     addChild: function () {
-      this.children.push({firstName: null, birthday: null, schoolName: null})
+      this.children.push({ firstName: null, birthday: null, schoolName: null })
     },
     removeChild: function (index) {
-      this.children.splice(index, 1);
+      this.children.splice(index, 1)
     }
   },
   computed: {
@@ -66,8 +66,8 @@ export default {
         return true
       } else {
         return false
-    }
-  },
+      }
+    },
     error: function () {
       if (this.childrenValidates) {
         return false
@@ -85,14 +85,13 @@ export default {
   watch: {
     children: {
       handler: function () {
-      this.$emit('input', {
-        list: this.children,
-        err: this.error
-      })
-    },
-    deep: true
+        this.$emit('input', {
+          list: this.children,
+          err: this.error
+        })
+      },
+      deep: true
+    }
   }
 }
-};
 </script>
-

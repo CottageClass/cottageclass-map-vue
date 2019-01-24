@@ -2,27 +2,27 @@
 <div class="body-2">
   <MainNav />
   <div class="event-detail-container w-container">
-    <div class="event-detail-graphic"><EventCategoryIcon :category="event.activityName"  
+    <div class="event-detail-graphic"><EventCategoryIcon :category="event.activityName"
  width="150" height="150" /></div>
     <div class="div-block-36">
       <div
-      v-if="event.participated" 
+      v-if="event.participated"
       class="alert-container alert-success" id="alert">
-        Congratulations, you have RSVP&apos;ed to this event! If you haven't yet, please fill out our <a href="https://cottageclass1.typeform.com/to/Z6pwkl">emergency information form</a>.  
+        Congratulations, you have RSVP&apos;ed to this event! If you haven't yet, please fill out our <a href="https://cottageclass1.typeform.com/to/Z6pwkl">emergency information form</a>.
       </div>
    <!--
       <div class="alert-container alert-failure" id="alert">
-        Sorry, this event is full &amp; not accepting any more RSVPs. 
+        Sorry, this event is full &amp; not accepting any more RSVPs.
       </div>
     -->
       <h1 class="event-detail-heading">{{ event.name }}</h1>
       <div class="action-bar">
         <div class="host-info"><AvatarImage className="avatar-large" :person="{facebookId: event.hostFacebookUid, avatar: event.hostAvatar}"/>
           <div class="host-info-wrapper">
-            <div class="hosted-by">Hosted by <a href="#" class="host">{{ event.hostFirstName }}</a> &amp; 
+            <div class="hosted-by">Hosted by <a href="#" class="host">{{ event.hostFirstName }}</a> &amp;
             <span v-if="childAgesSorted.length == 1">1 kid&mdash;age {{  childAgesSorted[0] }}.</span>
           <span v-if="childAgesSorted.length == 2">2 kids&mdash;ages {{ childAgesSorted[0] }} and {{ childAgesSorted[1] }}.</span>
-          <span v-if="childAgesSorted.length > 2">{{ childAgesSorted.length }} kids&mdash;ages 
+          <span v-if="childAgesSorted.length > 2">{{ childAgesSorted.length }} kids&mdash;ages
             <span v-for="(age, index) in childAgesSorted">
               <span v-if="index == childAgesSorted.length - 1"> and {{ age }}.</span>
               <span v-else> {{ age}}<span v-if="index != childAgesSorted.length - 2">,</span></span>
@@ -33,17 +33,17 @@
             </div>
           </div>
         </div>
-        
+
         <!-- RSVP button or share button-->
 
-        <RsvpButton 
+        <RsvpButton
         v-if="!hostIsCurrentUser"
-        :userParticipating="event.participated" 
-        :full="event.full" 
+        :userParticipating="event.participated"
+        :full="event.full"
         :eventId="eventId"
         /></div>
 
-        <!-- Summary info --> 
+        <!-- Summary info -->
 
       <ul class="summary-info">
         <li class="summary-list-item"><img src="@/assets/time-black.svg" alt="" class="summary-icon">
@@ -58,7 +58,7 @@
       </ul>
     </div>
 
-        <!-- Map --> 
+        <!-- Map -->
 
   <div class="map">
   <GmapMap
@@ -74,7 +74,7 @@
       icon="https://storage.googleapis.com/cottageclass-prod/images/map-radius.png"
       />
     </GmapMap>
-  </div>    
+  </div>
   <div class="mobile-cards-wrapper">
       <div class="event-specifics-card"><img src="@/assets/about.svg" width="100" height="100" alt="">
         <div class="card-small-text" v-if="event.activityName && event.food">About</div>
@@ -91,10 +91,10 @@
       <div class="event-specifics-card"><AvatarImage className="avatar-x-large" :person="{facebookId: event.hostFacebookUid, avatar: event.hostAvatar}"/>
         <div class="card-small-text">Host</div>
         <div class="card-large-text">{{ event.hostFirstName }}</div>
-        <div v-if="childAgesSorted.length > 0" class="card-large-text-gray">Parent to 
+        <div v-if="childAgesSorted.length > 0" class="card-large-text-gray">Parent to
           <span v-if="childAgesSorted.length == 1">one child age {{  childAgesSorted[0] }}.</span>
           <span v-if="childAgesSorted.length == 2">two children ages {{ childAgesSorted[0] }} and {{ childAgesSorted[1] }}.</span>
-          <span v-if="childAgesSorted.length > 2">{{ childAgesSorted.length }} children ages 
+          <span v-if="childAgesSorted.length > 2">{{ childAgesSorted.length }} children ages
             <span v-for="(age, index) in childAgesSorted">
               <span v-if="index == childAgesSorted.length - 1"> and {{ age }}.</span>
               <span v-else> {{ age}}<span v-if="index != childAgesSorted.length - 2">,</span></span>
@@ -103,19 +103,19 @@
         </div>
       </div>
 
-      <!-- second RSVP button --> 
+      <!-- second RSVP button -->
 
       <div class="event-specifics-card" v-if="!event.full && !event.participated && !hostIsCurrentUser">
         <div class="card-large-text">Interested in this event?</div>
-        <RsvpButton 
+        <RsvpButton
         class="rsvp-button-bottom"
-        :userParticipating="event.participated" 
-        :full="event.full" 
+        :userParticipating="event.participated"
+        :full="event.full"
         :eventId="eventId"
         />
       </div>
 
-      <!-- Sharing ask --> 
+      <!-- Sharing ask -->
 
       <div class="event-specifics-card" v-if="!event.full && !event.participated">
         <div v-if="!hostIsCurrentUser" class="card-large-text">Want to help spread the word?</div>
@@ -127,8 +127,8 @@
 
     </div>
   </div>
- 
-<!-- Footer --> 
+
+<!-- Footer -->
 
  <Footer />
 
@@ -139,13 +139,13 @@
 
 import * as api from '@/utils/api.js'
 import * as Token from '@/utils/tokens.js'
-var moment = require('moment');
 import AvatarImage from './AvatarImage.vue'
 import RsvpButton from './RsvpButton.vue'
 import ShareButton from './ShareButton.vue'
 import MainNav from './MainNav.vue'
 import Footer from '@/components/Footer.vue'
 import EventCategoryIcon from '@/components/EventCategoryIcon.vue'
+var moment = require('moment')
 
 export default {
   name: 'EventPage',
@@ -156,19 +156,19 @@ export default {
       currentUser: null,
       currentUserId: null,
       isAuthenticated: false,
-      mapOptions: { 
-      "disableDefaultUI": true, // turns off map controls
-      "gestureHandling": "none" // prevents any kind of scrolling
-    },
-      locationPlaceholder: {"lat": 40.6869221, "lng": -73.9978474} // todo: pull from actual location
-      } 
+      mapOptions: {
+        'disableDefaultUI': true, // turns off map controls
+        'gestureHandling': 'none' // prevents any kind of scrolling
+      },
+      locationPlaceholder: { 'lat': 40.6869221, 'lng': -73.9978474 } // todo: pull from actual location
+    }
   },
   methods: {
     isToday: function (date) {
-      return moment(0,"HH").diff(date, "days") == 0;
+      return moment(0, 'HH').diff(date, 'days') == 0
     },
     formatDate: function (date) {
-      return moment(date).format('ddd, MMM D, YYYY' )
+      return moment(date).format('ddd, MMM D, YYYY')
     },
     backgroundColor: function (id) {
       let colors = ['#e82d55', '#0cba52', '#aff0fc', '#fd6f77', '#64426b']
@@ -180,14 +180,14 @@ export default {
     fetchCurrentUser: function () {
       api.fetchCurrentUserNew(Token.currentUserId(this.$auth)).then(currentUser => {
         this.currentUser = currentUser
-        })
+      })
     },
     fetchEvent: function () {
       this.events = window.globalEventList
       api.fetchEvents(this.$route.params.id).then(
-      (res) => { 
-        this.events = res
-      })      
+        (res) => {
+          this.events = res
+        })
     }
   },
   mounted: function () {
@@ -195,8 +195,8 @@ export default {
     if (this.$auth && this.$auth.isAuthenticated()) {
       this.isAuthenticated = true
       this.currentUserId = Token.currentUserId(this.$auth)
-      this.fetchCurrentUser()      
-    } 
+      this.fetchCurrentUser()
+    }
   },
   computed: {
     hostIsCurrentUser: function () {
@@ -206,14 +206,14 @@ export default {
       return this.event.id
     },
     distance: function () {
-    if (this.currentUser) {
-      return api.distanceHaversine(this.event.hostFuzzyLatitude, this.event.hostFuzzyLongitude, this.currentUser.latitude, this.currentUser.longitude)
-    } else {
-      return null
-    }
-  },
+      if (this.currentUser) {
+        return api.distanceHaversine(this.event.hostFuzzyLatitude, this.event.hostFuzzyLongitude, this.currentUser.latitude, this.currentUser.longitude)
+      } else {
+        return null
+      }
+    },
     childAgesSorted: function () {
-      return this.event.hostChildAges.sort((a,b) => a - b)
+      return this.event.hostChildAges.sort((a, b) => a - b)
     },
     event: function () {
       if (Array.isArray(this.events)) {
@@ -224,7 +224,7 @@ export default {
     }
   }
 
-};
+}
 </script>
 
 <style scoped>

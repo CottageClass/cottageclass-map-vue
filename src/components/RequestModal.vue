@@ -11,7 +11,7 @@
       <div class="form-block w-form">
         <div id="email-form" class="form">
           <select v-model="day" class="select-field w-select">
-            <!-- this is silly but saves us from using natural date libraries right now--> 
+            <!-- this is silly but saves us from using natural date libraries right now-->
             <option value="today" select="selected">Today</option>
             <option value="tomorrow" select="selected">Tomorrow</option>
             <option value="Monday" select="selected">Monday</option>
@@ -69,14 +69,13 @@ import networks from '../assets/network-info.json'
 import * as api from '@/utils/api.js'
 import * as Token from '@/utils/tokens.js'
 import AvatarImage from './AvatarImage.vue'
-var moment = require('moment');
 
 // import google sheets API service
 import sheetsu from 'sheetsu-node'
+var moment = require('moment')
 
 // create a config file to identify which spreadsheet we push to.
 var client = sheetsu({ address: 'https://sheetsu.com/apis/v1.0su/62cd725d6088' })
-
 
 export default {
   name: 'RequestModal',
@@ -84,16 +83,16 @@ export default {
   data () {
     return {
       numberOfChildren: 1,
-      day: "today",
-      startTime: "19:00",
-      endTime: "22:00",
+      day: 'today',
+      startTime: '19:00',
+      endTime: '22:00',
       people: [],
       networks: networks,
       currentUserId: Token.currentUserId(this.$auth),
       currentUser: {},
       providerId: this.$route.params.id,
       twilioProxyNumberForProvider: null,
-      sendButtonText: "Send Text"
+      sendButtonText: 'Send Text'
     }
   },
   computed: {
@@ -117,20 +116,20 @@ export default {
     submitRequest: function () {
       // these will be executed in parallel
       // - if we want sequential execution, wrap in a promise
-      this.sendButtonText = "Sending..."
+      this.sendButtonText = 'Sending...'
       this.saveBookingRequestToSpreadsheet()
       this.startProxySessionAndSendIntroMessages().then((data) => {
-        this.sendButtonText = "\u2714 Sent"
+        this.sendButtonText = '\u2714 Sent'
       }, (err) => {
-        alert("Oops! There was a problem sending your request. Try again?")
-        this.sendButtonText = "Send Text"
-      });
+        alert('Oops! There was a problem sending your request. Try again?')
+        this.sendButtonText = 'Send Text'
+      })
     },
     formatTime: function (time) {
-      var minutes = time.slice(-2);
-      var hours24 = time.substr(0, time.indexOf(':'));
-      var ampm = (hours24 >= 12) ? 'pm' : 'am';
-      var hours12 = hours24 % 12;
+      var minutes = time.slice(-2)
+      var hours24 = time.substr(0, time.indexOf(':'))
+      var ampm = (hours24 >= 12) ? 'pm' : 'am'
+      var hours12 = hours24 % 12
       if (hours12 == 0) {
         hours12 = 12
       }
@@ -157,28 +156,28 @@ export default {
     },
     saveBookingRequestToSpreadsheet: function () {
       client.create({
-        "Requester ID": this.currentUser.id,
-        "Requester Name": this.currentUser.firstName + ' ' + this.currentUser.lastInitial,
-        "Requester Phone": this.currentUser.phone,
-        "Provider ID": this.provider.id,
-        "Provider Name": this.provider.firstName + ' ' + this.provider.lastInitial,
-        "Provider Phone #": this.provider.phone,
-        "Date submitted": moment(Date()).format("L"),
-        "Time submitted": moment(Date()).format("LT"),
-        "Request Day": this.day,
-        "Start Time": this.startTime,
-        "End Time": this.endTime,
-        "# Children": this.numberOfChildren,
-        "Network": this.network.name,
-        "Network Code": this.network.stub
-      }, "requests").then((data) => {
+        'Requester ID': this.currentUser.id,
+        'Requester Name': this.currentUser.firstName + ' ' + this.currentUser.lastInitial,
+        'Requester Phone': this.currentUser.phone,
+        'Provider ID': this.provider.id,
+        'Provider Name': this.provider.firstName + ' ' + this.provider.lastInitial,
+        'Provider Phone #': this.provider.phone,
+        'Date submitted': moment(Date()).format('L'),
+        'Time submitted': moment(Date()).format('LT'),
+        'Request Day': this.day,
+        'Start Time': this.startTime,
+        'End Time': this.endTime,
+        '# Children': this.numberOfChildren,
+        'Network': this.network.name,
+        'Network Code': this.network.stub
+      }, 'requests').then((data) => {
         console.log(data)
       }, (err) => {
         console.log(err)
-      });
+      })
     }
   }
-};
+}
 </script>
 
 <style scoped>

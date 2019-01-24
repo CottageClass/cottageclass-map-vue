@@ -1,12 +1,12 @@
 <template>
 
-  <!-- wrapper for desktop screens -->  
+  <!-- wrapper for desktop screens -->
 
     <div class="onb-body">
       <div class="body">
         <div class="content-wrapper">
 
-  <!-- nav -->           
+  <!-- nav -->
     <div class="title-bar">
       <a @click="$emit('activateScreen', 'facebook')" class="title-bar-back-button w-inline-block"></a>
     </div>
@@ -55,12 +55,12 @@
 
 <script>
 // import networks from '@/assets/network-info.json';
-import * as Token from '@/utils/tokens.js';
-import * as api from '@/utils/api.js';
+import * as Token from '@/utils/tokens.js'
+import * as api from '@/utils/api.js'
 
 export default {
   name: 'DirectLogin',
-  data: function() {
+  data: function () {
     return {
       // networks: networks,
       currentUser: {},
@@ -68,32 +68,32 @@ export default {
       password: '',
       showError: false,
       errorMessage: null
-    };
+    }
   },
-  mounted: function() {
-    if (!!this.$auth) {
-      let current_user_identifier = Token.currentUserId(this.$auth);
-      if (!!current_user_identifier) {
+  mounted: function () {
+    if (this.$auth) {
+      let current_user_identifier = Token.currentUserId(this.$auth)
+      if (current_user_identifier) {
         api
           .fetchCurrentUser(current_user_identifier)
           .then(currentUser => {
             if (currentUser.hasAllRequiredFields) {
-              this.$emit('userAlreadyOnboarded');
+              this.$emit('userAlreadyOnboarded')
             } else if (currentUser.id) {
-              this.$emit('userNotYetOnboarded');
+              this.$emit('userNotYetOnboarded')
             } else {
-              return false;
+              return false
             }
           })
-          .catch(function(error) {
-            console.log('auth FAILURE or user not onboarded yet');
-            console.warn(error);
-          });
+          .catch(function (error) {
+            console.log('auth FAILURE or user not onboarded yet')
+            console.warn(error)
+          })
       } else {
-        console.warn('current user does not exist');
+        console.warn('current user does not exist')
       }
     } else {
-      console.warn('this.$auth is blank');
+      console.warn('this.$auth is blank')
     }
     // override for better error messages on this screen and on signup screen.
     // note: changes here affect all vee-validate error messages until page reload.
@@ -116,25 +116,25 @@ export default {
           required: 'You must add a profile photo, below.'
         }
       }
-    };
+    }
     // Override and merge the dictionaries
-    this.$validator.localize('en', dict);
+    this.$validator.localize('en', dict)
   },
   methods: {
-    login: function(event) {
-      event.preventDefault();
-      let component = this;
+    login: function (event) {
+      event.preventDefault()
+      let component = this
 
       this.$validator
         .validateAll()
-        .then(function(result) {
+        .then(function (result) {
           if (result) {
-            let email = component.email && component.email.trim();
-            let password = component.password && component.password.trim();
+            let email = component.email && component.email.trim()
+            let password = component.password && component.password.trim()
             component.$auth
               .login({ email, password })
               .then(res => {
-                console.log('auth success:', res);
+                console.log('auth success:', res)
               }).catch(err => {
                 component.showError = true
                 component.errorMessage = 'There was a problem signing you in. If you forgot your password, email  contact@cottageclass.com for help.'
@@ -145,27 +145,27 @@ export default {
               )
               .then(currentUser => {
                 if (currentUser.hasAllRequiredFields) {
-                  component.$emit('userAlreadyOnboarded');
+                  component.$emit('userAlreadyOnboarded')
                 } else if (currentUser.id) {
-                  component.$emit('userNotYetOnboarded');
+                  component.$emit('userNotYetOnboarded')
                 } else {
-                  return false;
+                  return false
                 }
               })
-              .catch(function(err) {
-                console.log('auth FAILURE or user not onboarded yet');
-                console.error(err);
-              });
+              .catch(function (err) {
+                console.log('auth FAILURE or user not onboarded yet')
+                console.error(err)
+              })
           } else {
             component.showError = true
           }
         })
-        .catch(function(error) {
-          console.warn('validation error', error);
-        });
+        .catch(function (error) {
+          console.warn('validation error', error)
+        })
     }
   }
-};
+}
 </script>
 
 <style lang="scss" scoped>

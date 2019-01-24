@@ -1,14 +1,14 @@
 <template>
 <div class="body">
   <div class="title-bar-container">
-    <router-link 
+    <router-link
     :to="{ name: 'MainView', params: { tab: 'provide' }}"
     class="title-bar-action-l w-inline-block">
       <img src="../assets/Arrow-Back-2.svg">
     </router-link>
     <h5 class="heading-3">Emergency Contacts</h5><a href="#" class="title-bar-action-2 w-inline-block"></a></div>
 
- <!-- Note $route.params for pulling in data. I guess I can pull in people again. --> 
+ <!-- Note $route.params for pulling in data. I guess I can pull in people again. -->
   <div class="emergency-contact-parent-summary"><AvatarImage :person="person" className="ec-parent-avatar" />
     <h5 class="heading">{{ person.firstName}} {{ person.lastInitial }}.</h5>
     <div class="ec-parent-summary-phone"><a :href="'tel:' + person.phone">{{ person.phone }}</a></div>
@@ -77,14 +77,14 @@ import * as api from '@/utils/api.js'
 import networks from '@/assets/network-info.json'
 
 export default {
-	name: 'EmergencyInfo',
+  name: 'EmergencyInfo',
   components: { AvatarImage },
-	data () {
-		return {
-			people: [],
+  data () {
+    return {
+      people: [],
       networks: networks
-		}
-	},
+    }
+  },
   mounted: function () {
     api.fetchUsersInNetwork(this.network.stub).then(res => {
       this.people = res
@@ -96,10 +96,10 @@ export default {
       return this.networks.find(network => network.stub == networkId)
     },
     person: function () {
-    return this.people.find(person => person.id == this.$route.params.id) // computes person. this isn't efficient but simplifies interaction with the API.
+      return this.people.find(person => person.id == this.$route.params.id) // computes person. this isn't efficient but simplifies interaction with the API.
+    }
   }
-  }
-};
+}
 </script>
 
 <style scoped>
@@ -760,6 +760,5 @@ a {
     padding: 16px;
   }
 }
-
 
 </style>

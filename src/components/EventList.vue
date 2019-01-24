@@ -26,13 +26,13 @@
 
 <script>
 import EventListItem from '@/components/EventListItem.vue'
-var moment = require('moment');
+var moment = require('moment')
 
 console.log('eventlist')
 export default {
   name: 'EventList',
   components: { EventListItem },
-  props : ['events'],
+  props: ['events'],
   data () {
   	return {
       currentUser: null,
@@ -42,11 +42,11 @@ export default {
   },
   methods: {
     formatDate: function (date) {
-      return moment(date).format('dddd, MMM Do' )
+      return moment(date).format('dddd, MMM Do')
     },
-		isToday: function (date) {
-			return moment(0,"HH").diff(date, "days") == 0;
-		},
+    isToday: function (date) {
+      return moment(0, 'HH').diff(date, 'days') == 0
+    },
     distanceFromCurrentUser: function (lat, lon) {
       if (this.currentUser) {
         return api.distanceHaversine(lat, lon, this.currentUser.latitude, this.currentUser.longitude)

@@ -20,7 +20,7 @@
       </div>
 
         <form id="email-form-2" v-on:submit.prevent>
-        <input 
+        <input
           v-if="showApartmentField"
           @keyup.enter="$emit('pressedEnter')"
           name="apartmentNumber"
@@ -37,7 +37,7 @@
 <script>
 import VueGoogleAutocomplete from 'vue-google-autocomplete'
 export default {
-  name: "Location",
+  name: 'Location',
   props: ['currentAddress'],
   data () {
   	return {
@@ -58,12 +58,12 @@ export default {
     toggleApartmentField: function () {
       this.showApartmentField = true
     },
-    getAddressData: function(addressData, placeResultData, id) {
-      let placeResultObject = {};
+    getAddressData: function (addressData, placeResultData, id) {
+      let placeResultObject = {}
       placeResultData.address_components.forEach(e =>
         e.types.forEach(type => (placeResultObject[type] = e.long_name))
-      );
-      this.address = { ...addressData, ...placeResultObject };
+      )
+      this.address = { ...addressData, ...placeResultObject }
       this.emitAddress()
     },
     emitAddress: function () {
@@ -73,7 +73,7 @@ export default {
         lng: this.address.longitude,
         apartmentNumber: this.apartmentNumber,
         err: this.error
-      });
+      })
     }
   },
   computed: {
@@ -93,5 +93,5 @@ export default {
       this.emitAddress()
     }
   }
-};
+}
 </script>

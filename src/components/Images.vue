@@ -8,11 +8,10 @@
 
 <script>
 export default {
-        name: 'Images',
-        props: ['person'],
-};
+  name: 'Images',
+  props: ['person']
+}
 </script>
-
 
 <style scoped>
 
@@ -42,7 +41,6 @@ export default {
 .body {
   background-color: #f2f2f2;
 }
-
 
 .child {
 	white-space:nowrap;

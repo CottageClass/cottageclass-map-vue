@@ -17,7 +17,7 @@
 
 <script>
 export default {
-	name: 'OAuthCallback',
+  name: 'OAuthCallback',
   props: {
     size: {
       default: '50px'
@@ -37,7 +37,7 @@ export default {
       }
     }
   }
-};
+}
 </script>
 
 <style lang="scss" scoped>

@@ -9,7 +9,6 @@
   </span>
   </div>
 
-
   <div class="onb-content-container _100vh">
     <div class="onb-top-content-container">
       <h1 class="onb-heading-large">Add the App</h1>
@@ -35,7 +34,6 @@
 
 <script>
 export default {
-  name: "AddToHomescreen",
-};
+  name: 'AddToHomescreen'
+}
 </script>
-

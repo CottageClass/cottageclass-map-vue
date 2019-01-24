@@ -5,8 +5,6 @@
     </router-link><AvatarImage :person="person" class="providerp-avatar" />
     <h1 class="providerp-h1">{{ person.firstName }} {{ person.lastInitial }}.</h1>
 
-
-
     <div class="providerp-occupation" v-if="person.title && person.employer">{{ person.title }} at {{ person.employer }}</div>
     <div v-if="person.children.length > 0" class="providerp-children">
         <ChildInfo :children="person.children" />
@@ -28,7 +26,7 @@
       </div>
     </div>
 
- <!-- activities --> 
+ <!-- activities -->
 
       <div class="tag-group-container" v-if="person.activities.length"><img src="../assets/tag-24-2.svg" width="20" height="20" class="image-tag">
         <div class="tags-container" v-for="activity in person.activities">
@@ -38,7 +36,7 @@
       </div>
       </div>
 
-<!-- Times --> 
+<!-- Times -->
       <div class="time-group-container"><img src="../assets/time-24-2.svg" width="20" height="20" class="image-time">
         <div class="times-container">
           <div class="time" v-if="person.availableMornings">
@@ -57,10 +55,10 @@
       </div>
   </div>
 
-<!-- Photos --> 
+<!-- Photos -->
 
   <div v-if="person.images" class="group-title-container-2">
-    <h5 class="list-title-2">Photos</h5> 
+    <h5 class="list-title-2">Photos</h5>
   </div>
 
   <Images :person="person"/>
@@ -87,14 +85,14 @@
     </GmapMap>
   </div>
 
-<!-- Positive reviews --> 
+<!-- Positive reviews -->
   <div class="group-title-container-2">
     <h5 class="list-title-2">Great Experiences</h5>
   </div>
   <span v-for="review in person.reviews">
 </span>
 
-<!-- Leave a review --> 
+<!-- Leave a review -->
 
   <div class="providerp-post-comment-container"><a :href="'mailto:contact@cottageclass.com?subject=Great experience with ' + person.firstName + ' ' + person.lastInitial + '. (' + person.id + ')&body=(please%20describe%20your%20great%20experience%20here!)'" class="pprofile-compose-button w-inline-block"><img src="../assets/compose.svg" class="image-5"><div class="pprofile-comment-prompt-button-text">Post a great experience</div></a>
     <div class="providerp-book-care-container">
@@ -103,7 +101,7 @@
     </div>
   </div>
 
-<!-- Negative reviews (concerns) --> 
+<!-- Negative reviews (concerns) -->
 
   <div class="group-title-container-2">
     <h5 class="list-title-2">Concerns</h5>
@@ -111,7 +109,7 @@
   <span v-for="review in person.concerns">
 </span>
 
-  <!-- concern link --> 
+  <!-- concern link -->
 
   <div class="providerp-post-comment-container"><a :href="'mailto:contact@cottageclass.com?subject=Concern re: ' + person.firstName + ' ' + person.lastInitial + '. (' + person.id + ')&body=(please%20detail%20your%20concern%20here)'" class="pprofile-compose-button w-inline-block"><img src="../assets/compose.svg" class="image-5"><div class="pprofile-comment-prompt-button-text">Post a concern</div></a></div>
 
@@ -125,9 +123,8 @@ import Images from './Images.vue'
 import * as Token from '@/utils/tokens.js'
 import AvatarImage from './AvatarImage'
 import * as api from '@/utils/api.js'
-import networks from '@/assets/network-info.json' 
+import networks from '@/assets/network-info.json'
 import ChildInfo from '@/components/ChildInfo.vue'
-
 
 export default {
   components: { Images, AvatarImage, ChildInfo },
@@ -141,11 +138,11 @@ export default {
     return {
       people: [],
       networks: networks,
-      mapOptions: 
+      mapOptions:
        { // move this to map component when i separate it.
-            "disableDefaultUI": true, // turns off map controls
-            "gestureHandling": "none" // prevents any kind of scrolling
-          }
+         'disableDefaultUI': true, // turns off map controls
+         'gestureHandling': 'none' // prevents any kind of scrolling
+       }
     }
   },
   mounted: function () {
@@ -159,11 +156,10 @@ export default {
       return this.networks.find(network => network.stub == networkId)
     },
     person: function () {
-    return this.people.find(person => person.id == this.$route.params.id) // computes person. this isn't efficient but simplifies interaction with the API.
+      return this.people.find(person => person.id == this.$route.params.id) // computes person. this isn't efficient but simplifies interaction with the API.
+    }
   }
-  }
-};
-
+}
 
 </script>
 <style scoped>

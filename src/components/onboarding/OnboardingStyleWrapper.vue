@@ -4,9 +4,9 @@
 
 <script>
 export default {
-	name: 'OnboardingStyleWrapper',
-	props: ['styleIs']
-};
+  name: 'OnboardingStyleWrapper',
+  props: ['styleIs']
+}
 </script>
 
 <style lang="scss">
@@ -1902,7 +1902,7 @@ a:hover {
   display: -webkit-flex;
   display: -ms-flexbox;
   display: flex;
-	flex-wrap: wrap;  
+	flex-wrap: wrap;
   width: 100%;
   margin-top: 16px;
   padding: 0 32px 40px 32px;
@@ -1935,7 +1935,7 @@ a:hover {
 }
 
 .onb-child-group-2 {
-	width: 100%;	
+	width: 100%;
 }
 
 .card-title, .title, .onb-heading-large, .onb-child-group-heading {
@@ -1970,7 +1970,7 @@ a:hover {
 }
 
 .radio-form, .w-form {
-  margin-top: 8px;  
+  margin-top: 8px;
 }
 
 .radio-button-field, .checkbox-field-extra-space {
@@ -2416,8 +2416,6 @@ a:hover {
   }
 }
 
-
 }
 
 </style>
-

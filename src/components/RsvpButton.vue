@@ -14,10 +14,9 @@
 export default {
   name: 'RsvpButton',
   props: ['full', 'userParticipating', 'eventId']
-};
+}
 
 </script>
-
 
 <style scoped>
 

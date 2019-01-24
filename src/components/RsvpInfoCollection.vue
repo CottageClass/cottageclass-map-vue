@@ -1,18 +1,18 @@
 <template>
-  <!-- wrapper for desktop screens -->  
+  <!-- wrapper for desktop screens -->
 
     <div class="onb-body">
       <div class="body">
         <div class="content-wrapper">
 
-  <!-- nav --> 
+  <!-- nav -->
 
-  <Nav 
-  :button="nextButtonState" 
-  @next="nextStep" 
+  <Nav
+  :button="nextButtonState"
+  @next="nextStep"
   @prev="$router.go(-1)" />
 
-  <!-- error message --> 
+  <!-- error message -->
 
   <div v-if="error" class="onb-error-container">
     <div class="onb-error-text">{{ error }}</div>
@@ -23,33 +23,33 @@
   <OAuthCallback v-if="!allInformationLoaded"/>
 
 <!-- Once we have child and event information, ask user which child/children they want to RSVP -->
-  
+
   <div v-if="allInformationLoaded" class="onb-content-container">
     <div class="onb-top-content-container">
       <h1 class="onb-heading-large">Which children would you like to RSVP?</h1>
-      <p 
-      class="onb-paragraph-subheading-2" 
+      <p
+      class="onb-paragraph-subheading-2"
       v-if="Number.isInteger(spotsRemaining)">There <span v-if="spotsRemaining == 1">is</span><span v-else>are</span> {{ spotsRemaining }} spot<span v-if="spotsRemaining != 1">s</span> remaining.</p>
     </div>
     <div class="onb-form-block-checkbox-list w-form">
       <form class="onb-form-checkbox-list">
         <div
         v-for="child in children"
-        class="checkbox-field-extra-space" 
+        class="checkbox-field-extra-space"
         :class="{'active-checkbox': isSelected(child.id)}">
-          <input 
-          @click="toggleSelected(child.id)" 
-          type="checkbox" 
-          :id="child.id" 
-          :name="child.id" 
+          <input
+          @click="toggleSelected(child.id)"
+          type="checkbox"
+          :id="child.id"
+          :name="child.id"
           class="onb-checkbox w-checkbox-input"
           :checked="isSelected(child.id)"
           >
-          <label 
-          :for="child.id" 
+          <label
+          :for="child.id"
           class="onb-checkbox-label w-form-label"
           >
-           {{ child.firstName }}, {{ calculateAge(child.birthday) }} 
+           {{ child.firstName }}, {{ calculateAge(child.birthday) }}
          </label>
         </div>
       </form>
@@ -71,30 +71,29 @@
 <script>
 
 // todo:
-// figure out why maximum children is 0 on event 73. am I submitting it correctly? 
-// confirm that child info gets acquired correctly and that api submit will work properly once i have it. 
+// figure out why maximum children is 0 on event 73. am I submitting it correctly?
+// confirm that child info gets acquired correctly and that api submit will work properly once i have it.
 
 import * as Token from '@/utils/tokens.js'
 import * as api from '@/utils/api.js'
 import * as utils from '@/utils/utils.js'
 import Nav from '@/components/onboarding/Nav.vue'
 import sheetsu from 'sheetsu-node'
-// this component has a working loading indicator and no other logic. todo: break out and rename. 
+// this component has a working loading indicator and no other logic. todo: break out and rename.
 import OAuthCallback from '@/components/OAuthCallback.vue'
-var moment = require('moment');
+var moment = require('moment')
 // create a config file to identify which spreadsheet we push to.
 var client = sheetsu({ address: 'https://sheetsu.com/apis/v1.0su/62cd725d6088' })
 
-
 export default {
-  name: "RsvpInfoCollection",
+  name: 'RsvpInfoCollection',
   components: { Nav, OAuthCallback },
   data () {
     return {
       children: [],
       currentUser: false,
       childrenSelected: [],
-      error: "",
+      error: '',
       eventId: this.$route.params.eventId,
       event: false,
       isAuthenticated: this.$auth.isAuthenticated()
@@ -116,9 +115,9 @@ export default {
     },
     nextButtonState: function () {
       if (this.tooManyChildren || this.childrenSelected.length == 0) {
-        return "inactive"
+        return 'inactive'
       } else {
-        return "next"
+        return 'next'
       }
     },
     spotsRemaining: function () {
@@ -144,16 +143,16 @@ export default {
         this.currentUser = currentUser
         this.children = currentUser.children
         this.redirectToOnboardingIfNotOnboarded()
-        // if we don't have children for this user (which should never be true) show an error. (Todo: let user enter child info here in this case.) 
-        if (!this.children || this.children.length == 0){
+        // if we don't have children for this user (which should never be true) show an error. (Todo: let user enter child info here in this case.)
+        if (!this.children || this.children.length == 0) {
           this.error = 'Sorry, but we cannot retrieve your children\'s information. Are you sure you have signed in? To resolve this, please email us at: contact@cottageclass.com.'
         }
       }).catch(err => {
-      console.log('Error fetching user info', err)
-    })
+        console.log('Error fetching user info', err)
+      })
     },
     redirectToSignupIfNotAuthenticated: function () {
-      if(!this.$auth.isAuthenticated()) {
+      if (!this.$auth.isAuthenticated()) {
         console.log('User attempted to RSVP without being authenticated')
         this.$cookies.set('rsvpAttempted', this.eventId)
         this.$router.push('/?activeScreen=signup')
@@ -162,32 +161,32 @@ export default {
     redirectToOnboardingIfNotOnboarded: function () {
       if (!this.currentUser.hasAllRequiredFields) {
       // send them back to onboarding.
-      console.log('user doesnt have required fields on rsvpinfocollection step, sending them back to onboarding', this.currentUser)
-      this.$cookies.set('rsvpAttempted', this.eventId)
-      this.$router.push('/')
-     } else {
-      console.log('user already onboarded, not redirecting')
-     }
+        console.log('user doesnt have required fields on rsvpinfocollection step, sending them back to onboarding', this.currentUser)
+        this.$cookies.set('rsvpAttempted', this.eventId)
+        this.$router.push('/')
+      } else {
+        console.log('user already onboarded, not redirecting')
+      }
     },
     calculateAge: function (birthdate) {
       return moment().diff(birthdate, 'years')
     },
     fetchEventInformation: function () {
       api.fetchEvents(this.$route.params.eventId).then(
-        (res) => { 
+        (res) => {
           this.event = res[0]
-           if (this.event.full || this.event.maximumChildren == 0) {
+          if (this.event.full || this.event.maximumChildren == 0) {
             this.error = 'We\'re sorry, this event is full!'
-        }
-      }).catch(
-      (err) => {
-        this.error = 'Sorry, there was a problem retrieving information about the event. Go back and try again?'
-      })
+          }
+        }).catch(
+        (err) => {
+          this.error = 'Sorry, there was a problem retrieving information about the event. Go back and try again?'
+        })
     },
     nextStep: function () {
       if (this.tooManyChildren) {
         let numChildren = this.childrenSelected.length
-        let childrenSingularOrPlural = numChildren == 1 ? 'child' : 'children' 
+        let childrenSingularOrPlural = numChildren == 1 ? 'child' : 'children'
         this.error = 'Sorry, but there are not enough spots available for ' + numChildren + ' ' + childrenSingularOrPlural + '.'
       } else if (this.childrenSelected.length == 0) {
         this.error = 'Please choose at least one child to RSVP.'
@@ -199,7 +198,7 @@ export default {
       this.$cookies.remove('rsvpAttempted')
     },
     submitRsvp: function () {
-      this.error = ""
+      this.error = ''
       console.log('rsvping children ' + this.childrenSelected + ' to event ID' + this.eventId)
       this.submitToSheetsu()
       let component = this
@@ -207,7 +206,7 @@ export default {
       // open event page where user will see success message
         component.sendNotifications()
         component.forgetRsvpAttempted()
-        component.$router.push({name: 'EventPage', params: { id: this.eventId }})
+        component.$router.push({ name: 'EventPage', params: { id: this.eventId } })
       }).catch(err => {
         console.log(err)
         this.error = 'Sorry, there was a problem submittting your RSVP. Try again?'
@@ -219,40 +218,40 @@ export default {
       let userId = Token.currentUserId(this.$auth)
       // submit user to sheetsu which gives us notifications of new RSVPs
       client.create({
-        "Event ID": this.eventId,
-        "Event title": this.event.name,
-        "Event host": this.event.hostFirstName,
-        "Event date": this.event.startsAt,
-        "Date submitted": moment(Date()).format("L"),
-        "Parent first name": this.currentUser.firstName,
-        "Parent last name": this.currentUser.lastInitial,          
-        "Parent phone": this.currentUser.phone,
-        "Parent email": this.currentUser.email,
-        "IDs of RSVPed children": this.childrenSelected,
-        "All children": this.currentUser.children
-      }, "RSVPs").then((data) => {
+        'Event ID': this.eventId,
+        'Event title': this.event.name,
+        'Event host': this.event.hostFirstName,
+        'Event date': this.event.startsAt,
+        'Date submitted': moment(Date()).format('L'),
+        'Parent first name': this.currentUser.firstName,
+        'Parent last name': this.currentUser.lastInitial,
+        'Parent phone': this.currentUser.phone,
+        'Parent email': this.currentUser.email,
+        'IDs of RSVPed children': this.childrenSelected,
+        'All children': this.currentUser.children
+      }, 'RSVPs').then((data) => {
         console.log('Successfully submitted RSVP to Sheetsu: ' + data)
       }, (err) => {
         console.log(err)
-      });
+      })
     },
     isSelected: function (id) {
       return this.childrenSelected.includes(id)
     },
     toggleSelected: function (id) {
-      this.error = ""
+      this.error = ''
       if (this.isSelected(id)) {
-        this.childrenSelected = this.childrenSelected.filter((aChildId) => aChildId != id) 
+        this.childrenSelected = this.childrenSelected.filter((aChildId) => aChildId != id)
       } else {
         this.childrenSelected.push(id)
       }
     },
     sendNotifications: function () {
-        api.submitNotification(this.event.hostId, this.notificationToHost)
-        api.submitNotification(Token.currentUserId(this.$auth), this.notificationBackToUser)
-      },
+      api.submitNotification(this.event.hostId, this.notificationToHost)
+      api.submitNotification(Token.currentUserId(this.$auth), this.notificationBackToUser)
+    }
   }
-};
+}
 </script>
 
 <style lang="scss" scoped>
@@ -2964,7 +2963,6 @@ a {
   color: #c73200;
 }
 
-
 .onb-error-label {
   margin-bottom: 6px;
   font-weight: 700;
@@ -2973,7 +2971,6 @@ a {
 .onb-error-text {
   font-size: 13px;
 }
-
 
 .onb-title-bar-next-button-inactive {
   position: static;
@@ -3174,7 +3171,4 @@ a {
   }
 }
 
-
 </style>
-
- 

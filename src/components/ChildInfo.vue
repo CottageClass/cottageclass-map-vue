@@ -8,7 +8,7 @@
 
 <script>
 export default {
-	name: 'ChildInfo',
-	props: ['children']
-};
+  name: 'ChildInfo',
+  props: ['children']
+}
 </script>

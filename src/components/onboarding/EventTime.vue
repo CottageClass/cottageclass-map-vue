@@ -7,19 +7,19 @@
     <div class="onb-form-block-checkbox-list w-form">
       <form class="onb-form-checkbox-list">
         <div
-        v-for="time in times" 
-        class="checkbox-field-extra-space" 
+        v-for="time in times"
+        class="checkbox-field-extra-space"
         :class="{'active-checkbox': time == timeSelected}">
-          <input 
-          type="radio" 
-          :id="time" 
+          <input
+          type="radio"
+          :id="time"
           :value="time"
-          :name="time" 
+          :name="time"
           class="onb-checkbox w-checkbox-input"
           v-model="timeSelected"
           >
-          <label 
-          :for="time" 
+          <label
+          :for="time"
           class="onb-checkbox-label w-form-label"
           >
            {{ time }}
@@ -31,21 +31,21 @@
 </template>
 
 <script>
-var moment = require('moment');
+var moment = require('moment')
 
 export default {
-  name: "EventTime",
+  name: 'EventTime',
   props: ['value'],
   data () {
     return {
       timeSelected: '',
       errorMesg: 'Please choose a time for your playdate.',
       times: [
-      '5:00pm - 8:00pm',
-      '5:30pm - 8:30pm',
-      '6:00pm - 9:00pm',
-      '6:30pm - 9:30pm',
-      '7:00pm - 10:00pm'
+        '5:00pm - 8:00pm',
+        '5:30pm - 8:30pm',
+        '6:00pm - 9:00pm',
+        '6:30pm - 9:30pm',
+        '7:00pm - 10:00pm'
       ]
     }
   },
@@ -63,7 +63,7 @@ export default {
       }
     },
     startTimeUnparsed: function () {
-      return this.timeSelected.substring(0,this.timeSelected.indexOf(' '))
+      return this.timeSelected.substring(0, this.timeSelected.indexOf(' '))
     },
     startTime: function () {
       return moment(this.startTimeUnparsed, 'h mm a').format('HH:mm')
@@ -74,13 +74,13 @@ export default {
   },
   watch: {
     timeSelected: function () {
-        this.$emit('input', {
-          start: this.startTime,
-          end: this.endTime,
-          err: this.err
-        })
-      }
-    },
+      this.$emit('input', {
+        start: this.startTime,
+        end: this.endTime,
+        err: this.err
+      })
+    }
+  },
   methods: {
     formatTime: function (time) {
       // isolate the start time
@@ -88,7 +88,7 @@ export default {
       return time
     }
   }
-};
+}
 </script>
 
 <style scoped>
@@ -107,4 +107,3 @@ textarea {
 }
 
 </style>
-

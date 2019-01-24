@@ -7,36 +7,36 @@
     <div class="onb-form-block-checkbox-list w-form">
       <form class="onb-form-checkbox-list">
         <div
-        class="checkbox-field-extra-space" 
+        class="checkbox-field-extra-space"
         :class="{'active-checkbox': yesOrNo == 'yes'}">
-          <input 
-          type="radio" 
-          id="yes" 
+          <input
+          type="radio"
+          id="yes"
           value="yes"
-          name="yes" 
+          name="yes"
           class="onb-checkbox w-checkbox-input"
           v-model="yesOrNo"
           >
-          <label 
-          for="yes" 
+          <label
+          for="yes"
           class="onb-checkbox-label w-form-label"
           >
            Yes
          </label>
         </div>
         <div
-        class="checkbox-field-extra-space" 
+        class="checkbox-field-extra-space"
         :class="{'active-checkbox': yesOrNo == 'no'}">
-          <input 
-          type="radio" 
-          id="no" 
+          <input
+          type="radio"
+          id="no"
           value="no"
-          name="no" 
+          name="no"
           class="onb-checkbox w-checkbox-input"
           v-model="yesOrNo"
           >
-          <label 
-          for="no" 
+          <label
+          for="no"
           class="onb-checkbox-label w-form-label"
           >
            No
@@ -49,12 +49,12 @@
 
 <script>
 export default {
-  name: "YesOrNo",
+  name: 'YesOrNo',
   props: ['value', 'question', 'description'],
   data () {
     return {
       yesOrNo: this.value.yesOrNo,
-      errorMesg: 'Please answer yes or no.',
+      errorMesg: 'Please answer yes or no.'
     }
   },
   mounted: function () {
@@ -83,11 +83,11 @@ export default {
   },
   watch: {
     yesOrNo: function () {
-        this.$emit('input', {
-          isTrue: this.trueOrFalse,
-          err: this.err
-        })
-      }
+      this.$emit('input', {
+        isTrue: this.trueOrFalse,
+        err: this.err
+      })
     }
-};
+  }
+}
 </script>

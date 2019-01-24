@@ -17,91 +17,91 @@ import Footer from '@/components/Footer.vue'
 import EventList from '@/components/EventList.vue'
 import * as Token from '@/utils/tokens.js'
 import * as api from '@/utils/api.js'
-var moment = require('moment');
+var moment = require('moment')
 
 export default {
-	name: 'MyEvents',
-	components: { MainNav, Footer, EventList },
-	props: ['limitTo'],
-	data () {
-		return {
-			events: null,
-			currentUser: null,
-			isAuthenticated: false,
-			currentUserId: null,
-			showAllButtonText: 'Show all playdates',
-			showShowAllButton: false
-		}
-	},
-	computed: {
-		eventsByDate: function () {
-			if (this.events) {
-				return this.events.sort((eventA, eventB) => {
-					return moment(eventA.startsAt).diff(moment(eventB.startsAt))
-				})
-			}
-		},
-		myEventsByDate: function() {
-			if (this.eventsByDate) {
-				return this.eventsByDate.filter(event => this.currentUserId == event.hostId)
-			}
-		}
-	},
-	methods: {
-		limitNumberOfEvents: function (events) {
-			if (!!this.limitTo) {
-				return events.slice(0, parseInt(this.limitTo))
-			} else {
-				return events
-			}
-		},
-		isToday: function (date) {
-			return moment(0,"HH").diff(date, "days") == 0;
-		},
-		formatDate: function (date) {
-			return moment(date).format('dddd, MMM Do' )
-		},
-		fetchAllEvents: function () {
-			this.showAllButtonText = 'Loading more...'
-			api.fetchEvents('upcoming').then((res) => {
-				this.events = res
-				window.globalEventList = res
-				this.showShowAllButton = false
-			})
-		},
-		fetchUpcomingEvents: function () {
-			this.events = window.globalEventList
-			if (!(this.events && this.events.length > 50)) {
-				api.fetchEvents('upcoming/page/1/page_size/50').then(
-					(res) => {
-						this.events = res
-						window.globalEventList = res
-						this.showShowAllButton = true
-						if (this.events.length < 10) {
-							this.fetchAllEvents()
-						}
-					}
-				)
-			}
-		},
-		fetchCurrentUser: function () {
-			api.fetchCurrentUserNew(Token.currentUserId(this.$auth)).then(currentUser => {
-				this.currentUser = currentUser
-			})
-		},
-	},
-	mounted: function () {
-		this.fetchUpcomingEvents()
-		if (this.$auth && this.$auth.isAuthenticated()) {
-			this.isAuthenticated = true
-			this.currentUserId = Token.currentUserId(this.$auth)
-		}
+  name: 'MyEvents',
+  components: { MainNav, Footer, EventList },
+  props: ['limitTo'],
+  data () {
+    return {
+      events: null,
+      currentUser: null,
+      isAuthenticated: false,
+      currentUserId: null,
+      showAllButtonText: 'Show all playdates',
+      showShowAllButton: false
+    }
+  },
+  computed: {
+    eventsByDate: function () {
+      if (this.events) {
+        return this.events.sort((eventA, eventB) => {
+          return moment(eventA.startsAt).diff(moment(eventB.startsAt))
+        })
+      }
+    },
+    myEventsByDate: function () {
+      if (this.eventsByDate) {
+        return this.eventsByDate.filter(event => this.currentUserId == event.hostId)
+      }
+    }
+  },
+  methods: {
+    limitNumberOfEvents: function (events) {
+      if (this.limitTo) {
+        return events.slice(0, parseInt(this.limitTo))
+      } else {
+        return events
+      }
+    },
+    isToday: function (date) {
+      return moment(0, 'HH').diff(date, 'days') == 0
+    },
+    formatDate: function (date) {
+      return moment(date).format('dddd, MMM Do')
+    },
+    fetchAllEvents: function () {
+      this.showAllButtonText = 'Loading more...'
+      api.fetchEvents('upcoming').then((res) => {
+        this.events = res
+        window.globalEventList = res
+        this.showShowAllButton = false
+      })
+    },
+    fetchUpcomingEvents: function () {
+      this.events = window.globalEventList
+      if (!(this.events && this.events.length > 50)) {
+        api.fetchEvents('upcoming/page/1/page_size/50').then(
+          (res) => {
+            this.events = res
+            window.globalEventList = res
+            this.showShowAllButton = true
+            if (this.events.length < 10) {
+              this.fetchAllEvents()
+            }
+          }
+        )
+      }
+    },
+    fetchCurrentUser: function () {
+      api.fetchCurrentUserNew(Token.currentUserId(this.$auth)).then(currentUser => {
+        this.currentUser = currentUser
+      })
+    }
+  },
+  mounted: function () {
+    this.fetchUpcomingEvents()
+    if (this.$auth && this.$auth.isAuthenticated()) {
+      this.isAuthenticated = true
+      this.currentUserId = Token.currentUserId(this.$auth)
+    }
 
-		if (this.isAuthenticated) {
-			this.fetchCurrentUser()
-		}
-	}
-};
+    if (this.isAuthenticated) {
+      this.fetchCurrentUser()
+    }
+  }
+}
 </script>
 
 <style scoped>

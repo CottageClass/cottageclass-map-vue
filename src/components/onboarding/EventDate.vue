@@ -7,19 +7,19 @@
     <div class="onb-form-block-checkbox-list w-form">
       <form class="onb-form-checkbox-list">
         <div
-        v-for="date in dates" 
-        class="checkbox-field-extra-space" 
+        v-for="date in dates"
+        class="checkbox-field-extra-space"
         :class="{'active-checkbox': date == dateSelected}">
-          <input 
-          type="radio" 
-          :id="date" 
+          <input
+          type="radio"
+          :id="date"
           :value="date"
-          :name="date" 
+          :name="date"
           class="onb-checkbox w-checkbox-input"
           v-model="dateSelected"
           >
-          <label 
-          :for="date" 
+          <label
+          :for="date"
           class="onb-checkbox-label w-form-label"
           >
            {{ displayDate(date) }}
@@ -27,14 +27,14 @@
         </div>
       </form>
     </div>
-    <div 
+    <div
     class="other-date"
     v-if="otherSelected">
     <p>
       Choose another date:
     </p>
-    <input 
-    type="date" 
+    <input
+    type="date"
     class="basic-text-field w-input"
     v-model="otherDate">
   </div>
@@ -42,21 +42,21 @@
 </template>
 
 <script>
-var moment = require('moment');
+var moment = require('moment')
 
 export default {
-  name: "EventDate",
+  name: 'EventDate',
   props: ['value'],
   data () {
     return {
       dateSelected: '',
       errorMesg: 'Please choose a day for your activity.',
-      dates: [ // this is hardcoded for now but we'll automatically populate this soon. 
-      '2019-02-15',
-      '2019-02-16',
-      '2019-02-22',
-      '2019-02-23',
-      'Other'
+      dates: [ // this is hardcoded for now but we'll automatically populate this soon.
+        '2019-02-15',
+        '2019-02-16',
+        '2019-02-22',
+        '2019-02-23',
+        'Other'
       ],
       otherDate: null
     }
@@ -85,7 +85,7 @@ export default {
     otherDate: function () {
       this.emitDate()
     }
-    },
+  },
   methods: {
     emitDate: function () {
       let date = null
@@ -94,11 +94,11 @@ export default {
       } else {
         date = this.dateSelected
       }
-        this.$emit('input', {
-          selected: date,
-          err: this.err
-        })
-      },
+      this.$emit('input', {
+        selected: date,
+        err: this.err
+      })
+    },
     dateIsValid: function (date) {
     // for now we just make them enter something
       return !!date
@@ -107,11 +107,11 @@ export default {
       if (date == 'Other') {
         return 'Other'
       } else {
-      return moment(date).format('dddd, MMMM Do')
-    }
+        return moment(date).format('dddd, MMMM Do')
+      }
     }
   }
-};
+}
 </script>
 
 <style scoped>
@@ -134,4 +134,3 @@ textarea {
 }
 
 </style>
-

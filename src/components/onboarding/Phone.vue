@@ -6,12 +6,12 @@
     <div class="location-search-container">
       <div class="w-form">
         <form v-on:submit.prevent id="email-form-2" name="email-form-2" data-name="Email Form 2">
-          <input 
+          <input
           @keyup.enter="$emit('pressedEnter')"
           v-model="number"
-          type="tel" 
-          class="location-text-field w-input" 
-          maxlength="30" 
+          type="tel"
+          class="location-text-field w-input"
+          maxlength="30"
           :placeholder="placeholder">
         </form>
       </div>
@@ -26,16 +26,15 @@
 // - https://www.npmjs.com/package/libphonenumber-js
 import {
   formatNumber,
-  isValidNumber,
+  isValidNumber
 } from 'libphonenumber-js'
 
-
 export default {
-  name: "Phone",
+  name: 'Phone',
   props: ['value', 'currentPhone'],
   data () {
     return {
-      number: "",
+      number: '',
       errorMesg: 'Please enter a valid US phone number.',
       placeholder: this.currentPhone || 'e.g. 2125551212'
     }
@@ -43,8 +42,8 @@ export default {
   mounted: function () {
     if (!this.isComplete) {
       this.$emit('input', {
-       number: this.value.number,
-       err: this.error
+        number: this.value.number,
+        err: this.error
       })
     }
   },
@@ -55,7 +54,7 @@ export default {
         err: this.error
       }
     },
-    formattedNumberUsa: function() {
+    formattedNumberUsa: function () {
       // still have to slice the country code off
       let num = this.number.replace(/[^\d]/g, '')
       if (num && num[0] === '1' && num.length === 11) {
@@ -64,7 +63,7 @@ export default {
 
       // https://www.npmjs.com/package/libphonenumber-js#format-phone-number
       // - arg 'National' does not expect a country code, arg 'International' does expect it
-      return formatNumber({ country: 'US', phone: num}, 'National')
+      return formatNumber({ country: 'US', phone: num }, 'National')
     },
     isComplete: function () {
       return this.number && isValidNumber(this.number, 'US')
@@ -82,5 +81,5 @@ export default {
       this.$emit('input', this.phone)
     }
   }
-};
+}
 </script>

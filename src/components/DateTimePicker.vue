@@ -1,21 +1,21 @@
 <template>
 <label class="lpv2-choose-time-button w-inline-block" @click="toggleShowDatetimeInputOnDesktop">
   <div class="div-block-8"><img src="@/assets/time-outline-blue.svg" width="15" height="15" alt="">
-    <div  
+    <div
     class="lpv2-choose-time-button-text"
     v-if="hideDateTimeInputOnMobile">{{ timePlaceholder }}</div>
-    <input type="datetime-local" 
+    <input type="datetime-local"
     v-model="dateTimeSelected"
-    class="timePlacholderText" 
+    class="timePlacholderText"
     :class="[{ hideDateTimeInput: hideDateTimeInputOnMobile }]"/>
   </div>
-  <img v-if="hideDateTimeInputOnMobile" 
+  <img v-if="hideDateTimeInputOnMobile"
   src="@/assets/Dropdown-Arrows.svg">
 </label>
 </template>
 
 <script>
-var moment = require('moment');
+var moment = require('moment')
 
 export default {
   name: 'DateTimePicker',
@@ -23,7 +23,7 @@ export default {
   data () {
     return {
       dateTimeSelected: this.value,
-      hideDateTimeInputOnMobile: true,
+      hideDateTimeInputOnMobile: true
     }
   },
   methods: {
@@ -39,9 +39,9 @@ export default {
   computed: {
     timePlaceholder: function () {
       if (this.dateTimeSelected == null) {
-        return "Choose a time"
+        return 'Choose a time'
       } else {
-        return moment(this.dateTimeSelected).format("dddd, h:mm a")
+        return moment(this.dateTimeSelected).format('dddd, h:mm a')
       }
     }
   },
@@ -50,16 +50,15 @@ export default {
       this.$emit('input', this.dateTimeSelected)
     }
   }
-};
+}
 </script>
 
 <style scoped>
 
 .hideDateTimeInput {
-  font-size: 1px; 
+  font-size: 1px;
   opacity: 0
 }
-
 
 @media (max-width: 479px){
   .lpv2-choose-time-button {
@@ -114,7 +113,5 @@ export default {
 .timePlacholderText {
   color: #1c8fe5;
 }
-
-
 
 </style>

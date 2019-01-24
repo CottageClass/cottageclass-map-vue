@@ -25,7 +25,7 @@
 
 <script>
 export default {
-  name: "MaxChildren",
+  name: 'MaxChildren',
   data () {
   	return {
   		maxChildren: 2
@@ -39,11 +39,10 @@ export default {
       this.$emit('input', this.maxChildren)
     }
   }
-};
+}
 </script>
 
 <style lang="scss" scoped>
-
 
 select {
   all: unset;

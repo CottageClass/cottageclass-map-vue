@@ -1,6 +1,6 @@
 <template>
 <div class="body">
- <MainNav />  
+ <MainNav />
   <div class="top-content-container">
     <div class="page-lead-text">Are you providing care? Simply check children in at drop-off, and check them out at pick-up. Click on the parent name for emergency information.</div>
     <router-link :to="{ name: 'HowItWorks' }" class="button-small-outline w-button">How it works</router-link>
@@ -34,7 +34,8 @@ export default {
   },
   mounted: function () {
     api.fetchUsersInNetwork(this.network.stub).then(res => {
-      this.currentUser = res.find(person => person.id == this.currentUserId)})
+      this.currentUser = res.find(person => person.id == this.currentUserId)
+    })
     api.fetchUsersWhoHaveMadeInquiries(this.currentUserId).then(res => {
       this.peopleWhoHaveMadeInquiriesToCurrentUser = res
     })
@@ -45,7 +46,7 @@ export default {
       return this.networks.find(network => network.stub == networkId)
     }
   }
-};
+}
 </script>
 
 <style scoped>

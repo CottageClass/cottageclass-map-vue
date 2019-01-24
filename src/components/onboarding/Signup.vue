@@ -1,6 +1,6 @@
 <template>
 
-  <!-- wrapper for desktop screens -->  
+  <!-- wrapper for desktop screens -->
 
     <div class="onb-body">
       <div class="body">
@@ -15,7 +15,7 @@
       </a>
     </div>
 
-<!-- title & form --> 
+<!-- title & form -->
 
     <div v-if="!success">
     <div class="onb-content-container-2">
@@ -29,12 +29,12 @@
       </div>
           <div class="onb-top-content-container">
             <h1 class="onb-heading-large">Join KidsClub</h1>
-            <button 
-            v-if="showFacebookLogin" 
+            <button
+            v-if="showFacebookLogin"
             class="button-text splash-button w-inline-block facebook-sign-in-button"
             @click="$emit('authenticateFacebook')"
             >Continue with Facebook</button>
-            <p class="onb-paragraph-subheading-2"><span v-if="showFacebookLogin">Or enter</span><span v-else>Enter</span> your information below. Already have an account? <a @click="$emit('activateScreen', 'directLogin')">Sign in here</a>.</p>         
+            <p class="onb-paragraph-subheading-2"><span v-if="showFacebookLogin">Or enter</span><span v-else>Enter</span> your information below. Already have an account? <a @click="$emit('activateScreen', 'directLogin')">Sign in here</a>.</p>
           </div>
         </div>
   <div class="onb-child-info-container">
@@ -84,8 +84,8 @@
               <img :src="avatar_url" height="128">
             </div>
             <label for="avatar" class="onb-button-add-group w-inline-block"><img src="@/assets/add.svg" alt="" class="image-7">
-              <div 
-              class="onb-button-add-group-text" 
+              <div
+              class="onb-button-add-group-text"
               :class="{'invalid': errors.has('avatar') }">
                 <span v-if="!avatar_url">Add profile photo</span>
                 <span v-else>Replace photo</span>
@@ -109,7 +109,7 @@
        <div class="onb-top-content-container">
         <br><br><br>
          <h1 class="onb-heading-large">Registration complete!</h1>
-           <p class="onb-paragraph-subheading-2">Sign in to continue.</p>            
+           <p class="onb-paragraph-subheading-2">Sign in to continue.</p>
        </div>
        <button @click="$emit('activateScreen', 'directLogin')" class="button-text splash-button w-inline-block">Sign in</button>
      </div>
@@ -120,12 +120,12 @@
 </template>
 
 <script>
-import * as Token from '@/utils/tokens.js';
-import * as api from '@/utils/api.js';
+import * as Token from '@/utils/tokens.js'
+import * as api from '@/utils/api.js'
 
 export default {
   name: 'Signup',
-  data: function() {
+  data: function () {
     return {
       success: false,
       disableForm: false,
@@ -143,27 +143,27 @@ export default {
       },
       showFacebookLogin: !this.hideFacebookLogin(),
       error: null
-    };
+    }
   },
   computed: {
-    cloudinaryUploadUrl: function() {
+    cloudinaryUploadUrl: function () {
       return `https://api.cloudinary.com/v1_1/${
         this.cloudinary.cloudName
-      }/image/upload`;
+      }/image/upload`
     },
     formHasErrors: function () {
       return this.errors
     },
     nextButtonClassObject: function () {
       return {
-        "title-bar-next-button-inactive": this.button === 'inactive',
-        "title-bar-next-button": !(this.button === 'inactive'),
-        "w-inline-block": true
+        'title-bar-next-button-inactive': this.button === 'inactive',
+        'title-bar-next-button': !(this.button === 'inactive'),
+        'w-inline-block': true
       }
     },
     button: function () {
       // todo: should show errors until avatar upload
-      if (this.first_name && this.last_name && this.email && this.password && this.avatar_url && this.errors.items.length == 0 ) {
+      if (this.first_name && this.last_name && this.email && this.password && this.avatar_url && this.errors.items.length == 0) {
         return 'next'
       } else {
         return 'inactive'
@@ -192,92 +192,92 @@ export default {
           required: 'You must add a profile photo, below.'
         }
       }
-    };
+    }
     // Override and merge the dictionaries
-    this.$validator.localize('en', dict);
+    this.$validator.localize('en', dict)
   },
   methods: {
     hideFacebookLogin: () => {
-        return ['(iPhone|iPod|iPad)(?!.*Safari)'].every(expression => {
-          return !!navigator.userAgent.match(new RegExp(`(${expression})`, 'ig'));
-        });
-      },
-    upload: function(event) {
-      let files = event.target.files;
+      return ['(iPhone|iPod|iPad)(?!.*Safari)'].every(expression => {
+        return !!navigator.userAgent.match(new RegExp(`(${expression})`, 'ig'))
+      })
+    },
+    upload: function (event) {
+      let files = event.target.files
 
-      let formData = new FormData();
-      formData.append('file', files[0]);
-      formData.append('upload_preset', this.cloudinary.uploadPreset);
+      let formData = new FormData()
+      formData.append('file', files[0])
+      formData.append('upload_preset', this.cloudinary.uploadPreset)
 
-      this.disableForm = true;
+      this.disableForm = true
 
       fetch(this.cloudinaryUploadUrl, { method: 'POST', body: formData })
         .then(response => {
           if (response.ok) {
-            return response.json();
+            return response.json()
           } else {
-            throw new Error('Network response was not ok');
+            throw new Error('Network response was not ok')
           }
         })
         .then(response => {
-          console.log('cloudinary upload success', response);
-          this.disableForm = false;
-          this.avatar_url = response.secure_url;
+          console.log('cloudinary upload success', response)
+          this.disableForm = false
+          this.avatar_url = response.secure_url
         })
         .catch(error => {
-          console.error('cloudinary upload error', error);
-          this.disableForm = false;
-        });
+          console.error('cloudinary upload error', error)
+          this.disableForm = false
+        })
     },
-    signup: function() {
-      let component = this;
+    signup: function () {
+      let component = this
 
       this.$validator
         .validateAll()
-        .then(function(result) {
+        .then(function (result) {
           if (result) {
-            component.disableForm = true;
+            component.disableForm = true
 
             let first_name =
-              component.first_name && component.first_name.trim();
-            let last_name = component.last_name && component.last_name.trim();
-            let email = component.email && component.email.trim();
-            let password = component.password && component.password.trim();
-            let avatar = component.avatar_url && component.avatar_url.trim();
+              component.first_name && component.first_name.trim()
+            let last_name = component.last_name && component.last_name.trim()
+            let email = component.email && component.email.trim()
+            let password = component.password && component.password.trim()
+            let avatar = component.avatar_url && component.avatar_url.trim()
 
             component.$auth
               .register({ first_name, last_name, email, password, avatar })
               .then(response => {
-                console.log('signup success:', response);
-                component.success = true;
-                component.disableForm = false;
+                console.log('signup success:', response)
+                component.success = true
+                component.disableForm = false
                 component.$auth
-              .login({ email, password })
-              .then(res => {
-                console.log('auth success:', res);
-                component.$emit('userNotYetOnboarded')
+                  .login({ email, password })
+                  .then(res => {
+                    console.log('auth success:', res)
+                    component.$emit('userNotYetOnboarded')
+                  })
+                  .catch(function (err) {
+                    console.log('auth FAILURE or user not onboarded yet')
+                    console.error(err)
+                  })
               })
-              .catch(function(err) {
-                console.log('auth FAILURE or user not onboarded yet');
-                console.error(err);
-              });
-              })
-              .catch(function(error) {
-                console.error('signup failure:', error);
-                component.disableForm = false;
+              .catch(function (error) {
+                console.error('signup failure:', error)
+                component.disableForm = false
                 component.showError = true
                 component.error = 'Sorry, there was a problem creating your account. Did you already create an account with this email address directly or via Facebook?'
-              });
+              })
           } else {
             component.showError = true
           }
         })
-        .catch(function(error) {
-          console.error('validation error', error);
-        });
+        .catch(function (error) {
+          console.error('validation error', error)
+        })
     }
   }
-};
+}
 </script>
 
 <style lang="scss" scoped>
@@ -343,6 +343,5 @@ button {
     width: 100%;
   }
 }
-
 
 </style>

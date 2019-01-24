@@ -5,7 +5,7 @@
       <h1 class="title">Messages sent</h1>
       <p class="onb-paragraph-subheading-2">We've sent your messages. You'll receive responses via text message soon! Then simply respond to any questions, finalize the details, and you'll be all set!</p>
     </div>
-    <router-link 
+    <router-link
     class="splash-button w-inline-block"
     :to="{ name: 'MainView' }">
     <div class="button-text">CONTINUE</div>
@@ -17,8 +17,8 @@
 <script>
 
 export default {
-  name: 'RequestSuccessful',
-};
+  name: 'RequestSuccessful'
+}
 
 </script>
 
@@ -48,7 +48,6 @@ html {
   text-transform: uppercase;
 }
 
-
 .splash-button {
   display: -webkit-box;
   display: -webkit-flex;
@@ -74,7 +73,7 @@ html {
 
 .describe-label {
   padding-top: 16px;
-} 
+}
 
 .body {
   font-family: soleil, sans-serif;
@@ -102,7 +101,6 @@ html {
   text-align: center;
   letter-spacing: -0.3px;
 }
-
 
 .content-container {
   margin-bottom: 0px;
@@ -287,6 +285,5 @@ html {
     align-items: center;
   }
 }
-
 
 </style>

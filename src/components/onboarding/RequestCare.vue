@@ -1,5 +1,5 @@
 <template>
-  <!-- wrapper for desktop screens -->  
+  <!-- wrapper for desktop screens -->
 
     <div class="onb-body">
       <div class="body">
@@ -41,14 +41,14 @@ export default {
       handler: function () {
         if (this.bookingRequest.description || this.bookingRequest.dateTimeSelected) {
           this.bookingRequest.err = false
-        } else if (this.bookingRequest.description == "" && this.bookingRequest.dateTimeSelected == null) {
-          this.bookingRequest.err = "skippable"
+        } else if (this.bookingRequest.description == '' && this.bookingRequest.dateTimeSelected == null) {
+          this.bookingRequest.err = 'skippable'
         }
       },
       deep: true
     }
   }
-};
+}
 
 </script>
 

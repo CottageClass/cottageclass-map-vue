@@ -20,14 +20,13 @@
         <ChildInfo :children="person.children" />
 </h5>
 
-      <!-- Background check --> 
+      <!-- Background check -->
 
         <div class="providerp-background-check-badge-container2" v-if="person.verified">
         <div class="providerp-background-check-badge"><img src="../assets/check-green.svg" alt="" class="checkmark-image">
           <div class="background-check-text">Background checked</div>
         </div>
       </div>
-
 
       <div class="tag-group-container" v-if="person.activities.length"><img src="../assets/tag.svg" class="image-tag">
         <div class="tags-container" v-for="activity in person.activities">
@@ -67,8 +66,8 @@ import ChildInfo from '@/components/ChildInfo.vue'
 export default {
   name: 'Provider',
   props: ['person', 'id'],
-  components: { Images, AvatarImage, ChildInfo },
-};
+  components: { Images, AvatarImage, ChildInfo }
+}
 </script>
 
 <style scoped>
