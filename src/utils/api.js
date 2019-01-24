@@ -35,6 +35,84 @@ export function initProxySession(currentUserId, receiverId, requestMessage, ackn
  * USERS
  */
 
+export function submitUserInfo(userId, phone, location, availability, children) {
+  console.log('attempting to submit', userId, phone, location, availability, children)
+
+  let postData = {
+          networkCode: 'brooklyn-events', // this is hardcoded until we make it unnecessary. 
+//        profileBlurb: this.blurb.text,
+  }
+
+  if (!!location.fullAddress) {
+      let address = location.fullAddress
+      let {
+        street_number,
+        route,
+        locality,
+        administrative_area_level_1,
+        administrative_area_level_2,
+        sublocality,
+        neighborhood,
+        country,
+        postal_code,
+      } = address
+      
+      postData = {
+        streetNumber: street_number,
+        route: route,
+        locality: locality,
+        // snake_case key name is ugly but necessary for backend to recognize attr with trailing 1
+        admin_area_level_1: administrative_area_level_1,
+        admin_area_level_2: administrative_area_level_2,
+        sublocality,
+        neighborhood,
+        country: country,
+        postalCode: postal_code,
+        apartmentNumber: location.apartmentNumber,
+        latitude: location.lat,
+        longitude: location.lng,
+    }
+  }
+
+  if (!!phone) {
+      let phoneAreaCode = phone.number.match(/(\(\d+\))/)[0].replace(/[^\d]/g,'')
+      let phoneNumber = phone.number.match(/\d{3}-\d{4}/)[0].replace(/[^\d]/g,'')
+      postData = {
+        ...postData,
+        phoneAreaCode: phoneAreaCode,
+        phoneNumber: phoneNumber,
+    }
+  }
+
+      // set child attributes, plus the parentId
+      let childrenAttributes = []
+      if (children.list && children.list.length > 0) {
+        childrenAttributes = children.list.map(function (childAttrs) {
+          return {
+            ...childAttrs,
+            parentId: userId,
+          }
+        })
+      }
+
+  if (!!availability) {
+    postData = {
+      ...postData,
+      ...availability
+    }
+  }   
+
+  if (children.list && children.list.length > 0) {
+        postData.childrenAttributes = childrenAttributes
+      }
+
+  console.log('postdata', postData)
+  return Vue.axios.post(
+    `${process.env.BASE_URL_API}/users/${userId}`, 
+    postData
+      )
+}
+
 function createPersonObject (personInApi, availableChildren = []) {
   var p = personInApi.attributes
   let hasAllRequiredFields = function () {

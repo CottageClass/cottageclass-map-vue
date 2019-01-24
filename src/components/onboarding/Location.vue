@@ -1,17 +1,17 @@
 <template>
   <div class="onb-content-container _100vh">
     <div class="onb-top-content-container">
-      <h1 class="onb-heading-large">What's your home address?</h1>
+      <h1 class="title">What's your home address?</h1>
       <p class="onb-paragraph-subheading-2">Please enter your address so we can list your playdate &amp; find playdates near you. Only your guests will see this.*</p>
     </div>
-    <div class="onb-location-search-container">
+    <div class="location-search-container">
       <div class="w-form">
 
         <vue-google-autocomplete
             ref="address"
             id="map"
             classname="email-form-2 w-form location-text-field w-input"
-            placeholder="Street address (not apt #)"
+            :placeholder="placeholder"
             v-on:placechanged="getAddressData"
             country="us"
         >
@@ -38,11 +38,13 @@
 import VueGoogleAutocomplete from 'vue-google-autocomplete'
 export default {
   name: "Location",
+  props: ['currentAddress'],
   data () {
   	return {
   		textEntered: '',
       showApartmentField: false,
       apartmentNumber: '',
+      placeholder: this.currentAddress || 'Street address (not apt #)',
       address: {}
   	}
   },
