@@ -18,6 +18,7 @@ import Events from '@/components/Events.vue'
 import RsvpInfoCollection from '@/components/RsvpInfoCollection.vue'
 import RsvpConfirmation from '@/components/RsvpConfirmation.vue'
 import Faq from '@/components/Faq.vue'
+import MyEvents from '@/components/MyEvents.vue'
 import Invite from '@/components/onboarding/Invite.vue'
 import ProfileEdit from '@/components/ProfileEdit.vue'
 
@@ -122,6 +123,11 @@ export default new Router({
       name: 'Faq',
       component: Faq,
       // NB: this route has beforeRouteEnter redirect in the component
+    },
+    {
+      path: '/my-events',
+      name: 'MyEvents',
+      component: MyEvents,
     }
   ],
   scrollBehavior (to, from, savedPosition) {
