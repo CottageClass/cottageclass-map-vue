@@ -1,9 +1,8 @@
 <template>
- <div class="onb-content-container">
-    <div class="onb-top-content-container">
-      <h1 class="onb-heading-large">When are you available for childcare in a pinch?</h1>
-      <p class="onb-paragraph-subheading-2">Other parents may text you to request care during the times you choose. There's never any obligation to respond, so just pick times when you're <em>usually</em> available to provide care.</p>
-    </div>
+ <Question
+ title="When are you available for childcare in a pinch?"
+ subtitle="Other parents may text you to request care during the times you choose. There's never any obligation to respond, so just pick times when you're usually available to provide care."
+ explanation="You'll be able to accept or decline any requests. Most families list days and times that they are generally at home with their own children or doing a fun or educational activity which they'd like to include other children in.">
     <div class="onb-form-block-checkbox-list w-form">
       <form id="email-form" name="email-form" data-name="Email Form" class="onb-form-checkbox-list">
         <div class="checkbox-field-extra-space" :class="{'active-checkbox': availability.availableMornings}"><input v-model="availability.availableMornings" type="checkbox" id="checkbox" name="checkbox" data-name="Checkbox" class="onb-checkbox w-checkbox-input" :class="{ 'active-checkbox': availability.availableMornings }"><label for="checkbox" class="onb-checkbox-label w-form-label">9am - 3pm</label></div>
@@ -12,16 +11,17 @@
         <div class="checkbox-field-extra-space" :class="{'active-checkbox': availability.availableWeekends}"><input v-model="availability.availableWeekends" type="checkbox" id="checkbox-3" name="checkbox-3" data-name="Checkbox 3" class="onb-checkbox w-checkbox-input"><label for="checkbox-3" class="onb-checkbox-label w-form-label">Weekends</label></div>
       </form>
     </div>
-    <p class="onb-paragraph-small-50">You&#x27;ll be able to accept or decline any requests. Most families list days and times that they are generally at home with their own children or doing a fun or educational activity which they&#x27;d like to include other children in.</p>
-  </div>
+  </Question>
 </template>
 
 <script>
+import Question from '@/components/onboarding/Question.vue'
 
 export default {
 
   name: 'Availability',
   props: ['value'],
+  components: { Question },
   data () {
     return {
       availability: this.value

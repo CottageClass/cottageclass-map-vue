@@ -1,10 +1,8 @@
 <template>
-  <div class="onb-content-container">
-    <div class="onb-top-content-container">
-      <h1 class="onb-heading-large">Choose a day for your monthly activity</h1>
-      <p class="onb-paragraph-subheading-2">Activities repeat every 4 weeks on the same weekday, unless you change or cancel, so please pick a day when you're usually available. These are the days we need most:</p>
-    </div>
-    <div class="onb-form-block-checkbox-list w-form">
+  <Question 
+  title="Choose a day for your monthly activity"
+  subtitle="Activities repeat every 4 weeks on the same weekday, unless you change or cancel, so please pick a day when you're usually available. These are the days we need most:">
+      <div class="onb-form-block-checkbox-list w-form">
       <form class="onb-form-checkbox-list">
         <div
         v-for="date in dates"
@@ -38,15 +36,17 @@
     class="basic-text-field w-input"
     v-model="otherDate">
   </div>
-</div>
+</Question>
 </template>
 
 <script>
 var moment = require('moment')
+import Question from '@/components/onboarding/Question.vue'
 
 export default {
   name: 'EventDate',
   props: ['value'],
+  components: { Question },
   data () {
     return {
       dateSelected: '',

@@ -1,25 +1,23 @@
 <template>
-<div class="body">
-  <div class="content-container">
-    <div class="title-container">
-      <h1 class="title">Tell us about your pets.</h1>
-      <p class="onb-paragraph-subheading-2">List all your pets in case people have allergies. Are they loud? Yappy? Scary? Any issues, ever?</p>
-    </div>
+<Question 
+title="Tell us about your pets."
+subtitle="List all your pets in case people have allergies. Are they loud? Yappy? Scary? Any issues, ever?"
+>
     <div class="form-describe-need w-form">
       <form v-on:submit.prevent id="email-form-2">
         <p class="describe-label">{{ charsLeft }} characters left...</p>
         <textarea v-model="blurb.text" id="field" name="field" placeholder="e.g. 'Our dog Cerberus is kinda scary but he's great with kids!'" class="text-area-decribe-need w-input"></textarea>
       </form>
     </div>
-  </div>
-</div>
+</Question>
 </template>
 
 <script>
-
+import Question from '@/components/onboarding/Question.vue'
 export default {
   name: 'PetsDescription',
   props: ['value'],
+  components: { Question },    
   data () {
     return {
       blurb: this.value,

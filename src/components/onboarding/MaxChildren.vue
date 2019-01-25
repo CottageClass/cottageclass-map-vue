@@ -1,10 +1,8 @@
 <template>
-  <div class="onb-content-container _100vh">
-    <div class="onb-top-content-container">
-      <h1 class="onb-heading-large">How many children can you host at your playdate?</h1>
-    </div>
-    <div class="dropdown-container">
-      <div class="w-form">
+  <Question 
+  title="How many children can you host at your playdate?"
+  explanation="For each child you host, you receive points that you can use to attend others' playdates.">
+      <div class="w-form dropdown-container">
         <select v-model="maxChildren">
           <option>2</option>
           <option>3</option>
@@ -17,15 +15,15 @@
           <option>10</option>
         </select>
       </div>
-    </div>
-    <br>
-        <p class="onb-paragraph-small-50">For each child you host, you receive points that you can use to attend others' playdates.</p>
-  </div>
+  </Question>
 </template>
 
 <script>
+import Question from '@/components/onboarding/Question.vue'
+
 export default {
   name: 'MaxChildren',
+  components: { Question },  
   data () {
     return {
       maxChildren: 2
@@ -39,10 +37,10 @@ export default {
       this.$emit('input', this.maxChildren)
     }
   }
-}
+};
 </script>
 
-<style lang="scss" scoped>
+<style scoped>
 
 select {
   all: unset;

@@ -1,9 +1,7 @@
 <template>
-  <div class="onb-content-container">
-    <div class="onb-top-content-container">
-      <h1 class="onb-heading-large">Choose your activity</h1>
-      <p class="onb-paragraph-subheading-2">All members must provide one activity per month. These tried-and-true options work great, and we'll walk you through whichever one you choose.</p>
-    </div>
+  <Question 
+  title="Choose your activity"
+  subtitle="All members must provide one activity per month. These tried-and-true options work great, and we'll walk you through whichever one you choose.">
     <div class="onb-form-block-checkbox-list w-form">
       <form class="onb-form-checkbox-list">
         <div
@@ -27,12 +25,14 @@
         </div>
       </form>
     </div>
-  </div>
+  </Question>
 </template>
 
 <script>
+import Question from '@/components/onboarding/Question.vue'
 export default {
   name: 'EventActivity',
+  components: { Question },
   props: ['value'],
   data () {
     return {

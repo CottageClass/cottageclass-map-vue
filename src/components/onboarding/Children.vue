@@ -1,13 +1,7 @@
 <template>
-  <div class="onb-children-info-container onb-content-container-2">
-  <div>
-    <div class="onb-top-content-container">
-      <h1 class="title">Child Information</h1>
-      <p class="onb-paragraph-subheading-2">We need some basic info about your children. Their ages will appear on your public profile, but only hosts of events you RSVP to will see their names.</p>
-    </div>
-  </div>
-  <div class="onb-child-info-container">
-    <div class="form-block-3 w-form">
+  <Question 
+  title="Child Information"
+  subtitle="We need some basic info about your children. Their ages will appear on your public profile, but only hosts of events you RSVP to will see their names.">
       <form v-on:submit.prevent id="email-form-2" name="email-form-2" data-name="Email Form 2" class="form-2">
         <div v-for="(child, index) in children" class="onb-child-group-2">
           <div class="onb-group-header" key="index">
@@ -24,17 +18,17 @@
           <input type="text" class="name-text-field w-input" maxlength="256" name="school-2" data-name="School 2" placeholder="Name of School" id="school-2" v-model="children[index].schoolName" />
         </div>
       </form><a @click="addChild" class="onb-button-add-group w-inline-block"><img src="@/assets/add.svg" alt="" class="image-7"><div class="onb-button-add-group-text">Add Another child</div></a>
-    </div>
-  </div>
-</div>
+    </Question>
 </template>
 
 <script>
+import Question from '@/components/onboarding/Question.vue'
 
 export default {
 
   name: 'Children',
   props: ['value'],
+  components: { Question },    
   data () {
     return {
       children: this.value.list,

@@ -1,9 +1,7 @@
 <template>
-  <div class="onb-content-container">
-    <div class="onb-top-content-container">
-      <h1 class="onb-heading-large">Choose a time for your activity</h1>
-      <p class="onb-paragraph-subheading-2">Each activity runs 3 hours in the evening, but the start time is up to you. (You'll choose the date next.)</p>
-    </div>
+  <Question 
+title="Choose a time for your activity"
+subtitle="Each activity runs 3 hours in the evening, but the start time is up to you. (You'll choose the date next.)">
     <div class="onb-form-block-checkbox-list w-form">
       <form class="onb-form-checkbox-list">
         <div
@@ -27,15 +25,17 @@
         </div>
       </form>
     </div>
-  </div>
+  </Question>
 </template>
 
 <script>
 var moment = require('moment')
+import Question from '@/components/onboarding/Question.vue'
 
 export default {
   name: 'EventTime',
   props: ['value'],
+  components: { Question },  
   data () {
     return {
       timeSelected: '',

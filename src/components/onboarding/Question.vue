@@ -2,6 +2,7 @@
   <div class="content-container">
     <div class="title-container">
       <h1 class="title">{{ title }}</h1>
+      <p class="onb-paragraph-subheading-2">{{ subtitle }}</p>      
     </div>
     <div class="location-search-container">
     	<slot></slot>
@@ -13,6 +14,6 @@
 <script>
 export default {
 	name: 'Question',
-	props: ['title', 'explanation']
+	props: ['title', 'explanation', 'subtitle']
 }
 </script>

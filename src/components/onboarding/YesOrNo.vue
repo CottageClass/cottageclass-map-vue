@@ -1,10 +1,5 @@
 <template>
-  <div class="onb-content-container">
-    <div class="onb-top-content-container">
-      <h1 class="onb-heading-large">{{ question }}</h1>
-      <p class="onb-paragraph-subheading-2">{{ description }}</p>
-    </div>
-    <div class="onb-form-block-checkbox-list w-form">
+  <Question :title="question" :subtitle="description">
       <form class="onb-form-checkbox-list">
         <div
         class="checkbox-field-extra-space"
@@ -43,13 +38,14 @@
          </label>
         </div>
       </form>
-    </div>
-  </div>
+  </Question>
 </template>
 
 <script>
+import Question from '@/components/onboarding/Question.vue'
 export default {
   name: 'YesOrNo',
+  components: { Question },  
   props: ['value', 'question', 'description'],
   data () {
     return {
