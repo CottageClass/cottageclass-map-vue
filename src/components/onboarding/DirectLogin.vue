@@ -13,11 +13,10 @@
 
     <div class="content-container">
 
-        <div v-if="showError && (errors.first('email') || errors.first('password')) || errorMessage" class="onb-error-container">
-      <div class="onb-error-text">{{ errors.first('email') }}</div>
-      <div class="onb-error-text">{{ errors.first('password') }}</div>
-      <div class="onb-error-text">{{ errorMessage }}</div>
-    </div>
+<!-- Error messages --> 
+
+        <ErrorMessage v-if="showError && (errors.first('email') || errors.first('password')) || errorMessage" :messages="[errors.first('email'), errors.first('password'), errors.first('password')]" />
+
     <div class="onb-top-content-container">
       <h1 class="onb-heading-large">Sign in</h1>
       <p>Don't have an account? <a @click="$emit('activateScreen', 'signup')">Sign up here</a>.</p>
@@ -57,9 +56,11 @@
 // import networks from '@/assets/network-info.json';
 import * as Token from '@/utils/tokens.js'
 import * as api from '@/utils/api.js'
+import ErrorMessage from '@/components/onboarding/ErrorMessage.vue'
 
 export default {
   name: 'DirectLogin',
+  components: { ErrorMessage },
   data: function () {
     return {
       // networks: networks,

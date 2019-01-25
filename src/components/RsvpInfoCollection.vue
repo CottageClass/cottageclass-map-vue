@@ -14,9 +14,7 @@
 
   <!-- error message -->
 
-  <div v-if="error" class="onb-error-container">
-    <div class="onb-error-text">{{ error }}</div>
-  </div>
+  <ErrorMessage v-if="error" :text="error" />
 
 <!-- Show loading indicator until we know how many children there are. If there is an error, show the error only. -->
 
@@ -78,6 +76,7 @@ import * as Token from '@/utils/tokens.js'
 import * as api from '@/utils/api.js'
 import * as utils from '@/utils/utils.js'
 import Nav from '@/components/onboarding/Nav.vue'
+import ErrorMessage from '@/components/onboarding/ErrorMessage.vue'
 import sheetsu from 'sheetsu-node'
 // this component has a working loading indicator and no other logic. todo: break out and rename.
 import OAuthCallback from '@/components/OAuthCallback.vue'
@@ -87,7 +86,7 @@ var client = sheetsu({ address: 'https://sheetsu.com/apis/v1.0su/62cd725d6088' }
 
 export default {
   name: 'RsvpInfoCollection',
-  components: { Nav, OAuthCallback },
+  components: { Nav, OAuthCallback, ErrorMessage },
   data () {
     return {
       children: [],

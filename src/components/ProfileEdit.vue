@@ -13,7 +13,7 @@
     <Availability v-model="availability" :required="false"/>
 
     <!-- But children back in once I have it
-      <div v-if="showError && error" id="error" class="onb-error-container"><div class="onb-error-text">{{ children.err }}</div></div>
+    <ErrorMessage v-if="showError && error" :text=" children.err" />
     <Children v-model="children" :required="false" />
   -->
   </OnboardingStyleWrapper>

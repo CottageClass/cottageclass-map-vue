@@ -40,9 +40,7 @@
 
   <!-- error message -->
 
-      <div v-if="showError && error && error!='skippable'" class="onb-error-container">
-        <div class="onb-error-text">{{ error }}</div>
-      </div>
+      <ErrorMessage v-if="showError && error && error!='skippable'" :text="error" />
 
   <!-- steps in form -->
   <OnboardingStyleWrapper styleIs="onboarding">
@@ -82,6 +80,7 @@
 
 <script>
 import Nav from '@/components/onboarding/Nav.vue'
+import ErrorMessage from '@/components/onboarding/ErrorMessage.vue'
 import Login from '@/components/onboarding/Login.vue'
 import DirectLogin from '@/components/onboarding/DirectLogin.vue'
 import Signup from '@/components/onboarding/Signup.vue'
@@ -111,7 +110,7 @@ var client = sheetsu({ address: 'https://sheetsu.com/apis/v1.0su/62cd725d6088' }
 
 export default {
   components: {
-    Nav, Login, DirectLogin, Signup, Location, Phone, Children, Availability, Food, EventActivity, EventTime, EventDate, HouseRules, PetsDescription, YesOrNo, MaxChildren, OAuthCallback, Invite, OnboardingStyleWrapper
+    Nav, Login, DirectLogin, Signup, Location, Phone, Children, Availability, Food, EventActivity, EventTime, EventDate, HouseRules, PetsDescription, YesOrNo, MaxChildren, OAuthCallback, Invite, OnboardingStyleWrapper, ErrorMessage
   },
   data () {
     return {
