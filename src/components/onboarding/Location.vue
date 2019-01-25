@@ -38,7 +38,7 @@
 <script>
 import VueGoogleAutocomplete from 'vue-google-autocomplete'
 export default {
-  name: "Location",
+  name: 'Location',
   props: ['currentAddress', 'value'],
   data () {
     return {
@@ -56,7 +56,7 @@ export default {
         err: 'Please enter your street address.'
       })
     }
-    },
+  },
   methods: {
     toggleApartmentField: function () {
       this.showApartmentField = true
@@ -71,7 +71,7 @@ export default {
     },
     emitAddress: function () {
       console.log('emitting address')
-      if (!!this.address.latitude) {
+      if (this.address.latitude) {
         this.$emit('input', {
           fullAddress: this.address,
           lat: this.address.latitude,
@@ -79,7 +79,7 @@ export default {
           apartmentNumber: this.apartmentNumber,
           err: this.error
         })
-      } else if (!!this.apartmentNumber) {
+      } else if (this.apartmentNumber) {
         this.$emit('input', {
           apartmentNumber: this.apartmentNumber,
           err: this.error

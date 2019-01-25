@@ -43,50 +43,50 @@ export function submitUserInfo (userId, phone, location, availability, children)
     //        profileBlurb: this.blurb.text,
   }
 
-  if (!!location.fullAddress) {
-      let address = location.fullAddress
-      let {
-        street_number,
-        route,
-        locality,
-        administrative_area_level_1,
-        administrative_area_level_2,
-        sublocality,
-        neighborhood,
-        country,
-        postal_code,
-      } = address
-      
-      postData = {
-        streetNumber: street_number,
-        route: route,
-        locality: locality,
-        // snake_case key name is ugly but necessary for backend to recognize attr with trailing 1
-        admin_area_level_1: administrative_area_level_1,
-        admin_area_level_2: administrative_area_level_2,
-        sublocality,
-        neighborhood,
-        country: country,
-        postalCode: postal_code,
-        latitude: location.lat,
-        longitude: location.lng,
+  if (location.fullAddress) {
+    let address = location.fullAddress
+    let {
+      street_number,
+      route,
+      locality,
+      administrative_area_level_1,
+      administrative_area_level_2,
+      sublocality,
+      neighborhood,
+      country,
+      postal_code
+    } = address
+
+    postData = {
+      streetNumber: street_number,
+      route: route,
+      locality: locality,
+      // snake_case key name is ugly but necessary for backend to recognize attr with trailing 1
+      admin_area_level_1: administrative_area_level_1,
+      admin_area_level_2: administrative_area_level_2,
+      sublocality,
+      neighborhood,
+      country: country,
+      postalCode: postal_code,
+      latitude: location.lat,
+      longitude: location.lng
     }
   }
 
-  if (!!location.apartmentNumber) {
+  if (location.apartmentNumber) {
     postData = {
       ...postData,
-      apartmentNumber: location.apartmentNumber,
+      apartmentNumber: location.apartmentNumber
     }
   }
 
-  if (!!phone.number) {
-      let phoneAreaCode = phone.number.match(/(\(\d+\))/)[0].replace(/[^\d]/g,'')
-      let phoneNumber = phone.number.match(/\d{3}-\d{4}/)[0].replace(/[^\d]/g,'')
-      postData = {
-        ...postData,
-        phoneAreaCode: phoneAreaCode,
-        phoneNumber: phoneNumber,
+  if (phone.number) {
+    let phoneAreaCode = phone.number.match(/(\(\d+\))/)[0].replace(/[^\d]/g, '')
+    let phoneNumber = phone.number.match(/\d{3}-\d{4}/)[0].replace(/[^\d]/g, '')
+    postData = {
+      ...postData,
+      phoneAreaCode: phoneAreaCode,
+      phoneNumber: phoneNumber
     }
   }
 
