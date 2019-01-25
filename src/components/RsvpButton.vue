@@ -1,11 +1,11 @@
 <template>
-	<div v-if="userParticipating" class="button w-button user-participating">&check; RSVP REQUESTED</div>
-	<div v-else-if="full" class="button w-button full">&check; EVENT IS FULL</div>
+  <div v-if="userParticipating" class="button w-button user-participating">&check; RSVP REQUESTED</div>
+  <div v-else-if="full" class="button w-button full">&check; EVENT IS FULL</div>
   <router-link
   v-else
-	:to="{ name: 'RsvpInfoCollection', params: { eventId: eventId }}"
-	class="button w-button"
-	>RSVP
+  :to="{ name: 'RsvpInfoCollection', params: { eventId: eventId }}"
+  class="button w-button"
+  >RSVP
   </router-link>
 </template>
 
@@ -14,10 +14,9 @@
 export default {
   name: 'RsvpButton',
   props: ['full', 'userParticipating', 'eventId']
-};
+}
 
 </script>
-
 
 <style scoped>
 
@@ -40,17 +39,17 @@ export default {
 }
 
 .user-participating {
-	background-color: transparent !important;
+  background-color: transparent !important;
   color: rgb(12, 186, 82);
 }
 
 .full {
-	background-color: transparent !important;
+  background-color: transparent !important;
   color: #ff672f;
 }
 
 @media (max-width: 479px) {
-	.button {
+  .button {
     width: 100%;
     margin-top: 20px;
   }

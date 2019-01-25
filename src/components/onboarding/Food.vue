@@ -7,19 +7,19 @@
     <div class="onb-form-block-checkbox-list w-form">
       <form class="onb-form-checkbox-list">
         <div
-        v-for="food in foods" 
-        class="checkbox-field-extra-space" 
-        :class="{'active-checkbox': food == foodSelected}">
-          <input 
-          type="radio" 
-          :id="food" 
+        v-for="food in foods"
+        class="checkbox-field-extra-space"
+        :class="{'active-checkbox': food === foodSelected}">
+          <input
+          type="radio"
+          :id="food"
           :value="food"
-          :name="food" 
+          :name="food"
           class="onb-checkbox w-checkbox-input"
           v-model="foodSelected"
           >
-          <label 
-          :for="food" 
+          <label
+          :for="food"
           class="onb-checkbox-label w-form-label"
           >
            {{ capitalizeFirstLetter(food) }}
@@ -32,23 +32,23 @@
 
 <script>
 export default {
-  name: "Food",
+  name: 'Food',
   props: ['value'],
   data () {
     return {
-      foodSelected: "",
+      foodSelected: '',
       errorMesg: 'Please choose a food option from the list.',
       foods: [
-      'pizza \ud83c\udf55',
-      'tacos \ud83c\udf2e',
-      'soup \ud83c\udf5c',
-      'pancakes \ud83e\udd5e',
-      'rice & beans \ud83c\udf5a',
-      'mac \'n\' cheese \ud83e\uddc0',
-      'pasta \ud83c\udf5d',
-      'chili \ud83c\udf36\ufe0f',
-      'hot dogs \ud83c\udf2d',
-      'sandwiches \ud83e\udd6a'
+        'pizza \ud83c\udf55',
+        'tacos \ud83c\udf2e',
+        'soup \ud83c\udf5c',
+        'pancakes \ud83e\udd5e',
+        'rice & beans \ud83c\udf5a',
+        'mac \'n\' cheese \ud83e\uddc0',
+        'pasta \ud83c\udf5d',
+        'chili \ud83c\udf36\ufe0f',
+        'hot dogs \ud83c\udf2d',
+        'sandwiches \ud83e\udd6a'
       ]
     }
   },
@@ -59,7 +59,7 @@ export default {
   },
   computed: {
     err: function () {
-      if (this.foods == '') {
+      if (this.foods === '') {
         return this.errorMesg
       } else {
         return false
@@ -68,18 +68,18 @@ export default {
   },
   watch: {
     foodSelected: function () {
-        this.$emit('input', {
-          selected: this.foodSelected,
-          err: this.err
-        })
-      }
-    },
+      this.$emit('input', {
+        selected: this.foodSelected,
+        err: this.err
+      })
+    }
+  },
   methods: {
-    capitalizeFirstLetter: function(string) {
-      return string.charAt(0).toUpperCase() + string.slice(1);
+    capitalizeFirstLetter: function (string) {
+      return string.charAt(0).toUpperCase() + string.slice(1)
     }
   }
-};
+}
 </script>
 
 <style scoped>
@@ -98,4 +98,3 @@ textarea {
 }
 
 </style>
-

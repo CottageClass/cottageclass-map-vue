@@ -21,30 +21,30 @@
     v-on:userAlreadyOnboarded="$router.push({name: 'MainView'})"
     v-on:authenticateFacebook="authenticate('facebook')"
      />
-    <Invite 
+    <Invite
     v-if="activeScreen === 'inviteOthers'"
     :eventData="createdEventData"
     :currentUser="currentUser"
     @prev="backFromInviteStep"
-    /> 
+    />
 
-  <!-- wrapper for desktop screens -->  
+  <!-- wrapper for desktop screens -->
 
-    <div class="onb-body" v-if="step != 0">
+    <div class="onb-body" v-if="step !== 0">
       <div class="body">
         <div class="content-wrapper">
 
-  <!-- nav --> 
+  <!-- nav -->
 
       <Nav :button="nextButtonState" @next="nextStep" @prev="prevStep" />
 
   <!-- error message -->
-      
+
       <div v-if="showError && error && error!='skippable'" class="onb-error-container">
         <div class="onb-error-text">{{ error }}</div>
       </div>
-  
-  <!-- steps in form --> 
+
+  <!-- steps in form -->
   <OnboardingStyleWrapper styleIs="onboarding">
       <Phone v-if="step === 1" v-model="phone" @pressedEnter="nextStep" required="true" />
       <Location v-if="step === 2" v-model="location" @pressedEnter="nextStep"/>
@@ -54,26 +54,26 @@
       <EventTime v-if="step === 6" v-model="eventTime" />
       <EventDate v-if="step === 7" v-model="eventDate" />
       <MaxChildren v-if="step === 8" v-model="maxChildren" />
-      <YesOrNo 
-      v-if="step === 9" 
-      v-model="canProvideEmergencyCare" 
-      question="Childcare in a Pinch?" 
-      description="Parents often need care at times not covered by our events. Would you like to be able to request childcare from other members when you need it and receive requests (by text message) in return?" 
+      <YesOrNo
+      v-if="step === 9"
+      v-model="canProvideEmergencyCare"
+      question="Childcare in a Pinch?"
+      description="Parents often need care at times not covered by our events. Would you like to be able to request childcare from other members when you need it and receive requests (by text message) in return?"
       />
       <Availability v-if="step === 10" v-model="availability" />
-      <YesOrNo 
-      v-if="step === 11" 
-      v-model="hasPets" 
-      question="Do you have pets?" 
-      description="This is often very important for parents (and children) to know." 
+      <YesOrNo
+      v-if="step === 11"
+      v-model="hasPets"
+      question="Do you have pets?"
+      description="This is often very important for parents (and children) to know."
       />
       <PetsDescription v-if="step === 12" v-model="petsDescription" />
       <HouseRules v-if="step === 13" v-model="houseRules" />
-      <!-- OAuthCallback is just used for the loading animation --> 
+      <!-- OAuthCallback is just used for the loading animation -->
       <OAuthCallback v-if="step > lastStep && !error" />
   </OnboardingStyleWrapper>
 
-   <!-- close desktop wrapper -->  
+   <!-- close desktop wrapper -->
  </div>
 </div>
     </div>
@@ -83,8 +83,8 @@
 <script>
 import Nav from '@/components/onboarding/Nav.vue'
 import Login from '@/components/onboarding/Login.vue'
-import DirectLogin from '@/components/onboarding/DirectLogin.vue';
-import Signup from '@/components/onboarding/Signup.vue';
+import DirectLogin from '@/components/onboarding/DirectLogin.vue'
+import Signup from '@/components/onboarding/Signup.vue'
 import Location from '@/components/onboarding/Location.vue'
 import Phone from '@/components/onboarding/Phone.vue'
 import Children from '@/components/onboarding/Children.vue'
@@ -97,18 +97,17 @@ import EventTime from '@/components/onboarding/EventTime.vue'
 import EventDate from '@/components/onboarding/EventDate.vue'
 import MaxChildren from '@/components/onboarding/MaxChildren.vue'
 import YesOrNo from '@/components/onboarding/YesOrNo.vue'
-import OAuthCallback from '@/components/OAuthCallback.vue' 
-import Invite from '@/components/onboarding/Invite.vue' 
-import OnboardingStyleWrapper from '@/components/onboarding/OnboardingStyleWrapper.vue' 
+import OAuthCallback from '@/components/OAuthCallback.vue'
+import Invite from '@/components/onboarding/Invite.vue'
+import OnboardingStyleWrapper from '@/components/onboarding/OnboardingStyleWrapper.vue'
 import * as Token from '@/utils/tokens.js'
 import * as api from '@/utils/api.js'
 import sheetsu from 'sheetsu-node'
-var moment = require('moment');
-import normalize from 'json-api-normalizer';
+import normalize from 'json-api-normalizer'
+var moment = require('moment')
 
 // create a config file to identify which spreadsheet we push to.
 var client = sheetsu({ address: 'https://sheetsu.com/apis/v1.0su/62cd725d6088' })
-
 
 export default {
   components: {
@@ -132,7 +131,7 @@ export default {
       location: {},
       phone: {},
       children: {
-        list: [{firstName: null, birthday: null}],
+        list: [{ firstName: null, birthday: null, schoolName: null }],
         err: 'skippable'
       },
       blurb: {
@@ -157,7 +156,7 @@ export default {
         yesOrNo: ''
       },
       petsDescription: {
-        text: '',
+        text: ''
       },
       invitationCode: {
         code: 'brooklyn-events' // this is now hard-coded
@@ -179,20 +178,20 @@ export default {
   methods: {
     fetchUpcomingEvents: function () {
       api.fetchEvents('upcoming/page/1/page_size/50').then(
-      (res) => { 
-        window.globalEventList = res
-      })
-    },    
-    activateScreen: function(name) {
-      console.log('activating:', name);
-      this.activeScreen = name;
+        (res) => {
+          window.globalEventList = res
+        })
     },
-    capitalize: function(string) {
-      return string.charAt(0).toUpperCase() + string.slice(1);
+    activateScreen: function (name) {
+      console.log('activating:', name)
+      this.activeScreen = name
+    },
+    capitalize: function (string) {
+      return string.charAt(0).toUpperCase() + string.slice(1)
     },
     continueWhenComplete: function () {
       if (this.rsvpAttempted) {
-        this.$router.push({ name: 'RsvpConfirmation', params: { eventId: this.rsvpAttempted }})
+        this.$router.push({ name: 'RsvpConfirmation', params: { eventId: this.rsvpAttempted } })
       } else {
         this.activateScreen('inviteOthers')
         this.step = 0
@@ -202,7 +201,7 @@ export default {
       if (
         (this.step === 9 && !this.canProvideEmergencyCare.isTrue) ||
         (this.step === 11 && !this.hasPets.isTrue)) {
-          this.setStep(this.step + 2)
+        this.setStep(this.step + 2)
       } else {
         this.setStep(this.step = this.step + 1)
       }
@@ -211,17 +210,16 @@ export default {
       this.step = destinationStep
     },
     nextStep: function () {
-      if (this.step == this.lastStep) {
+      if (this.step === this.lastStep) {
         this.submitData()
           .then(res => {
             this.continueWhenComplete()
           })
-      }
-      // check if there's an error, if so show it, if not advance and clear the error.
-      else if (!this.error || this.error === "skippable") {
+      } else if (!this.error || this.error === 'skippable') {
+        // check if there's an error, if so show it, if not advance and clear the error.
         this.showError = false
         this.skipSkippableSteps()
-        window.scrollTo(0,0)
+        window.scrollTo(0, 0)
       } else {
         this.showError = true
       }
@@ -234,8 +232,8 @@ export default {
       this.step = this.lastStep
       this.activeScreen = null
     },
-    authenticate: function(provider) {
-  /*
+    authenticate: function (provider) {
+      /*
    *  Logs in the user (Facebook)
    * - follows OAuth flow using VueAuth to get OAuth code
    * - sends code to backend to exchange for access_token
@@ -243,81 +241,80 @@ export default {
    * - VueAuthenticate stores JWT for future API access authorization
    */
 
-  /* TODO: Refactor front and backend to authenticate via the following:
+      /* TODO: Refactor front and backend to authenticate via the following:
    * - use FB library to obtain access token and store in cookies
    * - send FB access_token to backend
    * - backend decodes token using Koala, finds user by fbId or email, and sends back JWT for future API access
    * - VueAuthenticate or other JWT auth library stores JWT token in localStorage or otherwise for us
    */
 
-  // store value of this to access this.$emit during callback
-  let component = this
-  this.$auth.authenticate(provider)
-  .then(res => {
-    console.log("auth SUCCESS")
-  }).then(res => api.fetchCurrentUser(Token.currentUserId(component.$auth))).then(currentUser => {
-    if (currentUser.hasAllRequiredFields && !this.rsvpAttempted) {
-    // redirect to home screen if they haven't attempted an RSVP
-    this.$router.push({name: 'MainView'})
-  } else if (currentUser.hasAllRequiredFields && this.rsvpAttempted) {
-    // confirm that they want to RSVP if they have attempted an RSVP
-    this.$router.push({ name: 'RsvpConfirmation', params: { eventId: this.rsvpAttempted }})
-  } else if (currentUser.id) {
-  // begin onboarding
-  this.nextStep()
-} else {
-      return false
-    }
-  }).catch(function(err) {
-    console.log("auth FAILURE or user not onboarded yet")
-    console.log(err)
-  })
-},
-  submitData: function () {
+      // store value of this to access this.$emit during callback
+      let component = this
+      this.$auth.authenticate(provider)
+        .then(res => {
+          console.log('auth SUCCESS')
+        }).then(res => api.fetchCurrentUser(Token.currentUserId(component.$auth))).then(currentUser => {
+          if (currentUser.hasAllRequiredFields && !this.rsvpAttempted) {
+            // redirect to home screen if they haven't attempted an RSVP
+            this.$router.push({ name: 'MainView' })
+          } else if (currentUser.hasAllRequiredFields && this.rsvpAttempted) {
+            // confirm that they want to RSVP if they have attempted an RSVP
+            this.$router.push({ name: 'RsvpConfirmation', params: { eventId: this.rsvpAttempted } })
+          } else if (currentUser.id) {
+            // begin onboarding
+            this.nextStep()
+          } else {
+            return false
+          }
+        }).catch(function (err) {
+          console.log('auth FAILURE or user not onboarded yet')
+          console.log(err)
+        })
+    },
+    submitData: function () {
       // advance to loading indicator
       this.step = this.step + 1
       let userId = Token.currentUserId(this.$auth)
 
       // submit user to sheetsu for KPI tracking, unless network is "demo"
-      if (this.invitationCode.code != "demo") {
+      if (this.invitationCode.code !== 'demo') {
         client.create({
-          "ID": userId,
-          "Date joined": moment(Date()).format("L"),
-          "address": this.location.fullAddress,
-          "phone": this.phone.number,
-          "children": this.children.list,
-          "availability": this.availability,
-          "network": this.invitationCode.code,
-          "food": this.food.selected
-        }, "newUsers").then((data) => {
+          'ID': userId,
+          'Date joined': moment(Date()).format('L'),
+          'address': this.location.fullAddress,
+          'phone': this.phone.number,
+          'children': this.children.list,
+          'availability': this.availability,
+          'network': this.invitationCode.code,
+          'food': this.food.selected
+        }, 'newUsers').then((data) => {
           console.log(data)
         }, (err) => {
           console.log(err)
-        });
+        })
       }
 
       // I think this is necessary but I'm not sure.
       let component = this
 
       // set default values for the time being
-      const defaultMaximumChildren = 2
       const defaultChildAgeMaximum = 11
       const defaultChildAgeMinimum = 2
 
       let eventData = {
-        "event_series": {
-          "name": this.eventName, 
-          "start_date": this.eventDate.selected,
-          "starts_at": this.eventTime.start,
-          "ends_at": this.eventTime.end,
-          "has_pet": this.hasPets.isTrue,
-          "activity_names": [this.eventActivity.selected],
-          "foods": [this.food.selected],
-          "house_rules": this.houseRules.text,
-          "pet_description": this.petsDescription.text,
-          "maximum_children": this.maxChildren,
-          "child_age_minimum": defaultChildAgeMinimum,
-          "child_age_maximum": defaultChildAgeMaximum
+        'event_series': {
+          'name': this.eventName,
+          'start_date': this.eventDate.selected,
+          'starts_at': this.eventTime.start,
+          'ends_at': this.eventTime.end,
+          'has_pet': this.hasPets.isTrue,
+          'activity_names': [this.eventActivity.selected],
+          'foods': [this.food.selected],
+          'house_rules': this.houseRules.text,
+          'pet_description': this.petsDescription.text,
+          'maximum_children': this.maxChildren,
+          'child_age_minimum': defaultChildAgeMinimum,
+          'child_age_maximum': defaultChildAgeMaximum
         }
       }
       let phone = this.phone
@@ -325,12 +322,12 @@ export default {
       let availability = this.availability
       let children = this.children
       return api.submitUserInfo(userId, phone, location, availability, children).then(res => {
-          console.log("user update SUCCESS")
-          console.log(res)
-          return res
-        })
+        console.log('user update SUCCESS')
+        console.log(res)
+        return res
+      })
         .catch(err => {
-          console.log("user update FAILURE")
+          console.log('user update FAILURE')
           console.log(err)
           console.log(Object.entries(err))
           component.houseRules.err = 'Sorry, there was a problem saving your information. Try again?'
@@ -341,7 +338,7 @@ export default {
             component.createdEventData = normalize(res.data)
             console.log('axios put returns', component.createdEventData)
           })
-        }) // I might be attaching this .then to the wrong function. It's possible I should be attaching it to the axios call itself. 
+        }) // I might be attaching this .then to the wrong function. It's possible I should be attaching it to the axios call itself.
         .then(res => {
           console.log('event creation SUCCESS')
           console.log(res)
@@ -389,13 +386,13 @@ export default {
     },
     nextButtonState: function () {
       if (this.step > this.lastStep) {
-        return "none"
-      } else if (this.error === "skippable") {
-        return "skip"
+        return 'none'
+      } else if (this.error === 'skippable') {
+        return 'skip'
       } else if (this.error) {
-        return "inactive"
+        return 'inactive'
       } else {
-        return "next"
+        return 'next'
       }
     },
     userRequestedCare: function () {
@@ -404,22 +401,22 @@ export default {
       } else return false
     },
     eventName: function () {
-      // this is not a great place to put this because it will get executed whenever activity or food change.  
+      // this is not a great place to put this because it will get executed whenever activity or food change.
       let userId = Token.currentUserId(this.$auth)
       if (userId) {
         api.fetchCurrentUser(this.currentUserId)
-        .then(person => {
-          this.currentUser = person
-        })
+          .then(person => {
+            this.currentUser = person
+          })
       }
       if (this.currentUser.firstName) {
         return this.capitalize(this.eventActivity.selected) + ' & ' + this.food.selected + ' with ' + this.capitalize(this.currentUser.firstName)
       } else {
         return this.capitalize(this.eventActivity.selected) + ' & ' + this.food.selected
       }
-    },    
+    }
   }
-};
+}
 
 </script>
 
@@ -436,7 +433,6 @@ export default {
 ::-webkit-calendar-picker-indicator { color: rgba(0, 0, 0, .3); }
 
 /* background color state on checkbox list items */
-
 
 .body {
   background-color: #0d73c7;
@@ -467,7 +463,6 @@ html {
 .card {
   flex: 0 0 auto;
 }
-
 
 .body {
   font-family: soleil, sans-serif;
@@ -506,7 +501,6 @@ a {
   color: #c73200;
 }
 
-
 .onb-error-text {
   font-size: 13px;
 }
@@ -520,7 +514,6 @@ a {
   padding-bottom: 50px;
   background-color: #1c8be7;
 }
-
 
 @media (max-width: 991px) {
   .content-wrapper {
@@ -542,6 +535,5 @@ a {
     overflow: visible;
   }
 }
-
 
 </style>

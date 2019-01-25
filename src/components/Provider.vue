@@ -1,7 +1,7 @@
 <template>
-	<router-link :to="{ name: 'ProviderProfile', params: { id: person.id }}">
-	<span class="body">
-		  <div class="landing-page-list-item-header">
+  <router-link :to="{ name: 'ProviderProfile', params: { id: person.id }}">
+  <span class="body">
+      <div class="landing-page-list-item-header">
     <div class="avatar-name-container"><AvatarImage :person="person" className="image" />
       <div class="list-item-3-heading">
         <h5 class="heading">{{ person.firstName }} {{ person.lastInitial }}.</h5>
@@ -20,14 +20,13 @@
         <ChildInfo :children="person.children" />
 </h5>
 
-      <!-- Background check --> 
+      <!-- Background check -->
 
         <div class="providerp-background-check-badge-container2" v-if="person.verified">
         <div class="providerp-background-check-badge"><img src="../assets/check-green.svg" alt="" class="checkmark-image">
           <div class="background-check-text">Background checked</div>
         </div>
       </div>
-
 
       <div class="tag-group-container" v-if="person.activities.length"><img src="../assets/tag.svg" class="image-tag">
         <div class="tags-container" v-for="activity in person.activities">
@@ -55,7 +54,7 @@
       <div class="list-item-content-container"></div>
     </div>
   </div>
-	</span>
+  </span>
 </router-link>
 </template>
 
@@ -67,8 +66,8 @@ import ChildInfo from '@/components/ChildInfo.vue'
 export default {
   name: 'Provider',
   props: ['person', 'id'],
-  components: { Images, AvatarImage, ChildInfo },
-};
+  components: { Images, AvatarImage, ChildInfo }
+}
 </script>
 
 <style scoped>

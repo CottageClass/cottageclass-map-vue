@@ -1,7 +1,7 @@
 <template>
   <div class="body onb-body">
   <div class="title-bar"><a @click="$emit('prev')" class="button-back w-inline-block"></a>
-  <a v-if="button != 'none'" @click="$emit('next')" :class="classObject">
+  <a v-if="button !== 'none'" @click="$emit('next')" :class="classObject">
     <div class="button-next-text">{{ text }}</div>
   </a>
 </div>
@@ -13,27 +13,27 @@
 // states are: skip, next, none, inactive
 
 export default {
-	name: 'Nav',
-	props: ['button'],
-	computed: {
-	    text: function () {
-			if (this.button === 'skip') {
-				return "SKIP"
-			} else if (this.button === 'done') {
-        return "DONE"
+  name: 'Nav',
+  props: ['button'],
+  computed: {
+    text: function () {
+      if (this.button === 'skip') {
+        return 'SKIP'
+      } else if (this.button === 'done') {
+        return 'DONE'
       } else {
-				return "NEXT"
-			}
-		},
-		classObject: function () {
-			return {
-				"title-bar-next-button-inactive": this.button === 'inactive',
-				"title-bar-next-button": !(this.button === 'inactive'),
-				"w-inline-block": true
-			}
-		}
-	}
-};
+        return 'NEXT'
+      }
+    },
+    classObject: function () {
+      return {
+        'title-bar-next-button-inactive': this.button === 'inactive',
+        'title-bar-next-button': !(this.button === 'inactive'),
+        'w-inline-block': true
+      }
+    }
+  }
+}
 
 </script>
 

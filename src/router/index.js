@@ -6,10 +6,10 @@ import EmergencyInfo from '@/components/EmergencyInfo'
 import ProviderProfile from '@/components/ProviderProfile.vue'
 import RequestModal from '@/components/RequestModal.vue'
 import OAuthCallback from '@/components/OAuthCallback.vue'
-import network from '../assets/network-info.json'
+// import network from '../assets/network-info.json'
 import HowItWorks from '@/components/HowItWorks.vue'
 import NewUser from '@/components/NewUser.vue'
-import DirectLogin from '@/components/onboarding/DirectLogin.vue';
+// import DirectLogin from '@/components/onboarding/DirectLogin.vue'
 import RequestModal2 from '@/components/RequestModal2.vue'
 import RequestRecipients from '@/components/RequestRecipients.vue'
 import AdminMessages from '@/components/AdminMessages.vue'
@@ -18,6 +18,7 @@ import Events from '@/components/Events.vue'
 import RsvpInfoCollection from '@/components/RsvpInfoCollection.vue'
 import RsvpConfirmation from '@/components/RsvpConfirmation.vue'
 import Faq from '@/components/Faq.vue'
+import MyEvents from '@/components/MyEvents.vue'
 import Invite from '@/components/onboarding/Invite.vue'
 import EventEdit from '@/components/EventEdit.vue'
 import ProfileEdit from '@/components/ProfileEdit.vue'
@@ -41,11 +42,11 @@ export default new Router({
       path: '/request',
       name: 'Request',
       component: MainView
-    },  
+    },
     {
       path: '/bookings',
       redirect: '/offer'
-    },      
+    },
     {
       path: '/emergency-info/:id',
       name: 'emergencyInfo',
@@ -97,7 +98,7 @@ export default new Router({
       component: RequestModal
     },
     {
-      path:'/how-it-works',
+      path: '/how-it-works',
       name: 'HowItWorks',
       component: HowItWorks
     },
@@ -120,14 +121,19 @@ export default new Router({
     {
       path: '/admin-messages',
       name: 'AdminMessages',
-      component: AdminMessages,
+      component: AdminMessages
       // NB: this route has beforeRouteEnter redirect in the component
     },
     {
       path: '/faq',
       name: 'Faq',
-      component: Faq,
+      component: Faq
       // NB: this route has beforeRouteEnter redirect in the component
+    },
+    {
+      path: '/my-events',
+      name: 'MyEvents',
+      component: MyEvents
     }
   ],
   scrollBehavior (to, from, savedPosition) {

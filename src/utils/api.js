@@ -1,31 +1,31 @@
 import Vue from 'vue'
 import camelcaseKeys from 'camelcase-keys'
-import * as Token from './tokens.js'
-import normalize from 'json-api-normalizer';
+// import * as Token from './tokens.js'
+import normalize from 'json-api-normalizer'
 
-var moment = require('moment');
+// var moment = require('moment')
 
 /*
  * PROXY SESSIONS
  */
-export function initProxySession(currentUserId, receiverId, requestMessage, acknowledgmentMessage) {
-  console.log("INITIATING PROXY WITH users " + currentUserId + ", " + receiverId)
+export function initProxySession (currentUserId, receiverId, requestMessage, acknowledgmentMessage) {
+  console.log('INITIATING PROXY WITH users ' + currentUserId + ', ' + receiverId)
   let postData = {
     twilioSession: {
       requestMessage: requestMessage,
-      acknowledgmentMessage: acknowledgmentMessage,
+      acknowledgmentMessage: acknowledgmentMessage
     }
   }
   return Vue.axios.post(
     `${process.env.BASE_URL_API}/users/${receiverId}/proxy_sessions`,
-    postData,
+    postData
   ).then(res => {
-    console.log("proxy session init SUCCESS, returning proxy phone number for receiver")
+    console.log('proxy session init SUCCESS, returning proxy phone number for receiver')
     console.log(res)
     // return proxy number for receiver
     return res.data.data.attributes.proxyIdentifierReceiver
   }).catch(err => {
-    console.log("proxy session init FAILURE")
+    console.log('proxy session init FAILURE')
     console.log(err)
     throw err
   })
@@ -35,88 +35,88 @@ export function initProxySession(currentUserId, receiverId, requestMessage, ackn
  * USERS
  */
 
-export function submitUserInfo(userId, phone, location, availability, children) {
+export function submitUserInfo (userId, phone, location, availability, children) {
   console.log('attempting to submit', userId, phone, location, availability, children)
 
   let postData = {
-          networkCode: 'brooklyn-events', // this is hardcoded until we make it unnecessary. 
-//        profileBlurb: this.blurb.text,
+    networkCode: 'brooklyn-events' // this is hardcoded until we make it unnecessary.
+    //        profileBlurb: this.blurb.text,
   }
 
-  if (!!location.fullAddress) {
-      let address = location.fullAddress
-      let {
-        street_number,
-        route,
-        locality,
-        administrative_area_level_1,
-        administrative_area_level_2,
-        sublocality,
-        neighborhood,
-        country,
-        postal_code,
-      } = address
-      
-      postData = {
-        streetNumber: street_number,
-        route: route,
-        locality: locality,
-        // snake_case key name is ugly but necessary for backend to recognize attr with trailing 1
-        admin_area_level_1: administrative_area_level_1,
-        admin_area_level_2: administrative_area_level_2,
-        sublocality,
-        neighborhood,
-        country: country,
-        postalCode: postal_code,
-        latitude: location.lat,
-        longitude: location.lng,
+  if (location.fullAddress) {
+    let address = location.fullAddress
+    let {
+      street_number,
+      route,
+      locality,
+      administrative_area_level_1,
+      administrative_area_level_2,
+      sublocality,
+      neighborhood,
+      country,
+      postal_code
+    } = address
+
+    postData = {
+      streetNumber: street_number,
+      route: route,
+      locality: locality,
+      // snake_case key name is ugly but necessary for backend to recognize attr with trailing 1
+      admin_area_level_1: administrative_area_level_1,
+      admin_area_level_2: administrative_area_level_2,
+      sublocality,
+      neighborhood,
+      country: country,
+      postalCode: postal_code,
+      latitude: location.lat,
+      longitude: location.lng
     }
   }
 
-  if (!!location.apartmentNumber) {
+  if (location.apartmentNumber) {
     postData = {
       ...postData,
-      apartmentNumber: location.apartmentNumber,
+      apartmentNumber: location.apartmentNumber
     }
   }
 
-  if (!!phone.number) {
-      let phoneAreaCode = phone.number.match(/(\(\d+\))/)[0].replace(/[^\d]/g,'')
-      let phoneNumber = phone.number.match(/\d{3}-\d{4}/)[0].replace(/[^\d]/g,'')
-      postData = {
-        ...postData,
-        phoneAreaCode: phoneAreaCode,
-        phoneNumber: phoneNumber,
+  if (phone.number) {
+    let phoneAreaCode = phone.number.match(/(\(\d+\))/)[0].replace(/[^\d]/g, '')
+    let phoneNumber = phone.number.match(/\d{3}-\d{4}/)[0].replace(/[^\d]/g, '')
+    postData = {
+      ...postData,
+      phoneAreaCode: phoneAreaCode,
+      phoneNumber: phoneNumber
     }
   }
 
-      // set child attributes, plus the parentId
-      let childrenAttributes = []
-      if (children.list && children.list.length > 0) {
-        childrenAttributes = children.list.map(function (childAttrs) {
-          return {
-            ...childAttrs,
-            parentId: userId,
-          }
-        })
+  // set child attributes, plus the parentId
+  let childrenAttributes = []
+  if (children.list && children.list.length > 0) {
+    childrenAttributes = children.list.map(function (childAttrs) {
+      return {
+        ...childAttrs,
+        parentId: userId
       }
+    })
+  }
 
-  if (!!availability) {
+  if (availability) {
     postData = {
       ...postData,
       ...availability
     }
-  }   
+  }
 
   if (children.list && children.list.length > 0) {
-        postData.childrenAttributes = childrenAttributes
-      }
+    postData.childrenAttributes = childrenAttributes
+  }
 
   console.log('postdata', postData)
   return Vue.axios.post(
-    `${process.env.BASE_URL_API}/users/${userId}`, 
+    `${process.env.BASE_URL_API}/users/${userId}`,
     postData
-      )
+  )
 }
 
 function createPersonObject (personInApi, availableChildren = []) {
@@ -134,12 +134,12 @@ function createPersonObject (personInApi, availableChildren = []) {
         age: child.attributes.age
       }
     }
-    return availableChildren.filter(child => child.attributes.parent_id == personInApi.id).map(parseChild)
+    return availableChildren.filter(child => child.attributes.parent_id === personInApi.id).map(parseChild)
     // make sure this is an array.
   }
 
   let activities = p.activities || []
-  activities = activities.map(activity => activity.replace(/_/g, " "))
+  activities = activities.map(activity => activity.replace(/_/g, ' '))
 
   return {
     agreeTos: p.agree_tos,
@@ -157,16 +157,14 @@ function createPersonObject (personInApi, availableChildren = []) {
       lng: parseFloat(p.fuzzy_longitude)
     },
     // todo: add these once API has them
-    title: "",
-    employer: "",
+    title: '',
+    employer: '',
     backgroundCheck: false,
     facebookId: p.facebook_id,
     facebookMapIcon: 'https://graph.facebook.com/' + p.facebook_id + '/picture?width=30',
     // todo: add children now somehow
     children: createChildrenList(),
     // todo: add these once I have them
-    title: "",
-    employer: "",
     verified: p.verified,
     phone: p.phone,
     networkCode: p.network_code,
@@ -180,59 +178,58 @@ function createPersonObject (personInApi, availableChildren = []) {
 function createPeopleObject (responseData) {
   let peopleDataArray = responseData.data
   let included = responseData.included || []
-  let childrenArray = included.filter(obj => obj.type === "child")
+  let childrenArray = included.filter(obj => obj.type === 'child')
   return peopleDataArray.map(personInApi => createPersonObject(personInApi, childrenArray))
 }
 
-export function fetchUsersInNetwork(networkId) {
+export function fetchUsersInNetwork (networkId) {
   return Vue.axios.get(
     `${process.env.BASE_URL_API}/networks/${networkId}/users`
   ).then(res => {
-    console.log("FETCH USERS IN NETWORK SUCCESS")
+    console.log('FETCH USERS IN NETWORK SUCCESS')
     console.log(res.data)
     return createPeopleObject(res.data)
   }).catch(err => {
-    console.log("FETCH USERS IN NETWORK FAILURE")
+    console.log('FETCH USERS IN NETWORK FAILURE')
     console.log(err.errors)
     throw err
   })
 }
 
-export function fetchUsersWhoHaveMadeInquiries(currentUserId) {
+export function fetchUsersWhoHaveMadeInquiries (currentUserId) {
   return Vue.axios.get(
     `${process.env.BASE_URL_API}/users/${currentUserId}/inquiries`
-    ).then(res => {
-      console.log("FETCH USERS WHO HAVE MADE INQUIRIES SUCCESS")
-      console.log(res.data)
-          return createPeopleObject(res.data)
-        }).catch(err => {
-          console.log("FETCH USERS WHO HAVE MADE INQUIRIES FAILURE")
-          console.log(err.errors)
-          throw err
-        })
+  ).then(res => {
+    console.log('FETCH USERS WHO HAVE MADE INQUIRIES SUCCESS')
+    console.log(res.data)
+    return createPeopleObject(res.data)
+  }).catch(err => {
+    console.log('FETCH USERS WHO HAVE MADE INQUIRIES FAILURE')
+    console.log(err.errors)
+    throw err
+  })
 }
 
-export function fetchCurrentUser(userId) {
+export function fetchCurrentUser (userId) {
   return Vue.axios.get(
     `${process.env.BASE_URL_API}/users/${userId}`
   ).then(res => {
-    console.log("FETCH CURRENT USER SUCCESS")
+    console.log('FETCH CURRENT USER SUCCESS')
     console.log(createPersonObject(res.data.data))
     return createPersonObject(res.data.data)
   }).catch(err => {
-    console.log("FETCH CURRENT USER FAILURE")
+    console.log('FETCH CURRENT USER FAILURE')
     console.log(err.errors)
     throw err
   })
 }
 
-
 // same as above but using 'normalize' json normalizer to correctly extract children
-export function fetchCurrentUserNew(userId) {
+export function fetchCurrentUserNew (userId) {
   return Vue.axios.get(
     `${process.env.BASE_URL_API}/users/${userId}`
   ).then(res => {
-    console.log("FETCH CURRENT USER SUCCESS")
+    console.log('FETCH CURRENT USER SUCCESS')
     console.log(res)
     let normalizedData = normalize(res.data)
     let user = normalizedData.user[userId].attributes
@@ -244,26 +241,26 @@ export function fetchCurrentUserNew(userId) {
       child.id = aChildId
       child.firstName = capitalize(child.firstName)
       return child
-    } 
+    }
     user.children = childIds.map(generateChild)
     return user
   }).catch(err => {
-    console.log("FETCH CURRENT USER FAILURE")
+    console.log('FETCH CURRENT USER FAILURE')
     console.log(err.errors)
     throw err
   })
 }
 
 // backend requires user to be an admin
-export function fetchAllUsers() {
+export function fetchAllUsers () {
   return Vue.axios.get(
     `${process.env.BASE_URL_API}/users`
   ).then(res => {
-    console.log("FETCH ALL USERS SUCCESS")
+    console.log('FETCH ALL USERS SUCCESS')
     console.log(createPeopleObject(res.data))
     return createPeopleObject(res.data)
   }).catch(err => {
-    console.log("FETCH ALL USERS FAILURE")
+    console.log('FETCH ALL USERS FAILURE')
     console.log(err.errors)
     throw err
   })
@@ -273,26 +270,26 @@ export function fetchAllUsers() {
  * MESSAGES
  */
 
-function createMessagesObject(msgListFromApi) {
+function createMessagesObject (msgListFromApi) {
   return msgListFromApi.map(createMessageObject)
 }
 
-function createMessageObject(msgFromApi) {
+function createMessageObject (msgFromApi) {
   return {
     id: msgFromApi.id,
-    ...camelcaseKeys(msgFromApi.attributes, {deep: true})
+    ...camelcaseKeys(msgFromApi.attributes, { deep: true })
   }
 }
 
-export function fetchMessagesForUserPair(participantId1, participantId2) {
+export function fetchMessagesForUserPair (participantId1, participantId2) {
   return Vue.axios.get(
     `${process.env.BASE_URL_API}/users/${participantId1}/messages/${participantId2}`
   ).then(res => {
-    console.log("FETCH Messages for User Pair SUCCESS")
+    console.log('FETCH Messages for User Pair SUCCESS')
     console.log(createMessagesObject(res.data.data))
     return createMessagesObject(res.data.data)
   }).catch(err => {
-    console.log("FETCH Messages for User Pair FAILURE")
+    console.log('FETCH Messages for User Pair FAILURE')
     console.log(err)
     console.log(err.errors)
     throw err
@@ -303,98 +300,95 @@ export function fetchMessagesForUserPair(participantId1, participantId2) {
  * NOTIFICATIONS
  */
 
-export function submitNotification(participantId, notificationBodyText) {
+export function submitNotification (participantId, notificationBodyText) {
   let notificationData = {
-  'notification': {
-    'body': notificationBodyText
+    'notification': {
+      'body': notificationBodyText
+    }
   }
-}
   return Vue.axios.post(
     `${process.env.BASE_URL_API}/api/users/${participantId}/notifications/`, notificationData
   ).then(res => {
-    console.log("NOTIFICATION submission SUCCESS")
+    console.log('NOTIFICATION submission SUCCESS')
     return res
   }).catch(err => {
-    console.log("NOTIFICATION submission FAILURE")
+    console.log('NOTIFICATION submission FAILURE')
     console.log(err)
     throw err
   })
 }
 
-
 /*
  * EVENTS
  */
 
-export function fetchEvents(params) {
+export function fetchEvents (params) {
   return Vue.axios.get(
     `${process.env.BASE_URL_API}/api/events/${params || ''}`
-    ).then(res => {
-      console.log("FETCH EVENTS SUCCESS")
-      console.log(res.data)
-      return Object.values(normalize(res.data).event).map(obj => {
+  ).then(res => {
+    console.log('FETCH EVENTS SUCCESS')
+    console.log(res.data)
+    return Object.values(normalize(res.data).event).map(obj => {
       var e = obj.attributes
-      e["id"] = obj.id
+      e['id'] = obj.id
       e.hostFirstName = capitalize(e.hostFirstName)
       e.hostFuzzyLatitude = parseFloat(e.hostFuzzyLatitude)
       e.hostFuzzyLongitude = parseFloat(e.hostFuzzyLongitude)
       e.activityName = e.activityNames.length > 0 && e.activityNames[0]
       e.food = e.foods.length > 0 && e.foods[0]
       return e
-      })
-        }).catch(err => {
-          console.log("FETCH EVENTS FAILURE")
-          console.log(err.errors)
-          throw err
-        })
+    })
+  }).catch(err => {
+    console.log('FETCH EVENTS FAILURE')
+    console.log(err.errors)
+    throw err
+  })
 }
 
-export function submitEventParticipant(eventId, participantChildIds) {
+export function submitEventParticipant (eventId, participantChildIds) {
   let createChild = function (childId) {
     return {
-      "child_id": childId
+      'child_id': childId
     }
-  };
+  }
   let participantData = {
-    "participant": {
-    "participant_children_attributes": participantChildIds.map(createChild)
+    'participant': {
+      'participant_children_attributes': participantChildIds.map(createChild)
     }
   }
   return Vue.axios.post(`${process.env.BASE_URL_API}/api/events/${eventId}/participants`, participantData)
-        .then(res => {
-          console.log('SUBMIT EVENT PARTICIPANT SUCCESS')
-          console.log(res)
-          return res
-        })
-        .catch(err => {
-          console.log('SUBMIT EVENT PARTICIPANT FAILURE')
-          console.log(err)
-          console.log(Object.entries(err))
-          throw err
-        })
+    .then(res => {
+      console.log('SUBMIT EVENT PARTICIPANT SUCCESS')
+      console.log(res)
+      return res
+    })
+    .catch(err => {
+      console.log('SUBMIT EVENT PARTICIPANT FAILURE')
+      console.log(err)
+      console.log(Object.entries(err))
+      throw err
+    })
 }
 
 /*
  * UTILS
  */
 
-export function distanceHaversine(lat1, lon1, lat2, lon2) {
-        const unit='N' // always return miles
-        var radlat1 = Math.PI * lat1/180
-        var radlat2 = Math.PI * lat2/180
-        var radlon1 = Math.PI * lon1/180
-        var radlon2 = Math.PI * lon2/180
-        var theta = lon1-lon2
-        var radtheta = Math.PI * theta/180
-        var dist = Math.sin(radlat1) * Math.sin(radlat2) + Math.cos(radlat1) * Math.cos(radlat2) * Math.cos(radtheta);
-        dist = Math.acos(dist)
-        dist = dist * 180/Math.PI
-        dist = dist * 60 * 1.1515
-        if (unit=="K") { dist = dist * 1.609344 }
-        if (unit=="N") { dist = dist * 0.8684 }
-        return dist.toFixed(1)
-    }
-    
-function capitalize(string) {
-  return string.charAt(0).toUpperCase() + string.slice(1);  
+export function distanceHaversine (lat1, lon1, lat2, lon2) {
+  const unit = 'N' // always return miles
+  var radlat1 = Math.PI * lat1 / 180
+  var radlat2 = Math.PI * lat2 / 180
+  var theta = lon1 - lon2
+  var radtheta = Math.PI * theta / 180
+  var dist = Math.sin(radlat1) * Math.sin(radlat2) + Math.cos(radlat1) * Math.cos(radlat2) * Math.cos(radtheta)
+  dist = Math.acos(dist)
+  dist = dist * 180 / Math.PI
+  dist = dist * 60 * 1.1515
+  if (unit === 'K') { dist = dist * 1.609344 }
+  if (unit === 'N') { dist = dist * 0.8684 }
+  return dist.toFixed(1)
+}
+
+function capitalize (string) {
+  return string.charAt(0).toUpperCase() + string.slice(1)
 }

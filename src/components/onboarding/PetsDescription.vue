@@ -48,13 +48,13 @@ export default {
   computed: {
     charsLeft: function () {
       if (this.blurb.text) {
-      return this.charLimit - this.blurb.text.length
-    } else {
-      return this.charLimit
-    }
+        return this.charLimit - this.blurb.text.length
+      } else {
+        return this.charLimit
+      }
     }
   }
-};
+}
 
 </script>
 

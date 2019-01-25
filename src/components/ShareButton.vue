@@ -4,22 +4,22 @@
 
 <script>
 export default {
-	name: 'ShareButton',
-  props: [ 'buttonText', 'shareTitle', 'shareText', 'shareUrl'],
-	methods: {
-        share: function () {
-            if (navigator.share) {
-                navigator.share({
-                    title: this.shareTitle,
-                    text: this.shareText,
-                    url: this.shareUrl,
-                })
-                .then(() => console.log('Successful share'))
-                .catch((error) => console.log('Error sharing', error));
-            } else window.open('https://www.facebook.com/sharer/sharer.php?u=' + this.shareUrl)
-        }
-	}
-};
+  name: 'ShareButton',
+  props: ['buttonText', 'shareTitle', 'shareText', 'shareUrl'],
+  methods: {
+    share: function () {
+      if (navigator.share) {
+        navigator.share({
+          title: this.shareTitle,
+          text: this.shareText,
+          url: this.shareUrl
+        })
+          .then(() => console.log('Successful share'))
+          .catch((error) => console.log('Error sharing', error))
+      } else window.open('https://www.facebook.com/sharer/sharer.php?u=' + this.shareUrl)
+    }
+  }
+}
 </script>
 
 <style scoped>

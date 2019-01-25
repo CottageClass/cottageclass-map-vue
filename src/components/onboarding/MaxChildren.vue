@@ -25,11 +25,11 @@
 
 <script>
 export default {
-  name: "MaxChildren",
+  name: 'MaxChildren',
   data () {
-  	return {
-  		maxChildren: 2
-  	}
+    return {
+      maxChildren: 2
+    }
   },
   mounted: function () {
     this.$emit('input', this.maxChildren)
@@ -39,11 +39,10 @@ export default {
       this.$emit('input', this.maxChildren)
     }
   }
-};
+}
 </script>
 
 <style lang="scss" scoped>
-
 
 select {
   all: unset;

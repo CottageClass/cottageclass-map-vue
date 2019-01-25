@@ -7,19 +7,19 @@
     <div class="onb-form-block-checkbox-list w-form">
       <form class="onb-form-checkbox-list">
         <div
-        v-for="activity in activities" 
-        class="checkbox-field-extra-space" 
-        :class="{'active-checkbox': activity == activitySelected}">
-          <input 
-          type="radio" 
-          :id="activity" 
+        v-for="activity in activities"
+        class="checkbox-field-extra-space"
+        :class="{'active-checkbox': activity === activitySelected}">
+          <input
+          type="radio"
+          :id="activity"
           :value="activity"
-          :name="activity" 
+          :name="activity"
           class="onb-checkbox w-checkbox-input"
           v-model="activitySelected"
           >
-          <label 
-          :for="activity" 
+          <label
+          :for="activity"
           class="onb-checkbox-label w-form-label"
           >
            {{ capitalizeFirstLetter(activity) }}
@@ -32,18 +32,18 @@
 
 <script>
 export default {
-  name: "EventActivity",
+  name: 'EventActivity',
   props: ['value'],
   data () {
     return {
       activitySelected: '',
       errorMesg: 'Please choose an activity option from the list.',
       activities: [
-      'movie night',
-      'arts & crafts',
-      'games & puzzles',
-      'baking',
-      'book club'
+        'movie night',
+        'arts & crafts',
+        'games & puzzles',
+        'baking',
+        'book club'
       ]
     }
   },
@@ -54,7 +54,7 @@ export default {
   },
   computed: {
     err: function () {
-      if (this.activitySelected == '') {
+      if (this.activitySelected === '') {
         return this.errorMesg
       } else {
         return false
@@ -63,18 +63,18 @@ export default {
   },
   watch: {
     activitySelected: function () {
-        this.$emit('input', {
-          selected: this.activitySelected,
-          err: this.err
-        })
-      }
-    },
+      this.$emit('input', {
+        selected: this.activitySelected,
+        err: this.err
+      })
+    }
+  },
   methods: {
-    capitalizeFirstLetter: function(string) {
-      return string.charAt(0).toUpperCase() + string.slice(1);
+    capitalizeFirstLetter: function (string) {
+      return string.charAt(0).toUpperCase() + string.slice(1)
     }
   }
-};
+}
 </script>
 
 <style scoped>
@@ -93,4 +93,3 @@ textarea {
 }
 
 </style>
-

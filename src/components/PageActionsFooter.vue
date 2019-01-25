@@ -1,14 +1,14 @@
 <template>
-	 <div class="page-actions-wrapper">
-     	<a @click="$emit('click')" class="button-primary w-button">{{ buttonText }}</a></div>	
-  </div>	
+   <div class="page-actions-wrapper">
+       <a @click="$emit('click')" class="button-primary w-button">{{ buttonText }}</a>
+  </div>
 </template>
 
 <script>
 export default {
-	props: ['buttonText'],
-	name: 'PageActionsFooter'
-};
+  props: ['buttonText'],
+  name: 'PageActionsFooter'
+}
 </script>
 
 <style scoped>
@@ -78,7 +78,6 @@ export default {
 }
 
 @media (max-width: 767px) {
-
 
   .button-primary {
     display: block;

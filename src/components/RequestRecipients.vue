@@ -7,10 +7,10 @@
     </div><router-link to="/home" class="button-back w-inline-block"></router-link>
   </div>
   <div class="list-container">
-     <div 
+     <div
      v-for="person in peopleAvailable"
      class="list-item"
-     @click="toggleSelected(person.id)" 
+     @click="toggleSelected(person.id)"
      >
       <div class="avatar-container"><AvatarImage :person="person" className="image-2" /></div>
       <div class="info-container">
@@ -25,17 +25,17 @@
       -->
       </div>
       <div class="checkbox-container">
-        <span 
+        <span
         class="checkbox-unselected w-inline-block">
-        <img 
-        :src="require(`../assets/${checkImage(isSelected(person.id))}`)" 
+        <img
+        :src="require(`../assets/${checkImage(isSelected(person.id))}`)"
         class="check-unselected">
       </span>
     </div>
     </div>
     </div>
    <div class="fb-container">
-    <div 
+    <div
     @click="submitRequests"
     class="fb-button w-inline-block"
     v-bind:style="{ backgroundColor: buttonColor}"
@@ -50,16 +50,15 @@
 </template>
 
 <script>
-// todo: filter by availability 
+// todo: filter by availability
 // todo: send meessages
 // todo: what if there are no people available then in their network? we should make sure there is availability for everys slot
 
 import networks from '@/assets/network-info.json'
 import * as Token from '@/utils/tokens.js'
 import * as api from '@/utils/api.js'
-import router from '../router'
 import AvatarImage from '@/components/AvatarImage.vue'
-var moment = require('moment');
+var moment = require('moment')
 
 export default {
   components: { AvatarImage },
@@ -79,7 +78,7 @@ export default {
   methods: {
     toggleSelected: function (id) {
       if (this.isSelected(id)) {
-        this.peopleSelected = this.peopleSelected.filter((anId) => anId != id) 
+        this.peopleSelected = this.peopleSelected.filter((anId) => anId !== id)
       } else if (this.peopleSelected.length < this.maxRecipients) {
         this.peopleSelected.push(id)
       }
@@ -97,12 +96,13 @@ export default {
     submitRequests: function () {
       this.messagesUnsent = this.peopleSelected.length
       this.buttonText = 'Sending...'
-      this.peopleSelected.map(id => this.submitRequestTo(this.people.find(person => person.id == id))) 
+      this.peopleSelected.map(id => this.submitRequestTo(this.people.find(person => person.id === id)))
     },
     submitRequestTo: function (person) {
       this.startProxySessionAndSendIntroMessage(person).then(data => {
         this.messagesUnsent = this.messagesUnsent - 1
       }, err => {
+        console.log(err.stack)
         this.errorSending = true
       })
     },
@@ -113,7 +113,7 @@ export default {
       console.log([
         this.currentUserId,
         parseInt(provider.id),
-        this.messageToProvider(provider),
+        this.messageToProvider(provider)
       ])
     },
     startProxySessionAndSendIntroMessage: function (provider) {
@@ -125,12 +125,12 @@ export default {
         this.messageToProvider(provider),
         null // don't send acknowledgement messages because we don't want them to receive multiple messages in this case.
       )
-    },    
+    }
   },
   mounted: function () {
     api.fetchUsersInNetwork(this.network.stub).then(res => {
-      this.people = res.filter(person => person.id != this.currentUserId)
-      this.currentUser = res.find(person => person.id == this.currentUserId) 
+      this.people = res.filter(person => person.id !== this.currentUserId)
+      this.currentUser = res.find(person => person.id === this.currentUserId)
     })
   },
   watch: {
@@ -140,8 +140,8 @@ export default {
       }
     },
     errorSending: function () {
-      if (this.errorSending == true) {
-        alert("Oops, there was an error sending your requests. Try again?")
+      if (this.errorSending === true) {
+        alert('Oops, there was an error sending your requests. Try again?')
       }
     }
   },
@@ -153,16 +153,16 @@ export default {
       return this.messageToProvider(this.people[0])
     },
     timeFormatted: function () {
-      return moment(this.dateTimeSelected).format("h:mma")
+      return moment(this.dateTimeSelected).format('h:mma')
     },
     dateTimeFormatted: function () {
-      return moment(this.dateTimeSelected).format("dddd, MMMM Do,") + ' at ' + this.timeFormatted
+      return moment(this.dateTimeSelected).format('dddd, MMMM Do,') + ' at ' + this.timeFormatted
     },
     daySelected: function () {
-      return moment(this.dateTimeSelected).format("dddd")
+      return moment(this.dateTimeSelected).format('dddd')
     },
     hourSelected: function () {
-      return moment(this.dateTimeSelected).format("ha")
+      return moment(this.dateTimeSelected).format('ha')
     },
     buttonColor: function () {
       let green = '#00be41'
@@ -175,23 +175,25 @@ export default {
     },
     network: function () {
       let networkId = Token.currentUserNetworkCode(this.$auth)
-      return this.networks.find(network => network.stub == networkId)
+      return this.networks.find(network => network.stub === networkId)
     },
     peopleAvailable: function () {
       let h = moment(this.dateTimeSelected).hour()
       let d = moment(this.dateTimeSelected).day()
-      if (d == 6 || d == 0) {
+      if (d === 6 || d === 0) {
         return this.people.filter(person => person.availableWeekends)
       } else if (h > 7 && h <= 14) {
-        return this.people.filter(person => person.availableMornings) 
+        return this.people.filter(person => person.availableMornings)
       } else if (h > 14 && h <= 18) {
         return this.people.filter(person => person.availableAfternoons)
       } else if (h > 18 || h <= 7) {
         return this.people.filter(person => person.availableEvenings)
+      } else {
+        return []
       }
     }
   }
-};
+}
 </script>
 
 <style scoped>
@@ -330,7 +332,6 @@ a {
   flex: 0 auto;
   background-color: transparent;
 }
-
 
 .mid-line {
   height: 2px;
@@ -719,6 +720,5 @@ a {
     font-weight: 400;
   }
 }
-
 
 </style>

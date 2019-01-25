@@ -2,7 +2,7 @@
 <div class="body">
   <div class="title-bar-container">
     <a title-bar-action-l w-inline-block>
-    <router-link 
+    <router-link
     :to="{ name: 'MainView', params: { tab: 'provide' }}">
       <img src="../assets/Close-X.svg">
     </router-link></a>
@@ -11,7 +11,7 @@
   <div class="top-content-container">
     <div class="page-lead-text">
 
-When children arrive check them in, and when they leave check them out. It's that simple! Since parents only pay for the time they use, please do not check them in before their arrival. We will calculate your hours from check-in to check-out, and pay you ${{ (network.price - network.price * network.percentage).toFixed(2) }}/hr per child per hour of care (plus ${{ ((network.price - network.price * network.percentage)/2).toFixed(2) }}/hour for each additional sibling.) 
+When children arrive check them in, and when they leave check them out. It's that simple! Since parents only pay for the time they use, please do not check them in before their arrival. We will calculate your hours from check-in to check-out, and pay you ${{ (network.price - network.price * network.percentage).toFixed(2) }}/hr per child per hour of care (plus ${{ ((network.price - network.price * network.percentage)/2).toFixed(2) }}/hour for each additional sibling.)
 
 </div><a href="javascript:history.go(-1)" class="button-small-outline w-button">OK, Got it</a></div>
 
@@ -23,7 +23,7 @@ import networks from '../assets/network-info.json'
 import * as Token from '@/utils/tokens.js'
 
 export default {
-	name: 'HowItWorks',
+  name: 'HowItWorks',
   data () {
     return {
       networks: networks
@@ -35,7 +35,7 @@ export default {
       return this.networks.find(network => network.stub === networkId)
     }
   }
-};
+}
 </script>
 
 <style scoped>

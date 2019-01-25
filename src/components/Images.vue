@@ -8,11 +8,10 @@
 
 <script>
 export default {
-        name: 'Images',
-        props: ['person'],
-};
+  name: 'Images',
+  props: ['person']
+}
 </script>
-
 
 <style scoped>
 
@@ -25,8 +24,8 @@ export default {
   }
 
 .card img {
-	height: 100%;
-	width: auto;
+  height: 100%;
+  width: auto;
 }
 
 .scrolling-wrapper {
@@ -43,9 +42,8 @@ export default {
   background-color: #f2f2f2;
 }
 
-
 .child {
-	white-space:nowrap;
+  white-space:nowrap;
 }
 
 .scrolling-wrapper {

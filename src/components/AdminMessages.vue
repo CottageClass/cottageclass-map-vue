@@ -61,9 +61,9 @@
 
 <script>
 
-import * as Token from '@/utils/tokens.js';
-import * as api from '@/utils/api.js';
-import moment from 'moment';
+import * as Token from '@/utils/tokens.js'
+import * as api from '@/utils/api.js'
+import moment from 'moment'
 
 export default {
   name: 'AdminMessages',
@@ -72,10 +72,10 @@ export default {
   beforeRouteEnter: (to, from, next) => {
     next(vm => {
       if (Token.isLoggedIn(vm.$auth) && Token.isAdminUser(vm.$auth)) {
-        console.log("is admin!")
+        console.log('is admin!')
         next()
       } else {
-        console.log("Not logged in")
+        console.log('Not logged in')
         next('/home')
       }
     })
@@ -86,7 +86,7 @@ export default {
       participantId1: -1,
       participantId2: -2,
       messages: [],
-      loading: true,
+      loading: true
     }
   },
   mounted: function () {
@@ -120,7 +120,7 @@ export default {
     fetchMessagesForUserPair: function () {
       return api.fetchMessagesForUserPair(this.participantId1, this.participantId2)
         .then(messages => {
-          this.messages = messages.sort((a,b) => {
+          this.messages = messages.sort((a, b) => {
             return a.createdAt - b.createdAt
           })
         })
@@ -128,11 +128,10 @@ export default {
     fetchAllUsers: function () {
       return api.fetchAllUsers()
         .then(personObjects => {
-          let sortedPeople = personObjects.sort((a,b) => {
+          let sortedPeople = personObjects.sort((a, b) => {
             if (a.lastInitial === b.lastInitial) {
               return (a.firstName[0] >= b.firstName[0] ? 1 : -1)
-            }
-            else {
+            } else {
               return (a.lastInitial >= b.lastInitial ? 1 : -1)
             }
           })
@@ -147,14 +146,14 @@ export default {
     },
     formatTime: function (datetime) {
       return this.parseDate(datetime).format('LT')
-    },
+    }
   },
   computed: {
     messagesForParticipant: function (participantId) {
       return this.messages.filter(msg => msg.senderId === participantId)
-   },
+    }
   }
-};
+}
 
 </script>
 

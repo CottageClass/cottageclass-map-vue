@@ -1,20 +1,20 @@
 <template>
 <div class="body">
   <div class="title-bar-container">
-    <router-link 
+    <router-link
     :to="{ name: 'MainView', params: { tab: 'provide' }}"
     class="title-bar-action-l w-inline-block">
       <img src="../assets/Arrow-Back-2.svg">
     </router-link>
     <h5 class="heading-3">Emergency Contacts</h5><a href="#" class="title-bar-action-2 w-inline-block"></a></div>
 
- <!-- Note $route.params for pulling in data. I guess I can pull in people again. --> 
+ <!-- Note $route.params for pulling in data. I guess I can pull in people again. -->
   <div class="emergency-contact-parent-summary"><AvatarImage :person="person" className="ec-parent-avatar" />
     <h5 class="heading">{{ person.firstName}} {{ person.lastInitial }}.</h5>
     <div class="ec-parent-summary-phone"><a :href="'tel:' + person.phone">{{ person.phone }}</a></div>
     <div class="list-info-1">
-    	<!-- List children, possibly re-use this component-->
-    	<span v-for="(child, index) in person.children">{{ child.firstName }} <span class="black-50">{{ child.age }}</span><span v-if="(index < person.children.length - 1)">, </span></span>
+      <!-- List children, possibly re-use this component-->
+      <span v-for="(child, index) in person.children">{{ child.firstName }} <span class="black-50">{{ child.age }}</span><span v-if="(index < person.children.length - 1)">, </span></span>
     </div>
     <div class="ec-parent-summary-action-button-container">
       <a :href="'sms:' + person.phone" class="ec-parent-summary-button w-inline-block"><img src="../assets/chat.svg"><div class="ec-parent-summary-button-text">Text</div></a>
@@ -46,7 +46,7 @@
   </div>
   <div class="list-item-5" v-for="child in person.children">
     <h5 class="heading">{{ child.firstName }}</h5>
-    <h5 class="caption-2">Age {{ child.age }} | Born {{ child.birthday }}</h5>
+    <h5 class="caption-2">Age {{ child.age }} | Born {{ child.birthday }}</h5>
     <div class="label-description-block" v-if="child.allergies">
       <div class="text-block-5">Allergies</div>
       <div class="text-block-6">{{ child.allergies }}</div>
@@ -77,14 +77,14 @@ import * as api from '@/utils/api.js'
 import networks from '@/assets/network-info.json'
 
 export default {
-	name: 'EmergencyInfo',
+  name: 'EmergencyInfo',
   components: { AvatarImage },
-	data () {
-		return {
-			people: [],
+  data () {
+    return {
+      people: [],
       networks: networks
-		}
-	},
+    }
+  },
   mounted: function () {
     api.fetchUsersInNetwork(this.network.stub).then(res => {
       this.people = res
@@ -93,13 +93,13 @@ export default {
   computed: {
     network: function () {
       let networkId = Token.currentUserNetworkCode(this.$auth)
-      return this.networks.find(network => network.stub == networkId)
+      return this.networks.find(network => network.stub === networkId)
     },
     person: function () {
-    return this.people.find(person => person.id == this.$route.params.id) // computes person. this isn't efficient but simplifies interaction with the API.
+      return this.people.find(person => person.id === this.$route.params.id) // computes person. this isn't efficient but simplifies interaction with the API.
+    }
   }
-  }
-};
+}
 </script>
 
 <style scoped>
@@ -760,6 +760,5 @@ a {
     padding: 16px;
   }
 }
-
 
 </style>

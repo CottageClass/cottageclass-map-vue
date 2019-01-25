@@ -33,7 +33,7 @@
         </li>
         <li class="ul-menu-item">
           <a v-scroll-to="'#Trust-Safety'" class="w-inline-block">
-            <div>Trust &amp; Safety</div>
+            <div>Trust &amp; Safety</div>
           </a>
         </li>
         <li class="ul-menu-item">
@@ -56,7 +56,7 @@
         <li class="ul-item">Your playdate can be as simple as pizza and a movie, or you can go all out and host a creative arts project or a robotics class!</li>
         <li class="ul-item">You can also request childcare for times not covered by existing activities by putting out a general request or individually messaging members to request care. You can earn extra points by replying to last-minute child care requests.</li>
       </ul>
-      <div class="question">How do I contact you?</div>
+      <div class="question">How do I contact you?</div>
       <p class="paragraph">Please call us at 862-294-4859 if you have any questions at all! Our email is <a href="mailto:contact@cottageclass.com">contact@cottageclass.com</a></p>
     </div>
   </div>
@@ -183,7 +183,7 @@
       <p class="paragraph">It is our mission to bring diverse communities closer together through supporting each other in this challenging and rewarding process of raising our children. Our <strong>Nondiscrimination Policy </strong>prohibits discrimination based on race, gender, national origin, marital status or sexual orientation. If any user is found in violation of this Policy, KidsClub will take steps to enforce this Policy, which steps may include suspending or removing the user from the platform.</p>
     </div>
   </div>
-<!-- Footer --> 
+<!-- Footer -->
 
  <Footer />
 
@@ -195,9 +195,9 @@ import MainNav from '@/components/MainNav.vue'
 import Footer from '@/components/Footer.vue'
 
 export default {
-	name: 'Faq',
-	components: { MainNav, Footer },
-};
+  name: 'Faq',
+  components: { MainNav, Footer }
+}
 </script>
 
 <style scoped>
@@ -375,7 +375,5 @@ li {
     line-height: 22px;
   }
 }
-
-
 
 </style>
