@@ -5,14 +5,14 @@
       </div>
       <div class="actions-wrapper">
         <router-link to="/profile/edit">
-      	  <AvatarImage
-      	  v-if="currentUser" 
-      	  :person="currentUser" 
-      	  className="image" />
+          <AvatarImage
+          v-if="currentUser"
+          :person="currentUser"
+          className="image" />
         </router-link>
-      	<a @click="toggleMenu" class="nav-menu-button button w-button">Menu</a></div>
-      <div 
-      v-if="showMenu" 
+        <a @click="toggleMenu" class="nav-menu-button button w-button">Menu</a></div>
+      <div
+      v-if="showMenu"
       v-on-clickaway="clickedAway"
       class="nav-links-expanded">
         <ul class="unordered-list-2 w-list-unstyled">
@@ -35,7 +35,7 @@
             <router-link to="/profile/edit" class="link-block w-inline-block">
               <div class="text-block">Edit Profile</div>
             </router-link>
-          </li>          
+          </li>
           <li>
             <router-link to="/faq" class="link-block w-inline-block">
               <div class="text-block">FAQ</div>
