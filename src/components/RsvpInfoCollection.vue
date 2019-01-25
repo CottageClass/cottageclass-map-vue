@@ -29,37 +29,11 @@
       class="onb-paragraph-subheading-2"
       v-if="Number.isInteger(spotsRemaining)">There <span v-if="spotsRemaining === 1">is</span><span v-else>are</span> {{ spotsRemaining }} spot<span v-if="spotsRemaining !== 1">s</span> remaining.</p>
     </div>
-    <div class="onb-form-block-checkbox-list w-form">
-      <form class="onb-form-checkbox-list">
-        <div
-        v-for="child in children"
-        class="checkbox-field-extra-space"
-        :class="{'active-checkbox': isSelected(child.id)}">
-          <input
-          @click="toggleSelected(child.id)"
-          type="checkbox"
-          :id="child.id"
-          :name="child.id"
-          class="onb-checkbox w-checkbox-input"
-          :checked="isSelected(child.id)"
-          >
-          <label
-          :for="child.id"
-          class="onb-checkbox-label w-form-label"
-          >
-           {{ child.firstName }}, {{ calculateAge(child.birthday) }}
-         </label>
-        </div>
-      </form>
-  <!-- possibly useful notes section:
-    <div class="form-describe-need w-form">
-      <form v-on:submit.prevent id="email-form-2">
-        <p class="describe-label">Anything else you'd like to share?</p>
-        <textarea v-model="additionalText" id="field" name="field" placeholder="(This won't appear on your profile but our staff will review it.)" maxlength="5000" class="text-area-decribe-need w-input"></textarea>
-      </form>
-    </div>
-  -->
-    </div>
+   <MultipleChoice 
+   type="checkbox" 
+   v-model="childrenSelected" 
+   vModelIs="array"
+   :labelsAndOrder="labelsAndOrder"/> 
   </div>
 </div>
 </div>
@@ -68,15 +42,12 @@
 
 <script>
 
-// todo:
-// figure out why maximum children is 0 on event 73. am I submitting it correctly?
-// confirm that child info gets acquired correctly and that api submit will work properly once i have it.
-
 import * as Token from '@/utils/tokens.js'
 import * as api from '@/utils/api.js'
 import * as utils from '@/utils/utils.js'
 import Nav from '@/components/onboarding/Nav.vue'
 import ErrorMessage from '@/components/onboarding/ErrorMessage.vue'
+import MultipleChoice from '@/components/onboarding/MultipleChoice.vue'
 import sheetsu from 'sheetsu-node'
 // this component has a working loading indicator and no other logic. todo: break out and rename.
 import OAuthCallback from '@/components/OAuthCallback.vue'
@@ -86,7 +57,7 @@ var client = sheetsu({ address: 'https://sheetsu.com/apis/v1.0su/62cd725d6088' }
 
 export default {
   name: 'RsvpInfoCollection',
-  components: { Nav, OAuthCallback, ErrorMessage },
+  components: { Nav, OAuthCallback, ErrorMessage, MultipleChoice },
   data () {
     return {
       children: [],
@@ -106,6 +77,9 @@ export default {
     this.fetchEventInformation()
   },
   computed: {
+    labelsAndOrder: function () {
+      return this.children.map(child => [child.id, child.firstName + ', ' + this.calculateAge(child.birthday)])
+    },
     allInformationLoaded: function () {
       return this.currentUser && this.event
     },
