@@ -1,21 +1,24 @@
 <template>
-<div class="body">
-  <MainNav />
-  <div class="container w-container">
-  <h1 class="heading-1">Edit profile</h1>
+<div class="body" id="top-of-form">
+	<MainNav />
+	<div class="container w-container">
+	<h1 class="heading-1">Edit profile</h1>
   <OnboardingStyleWrapper styleIs="editing" class="cards" v-if="currentUser">
-      <div v-if="error" class="onb-error-container"><div class="onb-error-text">This is an error</div></div>
-    <Phone v-model="phone" :currentPhone="currentUser.phone" />
-      <div v-if="error" class="onb-error-container"><div class="onb-error-text">This is an error</div></div>
-    <Location :currentAddress="currentUser.fullAddress" :currentApartment="currentUser.apartment" v-model="location" />
-      <div v-if="error" class="onb-error-container"><div class="onb-error-text">This is an error</div></div>
-    <Availability v-model="availability" />
-      <div v-if="error" class="onb-error-container"><div class="onb-error-text">This is an error</div></div>
-    <Children v-model="children"/>
+      <div v-if="showError && error" class="onb-error-container"><div class="onb-error-text">Your form has errors. Please fix them to continue...</div></div>  
+      <div v-if="showError && error" id="error" class="onb-error-container"><div class="onb-error-text">{{ phone.err}}</div></div>	
+	  <Phone v-model="phone" :currentPhone="currentUser.phone" :required="false" />
+      <div v-if="showError && error" id="error" class="onb-error-container"><div class="onb-error-text">{{ location.err }}</div></div>		  
+	  <Location :currentAddress="currentUser.fullAddress" :currentApartment="currentUser.apartment" v-model="location" :required="false" />
+      <div v-if="showError && error" id="error" class="onb-error-container"><div class="onb-error-text">{{ availability.err }}</div></div>		  
+	  <Availability v-model="availability" :required="false"/>
+
+    <!-- But children back in once I have it 
+      <div v-if="showError && error" id="error" class="onb-error-container"><div class="onb-error-text">{{ children.err }}</div></div>      
+	  <Children v-model="children" :required="false" />
+  -->
   </OnboardingStyleWrapper>
-     <div class="page-actions-wrapper">
-       <a @click="submitUserInformation" class="button-primary w-button">Save</a></div>
-  </div>
+  <PageActionsFooter :buttonText="saveButtonText" />	
+  </div>	
 </div>
 
 </template>
@@ -26,22 +29,28 @@ import Phone from '@/components/onboarding/Phone.vue'
 import Children from '@/components/onboarding/Children.vue'
 import Availability from '@/components/onboarding/Availability.vue'
 import MainNav from '@/components/MainNav.vue'
+import PageActionsFooter from '@/components/PageActionsFooter.vue'
 import OnboardingStyleWrapper from '@/components/onboarding/OnboardingStyleWrapper.vue'
 import * as Token from '@/utils/tokens.js'
 import * as api from '@/utils/api.js'
+var VueScrollTo = require('vue-scrollto');
 
 export default {
-  name: 'ProfileEdit',
-  components: { Location, Phone, Children, Availability, MainNav, OnboardingStyleWrapper },
-  data () {
-    return {
+	name: 'ProfileEdit',
+	components: { Location, Phone, Children, Availability, MainNav, OnboardingStyleWrapper, PageActionsFooter },
+	data () {
+		return {
       currentUser: null,
       currentUserId: null,
       isAuthenticated: null,
-      location: null,
-      phone: null
-    }
-  },
+      location: {},
+      phone: {},
+      availability: {},
+      showError: false,
+      children: {},
+      saveButtonText: 'Save'
+		}
+	},
   mounted: function () {
     if (this.$auth && this.$auth.isAuthenticated()) {
       this.isAuthenticated = true
@@ -50,36 +59,46 @@ export default {
     }
   },
   computed: {
-    children: function () {
-      return {
-        list: this.currentUser.children
+    error: function () {
+      if (!!this.phone.err || !!this.availability.err || !!this.location.err || !!this.children.err) { 
+        return true
+      } else {
+        return false
       }
-    },
-    availability: function () {
-      return {
-        availableAfternoons: this.currentUser.availableAfternoons,
-        availableMornings: this.currentUser.availableMornings,
-        availableEvenings: this.currentUser.availableEvenings,
-        availableWeekends: this.currentUser.availableWeekends,
-        never: false
-      }
-    }
+  	},
   },
   methods: {
     fetchCurrentUser: function () {
       this.currentUser = window.globalCurrentUser
       api.fetchCurrentUserNew(Token.currentUserId(this.$auth)).then(currentUser => {
         this.currentUser = currentUser
+        this.children.list = this.currentUser.children
+        this.availability = {
+        availableAfternoons: this.currentUser.availableAfternoons,
+        availableMornings: this.currentUser.availableMornings,
+        availableEvenings: this.currentUser.availableEvenings,
+        availableWeekends: this.currentUser.availableWeekends,
+        }
         window.globalCurrentUser = currentUser
       })
     },
     submitUserInformation: function () {
-      api.submitUserInfo(this.currentUserId, this.phone, this.location, this.availability, this.children).then(res => {
-        console.log('user update SUCCESS')
-        console.log(res)
-        return res
-      })
-    }
+      if (!this.error) {
+       this.saveButtonText = 'Saving...' 
+    	 api.submitUserInfo(this.currentUserId, this.phone, this.location, this.availability, this.children).then(res => {
+          this.saveButtonText = ' \u2714 Saved'
+          console.log("user update SUCCESS")
+          console.log(res)
+          return res
+        }).catch(err => {
+          console.log('Error saving', err)
+          this.saveButtonText = 'Problem saving. Click to try again.'
+        })
+      } else {
+        this.showError = true
+        VueScrollTo.scrollTo('#top-of-form')
+      }
+    }  	
   }
 }
 </script>
@@ -136,111 +155,5 @@ export default {
   }
 }
 
-.button-primary {
-  margin-right: 4px;
-  padding: 12px 32px;
-  -webkit-align-self: auto;
-  -ms-flex-item-align: auto;
-  -ms-grid-row-align: auto;
-  align-self: auto;
-  border-style: solid;
-  border-width: 1px;
-  border-color: hsla(208.8118811881188, 82.11%, 51.76%, 1.00);
-  border-radius: 4px;
-  background-color: #1f88e9;
-  text-align: center;
-}
-
-.button-primary:hover {
-  border-color: #1b7bd1;
-  background-color: #1b7bd1;
-  text-decoration: none;
-}
-
-.page-actions-wrapper {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  margin-top: 16px;
-  -webkit-box-pack: center;
-  -webkit-justify-content: center;
-  -ms-flex-pack: center;
-  justify-content: center;
-  -webkit-box-align: center;
-  -webkit-align-items: center;
-  -ms-flex-align: center;
-  align-items: center;
-}
-
-@media (max-width: 991px) {
-
-  .button-primary {
-    height: auto;
-  }
-
-  .button-primary:hover {
-    border-color: #1f88e9;
-    background-color: #1f88e9;
-  }
-
-  .button-primary:active {
-    background-color: #1b7bd1;
-  }
-
-  .page-actions-wrapper {
-    position: fixed;
-    left: 0%;
-    top: auto;
-    right: 0%;
-    bottom: 0%;
-    padding: 16px;
-    background-color: #fff;
-    box-shadow: 0 -1px 2px 0 rgba(0, 0, 0, .08);
-  }
-}
-
-@media (max-width: 767px) {
-
-  .button-primary {
-    display: block;
-    padding-top: 6px;
-    padding-bottom: 7px;
-    -webkit-align-self: center;
-    -ms-flex-item-align: center;
-    -ms-grid-row-align: center;
-    align-self: center;
-    -webkit-box-flex: 0;
-    -webkit-flex: 0 auto;
-    -ms-flex: 0 auto;
-    flex: 0 auto;
-  }
-
-  .page-actions-wrapper {
-    width: auto;
-    min-width: 0px;
-    padding-top: 8px;
-    padding-bottom: 8px;
-    -webkit-box-orient: horizontal;
-    -webkit-box-direction: normal;
-    -webkit-flex-direction: row;
-    -ms-flex-direction: row;
-    flex-direction: row;
-    -webkit-box-pack: center;
-    -webkit-justify-content: center;
-    -ms-flex-pack: center;
-    justify-content: center;
-    -webkit-box-align: center;
-    -webkit-align-items: center;
-    -ms-flex-align: center;
-    align-items: center;
-  }
-}
-
-@media (max-width: 479px) {
-  .button-primary {
-    width: 100%;
-  }
-}
 
 </style>

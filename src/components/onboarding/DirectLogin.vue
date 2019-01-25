@@ -8,7 +8,7 @@
 
   <!-- nav -->
     <div class="title-bar">
-      <a @click="$emit('activateScreen', 'facebook')" class="title-bar-back-button w-inline-block"></a>
+      <a @click="$emit('activateScreen', 'facebook')" class="button-back w-inline-block"></a>
     </div>
 
     <div class="content-container">
@@ -214,5 +214,37 @@ input.invalid {
 }
 .form-grid span {
   color: red;
+}
+
+.button-back {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  margin-top: 7px;
+  margin-bottom: 8px;
+  margin-left: 10px;
+  padding: 18px;
+  -webkit-box-pack: justify;
+  -webkit-justify-content: space-between;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+  -ms-flex-align: center;
+  align-items: center;
+  border-radius: 4px;
+  background-color: transparent;
+  background-image: url('../../assets/arrow-back-white.svg');
+  background-position: 50% 50%;
+  background-size: 24px 24px;
+  background-repeat: no-repeat;
+  color: #1f88e9;
+}
+
+.button-back:active {
+  background-color: hsla(0, 0%, 100%, .2);
+  background-image: url('../../assets/arrow-back-white.svg');
+  background-size: 24px;
 }
 </style>

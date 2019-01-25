@@ -4,13 +4,15 @@
       <div class="logo-wrapper"><router-link :to="{ name: 'NewUser' }" class="w-inline-block"><img src="@/assets/kc-logo-landscape.svg" alt="" class="logo"></router-link>
       </div>
       <div class="actions-wrapper">
-        <AvatarImage
-        v-if="currentUser"
-        :person="currentUser"
-        className="image" />
-        <a @click="toggleMenu" class="nav-menu-button button w-button">Menu</a></div>
-      <div
-      v-if="showMenu"
+        <router-link to="/profile/edit">
+      	  <AvatarImage
+      	  v-if="currentUser" 
+      	  :person="currentUser" 
+      	  className="image" />
+        </router-link>
+      	<a @click="toggleMenu" class="nav-menu-button button w-button">Menu</a></div>
+      <div 
+      v-if="showMenu" 
       v-on-clickaway="clickedAway"
       class="nav-links-expanded">
         <ul class="unordered-list-2 w-list-unstyled">
@@ -29,6 +31,11 @@
               <div class="text-block">Offer Care</div>
             </router-link>
           </li>
+          <li v-if="isAuthenticated">
+            <router-link to="/profile/edit" class="link-block w-inline-block">
+              <div class="text-block">Edit Profile</div>
+            </router-link>
+          </li>          
           <li>
             <router-link to="/faq" class="link-block w-inline-block">
               <div class="text-block">FAQ</div>

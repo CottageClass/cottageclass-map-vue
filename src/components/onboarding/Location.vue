@@ -14,6 +14,7 @@
             :placeholder="placeholder"
             v-on:placechanged="getAddressData"
             country="us"
+            @inputChange="emitAddress"
         >
         </vue-google-autocomplete>
 
@@ -37,23 +38,25 @@
 <script>
 import VueGoogleAutocomplete from 'vue-google-autocomplete'
 export default {
-  name: 'Location',
-  props: ['currentAddress'],
+  name: "Location",
+  props: ['currentAddress', 'value'],
   data () {
-    return {
-      textEntered: '',
-      showApartmentField: false,
-      apartmentNumber: '',
+  	return {
+  		textEntered: '',
+      showApartmentField: !!this.currentApartment,
+      apartmentNumber: this.currentApartment || '',
       placeholder: this.currentAddress || 'Street address (not apt #)',
       address: {}
     }
   },
   components: { VueGoogleAutocomplete },
   mounted: function () {
-    this.$emit('input', {
-      err: 'Please enter your street address.'
-    })
-  },
+    if (!this.currentAddress) {
+  		this.$emit('input', {
+  			err: 'Please enter your street address.'
+  		})
+    }
+  	},
   methods: {
     toggleApartmentField: function () {
       this.showApartmentField = true
@@ -67,18 +70,30 @@ export default {
       this.emitAddress()
     },
     emitAddress: function () {
-      this.$emit('input', {
-        fullAddress: this.address,
-        lat: this.address.latitude,
-        lng: this.address.longitude,
-        apartmentNumber: this.apartmentNumber,
-        err: this.error
-      })
+      console.log('emitting address')
+      if (!!this.address.latitude) {
+        this.$emit('input', {
+          fullAddress: this.address,
+          lat: this.address.latitude,
+          lng: this.address.longitude,
+          apartmentNumber: this.apartmentNumber,
+          err: this.error
+        })
+      } else if (!!this.apartmentNumber) {
+        this.$emit('input', {
+          apartmentNumber: this.apartmentNumber,
+          err: this.error
+        })
+      } else {
+        this.$emit('input', {
+          err: this.error
+        })
+      }
     }
   },
   computed: {
     error: function () {
-      if (!this.address.latitude || !this.address.longitude) {
+      if (isNaN(this.address.latitude) || isNaN(this.address.longitude)) {
         return 'There was a problem processing your street address. Try again?'
       } else {
         return false

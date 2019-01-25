@@ -30,8 +30,8 @@ import {
 } from 'libphonenumber-js'
 
 export default {
-  name: 'Phone',
-  props: ['value', 'currentPhone'],
+  name: "Phone",
+  props: ['value', 'currentPhone', 'required'],
   data () {
     return {
       number: '',
@@ -40,7 +40,7 @@ export default {
     }
   },
   mounted: function () {
-    if (!this.isComplete) {
+    if (!this.isComplete && this.required) {
       this.$emit('input', {
         number: this.value.number,
         err: this.error
