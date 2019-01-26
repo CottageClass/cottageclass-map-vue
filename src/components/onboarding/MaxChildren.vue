@@ -2,8 +2,9 @@
   <Question 
   title="How many children can you host at your playdate?"
   explanation="For each child you host, you receive points that you can use to attend others' playdates.">
-      <div class="w-form dropdown-container">
-        <select v-model="maxChildren">
+  <div class="dropdown-container">
+      <div>
+        <select class="w-form" v-model="maxChildren">
           <option>2</option>
           <option>3</option>
           <option>4</option>
@@ -15,6 +16,7 @@
           <option>10</option>
         </select>
       </div>
+    </div>
   </Question>
 </template>
 
@@ -46,13 +48,19 @@ select {
   all: unset;
 }
 
+.w-form {
+    background-color: hsla(0, 0%, 100%, .7);
+  padding: 16px 8px 24px 24px;
+  border-radius: 4px;
+  margin-left: auto;
+  margin-right: auto;
+  width: 30px;
+}
+
 .dropdown-container {
   text-align: center;
   font-size: 24px;
-  background-color: hsla(0, 0%, 100%, .7);
-  height: 56px;
-  padding: 16px 12px 0px 18px;
-  border-radius: 4px;
+  padding: 0 0 16px 0;
 }
 
 </style>
