@@ -2,40 +2,22 @@
   <Question 
 title="Choose a time for your activity"
 subtitle="Each activity runs 3 hours in the evening, but the start time is up to you. (You'll choose the date next.)">
-    <div class="onb-form-block-checkbox-list w-form">
-      <form class="onb-form-checkbox-list">
-        <div
-        v-for="time in times"
-        class="checkbox-field-extra-space"
-        :class="{'active-checkbox': time === timeSelected}">
-          <input
-          type="radio"
-          :id="time"
-          :value="time"
-          :name="time"
-          class="onb-checkbox w-checkbox-input"
-          v-model="timeSelected"
-          >
-          <label
-          :for="time"
-          class="onb-checkbox-label w-form-label"
-          >
-           {{ time }}
-         </label>
-        </div>
-      </form>
-    </div>
+<MultipleChoice 
+   type="radio" 
+   v-model="timeSelected" 
+   :choices="times" />
   </Question>
 </template>
 
 <script>
 var moment = require('moment')
 import Question from '@/components/onboarding/Question.vue'
+import MultipleChoice from '@/components/onboarding/MultipleChoice.vue'
 
 export default {
   name: 'EventTime',
   props: ['value'],
-  components: { Question },  
+  components: { Question, MultipleChoice },  
   data () {
     return {
       timeSelected: '',
@@ -79,13 +61,6 @@ export default {
         end: this.endTime,
         err: this.err
       })
-    }
-  },
-  methods: {
-    formatTime: function (time) {
-      // isolate the start time
-      // placeholder
-      return time
     }
   }
 }

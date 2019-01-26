@@ -2,33 +2,15 @@
   <Question 
   title="Choose a day for your monthly activity"
   subtitle="Activities repeat every 4 weeks on the same weekday, unless you change or cancel, so please pick a day when you're usually available. These are the days we need most:">
-      <div class="onb-form-block-checkbox-list w-form">
-      <form class="onb-form-checkbox-list">
-        <div
-        v-for="date in dates"
-        class="checkbox-field-extra-space"
-        :class="{'active-checkbox': date === dateSelected}">
-          <input
-          type="radio"
-          :id="date"
-          :value="date"
-          :name="date"
-          class="onb-checkbox w-checkbox-input"
-          v-model="dateSelected"
-          >
-          <label
-          :for="date"
-          class="onb-checkbox-label w-form-label"
-          >
-           {{ displayDate(date) }}
-         </label>
-        </div>
-      </form>
-    </div>
+   <MultipleChoice 
+   type="radio" 
+   v-model="dateSelected" 
+   :labelsAndOrder="labelsAndOrder"
+   :choices="dates"/>
     <div
     class="other-date"
     v-if="otherSelected">
-    <p>
+    <p class="describe-label">
       Choose another date:
     </p>
     <input
@@ -42,11 +24,12 @@
 <script>
 var moment = require('moment')
 import Question from '@/components/onboarding/Question.vue'
+import MultipleChoice from '@/components/onboarding/MultipleChoice.vue'
 
 export default {
   name: 'EventDate',
   props: ['value'],
-  components: { Question },
+  components: { Question, MultipleChoice },
   data () {
     return {
       dateSelected: '',
@@ -67,6 +50,9 @@ export default {
     })
   },
   computed: {
+    labelsAndOrder: function () {
+      return this.dates.map(date => [date, this.displayDate(date)]) 
+    },
     err: function () {
       if (!this.dateSelected || (this.dateSelected === 'Other' && !this.dateIsValid(this.otherDate))) {
         return this.errorMesg

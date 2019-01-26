@@ -1872,6 +1872,10 @@ body {
   line-height: 20px;
 }
 
+.describe-label {
+  color: #3333338f;
+}
+
 .image-7 {
   display: none;
 }

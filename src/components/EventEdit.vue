@@ -2,10 +2,12 @@
 <div class="body" id="top-of-form">
   <MainNav />
   <div class="container w-container">
-  <h1 class="heading-1">Editing event #{{ id }} </h1>
+  <h1 class="heading-1">Editing event #{{ $route.params.id }} </h1>
   <OnboardingStyleWrapper styleIs="editing" class="cards" v-if="event">
       <ErrorMessage v-if="showError && error" text="Your form has errors. Please fix them to continue..." />
       <EventActivity v-model="event.activityName" />
+      <EventTime />
+      <EventDate /> 
       <MaxChildren v-model="event.maximumChildren" />
       <Food v-model="event.food" />
       <HouseRules v-model="event.houseRules"/>
@@ -58,6 +60,11 @@ import MaxChildren from '@/components/onboarding/MaxChildren.vue'
 import OnboardingStyleWrapper from '@/components/onboarding/OnboardingStyleWrapper.vue'
 var VueScrollTo = require('vue-scrollto')
 
+// todo: make submit event functionality real.
+// make error messages real
+// make data real
+// pull everything into single object
+
 export default {
   name: 'ProfileEdit',
   components: { EventActivity, Food, HouseRules, PetsDescription, EventTime, EventDate, MaxChildren, MainNav, OnboardingStyleWrapper, PageActionsFooter, ErrorMessage, YesOrNo },
@@ -86,7 +93,7 @@ export default {
           this.event = res[0]
         })
   },
-    submitUserInformation: function () {
+    submitEventInformation: function () {
       if (!this.error) {
         this.saveButtonText = 'Saving...'
         api.submitUserInfo(this.currentUserId, this.phone, this.location, this.availability, this.children).then(res => {

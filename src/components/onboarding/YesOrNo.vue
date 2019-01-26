@@ -1,51 +1,19 @@
 <template>
   <Question :title="question" :subtitle="description">
-      <form class="onb-form-checkbox-list">
-        <div
-        class="checkbox-field-extra-space"
-        :class="{'active-checkbox': yesOrNo === 'yes'}">
-          <input
-          type="radio"
-          id="yes"
-          value="yes"
-          name="yes"
-          class="onb-checkbox w-checkbox-input"
-          v-model="yesOrNo"
-          >
-          <label
-          for="yes"
-          class="onb-checkbox-label w-form-label"
-          >
-           Yes
-         </label>
-        </div>
-        <div
-        class="checkbox-field-extra-space"
-        :class="{'active-checkbox': yesOrNo === 'no'}">
-          <input
-          type="radio"
-          id="no"
-          value="no"
-          name="no"
-          class="onb-checkbox w-checkbox-input"
-          v-model="yesOrNo"
-          >
-          <label
-          for="no"
-          class="onb-checkbox-label w-form-label"
-          >
-           No
-         </label>
-        </div>
-      </form>
+         <MultipleChoice 
+     type="radio" 
+     v-model="yesOrNo" 
+     :choices="['yes', 'no']" /> 
   </Question>
 </template>
 
 <script>
 import Question from '@/components/onboarding/Question.vue'
+import MultipleChoice from '@/components/onboarding/MultipleChoice.vue'
+
 export default {
   name: 'YesOrNo',
-  components: { Question },  
+  components: { Question, MultipleChoice },  
   props: ['value', 'question', 'description'],
   data () {
     return {

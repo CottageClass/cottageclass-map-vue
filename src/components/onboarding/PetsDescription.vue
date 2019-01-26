@@ -20,7 +20,7 @@ export default {
   components: { Question },    
   data () {
     return {
-      blurb: this.value,
+      blurb: this.value || '',
       charLimit: 288,
       noTextErrorMsg: 'Please list your pets, including any key details.'
     }

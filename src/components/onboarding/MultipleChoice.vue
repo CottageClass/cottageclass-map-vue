@@ -1,19 +1,53 @@
 <template>
     <div class="w-form">
       <form class="onb-form-checkbox-list">
+
+<!-- for radio buttons -->
+
+        <div
+        v-if="type=='radio'"
+        v-for="(choice, index) in choices"
+        class="checkbox-field-extra-space"
+        :class="{'active-checkbox': choice === value}">
+          <input
+          type="radio"
+          :id="choice"
+          :value="choice"
+          :name="choice"
+          class="onb-checkbox w-checkbox-input"
+          v-model="value"
+          >
+          <label
+          :for="choice"
+          class="onb-checkbox-label w-form-label"
+          >
+           {{ capitalize(choicesOrLabels[index]) }}
+         </label>
+        </div>
+
+
+<!-- for checkboxes --> 
+
         <div 
+        v-if="type=='checkbox'"
         v-for="(key, index) in keys" 
         class="checkbox-field-extra-space" 
         :class="{'active-checkbox': objValues[index]}"
         >
+
+<!-- for objects with checkboxes --> 
+
           <input
-          :v-if="vModelIs=='object'"
+          v-if="vModelIs=='object'"
           v-model="value[key]" 
           type="checkbox" 
           :id="index" 
           :name="index"
           class="onb-checkbox w-checkbox-input" 
           :class="{ 'active-checkbox': objValues[index] }">
+
+<!-- for arrays with checkboxes --> 
+
           <input
           v-if="vModelIs=='array'"
           @click="toggleSelected(key)"
@@ -25,25 +59,35 @@
           <label :for="index" class="onb-checkbox-label w-form-label">
             {{ keysOrLabels[index] }}
           </label>
+
         </div>
       </form>
     </div>
 </template>
 
 <script>
+import * as utils from '@/utils/utils.js'
 export default {
 
 // labelsAndOrder is an array of arrays [key, label] and is optional, for when label names are different than key names. It determines the order. 
 // value is an array of ids or an object of keys and values. if an array of ids, v-model returns ids.  
 
   name: 'MultipleChoice',
-  props: ['value', 'labelsAndOrder', 'type'],
+  props: ['value', 'labelsAndOrder', 'type', 'choices'],
   computed: {
     keys: function () {
+      if (this.labelsAndOrder) {
         return this.labelsAndOrder.map(pair => pair[0])
+      } else {
+        return []
+      }
     },
     objValues: function () {
-      return this.keys.map(key => this.value[key])
+      if (this.type != 'radio') {
+        return this.keys.map(key => this.value[key])
+      } else {
+        return []
+      }
     },
     keysOrLabels: function () {
       if (this.labelsAndOrder) {
@@ -52,15 +96,23 @@ export default {
         return this.keys
       }
     },
+    choicesOrLabels: function () {
+      if (this.labelsAndOrder) {
+        return this.labelsAndOrder.map(pair => pair[1])
+      } else {
+        return this.choices
+      }
+    },
     vModelIs: function () {
       if (Array.isArray(this.value)) {
         return 'array'
-      } else {
+      }  else {
           return typeof this.value
         }
       }
   },
   methods: {
+    capitalize: utils.capitalize,
     toggleSelected: function (key) {
       if (this.value.includes(key)) {
         this.value = this.value.filter(item => item != key)
