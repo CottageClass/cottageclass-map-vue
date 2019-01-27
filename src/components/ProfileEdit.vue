@@ -11,11 +11,8 @@
     <Location :currentAddress="currentUser.fullAddress" :currentApartment="currentUser.apartment" v-model="location" :required="false" />
       <ErrorMessage v-if="showError && error" :text="availability.err" />
     <Availability v-model="availability" :required="false"/>
-
-    <!-- But children back in once I have it
     <ErrorMessage v-if="showError && error" :text=" children.err" />
     <Children v-model="children" :required="false" />
-  -->
   </OnboardingStyleWrapper>
   <PageActionsFooter :buttonText="saveButtonText" @click="submitUserInformation"/>
   </div>
@@ -25,6 +22,7 @@
 
 <script>
 import Location from '@/components/onboarding/Location.vue'
+import Children from '@/components/onboarding/Children.vue'
 import Phone from '@/components/onboarding/Phone.vue'
 import Availability from '@/components/onboarding/Availability.vue'
 import MainNav from '@/components/MainNav.vue'
@@ -37,7 +35,7 @@ var VueScrollTo = require('vue-scrollto')
 
 export default {
   name: 'ProfileEdit',
-  components: { Location, Phone, Availability, MainNav, OnboardingStyleWrapper, PageActionsFooter, ErrorMessage },
+  components: { Location, Phone, Availability, MainNav, OnboardingStyleWrapper, PageActionsFooter, ErrorMessage, Children },
   data () {
     return {
       currentUser: null,
