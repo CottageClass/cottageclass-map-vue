@@ -22,7 +22,7 @@ export default {
   components: { Question, MultipleChoice },    
   data () {
     return {
-      foodSelected: '',
+      foodSelected: this.value.selected,
       errorMesg: 'Please choose a food option from the list.',
       foods: [
         'pizza \ud83c\udf55',

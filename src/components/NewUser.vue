@@ -167,7 +167,9 @@ export default {
         yesOrNo: ''
       },
       maxChildren: null,
-      rsvpAttempted: this.$cookies.get('rsvpAttempted')
+      rsvpAttempted: this.$cookies.get('rsvpAttempted'),
+      childAgeMaximum: 11,
+      childAgeMinimum: 2
     }
   },
   name: 'NewUser',
@@ -295,27 +297,6 @@ export default {
 
       // I think this is necessary but I'm not sure.
       let component = this
-
-      // set default values for the time being
-      const defaultChildAgeMaximum = 11
-      const defaultChildAgeMinimum = 2
-
-      let eventData = {
-        'event_series': {
-          'name': this.eventName,
-          'start_date': this.eventDate.selected,
-          'starts_at': this.eventTime.start,
-          'ends_at': this.eventTime.end,
-          'has_pet': this.hasPets.isTrue,
-          'activity_names': [this.eventActivity.selected],
-          'foods': [this.food.selected],
-          'house_rules': this.houseRules.text,
-          'pet_description': this.petsDescription.text,
-          'maximum_children': this.maxChildren,
-          'child_age_minimum': defaultChildAgeMinimum,
-          'child_age_maximum': defaultChildAgeMaximum
-        }
-      }
       let phone = this.phone
       let location = this.location
       let availability = this.availability
@@ -329,27 +310,30 @@ export default {
           console.log('user update FAILURE')
           console.log(err)
           console.log(Object.entries(err))
+          // show on the houseRules step because it's the last step
           component.houseRules.err = 'Sorry, there was a problem saving your information. Try again?'
           throw err
         })
         .then(() => {
-          component.axios.post(`${process.env.BASE_URL_API}/api/event_series`, eventData).then(res => {
+          component.submitEventData().then(res => {
             component.createdEventData = normalize(res.data)
-            console.log('axios put returns', component.createdEventData)
           })
-        }) // I might be attaching this .then to the wrong function. It's possible I should be attaching it to the axios call itself.
+        })
         .then(res => {
           console.log('event creation SUCCESS')
           console.log(res)
           return res
         })
         .catch(err => {
-          console.log('event update FAILURE')
+          console.log('event creation FAILURE')
           console.log(err)
           console.log(Object.entries(err))
           component.houseRules.err = 'Sorry, there was a problem saving your activity information. Try again?'
           throw err
         })
+    },
+    submitEventData: function () {
+      return this.axios.post(`${process.env.BASE_URL_API}/api/event_series`, this.eventDataForSubmissionToAPI)
     }
   },
   computed: {
@@ -412,6 +396,24 @@ export default {
         return this.capitalize(this.eventActivity.selected) + ' & ' + this.food.selected + ' with ' + this.capitalize(this.currentUser.firstName)
       } else {
         return this.capitalize(this.eventActivity.selected) + ' & ' + this.food.selected
+      }
+    },
+    eventDataForSubmissionToAPI: function () {
+      return {
+        'event_series': {
+          'name': this.eventName,
+          'start_date': this.eventDate.selected,
+          'starts_at': this.eventTime.start,
+          'ends_at': this.eventTime.end,
+          'has_pet': this.hasPets.isTrue,
+          'activity_names': [this.eventActivity.selected],
+          'foods': [this.food.selected],
+          'house_rules': this.houseRules.text,
+          'pet_description': this.petsDescription.text,
+          'maximum_children': this.maxChildren,
+          'child_age_minimum': this.childAgeMinimum,
+          'child_age_maximum': this.childAgeMaximum
+        }
       }
     }
   }

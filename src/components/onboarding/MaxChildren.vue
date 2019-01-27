@@ -25,10 +25,11 @@ import Question from '@/components/onboarding/Question.vue'
 
 export default {
   name: 'MaxChildren',
-  components: { Question },  
+  components: { Question },
+  props: ['value'],
   data () {
     return {
-      maxChildren: 2
+      maxChildren: this.value || 2
     }
   },
   mounted: function () {

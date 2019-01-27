@@ -19,7 +19,7 @@ export default {
   props: ['value'],
   data () {
     return {
-      activitySelected: '',
+      activitySelected: this.value.selected,
       errorMesg: 'Please choose an activity option from the list.',
       activities: [
         'movie night',

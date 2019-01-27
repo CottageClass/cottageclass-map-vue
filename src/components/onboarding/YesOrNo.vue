@@ -17,7 +17,7 @@ export default {
   props: ['value', 'question', 'description'],
   data () {
     return {
-      yesOrNo: this.value.yesOrNo,
+      yesOrNo: this.value.isTrue ? 'yes' : 'no',
       errorMesg: 'Please answer yes or no.'
     }
   },
