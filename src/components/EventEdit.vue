@@ -6,7 +6,15 @@
   <OnboardingStyleWrapper styleIs="editing" class="cards" v-if="event">
       <ErrorMessage v-if="showError && error" text="Your form has errors. Please fix them to continue..." />
       <EventActivity v-model="event.activity" />
-
+      <MaxChildren v-model="event.maximumChildren" />
+      <Food v-model="event.food" />
+      <HouseRules v-model="event.houseRules"/>
+      <YesOrNo
+      question="Do you have pets?"
+      description="This is often very important for parents (and children) to know."
+      v-model="event.hasPet"
+      />     
+      <PetsDescription v-model="event.petDescription" />
       <!-- <edit date & time> -->
 
       <Question title="When is your event?" subtitle="From...">
@@ -17,17 +25,7 @@
       	<DateTimePicker v-model="event.endsAt" showDate="true" />
       </Question>
 
-      <!-- </edit date & time> -->
-
-      <MaxChildren v-model="event.maximumChildren" />
-      <Food v-model="event.food" />
-      <HouseRules v-model="event.houseRules"/>
-      <YesOrNo
-      question="Do you have pets?"
-      description="This is often very important for parents (and children) to know."
-      v-model="event.hasPet"
-      />     
-      <PetsDescription v-model="event.petDescription" />
+      <!-- </edit date & time> -->      
   </OnboardingStyleWrapper>
   <PageActionsFooter :buttonText="saveButtonText" @click="saveEvent"/>
   </div>
@@ -71,6 +69,7 @@ var VueScrollTo = require('vue-scrollto')
 // add title
 // add max / min ages
 // ensure user is host if not throw error. 
+// bug with timezones fetching event
 
 export default {
   name: 'ProfileEdit',
@@ -97,8 +96,8 @@ export default {
         'event': {
           'name': this.event.name,
           'start_date': this.event.date.selected,
-          'starts_at': this.event.time.start,
-          'ends_at': this.event.time.end,
+          'starts_at': this.event.startsAt,
+          'ends_at': this.event.endsAt,
           'has_pet': this.event.hasPet.isTrue,
           'activity_names': [this.event.activity.selected],
           'foods': [this.event.food.selected],
@@ -150,7 +149,7 @@ export default {
     	}
     },
     submitEventData: function () {
-    	return this.axios.post(`${process.env.BASE_URL_API}/api/events/${this.eventId}`, this.eventDataForSubmissionToAPI)
+    	return this.axios.put(`${process.env.BASE_URL_API}/api/events/${this.eventId}`, this.eventDataForSubmissionToAPI)
     },
     saveEvent: function () {
       if (this.error) {
@@ -162,6 +161,7 @@ export default {
           this.saveButtonText = ' \u2714 Saved'
           console.log('event update SUCCESS')
           console.log(res)
+          this.fetchEvent()
           return res
         }).catch(err => {
           console.log('Error saving', err)
