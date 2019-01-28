@@ -13,7 +13,7 @@
   <!-- error message -->
 
       <ErrorMessage v-if="error && showError" :text="error" />
-      
+
 <!-- Show loading indicator until we can show the event info we're confirming.  there are and there is more than one. If there is an error, show the error only. -->
 
   <OAuthCallback v-if="!event && !(error && showError)"/>
@@ -102,7 +102,7 @@ export default {
       if (this.yesOrNo === 'yes') {
         this.$router.push({ name: 'RsvpInfoCollection', params: { eventId: this.eventId } })
       } else if (this.yesOrNo === 'no') {
-        this.$router.push({ name: 'MainView' })
+        this.$router.push({ name: 'Home' })
       } else {
         this.showError = true
       }

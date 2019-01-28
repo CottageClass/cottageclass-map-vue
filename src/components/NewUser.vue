@@ -4,21 +4,21 @@
     v-if="activeScreen ==='facebook' && step === 0"
     v-on:userNotYetOnboarded="nextStep"
     v-on:activateScreen="activateScreen"
-    v-on:userAlreadyOnboarded="$router.push({name: 'MainView'})"
+    v-on:userAlreadyOnboarded="$router.push({name: 'Home'})"
     v-on:authenticateFacebook="authenticate('facebook')"
      />
     <DirectLogin
     v-if="activeScreen ==='directLogin' && step === 0"
     v-on:userNotYetOnboarded="nextStep"
     v-on:activateScreen="activateScreen"
-    v-on:userAlreadyOnboarded="$router.push({name: 'MainView'})"
+    v-on:userAlreadyOnboarded="$router.push({name: 'Home'})"
     v-on:authenticateFacebook="authenticate('facebook')"
      />
     <Signup
     v-if="activeScreen ==='signup' && step === 0"
     v-on:userNotYetOnboarded="nextStep"
     v-on:activateScreen="activateScreen"
-    v-on:userAlreadyOnboarded="$router.push({name: 'MainView'})"
+    v-on:userAlreadyOnboarded="$router.push({name: 'Home'})"
     v-on:authenticateFacebook="authenticate('facebook')"
      />
     <Invite
@@ -251,7 +251,7 @@ export default {
         }).then(res => api.fetchCurrentUser(Token.currentUserId(component.$auth))).then(currentUser => {
           if (currentUser.hasAllRequiredFields && !this.rsvpAttempted) {
             // redirect to home screen if they haven't attempted an RSVP
-            this.$router.push({ name: 'MainView' })
+            this.$router.push({ name: 'Home' })
           } else if (currentUser.hasAllRequiredFields && this.rsvpAttempted) {
             // confirm that they want to RSVP if they have attempted an RSVP
             this.$router.push({ name: 'RsvpConfirmation', params: { eventId: this.rsvpAttempted } })
