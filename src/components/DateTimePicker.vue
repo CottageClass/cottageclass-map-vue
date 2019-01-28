@@ -46,11 +46,14 @@ export default {
       } else {
         return moment(this.dateTimeSelected).format('dddd, h:mm a')
       }
-    }
+    },
+    dateIsValid: function () {
+      return moment(this.dateTimeSelected).isValid()
+      }
   },
   watch: {
     dateTimeSelected: function () {
-      this.$emit('input', this.dateTimeSelected + this.timeZoneString)
+      this.$emit('input', this.dateIsValid ? this.dateTimeSelected + this.timeZoneString : false)
     }
   }
 }

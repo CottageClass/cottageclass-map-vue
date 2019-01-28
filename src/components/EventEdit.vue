@@ -16,7 +16,7 @@
       />     
       <PetsDescription v-model="event.petDescription" />
       <!-- <edit date & time> -->
-
+      <ErrorMessage v-if="!datesValidate" text="Please enter valid start and end times for your event." />
       <Question title="When is your event?" subtitle="From...">
       	<DateTimePicker v-model="event.startsAt" showDate="true" />
       	<br>
@@ -34,14 +34,6 @@
 </template>
 
 <script>
-// todo: 
-// make sure user auth'd to edit
-
-/*        
-					'name': this.eventName,
-          'child_age_minimum': defaultChildAgeMinimum,
-          'child_age_maximum': defaultChildAgeMaximum
-*/ 
 import YesOrNo from '@/components/onboarding/YesOrNo.vue'
 import MainNav from '@/components/MainNav.vue'
 import DateTimePicker from '@/components/DateTimePicker.vue'
@@ -58,18 +50,27 @@ import EventDate from '@/components/onboarding/EventDate.vue'
 import MaxChildren from '@/components/onboarding/MaxChildren.vue'
 import OnboardingStyleWrapper from '@/components/onboarding/OnboardingStyleWrapper.vue'
 import Question from '@/components/onboarding/Question.vue'
+var moment = require('moment')
 
 var VueScrollTo = require('vue-scrollto')
 
-// todo: 
-// resolve API issue
-// use 'datetimepicker' component for start and end times. 
-// fix warning about modifying 'value' in multiple choice component
-// make error messages real
+// required to deploy: 
+// return error if error
+// validate event start / end time. 
+///
+// other todos:
+// make sure user auth'd to edit
 // add title
 // add max / min ages
+//          'child_age_minimum': defaultChildAgeMinimum,
+//          'child_age_maximum': defaultChildAgeMaximum
+// add title:					'name': this.eventName,
+
+// fix warning about modifying 'value' in multiple choice component
+// make error messages real
 // ensure user is host if not throw error. 
-// bug with timezones fetching event
+// add error message for "pets" where you have to enter a description if you have a pet.
+
 
 export default {
   name: 'ProfileEdit',
@@ -87,15 +88,20 @@ export default {
       this.fetchEvent()
   },
   computed: {
+  	datesValidate: function () {
+  		if (moment(this.event.startsAt).isBefore(this.event.endsAt)) {
+            return true
+          } else {
+          	return false
+          }
+  	},
     error: function () {
-    	// add validation here
-        return false
+    	return this.datesValidate
     },
     eventDataForSubmissionToAPI: function () {
       return {
         'event': {
           'name': this.event.name,
-          'start_date': this.event.date.selected,
           'starts_at': this.event.startsAt,
           'ends_at': this.event.endsAt,
           'has_pet': this.event.hasPet.isTrue,
@@ -122,10 +128,6 @@ export default {
     	let e = dataFromAPI;
     	return {
     		   name: e.name,
-    		   date: {
-    		     selected: 'Other',
-    		     otherDate: e.startDate
-    		   },
     		   startsAt: e.startsAt,
     		   endsAt: e.endsAt,
     		   hasPet: {
