@@ -38,10 +38,16 @@ export default {
       ]
     }
   },
-  mounted: function () {
-    this.$emit('input', {
-      err: this.errorMesg
+  methods: {
+    emitInput: function () {
+      this.$emit('input', {
+        selected: this.foodSelected,
+        err: this.err
     })
+  }
+  },  
+  mounted: function () {
+    this.emitInput()
   },
   computed: {
     err: function () {
@@ -54,15 +60,7 @@ export default {
   },
   watch: {
     foodSelected: function () {
-      this.$emit('input', {
-        selected: this.foodSelected,
-        err: this.err
-      })
-    }
-  },
-  methods: {
-    capitalizeFirstLetter: function (string) {
-      return string.charAt(0).toUpperCase() + string.slice(1)
+      this.emitInput()
     }
   }
 }
