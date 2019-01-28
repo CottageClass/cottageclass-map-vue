@@ -5,6 +5,7 @@
   <h1 class="heading-1">Editing event #{{ eventId }} </h1>
   <OnboardingStyleWrapper styleIs="editing" class="cards" v-if="event">
       <ErrorMessage v-if="showError && error" text="Your entries have errors. Please fix them to continue..." />
+      <EventName v-model="event.name" />      
       <EventActivity v-model="event.activity" />
       <MaxChildren v-model="event.maximumChildren" />
       <Food v-model="event.food" />
@@ -37,6 +38,7 @@
 </template>
 
 <script>
+import EventName from '@/components/onboarding/EventName.vue'
 import YesOrNo from '@/components/onboarding/YesOrNo.vue'
 import MainNav from '@/components/MainNav.vue'
 import DateTimePicker from '@/components/DateTimePicker.vue'
@@ -59,7 +61,7 @@ var VueScrollTo = require('vue-scrollto')
 
 export default {
   name: 'ProfileEdit',
-  components: { EventActivity, Food, HouseRules, PetsDescription, EventTime, EventDate, MaxChildren, MainNav, OnboardingStyleWrapper, PageActionsFooter, ErrorMessage, YesOrNo, Question, DateTimePicker },
+  components: { EventActivity, Food, HouseRules, PetsDescription, EventTime, EventDate, MaxChildren, MainNav, OnboardingStyleWrapper, PageActionsFooter, ErrorMessage, YesOrNo, Question, DateTimePicker, EventName },
   data () {
     return {
     	eventId: this.$route.params.id,
