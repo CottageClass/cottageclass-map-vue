@@ -21,7 +21,6 @@ export function initProxySession (currentUserId, receiverId, requestMessage, ack
     postData
   ).then(res => {
     console.log('proxy session init SUCCESS, returning proxy phone number for receiver')
-    console.log(res)
     // return proxy number for receiver
     return res.data.data.attributes.proxyIdentifierReceiver
   }).catch(err => {
@@ -321,6 +320,29 @@ export function submitNotification (participantId, notificationBodyText) {
 /*
  * EVENTS
  */
+
+export function fetchMyUpcomingEvents (params) {
+  return Vue.axios.get(
+    `${process.env.BASE_URL_API}/api/user/created_events/upcoming`
+  ).then(res => {
+    console.log('FETCH MY UPCOMING EVENTS SUCCESS')
+    console.log(res.data)
+    return Object.values(normalize(res.data).event).map(obj => {
+      var e = obj.attributes
+      e['id'] = obj.id
+      e.hostFirstName = capitalize(e.hostFirstName)
+      e.hostFuzzyLatitude = parseFloat(e.hostFuzzyLatitude)
+      e.hostFuzzyLongitude = parseFloat(e.hostFuzzyLongitude)
+      e.activityName = e.activityNames.length > 0 && e.activityNames[0]
+      e.food = e.foods.length > 0 && e.foods[0]
+      return e
+    })
+  }).catch(err => {
+    console.log('FETCH MY UPCOMING EVENTS FAILURE')
+    console.log(err.errors)
+    throw err
+  })
+}
 
 export function fetchEvents (params) {
   return Vue.axios.get(
