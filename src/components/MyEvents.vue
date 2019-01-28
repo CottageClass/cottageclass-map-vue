@@ -5,7 +5,11 @@
       <div class="divider-2px"></div>
       <div class="content-container-4 w-container">
         <h1 class="h1-display">My Playdates</h1>
-        <EventList :events="myEventsByDate"/>
+        <EventList
+        :events="myEventsByDate"
+        :currentUser="currentUser"
+        :currentUserId="currentUserId"
+        :isAuthenticated="isAuthenticated"/>
       </div>
     </div>
     <Footer />
@@ -64,28 +68,10 @@ export default {
     formatDate: function (date) {
       return moment(date).format('dddd, MMM Do')
     },
-    fetchAllEvents: function () {
-      this.showAllButtonText = 'Loading more...'
-      api.fetchEvents('upcoming').then((res) => {
+    fetchMyUpcomingEvents: function () {
+      api.fetchMyUpcomingEvents().then(res => {
         this.events = res
-        window.globalEventList = res
-        this.showShowAllButton = false
       })
-    },
-    fetchUpcomingEvents: function () {
-      this.events = window.globalEventList
-      if (!(this.events && this.events.length > 50)) {
-        api.fetchEvents('upcoming/page/1/page_size/50').then(
-          (res) => {
-            this.events = res
-            window.globalEventList = res
-            this.showShowAllButton = true
-            if (this.events.length < 10) {
-              this.fetchAllEvents()
-            }
-          }
-        )
-      }
     },
     fetchCurrentUser: function () {
       api.fetchCurrentUserNew(Token.currentUserId(this.$auth)).then(currentUser => {
@@ -94,7 +80,7 @@ export default {
     }
   },
   mounted: function () {
-    this.fetchUpcomingEvents()
+    this.fetchMyUpcomingEvents()
     if (this.$auth && this.$auth.isAuthenticated()) {
       this.isAuthenticated = true
       this.currentUserId = Token.currentUserId(this.$auth)
