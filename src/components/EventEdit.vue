@@ -1,5 +1,9 @@
 <template>
 <div class="body" id="top-of-form">
+  <DeleteEventConfirmationModal
+      v-if="showDeleteConfirmationModal"
+      v-on:closeModal="showDeleteConfirmationModal = false"
+      :eventId="eventId"/>
   <MainNav />
   <div class="container w-container">
   <h1 class="heading-1">Editing event #{{ eventId }} </h1>
@@ -30,6 +34,13 @@
         <br><br>
         <DateTimePicker v-model="event.endsAt" showDate="true" />
       </Question>
+      <Question title="Delete This Event" subtitle="Are you unable to host this event?  This cannot be undone.">
+        <button
+            class="delete-event-button"
+            v-on:click="showDeleteConfirmationModal=true">
+          Delete
+        </button>
+      </Question>
 
       <!-- </edit date & time> -->
   </OnboardingStyleWrapper>
@@ -46,7 +57,6 @@ import MainNav from '@/components/MainNav.vue'
 import DateTimePicker from '@/components/DateTimePicker.vue'
 import PageActionsFooter from '@/components/PageActionsFooter.vue'
 import ErrorMessage from '@/components/onboarding/ErrorMessage.vue'
-import * as Token from '@/utils/tokens.js'
 import * as api from '@/utils/api.js'
 import EventActivity from '@/components/onboarding/EventActivity.vue'
 import Food from '@/components/onboarding/Food.vue'
@@ -55,6 +65,8 @@ import PetsDescription from '@/components/onboarding/PetsDescription.vue'
 import MaxChildren from '@/components/onboarding/MaxChildren.vue'
 import OnboardingStyleWrapper from '@/components/onboarding/OnboardingStyleWrapper.vue'
 import Question from '@/components/onboarding/Question.vue'
+import DeleteEventConfirmationModal from '@/components/DeleteEventConfirmationModal.vue'
+
 import AgeRange from '@/components/onboarding/AgeRange.vue'
 var moment = require('moment')
 
@@ -62,14 +74,15 @@ var VueScrollTo = require('vue-scrollto')
 
 export default {
   name: 'ProfileEdit',
-  components: { EventActivity, Food, HouseRules, PetsDescription, MaxChildren, MainNav, OnboardingStyleWrapper, PageActionsFooter, ErrorMessage, YesOrNo, Question, DateTimePicker, EventName, AgeRange },
+  components: { EventActivity, Food, HouseRules, PetsDescription, MaxChildren, MainNav, OnboardingStyleWrapper, PageActionsFooter, ErrorMessage, YesOrNo, Question, DateTimePicker, EventName, AgeRange, DeleteEventConfirmationModal },
   data () {
     return {
       eventId: this.$route.params.id,
       saveButtonText: 'Save',
       eventDataFromAPI: null,
       event: null, // the client-side data model for events
-      showError: false
+      showError: false,
+      showDeleteConfirmationModal: false
     }
   },
   mounted: function () {
@@ -181,6 +194,24 @@ export default {
 
 .container {
   padding: 32px 32px 100px;
+}
+
+.delete-event-button {
+  padding: 12px 32px;
+  border-radius: 4px;
+  background-color: #e91f29;
+  text-align: center;
+  color: #fff;
+}
+
+.delete-event-button:hover {
+  background-image: -webkit-gradient(linear, left top, left bottom, from(rgba(0, 0, 0, .1)), to(rgba(0, 0, 0, .1)));
+  background-image: linear-gradient(180deg, rgba(0, 0, 0, .1), rgba(0, 0, 0, .1));
+}
+
+.delete-event-button:active {
+  background-image: -webkit-gradient(linear, left top, left bottom, from(rgba(0, 0, 0, .1)), to(rgba(0, 0, 0, .1)));
+  background-image: linear-gradient(180deg, rgba(0, 0, 0, .1), rgba(0, 0, 0, .1));
 }
 
 @media (max-width: 991px) {

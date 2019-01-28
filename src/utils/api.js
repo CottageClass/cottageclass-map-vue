@@ -370,6 +370,21 @@ export function submitEventParticipant (eventId, participantChildIds) {
     })
 }
 
+export function deleteEvent (eventId, successCallback) {
+  return Vue.axios.delete(`${process.env.BASE_URL_API}/api/events/${eventId}`)
+    .then(res => {
+      console.log('DELETE EVENT SUCCESS')
+      console.log(res)
+      successCallback()
+    })
+    .catch(err => {
+      console.log('DELETE EVENT FAILURE')
+      console.log(err)
+      console.log(Object.entries(err))
+      throw err
+    })
+}
+
 /*
  * UTILS
  */

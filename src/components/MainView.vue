@@ -359,9 +359,6 @@ text-align: center;
   font-size: 16px;
 }
 
-.dropdown-arrows img {
-}
-
 .availability-container a {
   text-decoration: none;
 }

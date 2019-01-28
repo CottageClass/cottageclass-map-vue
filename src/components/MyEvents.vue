@@ -5,7 +5,7 @@
       <div class="divider-2px"></div>
       <div class="content-container-4 w-container">
         <h1 class="h1-display">My Playdates</h1>
-        <EventList :events="myEventsByDate" />
+        <EventList :events="myEventsByDate"/>
       </div>
     </div>
     <Footer />
