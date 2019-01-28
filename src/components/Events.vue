@@ -19,7 +19,11 @@
         <option>20</option>
         <option>50</option>
       </select> miles</p>
-      <EventList :events="eventsWithinDistance" />
+      <EventList
+        :events="eventsWithinDistance"
+        :currentUser="currentUser"
+        :currentUserId="currentUserId"
+        :isAuthenticated="isAuthenticated"/>
     </div>
   </div>
 

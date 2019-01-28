@@ -42,6 +42,7 @@
       </div>
       </div>
           <RsvpButton v-if="showRsvpButton" :userParticipating="event.participated" :full="event.full" :eventId="event.id" />
+          <EditButton v-if="showEditButton" :eventId="event.id" />
       </div>
     </div>
   </li>
@@ -53,14 +54,15 @@
 
 import AvatarImage from './AvatarImage.vue'
 import RsvpButton from './RsvpButton.vue'
+import EditButton from './EditButton.vue'
 import EventCategoryIcon from '@/components/EventCategoryIcon.vue'
 
 var moment = require('moment')
 
 export default {
   name: 'EventListItem',
-  props: ['event', 'index', 'showRsvpButton', 'distance'],
-  components: { AvatarImage, RsvpButton, EventCategoryIcon },
+  props: ['event', 'index', 'showRsvpButton', 'distance', 'showEditButton'],
+  components: { AvatarImage, RsvpButton, EventCategoryIcon, EditButton },
   computed: {
     childAgesSorted: function () {
       return this.event.hostChildAges.concat().sort((a, b) => a - b)

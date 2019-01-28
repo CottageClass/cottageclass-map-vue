@@ -17,6 +17,7 @@
         :index="index"
         :key="index"
         :showRsvpButton="!isAuthenticated || currentUserId !== event.hostId"
+        :showEditButton="currentUserId === event.hostId"
         :distance="distanceFromCurrentUser(event.hostFuzzyLatitude, event.hostFuzzyLongitude)"
       />
     </div>
@@ -28,16 +29,12 @@ import EventListItem from '@/components/EventListItem.vue'
 import * as api from '@/utils/api.js'
 
 var moment = require('moment')
-console.log('eventlist')
 export default {
   name: 'EventList',
   components: { EventListItem },
-  props: ['events'],
+  props: ['events', 'currentUser', 'currentUserId', 'isAuthenticated'],
   data () {
     return {
-      currentUser: null,
-      isAuthenticated: false,
-      currentUserId: null
     }
   },
   methods: {
