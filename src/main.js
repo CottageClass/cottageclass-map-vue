@@ -3,6 +3,7 @@
 import Vue from 'vue'
 import App from './App'
 import router from './router'
+import store from './store'
 import * as VueGoogleMaps from 'vue2-google-maps'
 import './registerServiceWorker'
 import VueClipboard from 'vue-clipboard2'
@@ -102,6 +103,7 @@ Vue.use(VueGoogleMaps, {
 /* eslint-disable no-new */
 new Vue({
   el: '#app',
+  store,
   router,
   components: { App },
   template: '<App/>'
