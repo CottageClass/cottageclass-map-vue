@@ -1,13 +1,14 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import * as api from '../utils/api'
+import moment from 'moment'
 
 Vue.use(Vuex)
 
 export default new Vuex.Store(
   {
     state: {
-      eventsByDate: null,  // We shouldn't store all events.  It will have to change later
+      eventsByDate: null, // We shouldn't store all events.  It will have to change later
       currentUser: null,
       isAuthenticated: false
     },
@@ -20,8 +21,12 @@ export default new Vuex.Store(
       }
     },
     actions: {
-      updateAllEventsAsync: ({ commit }) => {
+      // Once again, we should not be doing this
+      fetchAllEventsAsync: ({ commit }) => {
         api.fetchEvents({}).then(events => {
+          this.events.sort((eventA, eventB) => {
+            return moment(eventA.startsAt).diff(moment(eventB.startsAt))
+          })
           commit('setEventsByDate', { events })
         })
       }
