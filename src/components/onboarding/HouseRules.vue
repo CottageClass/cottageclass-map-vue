@@ -1,23 +1,21 @@
 <template>
-<div class="body">
-  <div class="content-container">
-    <div class="title-container">
-      <h1 class="title">House rules</h1>
-      <p class="onb-paragraph-subheading-2">Are there any specific house rules you'd like guests to be aware of?</p>
-    </div>
+<Question 
+title="House rules"
+subtitle="Are there any specific house rules you'd like guests to be aware of?">
     <div class="form-describe-need w-form">
       <form v-on:submit.prevent id="email-form-2">
         <textarea v-model="rules" id="field" name="field" placeholder="Shoes off? Allergies? Anything else?" maxlength="5000" class="text-area-decribe-need w-input"></textarea>
       </form>
     </div>
-  </div>
-</div>
+  </Question>
 </template>
 
 <script>
+import Question from '@/components/onboarding/Question.vue'
 
 export default {
   name: 'HouseRules',
+  components: { Question },
   props: ['value'],
   data () {
     return {

@@ -15,13 +15,7 @@
 
         <div v-if="!success">
           <div class="onb-content-container-2">
-            <div v-if="showError && (errors.all().length > 0 || error)" class="onb-error-container">
-              <div class="onb-error-text">
-                <span> {{ error }}</span>
-                <ul>
-                  <li v-for="error in errors.all()">{{ error }}</li>
-                </ul>
-              </div>
+            <ErrorMessage v-if="showError && (errors.all().length > 0 || error)" :text="error" :messages="allErrors" }} />
             </div>
             <div class="onb-top-content-container">
               <h1 class="onb-heading-large">Join KidsClub</h1>
@@ -114,9 +108,11 @@
 </template>
 
 <script>
+import ErrorMessage from '@/components/onboarding/ErrorMessage.vue'
 
 export default {
   name: 'Signup',
+  components: { ErrorMessage },
   data: function () {
     return {
       success: false,
@@ -145,6 +141,9 @@ export default {
     },
     formHasErrors: function () {
       return this.errors
+    },
+    allErrors: function () {
+      return this.errors.all()
     },
     nextButtonClassObject: function () {
       return {

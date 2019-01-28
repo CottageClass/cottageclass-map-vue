@@ -1,23 +1,15 @@
 <template>
-  <div class="content-container _100vh">
-    <div class="title-container">
-      <h1 class="title">What's your phone number?</h1>
-    </div>
-    <div class="location-search-container">
-      <div class="w-form">
-        <form v-on:submit.prevent id="email-form-2" name="email-form-2" data-name="Email Form 2">
+  <Question title="What's your phone number?" explanation="Only members who RSVP to your playdate will see your phone number. (We may also send you text messages about your playdate or upcoming playdates. Message & data rates apply.)">
+        <form v-on:submit.prevent>
           <input
           @keyup.enter="$emit('pressedEnter')"
           v-model="number"
           type="tel"
-          class="location-text-field w-input"
+          class="w-input location-text-field"
           maxlength="30"
           :placeholder="placeholder">
         </form>
-      </div>
-    </div>
-    <p class="paragraph-small-50">Only members who RSVP to your playdate will see your phone number. (We may also send you text messages about your playdate or upcoming playdates. Message &amp; data rates apply.)</p>
-  </div>
+  </Question>
 </template>
 
 <script>
@@ -28,10 +20,13 @@ import {
   formatNumber,
   isValidNumber
 } from 'libphonenumber-js'
+import Question from '@/components/onboarding/Question.vue'
+
 
 export default {
   name: "Phone",
   props: ['value', 'currentPhone', 'required'],
+  components: { Question },
   data () {
     return {
       number: '',

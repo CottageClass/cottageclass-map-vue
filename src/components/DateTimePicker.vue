@@ -19,10 +19,10 @@ var moment = require('moment')
 
 export default {
   name: 'DateTimePicker',
-  props: ['value'],
+  props: ['value', 'showDate'],
   data () {
     return {
-      dateTimeSelected: this.value,
+      dateTimeSelected: moment(this.value).format('YYYY-MM-DDTHH:mm'),
       hideDateTimeInputOnMobile: true
     }
   },
@@ -40,6 +40,8 @@ export default {
     timePlaceholder: function () {
       if (this.dateTimeSelected === null) {
         return 'Choose a time'
+      } else if (this.showDate) {
+        return moment(this.dateTimeSelected).format('dddd, MMMM D - h:mm a')
       } else {
         return moment(this.dateTimeSelected).format('dddd, h:mm a')
       }

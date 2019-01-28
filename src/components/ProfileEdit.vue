@@ -4,20 +4,17 @@
   <div class="container w-container">
   <h1 class="heading-1">Edit profile</h1>
   <OnboardingStyleWrapper styleIs="editing" class="cards" v-if="currentUser">
-      <div v-if="showError && error" class="onb-error-container"><div class="onb-error-text">Your form has errors. Please fix them to continue...</div></div>
-      <div v-if="showError && error" id="error" class="onb-error-container"><div class="onb-error-text">{{ phone.err}}</div></div>
+      <ErrorMessage v-if="showError && error" text="Your form has errors. Please fix them to continue..." />
+      <ErrorMessage v-if="showError && error" :text="phone.err" />
     <Phone v-model="phone" :currentPhone="currentUser.phone" :required="false" />
-      <div v-if="showError && error" id="error" class="onb-error-container"><div class="onb-error-text">{{ location.err }}</div></div>
+      <ErrorMessage v-if="showError && error" :text="location.err" />
     <Location :currentAddress="currentUser.fullAddress" :currentApartment="currentUser.apartment" v-model="location" :required="false" />
-      <div v-if="showError && error" id="error" class="onb-error-container"><div class="onb-error-text">{{ availability.err }}</div></div>
+      <ErrorMessage v-if="showError && error" :text="availability.err" />
     <Availability v-model="availability" :required="false"/>
-
-    <!-- But children back in once I have it
-      <div v-if="showError && error" id="error" class="onb-error-container"><div class="onb-error-text">{{ children.err }}</div></div>
+    <ErrorMessage v-if="showError && error" :text=" children.err" />
     <Children v-model="children" :required="false" />
-  -->
   </OnboardingStyleWrapper>
-  <PageActionsFooter :buttonText="saveButtonText" />
+  <PageActionsFooter :buttonText="saveButtonText" @click="submitUserInformation"/>
   </div>
 </div>
 
@@ -25,18 +22,20 @@
 
 <script>
 import Location from '@/components/onboarding/Location.vue'
+import Children from '@/components/onboarding/Children.vue'
 import Phone from '@/components/onboarding/Phone.vue'
 import Availability from '@/components/onboarding/Availability.vue'
 import MainNav from '@/components/MainNav.vue'
 import PageActionsFooter from '@/components/PageActionsFooter.vue'
 import OnboardingStyleWrapper from '@/components/onboarding/OnboardingStyleWrapper.vue'
+import ErrorMessage from '@/components/onboarding/ErrorMessage.vue'
 import * as Token from '@/utils/tokens.js'
 import * as api from '@/utils/api.js'
 var VueScrollTo = require('vue-scrollto')
 
 export default {
   name: 'ProfileEdit',
-  components: { Location, Phone, Availability, MainNav, OnboardingStyleWrapper, PageActionsFooter },
+  components: { Location, Phone, Availability, MainNav, OnboardingStyleWrapper, PageActionsFooter, ErrorMessage, Children },
   data () {
     return {
       currentUser: null,

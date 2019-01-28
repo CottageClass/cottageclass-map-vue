@@ -1,11 +1,10 @@
 <template>
-  <div class="onb-content-container _100vh">
-    <div class="onb-top-content-container">
-      <h1 class="onb-heading-large">How many children can you host at your playdate?</h1>
-    </div>
-    <div class="dropdown-container">
-      <div class="w-form">
-        <select v-model="maxChildren">
+  <Question 
+  title="How many children can you host at your playdate?"
+  explanation="For each child you host, you receive points that you can use to attend others' playdates.">
+  <div class="dropdown-container">
+      <div>
+        <select class="w-form" v-model="maxChildren">
           <option>2</option>
           <option>3</option>
           <option>4</option>
@@ -18,17 +17,19 @@
         </select>
       </div>
     </div>
-    <br>
-        <p class="onb-paragraph-small-50">For each child you host, you receive points that you can use to attend others' playdates.</p>
-  </div>
+  </Question>
 </template>
 
 <script>
+import Question from '@/components/onboarding/Question.vue'
+
 export default {
   name: 'MaxChildren',
+  components: { Question },
+  props: ['value'],
   data () {
     return {
-      maxChildren: 2
+      maxChildren: this.value || 2
     }
   },
   mounted: function () {
@@ -39,22 +40,28 @@ export default {
       this.$emit('input', this.maxChildren)
     }
   }
-}
+};
 </script>
 
-<style lang="scss" scoped>
+<style scoped>
 
 select {
   all: unset;
 }
 
+.w-form {
+    background-color: hsla(0, 0%, 100%, .7);
+  padding: 16px 8px 24px 24px;
+  border-radius: 4px;
+  margin-left: auto;
+  margin-right: auto;
+  width: 30px;
+}
+
 .dropdown-container {
   text-align: center;
   font-size: 24px;
-  background-color: hsla(0, 0%, 100%, .7);
-  height: 56px;
-  padding: 16px 12px 0px 18px;
-  border-radius: 4px;
+  padding: 0 0 16px 0;
 }
 
 </style>

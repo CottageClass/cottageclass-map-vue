@@ -1,42 +1,28 @@
 <template>
-  <div class="onb-content-container">
-    <div class="onb-top-content-container">
-      <h1 class="onb-heading-large">What kind of food will you serve at your activity?</h1>
-      <p class="onb-paragraph-subheading-2">All hosts must provide a dinner for kids. We may ask you to accommodate allergies and dietary restrictions, but it doesn't have to be time-consuming. Choose one of these tried-and-true options.</p>
-    </div>
-    <div class="onb-form-block-checkbox-list w-form">
-      <form class="onb-form-checkbox-list">
-        <div
-        v-for="food in foods"
-        class="checkbox-field-extra-space"
-        :class="{'active-checkbox': food === foodSelected}">
-          <input
-          type="radio"
-          :id="food"
-          :value="food"
-          :name="food"
-          class="onb-checkbox w-checkbox-input"
-          v-model="foodSelected"
-          >
-          <label
-          :for="food"
-          class="onb-checkbox-label w-form-label"
-          >
-           {{ capitalizeFirstLetter(food) }}
-         </label>
-        </div>
-      </form>
-    </div>
-  </div>
+  <Question
+title="What kind of food will you serve at your activity?"
+subtitle="All hosts must provide a dinner for kids. We may ask you to accommodate allergies and dietary restrictions, but it doesn't have to be time-consuming. Choose one of these tried-and-true options.">
+
+   <MultipleChoice 
+   type="radio" 
+   v-model="foodSelected" 
+   :choices="foods"/> 
+
+  </Question>
 </template>
 
 <script>
+import Question from '@/components/onboarding/Question.vue'
+import MultipleChoice from '@/components/onboarding/MultipleChoice.vue'
+
+
 export default {
   name: 'Food',
   props: ['value'],
+  components: { Question, MultipleChoice },    
   data () {
     return {
-      foodSelected: '',
+      foodSelected: this.value.selected,
       errorMesg: 'Please choose a food option from the list.',
       foods: [
         'pizza \ud83c\udf55',

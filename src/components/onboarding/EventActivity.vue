@@ -1,42 +1,25 @@
 <template>
-  <div class="onb-content-container">
-    <div class="onb-top-content-container">
-      <h1 class="onb-heading-large">Choose your activity</h1>
-      <p class="onb-paragraph-subheading-2">All members must provide one activity per month. These tried-and-true options work great, and we'll walk you through whichever one you choose.</p>
-    </div>
-    <div class="onb-form-block-checkbox-list w-form">
-      <form class="onb-form-checkbox-list">
-        <div
-        v-for="activity in activities"
-        class="checkbox-field-extra-space"
-        :class="{'active-checkbox': activity === activitySelected}">
-          <input
-          type="radio"
-          :id="activity"
-          :value="activity"
-          :name="activity"
-          class="onb-checkbox w-checkbox-input"
-          v-model="activitySelected"
-          >
-          <label
-          :for="activity"
-          class="onb-checkbox-label w-form-label"
-          >
-           {{ capitalizeFirstLetter(activity) }}
-         </label>
-        </div>
-      </form>
-    </div>
-  </div>
+  <Question 
+  title="Choose your activity"
+  subtitle="All members must provide one activity per month. These tried-and-true options work great, and we'll walk you through whichever one you choose.">
+     <MultipleChoice 
+     type="radio" 
+     v-model="activitySelected" 
+     :choices="activities" /> 
+    </Question>
 </template>
 
 <script>
+import Question from '@/components/onboarding/Question.vue'
+import MultipleChoice from '@/components/onboarding/MultipleChoice.vue'
+
 export default {
   name: 'EventActivity',
+  components: { Question, MultipleChoice },
   props: ['value'],
   data () {
     return {
-      activitySelected: '',
+      activitySelected: this.value.selected,
       errorMesg: 'Please choose an activity option from the list.',
       activities: [
         'movie night',
@@ -69,11 +52,6 @@ export default {
       })
     }
   },
-  methods: {
-    capitalizeFirstLetter: function (string) {
-      return string.charAt(0).toUpperCase() + string.slice(1)
-    }
-  }
 }
 </script>
 
