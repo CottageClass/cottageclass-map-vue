@@ -167,7 +167,7 @@ function createPersonObject (personInApi, availableChildren = []) {
     // todo: add these once I have them
     verified: p.verified,
     phone: p.phone,
-    networkCode: p.network_code,
+    networkCode: 'brooklyn-events',
     dateCreated: p.date_created,
     hasAllRequiredFields: hasAllRequiredFields(),
     blurb: p.profile_blurb
@@ -233,7 +233,8 @@ export function fetchCurrentUserNew (userId) {
     console.log(res)
     let normalizedData = normalize(res.data)
     let user = normalizedData.user[userId].attributes
-    user.hasAllRequiredFields = user.phone && user.latitude && user.longitude && user.networkCode
+    user.hasAllRequiredFields = user.phone && user.latitude && user.longitude
+    user.networkCode = 'brooklyn-events' // give everyone the new network code
     let childrenById = normalizedData.child
     let childIds = Object.keys(childrenById)
     let generateChild = function (aChildId) {
