@@ -1,5 +1,5 @@
 <template>
-  <Question 
+  <Question
   title="Child Information"
   subtitle="We need some basic info about your children. Their ages will appear on your public profile, but only hosts of events you RSVP to will see their names.">
       <form v-on:submit.prevent id="email-form-2" name="email-form-2" data-name="Email Form 2" class="form-2">
@@ -14,7 +14,7 @@
           <label for="birthday-2" class="onb-field-label">Birthday</label>
           <input type="date" min="1980-01-01" class="basic-text-field w-input" maxlength="256" name="birthday-2" data-name="Birthday 2" placeholder="MM / DD / YYYY" id="birthday-2" v-model="children[index].birthday" />
 
-          <label for="school-2" class="onb-field-label">School Name</label>
+          <label for="school-2" class="onb-field-label">School Name (optional)</label>
           <input type="text" class="name-text-field w-input" maxlength="256" name="school-2" data-name="School 2" placeholder="Name of School" id="school-2" v-model="children[index].schoolName" />
         </div>
       </form><a @click="addChild" class="onb-button-add-group w-inline-block"><img src="@/assets/add.svg" alt="" class="image-7"><div class="onb-button-add-group-text">Add Another child</div></a>
@@ -28,7 +28,7 @@ export default {
 
   name: 'Children',
   props: ['value'],
-  components: { Question },    
+  components: { Question },
   data () {
     return {
       children: this.value.list,
