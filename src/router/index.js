@@ -54,8 +54,9 @@ export default new Router({
     },
     {
       path: '/home',
-      name: 'MainView',
-      component: Events
+      name: 'Home',
+      component: Events,
+      props: true
     },
     {
       path: '/profile/edit',
