@@ -2043,7 +2043,6 @@ a:hover {
   display: -webkit-flex;
   display: -ms-flexbox;
   display: flex;
-  padding-top: 16px;
   padding-right: 8px;
   padding-left: 8px;
   -webkit-box-orient: vertical;
