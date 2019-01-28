@@ -14,7 +14,7 @@ export default new Vuex.Store(
     },
     mutations: {
       setEventsByDate: (state, payload) => {
-        state.eventsByDate = payload.eventsByDate
+        state.eventsByDate = payload.events
       },
       setCurrentUser: (state, payload) => {
         state.currentUser = payload.user
@@ -23,8 +23,8 @@ export default new Vuex.Store(
     actions: {
       // Once again, we should not be doing this
       fetchAllEventsAsync: ({ commit }) => {
-        api.fetchEvents({}).then(events => {
-          this.events.sort((eventA, eventB) => {
+        api.fetchEvents().then(events => {
+          events.sort((eventA, eventB) => {
             return moment(eventA.startsAt).diff(moment(eventB.startsAt))
           })
           commit('setEventsByDate', { events })
