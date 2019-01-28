@@ -121,12 +121,6 @@ export default {
       lastStep: 13,
       showError: false,
       name: {}, // todo: remove if possible now this comes from FB
-      bookingRequest: {
-        dateTimeSelected: null,
-        description: '',
-        err: 'skippable',
-        showCountdownPromo: true
-      },
       location: {},
       phone: {},
       children: {
