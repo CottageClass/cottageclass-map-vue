@@ -4,7 +4,7 @@
   <div class="container w-container">
   <h1 class="heading-1">Editing event #{{ eventId }} </h1>
   <OnboardingStyleWrapper styleIs="editing" class="cards" v-if="event">
-      <ErrorMessage v-if="showError && error" text="Your form has errors. Please fix them to continue..." />
+      <ErrorMessage v-if="showError && error" text="Your entries have errors. Please fix them to continue..." />
       <EventActivity v-model="event.activity" />
       <MaxChildren v-model="event.maximumChildren" />
       <Food v-model="event.food" />
@@ -16,8 +16,11 @@
       />     
       <PetsDescription v-model="event.petDescription" />
       <!-- <edit date & time> -->
-      <ErrorMessage v-if="!datesValidate" text="Please enter valid start and end times for your event." />
-      <Question title="When is your event?" subtitle="From...">
+      <ErrorMessage v-if="!datesValidate" text="Please enter a valid start and end time for your event." />
+      <Question title="When is your event?">
+      	From...
+      	<br>
+      	<br>
       	<DateTimePicker v-model="event.startsAt" showDate="true" />
       	<br>
       	To...
@@ -54,24 +57,6 @@ var moment = require('moment')
 
 var VueScrollTo = require('vue-scrollto')
 
-// required to deploy: 
-// return error if error
-// validate event start / end time. 
-///
-// other todos:
-// make sure user auth'd to edit
-// add title
-// add max / min ages
-//          'child_age_minimum': defaultChildAgeMinimum,
-//          'child_age_maximum': defaultChildAgeMaximum
-// add title:					'name': this.eventName,
-
-// fix warning about modifying 'value' in multiple choice component
-// make error messages real
-// ensure user is host if not throw error. 
-// add error message for "pets" where you have to enter a description if you have a pet.
-
-
 export default {
   name: 'ProfileEdit',
   components: { EventActivity, Food, HouseRules, PetsDescription, EventTime, EventDate, MaxChildren, MainNav, OnboardingStyleWrapper, PageActionsFooter, ErrorMessage, YesOrNo, Question, DateTimePicker },
@@ -96,7 +81,7 @@ export default {
           }
   	},
     error: function () {
-    	return this.datesValidate
+    	return !this.datesValidate
     },
     eventDataForSubmissionToAPI: function () {
       return {
