@@ -23,6 +23,7 @@ export default {
   data () {
     return {
       dateTimeSelected: moment(this.value).format('YYYY-MM-DDTHH:mm'),
+      timeZoneString: this.value.slice(-6),
       hideDateTimeInputOnMobile: true
     }
   },
@@ -45,11 +46,14 @@ export default {
       } else {
         return moment(this.dateTimeSelected).format('dddd, h:mm a')
       }
-    }
+    },
+    dateIsValid: function () {
+      return moment(this.dateTimeSelected).isValid()
+      }
   },
   watch: {
     dateTimeSelected: function () {
-      this.$emit('input', this.dateTimeSelected)
+      this.$emit('input', this.dateIsValid ? this.dateTimeSelected + this.timeZoneString : false)
     }
   }
 }

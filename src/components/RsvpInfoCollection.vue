@@ -32,7 +32,6 @@
    <MultipleChoice 
    type="checkbox" 
    v-model="childrenSelected" 
-   vModelIs="array"
    :labelsAndOrder="labelsAndOrder"/> 
   </div>
 </div>
