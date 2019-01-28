@@ -8,7 +8,8 @@
   <div class="container w-container">
   <h1 class="heading-1">Editing event #{{ eventId }} </h1>
   <OnboardingStyleWrapper styleIs="editing" class="cards" v-if="event">
-      <ErrorMessage v-if="showError && error" text="Your form has errors. Please fix them to continue..." />
+      <ErrorMessage v-if="showError && error" text="Your entries have errors. Please fix them to continue..." />
+      <EventName v-model="event.name" />
       <EventActivity v-model="event.activity" />
       <MaxChildren v-model="event.maximumChildren" />
       <Food v-model="event.food" />
@@ -17,11 +18,14 @@
       question="Do you have pets?"
       description="This is often very important for parents (and children) to know."
       v-model="event.hasPet"
-      />     
+      />
       <PetsDescription v-model="event.petDescription" />
       <!-- <edit date & time> -->
-
-      <Question title="When is your event?" subtitle="From...">
+      <ErrorMessage v-if="!datesValidate" text="Please enter a valid start and end time for your event." />
+      <Question title="When is your event?">
+      	From...
+      	<br>
+      	<br>
       	<DateTimePicker v-model="event.startsAt" showDate="true" />
       	<br>
       	To...
@@ -37,7 +41,7 @@
       </Question>
 
 
-      <!-- </edit date & time> -->      
+      <!-- </edit date & time> -->
   </OnboardingStyleWrapper>
   <PageActionsFooter :buttonText="saveButtonText" @click="saveEvent"/>
   </div>
@@ -46,14 +50,7 @@
 </template>
 
 <script>
-// todo: 
-// make sure user auth'd to edit
-
-/*        
-					'name': this.eventName,
-          'child_age_minimum': defaultChildAgeMinimum,
-          'child_age_maximum': defaultChildAgeMaximum
-*/ 
+import EventName from '@/components/onboarding/EventName.vue'
 import YesOrNo from '@/components/onboarding/YesOrNo.vue'
 import MainNav from '@/components/MainNav.vue'
 import DateTimePicker from '@/components/DateTimePicker.vue'
@@ -72,22 +69,13 @@ import OnboardingStyleWrapper from '@/components/onboarding/OnboardingStyleWrapp
 import Question from '@/components/onboarding/Question.vue'
 import DeleteEventConfirmationModal from '@/components/DeleteEventConfirmationModal.vue'
 
+var moment = require('moment')
 
 var VueScrollTo = require('vue-scrollto')
 
-// todo: 
-// resolve API issue
-// use 'datetimepicker' component for start and end times. 
-// fix warning about modifying 'value' in multiple choice component
-// make error messages real
-// add title
-// add max / min ages
-// ensure user is host if not throw error. 
-// bug with timezones fetching event
-
 export default {
   name: 'EventEdit',
-  components: { EventActivity, Food, HouseRules, PetsDescription, EventTime, EventDate, MaxChildren, MainNav, OnboardingStyleWrapper, PageActionsFooter, ErrorMessage, YesOrNo, Question, DateTimePicker, DeleteEventConfirmationModal },
+  components: { EventActivity, Food, HouseRules, PetsDescription, EventTime, EventDate, MaxChildren, MainNav, OnboardingStyleWrapper, PageActionsFooter, ErrorMessage, YesOrNo, Question, DateTimePicker, DeleteEventConfirmationModal, EventName },
   data () {
     return {
     	eventId: this.$route.params.id,
@@ -102,15 +90,20 @@ export default {
       this.fetchEvent()
   },
   computed: {
+  	datesValidate: function () {
+  		if (moment(this.event.startsAt).isBefore(this.event.endsAt)) {
+            return true
+          } else {
+          	return false
+          }
+  	},
     error: function () {
-    	// add validation here
-        return false
+    	return !this.datesValidate
     },
     eventDataForSubmissionToAPI: function () {
       return {
         'event': {
           'name': this.event.name,
-          'start_date': this.event.date.selected,
           'starts_at': this.event.startsAt,
           'ends_at': this.event.endsAt,
           'has_pet': this.event.hasPet.isTrue,
@@ -123,7 +116,7 @@ export default {
           'child_age_maximum': this.event.childAgeMaximum
         }
       }
-    }    
+    }
   },
   methods: {
   	fetchEvent: function () {
@@ -137,10 +130,6 @@ export default {
     	let e = dataFromAPI;
     	return {
     		   name: e.name,
-    		   date: {
-    		     selected: 'Other',
-    		     otherDate: e.startDate
-    		   },
     		   startsAt: e.startsAt,
     		   endsAt: e.endsAt,
     		   hasPet: {
@@ -182,7 +171,7 @@ export default {
           console.log('Error saving', err)
           this.saveButtonText = 'Problem saving. Click to try again.'
         })
-      }     
+      }
     }
   }
 }

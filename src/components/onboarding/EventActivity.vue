@@ -30,10 +30,16 @@ export default {
       ]
     }
   },
-  mounted: function () {
-    this.$emit('input', {
-      err: this.errorMesg
+  methods: {
+    emitInput: function () {
+      this.$emit('input', {
+        selected: this.activitySelected,
+        err: this.err
     })
+  }
+  },
+  mounted: function () {
+    this.emitInput()
   },
   computed: {
     err: function () {
@@ -46,10 +52,7 @@ export default {
   },
   watch: {
     activitySelected: function () {
-      this.$emit('input', {
-        selected: this.activitySelected,
-        err: this.err
-      })
+      this.emitInput()
     }
   },
 }
