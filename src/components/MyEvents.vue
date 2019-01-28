@@ -1,19 +1,11 @@
 <template>
   <div class="body">
-    <DeleteEventConfirmationModal
-      v-if="!!deleteModalEventId"
-      v-on:closeModal="deleteModalEventId = null"
-      v-on:eventDeleted="fetchAllEvents()"
-      :eventId="deleteModalEventId"/>
     <MainNav />
     <div class="content-section background-01">
       <div class="divider-2px"></div>
       <div class="content-container-4 w-container">
         <h1 class="h1-display">My Playdates</h1>
-        <EventList
-          :events="myEventsByDate"
-          v-on:deleteEvent="(eventId) => deleteModalEventId = eventId"
-        />
+        <EventList :events="myEventsByDate"/>
       </div>
     </div>
     <Footer />
@@ -24,14 +16,13 @@
 import MainNav from '@/components/MainNav.vue'
 import Footer from '@/components/Footer.vue'
 import EventList from '@/components/EventList.vue'
-import DeleteEventConfirmationModal from '@/components/DeleteEventConfirmationModal.vue'
 import * as Token from '@/utils/tokens.js'
 import * as api from '@/utils/api.js'
 var moment = require('moment')
 
 export default {
   name: 'MyEvents',
-  components: { MainNav, Footer, EventList, DeleteEventConfirmationModal },
+  components: { MainNav, Footer, EventList },
   props: ['limitTo'],
   data () {
     return {
@@ -40,8 +31,7 @@ export default {
       isAuthenticated: false,
       currentUserId: null,
       showAllButtonText: 'Show all playdates',
-      showShowAllButton: false,
-      deleteModalEventId: null
+      showShowAllButton: false
     }
   },
   computed: {

@@ -1,57 +1,51 @@
 <template>
-  <div>
-    <div class="action-bar">
-      <div/>
-      <button class="delete-event-button" v-on:click="$emit('deleteEvent')">x</button>
-    </div>
-  <router-link :to="{ name: 'EventPage', params: { id: event.id }}">
-  <li class="event-list-item">
-        <div class="event-list-item-graphic" :style="{ backgroundColor: backgroundColor(index)}">
-          <EventCategoryIcon :category="event.activityName" width="100" height="100" />
-    </div>
-    <div class="event-list-item-content">
-      <a href="event-detail.html" class="link-block-4 w-inline-block">
-        <h2 class="event-heading">{{ event.name }}</h2>
-      </a>
-      <div class="event-summary">
-            <div class="event-time">
-              {{ formatDate(event.startsAt) }}, {{ formatTime(event.startsAt) }} – {{ formatTime(event.endsAt) }}
-      </div>
-            <div class="event-location">
-              {{ event.hostNeighborhood || event.hostLocality || event.hostAdminAreaLevel1 }}
-              <span v-if="distance">- {{ distance }} miles from you</span>
-            </div>
-          </div>
-      <div class="action-bar">
-            <div class="host-info">
-              <AvatarImage class="avatar-small" :person="{facebookId: event.hostFacebookUid, avatar: event.hostAvatar}" />
-              <div class="text-block">
-                Hosted by
-                <a href="#" class="host-name link">{{ event.hostFirstName }}</a> &amp;
-                <span v-if="childAgesSorted.length === 1">
-                  1 kid&mdash;age {{ childAgesSorted[0] }}.
-                </span>
-                <span v-if="childAgesSorted.length === 2">
-                  2 kids&mdash;ages {{ childAgesSorted[0] }} and {{ childAgesSorted[1] }}.
-                </span>
-                <span v-if="childAgesSorted.length > 2">
-                  {{ childAgesSorted.length }} kids&mdash;ages
-            <span v-for="(age, index) in childAgesSorted">
-                    <span v-if="index === childAgesSorted.length - 1">and {{ age }}.</span>
-                    <span v-else>
-                      {{ age}}
-                      <span v-if="index !== childAgesSorted.length - 2">,</span>
-                    </span>
-            </span>
-          </span>
-        </div>
-        </div>
-            <RsvpButton v-if="showRsvpButton" :userParticipating="event.participated" :full="event.full" :eventId="event.id" />
-        </div>
-      </div>
-    </li>
-  </router-link>
+<router-link :to="{ name: 'EventPage', params: { id: event.id }}">
+<li class="event-list-item">
+      <div class="event-list-item-graphic" :style="{ backgroundColor: backgroundColor(index)}">
+        <EventCategoryIcon :category="event.activityName" width="100" height="100" />
   </div>
+  <div class="event-list-item-content">
+    <a href="event-detail.html" class="link-block-4 w-inline-block">
+      <h2 class="event-heading">{{ event.name }}</h2>
+    </a>
+    <div class="event-summary">
+          <div class="event-time">
+            {{ formatDate(event.startsAt) }}, {{ formatTime(event.startsAt) }} – {{ formatTime(event.endsAt) }}
+    </div>
+          <div class="event-location">
+            {{ event.hostNeighborhood || event.hostLocality || event.hostAdminAreaLevel1 }}
+            <span v-if="distance">- {{ distance }} miles from you</span>
+          </div>
+        </div>
+    <div class="action-bar">
+          <div class="host-info">
+            <AvatarImage class="avatar-small" :person="{facebookId: event.hostFacebookUid, avatar: event.hostAvatar}" />
+            <div class="text-block">
+              Hosted by
+              <a href="#" class="host-name link">{{ event.hostFirstName }}</a> &amp;
+              <span v-if="childAgesSorted.length === 1">
+                1 kid&mdash;age {{ childAgesSorted[0] }}.
+              </span>
+              <span v-if="childAgesSorted.length === 2">
+                2 kids&mdash;ages {{ childAgesSorted[0] }} and {{ childAgesSorted[1] }}.
+              </span>
+              <span v-if="childAgesSorted.length > 2">
+                {{ childAgesSorted.length }} kids&mdash;ages
+          <span v-for="(age, index) in childAgesSorted">
+                  <span v-if="index === childAgesSorted.length - 1">and {{ age }}.</span>
+                  <span v-else>
+                    {{ age}}
+                    <span v-if="index !== childAgesSorted.length - 2">,</span>
+                  </span>
+          </span>
+        </span>
+      </div>
+      </div>
+          <RsvpButton v-if="showRsvpButton" :userParticipating="event.participated" :full="event.full" :eventId="event.id" />
+      </div>
+    </div>
+  </li>
+</router-link>
 </template>
 
 <script>

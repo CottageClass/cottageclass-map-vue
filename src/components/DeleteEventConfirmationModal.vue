@@ -26,8 +26,13 @@ export default {
   methods: {
     deleteEvent: function () {
       api.deleteEvent(this.eventId, () => {
-        this.$emit('eventDeleted')
-        this.$emit('closeModal')
+        console.log('deleted it')
+        this.$router.push({
+          name: 'Home',
+          params: {
+            eventDeleted: true
+          }
+        })
       })
     }
   }

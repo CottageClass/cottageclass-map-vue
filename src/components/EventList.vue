@@ -18,7 +18,6 @@
         :key="index"
         :showRsvpButton="!isAuthenticated || currentUserId !== event.hostId"
         :distance="distanceFromCurrentUser(event.hostFuzzyLatitude, event.hostFuzzyLongitude)"
-        v-on:deleteEvent="$emit('deleteEvent', event.id)"
       />
     </div>
   </div>
