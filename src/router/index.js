@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import MainView from '@/components/MainView.vue'
+import RequestCare from '@/components/RequestCare.vue'
 import Bookings from '@/components/Bookings'
 import EmergencyInfo from '@/components/EmergencyInfo'
 import ProviderProfile from '@/components/ProviderProfile.vue'
@@ -41,7 +41,7 @@ export default new Router({
     {
       path: '/request',
       name: 'Request',
-      component: MainView
+      component: RequestCare
     },
     {
       path: '/bookings',
@@ -77,7 +77,7 @@ export default new Router({
       path: '/event/:id/edit',
       name: 'EventEdit',
       component: EventEdit
-    },    
+    },
     {
       path: '/event/:id/',
       name: 'EventPage',

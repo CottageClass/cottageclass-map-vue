@@ -61,7 +61,7 @@ import * as Token from '@/utils/tokens.js'
 import * as api from '@/utils/api.js'
 
 export default {
-  name: 'MainView',
+  name: 'RequestCare',
   components: { Provider, ShareButton, MainNav },
   data () {
     return {

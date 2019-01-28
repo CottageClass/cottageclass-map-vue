@@ -8,7 +8,7 @@
 
  <!-- nav -->
 
-      <Nav button="done" @next="$router.push({name: 'MainView'})" @prev="$emit('prev')" />
+      <Nav button="done" @next="$router.push({name: 'Home'})" @prev="$emit('prev')" />
 
   <div class="onb-content-container">
     <div class="onb-top-content-container">
