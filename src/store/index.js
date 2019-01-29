@@ -2,11 +2,13 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import * as api from '../utils/api'
 import moment from 'moment'
+import createPersistedState from 'vuex-persistedstate'
 
 Vue.use(Vuex)
 
 export default new Vuex.Store(
   {
+    plugins: [createPersistedState()],
     state: {
       eventsByDate: null, // We shouldn't store all events.  It will have to change later
       currentUser: null,
