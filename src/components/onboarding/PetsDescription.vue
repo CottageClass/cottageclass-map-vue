@@ -55,3 +55,56 @@ export default {
 }
 
 </script>
+
+<style scoped>
+
+html {
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+}
+
+.describe-label {
+  padding-top: 16px;
+}
+
+.body {
+  font-family: soleil, sans-serif;
+  color: #333;
+  font-size: 14px;
+  line-height: 20px;
+  min-height: 100vh;
+}
+
+.title-container {
+  margin-bottom: 32px;
+}
+
+.title {
+  margin-top: 0px;
+  margin-bottom: 10px;
+  font-size: 24px;
+  line-height: 34px;
+  text-align: center;
+  letter-spacing: -0.3px;
+}
+
+.text-area-decribe-need {
+  min-height: 120px;
+  padding-top: 16px;
+  padding-bottom: 16px;
+  padding-left: 18px;
+  border: 1px none #000;
+  border-radius: 4px;
+  font-size: 16px;
+}
+
+.describe-label {
+  margin-bottom: 8px;
+  line-height: 21px;
+  text-align: left;
+}
+
+.form-describe-need {
+  margin-bottom: 24px;
+}
+
+</style>
