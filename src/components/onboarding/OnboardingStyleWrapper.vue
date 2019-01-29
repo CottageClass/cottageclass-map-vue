@@ -15,7 +15,6 @@ export default {
 
 .select-field {
   background-color: hsla(0, 0%, 100%, .7);
-  padding: 16px 8px 24px 24px;
   border-radius: 4px;
   margin-left: auto;
   margin-right: auto;
