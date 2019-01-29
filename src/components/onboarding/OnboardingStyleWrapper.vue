@@ -13,6 +13,15 @@ export default {
 
 .onboarding {
 
+.select-field {
+  background-color: hsla(0, 0%, 100%, .7);
+  padding: 16px 8px 24px 24px;
+  border-radius: 4px;
+  margin-left: auto;
+  margin-right: auto;
+  width: 60px;
+}
+
 .event-heading {
   color: #333;
 }
@@ -1871,6 +1880,12 @@ a {
   }
 }
 
+.dropdown-container {
+  text-align: center;
+  font-size: 24px;
+  padding: 0 0 16px 0;
+}
+
 }
 
 .editing {
@@ -1880,7 +1895,10 @@ body {
   font-size: 14px;
   line-height: 20px;
 }
-
+w-form {
+  margin-left: 0;
+  margin-right: 0;
+}
 .describe-label {
   color: #3333338f;
 }
@@ -2405,6 +2423,12 @@ a:hover {
     -webkit-column-span: none;
     column-span: none;
   }
+}
+
+.dropdown-container {
+  text-align: center;
+  font-size: 24px;
+  padding: 0 0 16px 0;
 }
 
 }

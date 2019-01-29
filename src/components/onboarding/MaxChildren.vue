@@ -4,7 +4,7 @@
   explanation="For each child you host, you receive points that you can use to attend others' playdates.">
   <div class="dropdown-container">
       <div>
-        <select class="w-form" v-model="maxChildren">
+        <select class="w-form select-field w-select" v-model="maxChildren">
           <option>2</option>
           <option>3</option>
           <option>4</option>
@@ -40,28 +40,7 @@ export default {
       this.$emit('input', this.maxChildren)
     }
   }
-};
+}
+
 </script>
 
-<style scoped>
-
-select {
-  all: unset;
-}
-
-.w-form {
-    background-color: hsla(0, 0%, 100%, .7);
-  padding: 16px 8px 24px 24px;
-  border-radius: 4px;
-  margin-left: auto;
-  margin-right: auto;
-  width: 30px;
-}
-
-.dropdown-container {
-  text-align: center;
-  font-size: 24px;
-  padding: 0 0 16px 0;
-}
-
-</style>
