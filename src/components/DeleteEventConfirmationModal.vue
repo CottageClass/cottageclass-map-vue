@@ -45,6 +45,11 @@ p {
   text-align: center;
 }
 
+.title {
+  font-size: 14px;
+  font-weight: bold;
+}
+
 .action-bar {
   display: -webkit-box;
   display: -webkit-flex;
@@ -67,7 +72,9 @@ p {
 }
 
 .button {
+  width: 50%;
   padding: 12px 32px;
+  margin: 10px;
   border-radius: 4px;
   background-color: #1f88e9;
   text-align: center;
@@ -149,5 +156,21 @@ p {
 .modal-leave-active .modal-container {
   -webkit-transform: scale(1.1);
   transform: scale(1.1);
+}
+
+@media (max-width: 479px) {
+  .modal-container {
+    width:90%;
+  }
+
+  .action-bar {
+    -webkit-flex-direction: column;
+    flex-direction: column;
+  }
+
+  .button {
+    width: 100%;
+    margin: 8px;
+  }
 }
 </style>
