@@ -172,7 +172,7 @@ export default {
       return moment(time24).format('LT')
     },
     fetchCurrentUser: function () {
-      api.fetchCurrentUserNew(Token.currentUserId(this.$auth)).then(currentUser => {
+      api.fetchCurrentUser(Token.currentUserId(this.$auth)).then(currentUser => {
         this.currentUser = currentUser
       })
     },

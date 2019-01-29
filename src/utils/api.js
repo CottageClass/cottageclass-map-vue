@@ -209,22 +209,8 @@ export function fetchUsersWhoHaveMadeInquiries (currentUserId) {
   })
 }
 
-export function fetchCurrentUser (userId) {
-  return Vue.axios.get(
-    `${process.env.BASE_URL_API}/users/${userId}`
-  ).then(res => {
-    console.log('FETCH CURRENT USER SUCCESS')
-    console.log(createPersonObject(res.data.data))
-    return createPersonObject(res.data.data)
-  }).catch(err => {
-    console.log('FETCH CURRENT USER FAILURE')
-    console.log(err.errors)
-    throw err
-  })
-}
-
 // same as above but using 'normalize' json normalizer to correctly extract children
-export function fetchCurrentUserNew (userId) {
+export function fetchCurrentUser (userId) {
   return Vue.axios.get(
     `${process.env.BASE_URL_API}/users/${userId}`
   ).then(res => {

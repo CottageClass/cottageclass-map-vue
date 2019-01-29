@@ -103,7 +103,7 @@ export default {
     },
     fetchCurrentUser: function () {
       this.currentUser = window.globalCurrentUser
-      api.fetchCurrentUserNew(Token.currentUserId(this.$auth)).then(currentUser => {
+      api.fetchCurrentUser(Token.currentUserId(this.$auth)).then(currentUser => {
         this.currentUser = currentUser
         window.globalCurrentUser = currentUser
       })

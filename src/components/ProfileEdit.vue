@@ -68,7 +68,7 @@ export default {
   methods: {
     fetchCurrentUser: function () {
       this.currentUser = window.globalCurrentUser
-      api.fetchCurrentUserNew(Token.currentUserId(this.$auth)).then(currentUser => {
+      api.fetchCurrentUser(Token.currentUserId(this.$auth)).then(currentUser => {
         this.currentUser = currentUser
         this.children.list = this.currentUser.children
         this.availability = {

@@ -114,7 +114,7 @@ export default {
   },
   methods: {
     fetchUserInformation: function () {
-      api.fetchCurrentUserNew(Token.currentUserId(this.$auth)).then(currentUser => {
+      api.fetchCurrentUser(Token.currentUserId(this.$auth)).then(currentUser => {
         console.log(currentUser)
         this.currentUser = currentUser
         this.children = currentUser.children
