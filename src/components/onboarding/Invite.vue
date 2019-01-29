@@ -1,4 +1,5 @@
 <template>
+<OnboardingStyleWrapper styleIs="onboarding">
 
   <!-- wrapper for desktop screens -->
 
@@ -8,7 +9,7 @@
 
  <!-- nav -->
 
-      <Nav button="done" @next="$router.push({name: 'MainView'})" @prev="$emit('prev')" />
+      <Nav button="done" @next="$router.push({name: 'Home'})" @prev="$emit('prev')" />
 
   <div class="onb-content-container">
     <div class="onb-top-content-container">
@@ -43,6 +44,7 @@
 </div>
 </div>
 </div>
+</OnboardingStyleWrapper>
 </template>
 
 <script>
@@ -59,10 +61,12 @@ import TextMessageLink from '@/components/TextMessageLink.vue'
 import EventListItem from '@/components/EventListItem.vue'
 import Nav from '@/components/onboarding/Nav.vue'
 import * as api from '@/utils/api.js'
+import OnboardingStyleWrapper from '@/components/onboarding/OnboardingStyleWrapper.vue'
+
 
 export default {
   name: 'Invite',
-  components: { TextMessageLink, EventListItem, Nav },
+  components: { TextMessageLink, EventListItem, Nav, OnboardingStyleWrapper },
   props: [ 'eventData', 'currentUser' ],
   data () {
     return {
@@ -150,7 +154,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '../../assets/css/onboarding-and-forms.css';
 
 .onb-content-container {
   font-family: soleil;

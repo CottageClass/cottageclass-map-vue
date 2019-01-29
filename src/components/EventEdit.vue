@@ -1,35 +1,48 @@
 <template>
 <div class="body" id="top-of-form">
+  <DeleteEventConfirmationModal
+      v-if="showDeleteConfirmationModal"
+      v-on:closeModal="showDeleteConfirmationModal = false"
+      :eventId="eventId"/>
   <MainNav />
   <div class="container w-container">
   <h1 class="heading-1">Editing event #{{ eventId }} </h1>
   <OnboardingStyleWrapper styleIs="editing" class="cards" v-if="event">
       <ErrorMessage v-if="showError && error" text="Your entries have errors. Please fix them to continue..." />
-      <EventName v-model="event.name" />      
+      <EventName v-model="event.name" />
       <EventActivity v-model="event.activity" />
       <MaxChildren v-model="event.maximumChildren" />
+      <ErrorMessage v-if="event.ageRange.err" :text="event.ageRange.err" />
+      <AgeRange v-model="event.ageRange" />
       <Food v-model="event.food" />
       <HouseRules v-model="event.houseRules"/>
       <YesOrNo
       question="Do you have pets?"
       description="This is often very important for parents (and children) to know."
       v-model="event.hasPet"
-      />     
+      />
       <PetsDescription v-model="event.petDescription" />
       <!-- <edit date & time> -->
       <ErrorMessage v-if="!datesValidate" text="Please enter a valid start and end time for your event." />
       <Question title="When is your event?">
-      	From...
-      	<br>
-      	<br>
-      	<DateTimePicker v-model="event.startsAt" showDate="true" />
-      	<br>
-      	To...
-      	<br><br>
-      	<DateTimePicker v-model="event.endsAt" showDate="true" />
+        From...
+        <br>
+        <br>
+        <DateTimePicker v-model="event.startsAt" showDate="true" />
+        <br>
+        To...
+        <br><br>
+        <DateTimePicker v-model="event.endsAt" showDate="true" />
       </Question>
+      <!-- <Question title="Delete This Event" subtitle="Are you unable to host this event?  This cannot be undone.">
+        <button
+            class="delete-event-button"
+            v-on:click="showDeleteConfirmationModal=true">
+          Delete
+        </button>
+      </Question> -->
 
-      <!-- </edit date & time> -->      
+      <!-- </edit date & time> -->
   </OnboardingStyleWrapper>
   <PageActionsFooter :buttonText="saveButtonText" @click="saveEvent"/>
   </div>
@@ -44,46 +57,47 @@ import MainNav from '@/components/MainNav.vue'
 import DateTimePicker from '@/components/DateTimePicker.vue'
 import PageActionsFooter from '@/components/PageActionsFooter.vue'
 import ErrorMessage from '@/components/onboarding/ErrorMessage.vue'
-import * as Token from '@/utils/tokens.js'
 import * as api from '@/utils/api.js'
 import EventActivity from '@/components/onboarding/EventActivity.vue'
 import Food from '@/components/onboarding/Food.vue'
 import HouseRules from '@/components/onboarding/HouseRules.vue'
 import PetsDescription from '@/components/onboarding/PetsDescription.vue'
-import EventTime from '@/components/onboarding/EventTime.vue'
-import EventDate from '@/components/onboarding/EventDate.vue'
 import MaxChildren from '@/components/onboarding/MaxChildren.vue'
 import OnboardingStyleWrapper from '@/components/onboarding/OnboardingStyleWrapper.vue'
 import Question from '@/components/onboarding/Question.vue'
+import DeleteEventConfirmationModal from '@/components/DeleteEventConfirmationModal.vue'
+
+import AgeRange from '@/components/onboarding/AgeRange.vue'
 var moment = require('moment')
 
 var VueScrollTo = require('vue-scrollto')
 
 export default {
   name: 'ProfileEdit',
-  components: { EventActivity, Food, HouseRules, PetsDescription, EventTime, EventDate, MaxChildren, MainNav, OnboardingStyleWrapper, PageActionsFooter, ErrorMessage, YesOrNo, Question, DateTimePicker, EventName },
+  components: { EventActivity, Food, HouseRules, PetsDescription, MaxChildren, MainNav, OnboardingStyleWrapper, PageActionsFooter, ErrorMessage, YesOrNo, Question, DateTimePicker, EventName, AgeRange, DeleteEventConfirmationModal },
   data () {
     return {
-    	eventId: this.$route.params.id,
+      eventId: this.$route.params.id,
       saveButtonText: 'Save',
       eventDataFromAPI: null,
       event: null, // the client-side data model for events
-      showError: false
+      showError: false,
+      showDeleteConfirmationModal: false
     }
   },
   mounted: function () {
-      this.fetchEvent()
+    this.fetchEvent()
   },
   computed: {
-  	datesValidate: function () {
-  		if (moment(this.event.startsAt).isBefore(this.event.endsAt)) {
-            return true
-          } else {
-          	return false
-          }
-  	},
+    datesValidate: function () {
+      if (moment(this.event.startsAt).isBefore(this.event.endsAt)) {
+        return true
+      } else {
+        return false
+      }
+    },
     error: function () {
-    	return !this.datesValidate
+      return !this.datesValidate || this.event.ageRange.err
     },
     eventDataForSubmissionToAPI: function () {
       return {
@@ -97,14 +111,14 @@ export default {
           'house_rules': this.event.houseRules.text,
           'pet_description': this.event.petDescription.text,
           'maximum_children': this.event.maximumChildren,
-          'child_age_minimum': this.event.childAgeMinimum,
-          'child_age_maximum': this.event.childAgeMaximum
+          'child_age_minimum': this.event.ageRange.minimum,
+          'child_age_maximum': this.event.ageRange.maximum
         }
       }
-    }    
+    }
   },
   methods: {
-  	fetchEvent: function () {
+    fetchEvent: function () {
       api.fetchEvents(this.eventId).then(
         (res) => {
           this.eventDataFromAPI = res[0]
@@ -112,33 +126,35 @@ export default {
         })
     },
     parseEventDataFromAPI: function (dataFromAPI) {
-    	let e = dataFromAPI;
-    	return {
-    		   name: e.name,
-    		   startsAt: e.startsAt,
-    		   endsAt: e.endsAt,
-    		   hasPet: {
-    		     isTrue: e.hasPet
-    		   },
-    		   activity: {
-    		   	 selected: e.activityNames[0]
-    		   	},
-    		   food: {
-    		   	selected: e.foods[0]
-    		   },
-    		   houseRules: {
-    		   	text: e.houseRules
-    		   },
-    		   petDescription: {
-    		   	text: e.petDescription
-    		   },
-    		   maximumChildren: e.maximumChildren,
-    		   childAgeMaximum: e.childAgeMaximum,
-    		   childAgeMinimum: e.childAgeMinimum
-    	}
+      let e = dataFromAPI
+      return {
+        name: e.name,
+        startsAt: e.startsAt,
+        endsAt: e.endsAt,
+        hasPet: {
+          isTrue: e.hasPet
+        },
+        activity: {
+          selected: e.activityNames[0]
+        },
+        food: {
+          selected: e.foods[0]
+        },
+        houseRules: {
+          text: e.houseRules
+        },
+        petDescription: {
+          text: e.petDescription
+        },
+        maximumChildren: e.maximumChildren,
+        ageRange: {
+          maximum: e.childAgeMaximum,
+          minimum: e.childAgeMinimum
+        }
+      }
     },
     submitEventData: function () {
-    	return this.axios.put(`${process.env.BASE_URL_API}/api/events/${this.eventId}`, this.eventDataForSubmissionToAPI)
+      return this.axios.put(`${process.env.BASE_URL_API}/api/events/${this.eventId}`, this.eventDataForSubmissionToAPI)
     },
     saveEvent: function () {
       if (this.error) {
@@ -146,7 +162,7 @@ export default {
         VueScrollTo.scrollTo('#top-of-form')
       } else {
         this.saveButtonText = 'Saving...'
-         this.submitEventData().then(res => {
+        this.submitEventData().then(res => {
           this.saveButtonText = ' \u2714 Saved'
           console.log('event update SUCCESS')
           console.log(res)
@@ -156,7 +172,7 @@ export default {
           console.log('Error saving', err)
           this.saveButtonText = 'Problem saving. Click to try again.'
         })
-      }     
+      }
     }
   }
 }
@@ -178,6 +194,24 @@ export default {
 
 .container {
   padding: 32px 32px 100px;
+}
+
+.delete-event-button {
+  padding: 12px 32px;
+  border-radius: 4px;
+  background-color: #e91f29;
+  text-align: center;
+  color: #fff;
+}
+
+.delete-event-button:hover {
+  background-image: -webkit-gradient(linear, left top, left bottom, from(rgba(0, 0, 0, .1)), to(rgba(0, 0, 0, .1)));
+  background-image: linear-gradient(180deg, rgba(0, 0, 0, .1), rgba(0, 0, 0, .1));
+}
+
+.delete-event-button:active {
+  background-image: -webkit-gradient(linear, left top, left bottom, from(rgba(0, 0, 0, .1)), to(rgba(0, 0, 0, .1)));
+  background-image: linear-gradient(180deg, rgba(0, 0, 0, .1), rgba(0, 0, 0, .1));
 }
 
 @media (max-width: 991px) {
@@ -215,4 +249,3 @@ export default {
 }
 
 </style>
-

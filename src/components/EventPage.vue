@@ -1,20 +1,14 @@
 <template>
 <div class="body-2">
+  <Alert v-if="event.participated">
+      Congratulations, you have RSVP&apos;ed to this event! If you haven't yet, please fill out our <a href="https://cottageclass1.typeform.com/to/Z6pwkl">emergency information form</a>.
+  </Alert>
   <MainNav />
   <div class="event-detail-container w-container">
     <div class="event-detail-graphic"><EventCategoryIcon :category="event.activityName"
  width="150" height="150" /></div>
     <div class="div-block-36">
-      <div
-      v-if="event.participated"
-      class="alert-container alert-success" id="alert">
-        Congratulations, you have RSVP&apos;ed to this event! If you haven't yet, please fill out our <a href="https://cottageclass1.typeform.com/to/Z6pwkl">emergency information form</a>.
-      </div>
-   <!--
-      <div class="alert-container alert-failure" id="alert">
-        Sorry, this event is full &amp; not accepting any more RSVPs.
-      </div>
-    -->
+
       <h1 class="event-detail-heading">{{ event.name }}</h1>
       <div class="action-bar">
         <div class="host-info"><AvatarImage className="avatar-large" :person="{facebookId: event.hostFacebookUid, avatar: event.hostAvatar}"/>
@@ -141,6 +135,7 @@ import * as api from '@/utils/api.js'
 import * as Token from '@/utils/tokens.js'
 import AvatarImage from './AvatarImage.vue'
 import RsvpButton from './RsvpButton.vue'
+import Alert from './Alert.vue'
 import MainNav from './MainNav.vue'
 import Footer from '@/components/Footer.vue'
 import EventCategoryIcon from '@/components/EventCategoryIcon.vue'
@@ -148,7 +143,7 @@ var moment = require('moment')
 
 export default {
   name: 'EventPage',
-  components: { AvatarImage, RsvpButton, MainNav, Footer, EventCategoryIcon },
+  components: { AvatarImage, RsvpButton, MainNav, Footer, EventCategoryIcon, Alert },
   data () {
     return {
       events: [],
@@ -242,39 +237,6 @@ a.host {
 
 a.host:hover {
   text-decoration: underline;
-}
-
-.alert-container {
-  width: 100%;
-  min-height: 60px;
-  margin-bottom: 16px;
-  padding: 16px 16px 18px;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-  -webkit-flex-direction: column;
-  -ms-flex-direction: column;
-  flex-direction: column;
-  -webkit-box-pack: center;
-  -webkit-justify-content: center;
-  -ms-flex-pack: center;
-  justify-content: center;
-  -webkit-box-align: start;
-  -webkit-align-items: flex-start;
-  -ms-flex-align: start;
-  align-items: center;
-  color: #17c700;
-}
-
-.alert-success {
-  background-color: #c1ffda;
-  border: 1px solid rgb(12, 186, 82);
-  color: rgb(12, 186, 82);
-}
-
-.alert-failure {
-  background-color: #ffbebe;
-  border: 1px solid #c73200;
-  color: #c73200;
 }
 
 body {
@@ -1036,12 +998,6 @@ h1 {
     width: 100%;
     margin-top: 20px;
   }
-}
-
-.alert-success a {
-  display: inline;
-  font-weight: bold;
-  color: inherit;
 }
 
 </style>

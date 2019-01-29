@@ -1,7 +1,7 @@
 <template>
 <div class="body">
     <div class="providerp-provider-info-section">
-      <router-link :to="{ name: 'MainView' }" class="providerp-button-back w-inline-block"><img src="../assets/Arrow-Back-2.svg">
+      <router-link :to="{ name: 'Home' }" class="providerp-button-back w-inline-block"><img src="../assets/Arrow-Back-2.svg">
     </router-link><AvatarImage :person="person" class="providerp-avatar" />
     <h1 class="providerp-h1">{{ person.firstName }} {{ person.lastInitial }}.</h1>
 

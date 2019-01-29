@@ -21,7 +21,6 @@ export function initProxySession (currentUserId, receiverId, requestMessage, ack
     postData
   ).then(res => {
     console.log('proxy session init SUCCESS, returning proxy phone number for receiver')
-    console.log(res)
     // return proxy number for receiver
     return res.data.data.attributes.proxyIdentifierReceiver
   }).catch(err => {
@@ -167,7 +166,7 @@ function createPersonObject (personInApi, availableChildren = []) {
     // todo: add these once I have them
     verified: p.verified,
     phone: p.phone,
-    networkCode: p.network_code,
+    networkCode: 'brooklyn-events',
     dateCreated: p.date_created,
     hasAllRequiredFields: hasAllRequiredFields(),
     blurb: p.profile_blurb
@@ -233,7 +232,8 @@ export function fetchCurrentUserNew (userId) {
     console.log(res)
     let normalizedData = normalize(res.data)
     let user = normalizedData.user[userId].attributes
-    user.hasAllRequiredFields = user.phone && user.latitude && user.longitude && user.networkCode
+    user.hasAllRequiredFields = user.phone && user.latitude && user.longitude
+    user.networkCode = 'brooklyn-events' // give everyone the new network code
     let childrenById = normalizedData.child
     let childIds = Object.keys(childrenById)
     let generateChild = function (aChildId) {
@@ -322,6 +322,29 @@ export function submitNotification (participantId, notificationBodyText) {
  * EVENTS
  */
 
+export function fetchMyUpcomingEvents (params) {
+  return Vue.axios.get(
+    `${process.env.BASE_URL_API}/api/user/created_events/upcoming`
+  ).then(res => {
+    console.log('FETCH MY UPCOMING EVENTS SUCCESS')
+    console.log(res.data)
+    return Object.values(normalize(res.data).event).map(obj => {
+      var e = obj.attributes
+      e['id'] = obj.id
+      e.hostFirstName = capitalize(e.hostFirstName)
+      e.hostFuzzyLatitude = parseFloat(e.hostFuzzyLatitude)
+      e.hostFuzzyLongitude = parseFloat(e.hostFuzzyLongitude)
+      e.activityName = e.activityNames.length > 0 && e.activityNames[0]
+      e.food = e.foods.length > 0 && e.foods[0]
+      return e
+    })
+  }).catch(err => {
+    console.log('FETCH MY UPCOMING EVENTS FAILURE')
+    console.log(err.errors)
+    throw err
+  })
+}
+
 export function fetchEvents (params) {
   return Vue.axios.get(
     `${process.env.BASE_URL_API}/api/events/${params || ''}`
@@ -364,6 +387,21 @@ export function submitEventParticipant (eventId, participantChildIds) {
     })
     .catch(err => {
       console.log('SUBMIT EVENT PARTICIPANT FAILURE')
+      console.log(err)
+      console.log(Object.entries(err))
+      throw err
+    })
+}
+
+export function deleteEvent (eventId, successCallback) {
+  return Vue.axios.delete(`${process.env.BASE_URL_API}/api/events/${eventId}`)
+    .then(res => {
+      console.log('DELETE EVENT SUCCESS')
+      console.log(res)
+      successCallback()
+    })
+    .catch(err => {
+      console.log('DELETE EVENT FAILURE')
       console.log(err)
       console.log(Object.entries(err))
       throw err

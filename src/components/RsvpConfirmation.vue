@@ -1,5 +1,5 @@
 <template>
-  <span>
+<OnboardingStyleWrapper styleIs="onboarding">
     <!-- wrapper for desktop screens -->
 
     <div class="onb-body">
@@ -13,7 +13,7 @@
   <!-- error message -->
 
       <ErrorMessage v-if="error && showError" :text="error" />
-      
+
 <!-- Show loading indicator until we can show the event info we're confirming.  there are and there is more than one. If there is an error, show the error only. -->
 
   <OAuthCallback v-if="!event && !(error && showError)"/>
@@ -68,7 +68,7 @@
 </div>
 </div>
 </div>
-</span>
+</OnboardingStyleWrapper>
 </template>
 
 <script>
@@ -78,10 +78,11 @@ import EventListItem from '@/components/EventListItem.vue'
 import Nav from '@/components/onboarding/Nav.vue'
 import OAuthCallback from '@/components/OAuthCallback.vue'
 import ErrorMessage from '@/components/onboarding/ErrorMessage.vue'
+import OnboardingStyleWrapper from '@/components/onboarding/OnboardingStyleWrapper.vue'
 
 export default {
   name: 'RsvpConfirmation',
-  components: { EventListItem, Nav, OAuthCallback, ErrorMessage },
+  components: { EventListItem, Nav, OAuthCallback, ErrorMessage, OnboardingStyleWrapper },
   data () {
     return {
       eventId: this.$route.params.eventId,
@@ -102,7 +103,7 @@ export default {
       if (this.yesOrNo === 'yes') {
         this.$router.push({ name: 'RsvpInfoCollection', params: { eventId: this.eventId } })
       } else if (this.yesOrNo === 'no') {
-        this.$router.push({ name: 'MainView' })
+        this.$router.push({ name: 'Home' })
       } else {
         this.showError = true
       }
@@ -130,7 +131,3 @@ export default {
   }
 }
 </script>
-
-<style lang="scss" scoped>
-@import '../assets/css/onboarding-and-forms.css';
-</style>

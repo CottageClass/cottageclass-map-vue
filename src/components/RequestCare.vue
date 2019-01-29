@@ -61,7 +61,7 @@ import * as Token from '@/utils/tokens.js'
 import * as api from '@/utils/api.js'
 
 export default {
-  name: 'MainView',
+  name: 'RequestCare',
   components: { Provider, ShareButton, MainNav },
   data () {
     return {
@@ -357,9 +357,6 @@ text-align: center;
 .time-block {
   color: #2b8eea;
   font-size: 16px;
-}
-
-.dropdown-arrows img {
 }
 
 .availability-container a {

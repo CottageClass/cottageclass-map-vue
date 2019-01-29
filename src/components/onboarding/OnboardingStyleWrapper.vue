@@ -13,6 +13,13 @@ export default {
 
 .onboarding {
 
+.event-heading {
+  color: #333;
+}
+
+.host-name {
+  color: #333;
+}
 /* child birthdate selector */
 
 ::-webkit-datetime-edit-text {
@@ -75,8 +82,10 @@ a {
   color: #fff;
 }
 
-a:visited {
-  color: #fff;
+.host-name {
+  a {
+    color: #333;
+  }
 }
 
 .list-container {
@@ -2043,7 +2052,6 @@ a:hover {
   display: -webkit-flex;
   display: -ms-flexbox;
   display: flex;
-  padding-top: 16px;
   padding-right: 8px;
   padding-left: 8px;
   -webkit-box-orient: vertical;
