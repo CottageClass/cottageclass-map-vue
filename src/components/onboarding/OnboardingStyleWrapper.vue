@@ -13,14 +13,6 @@ export default {
 
 .onboarding {
 
-.select-field {
-  background-color: hsla(0, 0%, 100%, .7);
-  border-radius: 4px;
-  margin-left: auto;
-  margin-right: auto;
-  width: 60px;
-}
-
 .event-heading {
   color: #333;
 }
@@ -419,13 +411,6 @@ a {
   -webkit-align-items: center;
   -ms-flex-align: center;
   align-items: center;
-}
-
-.select-field {
-  border: 1px solid #e4e4e4;
-  border-radius: 0px;
-  background-image: -webkit-linear-gradient(270deg, #fff, #fff);
-  background-image: linear-gradient(180deg, #fff, #fff);
 }
 
 .text-span {
