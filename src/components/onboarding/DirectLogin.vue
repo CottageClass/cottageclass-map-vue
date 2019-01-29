@@ -134,11 +134,11 @@ export default {
                 component.errorMessage = 'There was a problem signing you in. If you forgot your password, email  contact@cottageclass.com for help.'
                 console.log('auth failure', err)
               }).then(() => {
-                this.$store.dispatch('establishCurrentUserAsync', Token.currentUserId(component.$auth))
+                return component.$store.dispatch('establishCurrentUserAsync', Token.currentUserId(component.$auth))
               }).then(() => {
-                if (this.currentUser.hasAllRequiredFields) {
+                if (component.currentUser.hasAllRequiredFields) {
                   component.$emit('userAlreadyOnboarded')
-                } else if (this.currentUser.id) {
+                } else if (component.currentUser.id) {
                   component.$emit('userNotYetOnboarded')
                 } else {
                   return false
