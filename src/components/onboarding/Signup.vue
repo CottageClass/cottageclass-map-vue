@@ -1,4 +1,6 @@
 <template>
+ <OnboardingStyleWrapper styleIs="onboarding">
+
   <!-- wrapper for desktop screens -->
   <div class="onb-body">
     <div class="body">
@@ -105,14 +107,16 @@
     </div>
   </div>
 </div>
+</OnboardingStyleWrapper>
 </template>
 
 <script>
 import ErrorMessage from '@/components/onboarding/ErrorMessage.vue'
+import OnboardingStyleWrapper from '@/components/onboarding/OnboardingStyleWrapper.vue'
 
 export default {
   name: 'Signup',
-  components: { ErrorMessage },
+  components: { ErrorMessage, OnboardingStyleWrapper },
   data: function () {
     return {
       success: false,
@@ -272,7 +276,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '../../assets/css/onboarding-and-forms.css';
 
 .title-bar-next-button {
   position: static;

@@ -1,4 +1,6 @@
 <template>
+<OnboardingStyleWrapper styleIs="onboarding">
+
   <!-- wrapper for desktop screens -->
 
     <div class="onb-body">
@@ -29,14 +31,15 @@
       class="onb-paragraph-subheading-2"
       v-if="Number.isInteger(spotsRemaining)">There <span v-if="spotsRemaining === 1">is</span><span v-else>are</span> {{ spotsRemaining }} spot<span v-if="spotsRemaining !== 1">s</span> remaining.</p>
     </div>
-   <MultipleChoice 
-   type="checkbox" 
-   v-model="childrenSelected" 
-   :labelsAndOrder="labelsAndOrder"/> 
+   <MultipleChoice
+   type="checkbox"
+   v-model="childrenSelected"
+   :labelsAndOrder="labelsAndOrder"/>
   </div>
 </div>
 </div>
 </div>
+</OnboardingStyleWrapper>
 </template>
 
 <script>
@@ -47,6 +50,7 @@ import * as utils from '@/utils/utils.js'
 import Nav from '@/components/onboarding/Nav.vue'
 import ErrorMessage from '@/components/onboarding/ErrorMessage.vue'
 import MultipleChoice from '@/components/onboarding/MultipleChoice.vue'
+import OnboardingStyleWrapper from '@/components/onboarding/OnboardingStyleWrapper.vue'
 import sheetsu from 'sheetsu-node'
 // this component has a working loading indicator and no other logic. todo: break out and rename.
 import OAuthCallback from '@/components/OAuthCallback.vue'
@@ -56,7 +60,7 @@ var client = sheetsu({ address: 'https://sheetsu.com/apis/v1.0su/62cd725d6088' }
 
 export default {
   name: 'RsvpInfoCollection',
-  components: { Nav, OAuthCallback, ErrorMessage, MultipleChoice },
+  components: { Nav, OAuthCallback, ErrorMessage, MultipleChoice, OnboardingStyleWrapper },
   data () {
     return {
       children: [],
@@ -225,7 +229,3 @@ export default {
   }
 }
 </script>
-
-<style lang="scss" scoped>
-@import '../assets/css/onboarding-and-forms.css';
-</style>

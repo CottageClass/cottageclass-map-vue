@@ -1,4 +1,6 @@
 <template>
+<OnboardingStyleWrapper styleIs="onboarding">
+
   <!-- wrapper for desktop screens -->
 
     <div class="onb-body">
@@ -21,16 +23,19 @@
 </div>
 </div>
 </div>
+</OnboardingStyleWrapper>
 </template>
 
 <script>
 import CountdownPromo from '@/components/onboarding/CountdownPromo.vue'
 import DateTimePicker from '@/components/DateTimePicker.vue'
+import OnboardingStyleWrapper from '@/components/onboarding/OnboardingStyleWrapper.vue'
+
 
 export default {
   name: 'RequestCare',
   props: ['value'],
-  components: { CountdownPromo, DateTimePicker },
+  components: { CountdownPromo, DateTimePicker, OnboardingStyleWrapper },
   data () {
     return {
       bookingRequest: this.value
@@ -53,7 +58,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '../../assets/css/onboarding-and-forms.css';
 html {
   -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
 }

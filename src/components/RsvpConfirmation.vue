@@ -1,5 +1,5 @@
 <template>
-  <span>
+<OnboardingStyleWrapper styleIs="onboarding">
     <!-- wrapper for desktop screens -->
 
     <div class="onb-body">
@@ -68,7 +68,7 @@
 </div>
 </div>
 </div>
-</span>
+</OnboardingStyleWrapper>
 </template>
 
 <script>
@@ -78,10 +78,11 @@ import EventListItem from '@/components/EventListItem.vue'
 import Nav from '@/components/onboarding/Nav.vue'
 import OAuthCallback from '@/components/OAuthCallback.vue'
 import ErrorMessage from '@/components/onboarding/ErrorMessage.vue'
+import OnboardingStyleWrapper from '@/components/onboarding/OnboardingStyleWrapper.vue'
 
 export default {
   name: 'RsvpConfirmation',
-  components: { EventListItem, Nav, OAuthCallback, ErrorMessage },
+  components: { EventListItem, Nav, OAuthCallback, ErrorMessage, OnboardingStyleWrapper },
   data () {
     return {
       eventId: this.$route.params.eventId,
@@ -130,7 +131,3 @@ export default {
   }
 }
 </script>
-
-<style lang="scss" scoped>
-@import '../assets/css/onboarding-and-forms.css';
-</style>

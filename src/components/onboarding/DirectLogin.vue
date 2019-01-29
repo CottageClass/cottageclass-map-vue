@@ -1,4 +1,5 @@
 <template>
+<OnboardingStyleWrapper styleIs="onboarding">
 
   <!-- wrapper for desktop screens -->
 
@@ -13,7 +14,7 @@
 
     <div class="content-container">
 
-<!-- Error messages --> 
+<!-- Error messages -->
 
         <ErrorMessage v-if="showError && (errors.first('email') || errors.first('password')) || errorMessage" :messages="[errors.first('email'), errors.first('password'), errors.first('password')]" />
 
@@ -50,6 +51,7 @@
 </div>
     </div>
     </div>
+</OnboardingStyleWrapper>
 </template>
 
 <script>
@@ -57,10 +59,12 @@
 import * as Token from '@/utils/tokens.js'
 import * as api from '@/utils/api.js'
 import ErrorMessage from '@/components/onboarding/ErrorMessage.vue'
+import OnboardingStyleWrapper from '@/components/onboarding/OnboardingStyleWrapper.vue'
+
 
 export default {
   name: 'DirectLogin',
-  components: { ErrorMessage },
+  components: { ErrorMessage, OnboardingStyleWrapper },
   data: function () {
     return {
       // networks: networks,
@@ -170,7 +174,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '../../assets/css/onboarding-and-forms.css';
 
 .body {
   font-family: soleil

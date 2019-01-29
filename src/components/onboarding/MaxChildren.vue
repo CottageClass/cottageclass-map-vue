@@ -1,5 +1,5 @@
 <template>
-  <Question 
+  <Question
   title="How many children can you host at your playdate?"
   explanation="For each child you host, you receive points that you can use to attend others' playdates.">
   <div class="dropdown-container">
