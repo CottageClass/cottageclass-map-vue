@@ -177,7 +177,6 @@ export default {
       })
     },
     fetchEvent: function () {
-      this.events = window.globalEventList
       api.fetchEvents(this.$route.params.id).then(
         (res) => {
           this.events = res
