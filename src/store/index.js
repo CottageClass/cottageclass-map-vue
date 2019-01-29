@@ -21,13 +21,21 @@ export default new Vuex.Store(
       }
     },
     actions: {
+      //////////////////////////////////////////
       // Once again, we should not be doing this
+      //////////////////////////////////////////
       fetchAllEventsAsync: ({ commit }) => {
         api.fetchEvents().then(events => {
           events.sort((eventA, eventB) => {
             return moment(eventA.startsAt).diff(moment(eventB.startsAt))
           })
           commit('setEventsByDate', { events })
+        })
+      },
+      establishCurrentUserAsync: ({ commit }, userId) => {
+        console.log('establish')
+        return api.fetchCurrentUser(userId).then(user => {
+          commit('setCurrentUser', { user })
         })
       }
     },
@@ -44,6 +52,9 @@ export default new Vuex.Store(
         } else {
           return null
         }
+      },
+      getCurrentUser: (state) => {
+        return state.currentUser
       }
     }
   }
