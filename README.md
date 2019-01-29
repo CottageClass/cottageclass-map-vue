@@ -16,7 +16,7 @@ npm run dev
 
 ## Deploying
 
-Changes to master will auto deploy to https://cottageclass-app-staging.herokuapp.com/. Once staging has been QA'd, we use Heroku "pipelines" to push master to production with one click.   
+Changes to master will auto deploy to https://cottageclass-app-staging.herokuapp.com/. Once staging has been QA'd, we use Heroku "pipelines" to push master to production with one click.
 
 ## Testing locally with Express.js
 
@@ -40,3 +40,16 @@ To test locally on machines other than your development machine, we currently ta
 2. add the line `host: '0.0.0.0'` to the devServer object in `config/webpack.dev.conf.js`. (Otherwise your local dev server will not accept the incoming connection.)
 
 (We may wish to make this second change permanent and find a solution that doesn't require us to modify the facebook settings every time we happen to use a device with a new local IP.)
+
+## Basic QA workflow before deploy
+
+CORE FUNCTIONALITY
+* user with a fb account can login
+* user with email can login
+* user can create account with email
+* user can create account with facebook
+* logged-in user can rsvp
+* not-logged-in user can rsvp after logging (via rsvp route)
+* not-logged-in user can rsvp after signing up (via rsvp route)
+* User can browse events (logged in, not)
+* All links in navigation work (logged in, not)
