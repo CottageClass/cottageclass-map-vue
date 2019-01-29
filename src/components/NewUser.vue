@@ -315,8 +315,9 @@ export default {
           // show on the houseRules step because it's the last step
           component.houseRules.err = 'Sorry, there was a problem saving your information. Try again?'
           throw err
-        })
-        .then(() => {
+        }).then(() => {
+          return component.$store.dispatch('establishCurrentUserAsync', Token.currentUserId(this.$auth))
+        }).then(() => {
           component.submitEventData().then(res => {
             component.createdEventData = normalize(res.data)
           })
