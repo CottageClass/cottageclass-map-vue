@@ -4,21 +4,21 @@
     v-if="activeScreen ==='facebook' && step === 0"
     v-on:userNotYetOnboarded="nextStep"
     v-on:activateScreen="activateScreen"
-    v-on:userAlreadyOnboarded="$router.push({name: 'Home'})"
+    v-on:userAlreadyOnboarded="proceedToHomePage"
     v-on:authenticateFacebook="authenticate('facebook')"
      />
     <DirectLogin
     v-if="activeScreen ==='directLogin' && step === 0"
     v-on:userNotYetOnboarded="nextStep"
     v-on:activateScreen="activateScreen"
-    v-on:userAlreadyOnboarded="$router.push({name: 'Home'})"
+    v-on:userAlreadyOnboarded="proceedToHomePage"
     v-on:authenticateFacebook="authenticate('facebook')"
      />
     <Signup
     v-if="activeScreen ==='signup' && step === 0"
     v-on:userNotYetOnboarded="nextStep"
     v-on:activateScreen="activateScreen"
-    v-on:userAlreadyOnboarded="$router.push({name: 'Home'})"
+    v-on:userAlreadyOnboarded="proceedToHomePage"
     v-on:authenticateFacebook="authenticate('facebook')"
      />
     <Invite
@@ -172,6 +172,12 @@ export default {
     this.fetchUpcomingEvents()
   },
   methods: {
+    proceedToHomePage: function () {
+      console.log('proceedToHomePage')
+      this.$store.dispatch('establishCurrentUserAsync', Token.currentUserId(this.$auth)).then(() => {
+        this.$router.push({ name: 'Home' })
+      })
+    },
     fetchUpcomingEvents: function () {
       api.fetchEvents('upcoming/page/1/page_size/50').then(
         (res) => {
