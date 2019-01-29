@@ -5,11 +5,7 @@
       <div class="divider-2px"></div>
       <div class="content-container-4 w-container">
         <h1 class="h1-display">My Playdates</h1>
-        <EventList
-        :events="myEventsByDate"
-        :currentUser="currentUser"
-        :currentUserId="currentUserId"
-        :isAuthenticated="isAuthenticated"/>
+        <EventList :events="myEventsByDate"/>
       </div>
     </div>
     <Footer />
@@ -20,8 +16,9 @@
 import MainNav from '@/components/MainNav.vue'
 import Footer from '@/components/Footer.vue'
 import EventList from '@/components/EventList.vue'
-import * as Token from '@/utils/tokens.js'
 import * as api from '@/utils/api.js'
+import { mapState } from 'vuex'
+
 var moment = require('moment')
 
 export default {
@@ -31,9 +28,6 @@ export default {
   data () {
     return {
       events: null,
-      currentUser: null,
-      isAuthenticated: false,
-      currentUserId: null,
       showAllButtonText: 'Show all playdates',
       showShowAllButton: false
     }
@@ -49,10 +43,13 @@ export default {
     },
     myEventsByDate: function () {
       if (this.eventsByDate) {
-        return this.eventsByDate.filter(event => this.currentUserId === event.hostId)
+        return this.eventsByDate.filter(event => this.currentUser.id === event.hostId)
       }
       return []
-    }
+    },
+    ...mapState({
+      currentUser: state => state.currentUser
+    })
   },
   methods: {
     limitNumberOfEvents: function (events) {
@@ -72,23 +69,10 @@ export default {
       api.fetchMyUpcomingEvents().then(res => {
         this.events = res
       })
-    },
-    fetchCurrentUser: function () {
-      api.fetchCurrentUser(Token.currentUserId(this.$auth)).then(currentUser => {
-        this.currentUser = currentUser
-      })
     }
   },
   mounted: function () {
     this.fetchMyUpcomingEvents()
-    if (this.$auth && this.$auth.isAuthenticated()) {
-      this.isAuthenticated = true
-      this.currentUserId = Token.currentUserId(this.$auth)
-    }
-
-    if (this.isAuthenticated) {
-      this.fetchCurrentUser()
-    }
   }
 }
 </script>

@@ -386,14 +386,6 @@ export default {
       } else return false
     },
     eventName: function () {
-      // this is not a great place to put this because it will get executed whenever activity or food change.
-      let userId = Token.currentUserId(this.$auth)
-      if (userId) {
-        api.fetchCurrentUser(this.currentUserId)
-          .then(person => {
-            this.currentUser = person
-          })
-      }
       if (this.currentUser.firstName) {
         return this.capitalize(this.eventActivity.selected) + ' & ' + this.food.selected + ' with ' + this.capitalize(this.currentUser.firstName)
       } else {

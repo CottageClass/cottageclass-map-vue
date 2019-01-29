@@ -29,8 +29,9 @@ import MainNav from '@/components/MainNav.vue'
 import PageActionsFooter from '@/components/PageActionsFooter.vue'
 import OnboardingStyleWrapper from '@/components/onboarding/OnboardingStyleWrapper.vue'
 import ErrorMessage from '@/components/onboarding/ErrorMessage.vue'
-import * as Token from '@/utils/tokens.js'
 import * as api from '@/utils/api.js'
+import { mapState } from 'vuex'
+
 var VueScrollTo = require('vue-scrollto')
 
 export default {
@@ -38,8 +39,6 @@ export default {
   components: { Location, Phone, Availability, MainNav, OnboardingStyleWrapper, PageActionsFooter, ErrorMessage, Children },
   data () {
     return {
-      currentUser: null,
-      currentUserId: null,
       isAuthenticated: null,
       location: {},
       phone: {},
@@ -50,11 +49,13 @@ export default {
     }
   },
   mounted: function () {
-    if (this.$auth && this.$auth.isAuthenticated()) {
-      this.isAuthenticated = true
-      this.currentUserId = Token.currentUserId(this.$auth)
-      this.fetchCurrentUser()
+    this.availability = {
+      availableAfternoons: this.currentUser.availableAfternoons,
+      availableMornings: this.currentUser.availableMornings,
+      availableEvenings: this.currentUser.availableEvenings,
+      availableWeekends: this.currentUser.availableWeekends
     }
+    this.children.list = this.currentUser.children
   },
   computed: {
     error: function () {
@@ -63,27 +64,16 @@ export default {
       } else {
         return false
       }
-    }
+    },
+    ...mapState({
+      currentUser: state => state.currentUser
+    })
   },
   methods: {
-    fetchCurrentUser: function () {
-      this.currentUser = window.globalCurrentUser
-      api.fetchCurrentUser(Token.currentUserId(this.$auth)).then(currentUser => {
-        this.currentUser = currentUser
-        this.children.list = this.currentUser.children
-        this.availability = {
-          availableAfternoons: this.currentUser.availableAfternoons,
-          availableMornings: this.currentUser.availableMornings,
-          availableEvenings: this.currentUser.availableEvenings,
-          availableWeekends: this.currentUser.availableWeekends
-        }
-        window.globalCurrentUser = currentUser
-      })
-    },
     submitUserInformation: function () {
       if (!this.error) {
         this.saveButtonText = 'Saving...'
-        api.submitUserInfo(this.currentUserId, this.phone, this.location, this.availability, this.children).then(res => {
+        api.submitUserInfo(this.currentUser.id, this.phone, this.location, this.availability, this.children).then(res => {
           this.saveButtonText = ' \u2714 Saved'
           console.log('user update SUCCESS')
           console.log(res)

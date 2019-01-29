@@ -56,19 +56,17 @@
 
 <script>
 // import networks from '@/assets/network-info.json';
+import { mapState } from 'vuex'
 import * as Token from '@/utils/tokens.js'
 import * as api from '@/utils/api.js'
 import ErrorMessage from '@/components/onboarding/ErrorMessage.vue'
 import OnboardingStyleWrapper from '@/components/onboarding/OnboardingStyleWrapper.vue'
 
-
 export default {
-  name: 'DirectLogin',
+  name: ' ',
   components: { ErrorMessage, OnboardingStyleWrapper },
   data: function () {
     return {
-      // networks: networks,
-      currentUser: {},
       email: '',
       password: '',
       showError: false,
@@ -77,25 +75,16 @@ export default {
   },
   mounted: function () {
     if (this.$auth) {
-      let current_user_identifier = Token.currentUserId(this.$auth)
-      if (current_user_identifier) {
-        api
-          .fetchCurrentUser(current_user_identifier)
-          .then(currentUser => {
-            if (currentUser.hasAllRequiredFields) {
-              this.$emit('userAlreadyOnboarded')
-            } else if (currentUser.id) {
-              this.$emit('userNotYetOnboarded')
-            } else {
-              return false
-            }
-          })
-          .catch(function (error) {
-            console.log('auth FAILURE or user not onboarded yet')
-            console.warn(error)
-          })
+      if (this.currentUser !== null) {
+        if (this.currentUser.hasAllRequiredFields) {
+          this.$emit('userAlreadyOnboarded')
+        } else if (this.currentUser.id) {
+          this.$emit('userNotYetOnboarded')
+        } else {
+          return false
+        }
       } else {
-        console.warn('current user does not exist')
+        console.log('current user does not exist')
       }
     } else {
       console.warn('this.$auth is blank')
@@ -144,14 +133,12 @@ export default {
                 component.showError = true
                 component.errorMessage = 'There was a problem signing you in. If you forgot your password, email  contact@cottageclass.com for help.'
                 console.log('auth failure', err)
-              })
-              .then(res =>
-                api.fetchCurrentUser(Token.currentUserId(component.$auth))
-              )
-              .then(currentUser => {
-                if (currentUser.hasAllRequiredFields) {
+              }).then(() => {
+                this.$store.dispatch('establishCurrentUserAsync', Token.currentUserId(component.$auth))
+              }).then(() => {
+                if (this.currentUser.hasAllRequiredFields) {
                   component.$emit('userAlreadyOnboarded')
-                } else if (currentUser.id) {
+                } else if (this.currentUser.id) {
                   component.$emit('userNotYetOnboarded')
                 } else {
                   return false
@@ -169,7 +156,10 @@ export default {
           console.warn('validation error', error)
         })
     }
-  }
+  },
+  computed: mapState({
+    currentUser: state => state.currentUser
+  })
 }
 </script>
 

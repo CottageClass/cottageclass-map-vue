@@ -26,7 +26,7 @@
 import Nav from '@/components/onboarding/Nav.vue'
 import RequestCare from '@/components/onboarding/RequestCare.vue'
 import * as Token from '@/utils/tokens.js'
-import * as api from '@/utils/api.js'
+import { mapState } from 'vuex'
 import sheetsu from 'sheetsu-node'
 import RequestRecipients from '@/components/RequestRecipients.vue'
 import RequestSuccessful from '@/components/RequestSuccessful.vue'
@@ -42,8 +42,6 @@ export default {
   data: function () {
     return {
       step: 1,
-      currentUser: {},
-      currentUserId: Token.currentUserId(this.$auth),
       bookingRequest: {
         dateTimeSelected: null,
         description: '',
@@ -51,13 +49,6 @@ export default {
         showCountdownPromo: false
       }
     }
-  },
-  mounted: function () {
-    // fetch users in network
-    api.fetchCurrentUser(this.currentUserId)
-      .then(person => {
-        this.currentUser = person
-      })
   },
   computed: {
     network: function () {
@@ -70,12 +61,15 @@ export default {
       } else {
         return 'next'
       }
-    }
+    },
+    ...mapState({
+      currentUser: state => state.currentUser
+    })
   },
   methods: {
     saveBookingRequestToSpreadsheet: function () {
       client.create({
-        'User ID': this.currentUserId,
+        'User ID': this.currentUser.id,
         'Name': this.currentUser.firstName + ' ' + this.currentUser.lastInitial + '.',
         'Phone': this.currentUser.phone,
         'Time submitted': moment(Date()).format('LT'),

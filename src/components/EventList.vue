@@ -16,8 +16,8 @@
         :event="event"
         :index="index"
         :key="index"
-        :showRsvpButton="!isAuthenticated || currentUserId !== event.hostId"
-        :showEditButton="currentUserId === event.hostId"
+        :showRsvpButton="currentUser === null || currentUser.id !== event.hostId"
+        :showEditButton="currentUser !== null && currentUser.id === event.hostId"
         :distance="distanceFromCurrentUser(event.hostFuzzyLatitude, event.hostFuzzyLongitude)"
       />
     </div>
@@ -27,16 +27,13 @@
 <script>
 import EventListItem from '@/components/EventListItem.vue'
 import * as api from '@/utils/api.js'
+import { mapState } from 'vuex'
 
 var moment = require('moment')
 export default {
   name: 'EventList',
   components: { EventListItem },
-  props: ['events', 'currentUser', 'currentUserId', 'isAuthenticated'],
-  data () {
-    return {
-    }
-  },
+  props: ['events'],
   methods: {
     formatDate: function (date) {
       return moment(date).format('dddd, MMM Do')
@@ -51,7 +48,10 @@ export default {
         return null
       }
     }
-  }
+  },
+  computed: mapState({
+    currentUser: state => state.currentUser
+  })
 }
 </script>
 

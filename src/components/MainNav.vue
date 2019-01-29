@@ -66,8 +66,7 @@
 <script>
 import { mixin as clickaway } from 'vue-clickaway'
 import AvatarImage from '@/components/AvatarImage.vue'
-import * as Token from '@/utils/tokens.js'
-import * as api from '@/utils/api.js'
+import { mapState } from 'vuex'
 
 export default {
   name: 'MainNav',
@@ -78,16 +77,12 @@ export default {
     return {
       showMenu: false,
       menuButtonText: 'Menu',
-      currentUser: null,
-      currentUserId: null,
       isAuthenticated: null
     }
   },
   mounted: function () {
     if (this.$auth && this.$auth.isAuthenticated()) {
       this.isAuthenticated = true
-      this.currentUserId = Token.currentUserId(this.$auth)
-      this.fetchCurrentUser()
     }
   },
   methods: {
@@ -100,15 +95,11 @@ export default {
     logout: function () {
       this.$auth.logout()
       this.$router.push('/')
-    },
-    fetchCurrentUser: function () {
-      this.currentUser = window.globalCurrentUser
-      api.fetchCurrentUser(Token.currentUserId(this.$auth)).then(currentUser => {
-        this.currentUser = currentUser
-        window.globalCurrentUser = currentUser
-      })
     }
-  }
+  },
+  computed: mapState({
+    currentUser: state => state.currentUser
+  })
 }
 </script>
 

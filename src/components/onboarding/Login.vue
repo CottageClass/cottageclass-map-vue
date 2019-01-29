@@ -362,11 +362,10 @@
 <script>
 
 import networks from '@/assets/network-info.json'
-import * as Token from '@/utils/tokens.js'
-import * as api from '@/utils/api.js'
 import RsvpButton from '@/components/RsvpButton.vue'
 import MainNav from '@/components/MainNav.vue'
 import Footer from '@/components/Footer.vue'
+import { mapState } from 'vuex'
 
 export default {
   name: 'Login',
@@ -374,20 +373,17 @@ export default {
   data () {
     return {
       networks: networks,
-      currentUser: {},
       facebookLogin: !this.hideFacebookLogin()
     }
   },
   mounted: function () {
-    api.fetchCurrentUser(Token.currentUserId(this.$auth)).then(currentUser => {
-      if (currentUser.hasAllRequiredFields) {
-        this.$emit('userAlreadyOnboarded')
-      } else if (currentUser.id) {
-        this.$emit('userNotYetOnboarded')
-      } else {
-        return false
-      }
-    })
+    if (this.currentUser.hasAllRequiredFields) {
+      this.$emit('userAlreadyOnboarded')
+    } else if (this.currentUser.id) {
+      this.$emit('userNotYetOnboarded')
+    } else {
+      return false
+    }
   },
   methods: {
     hideFacebookLogin: () => {
@@ -395,7 +391,10 @@ export default {
         return !!navigator.userAgent.match(new RegExp(`(${expression})`, 'ig'))
       })
     }
-  }
+  },
+  computed: mapState({
+    currentUser: state => state.currentUser
+  })
 }
 
 </script>
