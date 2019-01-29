@@ -34,7 +34,7 @@
         <br><br>
         <DateTimePicker v-model="event.endsAt" showDate="true" />
       </Question>
-      <!-- <Question title="Delete This Event" subtitle="Are you unable to host this event?  This cannot be undone.">
+      <!--<Question title="Delete this event" subtitle="Are you unable to host this event? This cannot be undone. Your guests will receive a text message informing them that the event has been cancelled.">
         <button
             class="delete-event-button"
             v-on:click="showDeleteConfirmationModal=true">

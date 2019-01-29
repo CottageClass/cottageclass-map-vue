@@ -13,6 +13,15 @@ export default {
 
 .onboarding {
 
+.select-field {
+  background-color: hsla(0, 0%, 100%, .7);
+  padding: 16px 8px 24px 24px;
+  border-radius: 4px;
+  margin-left: auto;
+  margin-right: auto;
+  width: 60px;
+}
+
 .event-heading {
   color: #333;
 }
@@ -1871,6 +1880,12 @@ a {
   }
 }
 
+.dropdown-container {
+  text-align: center;
+  font-size: 24px;
+  padding: 0 0 16px 0;
+}
+
 }
 
 .editing {
@@ -1880,7 +1895,10 @@ body {
   font-size: 14px;
   line-height: 20px;
 }
-
+w-form {
+  margin-left: 0;
+  margin-right: 0;
+}
 .describe-label {
   color: #3333338f;
 }
@@ -2105,27 +2123,6 @@ a:hover {
   background-image: -webkit-gradient(linear, left top, left bottom, from(rgba(0, 0, 0, .06)), to(rgba(0, 0, 0, .06)));
   background-image: linear-gradient(180deg, rgba(0, 0, 0, .06), rgba(0, 0, 0, .06));
   font-size: 16px;
-}
-
-.form-2 {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  width: 100%;
-  -webkit-box-orient: horizontal;
-  -webkit-box-direction: normal;
-  -webkit-flex-direction: row;
-  -ms-flex-direction: row;
-  flex-direction: row;
-  -webkit-box-pack: start;
-  -webkit-justify-content: flex-start;
-  -ms-flex-pack: start;
-  justify-content: flex-start;
-  -webkit-box-align: start;
-  -webkit-align-items: flex-start;
-  -ms-flex-align: start;
-  align-items: flex-start;
 }
 
 .form-block {
@@ -2426,6 +2423,12 @@ a:hover {
     -webkit-column-span: none;
     column-span: none;
   }
+}
+
+.dropdown-container {
+  text-align: center;
+  font-size: 24px;
+  padding: 0 0 16px 0;
 }
 
 }

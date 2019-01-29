@@ -11,7 +11,7 @@
   <div class="top-content-container">
     <div class="page-lead-text">
 
-When children arrive check them in, and when they leave check them out. It's that simple! Since parents only pay for the time they use, please do not check them in before their arrival. We will calculate your hours from check-in to check-out, and pay you ${{ (network.price - network.price * network.percentage).toFixed(2) }}/hr per child per hour of care (plus ${{ ((network.price - network.price * network.percentage)/2).toFixed(2) }}/hour for each additional sibling.)
+When children arrive check them in, and when they leave check them out. It's that simple! (This lets us keep a tally of hours of care offered and received, to make sure everyone is doing their part. We will calculate the hours from check-in to check-out. To receive extra credit for siblings, enter the number of children when checking in.
 
 </div><a href="javascript:history.go(-1)" class="button-small-outline w-button">OK, Got it</a></div>
 

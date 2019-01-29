@@ -42,11 +42,11 @@
 
  <!-- request care button -->
 
+<!--
    <div class="fb-container">
-    <router-link to="/request" class="fb-button w-inline-block"><span><img src="@/assets/request-care-white.svg" width="24" height="24" alt="" /><span class="fb-button-text">Request care</span></span></router-link>
-<!--        <div class="tos-acceptance">
-      (By signing in you agree to our <a href="https://cottageclass.com/terms-of-service">Terms of Service</a> and <a href="https://cottageclass.com/privacy-policy">Privacy Policy</a>)
-    </div> -->
+    <router-link to="/request-create" class="fb-button w-inline-block"><span><img src="@/assets/request-care-white.svg" width="24" height="24" alt="" /><span class="fb-button-text">Request care</span></span></router-link>
+-->
+
   </div>
 </div>
 

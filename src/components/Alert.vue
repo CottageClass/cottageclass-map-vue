@@ -15,11 +15,10 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 
 .alert-container {
   width: 100%;
-
   margin-bottom: 16px;
   padding: 10px 10px 10px;
   text-align: center;

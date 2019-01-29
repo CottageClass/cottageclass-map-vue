@@ -57,35 +57,6 @@ export default {
 </script>
 
 <style scoped>
-html {
-  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
-}
-
-.body {
-  font-family: soleil, sans-serif;
-  color: #333;
-  font-size: 14px;
-  line-height: 20px;
-}
-
-.body {
-  background-color: #1d8ae7;
-}
-
-.title-container {
-  margin-bottom: 32px;
-  color: #fff;
-}
-
-.title {
-  margin-top: 0px;
-  margin-bottom: 10px;
-  color: #fff;
-  font-size: 24px;
-  line-height: 34px;
-  text-align: center;
-  letter-spacing: -0.3px;
-}
 
 .promo-container {
   display: -webkit-box;

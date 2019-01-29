@@ -109,7 +109,7 @@ export default new Router({
       component: OAuthCallback
     },
     {
-      path: '/request',
+      path: '/request-create',
       name: 'RequestModal2',
       component: RequestModal2
     },
