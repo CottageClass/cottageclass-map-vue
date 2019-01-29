@@ -316,7 +316,7 @@ export default {
           component.houseRules.err = 'Sorry, there was a problem saving your information. Try again?'
           throw err
         }).then(() => {
-          return component.$store.dispatch('establishCurrentUserAsync', Token.currentUserId(this.$auth))
+          return component.$store.dispatch('establishCurrentUserAsync', Token.currentUserId(component.$auth))
         }).then(() => {
           component.submitEventData().then(res => {
             component.createdEventData = normalize(res.data)

@@ -377,6 +377,9 @@ export default {
     }
   },
   mounted: function () {
+    if (this.currentUser === null) {
+      return
+    }
     if (this.currentUser.hasAllRequiredFields) {
       this.$emit('userAlreadyOnboarded')
     } else if (this.currentUser.id) {
