@@ -74,43 +74,6 @@
       <div class="events-list-wrapper">
         <div class="event-date-section-tittle cancel-top-margin"><img src="@/assets/date-outline-white-oval.svg" alt="" class="image-265">
           <div class="date-text-wrapper">
-            <div class="date-title">Thursday, January 24</div>
-          </div>
-        </div>
-        <ul class="unordered-list-events">
-          <li class="event-list-item">
-            <div class="event-list-item-graphic color-pink"><img src="@/assets/butterfly.svg" alt="" class="emoji"></div>
-            <div class="event-list-item-content">
-              <div class="spacer w-hidden-main w-hidden-medium"></div>
-              <router-link
-              :to="{ name: 'EventPage', params: { id: 109 }}"
-              class="link-block-4 w-inline-block">
-                <h2 class="event-heading">Develop your mindfulness superpower workshop &amp; dinner with Julie</h2>
-              </router-link>
-              <div class="event-summary">
-                <div class="event-time">Thu, Jan 24, 2019 at 6:00 PM–9:00 PM</div>
-                <div class="event-ages">Ages 4-11 (4 kids total)</div>
-                <div class="event-location">Cobble Hill</div>
-              </div>
-              <div class="scrolling-wrapper">
-                <img src="@/assets/Julie-Screen-Shot-2019-01-04-at-3.46.43-PM.jpg" alt="" class="event-household-photo"><img src="@/assets/Julie-Screen-Shot-2019-01-04-at-3.45.40-PM.jpg" alt="" class="event-household-photo"><img src="@/assets/Julie-Screen-Shot-2019-01-04-at-3.44.52-PM.jpg" alt="" class="event-household-photo"><img src="@/assets/Julie-Screen-Shot-2019-01-04-at-3.45.13-PM.jpg" alt="" class="event-household-photo"><img src="@/assets/JulieNEW.jpg" alt="" class="event-household-photo"></div>
-              <div class="action-bar">
-                <div class="host-container">
-                  <div class="host-info"><img src="@/assets/julie.jpg" height="40" width="40" alt="" class="avatar-small">
-                    <div class="text-block">Hosted by Julie and 2 kids–age 4 and 7, PS29.</div>
-                  </div>
-                  <div class="host-meta">
-                    <div class="host-occupation">Partner Lead, Google</div>
-                    <div class="background-checked-wrapper"><img src="@/assets/check-green.svg" alt="">
-                      <div class="background-checked">Background Checked</div>
-                    </div>
-                  </div>
-                </div><RsvpButton eventId="109" /></div>
-            </div>
-          </li>
-        </ul>
-        <div class="event-date-section-tittle"><img src="@/assets/date-outline-white-oval.svg" alt="" class="image-265">
-          <div class="date-text-wrapper">
             <div class="date-title">Sunday, Febuary 3</div>
           </div>
         </div>
@@ -214,6 +177,43 @@
                     </div>
                   </div>
                 </div><RsvpButton eventId="86" /></div>
+            </div>
+          </li>
+        </ul>
+        <div class="event-date-section-tittle"><img src="@/assets/date-outline-white-oval.svg" alt="" class="image-265">
+          <div class="date-text-wrapper">
+            <div class="date-title">Friday, February 15</div>
+          </div>
+        </div>
+        <ul class="unordered-list-events">
+          <li class="event-list-item">
+            <div class="event-list-item-graphic color-pink"><img src="@/assets/butterfly.svg" alt="" class="emoji"></div>
+            <div class="event-list-item-content">
+              <div class="spacer w-hidden-main w-hidden-medium"></div>
+              <router-link
+              :to="{ name: 'EventPage', params: { id: 110 }}"
+              class="link-block-4 w-inline-block">
+                <h2 class="event-heading">Develop your mindfulness superpower workshop &amp; dinner with Julie</h2>
+              </router-link>
+              <div class="event-summary">
+                <div class="event-time">Fri, Feb 15, 2019 at 6:00 PM–9:00 PM</div>
+                <div class="event-ages">Ages 4-11 (4 kids total)</div>
+                <div class="event-location">Cobble Hill</div>
+              </div>
+              <div class="scrolling-wrapper">
+                <img src="@/assets/Julie-Screen-Shot-2019-01-04-at-3.46.43-PM.jpg" alt="" class="event-household-photo"><img src="@/assets/Julie-Screen-Shot-2019-01-04-at-3.45.40-PM.jpg" alt="" class="event-household-photo"><img src="@/assets/Julie-Screen-Shot-2019-01-04-at-3.44.52-PM.jpg" alt="" class="event-household-photo"><img src="@/assets/Julie-Screen-Shot-2019-01-04-at-3.45.13-PM.jpg" alt="" class="event-household-photo"><img src="@/assets/JulieNEW.jpg" alt="" class="event-household-photo"></div>
+              <div class="action-bar">
+                <div class="host-container">
+                  <div class="host-info"><img src="@/assets/julie.jpg" height="40" width="40" alt="" class="avatar-small">
+                    <div class="text-block">Hosted by Julie and 2 kids–age 4 and 7, PS29.</div>
+                  </div>
+                  <div class="host-meta">
+                    <div class="host-occupation">Partner Lead, Google</div>
+                    <div class="background-checked-wrapper"><img src="@/assets/check-green.svg" alt="">
+                      <div class="background-checked">Background Checked</div>
+                    </div>
+                  </div>
+                </div><RsvpButton eventId="110" /></div>
             </div>
           </li>
         </ul>
