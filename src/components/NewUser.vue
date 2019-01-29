@@ -103,6 +103,8 @@ import * as Token from '@/utils/tokens.js'
 import * as api from '@/utils/api.js'
 import sheetsu from 'sheetsu-node'
 import normalize from 'json-api-normalizer'
+import { mapState } from 'vuex'
+
 var moment = require('moment')
 
 // create a config file to identify which spreadsheet we push to.
@@ -116,7 +118,6 @@ export default {
     return {
       createdEventData: null,
       activeScreen: this.$route.query.activeScreen || 'facebook',
-      currentUser: {},
       step: 0,
       lastStep: 13,
       showError: false,
@@ -248,14 +249,15 @@ export default {
       this.$auth.authenticate(provider)
         .then(res => {
           console.log('auth SUCCESS')
-        }).then(res => api.fetchCurrentUser(Token.currentUserId(component.$auth))).then(currentUser => {
-          if (currentUser.hasAllRequiredFields && !this.rsvpAttempted) {
+          return this.$store.dispatch('establishCurrentUserAsync', Token.currentUserId(component.$auth))
+        }).then(() => {
+          if (this.currentUser.hasAllRequiredFields && !this.rsvpAttempted) {
             // redirect to home screen if they haven't attempted an RSVP
             this.$router.push({ name: 'Home' })
-          } else if (currentUser.hasAllRequiredFields && this.rsvpAttempted) {
+          } else if (this.currentUser.hasAllRequiredFields && this.rsvpAttempted) {
             // confirm that they want to RSVP if they have attempted an RSVP
             this.$router.push({ name: 'RsvpConfirmation', params: { eventId: this.rsvpAttempted } })
-          } else if (currentUser.id) {
+          } else if (this.currentUser.id) {
             // begin onboarding
             this.nextStep()
           } else {
@@ -409,7 +411,10 @@ export default {
           'child_age_maximum': this.childAgeMaximum
         }
       }
-    }
+    },
+    ...mapState({
+      currentUser: state => state.currentUser
+    })
   }
 }
 
