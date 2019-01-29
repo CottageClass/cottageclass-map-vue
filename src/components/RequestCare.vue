@@ -57,7 +57,7 @@ import MainNav from './MainNav.vue'
 import Provider from '@/components/Provider.vue'
 import ShareButton from '@/components/ShareButton.vue'
 import networks from '@/assets/network-info.json'
-import * as Token from '@/utils/tokens.js'
+import { mapState } from 'vuex'
 import * as api from '@/utils/api.js'
 
 export default {
@@ -70,9 +70,7 @@ export default {
       mapOptions: { // move this to map component when i separate it.
         'disableDefaultUI': true, // turns off map controls
         'gestureHandling': 'greedy' // allows one finger pan.
-      },
-      currentUserId: Token.currentUserId(this.$auth),
-      currentUser: {}
+      }
     }
   },
   methods: {
@@ -83,13 +81,12 @@ export default {
   },
   mounted: function () {
     api.fetchUsersInNetwork(this.network.stub).then(res => {
-      this.people = res.filter(person => person.id !== this.currentUserId)
-      this.currentUser = res.find(person => person.id === this.currentUserId)
+      this.people = res.filter(person => person.id !== this.currentUser.id)
     })
   },
   computed: {
     network: function () {
-      let networkId = Token.currentUserNetworkCode(this.$auth)
+      let networkId = this.currentUser.networkCode
       return this.networks.find(network => network.stub === networkId)
     },
     peopleAvailable: function () {
@@ -97,7 +94,10 @@ export default {
     },
     providersSectionTitle: function () {
       return 'People in "' + this.network.name + '"'
-    }
+    },
+    ...mapState({
+      currentUser: state => state.currentUser
+    })
   }
 }
 </script>
