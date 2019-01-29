@@ -220,15 +220,19 @@ export function fetchCurrentUser (userId) {
     let user = normalizedData.user[userId].attributes
     user.hasAllRequiredFields = user.phone && user.latitude && user.longitude
     user.networkCode = 'brooklyn-events' // give everyone the new network code
-    let childrenById = normalizedData.child
-    let childIds = Object.keys(childrenById)
-    let generateChild = function (aChildId) {
-      let child = childrenById[aChildId].attributes
-      child.id = aChildId
-      child.firstName = capitalize(child.firstName)
-      return child
+    if ('child' in normalizedData) {
+      let childrenById = normalizedData.child
+      let childIds = Object.keys(childrenById)
+      let generateChild = function (aChildId) {
+        let child = childrenById[aChildId].attributes
+        child.id = aChildId
+        child.firstName = capitalize(child.firstName)
+        return child
+      }
+      user.children = childIds.map(generateChild)
+    } else {
+      user.children = []
     }
-    user.children = childIds.map(generateChild)
     user.id = userId
     return user
   }).catch(err => {
