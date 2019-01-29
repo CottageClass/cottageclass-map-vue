@@ -67,7 +67,6 @@ export default {
   },
   methods: {
     fetchCurrentUser: function () {
-      this.currentUser = window.globalCurrentUser
       api.fetchCurrentUserNew(Token.currentUserId(this.$auth)).then(currentUser => {
         this.currentUser = currentUser
         this.children.list = this.currentUser.children
@@ -77,7 +76,6 @@ export default {
           availableEvenings: this.currentUser.availableEvenings,
           availableWeekends: this.currentUser.availableWeekends
         }
-        window.globalCurrentUser = currentUser
       })
     },
     submitUserInformation: function () {
