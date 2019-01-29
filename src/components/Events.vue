@@ -137,7 +137,6 @@ export default {
     }
   },
   mounted: function () {
-    this.$store.dispatch('fetchAllEventsAsync')
     this.fetchUpcomingEvents()
     if (this.$auth && this.$auth.isAuthenticated()) {
       this.isAuthenticated = true
