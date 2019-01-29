@@ -12,7 +12,7 @@
       <ErrorMessage v-if="showError && error" :text="availability.err" />
     <Availability v-model="availability" :required="false"/>
     <ErrorMessage v-if="showError && error" :text=" children.err" />
-    <!-- <Children v-model="children" :required="false" /> -->
+    <Children v-model="children" :required="false" />
   </OnboardingStyleWrapper>
   <PageActionsFooter :buttonText="saveButtonText" @click="submitUserInformation"/>
   </div>
