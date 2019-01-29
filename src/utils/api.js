@@ -229,6 +229,7 @@ export function fetchCurrentUser (userId) {
       return child
     }
     user.children = childIds.map(generateChild)
+    user.id = userId
     return user
   }).catch(err => {
     console.log('FETCH CURRENT USER FAILURE')
