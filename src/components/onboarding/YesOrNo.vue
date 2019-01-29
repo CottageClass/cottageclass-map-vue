@@ -1,9 +1,9 @@
 <template>
   <Question :title="question" :subtitle="description">
-         <MultipleChoice 
-     type="radio" 
-     v-model="yesOrNo" 
-     :choices="['yes', 'no']" /> 
+         <MultipleChoice
+     type="radio"
+     v-model="yesOrNo"
+     :choices="['yes', 'no']" />
   </Question>
 </template>
 
@@ -13,18 +13,24 @@ import MultipleChoice from '@/components/onboarding/MultipleChoice.vue'
 
 export default {
   name: 'YesOrNo',
-  components: { Question, MultipleChoice },  
+  components: { Question, MultipleChoice },
   props: ['value', 'question', 'description'],
   data () {
     return {
-      yesOrNo: this.value.isTrue ? 'yes' : 'no',
+      yesOrNo: this.value.isTrue ? 'yes' : (this.value.isTrue === false ? 'no' : null),
       errorMesg: 'Please answer yes or no.'
     }
   },
   mounted: function () {
-    this.$emit('input', {
-      err: this.errorMesg
-    })
+    this.emitData()
+  },
+  methods: {
+    emitData: function () {
+      this.$emit('input', {
+        isTrue: this.trueOrFalse,
+        err: this.err
+      })
+    }
   },
   computed: {
     err: function () {
@@ -47,10 +53,7 @@ export default {
   },
   watch: {
     yesOrNo: function () {
-      this.$emit('input', {
-        isTrue: this.trueOrFalse,
-        err: this.err
-      })
+      this.emitData()
     }
   }
 }
