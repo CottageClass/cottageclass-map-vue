@@ -40,16 +40,9 @@ export default {
     },
     isToday: function (date) {
       return moment(0, 'HH').diff(date, 'days') === 0
-    },
-    distanceFromCurrentUser: function (lat, lon) {
-      if (this.currentUser) {
-        return api.distanceHaversine(lat, lon, this.currentUser.latitude, this.currentUser.longitude)
-      } else {
-        return null
-      }
     }
   },
-  computed: mapGetters(['currentUser'])
+  computed: mapGetters(['currentUser', 'distanceFromCurrentUser'])
 }
 </script>
 
