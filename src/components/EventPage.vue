@@ -205,7 +205,7 @@ export default {
       if (Array.isArray(this.events)) {
         return this.events.find(event => event.id === this.$route.params.id)
       } else {
-        return {}
+        return null
       }
     },
     ...mapState({

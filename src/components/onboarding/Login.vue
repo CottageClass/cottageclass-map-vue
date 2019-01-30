@@ -83,7 +83,7 @@
             <div class="event-list-item-content">
               <div class="spacer w-hidden-main w-hidden-medium"></div>
               <router-link
-              :to="{ name: 'EventPage', params: { id: 109 }}"
+              :to="{ name: 'EventPage', params: { id: '109' }}"
               class="link-block-4 w-inline-block">
                 <h2 class="event-heading">Develop your mindfulness superpower workshop &amp; dinner with Julie</h2>
               </router-link>
@@ -120,7 +120,7 @@
             <div class="event-list-item-content">
               <div class="spacer w-hidden-main w-hidden-medium"></div>
               <router-link
-              :to="{ name: 'EventPage', params: { id: 91 }}"
+              :to="{ name: 'EventPage', params: { id: '91' }}"
               class="link-block-4 w-inline-block">
                 <h2 class="event-heading">Eggs &amp; Painting with Jordana</h2>
               </router-link>
@@ -156,7 +156,7 @@
             <div class="event-list-item-content">
               <div class="spacer w-hidden-main w-hidden-medium"></div>
               <router-link
-              :to="{ name: 'EventPage', params: { id: 103 }}"
+              :to="{ name: 'EventPage', params: { id: '103' }}"
               class="link-block-4 w-inline-block">
                 <h2 class="event-heading">Movie night &amp; pizza 🍕 with Charlice</h2>
               </router-link>
@@ -192,7 +192,7 @@
             <div class="event-list-item-content">
               <div class="spacer w-hidden-main w-hidden-medium"></div>
               <router-link
-              :to="{ name: 'EventPage', params: { id: 86 }}"
+              :to="{ name: 'EventPage', params: { id: '86' }}"
               class="link-block-4 w-inline-block">
                 <h2 class="event-heading">Arts &amp; Crafts &amp; Pizza 🍕 with Manisha</h2>
               </router-link>
@@ -228,7 +228,7 @@
             <div class="event-list-item-content">
               <div class="spacer w-hidden-main w-hidden-medium"></div>
               <router-link
-              :to="{ name: 'EventPage', params: { id: 98 }}"
+              :to="{ name: 'EventPage', params: { id: '98' }}"
               class="link-block-4 w-inline-block">
                 <h2 class="event-heading">Movie night &amp; pizza 🍕 with Rima</h2>
               </router-link>
