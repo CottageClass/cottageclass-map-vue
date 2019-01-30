@@ -58,6 +58,7 @@ import networks from '@/assets/network-info.json'
 import * as Token from '@/utils/tokens.js'
 import * as api from '@/utils/api.js'
 import AvatarImage from '@/components/AvatarImage.vue'
+import { mapGetters } from 'vuex'
 var moment = require('moment')
 
 export default {
@@ -67,8 +68,6 @@ export default {
     return {
       people: [],
       peopleSelected: [],
-      currentUserId: Token.currentUserId(this.$auth),
-      currentUser: {},
       networks: networks,
       maxRecipients: 3,
       messagesUnsent: null,
@@ -111,7 +110,7 @@ export default {
     },
     testApi: function (provider) {
       console.log([
-        this.currentUserId,
+        this.currentUser.id,
         parseInt(provider.id),
         this.messageToProvider(provider)
       ])
@@ -120,7 +119,7 @@ export default {
       // init twilio proxy session
       // only provider should get message welcoming them to proxy session
       return api.initProxySession(
-        this.currentUserId,
+        this.currentUser.id,
         parseInt(provider.id),
         this.messageToProvider(provider),
         null // don't send acknowledgement messages because we don't want them to receive multiple messages in this case.
@@ -129,8 +128,8 @@ export default {
   },
   mounted: function () {
     api.fetchUsersInNetwork(this.network.stub).then(res => {
-      this.people = res.filter(person => person.id !== this.currentUserId)
-      this.currentUser = res.find(person => person.id === this.currentUserId)
+      this.people = res.filter(person => person.id !== this.currentUser.id)
+      this.currentUser = res.find(person => person.id === this.currentUser.id)
     })
   },
   watch: {
@@ -191,7 +190,8 @@ export default {
       } else {
         return []
       }
-    }
+    },
+    ...mapGetters([ 'currentUser' ])
   }
 }
 </script>

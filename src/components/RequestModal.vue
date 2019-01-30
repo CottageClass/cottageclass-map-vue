@@ -69,6 +69,7 @@ import AvatarImage from './AvatarImage.vue'
 
 // import google sheets API service
 import sheetsu from 'sheetsu-node'
+import { mapGetters } from 'vuex'
 var moment = require('moment')
 
 // create a config file to identify which spreadsheet we push to.
@@ -85,8 +86,6 @@ export default {
       endTime: '22:00',
       people: [],
       networks: networks,
-      currentUserId: Token.currentUserId(this.$auth),
-      currentUser: {},
       providerId: this.$route.params.id,
       twilioProxyNumberForProvider: null,
       sendButtonText: 'Send Text'
@@ -99,14 +98,15 @@ export default {
     },
     provider: function () {
       return this.people.find(person => person.id === this.providerId) || {}
-    }
+    },
+    ...mapGetters([ 'currentUser' ])
   },
   mounted: function () {
     // fetch users in network
     api.fetchUsersInNetwork(this.network.stub)
       .then(people => {
         this.people = people
-        this.currentUser = people.find(person => person.id === this.currentUserId)
+        this.currentUser = people.find(person => person.id === this.currentUser.id)
       })
   },
   methods: {
@@ -146,7 +146,7 @@ export default {
       // init twilio proxy session
       // - both provider and careseeker should get messages welcoming them to proxy session
       return api.initProxySession(
-        this.currentUserId,
+        this.currentUser.id,
         this.providerId,
         this.messageForProvider(),
         this.acknowledgmentMessage()

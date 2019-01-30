@@ -45,12 +45,6 @@ export default new Vuex.Store(
       }
     },
     getters: {
-      getEventsForUser: (state) => (userId) => {
-        return state.eventsByDate.filter(event => this.currentUserId === event.hostId)
-      },
-      getEventsWithinDistance: (state) => (event) => {
-        return this.eventsByDate.filter(event => this.distanceFromCurrentUser(event.hostFuzzyLatitude, event.hostFuzzyLongitude) <= parseFloat(this.maximumDistanceFromUserInMiles))
-      },
       distanceFromCurrentUser: (state) => (lat, lon) => {
         if (state.currentUser) {
           return api.distanceHaversine(lat, lon, state.currentUser.latitude, state.currentUser.longitude)

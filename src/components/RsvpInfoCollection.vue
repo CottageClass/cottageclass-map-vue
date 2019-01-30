@@ -219,7 +219,7 @@ export default {
     },
     sendNotifications: function () {
       api.submitNotification(this.event.hostId, this.notificationToHost)
-      api.submitNotification(Token.currentUserId(this.$auth), this.notificationBackToUser)
+      api.submitNotification(this.currentUser.id, this.notificationBackToUser)
     }
   }
 }
