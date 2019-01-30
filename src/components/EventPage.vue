@@ -30,13 +30,15 @@
 
         <!-- RSVP button or share button-->
 
+
         <RsvpButton
         v-if="!hostIsCurrentUser"
         :userParticipating="event.participated"
         :full="event.full"
         :eventId="eventId"
-        /></div>
-
+        />
+        <EditButton v-if="hostIsCurrentUser" :eventId="eventId" />
+      </div>
         <!-- Summary info -->
 
       <ul class="summary-info">
@@ -109,6 +111,7 @@
         />
       </div>
 
+
       <!-- Sharing ask -->
 
       <div class="event-specifics-card" v-if="!event.full && !event.participated">
@@ -135,6 +138,7 @@ import * as api from '@/utils/api.js'
 import * as Token from '@/utils/tokens.js'
 import AvatarImage from './AvatarImage.vue'
 import RsvpButton from './RsvpButton.vue'
+import EditButton from './EditButton.vue'
 import Alert from './Alert.vue'
 import MainNav from './MainNav.vue'
 import Footer from '@/components/Footer.vue'
@@ -143,7 +147,7 @@ var moment = require('moment')
 
 export default {
   name: 'EventPage',
-  components: { AvatarImage, RsvpButton, MainNav, Footer, EventCategoryIcon, Alert },
+  components: { AvatarImage, RsvpButton, MainNav, Footer, EventCategoryIcon, Alert, EditButton },
   data () {
     return {
       events: [],
@@ -212,7 +216,7 @@ export default {
       if (Array.isArray(this.events)) {
         return this.events.find(event => event.id === this.$route.params.id)
       } else {
-        return {}
+        return null
       }
     }
   }
