@@ -76,13 +76,7 @@ export default {
   data () {
     return {
       showMenu: false,
-      menuButtonText: 'Menu',
-      isAuthenticated: null
-    }
-  },
-  mounted: function () {
-    if (this.$auth && this.$auth.isAuthenticated()) {
-      this.isAuthenticated = true
+      menuButtonText: 'Menu'
     }
   },
   methods: {
@@ -98,9 +92,14 @@ export default {
       this.$router.push('/')
     }
   },
-  computed: mapState({
-    currentUser: state => state.currentUser
-  })
+  computed: {
+    isAuthenticated: function () {
+      return this.currentUser !== null
+    },
+    ...mapState({
+      currentUser: state => state.currentUser
+    })
+  }
 }
 </script>
 

@@ -39,7 +39,6 @@ export default {
   components: { Location, Phone, Availability, MainNav, OnboardingStyleWrapper, PageActionsFooter, ErrorMessage, Children },
   data () {
     return {
-      isAuthenticated: null,
       location: {},
       phone: {},
       availability: {},

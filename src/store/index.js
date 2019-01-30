@@ -11,8 +11,7 @@ export default new Vuex.Store(
     plugins: [createPersistedState()],
     state: {
       eventsByDate: null, // We shouldn't store all events.  It will have to change later
-      currentUser: null,
-      isAuthenticated: false
+      currentUser: null
     },
     mutations: {
       setEventsByDate: (state, payload) => {
@@ -61,6 +60,9 @@ export default new Vuex.Store(
       },
       currentUser: (state) => {
         return state.currentUser
+      },
+      isAuthenticated: (state) => {
+        return state.currentUser !== null
       }
     }
   }

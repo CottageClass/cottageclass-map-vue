@@ -8,7 +8,7 @@
     <div class="divider-2px"></div>
     <div class="content-container-4 w-container">
      <h1 class="h1-display">Upcoming Playdates</h1>
-     <p v-if="isAuthenticated">Within
+     <p v-if="currentUser !== null">Within
       <select v-model="maximumDistanceFromUserInMiles">
         <option>0.2</option>
         <option>0.5</option>
@@ -19,11 +19,7 @@
         <option>20</option>
         <option>50</option>
       </select> miles</p>
-      <EventList
-        :events="eventsWithinDistance"
-        :currentUser="currentUser"
-        :currentUserId="currentUser.id"
-        :isAuthenticated="isAuthenticated"/>
+      <EventList :events="eventsWithinDistance" />
     </div>
   </div>
 
@@ -62,7 +58,6 @@ export default {
   data () {
     return {
       events: null,
-      isAuthenticated: false,
       maximumDistanceFromUserInMiles: '5',
       showAllButtonText: 'Show all playdates',
       showShowAllButton: false
@@ -78,7 +73,7 @@ export default {
       return []
     },
     eventsWithinDistance: function () {
-      if (this.isAuthenticated && !!this.eventsByDate) {
+      if (this.currentUser !== null && !!this.eventsByDate) {
         return this.eventsByDate.filter(event => this.distanceFromCurrentUser(event.hostFuzzyLatitude, event.hostFuzzyLongitude) <= parseFloat(this.maximumDistanceFromUserInMiles))
       } else {
         return this.eventsByDate
@@ -135,9 +130,6 @@ export default {
   },
   mounted: function () {
     this.fetchUpcomingEvents()
-    if (this.$auth && this.$auth.isAuthenticated()) {
-      this.isAuthenticated = true
-    }
   }
 }
 </script>

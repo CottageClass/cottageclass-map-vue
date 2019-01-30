@@ -153,7 +153,6 @@ export default {
   data () {
     return {
       events: [],
-      isAuthenticated: false,
       mapOptions: {
         'disableDefaultUI': true, // turns off map controls
         'gestureHandling': 'none' // prevents any kind of scrolling
@@ -184,9 +183,6 @@ export default {
   },
   mounted: function () {
     this.fetchEvent()
-    if (this.$auth && this.$auth.isAuthenticated()) {
-      this.isAuthenticated = true
-    }
   },
   computed: {
     hostIsCurrentUser: function () {
