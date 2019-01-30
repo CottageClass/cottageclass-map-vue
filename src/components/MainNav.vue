@@ -66,7 +66,7 @@
 <script>
 import { mixin as clickaway } from 'vue-clickaway'
 import AvatarImage from '@/components/AvatarImage.vue'
-import { mapState } from 'vuex'
+import { mapGetters } from 'vuex'
 
 export default {
   name: 'MainNav',
@@ -92,14 +92,7 @@ export default {
       this.$router.push('/')
     }
   },
-  computed: {
-    isAuthenticated: function () {
-      return this.currentUser !== null
-    },
-    ...mapState({
-      currentUser: state => state.currentUser
-    })
-  }
+  computed: mapGetters([ 'isAuthenticated', 'currentUser' ])
 }
 </script>
 

@@ -57,7 +57,7 @@ import MainNav from './MainNav.vue'
 import Provider from '@/components/Provider.vue'
 import ShareButton from '@/components/ShareButton.vue'
 import networks from '@/assets/network-info.json'
-import { mapState } from 'vuex'
+import { mapGetters } from 'vuex'
 import * as api from '@/utils/api.js'
 
 export default {
@@ -95,9 +95,7 @@ export default {
     providersSectionTitle: function () {
       return 'People in "' + this.network.name + '"'
     },
-    ...mapState({
-      currentUser: state => state.currentUser
-    })
+    ...mapGetters(['currentUser'])
   }
 }
 </script>

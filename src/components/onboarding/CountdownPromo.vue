@@ -20,7 +20,7 @@
 </template>
 
 <script>
-import { mapState } from 'vuex'
+import { mapGetters } from 'vuex'
 
 var Moment = require('moment')
 
@@ -36,9 +36,7 @@ export default {
       interval: null
     }
   },
-  computed: mapState({
-    currentUser: state => state.currentUser
-  }),
+  computed: mapGetters(['currentUser']),
   mounted: function () {
     this.interval = setInterval(() => {
       var now = new Moment()

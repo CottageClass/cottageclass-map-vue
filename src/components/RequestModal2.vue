@@ -26,7 +26,7 @@
 import Nav from '@/components/onboarding/Nav.vue'
 import RequestCare from '@/components/onboarding/RequestCare.vue'
 import * as Token from '@/utils/tokens.js'
-import { mapState } from 'vuex'
+import { mapGetters } from 'vuex'
 import sheetsu from 'sheetsu-node'
 import RequestRecipients from '@/components/RequestRecipients.vue'
 import RequestSuccessful from '@/components/RequestSuccessful.vue'
@@ -62,9 +62,7 @@ export default {
         return 'next'
       }
     },
-    ...mapState({
-      currentUser: state => state.currentUser
-    })
+    ...mapGetters(['currentUser'])
   },
   methods: {
     saveBookingRequestToSpreadsheet: function () {

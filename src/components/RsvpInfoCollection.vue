@@ -54,7 +54,7 @@ import OnboardingStyleWrapper from '@/components/onboarding/OnboardingStyleWrapp
 import sheetsu from 'sheetsu-node'
 // this component has a working loading indicator and no other logic. todo: break out and rename.
 import OAuthCallback from '@/components/OAuthCallback.vue'
-import { mapState } from 'vuex'
+import { mapGetters } from 'vuex'
 var moment = require('moment')
 // create a config file to identify which spreadsheet we push to.
 var client = sheetsu({ address: 'https://sheetsu.com/apis/v1.0su/62cd725d6088' })
@@ -111,9 +111,7 @@ export default {
     notificationBackToUser: function () {
       return 'Congratulations ' + this.currentUser.firstName + '! You\'ve booked a playdate with ' + this.event.hostFirstName + ' for ' + this.guestChildrenNamesAgesFormatted + ' on ' + this.eventDateFormattedMonthDay + '. We\'ll email you shortly to confirm your RSVP.'
     },
-    ...mapState({
-      currentUser: state => state.currentUser
-    })
+    ...mapGetters(['currentUser'])
   },
   methods: {
     fetchUserInformation: function () {

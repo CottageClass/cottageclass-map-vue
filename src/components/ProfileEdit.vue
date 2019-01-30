@@ -30,7 +30,7 @@ import PageActionsFooter from '@/components/PageActionsFooter.vue'
 import OnboardingStyleWrapper from '@/components/onboarding/OnboardingStyleWrapper.vue'
 import ErrorMessage from '@/components/onboarding/ErrorMessage.vue'
 import * as api from '@/utils/api.js'
-import { mapState } from 'vuex'
+import { mapGetters } from 'vuex'
 
 var VueScrollTo = require('vue-scrollto')
 
@@ -63,9 +63,7 @@ export default {
         return false
       }
     },
-    ...mapState({
-      currentUser: state => state.currentUser
-    })
+    ...mapGetters(['currentUser'])
   },
   methods: {
     submitUserInformation: function () {

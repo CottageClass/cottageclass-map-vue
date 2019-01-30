@@ -36,7 +36,7 @@ import MainNav from '@/components/MainNav.vue'
 import Footer from '@/components/Footer.vue'
 import Alert from '@/components/Alert.vue'
 import * as api from '@/utils/api.js'
-import { mapState } from 'vuex'
+import { mapGetters } from 'vuex'
 
 var moment = require('moment')
 
@@ -79,9 +79,9 @@ export default {
         return this.eventsByDate
       }
     },
-    ...mapState({
-      currentUser: state => state.currentUser
-    })
+    ...mapGetters([
+      'distanceFromCurrentUser', 'currentUser'
+    ])
   },
   methods: {
     limitNumberOfEvents: function (events) {
@@ -118,13 +118,6 @@ export default {
               this.fetchAllEvents()
             }
           })
-      }
-    },
-    distanceFromCurrentUser: function (lat, lon) {
-      if (this.currentUser) {
-        return api.distanceHaversine(lat, lon, this.currentUser.latitude, this.currentUser.longitude)
-      } else {
-        return null
       }
     }
   },

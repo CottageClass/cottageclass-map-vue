@@ -143,7 +143,7 @@ import Alert from './Alert.vue'
 import MainNav from './MainNav.vue'
 import Footer from '@/components/Footer.vue'
 import EventCategoryIcon from '@/components/EventCategoryIcon.vue'
-import { mapState } from 'vuex'
+import { mapGetters } from 'vuex'
 
 var moment = require('moment')
 
@@ -208,9 +208,7 @@ export default {
         return null
       }
     },
-    ...mapState({
-      currentUser: state => state.currentUser
-    })
+    ...mapGetters(['currentUser'])
   }
 
 }

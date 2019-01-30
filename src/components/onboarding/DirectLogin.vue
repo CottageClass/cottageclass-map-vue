@@ -56,7 +56,7 @@
 
 <script>
 // import networks from '@/assets/network-info.json';
-import { mapState } from 'vuex'
+import { mapGetters } from 'vuex'
 import * as Token from '@/utils/tokens.js'
 import * as api from '@/utils/api.js'
 import ErrorMessage from '@/components/onboarding/ErrorMessage.vue'
@@ -157,9 +157,7 @@ export default {
         })
     }
   },
-  computed: mapState({
-    currentUser: state => state.currentUser
-  })
+  computed: mapGetters(['currentUser'])
 }
 </script>
 

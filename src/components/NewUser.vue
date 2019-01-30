@@ -103,7 +103,7 @@ import * as Token from '@/utils/tokens.js'
 import * as api from '@/utils/api.js'
 import sheetsu from 'sheetsu-node'
 import normalize from 'json-api-normalizer'
-import { mapState } from 'vuex'
+import { mapGetters } from 'vuex'
 
 var moment = require('moment')
 
@@ -411,9 +411,7 @@ export default {
         }
       }
     },
-    ...mapState({
-      currentUser: state => state.currentUser
-    })
+    ...mapGetters(['currentUser'])
   }
 }
 

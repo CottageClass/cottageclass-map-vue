@@ -402,7 +402,7 @@ import networks from '@/assets/network-info.json'
 import RsvpButton from '@/components/RsvpButton.vue'
 import MainNav from '@/components/MainNav.vue'
 import Footer from '@/components/Footer.vue'
-import { mapState } from 'vuex'
+import { mapGetters } from 'vuex'
 
 export default {
   name: 'Login',
@@ -432,9 +432,7 @@ export default {
       })
     }
   },
-  computed: mapState({
-    currentUser: state => state.currentUser
-  })
+  computed: mapGetters(['currentUser'])
 }
 
 </script>

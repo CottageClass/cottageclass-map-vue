@@ -27,7 +27,7 @@
 <script>
 import EventListItem from '@/components/EventListItem.vue'
 import * as api from '@/utils/api.js'
-import { mapState } from 'vuex'
+import { mapGetters } from 'vuex'
 
 var moment = require('moment')
 export default {
@@ -49,9 +49,7 @@ export default {
       }
     }
   },
-  computed: mapState({
-    currentUser: state => state.currentUser
-  })
+  computed: mapGetters(['currentUser'])
 }
 </script>
 

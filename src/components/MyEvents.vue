@@ -17,7 +17,7 @@ import MainNav from '@/components/MainNav.vue'
 import Footer from '@/components/Footer.vue'
 import EventList from '@/components/EventList.vue'
 import * as api from '@/utils/api.js'
-import { mapState } from 'vuex'
+import { mapGetters } from 'vuex'
 
 var moment = require('moment')
 
@@ -47,9 +47,7 @@ export default {
       }
       return []
     },
-    ...mapState({
-      currentUser: state => state.currentUser
-    })
+    ...mapGetters(['currentUser'])
   },
   methods: {
     limitNumberOfEvents: function (events) {
