@@ -36,9 +36,13 @@ export default new Vuex.Store(
       },
       establishCurrentUserAsync: ({ commit }, userId) => {
         console.log('establish')
-        return api.fetchCurrentUser(userId).then(user => {
-          commit('setCurrentUser', { user })
-        })
+        if (userId === null) {
+          commit('setCurrentUser', { user: null })
+        } else {
+          return api.fetchCurrentUser(userId).then(user => {
+            commit('setCurrentUser', { user })
+          })
+        }
       }
     },
     getters: {

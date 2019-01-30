@@ -94,6 +94,7 @@ export default {
     },
     logout: function () {
       this.$auth.logout()
+      this.$store.dispatch('establishCurrentUserAsync', null)
       this.$router.push('/')
     }
   },
