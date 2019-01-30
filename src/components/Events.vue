@@ -8,7 +8,7 @@
     <div class="divider-2px"></div>
     <div class="content-container-4 w-container">
      <h1 class="h1-display">Upcoming Playdates</h1>
-     <p v-if="currentUser !== null">Within
+     <p v-if="isAuthenticated">Within
       <select v-model="maximumDistanceFromUserInMiles">
         <option>0.2</option>
         <option>0.5</option>
@@ -73,14 +73,14 @@ export default {
       return []
     },
     eventsWithinDistance: function () {
-      if (this.currentUser !== null && !!this.eventsByDate) {
+      if (this.isAuthenticated && !!this.eventsByDate) {
         return this.eventsByDate.filter(event => this.distanceFromCurrentUser(event.hostFuzzyLatitude, event.hostFuzzyLongitude) <= parseFloat(this.maximumDistanceFromUserInMiles))
       } else {
         return this.eventsByDate
       }
     },
     ...mapGetters([
-      'distanceFromCurrentUser', 'currentUser'
+      'distanceFromCurrentUser', 'currentUser', 'isAuthenticated'
     ])
   },
   methods: {

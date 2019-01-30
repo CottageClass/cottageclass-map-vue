@@ -75,7 +75,7 @@ export default {
   },
   mounted: function () {
     if (this.$auth) {
-      if (this.currentUser !== null) {
+      if (this.isAuthenticated) {
         if (this.currentUser.hasAllRequiredFields) {
           this.$emit('userAlreadyOnboarded')
         } else if (this.currentUser.id) {
@@ -157,7 +157,7 @@ export default {
         })
     }
   },
-  computed: mapGetters(['currentUser'])
+  computed: mapGetters(['currentUser', 'isAuthenticated'])
 }
 </script>
 

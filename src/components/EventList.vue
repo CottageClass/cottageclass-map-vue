@@ -17,7 +17,7 @@
         :index="index"
         :key="index"
         :showRsvpButton="currentUser === null || currentUser.id !== event.hostId"
-        :showEditButton="currentUser !== null && currentUser.id === event.hostId"
+        :showEditButton="isAuthenticated && currentUser.id === event.hostId"
         :distance="distanceFromCurrentUser(event.hostFuzzyLatitude, event.hostFuzzyLongitude)"
       />
     </div>
@@ -42,7 +42,7 @@ export default {
       return moment(0, 'HH').diff(date, 'days') === 0
     }
   },
-  computed: mapGetters(['currentUser', 'distanceFromCurrentUser'])
+  computed: mapGetters(['currentUser', 'distanceFromCurrentUser', 'isAuthenticated'])
 }
 </script>
 
