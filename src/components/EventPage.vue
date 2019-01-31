@@ -133,7 +133,6 @@ import * as api from '@/utils/api.js'
 import AvatarImage from './AvatarImage.vue'
 import RsvpButton from './RsvpButton.vue'
 import EditButton from './EditButton.vue'
-import Alert from './Alert.vue'
 import MainNav from './MainNav.vue'
 import Footer from '@/components/Footer.vue'
 import EventCategoryIcon from '@/components/EventCategoryIcon.vue'
@@ -143,7 +142,7 @@ var moment = require('moment')
 
 export default {
   name: 'EventPage',
-  components: { AvatarImage, RsvpButton, MainNav, Footer, EventCategoryIcon, Alert, EditButton },
+  components: { AvatarImage, RsvpButton, MainNav, Footer, EventCategoryIcon, EditButton },
   data () {
     return {
       events: [],

@@ -1,5 +1,6 @@
 <template>
-<div class="alert-container" v-bind:class="{ 'alert-success': alert.status === success, 'alert-failure': alert.status === failure }">
+<div class="alert-container"
+    v-bind:class="{ 'alert-success': alert.status === 'success', 'alert-failure': alert.status === 'failure' }">
   <span v-html="alert.message" />
 </div>
 </template>
