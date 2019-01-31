@@ -11,7 +11,8 @@ export default new Vuex.Store(
     plugins: [createPersistedState()],
     state: {
       eventsByDate: null, // We shouldn't store all events.  It will have to change later
-      currentUser: null
+      currentUser: null,
+      alert: null
     },
     mutations: {
       setEventsByDate: (state, payload) => {
@@ -19,6 +20,10 @@ export default new Vuex.Store(
       },
       setCurrentUser: (state, payload) => {
         state.currentUser = payload.user
+      },
+      setAlert: (state, payload) => {
+        state.alert = payload.alert
+        state.alert.preshow = true // this indicates that we will show the alert in the next route
       }
     },
     actions: {
@@ -42,6 +47,17 @@ export default new Vuex.Store(
             commit('setCurrentUser', { user })
           })
         }
+      },
+      newRoute: ({ commit, state }, { to, from, next }) => {
+        // this method manages the showing of alerts when you enter a new route
+        if (state.alert) {
+          if (state.alert.preshow) {
+            state.alert.preshow = false
+          } else {
+            state.alert = null
+          }
+        }
+        next()
       }
     },
     getters: {
@@ -57,7 +73,8 @@ export default new Vuex.Store(
       },
       isAuthenticated: (state) => {
         return state.currentUser !== null
-      }
+      },
+      alert: state => state.alert
     }
   }
 )
