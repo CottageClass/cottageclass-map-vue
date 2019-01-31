@@ -1,5 +1,6 @@
 <template>
   <div class="main-nav">
+    <Alert v-if="alert" />
     <div class="container w-container">
       <div class="logo-wrapper"><router-link :to="{ name: 'NewUser' }" class="w-inline-block"><img src="@/assets/kc-logo-landscape.svg" alt="" class="logo"></router-link>
       </div>
@@ -66,11 +67,12 @@
 <script>
 import { mixin as clickaway } from 'vue-clickaway'
 import AvatarImage from '@/components/AvatarImage.vue'
+import Alert from '@/components/Alert.vue'
 import { mapGetters } from 'vuex'
 
 export default {
   name: 'MainNav',
-  components: { AvatarImage },
+  components: { AvatarImage, Alert },
   mixins: [ clickaway ],
   props: ['user'],
   data () {
@@ -92,7 +94,7 @@ export default {
       this.$router.push('/')
     }
   },
-  computed: mapGetters([ 'isAuthenticated', 'currentUser' ])
+  computed: mapGetters([ 'isAuthenticated', 'currentUser', 'alert' ])
 }
 </script>
 

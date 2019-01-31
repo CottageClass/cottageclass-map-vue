@@ -1,8 +1,5 @@
 <template>
   <div class="body">
-    <Alert v-if="eventDeleted">
-      Your Event Has been deleted.
-    </Alert>
     <MainNav />
   <div class="content-section background-01">
     <div class="divider-2px"></div>
@@ -34,7 +31,6 @@
 import EventList from '@/components/EventList.vue'
 import MainNav from '@/components/MainNav.vue'
 import Footer from '@/components/Footer.vue'
-import Alert from '@/components/Alert.vue'
 import * as api from '@/utils/api.js'
 import { mapGetters } from 'vuex'
 
@@ -48,13 +44,7 @@ var moment = require('moment')
 
 export default {
   name: 'Events',
-  components: { EventList, MainNav, Footer, Alert },
-  props: {
-    eventDeleted: {
-      type: Boolean,
-      default: false
-    }
-  },
+  components: { EventList, MainNav, Footer },
   data () {
     return {
       events: null,

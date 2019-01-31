@@ -1,17 +1,13 @@
 <template>
-<div class="alert-container alert-success">
-  <slot></slot>
+<div class="alert-container" v-bind:class="{ 'alert-success': alert.status === success, 'alert-failure': alert.status === failure }">
+  <span v-html="alert.message" />
 </div>
-   <!--
-      <div class="alert-container alert-failure" id="alert">
-        Sorry, this event is full &amp; not accepting any more RSVPs.
-      </div>
-    -->
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
 export default {
-
+  computed: mapGetters([ 'alert' ])
 }
 </script>
 
