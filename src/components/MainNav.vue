@@ -48,6 +48,11 @@
             </router-link>
           </li>
           <li v-if="isAuthenticated">
+            <router-link to="/my-rsvps" class="link-block w-inline-block">
+              <div class="text-block">My RSVP</div>
+            </router-link>
+          </li>
+          <li v-if="isAuthenticated">
             <a @click="logout" class="link-block w-inline-block">
               <div class="text-block">Logout</div>
             </a>

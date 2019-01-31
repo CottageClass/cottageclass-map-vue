@@ -1,5 +1,19 @@
 <template>
-  <div v-if="userParticipating" class="button w-button user-participating">&check; RSVP REQUESTED</div>
+  <div v-if="userParticipating">
+    <div class="button w-button user-participating">&check; RSVP REQUESTED</div>
+    <br/>
+    <div class="button-sub-link-container">
+      <p class="button-sub-link-paragraph">
+        <router-link
+            class="button-sub-link"
+            @click="cancelRSVP"
+            :to="{ name: 'CancelRSVP', params: { eventId: eventId }}"
+>
+          cancel
+        </router-link>
+        </p>
+    </div>
+  </div>
   <div v-else-if="full" class="button w-button full">&check; EVENT IS FULL</div>
   <router-link
   v-else
@@ -19,6 +33,20 @@ export default {
 </script>
 
 <style scoped>
+
+.button-sub-link-paragraph {
+  text-align: right;
+}
+
+.button-sub-link-container {
+  width: 100%;
+}
+
+.button-sub-link {
+  margin-right: 0px;
+  color: #1f88e9;
+  text-decoration: none;
+}
 
 .button {
   padding: 12px 32px;
