@@ -362,7 +362,11 @@ export function fetchMyUpcomingParticipatingEvents () {
   return Vue.axios.get(`${process.env.BASE_URL_API}/api/user/participated_events/upcoming`)
     .then(res => {
       console.log('GET PARTICIPATING EVENTS SUCCESS')
-      return Object.values(normalize(res.data).event).map(obj => {
+      const normedData = normalize(res.data)
+      if (!normedData.event) {
+        return []
+      }
+      return Object.values(normedData.event).map(obj => {
         var e = obj.attributes
         e['id'] = obj.id
         e.hostFirstName = capitalize(e.hostFirstName)
