@@ -67,6 +67,15 @@ export default {
     nevermind: function () {
       this.$router.go(-1) // go back by one record
     },
+    fetchEventInformation: function () {
+      api.fetchEvents(this.eventId).then(
+        (res) => {
+          this.event = res[0]
+        }).catch(
+        (err) => {
+          console.log(err.stack)
+        })
+    },
     confirm: function () {
       api.removeEventParticipant(this.eventId)
         .then(res => {
@@ -74,10 +83,18 @@ export default {
           // send reason to spreadsheet
 
           client.create({
-            'user ID': this.currentUser.id,
-            'Cancelation Time': moment(Date()).format('L'),
-            'event ID': this.eventId,
-            'reason': this.reason
+            'User ID': this.currentUser.id,
+            'Cancelation Time': moment(Date()).format('LLLL'),
+            'Event ID': this.eventId,
+            'Reason for cancelation': this.reason,
+            'Event title': this.event.name,
+            'Event host': this.event.hostFirstName,
+            'Event date': this.event.startsAt,
+            'Parent first name': this.currentUser.firstName,
+            'Parent last name': this.currentUser.lastInitial,
+            'Parent phone': this.currentUser.phone,
+            'Parent email': this.currentUser.email,
+            'All children': this.currentUser.children
           }, 'RSVPCancelations').then((data) => {
             console.log(data)
           }, (err) => {
@@ -100,6 +117,9 @@ export default {
           throw err
         })
     }
+  },
+  mounted: function () {
+    this.fetchEventInformation()
   }
 }
 
