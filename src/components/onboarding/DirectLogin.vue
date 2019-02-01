@@ -74,7 +74,7 @@ export default {
     }
   },
   mounted: function () {
-    if (this.$auth) {
+    if (this.auth) {
       if (this.isAuthenticated) {
         if (this.currentUser.hasAllRequiredFields) {
           this.$emit('userAlreadyOnboarded')
@@ -87,7 +87,7 @@ export default {
         console.log('current user does not exist')
       }
     } else {
-      console.warn('this.$auth is blank')
+      console.warn('this.auth is blank')
     }
     // override for better error messages on this screen and on signup screen.
     // note: changes here affect all vee-validate error messages until page reload.
@@ -125,7 +125,7 @@ export default {
           if (result) {
             let email = component.email && component.email.trim()
             let password = component.password && component.password.trim()
-            component.$auth
+            component.auth
               .login({ email, password })
               .then(res => {
                 console.log('auth success:', res)
@@ -134,7 +134,7 @@ export default {
                 component.errorMessage = 'There was a problem signing you in. If you forgot your password, email  contact@cottageclass.com for help.'
                 console.log('auth failure', err)
               }).then(() => {
-                return component.$store.dispatch('establishCurrentUserAsync', Token.currentUserId(component.$auth))
+                return component.$store.dispatch('establishCurrentUser')
               }).then(() => {
                 if (component.currentUser.hasAllRequiredFields) {
                   component.$emit('userAlreadyOnboarded')
@@ -157,7 +157,7 @@ export default {
         })
     }
   },
-  computed: mapGetters(['currentUser', 'isAuthenticated'])
+  computed: mapGetters(['currentUser', 'isAuthenticated', 'auth'])
 }
 </script>
 

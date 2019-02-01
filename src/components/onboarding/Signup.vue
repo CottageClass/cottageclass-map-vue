@@ -113,6 +113,7 @@
 <script>
 import ErrorMessage from '@/components/onboarding/ErrorMessage.vue'
 import OnboardingStyleWrapper from '@/components/onboarding/OnboardingStyleWrapper.vue'
+import { mapGetters } from 'vuex'
 
 export default {
   name: 'Signup',
@@ -163,7 +164,9 @@ export default {
       } else {
         return 'inactive'
       }
-    }
+    },
+    ...mapGetters([ 'auth' ])
+
   },
   mounted: function () {
     // override for better error messages on this screen and on signup screen.
@@ -240,13 +243,13 @@ export default {
             let password = component.password && component.password.trim()
             let avatar = component.avatar_url && component.avatar_url.trim()
 
-            component.$auth
+            component.auth
               .register({ first_name, last_name, email, password, avatar })
               .then(response => {
                 console.log('signup success:', response)
                 component.success = true
                 component.disableForm = false
-                component.$auth
+                component.auth
                   .login({ email, password })
                   .then(res => {
                     console.log('auth success:', res)

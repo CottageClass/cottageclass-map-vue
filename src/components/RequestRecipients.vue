@@ -173,7 +173,7 @@ export default {
       }
     },
     network: function () {
-      let networkId = Token.currentUserNetworkCode(this.$auth)
+      let networkId = Token.currentUserNetworkCode(this.auth)
       return this.networks.find(network => network.stub === networkId)
     },
     peopleAvailable: function () {
@@ -191,7 +191,7 @@ export default {
         return []
       }
     },
-    ...mapGetters([ 'currentUser' ])
+    ...mapGetters([ 'currentUser', 'auth' ])
   }
 }
 </script>

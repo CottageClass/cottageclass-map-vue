@@ -52,7 +52,7 @@ export default {
   },
   computed: {
     network: function () {
-      let networkId = Token.currentUserNetworkCode(this.$auth)
+      let networkId = Token.currentUserNetworkCode(this.auth)
       return this.networks.find(network => network.stub === networkId)
     },
     nextButtonState: function () {
@@ -62,7 +62,7 @@ export default {
         return 'next'
       }
     },
-    ...mapGetters(['currentUser'])
+    ...mapGetters([ 'currentUser', 'auth' ])
   },
   methods: {
     saveBookingRequestToSpreadsheet: function () {

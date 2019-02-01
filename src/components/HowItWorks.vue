@@ -21,6 +21,7 @@ When children arrive check them in, and when they leave check them out. It's tha
 <script>
 import networks from '../assets/network-info.json'
 import * as Token from '@/utils/tokens.js'
+import { mapGetters } from 'vuex'
 
 export default {
   name: 'HowItWorks',
@@ -31,9 +32,10 @@ export default {
   },
   computed: {
     network: function () {
-      let networkId = Token.currentUserNetworkCode(this.$auth)
+      let networkId = Token.currentUserNetworkCode(this.auth)
       return this.networks.find(network => network.stub === networkId)
-    }
+    },
+    ...mapGetters([ 'auth' ])
   }
 }
 </script>

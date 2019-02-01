@@ -53,8 +53,7 @@ const origin = window.location.origin
  * - gives us auth/login/logout methods
  * - see: https://www.npmjs.com/package/vue-authenticate
  */
-Vue.use(VueAuthenticate, {
-  // baseUrl: 'https://cottageclass-app-api.herokuapp.com',
+var vueAuth = VueAuthenticate.factory(Vue.prototype.$http, {
   baseUrl: process.env.BASE_URL_API,
   withCredentials: true,
   tokenName: 'jwt',
@@ -69,6 +68,8 @@ Vue.use(VueAuthenticate, {
     }
   }
 })
+// hold the auth object in the store
+store.commit('setAuth', { auth: vueAuth })
 
 Vue.config.productionTip = false
 
@@ -101,7 +102,6 @@ Vue.use(VueGoogleMaps, {
 })
 
 router.beforeEach((to, from, next) => {
-  console.log('going to new route: ' + to)
   store.dispatch('newRoute', { to, from, next })
 })
 
