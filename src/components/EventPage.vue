@@ -1,8 +1,5 @@
 <template>
 <div class="body-2">
-  <Alert v-if="event.participated">
-      Congratulations, you have RSVP&apos;ed to this event! If you haven't yet, please fill out our <a href="https://cottageclass1.typeform.com/to/Z6pwkl">emergency information form</a>.
-  </Alert>
   <MainNav />
   <div class="event-detail-container w-container">
     <div class="event-detail-graphic"><EventCategoryIcon :category="event.activityName"
@@ -29,7 +26,6 @@
         </div>
 
         <!-- RSVP button or share button-->
-
 
         <RsvpButton
         v-if="!hostIsCurrentUser"
@@ -111,7 +107,6 @@
         />
       </div>
 
-
       <!-- Sharing ask -->
 
       <div class="event-specifics-card" v-if="!event.full && !event.participated">
@@ -135,11 +130,9 @@
 // todo: pass "person" object to AvatarImage
 
 import * as api from '@/utils/api.js'
-import * as Token from '@/utils/tokens.js'
 import AvatarImage from './AvatarImage.vue'
 import RsvpButton from './RsvpButton.vue'
 import EditButton from './EditButton.vue'
-import Alert from './Alert.vue'
 import MainNav from './MainNav.vue'
 import Footer from '@/components/Footer.vue'
 import EventCategoryIcon from '@/components/EventCategoryIcon.vue'
@@ -149,7 +142,7 @@ var moment = require('moment')
 
 export default {
   name: 'EventPage',
-  components: { AvatarImage, RsvpButton, MainNav, Footer, EventCategoryIcon, Alert, EditButton },
+  components: { AvatarImage, RsvpButton, MainNav, Footer, EventCategoryIcon, EditButton },
   data () {
     return {
       events: [],

@@ -100,6 +100,11 @@ Vue.use(VueGoogleMaps, {
   // installComponents: true,
 })
 
+router.beforeEach((to, from, next) => {
+  console.log('going to new route: ' + to)
+  store.dispatch('newRoute', { to, from, next })
+})
+
 /* eslint-disable no-new */
 new Vue({
   el: '#app',

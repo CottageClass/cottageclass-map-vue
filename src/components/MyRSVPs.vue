@@ -1,77 +1,41 @@
 <template>
   <div class="body">
     <MainNav />
-  <div class="content-section background-01">
-    <div class="divider-2px"></div>
-    <div class="content-container-4 w-container">
-     <h1 class="h1-display">Upcoming Playdates</h1>
-     <p v-if="isAuthenticated">Within
-      <select v-model="maximumDistanceFromUserInMiles">
-        <option>0.2</option>
-        <option>0.5</option>
-        <option>1</option>
-        <option>2</option>
-        <option>5</option>
-        <option>10</option>
-        <option>20</option>
-        <option>50</option>
-      </select> miles</p>
-      <EventList :events="eventsWithinDistance" />
+    <div class="content-section background-01">
+      <div class="divider-2px"></div>
+      <div class="content-container-4 w-container">
+        <h1 class="h1-display">My RSVP'ed events</h1>
+        <EventList
+        :events="events"
+        :isAuthenticated="isAuthenticated"/>
+      </div>
     </div>
-  </div>
-
-<!-- Footer -->
-
- <Footer />
-
+    <Footer />
   </div>
 </template>
 
 <script>
-import EventList from '@/components/EventList.vue'
 import MainNav from '@/components/MainNav.vue'
 import Footer from '@/components/Footer.vue'
+import EventList from '@/components/EventList.vue'
 import * as api from '@/utils/api.js'
 import { mapGetters } from 'vuex'
 
 var moment = require('moment')
 
-// todo:
-// work on event page until it's complete for one event, so I get all the data I need
-// try to get as far as possible without transforming the data in any way? or possibly go through each one by one as before.
-// change logic for "is today"
-// sort events by date so that current date display logic will work
-
 export default {
-  name: 'Events',
-  components: { EventList, MainNav, Footer },
+  name: 'MyRSVPs',
+  components: { MainNav, Footer, EventList },
+  props: ['limitTo'],
   data () {
     return {
       events: null,
-      maximumDistanceFromUserInMiles: '5',
       showAllButtonText: 'Show all playdates',
       showShowAllButton: false
     }
   },
   computed: {
-    eventsByDate: function () {
-      if (this.events) {
-        return this.events.concat().sort((eventA, eventB) => {
-          return moment(eventA.startsAt).diff(moment(eventB.startsAt))
-        })
-      }
-      return []
-    },
-    eventsWithinDistance: function () {
-      if (this.isAuthenticated && !!this.eventsByDate) {
-        return this.eventsByDate.filter(event => this.distanceFromCurrentUser(event.hostFuzzyLatitude, event.hostFuzzyLongitude) <= parseFloat(this.maximumDistanceFromUserInMiles))
-      } else {
-        return this.eventsByDate
-      }
-    },
-    ...mapGetters([
-      'distanceFromCurrentUser', 'currentUser', 'isAuthenticated'
-    ])
+    ...mapGetters(['currentUser', 'isAuthenticated'])
   },
   methods: {
     limitNumberOfEvents: function (events) {
@@ -87,32 +51,14 @@ export default {
     formatDate: function (date) {
       return moment(date).format('dddd, MMM Do')
     },
-    fetchAllEvents: function () {
-      this.showAllButtonText = 'Loading more...'
-      api.fetchEvents('upcoming').then(
-        (res) => {
-          this.events = res
-          window.globalEventList = res
-          this.showShowAllButton = false
-        })
-    },
-    fetchUpcomingEvents: function () {
-      this.events = window.globalEventList
-      if (!(this.events && this.events.length > 50)) {
-        api.fetchEvents('upcoming/page/1/page_size/50').then(
-          (res) => {
-            this.events = res
-            window.globalEventList = res
-            this.showShowAllButton = true
-            if (this.eventsWithinDistance.length < 10) {
-              this.fetchAllEvents()
-            }
-          })
-      }
+    fetchMyUpcomingParticipatingEvents: function () {
+      api.fetchMyUpcomingParticipatingEvents().then(res => {
+        this.events = res
+      })
     }
   },
   mounted: function () {
-    this.fetchUpcomingEvents()
+    this.fetchMyUpcomingParticipatingEvents()
   }
 }
 </script>
@@ -145,35 +91,9 @@ h1 {
   text-align: center;
 }
 
-h2 {
-  margin-top: 20px;
-  margin-bottom: 10px;
-  font-size: 32px;
-  line-height: 36px;
-  font-weight: bold;
-}
-
 a {
   color: #000;
   text-decoration: none;
-}
-
-.button {
-  padding: 12px 32px;
-  border-radius: 4px;
-  background-color: #1f88e9;
-  text-align: center;
-  color: white;
-}
-
-.button:hover {
-  background-image: -webkit-gradient(linear, left top, left bottom, from(rgba(0, 0, 0, .1)), to(rgba(0, 0, 0, .1)));
-  background-image: linear-gradient(180deg, rgba(0, 0, 0, .1), rgba(0, 0, 0, .1));
-}
-
-.button:active {
-  background-image: -webkit-gradient(linear, left top, left bottom, from(rgba(0, 0, 0, .1)), to(rgba(0, 0, 0, .1)));
-  background-image: linear-gradient(180deg, rgba(0, 0, 0, .1), rgba(0, 0, 0, .1));
 }
 
 .body {
@@ -482,6 +402,23 @@ a {
 
   .image-265 {
     width: 32px;
+  }
+
+  .action-bar {
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    width: 100%;
+    margin-top: 24px;
+    -webkit-box-pack: justify;
+    -webkit-justify-content: space-between;
+    -ms-flex-pack: justify;
+    justify-content: space-between;
+    -webkit-box-align: center;
+    -webkit-align-items: center;
+    -ms-flex-align: center;
+    align-items: center;
   }
 }
 </style>

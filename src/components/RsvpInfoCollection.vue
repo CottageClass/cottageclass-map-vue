@@ -44,7 +44,6 @@
 
 <script>
 
-import * as Token from '@/utils/tokens.js'
 import * as api from '@/utils/api.js'
 import * as utils from '@/utils/utils.js'
 import Nav from '@/components/onboarding/Nav.vue'
@@ -178,6 +177,12 @@ export default {
       // open event page where user will see success message
         component.sendNotifications()
         component.forgetRsvpAttempted()
+        this.$store.commit('setAlert', {
+          alert: {
+            message: "Congratulations, you have RSVP&apos;ed to this event! If you haven't yet, please fill out our <a href=&quot;https://cottageclass1.typeform.com/to/Z6pwkl&quot;>emergency information form</a>.",
+            status: 'success'
+          }
+        })
         component.$router.push({ name: 'EventPage', params: { id: this.eventId } })
       }).catch(err => {
         console.log(err)
