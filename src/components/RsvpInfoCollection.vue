@@ -67,8 +67,7 @@ export default {
       childrenSelected: [],
       error: '',
       eventId: this.$route.params.eventId,
-      event: false,
-      isAuthenticated: this.auth.isAuthenticated()
+      event: false
     }
   },
   mounted: function () {
@@ -110,7 +109,7 @@ export default {
     notificationBackToUser: function () {
       return 'Congratulations ' + this.currentUser.firstName + '! You\'ve booked a playdate with ' + this.event.hostFirstName + ' for ' + this.guestChildrenNamesAgesFormatted + ' on ' + this.eventDateFormattedMonthDay + '. We\'ll email you shortly to confirm your RSVP.'
     },
-    ...mapGetters([ 'currentUser', 'auth' ])
+    ...mapGetters([ 'currentUser', 'auth', 'isAuthenticated' ])
   },
   methods: {
     fetchUserInformation: function () {
@@ -122,7 +121,7 @@ export default {
       }
     },
     redirectToSignupIfNotAuthenticated: function () {
-      if (!this.auth.isAuthenticated()) {
+      if (!this.isAuthenticated) {
         console.log('User attempted to RSVP without being authenticated')
         this.$cookies.set('rsvpAttempted', this.eventId)
         this.$router.push('/?activeScreen=signup')
