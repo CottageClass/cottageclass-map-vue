@@ -54,6 +54,7 @@ import OnboardingStyleWrapper from '@/components/onboarding/OnboardingStyleWrapp
 import sheetsu from 'sheetsu-node'
 // this component has a working loading indicator and no other logic. todo: break out and rename.
 import OAuthCallback from '@/components/OAuthCallback.vue'
+import { mapGetters } from 'vuex'
 var moment = require('moment')
 // create a config file to identify which spreadsheet we push to.
 var client = sheetsu({ address: 'https://sheetsu.com/apis/v1.0su/62cd725d6088' })
@@ -64,7 +65,6 @@ export default {
   data () {
     return {
       children: [],
-      currentUser: false,
       childrenSelected: [],
       error: '',
       eventId: this.$route.params.eventId,
@@ -110,22 +110,17 @@ export default {
     },
     notificationBackToUser: function () {
       return 'Congratulations ' + this.currentUser.firstName + '! You\'ve booked a playdate with ' + this.event.hostFirstName + ' for ' + this.guestChildrenNamesAgesFormatted + ' on ' + this.eventDateFormattedMonthDay + '. We\'ll email you shortly to confirm your RSVP.'
-    }
+    },
+    ...mapGetters(['currentUser'])
   },
   methods: {
     fetchUserInformation: function () {
-      api.fetchCurrentUserNew(Token.currentUserId(this.$auth)).then(currentUser => {
-        console.log(currentUser)
-        this.currentUser = currentUser
-        this.children = currentUser.children
-        this.redirectToOnboardingIfNotOnboarded()
-        // if we don't have children for this user (which should never be true) show an error. (Todo: let user enter child info here in this case.)
-        if (!this.children || this.children.length === 0) {
-          this.error = 'Sorry, but we cannot retrieve your children\'s information. Are you sure you have signed in? To resolve this, please email us at: contact@cottageclass.com.'
-        }
-      }).catch(err => {
-        console.log('Error fetching user info', err)
-      })
+      this.children = this.currentUser.children
+      this.redirectToOnboardingIfNotOnboarded()
+      // if we don't have children for this user (which should never be true) show an error. (Todo: let user enter child info here in this case.)
+      if (!this.children || this.children.length === 0) {
+        this.error = 'Sorry, but we cannot retrieve your children\'s information. Are you sure you have signed in? To resolve this, please email us at: contact@cottageclass.com.'
+      }
     },
     redirectToSignupIfNotAuthenticated: function () {
       if (!this.$auth.isAuthenticated()) {
@@ -224,7 +219,7 @@ export default {
     },
     sendNotifications: function () {
       api.submitNotification(this.event.hostId, this.notificationToHost)
-      api.submitNotification(Token.currentUserId(this.$auth), this.notificationBackToUser)
+      api.submitNotification(this.currentUser.id, this.notificationBackToUser)
     }
   }
 }

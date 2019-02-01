@@ -143,6 +143,8 @@ import Alert from './Alert.vue'
 import MainNav from './MainNav.vue'
 import Footer from '@/components/Footer.vue'
 import EventCategoryIcon from '@/components/EventCategoryIcon.vue'
+import { mapGetters } from 'vuex'
+
 var moment = require('moment')
 
 export default {
@@ -151,9 +153,6 @@ export default {
   data () {
     return {
       events: [],
-      currentUser: null,
-      currentUserId: null,
-      isAuthenticated: false,
       mapOptions: {
         'disableDefaultUI': true, // turns off map controls
         'gestureHandling': 'none' // prevents any kind of scrolling
@@ -175,11 +174,6 @@ export default {
     formatTime: function (time24) {
       return moment(time24).format('LT')
     },
-    fetchCurrentUser: function () {
-      api.fetchCurrentUserNew(Token.currentUserId(this.$auth)).then(currentUser => {
-        this.currentUser = currentUser
-      })
-    },
     fetchEvent: function () {
       api.fetchEvents(this.$route.params.id).then(
         (res) => {
@@ -189,15 +183,10 @@ export default {
   },
   mounted: function () {
     this.fetchEvent()
-    if (this.$auth && this.$auth.isAuthenticated()) {
-      this.isAuthenticated = true
-      this.currentUserId = Token.currentUserId(this.$auth)
-      this.fetchCurrentUser()
-    }
   },
   computed: {
     hostIsCurrentUser: function () {
-      return this.event.hostId === this.currentUserId
+      return this.event.hostId === this.currentUser.id
     },
     eventId: function () {
       return this.event.id
@@ -218,7 +207,8 @@ export default {
       } else {
         return null
       }
-    }
+    },
+    ...mapGetters(['currentUser'])
   }
 
 }

@@ -66,8 +66,7 @@
 <script>
 import { mixin as clickaway } from 'vue-clickaway'
 import AvatarImage from '@/components/AvatarImage.vue'
-import * as Token from '@/utils/tokens.js'
-import * as api from '@/utils/api.js'
+import { mapGetters } from 'vuex'
 
 export default {
   name: 'MainNav',
@@ -77,17 +76,7 @@ export default {
   data () {
     return {
       showMenu: false,
-      menuButtonText: 'Menu',
-      currentUser: null,
-      currentUserId: null,
-      isAuthenticated: null
-    }
-  },
-  mounted: function () {
-    if (this.$auth && this.$auth.isAuthenticated()) {
-      this.isAuthenticated = true
-      this.currentUserId = Token.currentUserId(this.$auth)
-      this.fetchCurrentUser()
+      menuButtonText: 'Menu'
     }
   },
   methods: {
@@ -99,16 +88,11 @@ export default {
     },
     logout: function () {
       this.$auth.logout()
+      this.$store.dispatch('establishCurrentUserAsync', null)
       this.$router.push('/')
-    },
-    fetchCurrentUser: function () {
-      this.currentUser = window.globalCurrentUser
-      api.fetchCurrentUserNew(Token.currentUserId(this.$auth)).then(currentUser => {
-        this.currentUser = currentUser
-        window.globalCurrentUser = currentUser
-      })
     }
-  }
+  },
+  computed: mapGetters([ 'isAuthenticated', 'currentUser' ])
 }
 </script>
 
