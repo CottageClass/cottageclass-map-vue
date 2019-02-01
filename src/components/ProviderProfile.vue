@@ -125,6 +125,7 @@ import AvatarImage from './AvatarImage'
 import * as api from '@/utils/api.js'
 import networks from '@/assets/network-info.json'
 import ChildInfo from '@/components/ChildInfo.vue'
+import { mapGetters } from 'vuex'
 
 export default {
   components: { Images, AvatarImage, ChildInfo },
@@ -152,12 +153,13 @@ export default {
   },
   computed: {
     network: function () {
-      let networkId = Token.currentUserNetworkCode(this.$auth)
+      let networkId = Token.currentUserNetworkCode(this.auth)
       return this.networks.find(network => network.stub === networkId)
     },
     person: function () {
       return this.people.find(person => person.id === this.$route.params.id) // computes person. this isn't efficient but simplifies interaction with the API.
-    }
+    },
+    ...mapGetters([ 'auth' ])
   }
 }
 

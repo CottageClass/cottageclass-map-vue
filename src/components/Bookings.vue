@@ -40,11 +40,11 @@ export default {
   },
   computed: {
     network: function () {
-      let networkId = Token.currentUserNetworkCode(this.$auth)
+      let networkId = Token.currentUserNetworkCode(this.auth)
       return this.networks.find(network => network.stub === networkId)
     }
   },
-  ...mapGetters([ 'currentUser' ])
+  ...mapGetters([ 'currentUser', 'auth' ])
 }
 </script>
 

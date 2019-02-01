@@ -93,13 +93,13 @@ export default {
   },
   computed: {
     network: function () {
-      let networkId = Token.currentUserNetworkCode(this.$auth)
+      let networkId = Token.currentUserNetworkCode(this.auth)
       return this.networks.find(network => network.stub === networkId)
     },
     provider: function () {
       return this.people.find(person => person.id === this.providerId) || {}
     },
-    ...mapGetters([ 'currentUser' ])
+    ...mapGetters([ 'currentUser', 'auth' ])
   },
   mounted: function () {
     // fetch users in network

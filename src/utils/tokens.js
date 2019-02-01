@@ -2,7 +2,8 @@ const ADMIN_WHITELIST = [
   'holmes@cottageclass.com',
   'manisha@cottageclass.com',
   'developer@cottageclass.com',
-  'asa@cottageclass.com'
+  'asa@cottageclass.com',
+  'ari.kardasis@gmail.com'
 ]
 
 export function parseJWT (token) {

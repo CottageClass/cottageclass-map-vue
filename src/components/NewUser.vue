@@ -174,7 +174,7 @@ export default {
   methods: {
     proceedToHomePage: function () {
       console.log('proceedToHomePage')
-      this.$store.dispatch('establishCurrentUserAsync', Token.currentUserId(this.$auth)).then(() => {
+      this.$store.dispatch('establishCurrentUser').then(() => {
         this.$router.push({ name: 'Home' })
       })
     },
@@ -251,11 +251,10 @@ export default {
    */
 
       // store value of this to access this.$emit during callback
-      let component = this
-      this.$auth.authenticate(provider)
+      this.auth.authenticate(provider)
         .then(res => {
           console.log('auth SUCCESS')
-          return this.$store.dispatch('establishCurrentUserAsync', Token.currentUserId(component.$auth))
+          return this.$store.dispatch('establishCurrentUser')
         }).then(() => {
           if (this.currentUser.hasAllRequiredFields && !this.rsvpAttempted) {
             // redirect to home screen if they haven't attempted an RSVP
@@ -277,7 +276,7 @@ export default {
     submitData: function () {
       // advance to loading indicator
       this.step = this.step + 1
-      let userId = Token.currentUserId(this.$auth)
+      let userId = this.currentUser.id
 
       // submit user to sheetsu for KPI tracking, unless network is "demo"
       if (this.invitationCode.code !== 'demo') {
@@ -316,7 +315,7 @@ export default {
           component.houseRules.err = 'Sorry, there was a problem saving your information. Try again?'
           throw err
         }).then(() => {
-          return component.$store.dispatch('establishCurrentUserAsync', Token.currentUserId(component.$auth))
+          return component.$store.dispatch('establishCurrentUser')
         }).then(() => {
           component.submitEventData().then(res => {
             component.createdEventData = normalize(res.data)
@@ -411,7 +410,7 @@ export default {
         }
       }
     },
-    ...mapGetters(['currentUser'])
+    ...mapGetters(['currentUser', 'auth'])
   }
 }
 

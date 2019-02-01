@@ -3,6 +3,7 @@ import Vuex from 'vuex'
 import * as api from '../utils/api'
 import moment from 'moment'
 import createPersistedState from 'vuex-persistedstate'
+import * as Token from '@/utils/tokens.js'
 
 Vue.use(Vuex)
 
@@ -12,7 +13,8 @@ export default new Vuex.Store(
     state: {
       eventsByDate: null, // We shouldn't store all events.  It will have to change later
       currentUser: null,
-      alert: null
+      alert: null,
+      auth: null
     },
     mutations: {
       setEventsByDate: (state, payload) => {
@@ -24,12 +26,15 @@ export default new Vuex.Store(
       setAlert: (state, payload) => {
         state.alert = payload.alert
         state.alert.preshow = true // this indicates that we will show the alert in the next route
+      },
+      setAuth: (state, payload) => {
+        state.auth = payload.auth
       }
     },
     actions: {
-      //////////////////////////////////////////
+      // ////////////////////////////////////////
       // Once again, we should not be doing this
-      //////////////////////////////////////////
+      // ////////////////////////////////////////
       fetchAllEventsAsync: ({ commit }) => {
         api.fetchEvents().then(events => {
           events.sort((eventA, eventB) => {
@@ -38,11 +43,28 @@ export default new Vuex.Store(
           commit('setEventsByDate', { events })
         })
       },
-      establishCurrentUserAsync: ({ commit }, userId) => {
-        console.log('establish')
-        if (userId === null) {
+      logoutCurrentUserAsync: ({ commit, state }) => {
+        return state.auth.logout().then(res => {
           commit('setCurrentUser', { user: null })
+        }).catch(err => {
+          console.log(err)
+          throw err
+        })
+      },
+      establishCurrentUser: ({ commit, state }) => {
+        // set up state based on the userId in the auth object
+        const userId = Token.currentUserId(state.auth)
+        if (userId === null) {
+          // clear out the user
+          state.auth.logout().then(res => {
+            commit('setCurrentUser', { user: null })
+          }).catch(err => {
+            console.log(err)
+            throw err
+          })
         } else {
+          // fetch user data
+          // In the event that user data has changed on the server, this will update it
           return api.fetchCurrentUser(userId).then(user => {
             commit('setCurrentUser', { user })
           })
@@ -74,7 +96,8 @@ export default new Vuex.Store(
       isAuthenticated: (state) => {
         return state.currentUser !== null
       },
-      alert: state => state.alert
+      alert: state => state.alert,
+      auth: state => state.auth
     }
   }
 )
