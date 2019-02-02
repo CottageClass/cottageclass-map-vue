@@ -2,7 +2,7 @@
   <Question
   title="Child Information"
   subtitle="We need some basic info about your children. Their ages will appear on your public profile, but only hosts of events you RSVP to will see their names.">
-      <ManyFormFieldGroups
+    <ManyFormFieldGroups
     :labels="labels"
     :names="names"
     :placeholders="labels"
@@ -29,14 +29,6 @@ export default {
       names: ['firstName', 'birthday', 'schoolName'],
       placeholders: ['First Name', 'MM / DD / YYYY', 'Name of School'],
       errorMesg: 'Please enter a first name (or nickname) and birthdate for each child.'
-    }
-  },
-  methods: {
-    addChild: function () {
-      this.children.push({ firstName: null, birthday: null, schoolName: null })
-    },
-    removeChild: function (index) {
-      this.children.splice(index, 1)
     }
   },
   computed: {
