@@ -22,6 +22,7 @@ import MyEvents from '@/components/MyEvents.vue'
 import Invite from '@/components/onboarding/Invite.vue'
 import EventEdit from '@/components/EventEdit.vue'
 import ProfileEdit from '@/components/ProfileEdit.vue'
+import EmergencyContacts from '@/components/onboarding/EmergencyContacts.vue'
 
 Vue.use(Router)
 
@@ -135,6 +136,11 @@ export default new Router({
       path: '/my-events',
       name: 'MyEvents',
       component: MyEvents
+    },
+    {
+      path: '/emergency-contacts',
+      name: 'EmergencyContacts',
+      component: EmergencyContacts
     }
   ],
   scrollBehavior (to, from, savedPosition) {
