@@ -6,7 +6,7 @@
   >{{ label }}
   </label>
   <input
-  :type="type"
+  :type="type || 'text'"
   class="name-text-field w-input"
   :name="name"
   :placeholder="placeholder"

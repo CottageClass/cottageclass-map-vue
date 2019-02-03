@@ -9,6 +9,7 @@
     :types="types"
     headingWord="Child"
     v-model="children"
+    addAndRemove="true"
     />
     </Question>
 </template>

@@ -23,6 +23,7 @@ import Invite from '@/components/onboarding/Invite.vue'
 import EventEdit from '@/components/EventEdit.vue'
 import ProfileEdit from '@/components/ProfileEdit.vue'
 import EmergencyContacts from '@/components/onboarding/EmergencyContacts.vue'
+import ChildAllergiesAndSpecialRequirements from '@/components/onboarding/ChildAllergiesAndSpecialRequirements.vue'
 
 Vue.use(Router)
 
@@ -138,9 +139,14 @@ export default new Router({
       component: MyEvents
     },
     {
-      path: '/emergency-contacts',
+      path: '/onboarding/emergency-contacts',
       name: 'EmergencyContacts',
       component: EmergencyContacts
+    },
+    {
+      path: '/onboarding/allergies-and-special-requirements',
+      name: 'ChildAllergiesAndSpecialRequirements',
+      component: ChildAllergiesAndSpecialRequirements
     }
   ],
   scrollBehavior (to, from, savedPosition) {

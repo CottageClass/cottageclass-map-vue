@@ -9,14 +9,18 @@
           :key="objects[index].key"
           :labels="labels"
           :placeholders="placeholders"
-          :heading="headingWord + ' ' + (index + 1)"
+          :heading="headingWord ? headingWord + ' ' + (index + 1) : headings ? headings[index] : ''"
           :types="types"
           v-model="objects[index]"
           @remove="removeGroup(index)"
+          :showRemoveButton="addAndRemove"
           />
         </div>
       </form>
-      <a @click="add" class="onb-button-add-group w-inline-block">
+      <a
+      v-if="addAndRemove"
+      @click="add"
+      class="onb-button-add-group w-inline-block">
         <img src="@/assets/add.svg" alt="" class="image-7">
         <div class="onb-button-add-group-text">Add Another {{ headingWord }}</div>
       </a>
@@ -29,14 +33,16 @@ var _ = require('lodash/core')
 export default {
   name: 'ManyFormFieldGroups',
   components: { FormFieldGroup },
-  props: ['value', 'labels', 'placeholders', 'headingWord', 'names', 'types'],
+  props: ['value', 'labels', 'placeholders', 'headingWord', 'headings', 'names', 'types', 'addAndRemove'],
   data () {
     return {
       objects: this.value
     }
   },
   mounted: function () {
-    this.objects = [this.newObject()]
+    if (this.objects.length < 1) {
+      this.objects = [this.newObject()]
+    }
   },
   computed: {
     anEmptyObject: function () {

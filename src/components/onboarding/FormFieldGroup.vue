@@ -3,6 +3,7 @@
   <div class="onb-group-header">
     <h2 class="onb-child-group-heading">{{ heading }}</h2>
     <a
+    v-if="showRemoveButton"
     @click="$emit('remove')"
     class="onb-button-delete-child w-inline-block">
     <img src="@/assets/remove.svg" width="24" height="24" alt="" class="image-6"></a>
@@ -28,7 +29,8 @@ export default {
     'names', // an array of key names
     'placeholders', // an array of corresponding form placeholder text
     'heading', // the heading of the group of fields
-    'types' // and array of input types for each field
+    'types', // and array of input types for each field
+    'showRemoveButton' // show a remove button on each item
   ],
   data () {
     return {
