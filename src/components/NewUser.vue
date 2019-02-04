@@ -67,6 +67,7 @@
       />
       <PetsDescription v-if="step === 12" v-model="petsDescription" />
       <HouseRules v-if="step === 13" v-model="houseRules" />
+      <RSVPPrompt v-if="step === 14" v-model="RSVPPrompt"/>
       <!-- OAuthCallback is just used for the loading animation -->
       <OAuthCallback v-if="step > lastStep && !error" />
   </OnboardingStyleWrapper>
@@ -96,6 +97,7 @@ import EventTime from '@/components/onboarding/EventTime.vue'
 import EventDate from '@/components/onboarding/EventDate.vue'
 import MaxChildren from '@/components/onboarding/MaxChildren.vue'
 import YesOrNo from '@/components/onboarding/YesOrNo.vue'
+import RSVPPrompt from '@/components/onboarding/RSVPPrompt.vue'
 import OAuthCallback from '@/components/OAuthCallback.vue'
 import Invite from '@/components/onboarding/Invite.vue'
 import OnboardingStyleWrapper from '@/components/onboarding/OnboardingStyleWrapper.vue'
@@ -112,14 +114,34 @@ var client = sheetsu({ address: 'https://sheetsu.com/apis/v1.0su/62cd725d6088' }
 
 export default {
   components: {
-    Nav, Login, DirectLogin, Signup, Location, Phone, Children, Availability, Food, EventActivity, EventTime, EventDate, HouseRules, PetsDescription, YesOrNo, MaxChildren, OAuthCallback, Invite, OnboardingStyleWrapper, ErrorMessage
+    Nav,
+    Login,
+    DirectLogin,
+    Signup,
+    Location,
+    Phone,
+    Children,
+    Availability,
+    Food,
+    EventActivity,
+    EventTime,
+    EventDate,
+    HouseRules,
+    PetsDescription,
+    YesOrNo,
+    MaxChildren,
+    OAuthCallback,
+    Invite,
+    OnboardingStyleWrapper,
+    ErrorMessage,
+    RSVPPrompt
   },
   data () {
     return {
       createdEventData: null,
       activeScreen: this.$route.query.activeScreen || 'facebook',
-      step: 0,
-      lastStep: 13,
+      step: 14,
+      lastStep: 14,
       showError: false,
       name: {}, // todo: remove if possible now this comes from FB
       location: {},
@@ -145,6 +167,7 @@ export default {
       houseRules: {
         err: 'skippable'
       },
+      RSVPPrompt: {},
       communityRules: {},
       hasPets: {
         yesOrNo: ''
@@ -366,6 +389,8 @@ export default {
           return this.petsDescription.err
         case 13:
           return this.houseRules.err
+        case 14:
+          return this.RSVPPrompt.err
         default:
           return false
       }
