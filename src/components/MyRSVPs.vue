@@ -1,48 +1,65 @@
 <template>
-  <div class="events-list-wrapper">
-    <div v-for="(event, index) in events">
-      <div v-if="index === 0 || (formatDate(event.startsAt) !== formatDate(events[index - 1].startsAt))" class="event-date-section-tittle">
-        <img src="@/assets/date-outline-white-oval.svg" alt="" class="image-264">
-        <div class="date-text-wrapper">
-          <div class="date-title">
-            <span v-if="isToday(event.startsAt)">
-              <strong class="bold-text">Today</strong>,
-            </span>
-            {{ formatDate(event.startsAt) }}
-          </div>
-        </div>
+  <div class="body">
+    <MainNav />
+    <div class="content-section background-01">
+      <div class="divider-2px"></div>
+      <div class="content-container-4 w-container">
+        <h1 class="h1-display">My RSVP'ed events</h1>
+        <EventList
+        :events="events"
+        :isAuthenticated="isAuthenticated"/>
       </div>
-      <EventListItem
-        :event="event"
-        :index="index"
-        :key="index"
-        :showRsvpButton="currentUser === null || currentUser.id !== event.hostId"
-        :showEditButton="isAuthenticated && currentUser.id === event.hostId"
-        :distance="distanceFromCurrentUser(event.hostFuzzyLatitude, event.hostFuzzyLongitude)"
-      />
     </div>
+    <Footer />
   </div>
 </template>
 
 <script>
-import EventListItem from '@/components/EventListItem.vue'
+import MainNav from '@/components/MainNav.vue'
+import Footer from '@/components/Footer.vue'
+import EventList from '@/components/EventList.vue'
 import * as api from '@/utils/api.js'
 import { mapGetters } from 'vuex'
 
 var moment = require('moment')
+
 export default {
-  name: 'EventList',
-  components: { EventListItem },
-  props: ['events'],
+  name: 'MyRSVPs',
+  components: { MainNav, Footer, EventList },
+  props: ['limitTo'],
+  data () {
+    return {
+      events: null,
+      showAllButtonText: 'Show all playdates',
+      showShowAllButton: false
+    }
+  },
+  computed: {
+    ...mapGetters(['currentUser', 'isAuthenticated'])
+  },
   methods: {
-    formatDate: function (date) {
-      return moment(date).format('dddd, MMM Do')
+    limitNumberOfEvents: function (events) {
+      if (this.limitTo) {
+        return events.slice(0, parseInt(this.limitTo))
+      } else {
+        return events
+      }
     },
     isToday: function (date) {
       return moment(0, 'HH').diff(date, 'days') === 0
+    },
+    formatDate: function (date) {
+      return moment(date).format('dddd, MMM Do')
+    },
+    fetchMyUpcomingParticipatingEvents: function () {
+      api.fetchMyUpcomingParticipatingEvents().then(res => {
+        this.events = res
+      })
     }
   },
-  computed: mapGetters(['currentUser', 'distanceFromCurrentUser', 'isAuthenticated'])
+  mounted: function () {
+    this.fetchMyUpcomingParticipatingEvents()
+  }
 }
 </script>
 
@@ -74,35 +91,9 @@ h1 {
   text-align: center;
 }
 
-h2 {
-  margin-top: 20px;
-  margin-bottom: 10px;
-  font-size: 32px;
-  line-height: 36px;
-  font-weight: bold;
-}
-
 a {
   color: #000;
   text-decoration: none;
-}
-
-.button {
-  padding: 12px 32px;
-  border-radius: 4px;
-  background-color: #1f88e9;
-  text-align: center;
-  color: white;
-}
-
-.button:hover {
-  background-image: -webkit-gradient(linear, left top, left bottom, from(rgba(0, 0, 0, .1)), to(rgba(0, 0, 0, .1)));
-  background-image: linear-gradient(180deg, rgba(0, 0, 0, .1), rgba(0, 0, 0, .1));
-}
-
-.button:active {
-  background-image: -webkit-gradient(linear, left top, left bottom, from(rgba(0, 0, 0, .1)), to(rgba(0, 0, 0, .1)));
-  background-image: linear-gradient(180deg, rgba(0, 0, 0, .1), rgba(0, 0, 0, .1));
 }
 
 .body {
@@ -411,6 +402,23 @@ a {
 
   .image-265 {
     width: 32px;
+  }
+
+  .action-bar {
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    width: 100%;
+    margin-top: 24px;
+    -webkit-box-pack: justify;
+    -webkit-justify-content: space-between;
+    -ms-flex-pack: justify;
+    justify-content: space-between;
+    -webkit-box-align: center;
+    -webkit-align-items: center;
+    -ms-flex-align: center;
+    align-items: center;
   }
 }
 </style>

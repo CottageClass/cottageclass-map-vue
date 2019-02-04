@@ -20,16 +20,14 @@
 </template>
 
 <script>
-import * as Token from '@/utils/tokens.js'
-import * as api from '@/utils/api.js'
+import { mapGetters } from 'vuex'
+
 var Moment = require('moment')
 
 export default {
   name: 'CountdownPromo',
   data () {
     return {
-      currentUser: {},
-      currentUserId: Token.currentUserId(this.$auth),
       dateCreated: Date(),
       showPromo: false,
       hours: 23,
@@ -38,6 +36,7 @@ export default {
       interval: null
     }
   },
+  computed: mapGetters(['currentUser']),
   mounted: function () {
     this.interval = setInterval(() => {
       var now = new Moment()
@@ -48,11 +47,6 @@ export default {
       this.minutes = duration.minutes()
       this.seconds = duration.seconds()
     }, 1000)
-    // fetch current user
-    api.fetchCurrentUser(this.currentUserId)
-      .then(person => {
-        this.currentUser = person
-      })
   },
   beforeDestroy: function () {
     clearInterval(this.interval)

@@ -26,12 +26,14 @@ export default {
   methods: {
     deleteEvent: function () {
       api.deleteEvent(this.eventId, () => {
-        console.log('deleted it')
-        this.$router.push({
-          name: 'Home',
-          params: {
-            eventDeleted: true
+        this.$store.commit('setAlert', {
+          alert: {
+            message: 'Your event has been deleted',
+            status: 'success'
           }
+        })
+        this.$router.push({
+          name: 'Home'
         })
       })
     }

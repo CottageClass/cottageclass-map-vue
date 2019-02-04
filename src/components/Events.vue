@@ -1,8 +1,5 @@
 <template>
   <div class="body">
-    <Alert v-if="eventDeleted">
-      Your Event Has been deleted.
-    </Alert>
     <MainNav />
   <div class="content-section background-01">
     <div class="divider-2px"></div>
@@ -19,11 +16,7 @@
         <option>20</option>
         <option>50</option>
       </select> miles</p>
-      <EventList
-        :events="eventsWithinDistance"
-        :currentUser="currentUser"
-        :currentUserId="currentUserId"
-        :isAuthenticated="isAuthenticated"/>
+      <EventList :events="eventsWithinDistance" />
     </div>
   </div>
 
@@ -38,9 +31,9 @@
 import EventList from '@/components/EventList.vue'
 import MainNav from '@/components/MainNav.vue'
 import Footer from '@/components/Footer.vue'
-import Alert from '@/components/Alert.vue'
-import * as Token from '@/utils/tokens.js'
 import * as api from '@/utils/api.js'
+import { mapGetters } from 'vuex'
+
 var moment = require('moment')
 
 // todo:
@@ -51,20 +44,11 @@ var moment = require('moment')
 
 export default {
   name: 'Events',
-  components: { EventList, MainNav, Footer, Alert },
-  props: {
-    eventDeleted: {
-      type: Boolean,
-      default: false
-    }
-  },
+  components: { EventList, MainNav, Footer },
   data () {
     return {
       events: null,
-      currentUser: null,
-      isAuthenticated: false,
       maximumDistanceFromUserInMiles: '5',
-      currentUserId: null,
       showAllButtonText: 'Show all playdates',
       showShowAllButton: false
     }
@@ -84,7 +68,10 @@ export default {
       } else {
         return this.eventsByDate
       }
-    }
+    },
+    ...mapGetters([
+      'distanceFromCurrentUser', 'currentUser', 'isAuthenticated'
+    ])
   },
   methods: {
     limitNumberOfEvents: function (events) {
@@ -122,30 +109,10 @@ export default {
             }
           })
       }
-    },
-    fetchCurrentUser: function () {
-      api.fetchCurrentUserNew(Token.currentUserId(this.$auth)).then(currentUser => {
-        this.currentUser = currentUser
-      })
-    },
-    distanceFromCurrentUser: function (lat, lon) {
-      if (this.currentUser) {
-        return api.distanceHaversine(lat, lon, this.currentUser.latitude, this.currentUser.longitude)
-      } else {
-        return null
-      }
     }
   },
   mounted: function () {
     this.fetchUpcomingEvents()
-    if (this.$auth && this.$auth.isAuthenticated()) {
-      this.isAuthenticated = true
-      this.currentUserId = Token.currentUserId(this.$auth)
-    }
-
-    if (this.isAuthenticated) {
-      this.fetchCurrentUser()
-    }
   }
 }
 </script>

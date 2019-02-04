@@ -17,6 +17,8 @@ import EventPage from '@/components/EventPage.vue'
 import Events from '@/components/Events.vue'
 import RsvpInfoCollection from '@/components/RsvpInfoCollection.vue'
 import RsvpConfirmation from '@/components/RsvpConfirmation.vue'
+import CancelRSVP from '@/components/CancelRSVP.vue'
+import MyRSVPs from '@/components/MyRSVPs.vue'
 import Faq from '@/components/Faq.vue'
 import MyEvents from '@/components/MyEvents.vue'
 import Invite from '@/components/onboarding/Invite.vue'
@@ -152,6 +154,17 @@ export default new Router({
       path: '/onboarding/child-special-requirements-1/:eventId?',
       name: 'ChildSpecialRequirementsYesNo',
       component: ChildSpecialRequirementsYesNo
+    },
+    {
+      path: '/my-rsvps',
+      name: 'MyRSVPs',
+      component: MyRSVPs
+    },
+    {
+      path: '/rsvp/:eventId/cancel',
+      name: 'CancelRSVP',
+      component: CancelRSVP,
+      props: true
     }
   ],
   scrollBehavior (to, from, savedPosition) {

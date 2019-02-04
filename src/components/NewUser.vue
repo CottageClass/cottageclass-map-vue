@@ -4,21 +4,21 @@
     v-if="activeScreen ==='facebook' && step === 0"
     v-on:userNotYetOnboarded="nextStep"
     v-on:activateScreen="activateScreen"
-    v-on:userAlreadyOnboarded="$router.push({name: 'Home'})"
+    v-on:userAlreadyOnboarded="proceedToHomePage"
     v-on:authenticateFacebook="authenticate('facebook')"
      />
     <DirectLogin
     v-if="activeScreen ==='directLogin' && step === 0"
     v-on:userNotYetOnboarded="nextStep"
     v-on:activateScreen="activateScreen"
-    v-on:userAlreadyOnboarded="$router.push({name: 'Home'})"
+    v-on:userAlreadyOnboarded="proceedToHomePage"
     v-on:authenticateFacebook="authenticate('facebook')"
      />
     <Signup
     v-if="activeScreen ==='signup' && step === 0"
     v-on:userNotYetOnboarded="nextStep"
     v-on:activateScreen="activateScreen"
-    v-on:userAlreadyOnboarded="$router.push({name: 'Home'})"
+    v-on:userAlreadyOnboarded="proceedToHomePage"
     v-on:authenticateFacebook="authenticate('facebook')"
      />
     <Invite
@@ -103,6 +103,8 @@ import * as Token from '@/utils/tokens.js'
 import * as api from '@/utils/api.js'
 import sheetsu from 'sheetsu-node'
 import normalize from 'json-api-normalizer'
+import { mapGetters } from 'vuex'
+
 var moment = require('moment')
 
 // create a config file to identify which spreadsheet we push to.
@@ -116,7 +118,6 @@ export default {
     return {
       createdEventData: null,
       activeScreen: this.$route.query.activeScreen || 'facebook',
-      currentUser: {},
       step: 0,
       lastStep: 13,
       showError: false,
@@ -171,6 +172,12 @@ export default {
     this.fetchUpcomingEvents()
   },
   methods: {
+    proceedToHomePage: function () {
+      console.log('proceedToHomePage')
+      this.$store.dispatch('establishCurrentUserAsync', Token.currentUserId(this.$auth)).then(() => {
+        this.$router.push({ name: 'Home' })
+      })
+    },
     fetchUpcomingEvents: function () {
       api.fetchEvents('upcoming/page/1/page_size/50').then(
         (res) => {
@@ -248,14 +255,15 @@ export default {
       this.$auth.authenticate(provider)
         .then(res => {
           console.log('auth SUCCESS')
-        }).then(res => api.fetchCurrentUser(Token.currentUserId(component.$auth))).then(currentUser => {
-          if (currentUser.hasAllRequiredFields && !this.rsvpAttempted) {
+          return this.$store.dispatch('establishCurrentUserAsync', Token.currentUserId(component.$auth))
+        }).then(() => {
+          if (this.currentUser.hasAllRequiredFields && !this.rsvpAttempted) {
             // redirect to home screen if they haven't attempted an RSVP
             this.$router.push({ name: 'Home' })
-          } else if (currentUser.hasAllRequiredFields && this.rsvpAttempted) {
+          } else if (this.currentUser.hasAllRequiredFields && this.rsvpAttempted) {
             // confirm that they want to RSVP if they have attempted an RSVP
             this.$router.push({ name: 'RsvpConfirmation', params: { eventId: this.rsvpAttempted } })
-          } else if (currentUser.id) {
+          } else if (this.currentUser.id) {
             // begin onboarding
             this.nextStep()
           } else {
@@ -307,8 +315,9 @@ export default {
           // show on the houseRules step because it's the last step
           component.houseRules.err = 'Sorry, there was a problem saving your information. Try again?'
           throw err
-        })
-        .then(() => {
+        }).then(() => {
+          return component.$store.dispatch('establishCurrentUserAsync', Token.currentUserId(component.$auth))
+        }).then(() => {
           component.submitEventData().then(res => {
             component.createdEventData = normalize(res.data)
           })
@@ -378,14 +387,6 @@ export default {
       } else return false
     },
     eventName: function () {
-      // this is not a great place to put this because it will get executed whenever activity or food change.
-      let userId = Token.currentUserId(this.$auth)
-      if (userId) {
-        api.fetchCurrentUser(this.currentUserId)
-          .then(person => {
-            this.currentUser = person
-          })
-      }
       if (this.currentUser.firstName) {
         return this.capitalize(this.eventActivity.selected) + ' & ' + this.food.selected + ' with ' + this.capitalize(this.currentUser.firstName)
       } else {
@@ -409,7 +410,8 @@ export default {
           'child_age_maximum': this.childAgeMaximum
         }
       }
-    }
+    },
+    ...mapGetters(['currentUser'])
   }
 }
 

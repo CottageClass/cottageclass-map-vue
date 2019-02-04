@@ -19,6 +19,7 @@ import MainNav from './MainNav.vue'
 import * as api from '@/utils/api.js'
 import networks from '@/assets/network-info.json'
 import * as Token from '@/utils/tokens.js'
+import { mapGetters } from 'vuex'
 
 export default {
   name: 'Bookings',
@@ -26,16 +27,14 @@ export default {
   data () {
     return {
       peopleWhoHaveMadeInquiriesToCurrentUser: [],
-      networks: networks,
-      currentUserId: Token.currentUserId(this.$auth),
-      currentUser: {}
+      networks: networks
     }
   },
   mounted: function () {
     api.fetchUsersInNetwork(this.network.stub).then(res => {
-      this.currentUser = res.find(person => person.id === this.currentUserId)
+      this.currentUser = res.find(person => person.id === this.currentUser.id)
     })
-    api.fetchUsersWhoHaveMadeInquiries(this.currentUserId).then(res => {
+    api.fetchUsersWhoHaveMadeInquiries(this.currentUser.id).then(res => {
       this.peopleWhoHaveMadeInquiriesToCurrentUser = res
     })
   },
@@ -44,7 +43,8 @@ export default {
       let networkId = Token.currentUserNetworkCode(this.$auth)
       return this.networks.find(network => network.stub === networkId)
     }
-  }
+  },
+  ...mapGetters([ 'currentUser' ])
 }
 </script>
 

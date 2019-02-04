@@ -209,22 +209,8 @@ export function fetchUsersWhoHaveMadeInquiries (currentUserId) {
   })
 }
 
-export function fetchCurrentUser (userId) {
-  return Vue.axios.get(
-    `${process.env.BASE_URL_API}/users/${userId}`
-  ).then(res => {
-    console.log('FETCH CURRENT USER SUCCESS')
-    console.log(createPersonObject(res.data.data))
-    return createPersonObject(res.data.data)
-  }).catch(err => {
-    console.log('FETCH CURRENT USER FAILURE')
-    console.log(err.errors)
-    throw err
-  })
-}
-
 // same as above but using 'normalize' json normalizer to correctly extract children
-export function fetchCurrentUserNew (userId) {
+export function fetchCurrentUser (userId) {
   return Vue.axios.get(
     `${process.env.BASE_URL_API}/users/${userId}`
   ).then(res => {
@@ -234,15 +220,20 @@ export function fetchCurrentUserNew (userId) {
     let user = normalizedData.user[userId].attributes
     user.hasAllRequiredFields = user.phone && user.latitude && user.longitude
     user.networkCode = 'brooklyn-events' // give everyone the new network code
-    let childrenById = normalizedData.child
-    let childIds = Object.keys(childrenById)
-    let generateChild = function (aChildId) {
-      let child = childrenById[aChildId].attributes
-      child.id = aChildId
-      child.firstName = capitalize(child.firstName)
-      return child
+    if ('child' in normalizedData) {
+      let childrenById = normalizedData.child
+      let childIds = Object.keys(childrenById)
+      let generateChild = function (aChildId) {
+        let child = childrenById[aChildId].attributes
+        child.id = aChildId
+        child.firstName = capitalize(child.firstName)
+        return child
+      }
+      user.children = childIds.map(generateChild)
+    } else {
+      user.children = []
     }
-    user.children = childIds.map(generateChild)
+    user.id = userId
     return user
   }).catch(err => {
     console.log('FETCH CURRENT USER FAILURE')
@@ -327,7 +318,6 @@ export function fetchMyUpcomingEvents (params) {
     `${process.env.BASE_URL_API}/api/user/created_events/upcoming`
   ).then(res => {
     console.log('FETCH MY UPCOMING EVENTS SUCCESS')
-    console.log(res.data)
     return Object.values(normalize(res.data).event).map(obj => {
       var e = obj.attributes
       e['id'] = obj.id
@@ -366,6 +356,48 @@ export function fetchEvents (params) {
     console.log(err.errors)
     throw err
   })
+}
+
+export function fetchMyUpcomingParticipatingEvents () {
+  return Vue.axios.get(`${process.env.BASE_URL_API}/api/user/participated_events/upcoming`)
+    .then(res => {
+      console.log('GET PARTICIPATING EVENTS SUCCESS')
+      const normedData = normalize(res.data)
+      if (!normedData.event) {
+        return []
+      }
+      return Object.values(normedData.event).map(obj => {
+        var e = obj.attributes
+        e['id'] = obj.id
+        e.hostFirstName = capitalize(e.hostFirstName)
+        e.hostFuzzyLatitude = parseFloat(e.hostFuzzyLatitude)
+        e.hostFuzzyLongitude = parseFloat(e.hostFuzzyLongitude)
+        e.activityName = e.activityNames.length > 0 && e.activityNames[0]
+        e.food = e.foods.length > 0 && e.foods[0]
+        console.log({ e })
+        return e
+      })
+    }).catch(err => {
+      console.log('GET PARTICIPATING EVENTS FAILURE')
+      console.log(err)
+      console.log(Object.entries(err))
+      throw err
+    })
+}
+
+export function removeEventParticipant (eventId) {
+  return Vue.axios.delete(`${process.env.BASE_URL_API}/api/events/${eventId}/participants`)
+    .then(res => {
+      console.log('REMOVE EVENT PARTICIPANT SUCCESS')
+      console.log(res)
+      return res
+    })
+    .catch(err => {
+      console.log('REMOVE EVENT PARTICIPANT FAILURE')
+      console.log(err)
+      console.log(Object.entries(err))
+      throw err
+    })
 }
 
 export function submitEventParticipant (eventId, participantChildIds) {
