@@ -85,7 +85,7 @@
               <router-link
               :to="{ name: 'EventPage', params: { id: '86' }}"
               class="link-block-4 w-inline-block">
-                <h2 class="event-heading">Arts &amp; Crafts &amp; Pizza 🍕 with Manisha</h2>
+                <h2 class="event-heading">Make your own Valentines Workshop &amp; pizza 💝 with Manisha</h2>
               </router-link>
               <div class="event-summary">
                 <div class="event-time">Fri, Feb 8, 2019 at 5:30 PM–8::30 PM</div>
@@ -121,11 +121,11 @@
               <router-link
               :to="{ name: 'EventPage', params: { id: 110 }}"
               class="link-block-4 w-inline-block">
-                <h2 class="event-heading">Develop your mindfulness superpower workshop &amp; dinner with Julie</h2>
+                <h2 class="event-heading">SuperMindfulMe Workshop + Dinner 🍜 with Julie</h2>
               </router-link>
               <div class="event-summary">
                 <div class="event-time">Fri, Feb 15, 2019 at 6:00 PM–9:00 PM</div>
-                <div class="event-ages">Ages 4-11 (4 kids total)</div>
+                <div class="event-ages">Ages 3-11 (4 kids total)</div>
                 <div class="event-location">Cobble Hill</div>
               </div>
               <div class="scrolling-wrapper">
@@ -194,7 +194,7 @@
               <router-link
               :to="{ name: 'EventPage', params: { id: '92' }}"
               class="link-block-4 w-inline-block">
-                <h2 class="event-heading">Eggs &amp; Painting with Jordana</h2>
+                <h2 class="event-heading">Movie Night &amp; Tacos 🌮 with Jordana</h2>
               </router-link>
               <div class="event-summary">
                 <div class="event-time">Sun, Mar 3, 2019 at 10:00 AM - 12:00 PM</div>
