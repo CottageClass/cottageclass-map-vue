@@ -72,115 +72,6 @@
     <div class="content-container-3 w-container">
       <h1 class="h1-display">Upcoming Playdates</h1>
       <div class="events-list-wrapper">
-        <div class="event-date-section-tittle cancel-top-margin"><img src="@/assets/date-outline-white-oval.svg" alt="" class="image-265">
-          <div class="date-text-wrapper">
-            <div class="date-title">Thursday, January 24</div>
-          </div>
-        </div>
-        <ul class="unordered-list-events">
-          <li class="event-list-item">
-            <div class="event-list-item-graphic color-pink"><img src="@/assets/butterfly.svg" alt="" class="emoji"></div>
-            <div class="event-list-item-content">
-              <div class="spacer w-hidden-main w-hidden-medium"></div>
-              <router-link
-              :to="{ name: 'EventPage', params: { id: '109' }}"
-              class="link-block-4 w-inline-block">
-                <h2 class="event-heading">Develop your mindfulness superpower workshop &amp; dinner with Julie</h2>
-              </router-link>
-              <div class="event-summary">
-                <div class="event-time">Thu, Jan 24, 2019 at 6:00 PM–9:00 PM</div>
-                <div class="event-ages">Ages 4-11 (4 kids total)</div>
-                <div class="event-location">Cobble Hill</div>
-              </div>
-              <div class="scrolling-wrapper">
-                <img src="@/assets/Julie-Screen-Shot-2019-01-04-at-3.46.43-PM.jpg" alt="" class="event-household-photo"><img src="@/assets/Julie-Screen-Shot-2019-01-04-at-3.45.40-PM.jpg" alt="" class="event-household-photo"><img src="@/assets/Julie-Screen-Shot-2019-01-04-at-3.44.52-PM.jpg" alt="" class="event-household-photo"><img src="@/assets/Julie-Screen-Shot-2019-01-04-at-3.45.13-PM.jpg" alt="" class="event-household-photo"><img src="@/assets/JulieNEW.jpg" alt="" class="event-household-photo"></div>
-              <div class="action-bar">
-                <div class="host-container">
-                  <div class="host-info"><img src="@/assets/julie.jpg" height="40" width="40" alt="" class="avatar-small">
-                    <div class="text-block">Hosted by Julie and 2 kids–age 4 and 7, PS29.</div>
-                  </div>
-                  <div class="host-meta">
-                    <div class="host-occupation">Partner Lead, Google</div>
-                    <div class="background-checked-wrapper"><img src="@/assets/check-green.svg" alt="">
-                      <div class="background-checked">Background Checked</div>
-                    </div>
-                  </div>
-                </div><RsvpButton eventId="109" /></div>
-            </div>
-          </li>
-        </ul>
-        <div class="event-date-section-tittle"><img src="@/assets/date-outline-white-oval.svg" alt="" class="image-265">
-          <div class="date-text-wrapper">
-            <div class="date-title">Sunday, Febuary 3</div>
-          </div>
-        </div>
-        <ul class="unordered-list-events">
-          <li class="event-list-item">
-            <div class="event-list-item-graphic color-light-blue"><img src="@/assets/artist-palette.svg" alt="" class="emoji"></div>
-            <div class="event-list-item-content">
-              <div class="spacer w-hidden-main w-hidden-medium"></div>
-              <router-link
-              :to="{ name: 'EventPage', params: { id: '91' }}"
-              class="link-block-4 w-inline-block">
-                <h2 class="event-heading">Eggs &amp; Painting with Jordana</h2>
-              </router-link>
-              <div class="event-summary">
-                <div class="event-time">Sun, Feb 3, 2019 at 10:00 AM - 12:00 PM</div>
-                <div class="event-ages">Ages 2-5 (4 kids total)</div>
-                <div class="event-location">Red Hook</div>
-              </div>
-              <div class="scrolling-wrapper"><img src="@/assets/jordanacotton10.jpg" alt="" class="event-household-photo"><img src="@/assets/jordanacotton9.jpg" alt="" class="event-household-photo"><img src="@/assets/jordanacotton5.jpg" alt="" class="event-household-photo"><img src="@/assets/jordanacotton2.jpg" alt="" class="event-household-photo"><img src="@/assets/jordanacotton6.jpg" alt="" class="event-household-photo"><img src="@/assets/jordanacotton7.jpg" alt="" class="event-household-photo"></div>
-              <div class="action-bar">
-                <div class="host-container">
-                  <div class="host-info"><img src="@/assets/jordana.jpg" width="40" height="40" alt="" class="avatar-small">
-                    <div class="text-block">Hosted by Jordana &amp; Bastian (age 2).</div>
-                  </div>
-                  <div class="host-meta">
-                    <div class="host-occupation">Psychiatric Nurse Practitioner, the Midtown Practice</div>
-                    <div class="background-checked-wrapper"><img src="@/assets/check-green.svg" alt="">
-                      <div class="background-checked">Background Checked</div>
-                    </div>
-                  </div>
-                </div><RsvpButton eventId="91" /></div>
-            </div>
-          </li>
-        </ul>
-        <div class="event-date-section-tittle"><img src="@/assets/date-outline-white-oval.svg" alt="" class="image-265">
-          <div class="date-text-wrapper">
-            <div class="date-title">Monday, February 4</div>
-          </div>
-        </div>
-        <ul class="unordered-list-events">
-          <li class="event-list-item">
-            <div class="event-list-item-graphic color-green"><img src="@/assets/film-projector.svg" alt="" class="emoji"></div>
-            <div class="event-list-item-content">
-              <div class="spacer w-hidden-main w-hidden-medium"></div>
-              <router-link
-              :to="{ name: 'EventPage', params: { id: '103' }}"
-              class="link-block-4 w-inline-block">
-                <h2 class="event-heading">Movie night &amp; pizza 🍕 with Charlice</h2>
-              </router-link>
-              <div class="event-summary">
-                <div class="event-time">Mon, Feb 4, 2019 at 6:00 PM–9:00 PM</div>
-                <div class="event-ages">Ages 2-11 (5 kids total)</div>
-                <div class="event-location">Dumbo</div>
-              </div>
-              <div class="scrolling-wrapper"><img src="@/assets/charlice2.jpg" alt="" class="event-household-photo"><img src="@/assets/charlice3.jpg" alt="" class="event-household-photo"><img src="@/assets/charlice4.jpg" alt="" class="event-household-photo"><img src="@/assets/charlice6.jpg" alt="" class="event-household-photo"><img src="@/assets/charlice5.jpg" alt="" class="event-household-photo"><img src="@/assets/charlice8.jpg" alt="" class="event-household-photo"></div>
-              <div class="action-bar">
-                <div class="host-container">
-                  <div class="host-info"><img src="@/assets/charlice.jpg" width="40" height="40" alt="" class="avatar-small">
-                    <div class="text-block">Hosted by Charlice and 4 kids–ages (11, 6, 2 and 2).</div>
-                  </div>
-                  <div class="host-meta">
-                    <div class="host-occupation">Shift Supervisor, Starbucks</div>
-                    <div class="background-checked-wrapper"><img src="@/assets/check-green.svg" alt="">
-                      <div class="background-checked">Background Checked</div>
-                    </div>
-                  </div>
-                </div><RsvpButton eventId="103" /></div>
-            </div>
-          </li>
-        </ul>
         <div class="event-date-section-tittle"><img src="@/assets/date-outline-white-oval.svg" alt="" class="image-265">
           <div class="date-text-wrapper">
             <div class="date-title">Friday, February 8</div>
@@ -287,6 +178,78 @@
                     </div>
                   </div>
                 </div><RsvpButton eventId="98" /></div>
+            </div>
+          </li>
+        </ul>
+        <div class="event-date-section-tittle"><img src="@/assets/date-outline-white-oval.svg" alt="" class="image-265">
+          <div class="date-text-wrapper">
+            <div class="date-title">Sunday, March 3</div>
+          </div>
+        </div>
+        <ul class="unordered-list-events">
+          <li class="event-list-item">
+            <div class="event-list-item-graphic color-light-blue"><img src="@/assets/artist-palette.svg" alt="" class="emoji"></div>
+            <div class="event-list-item-content">
+              <div class="spacer w-hidden-main w-hidden-medium"></div>
+              <router-link
+              :to="{ name: 'EventPage', params: { id: '92' }}"
+              class="link-block-4 w-inline-block">
+                <h2 class="event-heading">Eggs &amp; Painting with Jordana</h2>
+              </router-link>
+              <div class="event-summary">
+                <div class="event-time">Sun, Mar 3, 2019 at 10:00 AM - 12:00 PM</div>
+                <div class="event-ages">Ages 2-5 (4 kids total)</div>
+                <div class="event-location">Red Hook</div>
+              </div>
+              <div class="scrolling-wrapper"><img src="@/assets/jordanacotton10.jpg" alt="" class="event-household-photo"><img src="@/assets/jordanacotton9.jpg" alt="" class="event-household-photo"><img src="@/assets/jordanacotton5.jpg" alt="" class="event-household-photo"><img src="@/assets/jordanacotton2.jpg" alt="" class="event-household-photo"><img src="@/assets/jordanacotton6.jpg" alt="" class="event-household-photo"><img src="@/assets/jordanacotton7.jpg" alt="" class="event-household-photo"></div>
+              <div class="action-bar">
+                <div class="host-container">
+                  <div class="host-info"><img src="@/assets/jordana.jpg" width="40" height="40" alt="" class="avatar-small">
+                    <div class="text-block">Hosted by Jordana &amp; Bastian (age 2).</div>
+                  </div>
+                  <div class="host-meta">
+                    <div class="host-occupation">Psychiatric Nurse Practitioner, the Midtown Practice</div>
+                    <div class="background-checked-wrapper"><img src="@/assets/check-green.svg" alt="">
+                      <div class="background-checked">Background Checked</div>
+                    </div>
+                  </div>
+                </div><RsvpButton eventId="92" /></div>
+            </div>
+          </li>
+        </ul>
+        <div class="event-date-section-tittle"><img src="@/assets/date-outline-white-oval.svg" alt="" class="image-265">
+          <div class="date-text-wrapper">
+            <div class="date-title">Monday, March 4</div>
+          </div>
+        </div>
+        <ul class="unordered-list-events">
+          <li class="event-list-item">
+            <div class="event-list-item-graphic color-green"><img src="@/assets/film-projector.svg" alt="" class="emoji"></div>
+            <div class="event-list-item-content">
+              <div class="spacer w-hidden-main w-hidden-medium"></div>
+              <router-link
+              :to="{ name: 'EventPage', params: { id: '104' }}"
+              class="link-block-4 w-inline-block">
+                <h2 class="event-heading">Movie night &amp; pizza 🍕 with Charlice</h2>
+              </router-link>
+              <div class="event-summary">
+                <div class="event-time">Mon, Mar 4, 2019 at 6:00 PM–9:00 PM</div>
+                <div class="event-ages">Ages 2-11 (5 kids total)</div>
+                <div class="event-location">Dumbo</div>
+              </div>
+              <div class="scrolling-wrapper"><img src="@/assets/charlice2.jpg" alt="" class="event-household-photo"><img src="@/assets/charlice3.jpg" alt="" class="event-household-photo"><img src="@/assets/charlice4.jpg" alt="" class="event-household-photo"><img src="@/assets/charlice6.jpg" alt="" class="event-household-photo"><img src="@/assets/charlice5.jpg" alt="" class="event-household-photo"><img src="@/assets/charlice8.jpg" alt="" class="event-household-photo"></div>
+              <div class="action-bar">
+                <div class="host-container">
+                  <div class="host-info"><img src="@/assets/charlice.jpg" width="40" height="40" alt="" class="avatar-small">
+                    <div class="text-block">Hosted by Charlice and 4 kids–ages (11, 6, 2 and 2).</div>
+                  </div>
+                  <div class="host-meta">
+                    <div class="host-occupation">Shift Supervisor, Starbucks</div>
+                    <div class="background-checked-wrapper"><img src="@/assets/check-green.svg" alt="">
+                      <div class="background-checked">Background Checked</div>
+                    </div>
+                  </div>
+                </div><RsvpButton eventId="104" /></div>
             </div>
           </li>
         </ul>
