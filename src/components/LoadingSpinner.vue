@@ -17,7 +17,7 @@
 
 <script>
 export default {
-  name: 'OAuthCallback',
+  name: 'LoadingSpinner',
   props: {
     size: {
       default: '50px'
