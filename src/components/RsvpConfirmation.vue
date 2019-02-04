@@ -18,53 +18,18 @@
 
   <OAuthCallback v-if="!event && !(error && showError)"/>
 
-  <div v-if="!!event" class="onb-content-container">
-    <div class="onb-top-content-container">
-      <h1 class="onb-heading-large">Welcome!</h1>
-      <p class="onb-paragraph-subheading-2">Would you still like to RSVP to the event below?</p>
-    </div>
-    <div class="onb-form-block-checkbox-list w-form">
-      <form class="onb-form-checkbox-list">
-        <div
-        class="checkbox-field-extra-space"
-        :class="{'active-checkbox': yesOrNo === 'yes'}">
-          <input
-          type="radio"
-          id="yes"
-          value="yes"
-          name="yes"
-          class="onb-checkbox w-checkbox-input"
-          v-model="yesOrNo"
-          >
-          <label
-          for="yes"
-          class="onb-checkbox-label w-form-label"
-          >
-           Yes
-         </label>
-        </div>
-        <div
-        class="checkbox-field-extra-space"
-        :class="{'active-checkbox': yesOrNo === 'no'}">
-          <input
-          type="radio"
-          id="no"
-          value="no"
-          name="no"
-          class="onb-checkbox w-checkbox-input"
-          v-model="yesOrNo"
-          >
-          <label
-          for="no"
-          class="onb-checkbox-label w-form-label"
-          >
-           No
-         </label>
-        </div>
-      </form>
-    </div>
-          <EventListItem :event="event" :index="eventId"/>
-  </div>
+      <YesOrNo
+      v-if="!!event"
+      v-model="yesOrNo"
+      question="Welcome!"
+      description="Would you still like to RSVP to the event below?">
+      <br>
+      <EventListItem
+      v-if="!!event"
+      :event="event"
+      :index="eventId"
+      />
+      </YesOrNo>
 </div>
 </div>
 </div>
@@ -79,16 +44,21 @@ import Nav from '@/components/onboarding/Nav.vue'
 import OAuthCallback from '@/components/OAuthCallback.vue'
 import ErrorMessage from '@/components/onboarding/ErrorMessage.vue'
 import OnboardingStyleWrapper from '@/components/onboarding/OnboardingStyleWrapper.vue'
+import Question from '@/components/onboarding/Question.vue'
+import YesOrNo from '@/components/onboarding/YesOrNo.vue'
+
 
 export default {
   name: 'RsvpConfirmation',
-  components: { EventListItem, Nav, OAuthCallback, ErrorMessage, OnboardingStyleWrapper },
+  components: { EventListItem, Nav, OAuthCallback, ErrorMessage, OnboardingStyleWrapper, Question, YesOrNo },
   data () {
     return {
       eventId: this.$route.params.eventId,
       errorMesg: 'Please answer yes or no.',
       event: null,
-      yesOrNo: '',
+      yesOrNo: {
+        isTrue: null
+      },
       showError: false
     }
   },
@@ -100,12 +70,12 @@ export default {
   },
   methods: {
     nextStep: function () {
-      if (this.yesOrNo === 'yes') {
-        this.$router.push({ name: 'RsvpInfoCollection', params: { eventId: this.eventId } })
-      } else if (this.yesOrNo === 'no') {
+      if (this.yesOrNo.isTrue === null) {
+        this.showError = true
+      } else if (this.yesOrNo.isTrue === false) {
         this.$router.push({ name: 'Home' })
       } else {
-        this.showError = true
+        this.$router.push({ name: 'RsvpInfoCollection', params: { eventId: this.eventId } })
       }
     },
     prevStep: function () {
@@ -114,7 +84,7 @@ export default {
   },
   computed: {
     error: function () {
-      if (this.yesOrNo === '') {
+      if (this.yesOrNo.isTrue === null) {
         return this.errorMesg
       } else {
         this.showError = false
