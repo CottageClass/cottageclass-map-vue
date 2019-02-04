@@ -4,6 +4,7 @@
      type="radio"
      v-model="yesOrNo"
      :choices="['yes', 'no']" />
+     <slot></slot>
   </Question>
 </template>
 
