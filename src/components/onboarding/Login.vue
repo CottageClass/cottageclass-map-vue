@@ -25,11 +25,11 @@
           <ul class="unordered-list">
             <li class="list-item"><img src="@/assets/give-care.svg" alt="" class="image-262">
               <div class="hero-list-item-heading">Give Care.</div>
-              <div class="hero-list-item-subtitle">Host a playdate once a month at your home for kids age 2 to 11. <router-link to="/faq">How it works.</router-link></div>
+              <div class="hero-list-item-subtitle">Host a playdate once a month at your home for 2 or more children. <router-link to="/faq">How it works.</router-link></div>
             </li>
             <li class="list-item"><img src="@/assets/get-care.svg" alt="" class="image-262">
               <div class="hero-list-item-heading">Get Care.</div>
-              <div class="hero-list-item-subtitle">Once you host a monthly event, you get unlimited access to <router-link to="/home" class="links">activities like these</router-link>.</div>
+              <div class="hero-list-item-subtitle">By hosting a monthly event, you get unlimited access to <router-link to="/home" class="links">activities like these</router-link>.</div>
             </li>
             <li class="list-item"><img src="@/assets/socially.svg" alt="" class="image-262">
               <div class="hero-list-item-heading">Socially.</div>
