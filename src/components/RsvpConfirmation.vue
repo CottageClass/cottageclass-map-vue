@@ -110,7 +110,9 @@ export default {
     },
     prevStep: function () {
       this.$router.go(-1)
-    },
+    }
+  },
+  computed: {
     error: function () {
       if (this.yesOrNo === '') {
         return this.errorMesg
@@ -118,9 +120,7 @@ export default {
         this.showError = false
         return false
       }
-    }
-  },
-  computed: {
+    },
     nextButtonState: function () {
       if (this.error) {
         return 'inactive'
