@@ -17,7 +17,7 @@
 
     <Question
   title="Allergies & special requirements"
-  subtitle="Do any of your children have allergies, dietary restrictions, or special needs that you would like to share with the host?">
+  subtitle="Please enter any allergies, dietary restrictions, or special needs that you would like to share with the host.">
     <ManyFormFieldGroups
     :labels="labels"
     :names="names"
@@ -39,8 +39,13 @@ import Question from '@/components/onboarding/Question.vue'
 import Nav from '@/components/onboarding/Nav.vue'
 import OnboardingStyleWrapper from '@/components/onboarding/OnboardingStyleWrapper.vue'
 
+// todos:
+// make child info real
+// ask yes or no question.
+// submit data
+
 export default {
-  name: 'ChildAllergiesAndSpecialRequirements',
+  name: 'ChildSpecialRequirements',
   components: { ManyFormFieldGroups, Nav, OnboardingStyleWrapper, Question },
   data () {
     return {
