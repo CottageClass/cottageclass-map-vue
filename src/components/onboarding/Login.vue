@@ -29,11 +29,11 @@
             </li>
             <li class="list-item"><img src="@/assets/get-care.svg" alt="" class="image-262">
               <div class="hero-list-item-heading">Get Care.</div>
-              <div class="hero-list-item-subtitle">For each child you host (how many is up to you) you get 1 point to spend on <router-link to="/home" class="links">activities like these</router-link>.</div>
+              <div class="hero-list-item-subtitle">Once you host a monthly event, you get unlimited access to <router-link to="/home" class="links">activities like these</router-link>.</div>
             </li>
             <li class="list-item"><img src="@/assets/socially.svg" alt="" class="image-262">
               <div class="hero-list-item-heading">Socially.</div>
-              <div class="hero-list-item-subtitle">Every activity is a playdate led by a local parent, so you can make new friends too!</div>
+              <div class="hero-list-item-subtitle">You can invite a circle of trusted friends, or meet new families near you.</div>
             </li>
             <!-- So we can direct link to the sign in button-->
             <span id="signup"></span>
