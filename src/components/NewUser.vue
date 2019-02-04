@@ -7,8 +7,8 @@
     v-on:userAlreadyOnboarded="proceedToHomePage"
     v-on:authenticateFacebook="authenticate('facebook')"
      />
-    <DirectLogin
-    v-if="activeScreen ==='directLogin' && step === 0"
+    <LoginWithEmail
+    v-if="activeScreen ==='loginWithEmail' && step === 0"
     v-on:userNotYetOnboarded="nextStep"
     v-on:activateScreen="activateScreen"
     v-on:userAlreadyOnboarded="proceedToHomePage"
@@ -82,7 +82,7 @@
 import Nav from '@/components/onboarding/Nav.vue'
 import ErrorMessage from '@/components/onboarding/ErrorMessage.vue'
 import Login from '@/components/onboarding/Login.vue'
-import DirectLogin from '@/components/onboarding/DirectLogin.vue'
+import LoginWithEmail from '@/components/onboarding/LoginWithEmail.vue'
 import Signup from '@/components/onboarding/Signup.vue'
 import Location from '@/components/onboarding/Location.vue'
 import Phone from '@/components/onboarding/Phone.vue'
@@ -112,7 +112,7 @@ var client = sheetsu({ address: 'https://sheetsu.com/apis/v1.0su/62cd725d6088' }
 
 export default {
   components: {
-    Nav, Login, DirectLogin, Signup, Location, Phone, Children, Availability, Food, EventActivity, EventTime, EventDate, HouseRules, PetsDescription, YesOrNo, MaxChildren, LoadingSpinner, Invite, OnboardingStyleWrapper, ErrorMessage
+    Nav, Login, LoginWithEmail, Signup, Location, Phone, Children, Availability, Food, EventActivity, EventTime, EventDate, HouseRules, PetsDescription, YesOrNo, MaxChildren, LoadingSpinner, Invite, OnboardingStyleWrapper, ErrorMessage
   },
   data () {
     return {

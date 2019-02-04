@@ -58,7 +58,6 @@
 // import networks from '@/assets/network-info.json';
 import { mapGetters } from 'vuex'
 import * as Token from '@/utils/tokens.js'
-import * as api from '@/utils/api.js'
 import ErrorMessage from '@/components/onboarding/ErrorMessage.vue'
 import OnboardingStyleWrapper from '@/components/onboarding/OnboardingStyleWrapper.vue'
 
