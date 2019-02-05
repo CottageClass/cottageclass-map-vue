@@ -37,7 +37,6 @@ export default {
   components: { EventListItem },
   props: {
     events: {
-      type: [Object]
     },
     showDates: {
       type: Boolean,

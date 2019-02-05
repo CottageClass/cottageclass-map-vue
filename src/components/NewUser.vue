@@ -27,6 +27,10 @@
     :currentUser="currentUser"
     @prev="backFromInviteStep"
     />
+    <RSVPPrompt
+    v-on:activateScreen="activateScreen"
+    v-if="activeScreen === 'RSVPPrompt'"
+    />
 
   <!-- wrapper for desktop screens -->
 
@@ -67,7 +71,6 @@
       />
       <PetsDescription v-if="step === 12" v-model="petsDescription" />
       <HouseRules v-if="step === 13" v-model="houseRules" />
-      <RSVPPrompt v-if="step === 14" v-model="RSVPPrompt"/>
       <!-- OAuthCallback is just used for the loading animation -->
       <OAuthCallback v-if="step > lastStep && !error" />
   </OnboardingStyleWrapper>
@@ -140,8 +143,8 @@ export default {
     return {
       createdEventData: null,
       activeScreen: this.$route.query.activeScreen || 'facebook',
-      step: 14,
-      lastStep: 14,
+      step: 0,
+      lastStep: 13,
       showError: false,
       name: {}, // todo: remove if possible now this comes from FB
       location: {},
@@ -167,7 +170,6 @@ export default {
       houseRules: {
         err: 'skippable'
       },
-      RSVPPrompt: {},
       communityRules: {},
       hasPets: {
         yesOrNo: ''
@@ -218,7 +220,7 @@ export default {
       if (this.rsvpAttempted) {
         this.$router.push({ name: 'RsvpConfirmation', params: { eventId: this.rsvpAttempted } })
       } else {
-        this.activateScreen('inviteOthers')
+        this.activateScreen('RSVPPrompt')
         this.step = 0
       }
     },
@@ -389,8 +391,6 @@ export default {
           return this.petsDescription.err
         case 13:
           return this.houseRules.err
-        case 14:
-          return this.RSVPPrompt.err
         default:
           return false
       }
