@@ -22,6 +22,7 @@
               <div class="text-block">Upcoming Playdates</div>
             </router-link>
           </li>
+          <!--
           <li v-if="isAuthenticated">
             <router-link to="/request" class="link-block w-inline-block">
               <div class="text-block">Request Care</div>
@@ -32,6 +33,7 @@
               <div class="text-block">Offer Care</div>
             </router-link>
           </li>
+        -->
           <li v-if="isAuthenticated">
             <router-link to="/profile/edit" class="link-block w-inline-block">
               <div class="text-block">Edit Profile</div>
