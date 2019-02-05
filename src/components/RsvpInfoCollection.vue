@@ -14,7 +14,7 @@
 
 <!-- Show loading indicator until we know how many children there are. If there is an error, show the error only. -->
 
-  <OAuthCallback v-if="!allInformationLoaded"/>
+  <LoadingSpinner v-if="!allInformationLoaded"/>
 
 <!-- Once we have child and event information, ask user which child/children they want to RSVP -->
 
@@ -45,7 +45,7 @@ import MultipleChoice from '@/components/onboarding/MultipleChoice.vue'
 import OnboardingStyleWrapper from '@/components/onboarding/OnboardingStyleWrapper.vue'
 import sheetsu from 'sheetsu-node'
 // this component has a working loading indicator and no other logic. todo: break out and rename.
-import OAuthCallback from '@/components/OAuthCallback.vue'
+import LoadingSpinner from '@/components/LoadingSpinner.vue'
 import { mapGetters } from 'vuex'
 var moment = require('moment')
 // create a config file to identify which spreadsheet we push to.
@@ -53,7 +53,7 @@ var client = sheetsu({ address: 'https://sheetsu.com/apis/v1.0su/62cd725d6088' }
 
 export default {
   name: 'RsvpInfoCollection',
-  components: { Nav, OAuthCallback, ErrorMessage, MultipleChoice, OnboardingStyleWrapper, Question },
+  components: { Nav, LoadingSpinner, ErrorMessage, MultipleChoice, OnboardingStyleWrapper, Question },
   data () {
     return {
       childrenSelected: [],

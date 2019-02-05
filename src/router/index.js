@@ -5,11 +5,8 @@ import Bookings from '@/components/Bookings'
 import EmergencyInfo from '@/components/EmergencyInfo'
 import ProviderProfile from '@/components/ProviderProfile.vue'
 import RequestModal from '@/components/RequestModal.vue'
-import OAuthCallback from '@/components/OAuthCallback.vue'
-// import network from '../assets/network-info.json'
 import HowItWorks from '@/components/HowItWorks.vue'
 import NewUser from '@/components/NewUser.vue'
-// import DirectLogin from '@/components/onboarding/DirectLogin.vue'
 import RequestModal2 from '@/components/RequestModal2.vue'
 import RequestRecipients from '@/components/RequestRecipients.vue'
 import AdminMessages from '@/components/AdminMessages.vue'
@@ -101,11 +98,6 @@ export default new Router({
       path: '/how-it-works',
       name: 'HowItWorks',
       component: HowItWorks
-    },
-    {
-      path: '/oauth-callback',
-      name: 'Root',
-      component: OAuthCallback
     },
     {
       path: '/request-create',

@@ -22,6 +22,7 @@
               <div class="text-block">Upcoming Playdates</div>
             </router-link>
           </li>
+          <!--
           <li v-if="isAuthenticated">
             <router-link to="/request" class="link-block w-inline-block">
               <div class="text-block">Request Care</div>
@@ -32,6 +33,7 @@
               <div class="text-block">Offer Care</div>
             </router-link>
           </li>
+        -->
           <li v-if="isAuthenticated">
             <router-link to="/profile/edit" class="link-block w-inline-block">
               <div class="text-block">Edit Profile</div>
@@ -53,13 +55,13 @@
             </router-link>
           </li>
           <li v-if="isAuthenticated">
-            <a @click="logout" class="link-block w-inline-block">
+            <a @click="logout" href="" class="link-block w-inline-block">
               <div class="text-block">Logout</div>
             </a>
           </li>
           <li v-if="!isAuthenticated">
             <!-- Can't use router link here because it won't refresh on frontpage -->
-            <a href="/?activeScreen=directLogin" class="link-block w-inline-block">
+            <a href="/?activeScreen=loginWithEmail" class="link-block w-inline-block">
               <div class="text-block">Sign in</div>
             </a>
           </li>

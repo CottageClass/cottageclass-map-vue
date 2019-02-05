@@ -8,7 +8,7 @@
             class="button-sub-link"
             @click="cancelRSVP"
             :to="{ name: 'CancelRSVP', params: { eventId: eventId }}"
->
+        >
           cancel
         </router-link>
         </p>
@@ -16,10 +16,11 @@
   </div>
   <div v-else-if="full" class="button w-button full">&check; EVENT IS FULL</div>
   <router-link
-  v-else
-  :to="{ name: 'RsvpInfoCollection', params: { eventId: eventId }}"
-  class="button w-button"
-  >RSVP
+      v-else
+      :to="{ name: 'RsvpInfoCollection', params: { eventId: eventId }}"
+      class="button w-button"
+  >
+    RSVP
   </router-link>
 </template>
 

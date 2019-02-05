@@ -345,16 +345,7 @@ export function fetchMyUpcomingEvents (params) {
     `${process.env.BASE_URL_API}/api/user/created_events/upcoming`
   ).then(res => {
     console.log('FETCH MY UPCOMING EVENTS SUCCESS')
-    return Object.values(normalize(res.data).event).map(obj => {
-      var e = obj.attributes
-      e['id'] = obj.id
-      e.hostFirstName = capitalize(e.hostFirstName)
-      e.hostFuzzyLatitude = parseFloat(e.hostFuzzyLatitude)
-      e.hostFuzzyLongitude = parseFloat(e.hostFuzzyLongitude)
-      e.activityName = e.activityNames.length > 0 && e.activityNames[0]
-      e.food = e.foods.length > 0 && e.foods[0]
-      return e
-    })
+    return Object.values(normalize(res.data).event).map(parseEventData)
   }).catch(err => {
     console.log('FETCH MY UPCOMING EVENTS FAILURE')
     console.log(err.errors)
@@ -368,16 +359,7 @@ export function fetchEvents (params) {
   ).then(res => {
     console.log('FETCH EVENTS SUCCESS')
     console.log(res.data)
-    return Object.values(normalize(res.data).event).map(obj => {
-      var e = obj.attributes
-      e['id'] = obj.id
-      e.hostFirstName = capitalize(e.hostFirstName)
-      e.hostFuzzyLatitude = parseFloat(e.hostFuzzyLatitude)
-      e.hostFuzzyLongitude = parseFloat(e.hostFuzzyLongitude)
-      e.activityName = e.activityNames.length > 0 && e.activityNames[0]
-      e.food = e.foods.length > 0 && e.foods[0]
-      return e
-    })
+    return Object.values(normalize(res.data).event).map(parseEventData)
   }).catch(err => {
     console.log('FETCH EVENTS FAILURE')
     console.log(err.errors)
@@ -393,17 +375,7 @@ export function fetchMyUpcomingParticipatingEvents () {
       if (!normedData.event) {
         return []
       }
-      return Object.values(normedData.event).map(obj => {
-        var e = obj.attributes
-        e['id'] = obj.id
-        e.hostFirstName = capitalize(e.hostFirstName)
-        e.hostFuzzyLatitude = parseFloat(e.hostFuzzyLatitude)
-        e.hostFuzzyLongitude = parseFloat(e.hostFuzzyLongitude)
-        e.activityName = e.activityNames.length > 0 && e.activityNames[0]
-        e.food = e.foods.length > 0 && e.foods[0]
-        console.log({ e })
-        return e
-      })
+      return Object.values(normedData.event).map(parseEventData)
     }).catch(err => {
       console.log('GET PARTICIPATING EVENTS FAILURE')
       console.log(err)
@@ -488,4 +460,30 @@ export function distanceHaversine (lat1, lon1, lat2, lon2) {
 
 function capitalize (string) {
   return string.charAt(0).toUpperCase() + string.slice(1)
+}
+
+function parseEventData (obj) {
+  var e = obj.attributes
+  e['id'] = obj.id
+  e.hostFirstName = capitalize(e.hostFirstName)
+  e.hostFuzzyLatitude = parseFloat(e.hostFuzzyLatitude)
+  e.hostFuzzyLongitude = parseFloat(e.hostFuzzyLongitude)
+  e.activityName = e.activityNames.length > 0 && e.activityNames[0]
+  e.food = e.foods.length > 0 && e.foods[0]
+  return e
+}
+
+export function fetchUpcomingEventsWithinDistance (miles) {
+  return Vue.axios.get(
+    // This is a placeholder until the endpoint is ready
+    `${process.env.BASE_URL_API}/api/events/upcoming/page/1/page_size/50`
+  ).then(res => {
+    console.log('FETCH UPCOMING EVENTS WITHIN DISTANCE SUCCESS')
+    console.log(res.data)
+    return Object.values(normalize(res.data).event).map(parseEventData)
+  }).catch(err => {
+    console.log('FETCH UPCOMING EVENTS WITHIN DISTANCE FAILURE')
+    console.log(err.errors)
+    throw err
+  })
 }

@@ -1,6 +1,10 @@
 <template>
   <div class="body onb-body">
-  <div class="title-bar"><a @click="$emit('prev')" class="button-back w-inline-block"></a>
+  <div class="title-bar">
+    <a
+        @click="$emit('prev')"
+        v-bind:class="['button-back', 'w-inline-block', {'button-hidden': hidePrevious}]">
+    </a>
   <a v-if="button !== 'none'" @click="$emit('next')" :class="classObject">
     <div class="button-next-text">{{ text }}</div>
   </a>
@@ -14,7 +18,12 @@
 
 export default {
   name: 'Nav',
-  props: ['button'],
+  props: {
+    button: {},
+    hidePrevious: {
+      default: false
+    }
+  },
   computed: {
     text: function () {
       if (this.button === 'skip') {
@@ -113,6 +122,10 @@ export default {
   background-size: 24px 24px;
   background-repeat: no-repeat;
   color: #1f88e9;
+}
+
+.button-hidden {
+  visibility: hidden;
 }
 
 .title-bar-back-button:active {
