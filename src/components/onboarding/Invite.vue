@@ -13,7 +13,7 @@
 
   <div class="onb-content-container">
     <div class="onb-top-content-container">
-      <h1 class="onb-heading-large"><span v-if="!!eventData">Last step: </span>Build your village</h1>
+      <h1 class="onb-heading-large">Build your village</h1>
       <p class="onb-paragraph-subheading-2">Invite a few friends to attend your activity. When they join, they'll be prompted to host their own activity and invite a few more friends. Before you know it, you'll have a thriving community of parents sharing activities and childcare!</p>
     </div>
     <ul class="onb-social-button-list">
@@ -63,11 +63,10 @@ import Nav from '@/components/onboarding/Nav.vue'
 import * as api from '@/utils/api.js'
 import OnboardingStyleWrapper from '@/components/onboarding/OnboardingStyleWrapper.vue'
 
-
 export default {
   name: 'Invite',
   components: { TextMessageLink, EventListItem, Nav, OnboardingStyleWrapper },
-  props: [ 'eventData', 'currentUser' ],
+  props: [ 'eventData' ],
   data () {
     return {
       copyButtonText: 'copy link',

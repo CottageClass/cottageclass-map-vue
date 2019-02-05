@@ -55,7 +55,7 @@
             </router-link>
           </li>
           <li v-if="isAuthenticated">
-            <a @click="logout" class="link-block w-inline-block">
+            <a @click="logout" href="" class="link-block w-inline-block">
               <div class="text-block">Logout</div>
             </a>
           </li>

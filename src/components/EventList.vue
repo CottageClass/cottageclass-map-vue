@@ -3,7 +3,9 @@
     <LoadingSpinner v-if="awaitingEvents"/>
     <p v-if="noEvents" v-html="noEventsMessage"></p>
     <div v-for="(event, index) in events">
-      <div v-if="index === 0 || (formatDate(event.startsAt) !== formatDate(events[index - 1].startsAt))" class="event-date-section-tittle">
+      <div
+          v-if="showDates && (index === 0 || (formatDate(event.startsAt) !== formatDate(events[index - 1].startsAt)))"
+          class="event-date-section-tittle">
         <img src="@/assets/date-outline-white-oval.svg" alt="" class="image-264">
         <div class="date-text-wrapper">
           <div class="date-title">
@@ -20,7 +22,8 @@
         :key="index"
         :showRsvpButton="currentUser === null || currentUser.id !== event.hostId"
         :showEditButton="isAuthenticated && currentUser.id === event.hostId"
-        :distance="distanceFromCurrentUser(event.hostFuzzyLatitude, event.hostFuzzyLongitude)"
+        :distance="distanceFromCurrentUser(event.hostFuzzyLatitude,
+                                           event.hostFuzzyLongitude)"
       />
     </div>
   </div>
@@ -35,8 +38,14 @@ var moment = require('moment')
 export default {
   name: 'EventList',
   components: { EventListItem, LoadingSpinner },
-  props: ['events', 'noEventsMessage'],
-  data: () => { return {} },
+  props: {
+    noEventsMessage: {},
+    events: {},
+    showDates: {
+      type: Boolean,
+      default: true
+    }
+  },
   methods: {
     formatDate: function (date) {
       return moment(date).format('dddd, MMM Do')

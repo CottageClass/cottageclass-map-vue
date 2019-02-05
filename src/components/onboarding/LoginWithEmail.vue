@@ -62,7 +62,7 @@ import ErrorMessage from '@/components/onboarding/ErrorMessage.vue'
 import OnboardingStyleWrapper from '@/components/onboarding/OnboardingStyleWrapper.vue'
 
 export default {
-  name: ' ',
+  name: 'DirectLogin',
   components: { ErrorMessage, OnboardingStyleWrapper },
   data: function () {
     return {
