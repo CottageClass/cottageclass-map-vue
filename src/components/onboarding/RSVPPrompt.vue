@@ -8,8 +8,8 @@
             hidePrevious="true"
           />
           <Question
-              title="RSVP to events near you"
-              subtitle="Here are some upcoming events in your area that you might be interested in"
+              title="RSVP to a playdate near you"
+              subtitle="Would you like to RSVP to one of these upcoming playdates in your area?"
           />
           <EventList
               :events="events"
