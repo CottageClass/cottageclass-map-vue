@@ -51,14 +51,27 @@ export default {
       nextButtonState: 'next',
       labels: ['Full Name', 'Phone Number', 'Relationship to Child'],
       types: ['text', 'tel', 'text'],
-      names: ['name', 'phone_number', 'relationship'],
+      names: ['name', 'phoneNumber', 'relationship'],
       showError: false,
-      error: 'This is an error'
+      error: 'This is an error',
+      eventId: this.$route.params.eventId,
     }
   },
   computed: {
     children: function () {
       return this.currentUser.children
+    },
+    newChildren: function () {
+      return this.children.map(child => {
+        let newChild = child
+        newChild.emergencyContacts = this.contacts
+        return newChild
+      })
+    },
+    newCurrentUser: function () {
+      let newUser = this.currentUser
+      newUser.children = this.newChildren
+      return newUser
     },
     ...mapGetters(['currentUser'])
   },
@@ -71,7 +84,10 @@ export default {
       console.log('previous step')
     },
     submitEmergencyContactsForChildren: function () {
+      // for some reason this isn't necessary. possibly because some two way binding is happening with each child
+      // this.store.commit('setCurrentUser', this.newCurrentUser)
       this.children.forEach(child => api.submitEmergencyContacts(child.id, this.contacts))
+      this.$router.push('/rsvp/' + this.eventId)
     }
   }
 }
