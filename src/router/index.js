@@ -88,11 +88,6 @@ export default new Router({
       component: EventPage
     },
     {
-      path: '/rsvp/:eventId',
-      name: 'RsvpInfoCollection',
-      component: RsvpInfoCollection
-    },
-    {
       path: '/rsvp-confirmation/:eventId',
       name: 'RsvpConfirmation',
       component: RsvpConfirmation
@@ -165,6 +160,11 @@ export default new Router({
       name: 'CancelRSVP',
       component: CancelRSVP,
       props: true
+    },
+    {
+      path: '/rsvp/:eventId/:emergencyInfoComplete?',
+      name: 'RsvpInfoCollection',
+      component: RsvpInfoCollection
     }
   ],
   scrollBehavior (to, from, savedPosition) {

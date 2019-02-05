@@ -21,15 +21,16 @@ import YesOrNo from '@/components/onboarding/YesOrNo.vue'
 import Nav from '@/components/onboarding/Nav.vue'
 import ErrorMessage from '@/components/onboarding/ErrorMessage.vue'
 import OnboardingStyleWrapper from '@/components/onboarding/OnboardingStyleWrapper.vue'
+import { mapGetters } from 'vuex'
 
 export default {
-  name: 'ChildSpecialNeedsYesNo',
+  name: 'ChildSpecialRequirementsYesNo',
   components: { YesOrNo, OnboardingStyleWrapper, ErrorMessage, Nav },
   data () {
     return {
       childHasSpecialNeeds: {},
       showError: false,
-      eventId: this.$router.params.eventId || ''
+      eventId: this.$route.params.eventId
     }
   },
   methods: {
@@ -39,7 +40,7 @@ export default {
       } else if (this.childHasSpecialNeeds.isTrue) {
         this.$router.push('/onboarding/child-special-requirements-2/' + this.eventIdOrNothing)
       } else {
-        this.$router.push('/rsvp/' + this.eventId)
+        this.$router.push('/rsvp/' + this.eventId + '/emergency-info-complete')
       }
     },
     prevStep: function () {
@@ -52,7 +53,7 @@ export default {
     },
     nextButtonState: function () {
       return this.childHasSpecialNeeds.isTrue === null ? 'inactive' : 'next'
-    }
+    },
   }
 }
 </script>

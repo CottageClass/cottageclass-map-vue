@@ -17,7 +17,7 @@
 
     <Question
   title="Emergency Contacts"
-  subtitle="Please enter emergency contacts for your children. If possible, include their primary care physician.">
+  subtitle="Please provide at least one emergency contact. If possible, include your children's primary care physician.">
     <ManyFormFieldGroups
     :labels="labels"
     :names="names"
@@ -36,6 +36,7 @@
 
 <script>
 import ManyFormFieldGroups from '@/components/onboarding/ManyFormFieldGroups.vue'
+import ErrorMessage from '@/components/onboarding/ErrorMessage.vue'
 import Question from '@/components/onboarding/Question.vue'
 import Nav from '@/components/onboarding/Nav.vue'
 import OnboardingStyleWrapper from '@/components/onboarding/OnboardingStyleWrapper.vue'
@@ -44,7 +45,7 @@ import { mapGetters } from 'vuex'
 
 export default {
   name: 'EmergencyContacts',
-  components: { ManyFormFieldGroups, Nav, OnboardingStyleWrapper, Question },
+  components: { ManyFormFieldGroups, Nav, OnboardingStyleWrapper, Question, ErrorMessage },
   data () {
     return {
       contacts: [],
@@ -53,7 +54,7 @@ export default {
       types: ['text', 'tel', 'text'],
       names: ['name', 'phoneNumber', 'relationship'],
       showError: false,
-      error: 'This is an error',
+      error: 'To be safe, please provide your host with at least one emergency contact.',
       eventId: this.$route.params.eventId,
     }
   },
@@ -61,33 +62,25 @@ export default {
     children: function () {
       return this.currentUser.children
     },
-    newChildren: function () {
-      return this.children.map(child => {
-        let newChild = child
-        newChild.emergencyContacts = this.contacts
-        return newChild
-      })
-    },
-    newCurrentUser: function () {
-      let newUser = this.currentUser
-      newUser.children = this.newChildren
-      return newUser
+    firstContactIsComplete: function () {
+      return this.contacts[0].name && this.contacts[0].phoneNumber && this.contacts[0].relationship
     },
     ...mapGetters(['currentUser'])
   },
   methods: {
     nextStep: function () {
-      console.log('next step')
-      this.submitEmergencyContactsForChildren()
+      if (this.firstContactIsComplete) {
+        this.submitEmergencyContactsForChildren()
+      } else {
+        this.showError = true
+      }
     },
     prevStep: function () {
       console.log('previous step')
     },
     submitEmergencyContactsForChildren: function () {
-      // for some reason this isn't necessary. possibly because some two way binding is happening with each child
-      // this.store.commit('setCurrentUser', this.newCurrentUser)
       this.children.forEach(child => api.submitEmergencyContacts(child.id, this.contacts))
-      this.$router.push('/rsvp/' + this.eventId)
+      this.$router.push('/onboarding/child-special-requirements-1/' + this.eventId)
     }
   }
 }

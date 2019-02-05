@@ -55,6 +55,7 @@ export default {
       types: ['text', 'text', 'text'],
       names: ['allergies', 'dietaryRestrictions', 'specialNeeds'],
       showError: false,
+      eventId: this.$route.params.eventId,
       error: 'This is an error',
       children: [
         {
@@ -79,6 +80,8 @@ export default {
   },
   methods: {
     nextStep: function () {
+      // submit special requirements
+      this.$router.push('/rsvp/' + this.eventId)
       console.log('next step')
     },
     prevStep: function () {

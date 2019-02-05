@@ -60,13 +60,17 @@ export default {
       error: '',
       eventId: this.$route.params.eventId,
       event: false,
+      emergencyInfoJustCompleted: this.$route.params.emergencyInfoComplete === 'emergency-info-complete',
       isAuthenticated: this.$auth.isAuthenticated()
     }
   },
   mounted: function () {
     this.redirectToSignupIfNotAuthenticated()
     this.redirectToOnboardingIfNotOnboarded()
-    this.redirectToEmergencyContactsIfNone()
+    if (!this.emergencyInfoJustCompleted) {
+      console.log('complete?', this.$route.params.emergencyInfoComplete)
+      this.redirectToEmergencyContactsIfNone()
+    }
     this.showErrorIfUserHasNoChildren()
     // get data about the current event to determine max attendees.
     this.fetchEventInformation()
