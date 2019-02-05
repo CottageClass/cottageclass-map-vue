@@ -125,7 +125,7 @@ export default {
       location: {},
       phone: {},
       children: {
-        list: [{ firstName: 'Mary', birthday: '2004-04-19', schoolName: 'Flagg' }],
+        list: [],
         err: 'skippable'
       },
       blurb: {
