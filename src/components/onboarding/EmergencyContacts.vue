@@ -76,7 +76,7 @@ export default {
       }
     },
     prevStep: function () {
-      console.log('previous step')
+      this.$router.go(-1)
     },
     submitEmergencyContactsForChildren: function () {
       this.children.forEach(child => api.submitEmergencyContacts(child.id, this.contacts))

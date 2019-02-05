@@ -24,7 +24,7 @@
     :placeholders="placeholders"
     :types="types"
     :headings="headings"
-    v-model="children"
+    v-model="childrenSpecialRequirements"
     />
   </Question>
 </div>
@@ -38,18 +38,14 @@ import ManyFormFieldGroups from '@/components/onboarding/ManyFormFieldGroups.vue
 import Question from '@/components/onboarding/Question.vue'
 import Nav from '@/components/onboarding/Nav.vue'
 import OnboardingStyleWrapper from '@/components/onboarding/OnboardingStyleWrapper.vue'
-
-// todos:
-// make child info real
-// ask yes or no question.
-// submit data
+import { mapGetters } from 'vuex'
+import * as api from '@/utils/api.js'
 
 export default {
   name: 'ChildSpecialRequirements',
   components: { ManyFormFieldGroups, Nav, OnboardingStyleWrapper, Question },
   data () {
     return {
-      nextButtonState: 'next',
       labels: ['Allergies', 'Dietary Restrictions', 'Special Needs'],
       placeholders: ['(Leave blank if none)', '(Leave blank if none)', '(Leave blank if none)'],
       types: ['text', 'text', 'text'],
@@ -57,35 +53,47 @@ export default {
       showError: false,
       eventId: this.$route.params.eventId,
       error: 'This is an error',
-      children: [
-        {
-          name: 'Mary',
-          age: '12'
-        },
-        {
-          name: 'Alice',
-          age: '7'
-        },
-        {
-          name: 'Bob',
-          age: '2'
-        }
-      ]
+      childrenSpecialRequirements: []
     }
   },
   computed: {
     headings: function () {
-      return this.children.map(child => child.name + ', age ' + child.age)
-    }
+      return this.currentUser.children.map(child => child.firstName + ', age ' + child.age)
+    },
+    nextButtonState: function () {
+      if (this.childrenSpecialRequirements.reduce((allChildrenSoFar, child) => allChildrenSoFar && (child.allergies.length > 0 || child.dietaryRestrictions.length > 0 || child.specialNeeds.length > 0), true)) {
+        return 'next'
+      } else {
+        return 'skip'
+      }
+    },
+    newChildren: function () {
+      let component = this
+      return this.childrenSpecialRequirements.map(function (newReqs, index) {
+        let newReqsAsArrays = {
+          allergies: [newReqs.allergies],
+          dietaryRestrictions: [newReqs.dietaryRestrictions],
+          specialNeeds: newReqs.specialNeeds
+        }
+        return {
+          ...component.currentUser.children[index],
+          ...newReqsAsArrays // because they are stored as arrays
+        }
+      })
+    },
+    ...mapGetters(['currentUser'])
   },
   methods: {
     nextStep: function () {
-      // submit special requirements
-      this.$router.push('/rsvp/' + this.eventId)
-      console.log('next step')
+      this.submitChildSpecialRequirements()
+      this.$router.push('/rsvp/' + this.eventId + '/emergency-info-complete')
     },
     prevStep: function () {
-      console.log('previous step')
+      this.$router.go(-1)
+    },
+    submitChildSpecialRequirements: function () {
+      console.log('submitting child requirements', this.newChildren)
+      api.submitUserInfo(this.currentUser.id, undefined, undefined, undefined, { list: this.newChildren })
     }
   }
 }

@@ -42,7 +42,7 @@ export function submitUserInfo (userId, phone, location, availability, children)
     //        profileBlurb: this.blurb.text,
   }
 
-  if (location.fullAddress) {
+  if (location && location.fullAddress) {
     let address = location.fullAddress
     let {
       street_number,
@@ -72,14 +72,14 @@ export function submitUserInfo (userId, phone, location, availability, children)
     }
   }
 
-  if (location.apartmentNumber) {
+  if (location && location.apartmentNumber) {
     postData = {
       ...postData,
       apartmentNumber: location.apartmentNumber
     }
   }
 
-  if (phone.number) {
+  if (phone && phone.number) {
     let phoneAreaCode = phone.number.match(/(\(\d+\))/)[0].replace(/[^\d]/g, '')
     let phoneNumber = phone.number.match(/\d{3}-\d{4}/)[0].replace(/[^\d]/g, '')
     postData = {
@@ -91,7 +91,7 @@ export function submitUserInfo (userId, phone, location, availability, children)
 
   // set child attributes, plus the parentId
   let childrenAttributes = []
-  if (children.list && children.list.length > 0) {
+  if (children && children.list && children.list.length > 0) {
     childrenAttributes = children.list.map(function (childAttrs) {
       return {
         ...childAttrs,
@@ -107,7 +107,7 @@ export function submitUserInfo (userId, phone, location, availability, children)
     }
   }
 
-  if (children.list && children.list.length > 0) {
+  if (children && children.list && children.list.length > 0) {
     postData.childrenAttributes = childrenAttributes
   }
 
@@ -115,7 +115,12 @@ export function submitUserInfo (userId, phone, location, availability, children)
   return Vue.axios.post(
     `${process.env.BASE_URL_API}/users/${userId}`,
     postData
-  )
+  ).then(res => {
+    console.log('SUBMIT USER SUCCESS', res)
+  }).catch(err => {
+    console.log('SUBMIT USER FAILURE', err)
+    throw err
+  })
 }
 
 function createPersonObject (personInApi, availableChildren = []) {

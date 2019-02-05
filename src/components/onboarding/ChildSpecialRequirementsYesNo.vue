@@ -38,13 +38,13 @@ export default {
       if (this.childHasSpecialNeeds.err) {
         this.showError = true
       } else if (this.childHasSpecialNeeds.isTrue) {
-        this.$router.push('/onboarding/child-special-requirements-2/' + this.eventIdOrNothing)
+        this.$router.push('/onboarding/child-special-requirements-2/' + this.eventId)
       } else {
         this.$router.push('/rsvp/' + this.eventId + '/emergency-info-complete')
       }
     },
     prevStep: function () {
-      console.log('previous step')
+      this.$router.go(-1)
     }
   },
   computed: {
