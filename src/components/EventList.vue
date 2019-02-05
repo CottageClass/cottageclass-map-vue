@@ -26,7 +26,6 @@
 
 <script>
 import EventListItem from '@/components/EventListItem.vue'
-import * as api from '@/utils/api.js'
 import { mapGetters } from 'vuex'
 
 var moment = require('moment')

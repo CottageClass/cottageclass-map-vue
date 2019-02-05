@@ -44,13 +44,11 @@ import Nav from '@/components/onboarding/Nav.vue'
 import OAuthCallback from '@/components/OAuthCallback.vue'
 import ErrorMessage from '@/components/onboarding/ErrorMessage.vue'
 import OnboardingStyleWrapper from '@/components/onboarding/OnboardingStyleWrapper.vue'
-import Question from '@/components/onboarding/Question.vue'
 import YesOrNo from '@/components/onboarding/YesOrNo.vue'
-
 
 export default {
   name: 'RsvpConfirmation',
-  components: { EventListItem, Nav, OAuthCallback, ErrorMessage, OnboardingStyleWrapper, Question, YesOrNo },
+  components: { EventListItem, Nav, OAuthCallback, ErrorMessage, OnboardingStyleWrapper, YesOrNo },
   data () {
     return {
       eventId: this.$route.params.eventId,
