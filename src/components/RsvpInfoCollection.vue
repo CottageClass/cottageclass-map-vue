@@ -56,7 +56,6 @@ export default {
   components: { Nav, OAuthCallback, ErrorMessage, MultipleChoice, OnboardingStyleWrapper, Question },
   data () {
     return {
-      children: [],
       childrenSelected: [],
       error: '',
       eventId: this.$route.params.eventId,
@@ -66,8 +65,9 @@ export default {
   },
   mounted: function () {
     this.redirectToSignupIfNotAuthenticated()
-    // get info about current user to display list of children
-    this.fetchUserInformation()
+    this.redirectToOnboardingIfNotOnboarded()
+    this.redirectToEmergencyContactsIfNone()
+    this.showErrorIfUserHasNoChildren()
     // get data about the current event to determine max attendees.
     this.fetchEventInformation()
   },
@@ -106,17 +106,24 @@ export default {
     notificationBackToUser: function () {
       return 'Congratulations ' + this.currentUser.firstName + '! You\'ve booked a playdate with ' + this.event.hostFirstName + ' for ' + this.guestChildrenNamesAgesFormatted + ' on ' + this.eventDateFormattedMonthDay + '. We\'ll email you shortly to confirm your RSVP.'
     },
+    children: function () {
+      return this.currentUser.children
+    },
+    childrenHaveEmergencyContacts: function () {
+      // add more logic here once parents can edit emergency contacts individually
+      if (this.children[0].emergencyContactsAttributes) {
+        return true
+      } else {
+        return false
+      }
+    },
     ...mapGetters(['currentUser'])
   },
   methods: {
-    fetchUserInformation: function () {
-      this.children = this.currentUser.children
-      this.redirectToOnboardingIfNotOnboarded()
-      // if we don't have children for this user (which should never be true) show an error. (Todo: let user enter child info here in this case.)
+    showErrorIfUserHasNoChildren: function () {
       if (!this.children || this.children.length === 0) {
         this.error = 'Sorry, but we cannot retrieve your children\'s information. Are you sure you have signed in? To resolve this, please email us at: contact@cottageclass.com.'
       }
-      this.redirectToEmergencyContactsIfNone()
     },
     redirectToSignupIfNotAuthenticated: function () {
       if (!this.$auth.isAuthenticated()) {
@@ -136,7 +143,7 @@ export default {
       }
     },
     redirectToEmergencyContactsIfNone: function () {
-      if (false) { // !this.currentUser.hasSubmittedEmergencyContacts
+      if (!this.childrenHaveEmergencyContacts) {
         this.$router.push('/onboarding/emergency-contacts/' + this.eventId)
       }
     },
