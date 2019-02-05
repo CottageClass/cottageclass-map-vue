@@ -217,6 +217,7 @@ export function fetchCurrentUser (userId) {
     console.log('FETCH CURRENT USER SUCCESS')
     console.log(res)
     let normalizedData = normalize(res.data)
+    console.log('normalizedData', normalizedData)
     let user = normalizedData.user[userId].attributes
     user.hasAllRequiredFields = user.phone && user.latitude && user.longitude
     user.networkCode = 'brooklyn-events' // give everyone the new network code
@@ -226,6 +227,7 @@ export function fetchCurrentUser (userId) {
       let generateChild = function (aChildId) {
         let child = childrenById[aChildId].attributes
         child.id = aChildId
+        child.emergencyContacts = childrenById[aChildId].relationships.emergencyContacts.data
         child.firstName = capitalize(child.firstName)
         return child
       }

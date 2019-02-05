@@ -110,12 +110,15 @@ export default {
       return this.currentUser.children
     },
     childrenHaveEmergencyContacts: function () {
-      // add more logic here once parents can edit emergency contacts individually
-      if (this.children[0].emergencyContactsAttributes) {
-        return true
-      } else {
-        return false
+      // assumes if first child has them that they all do. not a safe assumption once we allow editing
+      let childHasAtLeastOneEmergencyContact = function (child) {
+        if (child.emergencyContacts && child.emergencyContacts.length > 0) {
+          return true
+        } else {
+          return false
+        }
       }
+      return this.currentUser.children.reduce((allChildrenSoFar, child) => allChildrenSoFar && childHasAtLeastOneEmergencyContact(child), true)
     },
     ...mapGetters(['currentUser'])
   },
