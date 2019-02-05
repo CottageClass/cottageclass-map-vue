@@ -1,7 +1,7 @@
 <template>
   <div class="events-list-wrapper">
     <LoadingSpinner v-if="awaitingEvents"/>
-    <p v-if="noEvents">sorry no events</p>
+    <p v-if="noEvents" v-html="noEventsMessage"></p>
     <div v-for="(event, index) in events">
       <div v-if="index === 0 || (formatDate(event.startsAt) !== formatDate(events[index - 1].startsAt))" class="event-date-section-tittle">
         <img src="@/assets/date-outline-white-oval.svg" alt="" class="image-264">
@@ -35,8 +35,8 @@ var moment = require('moment')
 export default {
   name: 'EventList',
   components: { EventListItem, LoadingSpinner },
-  props: ['events'],
-  data: () => {return {}},
+  props: ['events', 'noEventsMessage'],
+  data: () => { return {} },
   methods: {
     formatDate: function (date) {
       return moment(date).format('dddd, MMM Do')

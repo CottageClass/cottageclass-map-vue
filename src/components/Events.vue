@@ -16,7 +16,10 @@
         <option>20</option>
         <option>50</option>
       </select> miles</p>
-      <EventList :events="eventsWithinDistance" />
+      <EventList
+          :events="eventsWithinDistance"
+          :noEventsMessage="noEventsMessage"
+      />
     </div>
   </div>
 
@@ -60,7 +63,7 @@ export default {
           return moment(eventA.startsAt).diff(moment(eventB.startsAt))
         })
       }
-      return []
+      return null
     },
     eventsWithinDistance: function () {
       if (this.isAuthenticated && !!this.eventsByDate) {
@@ -69,6 +72,7 @@ export default {
         return this.eventsByDate
       }
     },
+    noEventsMessage: () => 'Sorry, there are no upcoming events in your area',
     ...mapGetters([
       'distanceFromCurrentUser', 'currentUser', 'isAuthenticated'
     ])
