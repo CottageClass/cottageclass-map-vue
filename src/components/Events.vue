@@ -72,7 +72,7 @@ export default {
         return this.eventsByDate
       }
     },
-    noEventsMessage: () => 'Sorry, there are no upcoming events in your area',
+    noEventsMessage: () => 'Sorry, there are no upcoming playdates in your area',
     ...mapGetters([
       'distanceFromCurrentUser', 'currentUser', 'isAuthenticated'
     ])
