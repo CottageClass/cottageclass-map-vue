@@ -242,6 +242,26 @@ export function fetchCurrentUser (userId) {
   })
 }
 
+/*
+ * CHILDREN
+ */
+
+export function submitEmergencyContacts (childId, arrayOfContacts) {
+  return Vue.axios.put(
+    `${process.env.BASE_URL_API}/api/user/children/${childId}`,
+    {
+      child:
+      {
+        'emergency_contacts_attributes': arrayOfContacts
+      }
+    }).then(res => {
+    console.log('SUBMIT EMERGENCY CONTACTS SUCCESS', res)
+  }).catch(err => {
+    console.log('SUBMIT EMERGENCY CONTACTS FAILURE', childId, arrayOfContacts)
+    throw err
+  })
+}
+
 // backend requires user to be an admin
 export function fetchAllUsers () {
   return Vue.axios.get(

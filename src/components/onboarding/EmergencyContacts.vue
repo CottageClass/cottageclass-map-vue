@@ -39,6 +39,8 @@ import ManyFormFieldGroups from '@/components/onboarding/ManyFormFieldGroups.vue
 import Question from '@/components/onboarding/Question.vue'
 import Nav from '@/components/onboarding/Nav.vue'
 import OnboardingStyleWrapper from '@/components/onboarding/OnboardingStyleWrapper.vue'
+import * as api from '@/utils/api.js'
+import { mapGetters } from 'vuex'
 
 export default {
   name: 'EmergencyContacts',
@@ -49,17 +51,27 @@ export default {
       nextButtonState: 'next',
       labels: ['Full Name', 'Phone Number', 'Relationship to Child'],
       types: ['text', 'tel', 'text'],
-      names: ['name', 'phone', 'relationship'],
+      names: ['name', 'phone_number', 'relationship'],
       showError: false,
       error: 'This is an error'
     }
   },
+  computed: {
+    children: function () {
+      return this.currentUser.children
+    },
+    ...mapGetters(['currentUser'])
+  },
   methods: {
     nextStep: function () {
       console.log('next step')
+      this.submitEmergencyContactsForChildren()
     },
     prevStep: function () {
       console.log('previous step')
+    },
+    submitEmergencyContactsForChildren: function () {
+      this.children.forEach(child => api.submitEmergencyContacts(child.id, this.contacts))
     }
   }
 }
