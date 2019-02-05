@@ -39,13 +39,13 @@ export default {
           return moment(eventA.startsAt).diff(moment(eventB.startsAt))
         })
       }
-      return []
+      return null
     },
     myEventsByDate: function () {
       if (this.eventsByDate) {
         return this.eventsByDate.filter(event => this.currentUser.id === event.hostId)
       }
-      return []
+      return null
     },
     ...mapGetters(['currentUser'])
   },

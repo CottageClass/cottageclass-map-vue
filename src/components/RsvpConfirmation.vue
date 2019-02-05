@@ -16,7 +16,7 @@
 
 <!-- Show loading indicator until we can show the event info we're confirming.  there are and there is more than one. If there is an error, show the error only. -->
 
-  <OAuthCallback v-if="!event && !(error && showError)"/>
+  <LoadingSpinner v-if="!event && !(error && showError)"/>
 
   <div v-if="!!event" class="onb-content-container">
     <div class="onb-top-content-container">
@@ -76,13 +76,13 @@
 import * as api from '@/utils/api.js'
 import EventListItem from '@/components/EventListItem.vue'
 import Nav from '@/components/onboarding/Nav.vue'
-import OAuthCallback from '@/components/OAuthCallback.vue'
+import LoadingSpinner from '@/components/LoadingSpinner.vue'
 import ErrorMessage from '@/components/onboarding/ErrorMessage.vue'
 import OnboardingStyleWrapper from '@/components/onboarding/OnboardingStyleWrapper.vue'
 
 export default {
   name: 'RsvpConfirmation',
-  components: { EventListItem, Nav, OAuthCallback, ErrorMessage, OnboardingStyleWrapper },
+  components: { EventListItem, Nav, LoadingSpinner, ErrorMessage, OnboardingStyleWrapper },
   data () {
     return {
       eventId: this.$route.params.eventId,
