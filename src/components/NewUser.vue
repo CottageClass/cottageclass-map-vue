@@ -7,8 +7,8 @@
     v-on:userAlreadyOnboarded="proceedToHomePage"
     v-on:authenticateFacebook="authenticate('facebook')"
      />
-    <DirectLogin
-    v-if="activeScreen ==='directLogin' && step === 0"
+    <LoginWithEmail
+    v-if="activeScreen ==='loginWithEmail' && step === 0"
     v-on:userNotYetOnboarded="nextStep"
     v-on:activateScreen="activateScreen"
     v-on:userAlreadyOnboarded="proceedToHomePage"
@@ -71,8 +71,6 @@
       />
       <PetsDescription v-if="step === 12" v-model="petsDescription" />
       <HouseRules v-if="step === 13" v-model="houseRules" />
-      <!-- OAuthCallback is just used for the loading animation -->
-      <OAuthCallback v-if="step > lastStep && !error" />
   </OnboardingStyleWrapper>
 
    <!-- close desktop wrapper -->
@@ -86,7 +84,7 @@
 import Nav from '@/components/onboarding/Nav.vue'
 import ErrorMessage from '@/components/onboarding/ErrorMessage.vue'
 import Login from '@/components/onboarding/Login.vue'
-import DirectLogin from '@/components/onboarding/DirectLogin.vue'
+import LoginWithEmail from '@/components/onboarding/LoginWithEmail.vue'
 import Signup from '@/components/onboarding/Signup.vue'
 import Location from '@/components/onboarding/Location.vue'
 import Phone from '@/components/onboarding/Phone.vue'
@@ -101,7 +99,6 @@ import EventDate from '@/components/onboarding/EventDate.vue'
 import MaxChildren from '@/components/onboarding/MaxChildren.vue'
 import YesOrNo from '@/components/onboarding/YesOrNo.vue'
 import RSVPPrompt from '@/components/onboarding/RSVPPrompt.vue'
-import OAuthCallback from '@/components/OAuthCallback.vue'
 import Invite from '@/components/onboarding/Invite.vue'
 import OnboardingStyleWrapper from '@/components/onboarding/OnboardingStyleWrapper.vue'
 import * as Token from '@/utils/tokens.js'
@@ -119,7 +116,7 @@ export default {
   components: {
     Nav,
     Login,
-    DirectLogin,
+    LoginWithEmail,
     Signup,
     Location,
     Phone,
@@ -133,7 +130,6 @@ export default {
     PetsDescription,
     YesOrNo,
     MaxChildren,
-    OAuthCallback,
     Invite,
     OnboardingStyleWrapper,
     ErrorMessage,
@@ -230,7 +226,7 @@ export default {
         (this.step === 11 && !this.hasPets.isTrue)) {
         this.setStep(this.step + 2)
       } else {
-        this.setStep(this.step = this.step + 1)
+        this.setStep(this.step + 1)
       }
     },
     setStep: function (destinationStep) {

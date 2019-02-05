@@ -53,7 +53,7 @@
           <img src="@/assets/add.svg" width="24" height="24" alt="">
           <div class="fb-button-text">Create your account</div></a>
           <div v-if="facebookLogin" class="use-password-text">Or <a href="#" class="links" @click="$emit('activateScreen', 'signup')">use a password instead</a></div>
-          <div v-else class="use-password-text">Or <a href="#" class="links" @click="$emit('activateScreen', 'directLogin')">sign in now</a></div>
+          <div v-else class="use-password-text">Or <a href="#" class="links" @click="$emit('activateScreen', 'loginWithEmail')">sign in now</a></div>
           <div class="terms-text">By signing in you agree to our <a href="https://cottageclass.com/terms-of-service">Terms of Service</a> and <a href="https://cottageclass.com/privacy-policy">Privacy Policy</a>.</div>
         </div>
       </div>

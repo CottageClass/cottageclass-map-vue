@@ -26,7 +26,11 @@
               class="button-text splash-button w-inline-block facebook-sign-in-button"
               @click="$emit('authenticateFacebook')"
               >Continue with Facebook</button>
-              <p class="onb-paragraph-subheading-2"><span v-if="showFacebookLogin">Or enter</span><span v-else>Enter</span> your information below. Already have an account? <a @click="$emit('activateScreen', 'directLogin')">Sign in here</a>.</p>
+              <p class="onb-paragraph-subheading-2">
+                <span v-if="showFacebookLogin">Or enter</span>
+                <span v-else>Enter</span> your information below. Already have an account?
+                <a @click="$emit('activateScreen', 'loginWithEmail')">Sign in here</a>.
+              </p>
             </div>
           </div>
           <div class="onb-child-info-container">
@@ -102,7 +106,7 @@
           <h1 class="onb-heading-large">Registration complete!</h1>
           <p class="onb-paragraph-subheading-2">Sign in to continue.</p>
         </div>
-        <button @click="$emit('activateScreen', 'directLogin')" class="button-text splash-button w-inline-block">Sign in</button>
+        <button @click="$emit('activateScreen', 'loginWithEmail')" class="button-text splash-button w-inline-block">Sign in</button>
       </div>
     </div>
   </div>
