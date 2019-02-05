@@ -6,8 +6,9 @@
       <div class="content-container-4 w-container">
         <h1 class="h1-display">My RSVP'ed events</h1>
         <EventList
-        :events="events"
-        :isAuthenticated="isAuthenticated"/>
+            :events="events"
+            :noEventsMessage="noEventsMessage"
+        />
       </div>
     </div>
     <Footer />
@@ -35,6 +36,7 @@ export default {
     }
   },
   computed: {
+    noEventsMessage: () => 'You aren\'t scheduled for any playdates.  Check out some <a href="home">upcoming playdates near you</a>.',
     ...mapGetters(['currentUser', 'isAuthenticated'])
   },
   methods: {

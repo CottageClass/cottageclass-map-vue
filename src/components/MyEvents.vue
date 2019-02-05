@@ -5,7 +5,10 @@
       <div class="divider-2px"></div>
       <div class="content-container-4 w-container">
         <h1 class="h1-display">My Playdates</h1>
-        <EventList :events="myEventsByDate"/>
+        <EventList
+            :events="myEventsByDate"
+            :noEventsMessage="noEventsMessage"
+        />
       </div>
     </div>
     <Footer />
@@ -46,6 +49,9 @@ export default {
         return this.eventsByDate.filter(event => this.currentUser.id === event.hostId)
       }
       return null
+    },
+    noEventsMessage: () => {
+      return 'Sorry, you don\'t have any scheduled playdates'
     },
     ...mapGetters(['currentUser'])
   },
