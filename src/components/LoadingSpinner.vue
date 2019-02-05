@@ -43,7 +43,6 @@ export default {
 <style lang="scss" scoped>
   .onb-body
   {
-    background-color: #1d8be7;
     height: 100vh;
   }
   .loading-container

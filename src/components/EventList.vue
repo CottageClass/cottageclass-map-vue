@@ -1,5 +1,7 @@
 <template>
   <div class="events-list-wrapper">
+    <LoadingSpinner v-if="awaitingEvents"/>
+    <p v-if="noEvents">sorry no events</p>
     <div v-for="(event, index) in events">
       <div v-if="index === 0 || (formatDate(event.startsAt) !== formatDate(events[index - 1].startsAt))" class="event-date-section-tittle">
         <img src="@/assets/date-outline-white-oval.svg" alt="" class="image-264">
@@ -26,14 +28,15 @@
 
 <script>
 import EventListItem from '@/components/EventListItem.vue'
-import * as api from '@/utils/api.js'
+import LoadingSpinner from '@/components/LoadingSpinner.vue'
 import { mapGetters } from 'vuex'
 
 var moment = require('moment')
 export default {
   name: 'EventList',
-  components: { EventListItem },
+  components: { EventListItem, LoadingSpinner },
   props: ['events'],
+  data: () => {return {}},
   methods: {
     formatDate: function (date) {
       return moment(date).format('dddd, MMM Do')
@@ -42,7 +45,15 @@ export default {
       return moment(0, 'HH').diff(date, 'days') === 0
     }
   },
-  computed: mapGetters(['currentUser', 'distanceFromCurrentUser', 'isAuthenticated'])
+  computed: {
+    awaitingEvents: function () {
+      return this.events === null
+    },
+    noEvents: function () {
+      return this.events !== null && this.events.length === 0
+    },
+    ...mapGetters(['currentUser', 'distanceFromCurrentUser', 'isAuthenticated'])
+  }
 }
 </script>
 
