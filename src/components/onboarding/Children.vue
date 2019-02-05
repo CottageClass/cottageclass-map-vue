@@ -25,7 +25,7 @@ export default {
   data () {
     return {
       children: this.value.list,
-      labels: ['Full Name', 'Birthday', 'School Name'],
+      labels: ['First Name', 'Birthday', 'School Name'],
       types: ['text', 'date', 'text'],
       names: ['firstName', 'birthday', 'schoolName'],
       placeholders: ['First Name', 'MM / DD / YYYY', 'Name of School'],
