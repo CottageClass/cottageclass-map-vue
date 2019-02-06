@@ -9,12 +9,12 @@
       <img src="@/assets/remove.svg" width="24" height="24" alt="" class="image-6"></a>
     </div>
     <FormFieldAndLabel
-      v-for="(name, index) in names"
-      v-model="objectOfFormValues[name]"
-      :label="labels[index]"
-      :placeholder="placeholders[index]"
-      :key="name"
-      :type="types[index]"
+      v-for="fieldGroup in fieldGroups"
+      v-model="objectOfFormValues[fieldGroup.name]"
+      :label="fieldGroup.label"
+      :placeholder="fieldGroup.placeholder"
+      :key="fieldGroup.name"
+      :type="fieldGroup.type"
     />
   </span>
 </template>
@@ -25,6 +25,7 @@ export default {
   name: 'FormFieldGroup',
   components: { FormFieldAndLabel },
   props: [
+    'fieldGroups',
     'value', // an array of form entry values from v-model
     'labels', // an array of corresponding field labels
     'names', // an array of key names
