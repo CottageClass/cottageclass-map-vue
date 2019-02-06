@@ -64,14 +64,15 @@ export default {
       isAuthenticated: this.$auth.isAuthenticated()
     }
   },
-  mounted: function () {
+  created: function () {
     this.redirectToSignupIfNotAuthenticated()
     this.redirectToOnboardingIfNotOnboarded()
     if (!this.emergencyInfoJustCompleted) {
-      console.log('complete?', this.$route.params.emergencyInfoComplete)
       this.redirectToEmergencyContactsIfNone()
     }
     this.showErrorIfUserHasNoChildren()
+  },
+  mounted: function () {
     // get data about the current event to determine max attendees.
     this.fetchEventInformation()
   },
