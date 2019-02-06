@@ -5,15 +5,15 @@
         v-for="(object, index) in objects"
         class="onb-child-group-2">
           <FormFieldGroup
-          :names="names"
-          :key="objects[index].key"
-          :labels="labels"
-          :placeholders="placeholders"
-          :heading="headingWord ? headingWord + ' ' + (index + 1) : headings ? headings[index] : ''"
-          :types="types"
-          v-model="objects[index]"
-          @remove="removeGroup(index)"
-          :showRemoveButton="addAndRemove"
+            :names="names"
+            :key="objects[index].key"
+            :labels="labels"
+            :placeholders="placeholders"
+            :heading="headingWord ? headingWord + ' ' + (index + 1) : headings ? headings[index] : ''"
+            :types="types"
+            v-model="objects[index]"
+            @remove="removeGroup(index)"
+            :showRemoveButton="addAndRemove"
           />
         </div>
       </form>

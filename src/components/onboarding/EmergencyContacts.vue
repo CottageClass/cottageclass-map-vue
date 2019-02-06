@@ -1,37 +1,27 @@
 <template>
   <OnboardingStyleWrapper styleIs="onboarding">
-
-    <!-- wrapper for desktop screens -->
-
     <div class="onb-body">
       <div class="body">
         <div class="content-wrapper">
-
-  <!-- nav -->
-
-      <Nav :button="nextButtonState" @next="nextStep" @prev="prevStep" />
-
-  <!-- error message -->
-
-      <ErrorMessage v-if="error && showError" :text="error" />
-
-    <Question
-  title="Emergency Contacts"
-  subtitle="Please provide at least one emergency contact. If possible, include your children's primary care physician.">
-    <ManyFormFieldGroups
-    :labels="labels"
-    :names="names"
-    :placeholders="labels"
-    :types="types"
-    headingWord="Contact"
-    v-model="contacts"
-    addAndRemove="true"
-    />
-  </Question>
-</div>
-</div>
-</div>
-</OnboardingStyleWrapper>
+          <Nav :button="nextButtonState" @next="nextStep" @prev="prevStep" />
+          <ErrorMessage v-if="error && showError" :text="error" />
+          <Question
+            title="Emergency Contacts"
+            subtitle="Please provide at least one emergency contact. If possible, include your children's primary care physician.">
+            <ManyFormFieldGroups
+              :labels="labels"
+              :names="names"
+              :placeholders="labels"
+              :types="types"
+              headingWord="Contact"
+              v-model="contacts"
+              addAndRemove="true"
+            />
+          </Question>
+        </div>
+      </div>
+    </div>
+  </OnboardingStyleWrapper>
 </template>
 
 <script>

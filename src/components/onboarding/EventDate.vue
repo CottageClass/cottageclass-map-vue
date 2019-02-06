@@ -1,30 +1,30 @@
 <template>
-  <Question 
-  title="Choose a day for your monthly activity"
-  subtitle="Activities repeat every 4 weeks on the same weekday, unless you change or cancel, so please pick a day when you're usually available. These are the days we need most:">
-   <MultipleChoice 
-   type="radio" 
-   v-model="dateSelected" 
-   :labelsAndOrder="labelsAndOrder"
-   :choices="dates"/>
+  <Question
+    title="Choose a day for your monthly activity"
+    subtitle="Activities repeat every 4 weeks on the same weekday, unless you change or cancel, so please pick a day when you're usually available. These are the days we need most:">
+    <MultipleChoice
+      type="radio"
+      v-model="dateSelected"
+      :labelsAndOrder="labelsAndOrder"
+      :choices="dates" />
     <div
-    class="other-date"
-    v-if="otherSelected">
-    <p class="describe-label">
-      Choose another date:
-    </p>
-    <input
-    type="date"
-    class="basic-text-field w-input"
-    v-model="otherDate">
-  </div>
-</Question>
+      class="other-date"
+      v-if="otherSelected">
+      <p class="describe-label">
+        Choose another date:
+      </p>
+      <input
+        type="date"
+        class="basic-text-field w-input"
+        v-model="otherDate">
+    </div>
+  </Question>
 </template>
 
 <script>
-var moment = require('moment')
 import Question from '@/components/onboarding/Question.vue'
 import MultipleChoice from '@/components/onboarding/MultipleChoice.vue'
+var moment = require('moment')
 
 export default {
   name: 'EventDate',
@@ -51,7 +51,7 @@ export default {
   },
   computed: {
     labelsAndOrder: function () {
-      return this.dates.map(date => [date, this.displayDate(date)]) 
+      return this.dates.map(date => [date, this.displayDate(date)])
     },
     err: function () {
       if (!this.dateSelected || (this.dateSelected === 'Other' && !this.dateIsValid(this.otherDate))) {

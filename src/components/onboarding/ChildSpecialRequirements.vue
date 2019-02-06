@@ -1,36 +1,26 @@
 <template>
   <OnboardingStyleWrapper styleIs="onboarding">
-
-    <!-- wrapper for desktop screens -->
-
     <div class="onb-body">
       <div class="body">
         <div class="content-wrapper">
-
-  <!-- nav -->
-
-      <Nav :button="nextButtonState" @next="nextStep" @prev="prevStep" />
-
-  <!-- error message -->
-
-      <ErrorMessage v-if="error && showError" :text="error" />
-
-    <Question
-  title="Allergies & special requirements"
-  subtitle="Please enter any allergies, dietary restrictions, or special needs that you would like to share with the host.">
-    <ManyFormFieldGroups
-    :labels="labels"
-    :names="names"
-    :placeholders="placeholders"
-    :types="types"
-    :headings="headings"
-    v-model="childrenSpecialRequirements"
-    />
-  </Question>
-</div>
-</div>
-</div>
-</OnboardingStyleWrapper>
+          <Nav :button="nextButtonState" @next="nextStep" @prev="prevStep" />
+          <ErrorMessage v-if="error && showError" :text="error" />
+          <Question
+            title="Allergies & special requirements"
+            subtitle="Please enter any allergies, dietary restrictions, or special needs that you would like to share with the host.">
+            <ManyFormFieldGroups
+              :labels="labels"
+              :names="names"
+              :placeholders="placeholders"
+              :types="types"
+              :headings="headings"
+              v-model="childrenSpecialRequirements"
+            />
+          </Question>
+        </div>
+      </div>
+    </div>
+  </OnboardingStyleWrapper>
 </template>
 
 <script>

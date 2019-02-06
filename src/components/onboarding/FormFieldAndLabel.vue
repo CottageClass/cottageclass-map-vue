@@ -1,18 +1,18 @@
 <template>
-<span>
-  <label
-  :for="name"
-  class="onb-field-label"
-  >{{ label }}
-  </label>
-  <input
-  :type="type || 'text'"
-  class="name-text-field w-input"
-  :name="name"
-  :placeholder="placeholder"
-  :id="name"
-  v-model="fieldValue" />
-</span>
+  <span>
+    <label
+      :for="name"
+      class="onb-field-label"
+    >{{ label }}
+    </label>
+    <input
+      :type="type || 'text'"
+      class="name-text-field w-input"
+      :name="name"
+      :placeholder="placeholder"
+      :id="name"
+      v-model="fieldValue" />
+  </span>
 </template>
 
 <script>

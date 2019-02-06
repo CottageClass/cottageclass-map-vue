@@ -1,15 +1,15 @@
 <template>
   <Question
-  title="Child Information"
-  subtitle="We need some basic info about your children. Their ages will appear on your public profile, but only hosts of events you RSVP to will see their names.">
+    title="Child Information"
+    subtitle="We need some basic info about your children. Their ages will appear on your public profile, but only hosts of events you RSVP to will see their names.">
     <ManyFormFieldGroups
-    :labels="labels"
-    :names="names"
-    :placeholders="labels"
-    :types="types"
-    headingWord="Child"
-    v-model="children"
-    addAndRemove="true"
+      :labels="labels"
+      :names="names"
+      :placeholders="labels"
+      :types="types"
+      headingWord="Child"
+      v-model="children"
+      addAndRemove="true"
     />
     </Question>
 </template>

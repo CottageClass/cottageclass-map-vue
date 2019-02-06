@@ -7,9 +7,9 @@
           <Nav :button="nextButtonState" @next="nextStep" @prev="prevStep" />
           <ErrorMessage v-if="error && showError" :text="error" />
           <YesOrNo
-          v-model="childHasSpecialNeeds"
-          question="Allergies and Special Requirements"
-          description="Do any of your children have allergies, dietary restrictions, or special needs that you would like to share with the host?" />
+            v-model="childHasSpecialNeeds"
+            question="Allergies and Special Requirements"
+            description="Do any of your children have allergies, dietary restrictions, or special needs that you would like to share with the host?" />
         </div>
       </div>
     </div>

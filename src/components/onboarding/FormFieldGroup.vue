@@ -1,22 +1,22 @@
 <template>
   <span>
-  <div class="onb-group-header">
-    <h2 class="onb-child-group-heading">{{ heading }}</h2>
-    <a
-    v-if="showRemoveButton"
-    @click="$emit('remove')"
-    class="onb-button-delete-child w-inline-block">
-    <img src="@/assets/remove.svg" width="24" height="24" alt="" class="image-6"></a>
-  </div>
-  <FormFieldAndLabel
-  v-for="(name, index) in names"
-  v-model="objectOfFormValues[name]"
-  :label="labels[index]"
-  :placeholder="placeholders[index]"
-  :key="name"
-  :type="types[index]"
-  />
-</span>
+    <div class="onb-group-header">
+      <h2 class="onb-child-group-heading">{{ heading }}</h2>
+      <a
+        v-if="showRemoveButton"
+        @click="$emit('remove')"
+        class="onb-button-delete-child w-inline-block">
+      <img src="@/assets/remove.svg" width="24" height="24" alt="" class="image-6"></a>
+    </div>
+    <FormFieldAndLabel
+      v-for="(name, index) in names"
+      v-model="objectOfFormValues[name]"
+      :label="labels[index]"
+      :placeholder="placeholders[index]"
+      :key="name"
+      :type="types[index]"
+    />
+  </span>
 </template>
 
 <script>
