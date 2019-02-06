@@ -154,7 +154,7 @@ export default new Router({
       props: true
     },
     {
-      path: '/rsvp/:eventId/:emergencyInfoComplete?',
+      path: '/rsvp/:eventId',
       name: 'RsvpInfoCollection',
       component: RsvpInfoCollection
     }

@@ -152,7 +152,10 @@ export default {
     },
     redirectToEmergencyContactsIfNone: function () {
       if (!this.childrenHaveEmergencyContacts) {
-        this.$router.push('/onboarding/emergency-contacts/' + this.eventId)
+        this.$router.push({
+          name: 'EmergencyContacts',
+          params: { eventId: this.eventId }
+        })
       }
     },
     calculateAge: function (birthdate) {

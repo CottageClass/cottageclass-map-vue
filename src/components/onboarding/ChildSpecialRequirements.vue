@@ -76,7 +76,15 @@ export default {
   methods: {
     nextStep: function () {
       this.submitChildSpecialRequirements()
-      this.$router.push('/rsvp/' + this.eventId + '/emergency-info-complete')
+      this.$router.push({
+        name: 'RsvpInfoCollection',
+        params: {
+          eventId: this.eventId
+        },
+        query: {
+          emergencyInfoComplete: 'true'
+        }
+      })
     },
     prevStep: function () {
       this.$router.go(-1)

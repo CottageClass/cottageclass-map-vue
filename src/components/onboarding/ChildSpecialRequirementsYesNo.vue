@@ -38,9 +38,22 @@ export default {
       if (this.childHasSpecialNeeds.err) {
         this.showError = true
       } else if (this.childHasSpecialNeeds.isTrue) {
-        this.$router.push('/onboarding/child-special-requirements-2/' + this.eventId)
+        this.$router.push({
+          name: 'ChildSpecialRequirements',
+          params: {
+            eventId: this.eventId
+          }
+        })
       } else {
-        this.$router.push('/rsvp/' + this.eventId + '/emergency-info-complete')
+        this.$router.push({
+          name: 'RsvpInfoCollection',
+          params: {
+            eventId: this.eventId
+          },
+          query: {
+            emergencyInfoComplete: 'true'
+          }
+        })
       }
     },
     prevStep: function () {
