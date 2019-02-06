@@ -9,10 +9,7 @@
             title="Allergies & special requirements"
             subtitle="Please enter any allergies, dietary restrictions, or special needs that you would like to share with the host.">
             <ManyFormFieldGroups
-              :labels="labels"
-              :names="names"
-              :placeholders="placeholders"
-              :types="types"
+              :fieldGroups="fieldGroups"
               :headings="headings"
               v-model="childrenSpecialRequirements"
             />
@@ -36,10 +33,26 @@ export default {
   components: { ManyFormFieldGroups, Nav, OnboardingStyleWrapper, Question },
   data () {
     return {
-      labels: ['Allergies', 'Dietary Restrictions', 'Special Needs'],
-      placeholders: ['(Leave blank if none)', '(Leave blank if none)', '(Leave blank if none)'],
-      types: ['text', 'text', 'text'],
-      names: ['allergies', 'dietaryRestrictions', 'specialNeeds'],
+      fieldGroups: [
+        {
+          label: 'Allergies',
+          placeholder: '(Leave blank if none)',
+          type: 'text',
+          name: 'allergies'
+        },
+        {
+          label: 'Dietary Restrictions',
+          placeholder: '(Leave blank if none)',
+          type: 'text',
+          name: 'dietaryRestrictions'
+        },
+        {
+          label: 'Special Needs',
+          placeholder: '(Leave blank if none)',
+          type: 'text',
+          name: 'specialNeeds'
+        }
+      ],
       showError: false,
       eventId: this.$route.params.eventId,
       error: 'This is an error',

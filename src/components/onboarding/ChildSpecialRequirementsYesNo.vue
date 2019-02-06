@@ -1,6 +1,5 @@
 <template>
   <OnboardingStyleWrapper styleIs="onboarding">
-    <!-- wrapper for desktop screens -->
     <div class="onb-body">
       <div class="body">
         <div class="content-wrapper">

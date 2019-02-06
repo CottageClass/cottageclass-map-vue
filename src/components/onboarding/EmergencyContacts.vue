@@ -40,12 +40,28 @@ export default {
     return {
       contacts: [],
       nextButtonState: 'next',
-      labels: ['Full Name', 'Phone Number', 'Relationship to Child'],
-      types: ['text', 'tel', 'text'],
-      names: ['name', 'phoneNumber', 'relationship'],
+      fieldGroups: [
+        {
+          label: 'Full Name',
+          placeholder: 'Full Name',
+          type: 'text',
+          name: 'name'
+        },
+        {
+          label: 'Phone Number',
+          placeholder: 'Phone Number',
+          type: 'tel',
+          name: 'phoneNumber'
+        },
+        {
+          label: 'Relationship to Child',
+          placeholder: 'Relationship to Child',
+          type: 'text',
+          name: 'relationship'
+        }],
       showError: false,
       error: 'To be safe, please provide your host with at least one emergency contact.',
-      eventId: this.$route.params.eventId,
+      eventId: this.$route.params.eventId
     }
   },
   computed: {
