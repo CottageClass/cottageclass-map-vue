@@ -66,7 +66,12 @@ export default {
       }
     },
     prevStep: function () {
-      this.$router.go(-1)
+      this.$router.push({
+        name: 'EventPage',
+        params: {
+          id: this.eventId
+        }
+      })
     },
     submitEmergencyContactsForChildren: function () {
       this.children.forEach(child => api.submitEmergencyContacts(child.id, this.contacts))
