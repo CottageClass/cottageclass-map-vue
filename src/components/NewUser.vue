@@ -146,7 +146,7 @@ export default {
       location: {},
       phone: {},
       children: {
-        list: [{ firstName: null, birthday: null, schoolName: null }],
+        list: [],
         err: 'skippable'
       },
       blurb: {

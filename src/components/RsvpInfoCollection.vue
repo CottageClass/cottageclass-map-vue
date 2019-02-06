@@ -6,16 +6,10 @@
     <div class="onb-body">
       <div class="body">
         <div class="content-wrapper">
-
-  <!-- nav -->
-
   <Nav
   :button="nextButtonState"
   @next="nextStep"
   @prev="$router.go(-1)" />
-
-  <!-- error message -->
-
   <ErrorMessage v-if="error" :text="error" />
 
 <!-- Show loading indicator until we know how many children there are. If there is an error, show the error only. -->
@@ -24,18 +18,16 @@
 
 <!-- Once we have child and event information, ask user which child/children they want to RSVP -->
 
-  <div v-if="allInformationLoaded" class="onb-content-container">
-    <div class="onb-top-content-container">
-      <h1 class="onb-heading-large">Which children would you like to RSVP?</h1>
-      <p
-      class="onb-paragraph-subheading-2"
-      v-if="Number.isInteger(spotsRemaining)">There <span v-if="spotsRemaining === 1">is</span><span v-else>are</span> {{ spotsRemaining }} spot<span v-if="spotsRemaining !== 1">s</span> remaining.</p>
-    </div>
+  <Question
+  v-if="allInformationLoaded"
+  title="Which children would you like to RSVP?"
+  :subtitle="spotsRemainingPhrase"
+  >
    <MultipleChoice
    type="checkbox"
    v-model="childrenSelected"
    :labelsAndOrder="labelsAndOrder"/>
-  </div>
+ </Question>
 </div>
 </div>
 </div>
@@ -48,6 +40,7 @@ import * as api from '@/utils/api.js'
 import * as utils from '@/utils/utils.js'
 import Nav from '@/components/onboarding/Nav.vue'
 import ErrorMessage from '@/components/onboarding/ErrorMessage.vue'
+import Question from '@/components/onboarding/Question.vue'
 import MultipleChoice from '@/components/onboarding/MultipleChoice.vue'
 import OnboardingStyleWrapper from '@/components/onboarding/OnboardingStyleWrapper.vue'
 import sheetsu from 'sheetsu-node'
@@ -60,25 +53,32 @@ var client = sheetsu({ address: 'https://sheetsu.com/apis/v1.0su/62cd725d6088' }
 
 export default {
   name: 'RsvpInfoCollection',
-  components: { Nav, LoadingSpinner, ErrorMessage, MultipleChoice, OnboardingStyleWrapper },
+  components: { Nav, LoadingSpinner, ErrorMessage, MultipleChoice, OnboardingStyleWrapper, Question },
   data () {
     return {
-      children: [],
       childrenSelected: [],
       error: '',
       eventId: this.$route.params.eventId,
       event: false,
+      emergencyInfoJustCompleted: this.$route.params.emergencyInfoComplete === 'emergency-info-complete',
       isAuthenticated: this.$auth.isAuthenticated()
     }
   },
   mounted: function () {
     this.redirectToSignupIfNotAuthenticated()
-    // get info about current user to display list of children
-    this.fetchUserInformation()
+    this.redirectToOnboardingIfNotOnboarded()
+    if (!this.emergencyInfoJustCompleted) {
+      console.log('complete?', this.$route.params.emergencyInfoComplete)
+      this.redirectToEmergencyContactsIfNone()
+    }
+    this.showErrorIfUserHasNoChildren()
     // get data about the current event to determine max attendees.
     this.fetchEventInformation()
   },
   computed: {
+    spotsRemainingPhrase: function () {
+      return 'There ' + (this.spotsRemaining === 1 ? 'is' : 'are') + ' ' + this.spotsRemaining + ' spot' + (this.spotsRemaining !== 1 ? 's' : '') + ' remaining.'
+    },
     labelsAndOrder: function () {
       return this.children.map(child => [child.id, child.firstName + ', ' + this.calculateAge(child.birthday)])
     },
@@ -110,13 +110,24 @@ export default {
     notificationBackToUser: function () {
       return 'Congratulations ' + this.currentUser.firstName + '! You\'ve booked a playdate with ' + this.event.hostFirstName + ' for ' + this.guestChildrenNamesAgesFormatted + ' on ' + this.eventDateFormattedMonthDay + '. We\'ll email you shortly to confirm your RSVP.'
     },
+    children: function () {
+      return this.currentUser.children
+    },
+    childrenHaveEmergencyContacts: function () {
+      // assumes if first child has them that they all do. not a safe assumption once we allow editing
+      let childHasAtLeastOneEmergencyContact = function (child) {
+        if (child.emergencyContacts && child.emergencyContacts.length > 0) {
+          return true
+        } else {
+          return false
+        }
+      }
+      return this.currentUser.children.reduce((allChildrenSoFar, child) => allChildrenSoFar && childHasAtLeastOneEmergencyContact(child), true)
+    },
     ...mapGetters(['currentUser'])
   },
   methods: {
-    fetchUserInformation: function () {
-      this.children = this.currentUser.children
-      this.redirectToOnboardingIfNotOnboarded()
-      // if we don't have children for this user (which should never be true) show an error. (Todo: let user enter child info here in this case.)
+    showErrorIfUserHasNoChildren: function () {
       if (!this.children || this.children.length === 0) {
         this.error = 'Sorry, but we cannot retrieve your children\'s information. Are you sure you have signed in? To resolve this, please email us at: contact@cottageclass.com.'
       }
@@ -136,6 +147,11 @@ export default {
         this.$router.push('/')
       } else {
         console.log('user already onboarded, not redirecting')
+      }
+    },
+    redirectToEmergencyContactsIfNone: function () {
+      if (!this.childrenHaveEmergencyContacts) {
+        this.$router.push('/onboarding/emergency-contacts/' + this.eventId)
       }
     },
     calculateAge: function (birthdate) {

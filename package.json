@@ -27,6 +27,7 @@
     "heroku-ssl-redirect": "0.0.4",
     "json-api-normalizer": "^0.4.14",
     "libphonenumber-js": "^1.5.1",
+    "lodash": "^4.17.11",
     "moment": "^2.22.2",
     "newrelic": "^5.1.0",
     "node-sass": "^4.10.0",
