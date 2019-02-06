@@ -27,6 +27,10 @@
     </span>
  </template>
 <script>
+/*
+ * This component is for when you need multiple forms that collect identical information, like child info, or emergency contacts. It lets you determine the number of forms, or (if addAndRemove === true) it lets the user add them ad hoc depending on, say, how many kids they have or contacts they want to add.
+*/
+
 import FormFieldGroup from '@/components/onboarding/FormFieldGroup.vue'
 var _ = require('lodash/core')
 
