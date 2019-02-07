@@ -23,9 +23,14 @@
      />
     <Invite
     v-if="activeScreen === 'inviteOthers'"
+    v-on:activateScreen="activateScreen"
     :eventData="createdEventData"
-    :currentUser="currentUser"
     @prev="backFromInviteStep"
+    />
+    <InviteExistingUsers
+    v-if="activeScreen === 'inviteExistingUsers'"
+    :eventData="createdEventData"
+    @prev="backFromInviteExistingStep"
     />
     <RSVPPrompt
     v-on:activateScreen="activateScreen"
@@ -100,6 +105,7 @@ import MaxChildren from '@/components/onboarding/MaxChildren.vue'
 import YesOrNo from '@/components/onboarding/YesOrNo.vue'
 import RSVPPrompt from '@/components/onboarding/RSVPPrompt.vue'
 import Invite from '@/components/onboarding/Invite.vue'
+import InviteExistingUsers from '@/components/onboarding/InviteExistingUsers.vue'
 import OnboardingStyleWrapper from '@/components/onboarding/OnboardingStyleWrapper.vue'
 import * as Token from '@/utils/tokens.js'
 import * as api from '@/utils/api.js'
@@ -133,7 +139,8 @@ export default {
     Invite,
     OnboardingStyleWrapper,
     ErrorMessage,
-    RSVPPrompt
+    RSVPPrompt,
+    InviteExistingUsers
   },
   data () {
     return {
@@ -262,13 +269,6 @@ export default {
    * - sends code to backend to exchange for access_token
    * - backend fetches access_token, stores it in DB, and sends back JWT for user
    * - VueAuthenticate stores JWT for future API access authorization
-   */
-
-      /* TODO: Refactor front and backend to authenticate via the following:
-   * - use FB library to obtain access token and store in cookies
-   * - send FB access_token to backend
-   * - backend decodes token using Koala, finds user by fbId or email, and sends back JWT for future API access
-   * - VueAuthenticate or other JWT auth library stores JWT token in localStorage or otherwise for us
    */
 
       // store value of this to access this.$emit during callback
