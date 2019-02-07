@@ -262,6 +262,9 @@ export default {
       this.step = this.lastStep
       this.activeScreen = null
     },
+    backFromInviteExistingStep: function () {
+      this.activeScreen('inviteOthers')
+    },
     authenticate: function (provider) {
       /*
    *  Logs in the user (Facebook)
