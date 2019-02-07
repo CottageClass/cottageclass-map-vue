@@ -9,10 +9,7 @@
             title="Emergency Contacts"
             subtitle="Please provide at least one emergency contact. If possible, include your children's primary care physician.">
             <ManyFormFieldGroups
-              :labels="labels"
-              :names="names"
-              :placeholders="labels"
-              :types="types"
+              :fieldGroups="fieldGroups"
               headingWord="Contact"
               v-model="contacts"
               addAndRemove="true"
