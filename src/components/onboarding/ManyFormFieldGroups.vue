@@ -80,7 +80,7 @@ export default {
     }
   },
   watch: {
-    objects: function () {
+    objectsWithKeysRemoved: function () {
       this.$emit('input', this.objectsWithKeysRemoved)
     }
   }
