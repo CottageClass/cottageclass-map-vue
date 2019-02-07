@@ -73,7 +73,7 @@
 
 <script>
 import { mixin as clickaway } from 'vue-clickaway'
-import AvatarImage from '@/components/AvatarImage.vue'
+import AvatarImage from '@/components/base/AvatarImage'
 import Alert from '@/components/Alert.vue'
 import { mapGetters } from 'vuex'
 

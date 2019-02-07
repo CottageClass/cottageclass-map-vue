@@ -121,7 +121,7 @@
 <script>
 import Images from './Images.vue'
 import * as Token from '@/utils/tokens.js'
-import AvatarImage from './AvatarImage'
+import AvatarImage from '@/components/base/AvatarImage'
 import * as api from '@/utils/api.js'
 import networks from '@/assets/network-info.json'
 import ChildInfo from '@/components/ChildInfo.vue'

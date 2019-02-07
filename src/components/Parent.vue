@@ -34,7 +34,7 @@
 </template>
 
 <script>
-import AvatarImage from './AvatarImage.vue'
+import AvatarImage from '@/components/base/AvatarImage'
 import ChildInfo from '@/components/ChildInfo.vue'
 
 // import google sheets API service
