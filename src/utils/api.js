@@ -181,6 +181,24 @@ function createPeopleObject (responseData) {
   return peopleDataArray.map(personInApi => createPersonObject(personInApi, childrenArray))
 }
 
+export function fetchUsersWithinDistance (miles) {
+  // TODO
+  /*******************************************
+   ********* PLACEHOLDER *********************
+   ******************************************/
+  return Vue.axios.get(
+    `${process.env.BASE_URL_API}/networks/brooklyn-events/users`
+  ).then(res => {
+    console.log('FETCH USERS WITHIN DISTANCE SUCCESS')
+    console.log(res.data)
+    return createPeopleObject(res.data).slice(10)
+  }).catch(err => {
+    console.log('FETCH USERS WITHIN DISTANCE FAILURE')
+    console.log(err.errors)
+    throw err
+  })
+}
+
 export function fetchUsersInNetwork (networkId) {
   return Vue.axios.get(
     `${process.env.BASE_URL_API}/networks/${networkId}/users`
