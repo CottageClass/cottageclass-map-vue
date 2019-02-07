@@ -268,35 +268,6 @@ a {
   padding-left: 9px;
 }
 
-.list-item-container-2 {
-  position: relative;
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  margin-bottom: 8px;
-  padding-bottom: 16px;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-  -webkit-flex-direction: column;
-  -ms-flex-direction: column;
-  flex-direction: column;
-  -webkit-box-pack: justify;
-  -webkit-justify-content: space-between;
-  -ms-flex-pack: justify;
-  justify-content: space-between;
-  -webkit-box-align: start;
-  -webkit-align-items: flex-start;
-  -ms-flex-align: start;
-  align-items: flex-start;
-  border-style: none none solid;
-  border-bottom-width: 1px;
-  border-bottom-color: rgba(0, 0, 0, .1);
-  border-radius: 4px;
-  background-color: #fff;
-  box-shadow: 0 0 6px 0 #fff;
-}
-
 .list-item-3-container {
   position: relative;
   display: -webkit-box;
