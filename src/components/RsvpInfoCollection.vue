@@ -60,7 +60,7 @@ export default {
       error: '',
       eventId: this.$route.params.eventId,
       event: false,
-      emergencyInfoJustCompleted: this.$route.params.emergencyInfoComplete === 'emergency-info-complete',
+      emergencyInfoJustCompleted: this.$route.query.emergencyInfoComplete === 'true',
       isAuthenticated: this.$auth.isAuthenticated()
     }
   },
