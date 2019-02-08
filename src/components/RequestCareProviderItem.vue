@@ -1,6 +1,6 @@
 <template>
-  <router-link :to="{ name: 'ProviderProfile', params: { id: person.id }}">
-  <span :class="['body', bodyClass]">
+  <router-link :to="{ name: 'ProviderProfile', params: { person, id: person.id }}">
+  <span class="'body'">
     <div class="landing-page-list-item-header">
       <div class="avatar-name-container">
         <AvatarImage :person="person" class="avatar-image" />
@@ -19,7 +19,20 @@
       </router-link>
     </div>
     <Images :person="person" />
-    <ProviderInfo :person="person" />
+
+    <div class="title-bar-and-action-v2">
+      <div class="div-block-7">
+        <div class="name-and-caption">
+          <h5 v-if="person.job && person.job.employer" class="caption">{{ person.title }}
+            <span v-if="person.job.employer">at {{ person.employer }}</span>
+          </h5>
+        </div>
+      </div>
+      <h5 class="caption" v-if="person.children.length">
+        <ChildInfo :children="person.children" />
+      </h5>
+      <ProviderInfo :person="person" />
+    </div>
   </span>
 </router-link>
 </template>

@@ -1,17 +1,6 @@
 
 <template>
-  <div class="title-bar-and-action-v2">
-    <div class="div-block-7">
-      <div class="name-and-caption">
-        <h5 v-if="person.job && person.job.employer" class="caption">{{ person.title }}
-          <span v-if="person.job.employer">at {{ person.employer }}</span>
-        </h5>
-      </div>
-    </div>
-
-    <h5 class="caption" v-if="person.children.length">
-      <ChildInfo :children="person.children" />
-    </h5>
+  <div>
     <div class="providerp-background-check-badge-container2" v-if="person.verified">
       <div class="providerp-background-check-badge"><img src="../../assets/check-green.svg" alt="" class="checkmark-image">
         <div class="background-check-text">Background checked</div>
