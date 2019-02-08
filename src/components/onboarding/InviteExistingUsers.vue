@@ -53,18 +53,12 @@ export default {
   },
   mounted: function () {
     const currentUser = this.currentUser
-    api.fetchUsersWithinDistance(5, currentUser.latitude, currentUser.longitude).then(res => {
+    api.fetchUsersWithinDistance(20, currentUser.latitude, currentUser.longitude).then(res => {
       if (res.length > 0) {
         this.users = res.filter(person => parseInt(person.id) !== currentUser.id)
       } else {
-        api.fetchUsersWithinDistance(20, currentUser.latitude, currentUser.longitude).then(res => {
-          if (res.length > 0) {
-            this.users = res.filter(person => parseInt(person.id) !== currentUser.id)
-          } else {
-            // there are no users within 20 miles so we return to home
-            this.$router.push({ name: 'Home' })
-          }
-        })
+        // there are no users within 20 miles so we return to home
+        this.$router.push({ name: 'Home' })
       }
     }).catch(err => console.log(err))
   },
