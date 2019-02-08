@@ -30,6 +30,7 @@
           name="email"
           v-model="email"
           placeholder="Email"
+          type="email"
           class="location-text-field w-input"
           :class="{'invalid': errors.has('email') }"
         >
@@ -122,7 +123,7 @@ export default {
         .validateAll()
         .then(function (result) {
           if (result) {
-            let email = component.email && component.email.trim()
+            let email = component.email && component.email.trim().toLowerCase()
             let password = component.password && component.password.trim()
             component.$auth
               .login({ email, password })
