@@ -199,7 +199,7 @@ export default {
         component.forgetRsvpAttempted()
         this.$store.commit('setAlert', {
           alert: {
-            message: "Congratulations, you have RSVP&apos;ed to this event! If you haven't yet, please fill out our <a href=&quot;https://cottageclass1.typeform.com/to/Z6pwkl&quot;>emergency information form</a>.",
+            message: "Congratulations, you have RSVP&apos;ed to this event! You&apos;ll soon receive an email confirming your RSVP.",
             status: 'success'
           }
         })
