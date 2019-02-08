@@ -35,6 +35,7 @@ import Nav from '@/components/onboarding/Nav.vue'
 import * as api from '@/utils/api.js'
 import OnboardingStyleWrapper from '@/components/onboarding/OnboardingStyleWrapper.vue'
 import InviteUserListItem from '@/components/onboarding/InviteUserListItem.vue'
+import { mapGetters } from 'vuex'
 
 export default {
   name: 'InviteExistingUsers',
@@ -51,14 +52,16 @@ export default {
     }
   },
   mounted: function () {
-    api.fetchUsersWithinDistance(5).then(res => {
+    const currentUser = this.currentUser
+    api.fetchUsersWithinDistance(5, currentUser.latitude, currentUser.longitude).then(res => {
       if (res.length > 0) {
-        this.users = res
+        this.users = res.filter(person => parseInt(person.id) !== currentUser.id)
       } else {
-        api.fetchUsersWithinDistance(50).then(res => {
+        api.fetchUsersWithinDistance(20, currentUser.latitude, currentUser.longitude).then(res => {
           if (res.length > 0) {
-            this.users = res
+            this.users = res.filter(person => parseInt(person.id) !== currentUser.id)
           } else {
+            // there are no users within 20 miles so we return to home
             this.$router.push({ name: 'Home' })
           }
         })
@@ -68,7 +71,8 @@ export default {
   computed: {
     firstEventId: function () {
       return Object.keys(this.eventData.event).sort()[0]
-    }
+    },
+    ...mapGetters(['currentUser'])
   }
 }
 </script>
