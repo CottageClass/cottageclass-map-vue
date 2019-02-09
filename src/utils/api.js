@@ -464,6 +464,7 @@ function capitalize (string) {
 
 function parseEventData (obj) {
   var e = obj.attributes
+  e.participants = obj.relationships.participants.data
   e['id'] = obj.id
   e.hostFirstName = capitalize(e.hostFirstName)
   e.hostFuzzyLatitude = parseFloat(e.hostFuzzyLatitude)
