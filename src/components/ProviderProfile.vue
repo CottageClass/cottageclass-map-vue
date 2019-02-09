@@ -146,7 +146,7 @@ export default {
     }
   },
   mounted: function () {
-    api.fetchUsersInNetwork(this.network.stub).then(res => {
+    api.fetchUsersInNetwork('brooklyn-events').then(res => {
       this.people = res
     })
   },
