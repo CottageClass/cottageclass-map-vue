@@ -11,14 +11,13 @@
         <div class="host-info"><AvatarImage className="avatar-large" :person="{facebookId: event.hostFacebookUid, avatar: event.hostAvatar}"/>
           <div class="host-info-wrapper">
             <div class="hosted-by">Hosted by <a href="#" class="host">{{ event.hostFirstName }}</a> &amp;
-            <span v-if="childAgesSorted.length === 1">1 kid&mdash;age {{  childAgesSorted[0] }}.</span>
-          <span v-if="childAgesSorted.length === 2">2 kids&mdash;ages {{ childAgesSorted[0] }} and {{ childAgesSorted[1] }}.</span>
-          <span v-if="childAgesSorted.length > 2">{{ childAgesSorted.length }} kids&mdash;ages
+            <span v-if="childAgesSorted.length === 1">1 kid {{  childAgesSorted[0] }}</span>
+          <span v-if="childAgesSorted.length === 2">2 kids ages {{ childAgesSorted[0] }} and {{ childAgesSorted[1] }}</span>
+          <span v-if="childAgesSorted.length > 2">{{ childAgesSorted.length }} kids ages
             <span v-for="(age, index) in childAgesSorted">
-              <span v-if="index === childAgesSorted.length - 1"> and {{ age }}.</span>
+              <span v-if="index === childAgesSorted.length - 1"> and {{ age }}</span>
               <span v-else> {{ age}}<span v-if="index !== childAgesSorted.length - 2">,</span></span>
-            </span>
-          </span></div>
+            </span></span><span v-if="event.participants.length > 0"> with <span v-if="event.participants.length === 1"><router-link :to="{ name: 'ProviderProfile', params: { id: event.participants[0].id }}">one family</router-link> attending.</span><span v-else>{{ event.participants.length }} families attending: <span v-for="(participant, index) in event.participants"><router-link :to="{ name: 'ProviderProfile', params: { id: participant.id }}">{{ index + 1 }}</router-link><span v-if="index > event.participants.length - 1">, </span></span></span></span></div>
             <div v-if="event.hostVerified" class="background-checked-wrapper"><img src="@/assets/check-green.svg" alt="">
               <div class="background-checked">Background Checked</div>
             </div>
