@@ -186,9 +186,10 @@ function createPeopleObject (responseData) {
   return peopleDataArray.map(personInApi => createPersonObject(personInApi, childrenArray))
 }
 
+// hard codes network code to 'brooklyn-events'. we will soon remove this entirely.
 export function fetchUsersInNetwork (networkId) {
   return Vue.axios.get(
-    `${process.env.BASE_URL_API}/networks/${networkId}/users`
+    `${process.env.BASE_URL_API}/networks/brooklyn-events/users`
   ).then(res => {
     console.log('FETCH USERS IN NETWORK SUCCESS')
     console.log(res.data)
@@ -215,7 +216,7 @@ export function fetchUsersWhoHaveMadeInquiries (currentUserId) {
 }
 
 // same as above but using 'normalize' json normalizer to correctly extract children
-export function fetchCurrentUser (userId) {
+export function fetchUser (userId) {
   return Vue.axios.get(
     `${process.env.BASE_URL_API}/users/${userId}`
   ).then(res => {
@@ -269,6 +270,10 @@ export function submitEmergencyContacts (childId, arrayOfContacts) {
   })
 }
 
+/*
+ * MESSAGES
+ */
+
 // backend requires user to be an admin
 export function fetchAllUsers () {
   return Vue.axios.get(
@@ -283,10 +288,6 @@ export function fetchAllUsers () {
     throw err
   })
 }
-
-/*
- * MESSAGES
- */
 
 function createMessagesObject (msgListFromApi) {
   return msgListFromApi.map(createMessageObject)
