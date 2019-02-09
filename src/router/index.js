@@ -65,7 +65,7 @@ export default new Router({
       component: ProfileEdit
     },
     {
-      path: '/provider-profile/:id',
+      path: '/profile/:id',
       name: 'ProviderProfile',
       component: ProviderProfile
     },
