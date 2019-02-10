@@ -2,17 +2,17 @@
 <div class="body">
     <div class="providerp-provider-info-section">
       <router-link :to="{ name: 'Home' }" class="providerp-button-back w-inline-block"><img src="../assets/Arrow-Back-2.svg">
-    </router-link><AvatarImage :person="person" class="providerp-avatar" />
-    <h1 class="providerp-h1">{{ person.firstName }} {{ person.lastInitial }}.</h1>
+    </router-link><AvatarImage :person="user" class="providerp-avatar" />
+    <h1 class="providerp-h1">{{ user.firstName }} {{ user.lastInitial }}.</h1>
 
-    <div class="providerp-occupation" v-if="person.title && person.employer">{{ person.title }} at {{ person.employer }}</div>
-    <div v-if="person.children.length > 0" class="providerp-children">
-        <ChildInfo :children="person.children" />
+    <div class="providerp-occupation" v-if="user.title && user.employer">{{ user.title }} at {{ user.employer }}</div>
+    <div v-if="user.children.length > 0" class="providerp-children">
+        <ChildInfo :children="user.children" />
       </div>
-    <div v-if="person.blurb" class="providerp-chat-bubble-container">
+    <div v-if="user.blurb" class="providerp-chat-bubble-container">
       <div class="providerp-chat-bubble-caret"><img src="../assets/chat-bubble-caret.svg"></div>
       <div class="providerp-chat-bubble-primary">
-        <div>{{ person.blurb }}</div>
+        <div>{{ user.blurb }}</div>
       </div>
     </div>
   </div>
@@ -20,7 +20,7 @@
 
  <!-- background check -->
 
-    <div class="providerp-background-check-badge-container" v-if="person.backgroundCheck">
+    <div class="providerp-background-check-badge-container" v-if="user.backgroundCheck">
       <div class="providerp-background-check-badge"><img src="../assets/check-white-14.svg" class="checkmark-image">
         <div class="background-check-text">Background checked</div>
       </div>
@@ -28,8 +28,8 @@
 
  <!-- activities -->
 
-      <div class="tag-group-container" v-if="person.activities.length"><img src="../assets/tag-24-2.svg" width="20" height="20" class="image-tag">
-        <div class="tags-container" v-for="activity in person.activities">
+      <div class="tag-group-container" v-if="user.activities.length"><img src="../assets/tag-24-2.svg" width="20" height="20" class="image-tag">
+        <div class="tags-container" v-for="activity in user.activities">
           <div class="tag">
             <div class="small-text-upper-black-40">{{ activity }}</div>
           </div>
@@ -39,16 +39,16 @@
 <!-- Times -->
       <div class="time-group-container"><img src="../assets/time-24-2.svg" width="20" height="20" class="image-time">
         <div class="times-container">
-          <div class="time" v-if="person.availableMornings">
+          <div class="time" v-if="user.availableMornings">
             <div class="small-text-upper-purple">9a–3p</div>
           </div>
-          <div class="time" v-if="person.availableAfternoons">
+          <div class="time" v-if="user.availableAfternoons">
             <div class="small-text-upper-purple">3p–7p</div>
           </div>
-          <div class="time" v-if="person.availableEvenings">
+          <div class="time" v-if="user.availableEvenings">
             <div class="small-text-upper-purple">7p-</div>
           </div>
-          <div class="time" v-if="person.availableWeekends">
+          <div class="time" v-if="user.availableWeekends">
             <div class="small-text-upper-purple">WEEKENDS</div>
           </div>
         </div>
@@ -57,11 +57,11 @@
 
 <!-- Photos -->
 
-  <div v-if="person.images" class="group-title-container-2">
+  <div v-if="user.images" class="group-title-container-2">
     <h5 class="list-title-2">Photos</h5>
   </div>
 
-  <Images :person="person"/>
+  <Images :person="user"/>
 
  <!-- location with link to directions -->
 
@@ -69,17 +69,17 @@
     <h5 class="list-title-2">Location</h5>
   </div>
 
-   <div class="map-container" @click="getDirections(person.location)">
+   <div class="map-container" @click="getDirections(user.location)">
   <GmapMap
     :disableDefaultUI="true"
-    :center="person.location"
+    :center="user.location"
     :zoom="13"
     :options="mapOptions"
     style="width: 100%; height: 230px;">
       <GmapMarker
       :key="index"
-      :position="person.location"
-      :title="person.firstName"
+      :position="user.location"
+      :title="user.firstName"
       icon="https://storage.googleapis.com/cottageclass-prod/images/map-radius.png"
       />
     </GmapMap>
@@ -89,14 +89,14 @@
   <div class="group-title-container-2">
     <h5 class="list-title-2">Great Experiences</h5>
   </div>
-  <!-- <span v-for="review in person.reviews">
+  <!-- <span v-for="review in user.reviews">
 </span> -->
 
 <!-- Leave a review -->
 
-  <div class="providerp-post-comment-container"><a :href="'mailto:contact@cottageclass.com?subject=Great experience with ' + person.firstName + ' ' + person.lastInitial + '. (' + person.id + ')&body=(please%20describe%20your%20great%20experience%20here!)'" class="pprofile-compose-button w-inline-block"><img src="../assets/compose.svg" class="image-5"><div class="pprofile-comment-prompt-button-text">Post a great experience</div></a>
+  <div class="providerp-post-comment-container"><a :href="'mailto:contact@cottageclass.com?subject=Great experience with ' + user.firstName + ' ' + user.lastInitial + '. (' + user.id + ')&body=(please%20describe%20your%20great%20experience%20here!)'" class="pprofile-compose-button w-inline-block"><img src="../assets/compose.svg" class="image-5"><div class="pprofile-comment-prompt-button-text">Post a great experience</div></a>
     <div class="providerp-book-care-container">
-      <router-link :to="{ name: 'RequestModal', params: { id: person.id }}" class="pprovider-book-care-button w-inline-block"><img src="../assets/request-care-white.svg"><div class="pprovider-primary-action-text">Ask {{ person.firstName }}</div>
+      <router-link :to="{ name: 'RequestModal', params: { id: user.id }}" class="pprovider-book-care-button w-inline-block"><img src="../assets/request-care-white.svg"><div class="pprovider-primary-action-text">Ask {{ user.firstName }}</div>
       </router-link>
     </div>
   </div>
@@ -106,12 +106,12 @@
   <div class="group-title-container-2">
     <h5 class="list-title-2">Concerns</h5>
   </div>
-  <!-- <span v-for="review in person.concerns">
+  <!-- <span v-for="review in user.concerns">
 </span> -->
 
   <!-- concern link -->
 
-  <div class="providerp-post-comment-container"><a :href="'mailto:contact@cottageclass.com?subject=Concern re: ' + person.firstName + ' ' + person.lastInitial + '. (' + person.id + ')&body=(please%20detail%20your%20concern%20here)'" class="pprofile-compose-button w-inline-block"><img src="../assets/compose.svg" class="image-5"><div class="pprofile-comment-prompt-button-text">Post a concern</div></a></div>
+  <div class="providerp-post-comment-container"><a :href="'mailto:contact@cottageclass.com?subject=Concern re: ' + user.firstName + ' ' + user.lastInitial + '. (' + user.id + ')&body=(please%20detail%20your%20concern%20here)'" class="pprofile-compose-button w-inline-block"><img src="../assets/compose.svg" class="image-5"><div class="pprofile-comment-prompt-button-text">Post a concern</div></a></div>
 
   <div class="spacer-100px"></div>
 
@@ -136,7 +136,7 @@ export default {
   },
   data () {
     return {
-      people: [],
+      user: {},
       networks: networks,
       mapOptions:
        { // move this to map component when i separate it.
@@ -146,17 +146,14 @@ export default {
     }
   },
   mounted: function () {
-    api.fetchUsersInNetwork('brooklyn-events').then(res => {
-      this.people = res
+    api.fetchUser(this.$route.params.id).then(res => {
+      this.user = res
     })
   },
   computed: {
     network: function () {
-      let networkId = Token.currentUserNetworkCode(this.$auth)
+      let networkId = 'brooklyn-events'
       return this.networks.find(network => network.stub === networkId)
-    },
-    person: function () {
-      return this.people.find(person => person.id === this.$route.params.id) // computes person. this isn't efficient but simplifies interaction with the API.
     }
   }
 }
