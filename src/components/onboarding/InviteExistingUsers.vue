@@ -7,10 +7,9 @@
         <Alert v-if="alert" />
         <div class="onb-content-container">
           <div class="onb-top-content-container">
-            <h1 class="onb-heading-large">Build your village</h1>
+            <h1 class="onb-heading-large">Build your village (part 2)</h1>
             <p class="onb-paragraph-subheading-2">
-              Invite some KidsClub members to your upcoming event.  Here are
-              some parents near you that might be interested.
+              Here are some KidsClub members who live near you. Want to invite them? They'll get a text from us, with the option to reply.
             </p>
           </div>
           <div class="onb-copy-link-container">
@@ -103,7 +102,7 @@ export default {
   computed: {
     inviteMessage: function () {
       return function (invitee) {
-        return `Hi ${invitee.firstName}, ${this.currentUser.firstName} just joined and invited you to their first playdate. Are you interested? ${this.eventLink}`
+        return `Hi ${invitee.firstName}, ${this.currentUser.firstName} just invited you to their very first KidsClub.io playdate! Can you come? RSVP here: ${this.eventLink} (You can reply to this message to welcome ${this.currentUser.firstName} and ask them any questions.)`
       }
     },
     eventLink: function () {
