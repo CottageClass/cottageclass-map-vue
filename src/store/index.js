@@ -21,7 +21,7 @@ export default new Vuex.Store(
       setCurrentUser: (state, payload) => {
         state.currentUser = payload.user
       },
-      setAlert: (state, payload) => {
+      showAlertOnNextRoute: (state, payload) => {
         state.alert = payload.alert
         state.alert.preshow = true // this indicates that we will show the alert in the next route
       }

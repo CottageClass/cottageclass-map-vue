@@ -26,7 +26,7 @@ export default {
   methods: {
     deleteEvent: function () {
       api.deleteEvent(this.eventId, () => {
-        this.$store.commit('setAlert', {
+        this.$store.commit('showAlertOnNextRoute', {
           alert: {
             message: 'Your event has been deleted',
             status: 'success'
