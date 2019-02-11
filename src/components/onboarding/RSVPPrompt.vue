@@ -62,6 +62,9 @@ export default {
         api.fetchUpcomingEventsWithinDistance(20, this.currentUser.latitude, this.currentUser.longitude).then(res => {
           if (res.length > 0) {
             this.events = res
+            if (this.eventsNotBelongingToCurrentUser.length < 1) {
+              this.nextStep()
+            }
           } else {
             this.nextStep() // skip this step if no nearby events
           }
