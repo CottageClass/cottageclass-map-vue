@@ -6,15 +6,16 @@
           <Nav
             @next="$emit('activateScreen', 'inviteOthers')"
             hidePrevious="true"
+            button="skip"
             />
           <Question
             title="RSVP to a playdate near you"
-            subtitle="Would you like to RSVP to one of these upcoming playdates in your area?"
-            />
-          <EventList
-            :events="events"
-            :showDates="false"
-            />
+            subtitle="Would you like to RSVP to one of these upcoming playdates in your area?">
+            <EventList
+              :events="events"
+              :showDates="false"
+              />
+          </Question>
         </div>
       </div>
     </div>
