@@ -23,22 +23,7 @@
             <div class="text-block">
               Hosted by
               <a href="#" class="host-name link">{{ event.hostFirstName }}</a> &amp;
-              <span v-if="childAgesSorted.length === 1">
-                1 kid&mdash;age {{ childAgesSorted[0] }}.
-              </span>
-              <span v-if="childAgesSorted.length === 2">
-                2 kids&mdash;ages {{ childAgesSorted[0] }} and {{ childAgesSorted[1] }}.
-              </span>
-              <span v-if="childAgesSorted.length > 2">
-                {{ childAgesSorted.length }} kids&mdash;ages
-          <span v-for="(age, index) in childAgesSorted">
-                  <span v-if="index === childAgesSorted.length - 1">and {{ age }}.</span>
-                  <span v-else>
-                    {{ age}}
-                    <span v-if="index !== childAgesSorted.length - 2">,</span>
-                  </span>
-          </span>
-        </span>
+              <ChildAges :childAges="event.hostChildAges" />.
       </div>
       </div>
           <RsvpButton v-if="showRsvpButton" :userParticipating="event.participated" :full="event.full" :eventId="event.id" />
@@ -48,7 +33,6 @@
   </li>
 </router-link>
 </template>
-
 <script>
 // todo: pass "person" object to AvatarImage
 
@@ -56,18 +40,14 @@ import AvatarImage from './AvatarImage.vue'
 import RsvpButton from './RsvpButton.vue'
 import EditButton from './EditButton.vue'
 import EventCategoryIcon from '@/components/EventCategoryIcon.vue'
+import ChildAges from '@/components/ChildAges.vue'
 
 var moment = require('moment')
 
 export default {
   name: 'EventListItem',
   props: ['event', 'index', 'showRsvpButton', 'distance', 'showEditButton'],
-  components: { AvatarImage, RsvpButton, EventCategoryIcon, EditButton },
-  computed: {
-    childAgesSorted: function () {
-      return this.event.hostChildAges.concat().sort((a, b) => a - b)
-    }
-  },
+  components: { AvatarImage, RsvpButton, EventCategoryIcon, EditButton, ChildAges },
   methods: {
     backgroundColor: function (index) {
       let colors = ['#e82d55', '#0cba52', '#aff0fc', '#fd6f77', '#64426b']
