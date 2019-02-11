@@ -1,23 +1,32 @@
 <template>
-  <span class="body">
-    <div class="invite-user-list-item-container">
-      <div class="invite-user-top-row">
-        <div class="avatar-name-container">
-          <AvatarImage :person="person" class="invite-user-avatar" />
-          <div class="list-item-3-heading">
-            <h5 class="heading">{{ person.firstName }} {{ person.lastInitial }}.</h5>
-          </div>
-        </div>
-        <div
-          class="invite-button"
-          :class="{'invite-button-complete': inviteComplete, 'invite-button-ready': !inviteComplete}"
-          @click="sendInvite">
-          {{ inviteComplete ? 'Invited' : 'Invite' }}
-        </div>
-      </div>
-
+  <div @click="toggleSelected" class="item-container">
+    <div class="avatar-container">
+      <AvatarImage :person="person" class="avatar" />
     </div>
-  </span>
+    <div class="info-container">
+      <h5 class="heading">{{ person.firstName }} {{ person.lastInitial}}. </h5>
+      <div class="text-block-3">
+        <span class="caption" v-if="person.children.length">
+          Parent to
+          <span v-for="(child, index) in person.children">
+            <span class="child">{{ child.firstName }}
+              <span class="black-50">({{ child.age }})
+              </span>
+            </span>
+            <span v-if="(index < person.children.length - 1)">,
+            </span>
+          </span>
+        </span>
+      </div>
+    </div>
+    <div class="checkbox-container">
+      <span class="w-inline-block">
+        <img
+          :src="require(`../../assets/${imageNameForCheckmark}`)"
+          class="checkbox" />
+      </span>
+    </div>
+  </div>
 </template>
 
 <script>
@@ -29,41 +38,33 @@ export default {
   name: 'InviteUserListItem',
   data () {
     return {
+      isSelected: false,
       inviteComplete: false
     }
   },
-  props: ['person', 'eventId'],
+  props: ['person', 'eventId', 'isAllowedToTurnOn'],
   components: { AvatarImage },
   methods: {
-    sendInvite: function () {
-      if (this.inviteComplete) return
-      api.initProxySession(
-        this.currentUser.id,
-        this.person.id,
-        this.messageForProvider,
-        this.acknowledgmentMessage
-      ).then(res => {
-        this.setButtonToInvited()
-      }).catch(err => {
-        console.log(err)
-      })
-    },
-    setButtonToInvited: function () {
-      this.inviteComplete = true
+    toggleSelected: function () {
+      if (this.isSelected) {
+        this.isSelected = false
+      } else {
+        if (this.isAllowedToTurnOn) {
+          this.isSelected = true
+        } else {
+          this.$emit('disallowedSelection')
+        }
+      }
+      this.$emit('stateSet', this.person.id, this.isSelected)
     }
   },
   computed: {
-    messageForProvider: function () {
-      return `Hi ${this.inviteeFirstName}, ${this.hostFirstName} just joined and invited you to their first playdate. Are you interested? ${this.eventLink}`
-    },
-    inviteeFirstName: function () {
-      return this.person.firstName
-    },
-    hostFirstName: function () {
-      return this.currentUser.firstName
-    },
-    eventLink: function () {
-      return `https://www.kidsclub.io/event/${this.eventId}`
+    imageNameForCheckmark: function () {
+      if (this.isSelected) {
+        return 'check-circle-24.svg'
+      } else {
+        return 'check-circle-24-gray.svg'
+      }
     },
     ...mapGetters(['currentUser'])
   }
@@ -71,40 +72,68 @@ export default {
 </script>
 
 <style>
-.invite-user-top-row {
-  display: flex
+
+.avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
 }
-.invite-user-avatar {
-  width: 200px;
-  height: 200px;
+
+.item-container {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  padding-top: 16px;
+  padding-bottom: 16px;
+  padding-left: 16px;
+  -webkit-box-pack: justify;
+  -webkit-justify-content: space-between;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+  border-bottom: 1px solid rgba(0, 0, 0, .1);
+  background-color: #fff;
 }
-.invite-user-list-item-container {
-  background-color: #7ab9ec;
-  margin-bottom: 15px;
+
+.checkbox {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  min-width: 56px;
+  padding: 16px;
+  -webkit-box-pack: justify;
+  -webkit-justify-content: space-between;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+  -ms-flex-align: center;
+  align-items: center;
+  border-radius: 50%;
+  background-color: transparent;
+  color: #1f88e9;
 }
-.invite-button {
-  padding: 12px 32px;
-  border-radius: 4px;
-  text-align: center;
-  width: 100px;
-  align-self: flex-start;
-  margin-top: 50px;
-  margin-right: 20px;
-  color: #fff;
+
+.checkbox:active {
+  background-color: rgba(0, 0, 0, .1);
 }
-.invite-button-complete {
-  background-color: #c2cdd6;
+
+.checkbox-container {
+  -webkit-align-self: center;
+  -ms-flex-item-align: center;
+  -ms-grid-row-align: center;
+  align-self: center;
 }
-.invite-button-ready {
-  background-color: #1f88e9;
-  cursor: pointer;
+
+.avatar-container {
+  min-width: 40px;
 }
-.invite-button-ready:hover {
-  background-image: -webkit-gradient(linear, left top, left bottom, from(rgba(0, 0, 0, .1)), to(rgba(0, 0, 0, .1)));
-  background-image: linear-gradient(180deg, rgba(0, 0, 0, .1), rgba(0, 0, 0, .1));
+
+.info-container {
+  width: 100%;
+  padding-right: 16px;
+  padding-left: 16px;
 }
-.invite-button-ready:active {
-  background-image: -webkit-gradient(linear, left top, left bottom, from(rgba(0, 0, 0, .1)), to(rgba(0, 0, 0, .1)));
-  background-image: linear-gradient(180deg, rgba(0, 0, 0, .1), rgba(0, 0, 0, .1));
-}
+
 </style>
