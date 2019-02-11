@@ -102,7 +102,7 @@ export default {
             console.log(err)
           })
           // remove rspv from our server
-          this.$store.commit('setAlert', {
+          this.$store.commit('showAlertOnNextRoute', {
             alert: {
               message: 'Your RSVP has been canceled.',
               status: 'success'

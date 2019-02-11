@@ -1,29 +1,32 @@
 <template>
-<OnboardingStyleWrapper styleIs="onboarding">
-
-  <!-- wrapper for desktop screens -->
-
+  <OnboardingStyleWrapper styleIs="onboarding">
     <div class="onb-body">
       <div class="body">
         <div class="content-wrapper">
-
-  <div class="content-container">
-    <div class="title-container">
-      <h1 class="title">When do you need care?</h1>
+          <div class="content-container">
+            <div class="title-container">
+              <h1 class="title">When do you need care</h1>
+            </div>
+            <DateTimePicker v-model="bookingRequest.dateTimeSelected"/>
+            <div class="form-describe-need w-form">
+              <form v-on:submit.prevent id="email-form-2">
+                <p class="describe-label">Need care on multiple days?</p>
+                <textarea
+                  v-model="bookingRequest.description"
+                  id="field"
+                  name="field"
+                  placeholder="Describe your need and schedule here."
+                  maxlength="5000"
+                  class="text-area-decribe-need w-input">
+                </textarea>
+              </form>
+            </div>
+            <CountdownPromo />
+          </div>
+        </div>
+      </div>
     </div>
-    <DateTimePicker v-model="bookingRequest.dateTimeSelected"/>
-    <div class="form-describe-need w-form">
-      <form v-on:submit.prevent id="email-form-2">
-        <p class="describe-label">Need care on multiple days?</p>
-        <textarea v-model="bookingRequest.description" id="field" name="field" placeholder="Describe your need and schedule here." maxlength="5000" class="text-area-decribe-need w-input"></textarea>
-      </form>
-    </div>
-    <CountdownPromo />
-  </div>
-</div>
-</div>
-</div>
-</OnboardingStyleWrapper>
+  </OnboardingStyleWrapper>
 </template>
 
 <script>

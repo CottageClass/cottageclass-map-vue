@@ -57,7 +57,7 @@
 import networks from '@/assets/network-info.json'
 import * as Token from '@/utils/tokens.js'
 import * as api from '@/utils/api.js'
-import AvatarImage from '@/components/AvatarImage.vue'
+import AvatarImage from '@/components/base/AvatarImage'
 import { mapGetters } from 'vuex'
 var moment = require('moment')
 

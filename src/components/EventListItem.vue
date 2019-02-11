@@ -36,7 +36,7 @@
 <script>
 // todo: pass "person" object to AvatarImage
 
-import AvatarImage from './AvatarImage.vue'
+import AvatarImage from '@/components/base/AvatarImage'
 import RsvpButton from './RsvpButton.vue'
 import EditButton from './EditButton.vue'
 import EventCategoryIcon from '@/components/EventCategoryIcon.vue'

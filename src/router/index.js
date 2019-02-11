@@ -67,7 +67,8 @@ export default new Router({
     {
       path: '/profile/:id',
       name: 'ProviderProfile',
-      component: ProviderProfile
+      component: ProviderProfile,
+      props: true
     },
     {
       path: '/event/:id/share',
@@ -154,7 +155,7 @@ export default new Router({
       props: true
     },
     {
-      path: '/rsvp/:eventId/:emergencyInfoComplete?',
+      path: '/rsvp/:eventId',
       name: 'RsvpInfoCollection',
       component: RsvpInfoCollection
     }

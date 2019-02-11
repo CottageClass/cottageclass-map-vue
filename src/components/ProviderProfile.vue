@@ -23,42 +23,7 @@
     </div>
   </div>
   <div class="providerp-provider-info-bullets">
-
- <!-- background check -->
-
-    <div class="providerp-background-check-badge-container" v-if="user.verified">
-      <div class="providerp-background-check-badge"><img src="../assets/check-white-14.svg" class="checkmark-image">
-        <div class="background-check-text">Background checked</div>
-      </div>
-    </div>
-
- <!-- activities -->
-
-      <div class="tag-group-container" v-if="user.activities && user.activities.length > 0"><img src="../assets/tag-24-2.svg" width="20" height="20" class="image-tag">
-        <div class="tags-container" v-for="activity in user.activities">
-          <div class="tag">
-            <div class="small-text-upper-black-40">{{ activity }}</div>
-          </div>
-      </div>
-      </div>
-
-<!-- Times -->
-      <div v-if="userAvailableSometimes" class="time-group-container"><img src="../assets/time-24-2.svg" width="20" height="20" class="image-time">
-        <div class="times-container">
-          <div class="time" v-if="user.availableMornings">
-            <div class="small-text-upper-purple">9a–3p</div>
-          </div>
-          <div class="time" v-if="user.availableAfternoons">
-            <div class="small-text-upper-purple">3p–7p</div>
-          </div>
-          <div class="time" v-if="user.availableEvenings">
-            <div class="small-text-upper-purple">7p-</div>
-          </div>
-          <div class="time" v-if="user.availableWeekends">
-            <div class="small-text-upper-purple">WEEKENDS</div>
-          </div>
-        </div>
-      </div>
+    <ProviderInfo :person="user" />
   </div>
 
 <!-- Photos -->
@@ -75,7 +40,7 @@
     <h5 class="list-title-2"><span v-if="user.neighborhood">Neighborhood: {{ user.neighborhood }}</span><span v-else>Location</span></h5>
   </div>
 
-   <div class="map-container" @click="getDirections(userLocation)">
+   <div class="map-container">
   <GmapMap
     :disableDefaultUI="true"
     :center="userLocation"
@@ -129,21 +94,18 @@
 <script>
 import Images from './Images.vue'
 import * as Token from '@/utils/tokens.js'
-import AvatarImage from './AvatarImage'
+import AvatarImage from '@/components/base/AvatarImage'
 import * as api from '@/utils/api.js'
 import networks from '@/assets/network-info.json'
 import ChildAges from '@/components/ChildAges.vue'
 import OnboardingStyleWrapper from '@/components/onboarding/OnboardingStyleWrapper.vue'
 import moment from 'moment'
+import ProviderInfo from '@/components/base/ProviderInfo.vue'
+import ChildInfo from '@/components/ChildInfo.vue'
 
 export default {
-  components: { Images, AvatarImage, ChildAges, OnboardingStyleWrapper },
   name: 'ProviderProfile',
-  methods: {
-    getDirections: function (location) {
-      window.open('https://www.google.com/maps?saddr=My+Location&daddr=' + location.lat + ',' + location.lng)
-    }
-  },
+  components: { Images, AvatarImage, ChildAges, OnboardingStyleWrapper, ProviderInfo, ChildInfo },
   data () {
     return {
       user: {},

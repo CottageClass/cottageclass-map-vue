@@ -1,15 +1,12 @@
 <template>
   <Question
-  title="Child Information"
-  subtitle="We need some basic info about your children. Their ages will appear on your public profile, but only hosts of events you RSVP to will see their names.">
+    title="Child Information"
+    subtitle="We need some basic info about your children. Their ages will appear on your public profile, but only hosts of events you RSVP to will see their names.">
     <ManyFormFieldGroups
-    :labels="labels"
-    :names="names"
-    :placeholders="labels"
-    :types="types"
-    headingWord="Child"
-    v-model="children"
-    addAndRemove="true"
+      :fieldGroups="fieldGroups"
+      headingWord="Child"
+      v-model="children"
+      addAndRemove="true"
     />
     </Question>
 </template>
@@ -25,11 +22,27 @@ export default {
   data () {
     return {
       children: this.value.list,
-      labels: ['First Name', 'Birthday', 'School Name'],
-      types: ['text', 'date', 'text'],
-      names: ['firstName', 'birthday', 'schoolName'],
-      placeholders: ['First Name', 'MM / DD / YYYY', 'Name of School'],
-      errorMesg: 'Please enter a first name (or nickname) and birthdate for each child.'
+      errorMesg: 'Please enter a first name (or nickname) and birthdate for each child.',
+      fieldGroups: [
+        {
+          name: 'firstName',
+          label: 'First Name',
+          placeholder: 'First Name',
+          type: 'text'
+        },
+        {
+          name: 'birthday',
+          label: 'Birthday',
+          placeholder: 'MM / DD / YYYY',
+          type: 'date'
+        },
+        {
+          name: 'schoolName',
+          label: 'School Name',
+          placeholder: 'Name of School',
+          type: 'text'
+        }
+      ]
     }
   },
   computed: {

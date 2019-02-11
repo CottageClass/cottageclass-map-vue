@@ -116,7 +116,7 @@
 // todo: pass "person" object to AvatarImage
 
 import * as api from '@/utils/api.js'
-import AvatarImage from './AvatarImage.vue'
+import AvatarImage from '@/components/base/AvatarImage'
 import RsvpButton from './RsvpButton.vue'
 import EditButton from './EditButton.vue'
 import MainNav from './MainNav.vue'

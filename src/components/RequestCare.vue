@@ -23,7 +23,10 @@
   <!-- the list -->
 
   <div class="list-container">
-    <Provider v-for="person in peopleAvailable" :person="person" :key="person.id"></Provider>
+    <RequestCareProviderItem v-for="person in peopleAvailable"
+    :person="person"
+    :key="person.id"
+    />
   </div>
 
   <!-- share button -->
@@ -54,7 +57,7 @@
 
 <script>
 import MainNav from './MainNav.vue'
-import Provider from '@/components/Provider.vue'
+import RequestCareProviderItem from '@/components/RequestCareProviderItem.vue'
 import ShareButton from '@/components/ShareButton.vue'
 import networks from '@/assets/network-info.json'
 import { mapGetters } from 'vuex'
@@ -62,7 +65,7 @@ import * as api from '@/utils/api.js'
 
 export default {
   name: 'RequestCare',
-  components: { Provider, ShareButton, MainNav },
+  components: { RequestCareProviderItem, ShareButton, MainNav },
   data () {
     return {
       people: [], // gets updated on mount by fetchUsersInNetwork

@@ -65,7 +65,7 @@
 import networks from '../assets/network-info.json'
 import * as api from '@/utils/api.js'
 import * as Token from '@/utils/tokens.js'
-import AvatarImage from './AvatarImage.vue'
+import AvatarImage from '@/components/base/AvatarImage'
 
 // import google sheets API service
 import sheetsu from 'sheetsu-node'

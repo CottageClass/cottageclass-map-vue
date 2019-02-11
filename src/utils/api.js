@@ -186,6 +186,20 @@ function createPeopleObject (responseData) {
   return peopleDataArray.map(personInApi => createPersonObject(personInApi, childrenArray))
 }
 
+export function fetchUsersWithinDistance (miles, lat, lon) {
+  return Vue.axios.get(
+    `${process.env.BASE_URL_API}/api/users/miles/${miles}/latitude/${lat}/longitude/${lon}/page/1/page_size/10`
+  ).then(res => {
+    console.log('FETCH USERS WITHIN DISTANCE SUCCESS')
+    console.log(res.data)
+    return createPeopleObject(res.data)
+  }).catch(err => {
+    console.log('FETCH USERS WITHIN DISTANCE FAILURE')
+    console.log(err.errors)
+    throw err
+  })
+}
+
 export function fetchUsersInNetwork (networkId) {
   return Vue.axios.get(
     `${process.env.BASE_URL_API}/networks/${networkId}/users`
@@ -223,7 +237,6 @@ export function fetchCurrentUser (userId) {
     console.log('FETCH CURRENT USER SUCCESS')
     console.log(res)
     let normalizedData = normalize(res.data)
-    console.log('normalizedData', normalizedData)
     let user = normalizedData.user[userId].attributes
     user.hasAllRequiredFields = user.phone && user.latitude && user.longitude
     user.networkCode = 'brooklyn-events' // give everyone the new network code

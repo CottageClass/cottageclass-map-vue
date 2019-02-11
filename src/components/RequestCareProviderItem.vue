@@ -1,72 +1,51 @@
 <template>
-  <router-link :to="{ name: 'ProviderProfile', params: { id: person.id }}">
-  <span class="body">
-      <div class="landing-page-list-item-header">
-    <div class="avatar-name-container"><AvatarImage :person="person" className="image" />
-      <div class="list-item-3-heading">
-        <h5 class="heading">{{ person.firstName }} {{ person.lastInitial }}.</h5>
+  <router-link :to="{ name: 'ProviderProfile', params: { person, id: person.id }}">
+  <span class="'body'">
+    <div class="landing-page-list-item-header">
+      <div class="avatar-name-container">
+        <AvatarImage :person="person" class="avatar-image" />
+        <div class="list-item-3-heading">
+          <h5 class="heading">{{ person.firstName }} {{ person.lastInitial }}.</h5>
+        </div>
       </div>
-    </div><router-link :to="{ name: 'RequestModal', params: { id: person.id }}"  class="button-send-message w-inline-block"><img src="../assets/request-care-blue.svg" class="image-4"><div class="list-item-1-button">Ask</div></router-link></div>
-  <Images :person="person" />
-  <div class="list-item-container-2">
+      <router-link
+          :to="{ name: 'RequestModal', params: { id: person.id }}"
+          class="button-send-message w-inline-block"
+      >
+        <img src="../assets/request-care-blue.svg" class="image-4">
+        <div class="list-item-1-button">
+          Ask
+        </div>
+      </router-link>
+    </div>
+    <Images :person="person" />
+
     <div class="title-bar-and-action-v2">
       <div class="div-block-7">
         <div class="name-and-caption">
-          <h5 v-if="person.job && person.job.employer" class="caption">{{ person.title }} <span v-if="person.job.employer">at {{ person.employer }}</span></h5>
+          <h5 v-if="person.job && person.job.employer" class="caption">{{ person.title }}
+            <span v-if="person.job.employer">at {{ person.employer }}</span>
+          </h5>
         </div>
       </div>
-
-<h5 class="caption" v-if="person.children.length">
+      <h5 class="caption" v-if="person.children.length">
         <ChildInfo :children="person.children" />
-</h5>
-
-      <!-- Background check -->
-
-        <div class="providerp-background-check-badge-container2" v-if="person.verified">
-        <div class="providerp-background-check-badge"><img src="../assets/check-green.svg" alt="" class="checkmark-image">
-          <div class="background-check-text">Background checked</div>
-        </div>
-      </div>
-
-      <div class="tag-group-container" v-if="person.activities.length"><img src="../assets/tag.svg" class="image-tag">
-        <div class="tags-container" v-for="activity in person.activities">
-          <div class="tag">
-            <div class="small-text-upper-black-40">{{ activity }}</div>
-          </div>
-      </div>
-      </div>
-      <div class="time-group-container"><img src="../assets/time.svg" class="image-time">
-        <div class="times-container">
-          <div class="time" v-if="person.availableMornings">
-            <div class="time-tags">9a–3p</div>
-          </div>
-          <div class="time" v-if="person.availableAfternoons">
-            <div class="time-tags">3p–7p</div>
-          </div>
-          <div class="time" v-if="person.availableEvenings">
-            <div class="time-tags">7p-</div>
-          </div>
-          <div class="time" v-if="person.availableWeekends">
-            <div class="time-tags">WEEKENDS</div>
-          </div>
-        </div>
-      </div>
-      <div class="list-item-content-container"></div>
+      </h5>
+      <ProviderInfo :person="person" />
     </div>
-  </div>
   </span>
 </router-link>
 </template>
 
 <script>
 import Images from './Images.vue'
-import AvatarImage from './AvatarImage.vue'
-import ChildInfo from '@/components/ChildInfo.vue'
+import AvatarImage from '@/components/base/AvatarImage'
+import ProviderInfo from '@/components/base/ProviderInfo.vue'
 
 export default {
-  name: 'Provider',
-  props: ['person', 'id'],
-  components: { Images, AvatarImage, ChildInfo }
+  name: 'RequestCareProviderItem',
+  props: ['person'],
+  components: { Images, AvatarImage, ProviderInfo },
 }
 </script>
 
@@ -78,27 +57,9 @@ export default {
   line-height: 20px;
 }
 
-.times-container {
-  width: 100%;
-}
-
-.time {
-  display: inline-block;
-  margin-right: 6px;
-  margin-bottom: 6px;
-  padding: 4px 6px;
-  clear: none;
-  border-radius: 2px;
-  background-color: rgba(100, 66, 107, .2);
-}
-
-.time-tags {
-  margin-top: 1px;
-  color: #64426b;
-  font-size: 9px;
-  line-height: 9px;
-  font-weight: 700;
-  letter-spacing: 1.03px;
+.body-large>div
+ {
+  background-color: #d1e3f0;
 }
 
 a {
@@ -133,10 +94,10 @@ img {
   border-bottom-width: 1px;
   border-bottom-color: rgba(0, 0, 0, .1);
   border-radius: 4px;
-  background-color: #fff;
+  background-color: #1c8be7;
 }
 
-.image {
+.avatar-image {
   width: 40px;
   height: 40px;
   border-radius: 100px;
@@ -205,6 +166,32 @@ img {
   letter-spacing: 1.2px;
   text-decoration: none;
   text-transform: uppercase;
+}
+
+.button-invite {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  margin-top: 100px;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+  -webkit-flex-direction: row;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  -webkit-box-pack: end;
+  -webkit-justify-content: flex-end;
+  -ms-flex-pack: end;
+  justify-content: flex-end;
+  -webkit-align-items: center;
+  -ms-flex-align: center;
+  align-items: center;
+  border-radius: 4px;
+  border: 1px;
+  border-color:#333;
+  padding: 9px 24px;
+  background-color:#71e0a1;
+  font-size: 15px;
 }
 
 .button-send-message {
@@ -325,40 +312,8 @@ img {
   font-weight: 700;
 }
 
-.time-block {
-  color: #2b8eea;
-  font-size: 16px;
-}
-
 .image-3 {
   padding-left: 9px;
-}
-
-.list-item-container-2 {
-  position: relative;
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  margin-bottom: 8px;
-  padding-bottom: 16px;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-  -webkit-flex-direction: column;
-  -ms-flex-direction: column;
-  flex-direction: column;
-  -webkit-box-pack: justify;
-  -webkit-justify-content: space-between;
-  -ms-flex-pack: justify;
-  justify-content: space-between;
-  -webkit-box-align: start;
-  -webkit-align-items: flex-start;
-  -ms-flex-align: start;
-  align-items: flex-start;
-  border-style: none none solid;
-  border-bottom-width: 1px;
-  border-bottom-color: rgba(0, 0, 0, .1);
-  background-color: #fff;
 }
 
 .title-bar-and-action {
@@ -410,16 +365,6 @@ img {
   align-items: flex-start;
 }
 
-.tag {
-  display: inline-block;
-  margin-right: 4px;
-  margin-bottom: 4px;
-  padding: 4px 6px;
-  clear: none;
-  border-radius: 2px;
-  background-color: rgba(0, 0, 0, .1);
-}
-
 .small-text-upper-black-40 {
   margin-top: 1px;
   color: rgba(0, 0, 0, .4);
@@ -430,20 +375,6 @@ img {
   text-transform: uppercase;
 }
 
-.times-container {
-  width: 100%;
-}
-
-.time {
-  display: inline-block;
-  margin-right: 4px;
-  margin-bottom: 4px;
-  padding: 4px 6px;
-  clear: none;
-  border-radius: 2px;
-  background-color: rgba(100, 66, 107, .2);
-}
-
 .image-tag {
   margin-top: 1px;
   margin-right: 6px;
@@ -452,31 +383,6 @@ img {
 .image-time {
   margin-top: 2px;
   margin-right: 6px;
-}
-
-.tag-group-container {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  margin-top: 6px;
-  margin-bottom: 8px;
-  -webkit-box-align: start;
-  -webkit-align-items: flex-start;
-  -ms-flex-align: start;
-  align-items: flex-start;
-  flex-wrap: wrap;
-}
-
-.time-group-container {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-align: start;
-  -webkit-align-items: flex-start;
-  -ms-flex-align: start;
-  align-items: flex-start;
 }
 
 .name-and-caption {
@@ -734,36 +640,8 @@ img {
   text-align: center;
 }
 
-.providerp-background-check-badge {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  padding: 5px 10px;
-  -webkit-box-align: center;
-  -webkit-align-items: center;
-  -ms-flex-align: center;
-  align-items: center;
-  border-radius: 500px;
-  background-color: rgba(12, 186, 82, .2);
-}
-
-.background-check-text {
-  margin-top: 1px;
-  color: #0dba52;
-  font-size: 10px;
-  line-height: 9px;
-  font-weight: 700;
-  letter-spacing: 1.5px;
-  text-transform: uppercase;
-}
-
 .checkmark-image {
   margin-right: 8px;
-}
-
-.providerp-background-check-badge-container {
-  margin-bottom: 6px;
 }
 
 .providerp-avatar-name-group {
@@ -1114,11 +992,6 @@ img {
   align-items: center;
 }
 
-.providerp-background-check-badge-container2 {
-  margin-top: 8px;
-  margin-bottom: 6px;
-}
-
 .landing-page-list-item-header {
   display: -webkit-box;
   display: -webkit-flex;
@@ -1154,25 +1027,6 @@ img {
     -webkit-justify-content: flex-start;
     -ms-flex-pack: start;
     justify-content: flex-start;
-  }
-
-  .tag {
-    clear: both;
-  }
-
-  .time {
-    clear: both;
-  }
-
-  .tag-group-container {
-    display: -webkit-box;
-    display: -webkit-flex;
-    display: -ms-flexbox;
-    display: flex;
-    -webkit-box-align: start;
-    -webkit-align-items: flex-start;
-    -ms-flex-align: start;
-    align-items: flex-start;
   }
 
   .name-and-caption {
