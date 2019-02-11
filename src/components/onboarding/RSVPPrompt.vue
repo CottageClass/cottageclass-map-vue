@@ -1,24 +1,24 @@
 <template>
-<OnboardingStyleWrapper styleIs="onboarding">
-  <div class="onb-body">
-    <div class="body">
-      <div class="content-wrapper">
-        <Nav
+  <OnboardingStyleWrapper styleIs="onboarding">
+    <div class="onb-body">
+      <div class="body">
+        <div class="content-wrapper">
+          <Nav
             @next="$emit('activateScreen', 'inviteOthers')"
             hidePrevious="true"
-          />
+            />
           <Question
-              title="RSVP to a playdate near you"
-              subtitle="Would you like to RSVP to one of these upcoming playdates in your area?"
-          />
+            title="RSVP to a playdate near you"
+            subtitle="Would you like to RSVP to one of these upcoming playdates in your area?"
+            />
           <EventList
-              :events="events"
-              :showDates="false"
-        />
+            :events="events"
+            :showDates="false"
+            />
+        </div>
       </div>
     </div>
-  </div>
-</OnboardingStyleWrapper>
+  </OnboardingStyleWrapper>
 </template>
 
 <script>

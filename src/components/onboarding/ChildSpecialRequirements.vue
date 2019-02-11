@@ -1,36 +1,23 @@
 <template>
   <OnboardingStyleWrapper styleIs="onboarding">
-
-    <!-- wrapper for desktop screens -->
-
     <div class="onb-body">
       <div class="body">
         <div class="content-wrapper">
-
-  <!-- nav -->
-
-      <Nav :button="nextButtonState" @next="nextStep" @prev="prevStep" />
-
-  <!-- error message -->
-
-      <ErrorMessage v-if="error && showError" :text="error" />
-
-    <Question
-  title="Allergies & special requirements"
-  subtitle="Please enter any allergies, dietary restrictions, or special needs that you would like to share with the host.">
-    <ManyFormFieldGroups
-    :labels="labels"
-    :names="names"
-    :placeholders="placeholders"
-    :types="types"
-    :headings="headings"
-    v-model="childrenSpecialRequirements"
-    />
-  </Question>
-</div>
-</div>
-</div>
-</OnboardingStyleWrapper>
+          <Nav :button="nextButtonState" @next="nextStep" @prev="prevStep" />
+          <ErrorMessage v-if="error && showError" :text="error" />
+          <Question
+            title="Allergies & special requirements"
+            subtitle="Please enter any allergies, dietary restrictions, or special needs that you would like to share with the host.">
+            <ManyFormFieldGroups
+              :fieldGroups="fieldGroups"
+              :headings="headings"
+              v-model="childrenSpecialRequirements"
+            />
+          </Question>
+        </div>
+      </div>
+    </div>
+  </OnboardingStyleWrapper>
 </template>
 
 <script>
@@ -46,10 +33,26 @@ export default {
   components: { ManyFormFieldGroups, Nav, OnboardingStyleWrapper, Question },
   data () {
     return {
-      labels: ['Allergies', 'Dietary Restrictions', 'Special Needs'],
-      placeholders: ['(Leave blank if none)', '(Leave blank if none)', '(Leave blank if none)'],
-      types: ['text', 'text', 'text'],
-      names: ['allergies', 'dietaryRestrictions', 'specialNeeds'],
+      fieldGroups: [
+        {
+          label: 'Allergies',
+          placeholder: '(Leave blank if none)',
+          type: 'text',
+          name: 'allergies'
+        },
+        {
+          label: 'Dietary Restrictions',
+          placeholder: '(Leave blank if none)',
+          type: 'text',
+          name: 'dietaryRestrictions'
+        },
+        {
+          label: 'Special Needs',
+          placeholder: '(Leave blank if none)',
+          type: 'text',
+          name: 'specialNeeds'
+        }
+      ],
       showError: false,
       eventId: this.$route.params.eventId,
       error: 'This is an error',
@@ -86,7 +89,15 @@ export default {
   methods: {
     nextStep: function () {
       this.submitChildSpecialRequirements()
-      this.$router.push('/rsvp/' + this.eventId + '/emergency-info-complete')
+      this.$router.push({
+        name: 'RsvpInfoCollection',
+        params: {
+          eventId: this.eventId
+        },
+        query: {
+          emergencyInfoComplete: 'true'
+        }
+      })
     },
     prevStep: function () {
       this.$router.go(-1)

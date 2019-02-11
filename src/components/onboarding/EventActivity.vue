@@ -1,12 +1,13 @@
 <template>
-  <Question 
-  title="Choose your activity"
-  subtitle="All members must provide one activity per month. These tried-and-true options work great, and we'll walk you through whichever one you choose.">
-     <MultipleChoice 
-     type="radio" 
-     v-model="activitySelected" 
-     :choices="activities" /> 
-    </Question>
+  <Question
+    title="Choose your activity"
+    subtitle="All members must provide one activity per month. These tried-and-true options work great, and we'll walk you through whichever one you choose.">
+    <MultipleChoice
+      type="radio"
+      v-model="activitySelected"
+      :choices="activities"
+    />
+  </Question>
 </template>
 
 <script>

@@ -5,15 +5,12 @@
         v-for="(object, index) in objects"
         class="onb-child-group-2">
           <FormFieldGroup
-          :names="names"
-          :key="objects[index].key"
-          :labels="labels"
-          :placeholders="placeholders"
-          :heading="headingWord ? headingWord + ' ' + (index + 1) : headings ? headings[index] : ''"
-          :types="types"
-          v-model="objects[index]"
-          @remove="removeGroup(index)"
-          :showRemoveButton="addAndRemove"
+            :fieldGroups="fieldGroups"
+            :key="object.key"
+            :heading="headingWord ? headingWord + ' ' + (index + 1) : headings ? headings[index] : ''"
+            v-model="objects[index]"
+            @remove="removeGroup(object.key)"
+            :showRemoveButton="addAndRemove"
           />
         </div>
       </form>
@@ -27,13 +24,24 @@
     </span>
  </template>
 <script>
+/*
+ * This component is for when you need multiple forms that collect identical information, like child info, or emergency contacts. It lets you determine the number of forms, or (if addAndRemove === true) it lets the user add them ad hoc depending on, say, how many kids they have or contacts they want to add.
+*/
+
 import FormFieldGroup from '@/components/onboarding/FormFieldGroup.vue'
 var _ = require('lodash/core')
 
 export default {
   name: 'ManyFormFieldGroups',
   components: { FormFieldGroup },
-  props: ['value', 'labels', 'placeholders', 'headingWord', 'headings', 'names', 'types', 'addAndRemove'],
+  props:
+    [
+      'value',
+      'headingWord', // e.g. 'Child' which will become 'Child 1', 'Child 2', etc
+      'headings', // a list of headings e.g. Mary, Alice
+      'addAndRemove', // if true, the user can add and remove field groups.
+      'fieldGroups' // an array of objects { name: '', label: '', placeholder: '', type: ''}
+    ],
   data () {
     return {
       objects: this.value
@@ -46,18 +54,24 @@ export default {
   },
   computed: {
     anEmptyObject: function () {
-      return this.names.reduce(function (obj, name) {
-        return { ...obj, [name]: '' }
+      return this.fieldGroups.reduce(function (obj, aFieldGroup) {
+        return { ...obj, [aFieldGroup.name]: '' }
       }, {})
+    },
+    objectsWithKeysRemoved: function () {
+      return this.objects.map(obj => {
+        let newObj = JSON.parse(JSON.stringify(obj))
+        delete newObj.key
+        return newObj
+      })
     }
   },
   methods: {
     add: function () {
       this.objects.push(this.newObject())
     },
-    removeGroup: function (index) {
-      console.log('removing' + index, this.objects[index])
-      this.objects.splice(index, 1)
+    removeGroup: function (key) {
+      this.objects = this.objects.filter(obj => obj.key !== key)
     },
     newObject: function () {
       let obj = JSON.parse(JSON.stringify(this.anEmptyObject))
@@ -66,13 +80,8 @@ export default {
     }
   },
   watch: {
-    objects: function () {
-      function removeKey (obj) {
-        let newObject = obj
-        delete newObject.key
-        return newObject
-      }
-      this.$emit('input', this.objects.map(removeKey))
+    objectsWithKeysRemoved: function () {
+      this.$emit('input', this.objectsWithKeysRemoved)
     }
   }
 }

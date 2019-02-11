@@ -222,7 +222,6 @@ export function fetchCurrentUser (userId) {
     console.log('FETCH CURRENT USER SUCCESS')
     console.log(res)
     let normalizedData = normalize(res.data)
-    console.log('normalizedData', normalizedData)
     let user = normalizedData.user[userId].attributes
     user.hasAllRequiredFields = user.phone && user.latitude && user.longitude
     user.networkCode = 'brooklyn-events' // give everyone the new network code

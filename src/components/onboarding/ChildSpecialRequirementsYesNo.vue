@@ -1,15 +1,14 @@
 <template>
   <OnboardingStyleWrapper styleIs="onboarding">
-    <!-- wrapper for desktop screens -->
     <div class="onb-body">
       <div class="body">
         <div class="content-wrapper">
           <Nav :button="nextButtonState" @next="nextStep" @prev="prevStep" />
           <ErrorMessage v-if="error && showError" :text="error" />
           <YesOrNo
-          v-model="childHasSpecialNeeds"
-          question="Allergies and Special Requirements"
-          description="Do any of your children have allergies, dietary restrictions, or special needs that you would like to share with the host?" />
+            v-model="childHasSpecialNeeds"
+            question="Allergies and Special Requirements"
+            description="Do any of your children have allergies, dietary restrictions, or special needs that you would like to share with the host?" />
         </div>
       </div>
     </div>
@@ -38,9 +37,22 @@ export default {
       if (this.childHasSpecialNeeds.err) {
         this.showError = true
       } else if (this.childHasSpecialNeeds.isTrue) {
-        this.$router.push('/onboarding/child-special-requirements-2/' + this.eventId)
+        this.$router.push({
+          name: 'ChildSpecialRequirements',
+          params: {
+            eventId: this.eventId
+          }
+        })
       } else {
-        this.$router.push('/rsvp/' + this.eventId + '/emergency-info-complete')
+        this.$router.push({
+          name: 'RsvpInfoCollection',
+          params: {
+            eventId: this.eventId
+          },
+          query: {
+            emergencyInfoComplete: 'true'
+          }
+        })
       }
     },
     prevStep: function () {

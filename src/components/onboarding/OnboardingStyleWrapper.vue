@@ -1,5 +1,7 @@
 <template>
-<span :class="[styleIs]"><slot></slot></span>
+  <span :class="[styleIs]">
+    <slot></slot>
+  </span>
 </template>
 
 <script>

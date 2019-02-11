@@ -1,37 +1,24 @@
 <template>
   <OnboardingStyleWrapper styleIs="onboarding">
-
-    <!-- wrapper for desktop screens -->
-
     <div class="onb-body">
       <div class="body">
         <div class="content-wrapper">
-
-  <!-- nav -->
-
-      <Nav :button="nextButtonState" @next="nextStep" @prev="prevStep" />
-
-  <!-- error message -->
-
-      <ErrorMessage v-if="error && showError" :text="error" />
-
-    <Question
-  title="Emergency Contacts"
-  subtitle="Please provide at least one emergency contact. If possible, include your children's primary care physician.">
-    <ManyFormFieldGroups
-    :labels="labels"
-    :names="names"
-    :placeholders="labels"
-    :types="types"
-    headingWord="Contact"
-    v-model="contacts"
-    addAndRemove="true"
-    />
-  </Question>
-</div>
-</div>
-</div>
-</OnboardingStyleWrapper>
+          <Nav :button="nextButtonState" @next="nextStep" @prev="prevStep" />
+          <ErrorMessage v-if="error && showError" :text="error" />
+          <Question
+            title="Emergency Contacts"
+            subtitle="Please provide at least one emergency contact. If possible, include your children's primary care physician.">
+            <ManyFormFieldGroups
+              :fieldGroups="fieldGroups"
+              headingWord="Contact"
+              v-model="contacts"
+              addAndRemove="true"
+            />
+          </Question>
+        </div>
+      </div>
+    </div>
+  </OnboardingStyleWrapper>
 </template>
 
 <script>
@@ -50,12 +37,28 @@ export default {
     return {
       contacts: [],
       nextButtonState: 'next',
-      labels: ['Full Name', 'Phone Number', 'Relationship to Child'],
-      types: ['text', 'tel', 'text'],
-      names: ['name', 'phoneNumber', 'relationship'],
+      fieldGroups: [
+        {
+          label: 'Full Name',
+          placeholder: 'Full Name',
+          type: 'text',
+          name: 'name'
+        },
+        {
+          label: 'Phone Number',
+          placeholder: 'Phone Number',
+          type: 'tel',
+          name: 'phoneNumber'
+        },
+        {
+          label: 'Relationship to Child',
+          placeholder: 'Relationship to Child',
+          type: 'text',
+          name: 'relationship'
+        }],
       showError: false,
       error: 'To be safe, please provide your host with at least one emergency contact.',
-      eventId: this.$route.params.eventId,
+      eventId: this.$route.params.eventId
     }
   },
   computed: {
@@ -76,7 +79,12 @@ export default {
       }
     },
     prevStep: function () {
-      this.$router.go(-1)
+      this.$router.push({
+        name: 'EventPage',
+        params: {
+          id: this.eventId
+        }
+      })
     },
     submitEmergencyContactsForChildren: function () {
       this.children.forEach(child => api.submitEmergencyContacts(child.id, this.contacts))

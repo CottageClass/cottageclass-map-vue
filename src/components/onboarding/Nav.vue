@@ -1,15 +1,18 @@
 <template>
   <div class="body onb-body">
-  <div class="title-bar">
-    <a
+    <div class="title-bar">
+      <a
         @click="$emit('prev')"
         v-bind:class="['button-back', 'w-inline-block', {'button-hidden': hidePrevious}]">
-    </a>
-  <a v-if="button !== 'none'" @click="$emit('next')" :class="classObject">
-    <div class="button-next-text">{{ text }}</div>
-  </a>
-</div>
-</div>
+      </a>
+      <a
+        v-if="button !== 'none'"
+        @click="$emit('next')"
+        :class="classObject">
+      <div class="button-next-text">{{ text }}</div>
+      </a>
+    </div>
+  </div>
 </template>
 
 <script>

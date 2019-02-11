@@ -1,10 +1,12 @@
 <template>
-  <Question :title="question" :subtitle="description">
-         <MultipleChoice
-     type="radio"
-     v-model="yesOrNo"
-     :choices="['yes', 'no']" />
-     <slot></slot>
+  <Question
+    :title="question"
+    :subtitle="description">
+    <MultipleChoice
+      type="radio"
+      v-model="yesOrNo"
+      :choices="['yes', 'no']" />
+    <slot></slot>
   </Question>
 </template>
 

@@ -1,20 +1,20 @@
 <template>
-  <Question title="What is the name of your event?" subtitle="Be sure to give your event a descriptive and appealing title.">
-        <form v-on:submit.prevent>
-          <input
-          @keyup.enter="$emit('pressedEnter')"
-          v-model="name"
-          type="text"
-          class="w-input location-text-field"
-          maxlength="288"
-          >
-        </form>
+  <Question
+    title="What is the name of your event?"
+    subtitle="Be sure to give your event a descriptive and appealing title.">
+    <form v-on:submit.prevent>
+      <input
+        @keyup.enter="$emit('pressedEnter')"
+        v-model="name"
+        type="text"
+        class="w-input location-text-field"
+        maxlength="288">
+    </form>
   </Question>
 </template>
 
 <script>
 import Question from '@/components/onboarding/Question.vue'
-
 
 export default {
   name: 'EventName',
@@ -22,7 +22,7 @@ export default {
   components: { Question },
   data () {
     return {
-      name: this.value,
+      name: this.value
     }
   },
   watch: {

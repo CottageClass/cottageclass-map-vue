@@ -60,18 +60,19 @@ export default {
       error: '',
       eventId: this.$route.params.eventId,
       event: false,
-      emergencyInfoJustCompleted: this.$route.params.emergencyInfoComplete === 'emergency-info-complete',
+      emergencyInfoJustCompleted: this.$route.query.emergencyInfoComplete === 'true',
       isAuthenticated: this.$auth.isAuthenticated()
     }
   },
-  mounted: function () {
+  created: function () {
     this.redirectToSignupIfNotAuthenticated()
     this.redirectToOnboardingIfNotOnboarded()
     if (!this.emergencyInfoJustCompleted) {
-      console.log('complete?', this.$route.params.emergencyInfoComplete)
       this.redirectToEmergencyContactsIfNone()
     }
     this.showErrorIfUserHasNoChildren()
+  },
+  mounted: function () {
     // get data about the current event to determine max attendees.
     this.fetchEventInformation()
   },
@@ -151,7 +152,10 @@ export default {
     },
     redirectToEmergencyContactsIfNone: function () {
       if (!this.childrenHaveEmergencyContacts) {
-        this.$router.push('/onboarding/emergency-contacts/' + this.eventId)
+        this.$router.push({
+          name: 'EmergencyContacts',
+          params: { eventId: this.eventId }
+        })
       }
     },
     calculateAge: function (birthdate) {
@@ -195,7 +199,7 @@ export default {
         component.forgetRsvpAttempted()
         this.$store.commit('setAlert', {
           alert: {
-            message: "Congratulations, you have RSVP&apos;ed to this event! If you haven't yet, please fill out our <a href=&quot;https://cottageclass1.typeform.com/to/Z6pwkl&quot;>emergency information form</a>.",
+            message: "Congratulations, you have RSVP&apos;ed to this event! You&apos;ll soon receive an email confirming your RSVP.",
             status: 'success'
           }
         })
