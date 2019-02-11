@@ -11,7 +11,7 @@
         <div class="host-info"><router-link :to="{ name: 'ProviderProfile', params: { id: event.hostId }}"><AvatarImage className="avatar-large" :person="{facebookId: event.hostFacebookUid, avatar: event.hostAvatar}"/></router-link>
           <div class="host-info-wrapper">
             <div class="hosted-by">Hosted by <router-link :to="{ name: 'ProviderProfile', params: { id: event.hostId }}" class="host">{{ event.hostFirstName }}</router-link> &amp;
-            <ChildAges :childAges="event.hostChildAges" singular="kid" plural="kids"/><span v-if="event.participants.length > 0"> with <span v-if="event.participants.length === 1"><router-link class="host" :to="{ name: 'ProviderProfile', params: { id: event.participants[0].id }}">one family</router-link> attending.</span><span v-else>{{ event.participants.length }} RSVP's: <span v-for="(participant, index) in event.participants"><router-link class="host" :to="{ name: 'ProviderProfile', params: { id: participant.id }}">{{ index + 1 }}</router-link><span v-if="index > event.participants.length - 1">, </span></span></span></span><span v-else>.</span></div>
+            <ChildAges :childAges="event.hostChildAges" singular="kid" plural="kids"/><span v-if="event.participants && event.participants.length > 0"><Participants :participants="event.participants" /></span><span v-else>.</span></div>
             <div v-if="event.hostVerified" class="background-checked-wrapper"><img src="@/assets/check-green.svg" alt="">
               <div class="background-checked">Background Checked</div>
             </div>
@@ -123,13 +123,14 @@ import MainNav from './MainNav.vue'
 import Footer from '@/components/Footer.vue'
 import EventCategoryIcon from '@/components/EventCategoryIcon.vue'
 import ChildAges from '@/components/ChildAges.vue'
+import Participants from '@/components/Participants.vue'
 import { mapGetters } from 'vuex'
 
 var moment = require('moment')
 
 export default {
   name: 'EventPage',
-  components: { AvatarImage, RsvpButton, MainNav, Footer, EventCategoryIcon, EditButton, ChildAges },
+  components: { AvatarImage, RsvpButton, MainNav, Footer, EventCategoryIcon, EditButton, ChildAges, Participants },
   data () {
     return {
       events: [],
