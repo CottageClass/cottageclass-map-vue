@@ -4,7 +4,7 @@
       <div class="body">
         <div class="content-wrapper">
           <Nav
-            @next="$emit('activateScreen', 'inviteOthers')"
+            @next="nextStep"
             hidePrevious="true"
             button="skip"
             />
@@ -12,7 +12,7 @@
             title="RSVP to a playdate near you"
             subtitle="Would you like to RSVP to one of these upcoming playdates in your area?">
             <EventList
-              :events="events"
+              :events="eventsNotBelongingToCurrentUser"
               :showDates="false"
               />
           </Question>
@@ -28,6 +28,7 @@ import EventList from '../EventList.vue'
 import * as api from '@/utils/api.js'
 import OnboardingStyleWrapper from './OnboardingStyleWrapper.vue'
 import Nav from '@/components/onboarding/Nav.vue'
+import { mapGetters } from 'vuex'
 
 export default {
   name: 'RSVPPrompt',
@@ -39,16 +40,27 @@ export default {
       noNearbyEvents: false
     }
   },
+  computed: {
+    eventsNotBelongingToCurrentUser: function () {
+      return this.events.filter(event => event.hostId != this.currentUser.id)
+    },
+    ...mapGetters([ 'currentUser' ])
+  },
+  methods: {
+    nextStep: function () {
+      this.$emit('activateScreen', 'inviteOthers')
+    }
+  },
   mounted: function () {
-    api.fetchUpcomingEventsWithinDistance(5).then(res => {
+    api.fetchUpcomingEventsWithinDistance(10, this.currentUser.latitude, this.currentUser.longitude).then(res => {
       if (res.length > 0) {
         this.events = res
       } else {
-        api.fetchUpcomingEventsWithinDistance(50).then(res => {
+        api.fetchUpcomingEventsWithinDistance(50, this.currentUser.latitude, this.currentUser.longitude).then(res => {
           if (res.length > 0) {
             this.events = res
           } else {
-            this.noNearbyEvents = true
+            this.nextStep()
           }
         })
       }
