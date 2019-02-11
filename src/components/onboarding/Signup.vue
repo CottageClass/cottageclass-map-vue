@@ -64,6 +64,7 @@
                     placeholder="e.g. your-email@example.com"
                     :class="{'invalid': errors.has('email') }"
                     class="name-text-field w-input"
+                    type="email"
                     >
                     <label class="onb-field-label">Password</label>
                     <input
@@ -239,7 +240,7 @@ export default {
             let first_name =
               component.first_name && component.first_name.trim()
             let last_name = component.last_name && component.last_name.trim()
-            let email = component.email && component.email.trim()
+            let email = component.email && component.email.trim().toLowerCase()
             let password = component.password && component.password.trim()
             let avatar = component.avatar_url && component.avatar_url.trim()
 
