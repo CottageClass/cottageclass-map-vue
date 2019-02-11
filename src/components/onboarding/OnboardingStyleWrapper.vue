@@ -458,32 +458,6 @@ a {
   padding-left: 9px;
 }
 
-.list-item-container-2 {
-  position: relative;
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  margin-bottom: 8px;
-  padding-bottom: 16px;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-  -webkit-flex-direction: column;
-  -ms-flex-direction: column;
-  flex-direction: column;
-  -webkit-box-pack: justify;
-  -webkit-justify-content: space-between;
-  -ms-flex-pack: justify;
-  justify-content: space-between;
-  -webkit-box-align: start;
-  -webkit-align-items: flex-start;
-  -ms-flex-align: start;
-  align-items: flex-start;
-  border-style: none none solid;
-  border-bottom-width: 1px;
-  border-bottom-color: rgba(0, 0, 0, .1);
-  background-color: #fff;
-}
 
 .list-item-content-container {
   display: -webkit-box;

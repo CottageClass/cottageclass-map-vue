@@ -67,7 +67,8 @@ export default new Router({
     {
       path: '/provider-profile/:id',
       name: 'ProviderProfile',
-      component: ProviderProfile
+      component: ProviderProfile,
+      props: true
     },
     {
       path: '/event/:id/share',

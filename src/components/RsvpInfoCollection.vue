@@ -197,7 +197,7 @@ export default {
       // open event page where user will see success message
         component.sendNotifications()
         component.forgetRsvpAttempted()
-        this.$store.commit('setAlert', {
+        this.$store.commit('showAlertOnNextRoute', {
           alert: {
             message: "Congratulations, you have RSVP&apos;ed to this event! You&apos;ll soon receive an email confirming your RSVP.",
             status: 'success'

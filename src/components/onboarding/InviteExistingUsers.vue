@@ -1,0 +1,130 @@
+<template>
+<OnboardingStyleWrapper styleIs="onboarding">
+  <div class="onb-body">
+    <div class="body">
+      <div class="content-wrapper">
+        <Nav button="next" @next="sendInvites" @prev="$emit('prev')" />
+        <Alert v-if="alert" />
+        <div class="onb-content-container">
+          <div class="onb-top-content-container">
+            <h1 class="onb-heading-large">Build your village</h1>
+            <p class="onb-paragraph-subheading-2">
+              Invite some KidsClub members to your upcoming event.  Here are
+              some parents near you that might be interested.
+            </p>
+          </div>
+          <div class="onb-copy-link-container">
+            <div class="onb-copy-link-form-block w-form">
+              <div class="list-container full-width">
+                <InviteUserListItem v-for="person in users"
+                :isAllowedToTurnOn="recipientsSelected < maxRecipientsSelected"
+                :person="person"
+                :key="person.id"
+                v-on:stateSet="userItemStateSet"
+                v-on:disallowedSelection="userAttemptedDisallowedSelection"/>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</OnboardingStyleWrapper>
+</template>
+
+<script>
+import Nav from '@/components/onboarding/Nav.vue'
+import * as api from '@/utils/api.js'
+import OnboardingStyleWrapper from '@/components/onboarding/OnboardingStyleWrapper.vue'
+import InviteUserListItem from '@/components/onboarding/InviteUserListItem.vue'
+import { mapGetters } from 'vuex'
+import Alert from '@/components/Alert.vue'
+import alerts from '@/mixins/alerts.js'
+
+export default {
+  name: 'InviteExistingUsers',
+  components: { Nav, OnboardingStyleWrapper, InviteUserListItem, Alert },
+  props: [ 'eventData' ],
+  mixins: [alerts],
+  data () {
+    return {
+      users: null,
+      inviteStates: {},
+      maxRecipientsSelected: 3
+    }
+  },
+  methods: {
+    inviteClicked: function (userId) {
+      console.log(userId)
+    },
+    userItemStateSet: function (userId, state) {
+      console.log({ state, userId })
+      this.inviteStates[userId] = state
+    },
+    userAttemptedDisallowedSelection: function () {
+      this.showBriefAllert(`Sorry, you may only select a maximum of ${this.maxRecipientsSelected}`, 'failure')
+    },
+    sendInvites: function (person) {
+      const that = this
+      const requests = this.users
+        .filter(person => that.inviteStates[person.id])
+        .map(person => api.initProxySession(
+          that.currentUser.id,
+          person.id,
+          that.inviteMessage(person),
+          null
+        ))
+      Promise.all(requests).then(() => {
+        console.log('hi')
+        that.$router.push({ name: 'Home' })
+      }).catch(err => {
+        console.log(err)
+        that.showAlertOnNextRoute('There was a problem sending your invites', 'failure')
+        that.$router.push({ name: 'Home' })
+      })
+    }
+  },
+  mounted: function () {
+    const currentUser = this.currentUser
+    const that = this
+    api.fetchUsersWithinDistance(20, currentUser.latitude, currentUser.longitude).then(res => {
+      if (res.length > 0) {
+        that.users = res.filter(person => parseInt(person.id) !== currentUser.id)
+        // set the inviteStates object to all false
+        that.users.forEach(user => {
+          this.$set(that.inviteStates, user.id, false)
+        })
+      } else {
+        // there are no users within 20 miles so we return to home
+        this.$router.push({ name: 'Home' })
+      }
+    }).catch(err => console.log(err))
+  },
+  computed: {
+    inviteMessage: function () {
+      return function (invitee) {
+        return `Hi ${invitee.firstName}, ${this.currentUser.firstName} just joined and invited you to their first playdate. Are you interested? ${this.eventLink}`
+      }
+    },
+    eventLink: function () {
+      return `https://www.kidsclub.io/event/${this.firstEventId}`
+    },
+    firstEventId: function () {
+      return Object.keys(this.eventData.event).sort()[0]
+    },
+    recipientsSelected: function () {
+      const inviteStates = this.inviteStates
+      return this.users.reduce((sum, person) => {
+        return sum + (inviteStates[person.id] ? 1 : 0)
+      }, 0)
+    },
+    ...mapGetters(['currentUser', 'alert'])
+  }
+}
+</script>
+
+<style lang="scss" scoped>
+.full-width {
+  width:100%;
+}
+</style>

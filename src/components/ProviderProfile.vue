@@ -18,41 +18,7 @@
   </div>
   <div class="providerp-provider-info-bullets">
 
- <!-- background check -->
-
-    <div class="providerp-background-check-badge-container" v-if="person.backgroundCheck">
-      <div class="providerp-background-check-badge"><img src="../assets/check-white-14.svg" class="checkmark-image">
-        <div class="background-check-text">Background checked</div>
-      </div>
-    </div>
-
- <!-- activities -->
-
-      <div class="tag-group-container" v-if="person.activities.length"><img src="../assets/tag-24-2.svg" width="20" height="20" class="image-tag">
-        <div class="tags-container" v-for="activity in person.activities">
-          <div class="tag">
-            <div class="small-text-upper-black-40">{{ activity }}</div>
-          </div>
-      </div>
-      </div>
-
-<!-- Times -->
-      <div class="time-group-container"><img src="../assets/time-24-2.svg" width="20" height="20" class="image-time">
-        <div class="times-container">
-          <div class="time" v-if="person.availableMornings">
-            <div class="small-text-upper-purple">9a–3p</div>
-          </div>
-          <div class="time" v-if="person.availableAfternoons">
-            <div class="small-text-upper-purple">3p–7p</div>
-          </div>
-          <div class="time" v-if="person.availableEvenings">
-            <div class="small-text-upper-purple">7p-</div>
-          </div>
-          <div class="time" v-if="person.availableWeekends">
-            <div class="small-text-upper-purple">WEEKENDS</div>
-          </div>
-        </div>
-      </div>
+    <ProviderInfo :person="person" />
   </div>
 
 <!-- Photos -->
@@ -121,14 +87,20 @@
 <script>
 import Images from './Images.vue'
 import * as Token from '@/utils/tokens.js'
-import AvatarImage from './AvatarImage'
+import AvatarImage from '@/components/base/AvatarImage'
 import * as api from '@/utils/api.js'
 import networks from '@/assets/network-info.json'
 import ChildInfo from '@/components/ChildInfo.vue'
+import ProviderInfo from '@/components/base/ProviderInfo.vue'
 
 export default {
-  components: { Images, AvatarImage, ChildInfo },
+  components: { Images, AvatarImage, ChildInfo, ProviderInfo },
   name: 'ProviderProfile',
+  props: {
+    person: {
+      required: true
+    }
+  },
   methods: {
     getDirections: function (location) {
       window.open('https://www.google.com/maps?saddr=My+Location&daddr=' + location.lat + ',' + location.lng)
@@ -154,9 +126,6 @@ export default {
     network: function () {
       let networkId = Token.currentUserNetworkCode(this.$auth)
       return this.networks.find(network => network.stub === networkId)
-    },
-    person: function () {
-      return this.people.find(person => person.id === this.$route.params.id) // computes person. this isn't efficient but simplifies interaction with the API.
     }
   }
 }
