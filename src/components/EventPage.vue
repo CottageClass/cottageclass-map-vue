@@ -8,16 +8,10 @@
 
       <h1 class="event-detail-heading">{{ event.name }}</h1>
       <div class="action-bar">
-        <div class="host-info"><AvatarImage className="avatar-large" :person="{facebookId: event.hostFacebookUid, avatar: event.hostAvatar}"/>
+        <div class="host-info"><router-link :to="{ name: 'ProviderProfile', params: { id: event.hostId }}"><AvatarImage className="avatar-large" :person="{facebookId: event.hostFacebookUid, avatar: event.hostAvatar}"/></router-link>
           <div class="host-info-wrapper">
-            <div class="hosted-by">Hosted by <a href="#" class="host">{{ event.hostFirstName }}</a> &amp;
-            <span v-if="childAgesSorted.length === 1">1 kid {{  childAgesSorted[0] }}</span>
-          <span v-if="childAgesSorted.length === 2">2 kids ages {{ childAgesSorted[0] }} and {{ childAgesSorted[1] }}</span>
-          <span v-if="childAgesSorted.length > 2">{{ childAgesSorted.length }} kids ages
-            <span v-for="(age, index) in childAgesSorted">
-              <span v-if="index === childAgesSorted.length - 1"> and {{ age }}</span>
-              <span v-else> {{ age}}<span v-if="index !== childAgesSorted.length - 2">,</span></span>
-            </span></span><span v-if="event.participants.length > 0"> with <span v-if="event.participants.length === 1"><router-link class="host" :to="{ name: 'ProviderProfile', params: { id: event.participants[0].id }}">one family</router-link> attending.</span><span v-else>{{ event.participants.length }} families attending: <span v-for="(participant, index) in event.participants"><router-link class="host" :to="{ name: 'ProviderProfile', params: { id: participant.id }}">{{ index + 1 }}</router-link><span v-if="index > event.participants.length - 1">, </span></span></span></span></div>
+            <div class="hosted-by">Hosted by <router-link :to="{ name: 'ProviderProfile', params: { id: event.hostId }}" class="host">{{ event.hostFirstName }}</router-link> &amp;
+            <ChildAges :childAges="event.hostChildAges" singular="kid" plural="kids"/><span v-if="event.participants.length > 0"> with <span v-if="event.participants.length === 1"><router-link class="host" :to="{ name: 'ProviderProfile', params: { id: event.participants[0].id }}">one family</router-link> attending.</span><span v-else>{{ event.participants.length }} RSVP's: <span v-for="(participant, index) in event.participants"><router-link class="host" :to="{ name: 'ProviderProfile', params: { id: participant.id }}">{{ index + 1 }}</router-link><span v-if="index > event.participants.length - 1">, </span></span></span></span><span v-else>.</span></div>
             <div v-if="event.hostVerified" class="background-checked-wrapper"><img src="@/assets/check-green.svg" alt="">
               <div class="background-checked">Background Checked</div>
             </div>
@@ -79,18 +73,11 @@
         <div class="card-small-text">Pets</div>
         <div class="card-large-text">{{ event.petDescription }}</div>
       </div>
-      <div class="event-specifics-card"><AvatarImage className="avatar-x-large" :person="{facebookId: event.hostFacebookUid, avatar: event.hostAvatar}"/>
+
+      <div class="event-specifics-card"><router-link :to="{ name: 'ProviderProfile', params: { id: event.hostId }}" class="host"><AvatarImage className="avatar-x-large" :person="{facebookId: event.hostFacebookUid, avatar: event.hostAvatar}"/></router-link>
         <div class="card-small-text">Host</div>
         <div class="card-large-text">{{ event.hostFirstName }}</div>
-        <div v-if="childAgesSorted.length > 0" class="card-large-text-gray">Parent to
-          <span v-if="childAgesSorted.length === 1">one child age {{  childAgesSorted[0] }}.</span>
-          <span v-if="childAgesSorted.length === 2">two children ages {{ childAgesSorted[0] }} and {{ childAgesSorted[1] }}.</span>
-          <span v-if="childAgesSorted.length > 2">{{ childAgesSorted.length }} children ages
-            <span v-for="(age, index) in childAgesSorted">
-              <span v-if="index === childAgesSorted.length - 1"> and {{ age }}.</span>
-              <span v-else> {{ age}}<span v-if="index !== childAgesSorted.length - 2">,</span></span>
-            </span>
-          </span>
+        <div v-if="event.hostChildAges && event.hostChildAges.length > 0" class="card-large-text-gray">Parent to <ChildAges :childAges="event.hostChildAges" singular="child" plural="children" />.
         </div>
       </div>
 
@@ -135,13 +122,14 @@ import EditButton from './EditButton.vue'
 import MainNav from './MainNav.vue'
 import Footer from '@/components/Footer.vue'
 import EventCategoryIcon from '@/components/EventCategoryIcon.vue'
+import ChildAges from '@/components/ChildAges.vue'
 import { mapGetters } from 'vuex'
 
 var moment = require('moment')
 
 export default {
   name: 'EventPage',
-  components: { AvatarImage, RsvpButton, MainNav, Footer, EventCategoryIcon, EditButton },
+  components: { AvatarImage, RsvpButton, MainNav, Footer, EventCategoryIcon, EditButton, ChildAges },
   data () {
     return {
       events: [],
@@ -189,9 +177,6 @@ export default {
       } else {
         return null
       }
-    },
-    childAgesSorted: function () {
-      return this.event.hostChildAges.concat().sort((a, b) => a - b)
     },
     event: function () {
       if (Array.isArray(this.events)) {
@@ -667,6 +652,7 @@ h1 {
   border-radius: 50%;
   height: 60px;
   width: 60px;
+  max-width: unset;
 }
 
 .summary-info {

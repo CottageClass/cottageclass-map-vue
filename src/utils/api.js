@@ -215,6 +215,7 @@ export function fetchUsersWhoHaveMadeInquiries (currentUserId) {
 }
 
 // same as above but using 'normalize' json normalizer to correctly extract children
+// uses old API endpoint. todo: modify backend to provide all current user information if the current user themself is requesting it, then switch this to use newer /api/users/:id endpoint.
 export function fetchCurrentUser (userId) {
   return Vue.axios.get(
     `${process.env.BASE_URL_API}/users/${userId}`
@@ -244,6 +245,26 @@ export function fetchCurrentUser (userId) {
     return user
   }).catch(err => {
     console.log('FETCH CURRENT USER FAILURE')
+    console.log(err.errors)
+    throw err
+  })
+}
+
+// uses more recent API endpoint which for now only provides public user information
+
+export function fetchUser (userId) {
+  return Vue.axios.get(
+    `${process.env.BASE_URL_API}/api/users/${userId}`
+    ).then(res => {
+      console.log('FETCH USER #' + userId + ' SUCCESS')
+      console.log(res)
+      let normalizedData = normalize(res.data)
+      let user = normalizedData.user[userId].attributes
+      user.networkCode = 'brooklyn-events' // give everyone the new network code
+      user.id = userId
+      return user
+    }).catch(err => {
+    console.log('FETCH USER #' + userId + ' FAILURE')
     console.log(err.errors)
     throw err
   })

@@ -19,11 +19,11 @@
         </div>
     <div class="action-bar">
           <div class="host-info">
-            <AvatarImage class="avatar-small" :person="{facebookId: event.hostFacebookUid, avatar: event.hostAvatar}" />
+            <router-link :to="{ name: 'ProviderProfile', params: { id: event.hostId }}"><AvatarImage class="avatar-small" :person="{facebookId: event.hostFacebookUid, avatar: event.hostAvatar}" /></router-link>
             <div class="text-block">
               Hosted by
-              <a href="#" class="host-name link">{{ event.hostFirstName }}</a> &amp;
-              <ChildAges :childAges="event.hostChildAges" />.
+              <router-link :to="{ name: 'ProviderProfile', params: { id: event.hostId }}" class="host-name link">{{ event.hostFirstName }}</router-link> &amp;
+              <ChildAges :childAges="event.hostChildAges" singular="kid" plural="kids"/>.
       </div>
       </div>
           <RsvpButton v-if="showRsvpButton" :userParticipating="event.participated" :full="event.full" :eventId="event.id" />

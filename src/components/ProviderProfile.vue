@@ -1,14 +1,20 @@
 <template>
-<div class="body">
+  <OnboardingStyleWrapper styleIs="onboarding">
+    <!-- wrapper for desktop screens -->
+
+    <div class="onb-body">
+      <div class="body">
+        <div class="content-wrapper user-profile-wrapper">
     <div class="providerp-provider-info-section">
       <router-link :to="{ name: 'Home' }" class="providerp-button-back w-inline-block"><img src="../assets/Arrow-Back-2.svg">
-    </router-link><AvatarImage :person="user" class="providerp-avatar" />
-    <h1 class="providerp-h1">{{ user.firstName }} {{ user.lastInitial }}.</h1>
-
+    </router-link><AvatarImage :person="{facebookId: user.facebookUid, avatar: user.avatar}" className="avatar-large"/>
+    <h1 class="providerp-h1">{{ user.firstName }}</h1>
     <div class="providerp-occupation" v-if="user.title && user.employer">{{ user.title }} at {{ user.employer }}</div>
-    <div v-if="user.children.length > 0" class="providerp-children">
-        <ChildInfo :children="user.children" />
+    <div class="providerp-occupation">Member since {{ joinedDateFormatted }}</div>
+    <div v-if="user.childAges && user.childAges.length > 0" class="providerp-children">
+        Parent to <ChildAges :childAges="user.childAges" singular="child" plural="children" />.
       </div>
+
     <div v-if="user.blurb" class="providerp-chat-bubble-container">
       <div class="providerp-chat-bubble-caret"><img src="../assets/chat-bubble-caret.svg"></div>
       <div class="providerp-chat-bubble-primary">
@@ -20,7 +26,7 @@
 
  <!-- background check -->
 
-    <div class="providerp-background-check-badge-container" v-if="user.backgroundCheck">
+    <div class="providerp-background-check-badge-container" v-if="user.verified">
       <div class="providerp-background-check-badge"><img src="../assets/check-white-14.svg" class="checkmark-image">
         <div class="background-check-text">Background checked</div>
       </div>
@@ -28,7 +34,7 @@
 
  <!-- activities -->
 
-      <div class="tag-group-container" v-if="user.activities.length"><img src="../assets/tag-24-2.svg" width="20" height="20" class="image-tag">
+      <div class="tag-group-container" v-if="user.activities && user.activities.length > 0"><img src="../assets/tag-24-2.svg" width="20" height="20" class="image-tag">
         <div class="tags-container" v-for="activity in user.activities">
           <div class="tag">
             <div class="small-text-upper-black-40">{{ activity }}</div>
@@ -37,7 +43,7 @@
       </div>
 
 <!-- Times -->
-      <div class="time-group-container"><img src="../assets/time-24-2.svg" width="20" height="20" class="image-time">
+      <div v-if="userAvailableSometimes" class="time-group-container"><img src="../assets/time-24-2.svg" width="20" height="20" class="image-time">
         <div class="times-container">
           <div class="time" v-if="user.availableMornings">
             <div class="small-text-upper-purple">9a–3p</div>
@@ -66,19 +72,18 @@
  <!-- location with link to directions -->
 
   <div class="group-title-container-2">
-    <h5 class="list-title-2">Location</h5>
+    <h5 class="list-title-2"><span v-if="user.neighborhood">Neighborhood: {{ user.neighborhood }}</span><span v-else>Location</span></h5>
   </div>
 
-   <div class="map-container" @click="getDirections(user.location)">
+   <div class="map-container" @click="getDirections(userLocation)">
   <GmapMap
     :disableDefaultUI="true"
-    :center="user.location"
+    :center="userLocation"
     :zoom="13"
     :options="mapOptions"
     style="width: 100%; height: 230px;">
       <GmapMarker
-      :key="index"
-      :position="user.location"
+      :position="userLocation"
       :title="user.firstName"
       icon="https://storage.googleapis.com/cottageclass-prod/images/map-radius.png"
       />
@@ -95,8 +100,8 @@
 <!-- Leave a review -->
 
   <div class="providerp-post-comment-container"><a :href="'mailto:contact@cottageclass.com?subject=Great experience with ' + user.firstName + ' ' + user.lastInitial + '. (' + user.id + ')&body=(please%20describe%20your%20great%20experience%20here!)'" class="pprofile-compose-button w-inline-block"><img src="../assets/compose.svg" class="image-5"><div class="pprofile-comment-prompt-button-text">Post a great experience</div></a>
-    <div class="providerp-book-care-container">
-      <router-link :to="{ name: 'RequestModal', params: { id: user.id }}" class="pprovider-book-care-button w-inline-block"><img src="../assets/request-care-white.svg"><div class="pprovider-primary-action-text">Ask {{ user.firstName }}</div>
+    <div class="providerp-book-care-container" v-if="userAvailableSometimes">
+      <router-link :to="{ name: 'RequestModal', params: { id: user.id }}" class="pprovider-book-care-button w-inline-block"><img src="../assets/request-care-white.svg"><div class="pprovider-primary-action-text">Request childcare</div>
       </router-link>
     </div>
   </div>
@@ -116,6 +121,9 @@
   <div class="spacer-100px"></div>
 
 </div>
+</div>
+</div>
+</OnboardingStyleWrapper>
 </template>
 
 <script>
@@ -124,10 +132,12 @@ import * as Token from '@/utils/tokens.js'
 import AvatarImage from './AvatarImage'
 import * as api from '@/utils/api.js'
 import networks from '@/assets/network-info.json'
-import ChildInfo from '@/components/ChildInfo.vue'
+import ChildAges from '@/components/ChildAges.vue'
+import OnboardingStyleWrapper from '@/components/onboarding/OnboardingStyleWrapper.vue'
+import moment from 'moment'
 
 export default {
-  components: { Images, AvatarImage, ChildInfo },
+  components: { Images, AvatarImage, ChildAges, OnboardingStyleWrapper },
   name: 'ProviderProfile',
   methods: {
     getDirections: function (location) {
@@ -154,12 +164,32 @@ export default {
     network: function () {
       let networkId = 'brooklyn-events'
       return this.networks.find(network => network.stub === networkId)
+    },
+    userAvailableSometimes: function () {
+      return this.user.availableEvenings || this.user.availableMornings || this.user.availableAfternoons || this.user.availableWeekends
+    },
+    userLocation: function () {
+      return { lat: parseFloat(this.user.fuzzyLatitude), lng: parseFloat(this.user.fuzzyLongitude) }
+    },
+    joinedDateFormatted: function () {
+      return moment(this.user.createdAt).format('MMMM, YYYY')
     }
   }
 }
 
 </script>
 <style scoped>
+
+.avatar-large {
+  border-radius: 50%;
+  width: 100px;
+}
+
+.user-profile-wrapper {
+  padding-top: 0px !important;
+  background-color: #f2f2f2 !important;
+}
+
 .body {
   font-family: soleil, sans-serif;
   color: #333;
