@@ -263,7 +263,7 @@ export default {
       this.activeScreen = null
     },
     backFromInviteExistingStep: function () {
-      this.activeScreen('inviteOthers')
+      this.activateScreen('inviteOthers')
     },
     authenticate: function (provider) {
       /*
