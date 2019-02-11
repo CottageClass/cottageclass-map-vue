@@ -45,7 +45,7 @@ export default {
 
 .rsvp-button {
   background-color: #1f88e9 !important;
-  text-align: center;
+  text-align: center !important;
 }
 
 .button-sub-link {
@@ -79,13 +79,15 @@ export default {
 
 .full {
   background-color: transparent !important;
-  color: #ff672f;
+  color: #ff672f !important;
 }
 
 @media (max-width: 479px) {
   .button {
     width: 100%;
     margin-top: 20px;
+  }
+  .full {
     text-align: center !important;
   }
 }
