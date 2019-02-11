@@ -43,7 +43,9 @@ export default {
   },
   computed: {
     eventsNotBelongingToCurrentUser: function () {
-      return this.events.filter(event => event.hostId != this.currentUser.id)
+      return this.events.filter(event => {
+        return (event.full != 'false') && (event.hostId != this.currentUser.id)
+      })
     },
     ...mapGetters([ 'currentUser' ])
   },
