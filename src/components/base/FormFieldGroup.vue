@@ -20,7 +20,7 @@
 </template>
 
 <script>
-import FormFieldAndLabel from '@/components/onboarding/FormFieldAndLabel.vue'
+import FormFieldAndLabel from '@/components/base/FormFieldAndLabel.vue'
 export default {
   name: 'FormFieldGroup',
   components: { FormFieldAndLabel },

@@ -12,8 +12,8 @@
 </template>
 
 <script>
-import ManyFormFieldGroups from '@/components/onboarding/ManyFormFieldGroups.vue'
-import Question from '@/components/onboarding/Question.vue'
+import ManyFormFieldGroups from '@/components/base/ManyFormFieldGroups.vue'
+import Question from '@/components/base/Question.vue'
 
 export default {
   name: 'Children',

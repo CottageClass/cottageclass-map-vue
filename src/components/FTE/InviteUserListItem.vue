@@ -31,7 +31,6 @@
 
 <script>
 import AvatarImage from '@/components/base/AvatarImage.vue'
-import * as api from '@/utils/api'
 import { mapGetters } from 'vuex'
 
 export default {

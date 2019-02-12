@@ -21,14 +21,14 @@
 </template>
 
 <script>
-import Location from '@/components/onboarding/Location.vue'
-import Children from '@/components/onboarding/Children.vue'
-import Phone from '@/components/onboarding/Phone.vue'
-import Availability from '@/components/onboarding/Availability.vue'
+import Location from '@/components/FTE/userInformation/Location.vue'
+import Children from '@/components/FTE/userInformation/Children.vue'
+import Phone from '@/components/FTE/userInformation/Phone.vue'
+import Availability from '@/components/FTE/userInformation/Availability.vue'
 import MainNav from '@/components/MainNav.vue'
 import PageActionsFooter from '@/components/PageActionsFooter.vue'
-import OnboardingStyleWrapper from '@/components/onboarding/OnboardingStyleWrapper.vue'
-import ErrorMessage from '@/components/onboarding/ErrorMessage.vue'
+import OnboardingStyleWrapper from '@/components/FTE/OnboardingStyleWrapper.vue'
+import ErrorMessage from '@/components/base/ErrorMessage.vue'
 import * as api from '@/utils/api.js'
 import { mapGetters } from 'vuex'
 

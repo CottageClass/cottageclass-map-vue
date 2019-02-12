@@ -115,8 +115,8 @@
 </template>
 
 <script>
-import ErrorMessage from '@/components/onboarding/ErrorMessage.vue'
-import OnboardingStyleWrapper from '@/components/onboarding/OnboardingStyleWrapper.vue'
+import ErrorMessage from '@/components/base/ErrorMessage.vue'
+import OnboardingStyleWrapper from '@/components/FTE/OnboardingStyleWrapper.vue'
 
 export default {
   name: 'Signup',
@@ -368,7 +368,7 @@ export default {
   align-items: center;
   border-radius: 4px;
   background-color: transparent;
-  background-image: url('../../assets/arrow-back-white.svg');
+  background-image: url('../assets/arrow-back-white.svg');
   background-position: 50% 50%;
   background-size: 24px 24px;
   background-repeat: no-repeat;
@@ -377,7 +377,7 @@ export default {
 
 .button-back:active {
   background-color: hsla(0, 0%, 100%, .2);
-  background-image: url('../../assets/arrow-back-white.svg');
+  background-image: url('../assets/arrow-back-white.svg');
   background-size: 24px;
 }
 

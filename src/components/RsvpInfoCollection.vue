@@ -38,11 +38,11 @@
 
 import * as api from '@/utils/api.js'
 import * as utils from '@/utils/utils.js'
-import Nav from '@/components/onboarding/Nav.vue'
-import ErrorMessage from '@/components/onboarding/ErrorMessage.vue'
-import Question from '@/components/onboarding/Question.vue'
-import MultipleChoice from '@/components/onboarding/MultipleChoice.vue'
-import OnboardingStyleWrapper from '@/components/onboarding/OnboardingStyleWrapper.vue'
+import Nav from '@/components/FTE/Nav.vue'
+import ErrorMessage from '@/components/base/ErrorMessage.vue'
+import Question from '@/components/base/Question.vue'
+import MultipleChoice from '@/components/base/MultipleChoice.vue'
+import OnboardingStyleWrapper from '@/components/FTE/OnboardingStyleWrapper.vue'
 import sheetsu from 'sheetsu-node'
 // this component has a working loading indicator and no other logic. todo: break out and rename.
 import LoadingSpinner from '@/components/LoadingSpinner.vue'

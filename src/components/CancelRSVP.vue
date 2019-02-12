@@ -25,8 +25,8 @@
 </template>
 
 <script>
-import OnboardingStyleWrapper from '@/components/onboarding/OnboardingStyleWrapper.vue'
-import Question from '@/components/onboarding/Question.vue'
+import OnboardingStyleWrapper from '@/components/FTE/OnboardingStyleWrapper.vue'
+import Question from '@/components/base/Question.vue'
 import * as api from '@/utils/api'
 import sheetsu from 'sheetsu-node'
 import { mapGetters } from 'vuex'

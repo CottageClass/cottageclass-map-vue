@@ -11,7 +11,7 @@ subtitle="Are there any specific house rules you'd like guests to be aware of?">
 </template>
 
 <script>
-import Question from '@/components/onboarding/Question.vue'
+import Question from '@/components/base/Question.vue'
 
 export default {
   name: 'HouseRules',
