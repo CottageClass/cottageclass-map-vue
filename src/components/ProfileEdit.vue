@@ -13,6 +13,28 @@
     <Availability v-model="availability" :required="false"/>
     <ErrorMessage v-if="showError && error" :text=" children.err" />
     <Children v-model="children" :required="false" />
+    <Question
+      title="What do you do for a living?"
+      subtitle="Tell other families a bit about what you do for work.">
+      <FormFieldAndLabel
+        placeholder="Your employer"
+        label="Where do you work?"
+        v-model="currentUser.employer"
+        />
+      <FormFieldAndLabel
+        placeholder="Your title or role"
+        label="What do you do?"
+        v-model="currentUser.jobPosition"
+        />
+    </Question>
+    <Question
+      title="Tell us a bit about yourself"
+      subtitle="Other members would love to know a bit more about you and your family.">
+      <FormWithTextArea
+        v-model="currentUser.profileBlurb"
+        />
+    </Question>
+
   </OnboardingStyleWrapper>
   <PageActionsFooter :buttonText="saveButtonText" @click="submitUserInformation"/>
   </div>
@@ -22,13 +44,16 @@
 
 <script>
 import Location from '@/components/onboarding/Location.vue'
+import FormFieldAndLabel from '@/components/onboarding/FormFieldAndLabel.vue'
 import Children from '@/components/onboarding/Children.vue'
+import Question from '@/components/onboarding/Question.vue'
 import Phone from '@/components/onboarding/Phone.vue'
 import Availability from '@/components/onboarding/Availability.vue'
 import MainNav from '@/components/MainNav.vue'
 import PageActionsFooter from '@/components/PageActionsFooter.vue'
 import OnboardingStyleWrapper from '@/components/onboarding/OnboardingStyleWrapper.vue'
 import ErrorMessage from '@/components/onboarding/ErrorMessage.vue'
+import FormWithTextArea from '@/components/onboarding/FormWithTextArea.vue'
 import * as api from '@/utils/api.js'
 import { mapGetters } from 'vuex'
 
@@ -36,7 +61,7 @@ var VueScrollTo = require('vue-scrollto')
 
 export default {
   name: 'ProfileEdit',
-  components: { Location, Phone, Availability, MainNav, OnboardingStyleWrapper, PageActionsFooter, ErrorMessage, Children },
+  components: { Location, Phone, Availability, MainNav, OnboardingStyleWrapper, PageActionsFooter, ErrorMessage, Children, Question, FormFieldAndLabel, FormWithTextArea },
   data () {
     return {
       location: {},
