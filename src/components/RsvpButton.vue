@@ -18,7 +18,7 @@
   <router-link
       v-else
       :to="{ name: 'RsvpInfoCollection', params: { eventId: eventId }}"
-      class="button w-button"
+      class="button w-button rsvp-button"
   >
     RSVP
   </router-link>
@@ -41,6 +41,11 @@ export default {
 
 .button-sub-link-container {
   width: 100%;
+}
+
+.rsvp-button {
+  background-color: #1f88e9 !important;
+  text-align: center !important;
 }
 
 .button-sub-link {
@@ -74,13 +79,16 @@ export default {
 
 .full {
   background-color: transparent !important;
-  color: #ff672f;
+  color: #ff672f !important;
 }
 
 @media (max-width: 479px) {
   .button {
     width: 100%;
     margin-top: 20px;
+  }
+  .full {
+    text-align: center !important;
   }
 }
 
