@@ -4,11 +4,15 @@
   <div class="container w-container">
   <h1 class="heading-1">Edit profile</h1>
   <OnboardingStyleWrapper styleIs="editing" class="cards" v-if="currentUser">
-      <ErrorMessage v-if="showError && error" text="Your form has errors. Please fix them to continue..." />
-      <ErrorMessage v-if="showError && error" :text="phone.err" />
+    <ErrorMessage v-if="showError && error" text="Your form has errors. Please fix them to continue..." />
+    <ErrorMessage v-if="showError && error" :text="phone.err" />
     <Phone v-model="phone" :currentPhone="currentUser.phone" :required="false" />
-      <ErrorMessage v-if="showError && error" :text="location.err" />
-    <Location :currentAddress="currentUser.fullAddress" :currentApartment="currentUser.apartment" v-model="location" :required="false" />
+    <ErrorMessage v-if="showError && error" :text="location.err" />
+    <Location
+      :currentAddress="currentUser.fullAddress"
+      :currentApartment="currentUser.apartmentNumber"
+      v-model="location"
+      required="false" />
     <ErrorMessage v-if="showError && error" :text="availability.err" />
     <Question
       title="What do you do for a living?"

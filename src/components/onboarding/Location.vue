@@ -1,7 +1,7 @@
 <template>
-    <Question 
-    title="What's your home address?" 
-    subtitle="Please enter your address so we can list your playdate & find playdates near you. Only your guests will see this.*" 
+    <Question
+    title="What's your home address?"
+    subtitle="Please enter your address so we can list your playdate & find playdates near you. Only your guests will see this.*"
     explanation="* Members who RSVP to your playdate will see your address. Non-members will see an approximate location within a few blocks.">
       <div class="w-form">
         <vue-google-autocomplete
@@ -21,11 +21,11 @@
           @keyup.enter="$emit('pressedEnter')"
           name="apartmentNumber"
           v-model="apartmentNumber"
-          placeholder="Apartment #"
+          :placeholder="apartmentNumber || 'Apartment #'"
           class="location-text-field w-input"
         ></form>
     <a v-if="!showApartmentField" @click="toggleApartmentField" class="onb-button-add-group w-inline-block"><img src="@/assets/add.svg" alt="" class="image-7"><div class="onb-button-add-group-text">Add apartment #</div></a>
-    </Question>    
+    </Question>
 </template>
 
 <script>
@@ -33,8 +33,8 @@ import VueGoogleAutocomplete from 'vue-google-autocomplete'
 import Question from '@/components/onboarding/Question.vue'
 export default {
   name: 'Location',
-  props: ['currentAddress', 'value'],
-  components: { Question, VueGoogleAutocomplete },  
+  props: ['currentAddress', 'value', 'required', 'currentApartment'],
+  components: { Question, VueGoogleAutocomplete },
   data () {
     return {
       textEntered: '',
@@ -87,7 +87,7 @@ export default {
   },
   computed: {
     error: function () {
-      if (isNaN(this.address.latitude) || isNaN(this.address.longitude)) {
+      if (this.required != 'false' && (isNaN(this.address.latitude) || isNaN(this.address.longitude))) {
         return 'There was a problem processing your street address. Try again?'
       } else {
         return false
