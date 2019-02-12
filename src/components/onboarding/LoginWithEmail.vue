@@ -20,8 +20,18 @@
 
     <div class="onb-top-content-container">
       <h1 class="onb-heading-large">Sign in</h1>
-      <p>Don't have an account? <a @click="$emit('activateScreen', 'signup')">Sign up here</a>.</p>
+    <button
+      v-if="showFacebookLogin"
+      class="button-text splash-button w-inline-block facebook-sign-in-button"
+      @click="$emit('authenticateFacebook')"
+      >Continue with Facebook
+    </button>
+      <p>
+        <span v-if="showFacebookLogin">Or sign</span>
+        <span v-else>Sign</span> in with your email address. Don't have an account? <a @click="$emit('activateScreen', 'signup')">Sign up here</a>.
+      </p>
     </div>
+
     <div class="onb-location-search-container">
       <div class="w-form">
         <form id="email-form-2" v-on:submit.prevent="login">
@@ -46,7 +56,7 @@
           <button type="submit" class="button-text splash-button w-inline-block">Sign in</button>
       </form>
     </div>
-    <p><a @click="$emit('activateScreen', 'facebook')">Sign in here</a> if you sign in using Facebook. Forgot your password? <br><a href="mailto:contact@cottageclass.com">Email us</a></p>
+    <p>Forgot your password? Write us: <a href="mailto:contact@cottageclass.com">contact@cottageclass.com</a></p>
   </div>
 </div>
 </div>
@@ -70,7 +80,8 @@ export default {
       email: '',
       password: '',
       showError: false,
-      errorMessage: null
+      errorMessage: null,
+      showFacebookLogin: !this.hideFacebookLogin(),
     }
   },
   mounted: function () {
@@ -115,6 +126,11 @@ export default {
     this.$validator.localize('en', dict)
   },
   methods: {
+    hideFacebookLogin: () => {
+      return ['(iPhone|iPod|iPad)(?!.*Safari)'].every(expression => {
+        return !!navigator.userAgent.match(new RegExp(`(${expression})`, 'ig'))
+      })
+    },
     login: function (event) {
       event.preventDefault()
       let component = this
@@ -162,6 +178,13 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+
+.facebook-sign-in-button {
+  background-color: white;
+  max-width: 256px;
+  padding: 16px;
+  margin: 32px auto 16px auto;
+}
 
 .body {
   font-family: soleil
