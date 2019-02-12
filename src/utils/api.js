@@ -34,7 +34,7 @@ export function initProxySession (currentUserId, receiverId, requestMessage, ack
  * USERS
  */
 
-export function submitUserInfo (userId, phone, location, availability, children) {
+export function submitUserInfo (userId, phone, location, availability, children, userObj) {
   console.log('attempting to submit', userId, phone, location, availability, children)
 
   let postData = {
@@ -109,6 +109,18 @@ export function submitUserInfo (userId, phone, location, availability, children)
 
   if (children && children.list && children.list.length > 0) {
     postData.childrenAttributes = childrenAttributes
+  }
+
+  if (userObj && userObj.employer) {
+    postData.employer = userObj.employer
+  }
+
+  if (userObj && userObj.jobPosition) {
+    postData.jobPosition = userObj.jobPosition
+  }
+
+  if (userObj && userObj.profileBlurb) {
+    postData.profileBlurb = userObj.profileBlurb
   }
 
   console.log('postdata', postData)

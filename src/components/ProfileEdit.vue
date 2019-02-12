@@ -9,10 +9,7 @@
     <Phone v-model="phone" :currentPhone="currentUser.phone" :required="false" />
       <ErrorMessage v-if="showError && error" :text="location.err" />
     <Location :currentAddress="currentUser.fullAddress" :currentApartment="currentUser.apartment" v-model="location" :required="false" />
-      <ErrorMessage v-if="showError && error" :text="availability.err" />
-    <Availability v-model="availability" :required="false"/>
-    <ErrorMessage v-if="showError && error" :text=" children.err" />
-    <Children v-model="children" :required="false" />
+    <ErrorMessage v-if="showError && error" :text="availability.err" />
     <Question
       title="What do you do for a living?"
       subtitle="Tell other families a bit about what you do for work.">
@@ -32,9 +29,12 @@
       subtitle="Other members would love to know a bit more about you and your family.">
       <FormWithTextArea
         v-model="currentUser.profileBlurb"
+        placeholder="Your illustrious biography"
         />
     </Question>
-
+    <Availability v-model="availability" :required="false"/>
+    <ErrorMessage v-if="showError && error" :text=" children.err" />
+    <Children v-model="children" :required="false" />
   </OnboardingStyleWrapper>
   <PageActionsFooter :buttonText="saveButtonText" @click="submitUserInformation"/>
   </div>
@@ -94,7 +94,7 @@ export default {
     submitUserInformation: function () {
       if (!this.error) {
         this.saveButtonText = 'Saving...'
-        api.submitUserInfo(this.currentUser.id, this.phone, this.location, this.availability, this.children).then(res => {
+        api.submitUserInfo(this.currentUser.id, this.phone, this.location, this.availability, this.children, this.currentUser).then(res => {
           this.saveButtonText = ' \u2714 Saved'
           console.log('user update SUCCESS')
           console.log(res)
