@@ -37,8 +37,8 @@ export default new Router({
   routes: [
     {
       path: '/',
-      name: 'NewUser',
-      component: NewUser
+      name: 'SplashPage',
+      component: SplashPage
     },
     {
       path: '/offer',
@@ -64,6 +64,15 @@ export default new Router({
       name: 'Home',
       component: Events,
       props: true
+    },{
+      path: '/sign-in',
+      name: 'SignIn',
+      component: SignInWithEmail
+    },
+    {
+      path: '/sign-up',
+      name: 'SignUp',
+      component: SignUpWithEmail
     },
     {
       path: '/profile/edit',
@@ -78,8 +87,13 @@ export default new Router({
     },
     {
       path: '/event/:id/share',
-      name: 'Invite',
-      component: Invite
+      name: 'SocialInvite',
+      component: SocialInvite
+    },
+    {
+      path: '/event/:id/invite',
+      name: 'InviteExistingUsers',
+      component: InviteExistingUsers
     },
     {
       path: '/event/:id/edit',
@@ -164,6 +178,16 @@ export default new Router({
       path: '/rsvp/:eventId',
       name: 'RsvpInfoCollection',
       component: RsvpInfoCollection
+    },
+    {
+      path: '/welcome',
+      name: 'OnboardNewUser',
+      component: OnboardNewUser
+    },
+    {
+      path: '/welcome-RSVP',
+      name: 'RSVPPrompt',
+      component: RSVPPrompt
     }
   ],
   scrollBehavior (to, from, savedPosition) {
