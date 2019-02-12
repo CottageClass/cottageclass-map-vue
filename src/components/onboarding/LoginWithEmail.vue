@@ -16,7 +16,10 @@
 
 <!-- Error messages -->
 
-        <ErrorMessage v-if="showError && (errors.first('email') || errors.first('password')) || errorMessage" :messages="[errors.first('email'), errors.first('password'), errors.first('password')]" />
+        <ErrorMessage
+          v-if="showError && (errors.first('email') || errors.first('password')) || errorMessage"
+          :messages="[errorMessage,
+          errors.first('email'), errors.first('password'), errors.first('password')]" />
 
     <div class="onb-top-content-container">
       <h1 class="onb-heading-large">Sign in</h1>
