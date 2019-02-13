@@ -40,8 +40,8 @@ export default {
       this.$emit('input', {
         selected: this.foodSelected,
         err: this.err
-    })
-  }
+      })
+    }
   },
   mounted: function () {
     this.emitInput()

@@ -133,7 +133,7 @@ export default {
         food: {},
         time: {},
         date: {},
-        maxChildren: {},
+        maxChildren: 2,
         childAgeMaximum: 11,
         childAgeMinimum: 2
       }
