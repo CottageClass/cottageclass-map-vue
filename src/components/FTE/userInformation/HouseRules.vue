@@ -19,16 +19,8 @@ export default {
   props: ['value'],
   data () {
     return {
-      rules: this.value.text
-    }
-  },
-  computed: {
-    err: function () {
-      if (!this.rules) {
-        return 'skippable'
-      } else {
-        return false
-      }
+      rules: this.value.text,
+      err: false
     }
   },
   watch: {
