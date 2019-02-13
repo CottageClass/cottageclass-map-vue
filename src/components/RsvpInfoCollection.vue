@@ -206,7 +206,7 @@ export default {
         component.$router.push({ name: 'EventPage', params: { id: this.eventId } })
       }).catch(err => {
         console.log(err)
-        this.error = 'Sorry, there was a problem submittting your RSVP. Try again?'
+        this.error = 'Sorry, there was a problem submitting your RSVP. Try again?'
         // fetch event information again, which will update the error message if the event is full, e.g. in the case where another user RSVP'ed a the same time, just before this user did.
         this.fetchEventInformation()
       })

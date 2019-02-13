@@ -486,14 +486,17 @@ function parseEventData (obj) {
   return e
 }
 
-export function fetchUpcomingEventsWithinDistance (miles) {
+export function fetchUpcomingEventsWithinDistance (miles, lat, lon) {
   return Vue.axios.get(
     // This is a placeholder until the endpoint is ready
-    `${process.env.BASE_URL_API}/api/events/upcoming/page/1/page_size/50`
+    `${process.env.BASE_URL_API}/api/events/miles/${miles}/latitude/${lat}/longitude/${lon}/page/1/page_size/50`
   ).then(res => {
     console.log('FETCH UPCOMING EVENTS WITHIN DISTANCE SUCCESS')
     console.log(res.data)
-    return Object.values(normalize(res.data).event).map(parseEventData)
+    // this seems to reverse list order so we reverse on next line
+    let listOfEvents = Object.values(normalize(res.data).event).map(parseEventData)
+    listOfEvents.reverse()
+    return listOfEvents
   }).catch(err => {
     console.log('FETCH UPCOMING EVENTS WITHIN DISTANCE FAILURE')
     console.log(err.errors)

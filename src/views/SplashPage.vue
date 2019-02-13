@@ -50,6 +50,7 @@
     <div class="content-container-3 w-container">
       <h1 class="h1-display">Upcoming Playdates</h1>
       <div class="events-list-wrapper">
+        <!--
         <div class="event-date-section-tittle"><img src="@/assets/date-outline-white-oval.svg" alt="" class="image-265">
           <div class="date-text-wrapper">
             <div class="date-title">Friday, February 8</div>
@@ -86,6 +87,7 @@
             </div>
           </li>
         </ul>
+      -->
         <div class="event-date-section-tittle"><img src="@/assets/date-outline-white-oval.svg" alt="" class="image-265">
           <div class="date-text-wrapper">
             <div class="date-title">Friday, February 15</div>

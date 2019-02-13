@@ -59,12 +59,15 @@ export default {
       childrenSpecialRequirements: []
     }
   },
+  created: function () {
+    this.childrenSpecialRequirements = this.currentUser.children
+  },
   computed: {
     headings: function () {
       return this.currentUser.children.map(child => child.firstName + ', age ' + child.age)
     },
     nextButtonState: function () {
-      if (this.childrenSpecialRequirements.reduce((allChildrenSoFar, child) => allChildrenSoFar && (child.allergies.length > 0 || child.dietaryRestrictions.length > 0 || child.specialNeeds.length > 0), true)) {
+      if (Array.isArray(this.childrenSpecialRequirements) && this.childrenSpecialRequirements.length > 0 && this.childrenSpecialRequirements.reduce((allChildrenSoFar, child) => allChildrenSoFar || ((child.allergies && child.allergies.length > 0) || (child.dietaryRestrictions && child.dietaryRestrictions.length > 0) || (child.specialNeeds && child.specialNeeds.length > 0)), false)) {
         return 'next'
       } else {
         return 'skip'

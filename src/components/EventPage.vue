@@ -179,7 +179,7 @@ export default {
   },
   computed: {
     hostIsCurrentUser: function () {
-      return this.event.hostId === this.currentUser.id
+      return this.currentUser && this.event.hostId === this.currentUser.id
     },
     eventId: function () {
       return this.event.id

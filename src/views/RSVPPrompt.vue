@@ -2,20 +2,21 @@
   <div class="onb-body">
     <div class="body">
       <div class="content-wrapper">
-        <Nav :button="next" @next="nextStep" hidePrevious="true" />
+        <Nav :button="skip" @next="nextStep" hidePrevious="true" />
         <OnboardingStyleWrapper styleIs="onboarding">
+          <LoadingSpinner v-if="eventsNotBelongingToCurrentUser.length < 1" />
           <Question
             title="RSVP to a playdate near you"
             subtitle="Would you like to RSVP to one of these upcoming playdates in your area?"
             />
           <EventList
-            :events="events"
+            :events="eventsNotBelongingToCurrentUser"
             :showDates="false"
-            />
+          />
         </OnboardingStyleWrapper>
+        </div>
       </div>
     </div>
-  </div>
 </template>
 
 <script>
@@ -24,17 +25,25 @@ import EventList from '@/components/EventList.vue'
 import * as api from '@/utils/api.js'
 import OnboardingStyleWrapper from '@/components/FTE/OnboardingStyleWrapper.vue'
 import Nav from '@/components/FTE/Nav.vue'
-import { mapGetters } from 'vuex';
+import LoadingSpinner from '@/components/LoadingSpinner.vue'
+import { mapGetters } from 'vuex'
 
 export default {
   name: 'RSVPPrompt',
-  components: { Question, EventList, OnboardingStyleWrapper, Nav },
+  components: { Question, EventList, OnboardingStyleWrapper, Nav, LoadingSpinner },
   props: [],
   data () {
     return {
       events: [],
-      noNearbyEvents: false
     }
+  },
+  computed: {
+    eventsNotBelongingToCurrentUser: function () {
+      return this.events.filter(event => {
+        return (event.full != 'false') && (event.hostId != this.currentUser.id)
+      })
+    },
+    ...mapGetters([ 'currentUser' ])
   },
   methods: {
     nextStep () {
@@ -42,21 +51,23 @@ export default {
     }
   },
   mounted: function () {
-    api.fetchUpcomingEventsWithinDistance(5).then(res => {
+    api.fetchUpcomingEventsWithinDistance(3, this.currentUser.latitude, this.currentUser.longitude).then(res => {
       if (res.length > 0) {
         this.events = res
       } else {
-        api.fetchUpcomingEventsWithinDistance(50).then(res => {
+        api.fetchUpcomingEventsWithinDistance(20, this.currentUser.latitude, this.currentUser.longitude).then(res => {
           if (res.length > 0) {
             this.events = res
+            if (this.eventsNotBelongingToCurrentUser.length < 1) {
+              this.nextStep()
+            }
           } else {
-            this.noNearbyEvents = true
+            this.nextStep() // skip this step if no nearby events
           }
         })
       }
     }).catch(err => console.log(err))
-  },
-  computed: mapGetters([ 'firstCreatedEventId' ])
+  }
 }
 </script>
 
