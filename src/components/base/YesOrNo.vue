@@ -29,10 +29,10 @@ export default {
   },
   methods: {
     emitData: function () {
-      this.$emit('input', {
+      this.$emit('input', Object.assign(this.vaule, {
         isTrue: this.trueOrFalse,
         err: this.err
-      })
+      }))
     }
   },
   computed: {
