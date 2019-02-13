@@ -17,7 +17,7 @@
 </template>
 
 <script>
-import OnboardingStyleWrapper from '@/components/onboarding/OnboardingStyleWrapper.vue'
+import OnboardingStyleWrapper from '@/components/FTE/OnboardingStyleWrapper.vue'
 
 export default {
   name: 'RequestSuccessful',

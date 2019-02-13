@@ -11,7 +11,7 @@ subtitle="Are there any specific house rules you'd like guests to be aware of?">
 </template>
 
 <script>
-import Question from '@/components/onboarding/Question.vue'
+import Question from '@/components/base/Question.vue'
 
 export default {
   name: 'HouseRules',
@@ -19,16 +19,8 @@ export default {
   props: ['value'],
   data () {
     return {
-      rules: this.value.text
-    }
-  },
-  computed: {
-    err: function () {
-      if (!this.rules) {
-        return 'skippable'
-      } else {
-        return false
-      }
+      rules: this.value.text,
+      err: false
     }
   },
   watch: {

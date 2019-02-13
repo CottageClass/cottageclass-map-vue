@@ -16,10 +16,10 @@
 </template>
 
 <script>
-import YesOrNo from '@/components/onboarding/YesOrNo.vue'
-import Nav from '@/components/onboarding/Nav.vue'
-import ErrorMessage from '@/components/onboarding/ErrorMessage.vue'
-import OnboardingStyleWrapper from '@/components/onboarding/OnboardingStyleWrapper.vue'
+import YesOrNo from '@/components/base/YesOrNo.vue'
+import Nav from '@/components/FTE/Nav.vue'
+import ErrorMessage from '@/components/base/ErrorMessage.vue'
+import OnboardingStyleWrapper from '@/components/FTE/OnboardingStyleWrapper.vue'
 import { mapGetters } from 'vuex'
 
 export default {

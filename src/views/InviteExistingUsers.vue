@@ -32,10 +32,10 @@
 </template>
 
 <script>
-import Nav from '@/components/onboarding/Nav.vue'
+import Nav from '@/components/FTE/Nav.vue'
 import * as api from '@/utils/api.js'
-import OnboardingStyleWrapper from '@/components/onboarding/OnboardingStyleWrapper.vue'
-import InviteUserListItem from '@/components/onboarding/InviteUserListItem.vue'
+import OnboardingStyleWrapper from '@/components/FTE/OnboardingStyleWrapper.vue'
+import InviteUserListItem from '@/components/FTE/InviteUserListItem.vue'
 import { mapGetters } from 'vuex'
 import Alert from '@/components/Alert.vue'
 import alerts from '@/mixins/alerts.js'

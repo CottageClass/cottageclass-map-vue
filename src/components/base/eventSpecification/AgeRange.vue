@@ -11,7 +11,7 @@
 </template>
 
 <script>
-import Question from '@/components/onboarding/Question.vue'
+import Question from '@/components/base/Question.vue'
 import Dropdown from '@/components/Dropdown.vue'
 export default {
   name: 'AgeRange',

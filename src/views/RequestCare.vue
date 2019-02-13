@@ -30,9 +30,9 @@
 </template>
 
 <script>
-import CountdownPromo from '@/components/onboarding/CountdownPromo.vue'
+import CountdownPromo from '@/components/FTE/CountdownPromo.vue'
 import DateTimePicker from '@/components/DateTimePicker.vue'
-import OnboardingStyleWrapper from '@/components/onboarding/OnboardingStyleWrapper.vue'
+import OnboardingStyleWrapper from '@/components/FTE/OnboardingStyleWrapper.vue'
 
 export default {
   name: 'RequestCare',

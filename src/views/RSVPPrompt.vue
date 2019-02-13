@@ -1,35 +1,31 @@
 <template>
-  <OnboardingStyleWrapper styleIs="onboarding">
-    <LoadingSpinner v-if="eventsNotBelongingToCurrentUser.length < 1" />
-    <div class="onb-body" v-if="eventsNotBelongingToCurrentUser.length >= 1">
-      <div class="body">
-        <div class="content-wrapper">
-          <Nav
-            @next="nextStep"
-            hidePrevious="true"
-            button="skip"
-            />
+  <div class="onb-body">
+    <div class="body">
+      <div class="content-wrapper">
+        <Nav :button="skip" @next="nextStep" hidePrevious="true" />
+        <OnboardingStyleWrapper styleIs="onboarding">
+          <LoadingSpinner v-if="eventsNotBelongingToCurrentUser.length < 1" />
           <Question
             title="RSVP to a playdate near you"
-            subtitle="Would you like to RSVP to one of these upcoming playdates in your area?">
-            <EventList
-              :events="eventsNotBelongingToCurrentUser"
-              :showDates="false"
-              />
-          </Question>
+            subtitle="Would you like to RSVP to one of these upcoming playdates in your area?"
+            />
+          <EventList
+            :events="eventsNotBelongingToCurrentUser"
+            :showDates="false"
+          />
+        </OnboardingStyleWrapper>
         </div>
       </div>
     </div>
-  </OnboardingStyleWrapper>
 </template>
 
 <script>
-import Question from './Question.vue'
-import EventList from '../EventList.vue'
+import Question from '@/components/base/Question.vue'
+import EventList from '@/components/EventList.vue'
 import * as api from '@/utils/api.js'
-import OnboardingStyleWrapper from './OnboardingStyleWrapper.vue'
+import OnboardingStyleWrapper from '@/components/FTE/OnboardingStyleWrapper.vue'
+import Nav from '@/components/FTE/Nav.vue'
 import LoadingSpinner from '@/components/LoadingSpinner.vue'
-import Nav from '@/components/onboarding/Nav.vue'
 import { mapGetters } from 'vuex'
 
 export default {
@@ -50,8 +46,8 @@ export default {
     ...mapGetters([ 'currentUser' ])
   },
   methods: {
-    nextStep: function () {
-      this.$emit('activateScreen', 'inviteOthers')
+    nextStep () {
+      this.$router.push({ name: 'SocialInvite', params: { id: this.firstCreatedEventId } })
     }
   },
   mounted: function () {

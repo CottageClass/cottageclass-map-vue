@@ -3,7 +3,7 @@
   <div class="onb-body">
     <div class="body">
       <div class="content-wrapper">
-        <Nav button="done" @next="$emit('activateScreen', 'inviteExistingUsers')" @prev="$emit('prev')" />
+        <Nav button="done" @next="nextStep" hidePrevious="true" />
         <div class="onb-content-container">
           <div class="onb-top-content-container">
             <h1 class="onb-heading-large">Build your village</h1>
@@ -52,12 +52,13 @@
 
 import TextMessageLink from '@/components/TextMessageLink.vue'
 import EventListItem from '@/components/EventListItem.vue'
-import Nav from '@/components/onboarding/Nav.vue'
+import Nav from '@/components/FTE/Nav.vue'
 import * as api from '@/utils/api.js'
-import OnboardingStyleWrapper from '@/components/onboarding/OnboardingStyleWrapper.vue'
+import OnboardingStyleWrapper from '@/components/FTE/OnboardingStyleWrapper.vue'
+import { mapGetters } from 'vuex'
 
 export default {
-  name: 'Invite',
+  name: 'SocialInvite',
   components: { TextMessageLink, EventListItem, Nav, OnboardingStyleWrapper },
   props: [ 'eventData' ],
   data () {
@@ -128,9 +129,13 @@ export default {
       } else {
         return {}
       }
-    }
+    },
+    ...mapGetters([ 'firstCreatedEventId' ])
   },
   methods: {
+    nextStep () {
+      this.$router.push({ name: 'InviteExistingUsers', params: { id: this.firstCreatedEventId } })
+    },
     onCopy: function () {
       this.copyButtonText = 'copied!'
     },

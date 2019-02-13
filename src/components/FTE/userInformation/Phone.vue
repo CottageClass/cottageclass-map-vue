@@ -22,10 +22,10 @@ import {
   formatNumber,
   isValidNumber
 } from 'libphonenumber-js'
-import Question from '@/components/onboarding/Question.vue'
+import Question from '@/components/base/Question.vue'
 
 export default {
-  name: "Phone",
+  name: 'Phone',
   props: ['value', 'currentPhone', 'required'],
   components: { Question },
   data () {

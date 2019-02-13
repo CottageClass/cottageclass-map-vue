@@ -22,11 +22,11 @@
 </template>
 
 <script>
-import ManyFormFieldGroups from '@/components/onboarding/ManyFormFieldGroups.vue'
-import ErrorMessage from '@/components/onboarding/ErrorMessage.vue'
-import Question from '@/components/onboarding/Question.vue'
-import Nav from '@/components/onboarding/Nav.vue'
-import OnboardingStyleWrapper from '@/components/onboarding/OnboardingStyleWrapper.vue'
+import ManyFormFieldGroups from '@/components/base/ManyFormFieldGroups.vue'
+import ErrorMessage from '@/components/base/ErrorMessage.vue'
+import Question from '@/components/base/Question.vue'
+import Nav from '@/components/FTE/Nav.vue'
+import OnboardingStyleWrapper from '@/components/FTE/OnboardingStyleWrapper.vue'
 import * as api from '@/utils/api.js'
 import { mapGetters } from 'vuex'
 

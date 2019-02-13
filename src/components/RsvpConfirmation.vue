@@ -40,11 +40,11 @@
 
 import * as api from '@/utils/api.js'
 import EventListItem from '@/components/EventListItem.vue'
-import Nav from '@/components/onboarding/Nav.vue'
+import Nav from '@/components/FTE/Nav.vue'
 import LoadingSpinner from '@/components/LoadingSpinner.vue'
-import ErrorMessage from '@/components/onboarding/ErrorMessage.vue'
-import OnboardingStyleWrapper from '@/components/onboarding/OnboardingStyleWrapper.vue'
-import YesOrNo from '@/components/onboarding/YesOrNo.vue'
+import ErrorMessage from '@/components/base/ErrorMessage.vue'
+import OnboardingStyleWrapper from '@/components/FTE/OnboardingStyleWrapper.vue'
+import YesOrNo from '@/components/base/YesOrNo.vue'
 
 export default {
   name: 'RsvpConfirmation',

@@ -10,8 +10,8 @@
 </template>
 
 <script>
-import Question from '@/components/onboarding/Question.vue'
-import MultipleChoice from '@/components/onboarding/MultipleChoice.vue'
+import Question from '@/components/base/Question.vue'
+import MultipleChoice from '@/components/base/MultipleChoice.vue'
 
 export default {
   name: 'Food',
