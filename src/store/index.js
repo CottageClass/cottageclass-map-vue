@@ -86,7 +86,11 @@ export default new Vuex.Store(
       },
       alert: state => state.alert,
       firstCreatedEventId: (state) => {
-        return Object.keys(state.createdEventData.event).sort()[0]
+        if (state.createdEventData) {
+          return Object.keys(state.createdEventData.event).sort()[0]
+        } else {
+          return null
+        }
       }
     }
   }
