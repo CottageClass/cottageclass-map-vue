@@ -42,6 +42,15 @@
       >
       <MultipleImageUpload v-model="currentUser.images" />
     </Question>
+    <Question
+      title="What are your interests?"
+      subtitle="Pick some favorite interests and activities (things you like to do as a family) to find other families with common interests."
+      >
+      <MultipleChoice
+        :labelsAndOrder="[['travel', 'Travel' ], ['team sports', 'Team sports'], ['puzzles & games', 'Puzzles & games'], ['art & drawing', 'Art & drawing'], ['computers', 'Computers'], ['music', 'Music'], ['dance', 'Dance'], ['theater', 'Theater'], ['gardening', 'Gardening'], ['activism', 'Activism'], ['reading books', 'Reading books'], ['camping', 'Camping'], ['hiking', 'Hiking'], ['bike rides', 'Bike rides'], ['road trips', 'Road trips'], ['museums', 'Museums']]"
+        type="checkbox"
+        v-model="currentUser.activities" />
+    </Question>
     <Availability v-model="availability" :required="false"/>
     <ErrorMessage v-if="showError && error" :text=" children.err" />
     <Children v-model="children" :required="false" />
@@ -65,6 +74,7 @@ import OnboardingStyleWrapper from '@/components/onboarding/OnboardingStyleWrapp
 import ErrorMessage from '@/components/onboarding/ErrorMessage.vue'
 import FormWithTextArea from '@/components/onboarding/FormWithTextArea.vue'
 import MultipleImageUpload from '@/components/onboarding/MultipleImageUpload.vue'
+import MultipleChoice from '@/components/onboarding/MultipleChoice.vue'
 import * as api from '@/utils/api.js'
 import { mapGetters } from 'vuex'
 
@@ -72,7 +82,7 @@ var VueScrollTo = require('vue-scrollto')
 
 export default {
   name: 'ProfileEdit',
-  components: { Location, Phone, Availability, MainNav, OnboardingStyleWrapper, PageActionsFooter, ErrorMessage, Children, Question, FormFieldAndLabel, FormWithTextArea, MultipleImageUpload },
+  components: { Location, Phone, Availability, MainNav, OnboardingStyleWrapper, PageActionsFooter, ErrorMessage, Children, Question, FormFieldAndLabel, FormWithTextArea, MultipleImageUpload, MultipleChoice },
   data () {
     return {
       location: {},

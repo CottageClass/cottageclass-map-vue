@@ -106,10 +106,10 @@ export default {
     vModelIs: function () {
       if (Array.isArray(this.value)) {
         return 'array'
-      }  else {
-          return typeof this.value
-        }
+      } else {
+        return typeof this.value
       }
+    }
   },
   methods: {
     capitalize: utils.capitalize,

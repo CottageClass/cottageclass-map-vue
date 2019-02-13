@@ -127,6 +127,10 @@ export function submitUserInfo (userId, phone, location, availability, children,
     postData.images = userObj.images
   }
 
+  if (userObj && userObj.activities) {
+    postData.activities = userObj.activities
+  }
+
   console.log('postdata', postData)
   return Vue.axios.post(
     `${process.env.BASE_URL_API}/users/${userId}`,
