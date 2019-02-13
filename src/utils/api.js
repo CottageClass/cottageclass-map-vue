@@ -188,7 +188,7 @@ function createPeopleObject (responseData) {
 
 export function fetchUsersWithinDistance (miles, lat, lon) {
   return Vue.axios.get(
-    `${process.env.BASE_URL_API}/api/users/miles/${miles}/latitude/${lat}/longitude/${lon}/page/1/page_size/10`
+    `${process.env.BASE_URL_API}/api/users/miles/${miles}/latitude/${lat}/longitude/${lon}`
   ).then(res => {
     console.log('FETCH USERS WITHIN DISTANCE SUCCESS')
     console.log(res.data)
@@ -510,7 +510,6 @@ function parseEventData (obj) {
 
 export function fetchUpcomingEventsWithinDistance (miles, lat, lon) {
   return Vue.axios.get(
-    // This is a placeholder until the endpoint is ready
     `${process.env.BASE_URL_API}/api/events/miles/${miles}/latitude/${lat}/longitude/${lon}/page/1/page_size/50`
   ).then(res => {
     console.log('FETCH UPCOMING EVENTS WITHIN DISTANCE SUCCESS')
