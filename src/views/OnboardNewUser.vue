@@ -200,47 +200,50 @@ export default {
       console.log(this.eventDataForSubmissionToAPI)
       return this.axios.post(`${process.env.BASE_URL_API}/api/event_series`, this.eventDataForSubmissionToAPI)
     },
+    finishOnboarding () {
+    // send the data to the server
+      const that = this
+      const userId = Token.currentUserId(that.$auth)
+      const submitInfo = api.submitUserInfo(
+        userId,
+        this.userData.phone,
+        this.userData.location,
+        this.userData.availability,
+        this.userData.children
+      )
+      submitInfo.catch(err => {
+        console.log('user update FAILURE')
+        console.log(err)
+        console.log(Object.entries(err))
+        // show on the houseRules step because it's the last step
+        that.stepIndex = stepSequence.length - 1
+        that.modelForCurrentStep.err = 'Sorry, there was a problem saving your information. Try again?'
+        throw err
+      })
+      submitInfo.then(() => {
+        return that.$store.dispatch('establishCurrentUserAsync', userId)
+      }).then(() => {
+        console.log('thisthis')
+        that.submitEventData().then(res => {
+          that.$store.commit('setCreatedEventData', { eventData: normalize(res.data) })
+        })
+      }).then(res => {
+        console.log('event creation SUCCESS')
+        console.log(res)
+        this.$router.push({ name: 'RSVPPrompt' })
+      }).catch(err => {
+        console.log(err)
+        that.stepIndex = stepSequence.length - 1
+        that.modelForCurrentStep.err = 'Sorry, there was a problem saving your information. Try again?'
+        throw err
+      })
+    },
     nextStep () {
       if (!this.error) {
         if (this.stepIndex === stepSequence.length - 1) {
-          // send the data to the server
-          const that = this
-          const userId = Token.currentUserId(that.$auth)
-          const submitInfo = api.submitUserInfo(
-            userId,
-            this.userData.phone,
-            this.userData.location,
-            this.userData.availability,
-            this.userData.children
-          )
-          submitInfo.catch(err => {
-            console.log('user update FAILURE')
-            console.log(err)
-            console.log(Object.entries(err))
-            // show on the houseRules step because it's the last step
-            that.stepIndex = stepSequence.length - 1
-            that.modelForCurrentStep.err = 'Sorry, there was a problem saving your information. Try again?'
-            throw err
-          })
-          submitInfo.then(() => {
-            return that.$store.dispatch('establishCurrentUserAsync', userId)
-          }).then(() => {
-            console.log('thisthis')
-            that.submitEventData().then(res => {
-
-              that.$store.commit('setCreatedEventData', { eventData: normalize(res.data) })
-            })
-          }).then(res => {
-            console.log('event creation SUCCESS')
-            console.log(res)
-            this.$router.push({ name: 'RSVPPrompt' })
-          }).catch(err => {
-            console.log(err)
-            that.stepIndex = stepSequence.length - 1
-            that.modelForCurrentStep.err = 'Sorry, there was a problem saving your information. Try again?'
-            throw err
-          })
+          this.finishOnboarding()
         }
+        // set the next step
         if (this.currentStep === 'pets' &&
             this.substep === 'hasPets' &&
             this.userData.pets.isTrue) {
