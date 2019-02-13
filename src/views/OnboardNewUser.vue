@@ -3,7 +3,7 @@
     <div class="body">
       <div class="content-wrapper">
         <Nav :button="nextButtonState" @next="nextStep" @prev="prevStep" />
-        <ErrorMessage v-if="error" :text="error" />
+        <ErrorMessage v-if="error && this.showError" :text="error" />
         <OnboardingStyleWrapper styleIs="onboarding">
           <Phone
             v-if="currentStep === 'phone'"
@@ -117,12 +117,13 @@ export default {
   },
   data () {
     return {
+      showError: false,
       stepIndex: 0,
       substep: '',
       userData: {
         phone: {},
         location: {},
-        children: {list: []},
+        children: { list: [] },
         pets: {},
         houseRules: {},
         emergencyCare: {}
@@ -143,7 +144,7 @@ export default {
       return stepSequence[this.stepIndex]
     },
     nextButtonState () {
-      return 'next' // TODO
+      return 'next'
     },
     modelForCurrentStep () {
       const models = {
@@ -201,7 +202,7 @@ export default {
       return this.axios.post(`${process.env.BASE_URL_API}/api/event_series`, this.eventDataForSubmissionToAPI)
     },
     finishOnboarding () {
-    // send the data to the server
+      // send the data to the server
       const that = this
       const userId = Token.currentUserId(that.$auth)
       const submitInfo = api.submitUserInfo(
@@ -258,25 +259,24 @@ export default {
             this.substep = 'canProvide'
           }
         }
+        this.showError = false
         window.scrollTo(0, 0)
+      } else {
+        this.showError = true
       }
     },
     prevStep () {
-      console.log(this.currentStep, this.substep)
       if (this.currentStep === 'pets' && this.substep === 'description') {
         this.substep = 'hasPets'
       } else if (this.currentStep === 'emergencyCare' && this.substep === 'availability') {
         this.substep = 'canProvide'
       } else {
         this.stepIndex -= 1
-        console.log(this.currentStep, this.substep)
 
         if (this.currentStep === 'pets') {
           if (this.userData.pets.text) {
-            console.log('a')
             this.substep = 'description'
           } else {
-            console.log('b')
             this.substep = 'hasPets'
           }
         }
@@ -284,10 +284,8 @@ export default {
 
         if (this.currentStep === 'emergencyCare') {
           if (this.userData.emergencyCare.isTrue) {
-            console.log('c')
             this.substep = 'availability'
           } else {
-            console.log('d')
             this.substep = 'canProvide'
           }
         }
