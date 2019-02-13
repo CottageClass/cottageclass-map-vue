@@ -2,7 +2,11 @@
   <div class="onb-body">
     <div class="body">
       <div class="content-wrapper">
-        <Nav :button="nextButtonState" @next="nextStep" @prev="prevStep" />
+        <Nav
+          :button="nextButtonState"
+          @next="nextStep"
+          @prev="prevStep"
+        />
         <OnboardingStyleWrapper styleIs="onboarding">
           <ErrorMessage v-if="error && this.showError" :text="error" />
           <Phone
@@ -51,7 +55,7 @@
             v-if="currentStep === 'pets' && substep === 'description'"
             v-model="userData.pets" />
           <HouseRules v-if="currentStep === 'houseRules'"
-            v-model="houseRules" />
+            v-model="userData.houseRules" />
         </OnboardingStyleWrapper>
       </div>
     </div>
@@ -121,18 +125,18 @@ export default {
       stepIndex: 0,
       substep: '',
       userData: {
-        phone: {},
-        location: {},
-        children: { list: [] },
-        pets: {},
-        houseRules: {},
-        emergencyCare: {}
+        phone: { err: null },
+        location: { err: null },
+        children: { list: [], err: null },
+        pets: { err: null },
+        houseRules: { err: null },
+        emergencyCare: { err: null }
       },
       eventSeriesData: {
-        activity: {},
-        food: {},
-        time: {},
-        date: {},
+        activity: { err: null },
+        food: { err: null },
+        time: { err: null },
+        date: { err: null },
         maxChildren: 2,
         childAgeMaximum: 11,
         childAgeMinimum: 2
@@ -214,7 +218,6 @@ export default {
         console.log('user update FAILURE')
         console.log(err)
         console.log(Object.entries(err))
-        // show on the houseRules step because it's the last step
         that.stepIndex = stepSequence.length - 1
         that.modelForCurrentStep.err = 'Sorry, there was a problem saving your information. Try again?'
         throw err
@@ -265,13 +268,14 @@ export default {
     prevStep () {
       if (this.currentStep === 'pets' && this.substep === 'description') {
         this.substep = 'hasPets'
+        this.modelForCurrentStep.err = false
       } else if (this.currentStep === 'emergencyCare' && this.substep === 'availability') {
         this.substep = 'canProvide'
+        this.modelForCurrentStep.err = false
       } else {
         this.stepIndex -= 1
-
         if (this.currentStep === 'pets') {
-          if (this.userData.pets.text) {
+          if (this.userData.pets.isTrue) {
             this.substep = 'description'
           } else {
             this.substep = 'hasPets'
