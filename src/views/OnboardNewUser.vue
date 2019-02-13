@@ -197,8 +197,6 @@ export default {
   },
   methods: {
     submitEventData: function () {
-      console.log('this.eventDataForSubmissionToAPI')
-      console.log(this.eventDataForSubmissionToAPI)
       return this.axios.post(`${process.env.BASE_URL_API}/api/event_series`, this.eventDataForSubmissionToAPI)
     },
     finishOnboarding () {
@@ -224,7 +222,6 @@ export default {
       submitInfo.then(() => {
         return that.$store.dispatch('establishCurrentUserAsync', userId)
       }).then(() => {
-        console.log('thisthis')
         that.submitEventData().then(res => {
           that.$store.commit('setCreatedEventData', { eventData: normalize(res.data) })
         })
@@ -280,8 +277,6 @@ export default {
             this.substep = 'hasPets'
           }
         }
-        console.log(this.currentStep, this.substep)
-
         if (this.currentStep === 'emergencyCare') {
           if (this.userData.emergencyCare.isTrue) {
             this.substep = 'availability'
