@@ -48,7 +48,7 @@ export default {
   },
   computed: {
     err: function () {
-      if (this.foods === '') {
+      if (!this.foodSelected) {
         return this.errorMesg
       } else {
         return false
