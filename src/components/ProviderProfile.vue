@@ -1,51 +1,55 @@
 <template>
-<div class="body">
-    <div class="providerp-provider-info-section">
-      <router-link :to="{ name: 'Home' }" class="providerp-button-back w-inline-block"><img src="../assets/Arrow-Back-2.svg">
-    </router-link><AvatarImage :person="person" class="providerp-avatar" />
-    <h1 class="providerp-h1">{{ person.firstName }} {{ person.lastInitial }}.</h1>
+  <OnboardingStyleWrapper styleIs="onboarding">
+    <!-- wrapper for desktop screens -->
 
-    <div class="providerp-occupation" v-if="person.title && person.employer">{{ person.title }} at {{ person.employer }}</div>
-    <div v-if="person.children.length > 0" class="providerp-children">
-        <ChildInfo :children="person.children" />
+    <div class="onb-body">
+      <div class="body">
+        <div class="content-wrapper user-profile-wrapper">
+    <div class="providerp-provider-info-section">
+      <a @click="$router.go(-1)" class="providerp-button-back w-inline-block"><img src="../assets/Arrow-Back-2.svg">
+    </a><AvatarImage :person="{facebookId: user.facebookUid, avatar: user.avatar}" className="avatar-large"/>
+    <h1 class="providerp-h1">{{ user.firstName }}</h1>
+    <div class="providerp-occupation" v-if="user.title && user.employer">{{ user.title }} at {{ user.employer }}</div>
+    <div class="providerp-occupation">Member since {{ joinedDateFormatted }}</div>
+    <div v-if="user.childAges && user.childAges.length > 0" class="providerp-children">
+        Parent to <ChildAges :childAges="user.childAges" singular="child" plural="children" />.
       </div>
-    <div v-if="person.blurb" class="providerp-chat-bubble-container">
+
+    <div v-if="user.blurb" class="providerp-chat-bubble-container">
       <div class="providerp-chat-bubble-caret"><img src="../assets/chat-bubble-caret.svg"></div>
       <div class="providerp-chat-bubble-primary">
-        <div>{{ person.blurb }}</div>
+        <div>{{ user.blurb }}</div>
       </div>
     </div>
   </div>
   <div class="providerp-provider-info-bullets">
-
-    <ProviderInfo :person="person" />
+    <ProviderInfo :person="user" />
   </div>
 
 <!-- Photos -->
 
-  <div v-if="person.images" class="group-title-container-2">
+  <div v-if="user.images" class="group-title-container-2">
     <h5 class="list-title-2">Photos</h5>
   </div>
 
-  <Images :person="person"/>
+  <Images :person="user"/>
 
  <!-- location with link to directions -->
 
   <div class="group-title-container-2">
-    <h5 class="list-title-2">Location</h5>
+    <h5 class="list-title-2"><span v-if="user.neighborhood">Neighborhood: {{ user.neighborhood }}</span><span v-else>Location</span></h5>
   </div>
 
-   <div class="map-container" @click="getDirections(person.location)">
+   <div class="map-container">
   <GmapMap
     :disableDefaultUI="true"
-    :center="person.location"
+    :center="userLocation"
     :zoom="13"
     :options="mapOptions"
     style="width: 100%; height: 230px;">
       <GmapMarker
-      :key="index"
-      :position="person.location"
-      :title="person.firstName"
+      :position="userLocation"
+      :title="user.firstName"
       icon="https://storage.googleapis.com/cottageclass-prod/images/map-radius.png"
       />
     </GmapMap>
@@ -55,14 +59,14 @@
   <div class="group-title-container-2">
     <h5 class="list-title-2">Great Experiences</h5>
   </div>
-  <!-- <span v-for="review in person.reviews">
+  <!-- <span v-for="review in user.reviews">
 </span> -->
 
 <!-- Leave a review -->
 
-  <div class="providerp-post-comment-container"><a :href="'mailto:contact@cottageclass.com?subject=Great experience with ' + person.firstName + ' ' + person.lastInitial + '. (' + person.id + ')&body=(please%20describe%20your%20great%20experience%20here!)'" class="pprofile-compose-button w-inline-block"><img src="../assets/compose.svg" class="image-5"><div class="pprofile-comment-prompt-button-text">Post a great experience</div></a>
-    <div class="providerp-book-care-container">
-      <router-link :to="{ name: 'RequestModal', params: { id: person.id }}" class="pprovider-book-care-button w-inline-block"><img src="../assets/request-care-white.svg"><div class="pprovider-primary-action-text">Ask {{ person.firstName }}</div>
+  <div class="providerp-post-comment-container"><a :href="'mailto:contact@cottageclass.com?subject=Great experience with ' + user.firstName + ' ' + user.lastInitial + '. (' + user.id + ')&body=(please%20describe%20your%20great%20experience%20here!)'" class="pprofile-compose-button w-inline-block"><img src="../assets/compose.svg" class="image-5"><div class="pprofile-comment-prompt-button-text">Post a great experience</div></a>
+    <div class="providerp-book-care-container" v-if="userAvailableSometimes">
+      <router-link :to="{ name: 'RequestModal', params: { id: user.id }}" class="pprovider-book-care-button w-inline-block"><img src="../assets/request-care-white.svg"><div class="pprovider-primary-action-text">Request childcare</div>
       </router-link>
     </div>
   </div>
@@ -72,16 +76,19 @@
   <div class="group-title-container-2">
     <h5 class="list-title-2">Concerns</h5>
   </div>
-  <!-- <span v-for="review in person.concerns">
+  <!-- <span v-for="review in user.concerns">
 </span> -->
 
   <!-- concern link -->
 
-  <div class="providerp-post-comment-container"><a :href="'mailto:contact@cottageclass.com?subject=Concern re: ' + person.firstName + ' ' + person.lastInitial + '. (' + person.id + ')&body=(please%20detail%20your%20concern%20here)'" class="pprofile-compose-button w-inline-block"><img src="../assets/compose.svg" class="image-5"><div class="pprofile-comment-prompt-button-text">Post a concern</div></a></div>
+  <div class="providerp-post-comment-container"><a :href="'mailto:contact@cottageclass.com?subject=Concern re: ' + user.firstName + ' ' + user.lastInitial + '. (' + user.id + ')&body=(please%20detail%20your%20concern%20here)'" class="pprofile-compose-button w-inline-block"><img src="../assets/compose.svg" class="image-5"><div class="pprofile-comment-prompt-button-text">Post a concern</div></a></div>
 
   <div class="spacer-100px"></div>
 
 </div>
+</div>
+</div>
+</OnboardingStyleWrapper>
 </template>
 
 <script>
@@ -90,25 +97,18 @@ import * as Token from '@/utils/tokens.js'
 import AvatarImage from '@/components/base/AvatarImage'
 import * as api from '@/utils/api.js'
 import networks from '@/assets/network-info.json'
-import ChildInfo from '@/components/ChildInfo.vue'
+import ChildAges from '@/components/ChildAges.vue'
+import OnboardingStyleWrapper from '@/components/FTE/OnboardingStyleWrapper.vue'
+import moment from 'moment'
 import ProviderInfo from '@/components/base/ProviderInfo.vue'
+import ChildInfo from '@/components/ChildInfo.vue'
 
 export default {
-  components: { Images, AvatarImage, ChildInfo, ProviderInfo },
   name: 'ProviderProfile',
-  props: {
-    person: {
-      required: true
-    }
-  },
-  methods: {
-    getDirections: function (location) {
-      window.open('https://www.google.com/maps?saddr=My+Location&daddr=' + location.lat + ',' + location.lng)
-    }
-  },
+  components: { Images, AvatarImage, ChildAges, OnboardingStyleWrapper, ProviderInfo, ChildInfo },
   data () {
     return {
-      people: [],
+      user: {},
       networks: networks,
       mapOptions:
        { // move this to map component when i separate it.
@@ -118,20 +118,40 @@ export default {
     }
   },
   mounted: function () {
-    api.fetchUsersInNetwork(this.network.stub).then(res => {
-      this.people = res
+    api.fetchUser(this.$route.params.id).then(res => {
+      this.user = res
     })
   },
   computed: {
     network: function () {
-      let networkId = Token.currentUserNetworkCode(this.$auth)
+      let networkId = 'brooklyn-events'
       return this.networks.find(network => network.stub === networkId)
+    },
+    userAvailableSometimes: function () {
+      return this.user.availableEvenings || this.user.availableMornings || this.user.availableAfternoons || this.user.availableWeekends
+    },
+    userLocation: function () {
+      return { lat: parseFloat(this.user.fuzzyLatitude), lng: parseFloat(this.user.fuzzyLongitude) }
+    },
+    joinedDateFormatted: function () {
+      return moment(this.user.createdAt).format('MMMM, YYYY')
     }
   }
 }
 
 </script>
 <style scoped>
+
+.avatar-large {
+  border-radius: 50%;
+  width: 100px;
+}
+
+.user-profile-wrapper {
+  padding-top: 0px !important;
+  background-color: #f2f2f2 !important;
+}
+
 .body {
   font-family: soleil, sans-serif;
   color: #333;

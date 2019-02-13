@@ -80,7 +80,7 @@ export default new Router({
       component: ProfileEdit
     },
     {
-      path: '/provider-profile/:id',
+      path: '/users/:id',
       name: 'ProviderProfile',
       component: ProviderProfile,
       props: true
