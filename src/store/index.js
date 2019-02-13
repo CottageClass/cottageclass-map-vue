@@ -26,7 +26,7 @@ export default new Vuex.Store(
       showAlert: (state, payload) => {
         state.alert = payload.alert
       },
-      setRSVPAttempEventId: (state, payload) => {
+      setRSVPAttemptEventId: (state, payload) => {
         state.RSVPAttempEventId = payload.id
       },
       hideAlert: (state) => {

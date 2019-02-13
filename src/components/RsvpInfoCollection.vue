@@ -136,7 +136,7 @@ export default {
     redirectToSignupIfNotAuthenticated: function () {
       if (!this.$auth.isAuthenticated()) {
         console.log('User attempted to RSVP without being authenticated')
-        this.$store.commit('setRSVPAttempEventId', { id: this.eventId })
+        this.$store.commit('setRSVPAttemptEventId', { id: this.eventId })
         this.$router.push({ name: 'SignUp' })
       }
     },
@@ -144,7 +144,7 @@ export default {
       if (!this.currentUser.hasAllRequiredFields) {
         // send them back to onboarding.
         console.log('user doesnt have required fields on rsvpinfocollection step, sending them back to onboarding', this.currentUser)
-        this.$store.commit('setRSVPAttempEventId', { id: this.eventId })
+        this.$store.commit('setRSVPAttemptEventId', { id: this.eventId })
         this.$router.push({ name: 'OnboardNewUser' })
       } else {
         console.log('user already onboarded, not redirecting')
@@ -186,7 +186,7 @@ export default {
       }
     },
     forgetRsvpAttempted: function () {
-      this.$store.commit('setRSVPAttempEventId', { id: null })
+      this.$store.commit('setRSVPAttemptEventId', { id: null })
     },
     submitRsvp: function () {
       this.error = ''
