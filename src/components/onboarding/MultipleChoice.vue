@@ -11,7 +11,7 @@
         :class="{'active-checkbox': choice === value}">
           <input
           type="radio"
-          :id="choice"
+          :id="choice"  
           :value="choice"
           :name="choice"
           class="onb-checkbox w-checkbox-input"
@@ -55,6 +55,7 @@
           :id="index" 
           :name="index"
           class="onb-checkbox w-checkbox-input"
+          :checked="objValues[index]"
           :class="{ 'active-checkbox': objValues[index] }">          
           <label :for="index" class="onb-checkbox-label w-form-label">
             {{ keysOrLabels[index] }}
@@ -83,8 +84,10 @@ export default {
       }
     },
     objValues: function () {
-      if (this.type != 'radio') {
+      if ((this.type != 'radio') && (this.vModelIs != 'array')) {
         return this.keys.map(key => this.value[key])
+      } else if ((this.type != 'radio') && (this.vModelIs === 'array')) {
+        return this.keys.map(key => this.value.includes(key))
       } else {
         return []
       }
