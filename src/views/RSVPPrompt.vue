@@ -51,19 +51,20 @@ export default {
     }
   },
   mounted: function () {
+    const that = this
     api.fetchUpcomingEventsWithinDistance(20, this.currentUser.latitude, this.currentUser.longitude).then(res => {
       if (res.length > 0) {
-        this.events = res
-        if (this.eventsNotBelongingToCurrentUser.length < 1) {
-          this.nextStep()
+        that.events = res
+        if (that.eventsNotBelongingToCurrentUser.length < 1) {
+          that.nextStep()
         }
       } else {
-        this.nextStep() // skip this step if no nearby events
+        that.nextStep() // skip this step if no nearby events
       }
     }).catch(function (err) {
       console.log(err)
       // likely there are no events in the area, proceed to
-      this.nextStep()
+      that.nextStep()
     })
   }
 }
