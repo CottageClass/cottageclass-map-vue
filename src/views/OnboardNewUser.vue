@@ -3,8 +3,8 @@
     <div class="body">
       <div class="content-wrapper">
         <Nav :button="nextButtonState" @next="nextStep" @prev="prevStep" />
-        <ErrorMessage v-if="error && this.showError" :text="error" />
         <OnboardingStyleWrapper styleIs="onboarding">
+          <ErrorMessage v-if="error && this.showError" :text="error" />
           <Phone
             v-if="currentStep === 'phone'"
             @pressedEnter="nextStep"
