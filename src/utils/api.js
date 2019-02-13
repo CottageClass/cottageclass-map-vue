@@ -188,7 +188,7 @@ function createPeopleObject (responseData) {
 
 export function fetchUsersWithinDistance (miles, lat, lon) {
   return Vue.axios.get(
-    `${process.env.BASE_URL_API}/api/users/miles/${miles}/latitude/${lat}/longitude/${lon}`
+    `${process.env.BASE_URL_API}/api/users/miles/${miles}/latitude/${lat}/longitude/${lon}/page/1/page_size/10`
   ).then(res => {
     console.log('FETCH USERS WITHIN DISTANCE SUCCESS')
     console.log(res.data)
@@ -401,6 +401,23 @@ export function fetchEvents (params) {
   })
 }
 
+export function fetchUpcomingEventsWithinDistance (miles, lat, lon, sort) {
+  return Vue.axios.get(
+    `${process.env.BASE_URL_API}/api/events/miles/${miles}/latitude/${lat}/longitude/${lon}`
+  ).then(res => {
+    console.log('FETCH UPCOMING EVENTS WITHIN DISTANCE SUCCESS')
+    console.log(res.data)
+    // this seems to reverse list order so we reverse on next line
+    let listOfEvents = Object.values(normalize(res.data).event).map(parseEventData)
+    listOfEvents.reverse()
+    return listOfEvents
+  }).catch(err => {
+    console.log('FETCH UPCOMING EVENTS WITHIN DISTANCE FAILURE')
+    console.log(err.errors)
+    throw err
+  })
+}
+
 export function fetchMyUpcomingParticipatingEvents () {
   return Vue.axios.get(`${process.env.BASE_URL_API}/api/user/participated_events/upcoming`)
     .then(res => {
@@ -508,19 +525,3 @@ function parseEventData (obj) {
   return e
 }
 
-export function fetchUpcomingEventsWithinDistance (miles, lat, lon) {
-  return Vue.axios.get(
-    `${process.env.BASE_URL_API}/api/events/miles/${miles}/latitude/${lat}/longitude/${lon}/page/1/page_size/50`
-  ).then(res => {
-    console.log('FETCH UPCOMING EVENTS WITHIN DISTANCE SUCCESS')
-    console.log(res.data)
-    // this seems to reverse list order so we reverse on next line
-    let listOfEvents = Object.values(normalize(res.data).event).map(parseEventData)
-    listOfEvents.reverse()
-    return listOfEvents
-  }).catch(err => {
-    console.log('FETCH UPCOMING EVENTS WITHIN DISTANCE FAILURE')
-    console.log(err.errors)
-    throw err
-  })
-}

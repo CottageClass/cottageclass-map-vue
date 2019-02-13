@@ -42,7 +42,7 @@ export default {
   components: { EventList, MainNav, Footer },
   data () {
     return {
-      eventsWithinDistance: null,
+      events: null,
       maximumDistanceFromUserInMiles: '5',
       showAllButtonText: 'Show all playdates',
       showShowAllButton: false,
@@ -51,8 +51,8 @@ export default {
   },
   computed: {
     eventsSortedByDate: function () {
-      if (this.eventsWithinDistance) {
-        return this.eventsWithinDistance.concat().sort((eventA, eventB) => {
+      if (this.events) {
+        return this.events.concat().sort((eventA, eventB) => {
           return moment(eventA.startsAt).diff(moment(eventB.startsAt))
         })
       }
@@ -84,12 +84,23 @@ export default {
     fetchEventsWithinDistance: function () {
       api.fetchUpcomingEventsWithinDistance(this.maximumDistanceFromUserInMiles, this.currentUser.latitude, this.currentUser.longitude).then(
         (res) => {
-          this.eventsWithinDistance = res
+          this.events = res
         })
+    },
+    fetchAllUpcomingEvents: function () {
+      api.fetchEvents('upcoming').then(
+        (res) => {
+          this.events = res
+        }
+      )
     }
   },
   mounted: function () {
-    this.fetchEventsWithinDistance()
+    if (this.isAuthenticated) {
+      this.fetchEventsWithinDistance()
+    } else {
+      this.fetchAllUpcomingEvents()
+    }
   }
 }
 </script>
