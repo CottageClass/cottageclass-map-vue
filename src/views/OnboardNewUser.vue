@@ -67,6 +67,8 @@ import * as api from '@/utils/api'
 import * as Token from '@/utils/tokens'
 import normalize from 'json-api-normalizer'
 import { mapGetters } from 'vuex'
+import sheetsu from 'sheetsu-node'
+import moment from 'moment'
 
 import OnboardingStyleWrapper from '@/components/FTE/OnboardingStyleWrapper.vue'
 import Nav from '@/components/FTE/Nav.vue'
@@ -98,6 +100,7 @@ const stepSequence = [
   'pets',
   'houseRules'
 ]
+const client = sheetsu({ address: 'https://sheetsu.com/apis/v1.0su/62cd725d6088' })
 
 export default {
   name: 'OnboardNewUser',
@@ -223,6 +226,19 @@ export default {
         throw err
       })
       submitInfo.then(() => {
+        client.create({
+          'ID': userId,
+          'Date joined': moment(Date()).format('L'),
+          'address': this.userData.location.fullAddress,
+          'phone': this.userData.phone.number,
+          'children': this.userData.children.list,
+          'availability': this.userData.availability,
+          'food': this.eventSeriesData.food.selected
+        }, 'newUsers').then((data) => {
+          console.log(data)
+        }, (err) => {
+          console.log(err)
+        })
         return that.$store.dispatch('establishCurrentUserAsync', userId)
       }).then(() => {
         that.submitEventData().then(res => {
