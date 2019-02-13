@@ -29,7 +29,6 @@ export default {
   },
   methods: {
     emitData: function () {
-      console.log(this.vaule)
       this.$emit('input', Object.assign(this.value, {
         isTrue: this.trueOrFalse,
         err: this.err
