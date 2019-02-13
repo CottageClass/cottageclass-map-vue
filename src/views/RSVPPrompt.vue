@@ -1,12 +1,9 @@
 <template>
-  <OnboardingStyleWrapper styleIs="onboarding">
-    <div class="onb-body">
-      <div class="body">
-        <div class="content-wrapper">
-          <Nav
-            @next="$emit('activateScreen', 'inviteOthers')"
-            hidePrevious="true"
-            />
+  <div class="onb-body">
+    <div class="body">
+      <div class="content-wrapper">
+        <Nav :button="next" @next="nextStep" hidePrevious="true" />
+        <OnboardingStyleWrapper styleIs="onboarding">
           <Question
             title="RSVP to a playdate near you"
             subtitle="Would you like to RSVP to one of these upcoming playdates in your area?"
@@ -15,18 +12,19 @@
             :events="events"
             :showDates="false"
             />
-        </div>
+        </OnboardingStyleWrapper>
       </div>
     </div>
-  </OnboardingStyleWrapper>
+  </div>
 </template>
 
 <script>
-import Question from './Question.vue'
-import EventList from '../EventList.vue'
+import Question from '@/components/base/Question.vue'
+import EventList from '@/components/EventList.vue'
 import * as api from '@/utils/api.js'
-import OnboardingStyleWrapper from './OnboardingStyleWrapper.vue'
-import Nav from '@/components/onboarding/Nav.vue'
+import OnboardingStyleWrapper from '@/components/FTE/OnboardingStyleWrapper.vue'
+import Nav from '@/components/FTE/Nav.vue'
+import { mapGetters } from 'vuex';
 
 export default {
   name: 'RSVPPrompt',
@@ -36,6 +34,11 @@ export default {
     return {
       events: [],
       noNearbyEvents: false
+    }
+  },
+  methods: {
+    nextStep () {
+      this.$router.push({ name: 'SocialInvite', params: { id: this.firstCreatedEventId } })
     }
   },
   mounted: function () {
@@ -52,7 +55,8 @@ export default {
         })
       }
     }).catch(err => console.log(err))
-  }
+  },
+  computed: mapGetters([ 'firstCreatedEventId' ])
 }
 </script>
 

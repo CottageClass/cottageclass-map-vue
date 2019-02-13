@@ -24,7 +24,7 @@
     </div>
     <div class="onb-location-search-container">
       <div class="w-form">
-        <form id="email-form-2" v-on:submit.prevent="login">
+        <form id="email-form-2" v-on:submit.prevent="signIn">
         <input
           v-validate="'required|email'"
           name="email"
@@ -59,11 +59,11 @@
 // import networks from '@/assets/network-info.json';
 import { mapGetters } from 'vuex'
 import * as Token from '@/utils/tokens.js'
-import ErrorMessage from '@/components/onboarding/ErrorMessage.vue'
-import OnboardingStyleWrapper from '@/components/onboarding/OnboardingStyleWrapper.vue'
+import ErrorMessage from '@/components/base/ErrorMessage.vue'
+import OnboardingStyleWrapper from '@/components/FTE/OnboardingStyleWrapper.vue'
 
 export default {
-  name: 'DirectLogin',
+  name: 'SignInWithEmail',
   components: { ErrorMessage, OnboardingStyleWrapper },
   data: function () {
     return {
@@ -115,7 +115,7 @@ export default {
     this.$validator.localize('en', dict)
   },
   methods: {
-    login: function (event) {
+    signIn: function (event) {
       event.preventDefault()
       let component = this
 
@@ -227,7 +227,7 @@ input.invalid {
   align-items: center;
   border-radius: 4px;
   background-color: transparent;
-  background-image: url('../../assets/arrow-back-white.svg');
+  background-image: url('../assets/arrow-back-white.svg');
   background-position: 50% 50%;
   background-size: 24px 24px;
   background-repeat: no-repeat;
@@ -236,7 +236,7 @@ input.invalid {
 
 .button-back:active {
   background-color: hsla(0, 0%, 100%, .2);
-  background-image: url('../../assets/arrow-back-white.svg');
+  background-image: url('../assets/arrow-back-white.svg');
   background-size: 24px;
 }
 </style>

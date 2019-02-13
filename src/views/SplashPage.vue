@@ -1,21 +1,6 @@
 <template>
 <div class="body-homepage">
-
-    <!-- Nav -->
-
-    <MainNav />
-
-  <!--
-  <div data-collapse="medium" data-animation="default" data-duration="400" class="nav-section w-nav">
-    <div class="nav-container w-container"><a href="#" class="brand w-clearfix w-nav-brand"><img src="@/assets/kc-logo-landscape.svg" alt="" class="image-2"></a>
-      <div class="tag-container-desktop w-hidden-medium w-hidden-small w-hidden-tiny">
-        <div class="nav-tag">Free childcare, fun events.</div>
-      </div>
-      <div class="nav-flex-space"></div>
-    </div>
-  </div>
-
--->
+  <MainNav />
   <div class="hero-section">
     <div class="hero-container w-container">
       <div class="hero-content">
@@ -43,29 +28,22 @@
         <div class="signup-wrapper">
           <a
           v-if="!!facebookLogin"
-          @click="$emit('authenticateFacebook')"
+          @click="authenticate('facebook')"
           class="fb-button w-inline-block">
           <img src="@/assets/facebook-button-icon.svg" width="24" height="24" alt=""><div class="fb-button-text">Continue with Facebook</div></a>
           <a
           v-else
-          @click="$emit('activateScreen', 'signup')"
+          @click="$router.push({name: 'SignUp'})"
           class="fb-button w-inline-block">
           <img src="@/assets/add.svg" width="24" height="24" alt="">
           <div class="fb-button-text">Create your account</div></a>
-          <div v-if="facebookLogin" class="use-password-text">Or <a href="#" class="links" @click="$emit('activateScreen', 'signup')">use a password instead</a></div>
-          <div v-else class="use-password-text">Or <a href="#" class="links" @click="$emit('activateScreen', 'loginWithEmail')">sign in now</a></div>
+          <div v-if="facebookLogin" class="use-password-text">Or <a href="#" class="links" @click="$router.push({name: 'SignUp'})">use a password instead</a></div>
+          <div v-else class="use-password-text">Or <a href="#" class="links" @click="$router.push({name: 'SignIn'})">sign in now</a></div>
           <div class="terms-text">By signing in you agree to our <a href="https://cottageclass.com/terms-of-service">Terms of Service</a> and <a href="https://cottageclass.com/privacy-policy">Privacy Policy</a>.</div>
         </div>
       </div>
     </div>
   </div>
-
-<!-- Events -->
-
-  <!-- <Events limitTo="5" id="events" /> -->
-  <!--
-      <div class="event-date-section-more-events"><a href="events.html" class="links more-link">All Events</a></div>
-  -->
 
   <div class="content-section background-01">
     <div class="divider-2px"></div>
@@ -348,11 +326,9 @@
       <h1 class="h1-display">As covered in</h1>
       <div class="featured-container">
       <a href="https://www.bloomberg.com/company/announcements/bloomberg-and-ny-tech-meetup-spotlight-female-led-startups-at-winter-2016-womens-demo-night/" target="_blank" class="featured-card w-inline-block"><img src="@/assets/bloomberg.png" alt="" class="press-logo"></a><a href="https://www.wsj.com/articles/haute-home-schools-designed-to-give-kids-a-bespoke-education-1455807796" target="_blank" class="featured-card w-inline-block"><img src="@/assets/thewallstreetjournal.png" alt="" class="image-261"></a><a href="https://www.nytimes.com/slideshow/2016/06/26/nyregion/not-just-the-teachers-pets/s/26PETCITY-slide-IKW9.html" target="_blank" class="featured-card w-inline-block"><img src="@/assets/thenewyorktimes.png" alt="" class="image-261"></a><a href="https://mommypoppins.com/new-york-city-kids/camps/8-new-summer-camps-for-nyc-kids-in-2017" target="_blank" class="featured-card w-inline-block"><img src="@/assets/mommypoppins.png" alt="" class="image-261"></a><a href="http://www.gettingsmart.com/2017/01/cottageclass-expanding-access-to-microschools-and-learning-experiences/" target="_blank" class="featured-card w-inline-block"><img src="@/assets/gettingsmart.png" alt="" class="image-261"></a>
-      </div>
     </div>
-    </div>
-
-<!-- Footer -->
+  </div>
+</div>
 
 <Footer />
 
@@ -366,9 +342,10 @@ import RsvpButton from '@/components/RsvpButton.vue'
 import MainNav from '@/components/MainNav.vue'
 import Footer from '@/components/Footer.vue'
 import { mapGetters } from 'vuex'
+import * as Token from '@/utils/tokens'
 
 export default {
-  name: 'Login',
+  name: 'SplashPage',
   components: { RsvpButton, MainNav, Footer },
   data () {
     return {
@@ -393,7 +370,40 @@ export default {
       return ['(iPhone|iPod|iPad)(?!.*Safari)'].every(expression => {
         return !!navigator.userAgent.match(new RegExp(`(${expression})`, 'ig'))
       })
-    }
+    },
+    authenticate: function (provider) {
+      /*
+   *  Logs in the user (Facebook)
+   * - follows OAuth flow using VueAuth to get OAuth code
+   * - sends code to backend to exchange for access_token
+   * - backend fetches access_token, stores it in DB, and sends back JWT for user
+   * - VueAuthenticate stores JWT for future API access authorization
+   */
+      console.log('authing')
+      // store value of this to access this.$emit during callback
+      let component = this
+      this.$auth.authenticate(provider)
+        .then(res => {
+          console.log('auth SUCCESS')
+          return this.$store.dispatch('establishCurrentUserAsync', Token.currentUserId(component.$auth))
+        }).then(() => {
+          if (this.currentUser.hasAllRequiredFields && !this.rsvpAttempted) {
+            // redirect to home screen if they haven't attempted an RSVP
+            this.$router.push({ name: 'Home' })
+          } else if (this.currentUser.hasAllRequiredFields && this.rsvpAttempted) {
+            // confirm that they want to RSVP if they have attempted an RSVP
+            this.$router.push({ name: 'RsvpConfirmation', params: { eventId: this.rsvpAttempted } })
+          } else if (this.currentUser.id) {
+            // begin onboarding
+            this.$router.push({ name: 'OnboardNewUser' })
+          } else {
+            return false
+          }
+        }).catch(function (err) {
+          console.log('auth FAILURE or user not onboarded yet')
+          console.log(err)
+        })
+    },
   },
   computed: mapGetters(['currentUser'])
 }
@@ -525,7 +535,7 @@ a {
 .hero-section {
   margin-top: 0px;
   padding-top: 0px;
-  background-image: url('../../assets/hero-3---r.svg'), url('../../assets/hero-4---l.svg');
+  background-image: url('../assets/hero-3---r.svg'), url('../assets/hero-4---l.svg');
   background-position: 111% 50%, -125px 50%;
   background-size: 240px, 240px;
   background-repeat: no-repeat, no-repeat;
@@ -1534,7 +1544,7 @@ a {
   }
 
   .hero-section {
-    background-image: url('../../assets/group-5.svg');
+    background-image: url('../assets/group-5.svg');
     background-position: 50% -123px;
     background-size: 800px;
     background-repeat: no-repeat;
@@ -1717,7 +1727,7 @@ a {
   }
 
   .hero-section {
-    background-image: url('../../assets/group-5.svg');
+    background-image: url('../assets/group-5.svg');
     background-position: 50% -123px;
     background-size: 600px;
     background-repeat: no-repeat;
@@ -1999,7 +2009,7 @@ a {
   }
 
   .hero-section {
-    background-image: url('../../assets/group-5.svg');
+    background-image: url('../assets/group-5.svg');
     background-position: 50% -66px;
     background-size: 400px;
     background-repeat: no-repeat;
