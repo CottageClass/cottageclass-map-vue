@@ -2,8 +2,13 @@
 <div class="body-2">
   <MainNav />
   <div class="event-detail-container w-container">
-    <div class="event-detail-graphic"><EventCategoryIcon :category="event.activityName"
- width="150" height="150" /></div>
+    <div class="event-detail-graphic">
+      <EventCategoryIcon
+        :category="!!event ? event.activityName : ''"
+        width="150"
+        height="150"
+        />
+      </div>
     <div class="div-block-36">
 
       <h1 class="event-detail-heading">{{ event.name }}</h1>
@@ -145,7 +150,8 @@ export default {
   components: { AvatarImage, RsvpButton, MainNav, Footer, EventCategoryIcon, EditButton },
   data () {
     return {
-      events: [],
+      event: null,
+      eventId: this.$route.params.id,
       mapOptions: {
         'disableDefaultUI': true, // turns off map controls
         'gestureHandling': 'none' // prevents any kind of scrolling
@@ -170,19 +176,16 @@ export default {
     fetchEvent: function () {
       api.fetchEvents(this.$route.params.id).then(
         (res) => {
-          this.events = res
+          this.event = res[0]
         })
     }
   },
-  mounted: function () {
+  created: function () {
     this.fetchEvent()
   },
   computed: {
     hostIsCurrentUser: function () {
       return this.currentUser && this.event.hostId === this.currentUser.id
-    },
-    eventId: function () {
-      return this.event.id
     },
     distance: function () {
       if (this.currentUser) {
@@ -193,13 +196,6 @@ export default {
     },
     childAgesSorted: function () {
       return this.event.hostChildAges.concat().sort((a, b) => a - b)
-    },
-    event: function () {
-      if (Array.isArray(this.events)) {
-        return this.events.find(event => event.id === this.$route.params.id)
-      } else {
-        return null
-      }
     },
     ...mapGetters(['currentUser'])
   }
