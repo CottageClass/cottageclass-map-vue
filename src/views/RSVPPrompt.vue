@@ -2,7 +2,7 @@
   <div class="onb-body">
     <div class="body">
       <div class="content-wrapper">
-        <Nav :button="skip" @next="nextStep" hidePrevious="true" />
+        <Nav button="skip" @next="nextStep" hidePrevious="true" />
         <OnboardingStyleWrapper styleIs="onboarding">
           <LoadingSpinner v-if="eventsNotBelongingToCurrentUser.length < 1" />
           <Question
@@ -34,13 +34,13 @@ export default {
   props: [],
   data () {
     return {
-      events: [],
+      events: []
     }
   },
   computed: {
     eventsNotBelongingToCurrentUser: function () {
       return this.events.filter(event => {
-        return (event.full != 'false') && (event.hostId != this.currentUser.id)
+        return (event.full !== 'false') && (event.hostId !== this.currentUser.id)
       })
     },
     ...mapGetters([ 'currentUser' ])
@@ -51,22 +51,20 @@ export default {
     }
   },
   mounted: function () {
-    api.fetchUpcomingEventsWithinDistance(3, this.currentUser.latitude, this.currentUser.longitude).then(res => {
+    api.fetchUpcomingEventsWithinDistance(20, this.currentUser.latitude, this.currentUser.longitude).then(res => {
       if (res.length > 0) {
         this.events = res
+        if (this.eventsNotBelongingToCurrentUser.length < 1) {
+          this.nextStep()
+        }
       } else {
-        api.fetchUpcomingEventsWithinDistance(20, this.currentUser.latitude, this.currentUser.longitude).then(res => {
-          if (res.length > 0) {
-            this.events = res
-            if (this.eventsNotBelongingToCurrentUser.length < 1) {
-              this.nextStep()
-            }
-          } else {
-            this.nextStep() // skip this step if no nearby events
-          }
-        })
+        this.nextStep() // skip this step if no nearby events
       }
-    }).catch(err => console.log(err))
+    }).catch(function (err) {
+      console.log(err)
+      // likely there are no events in the area, proceed to
+      this.nextStep()
+    })
   }
 }
 </script>
