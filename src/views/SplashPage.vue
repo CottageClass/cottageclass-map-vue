@@ -161,6 +161,7 @@
             </div>
           </li>
         </ul>
+        <!--
         <div class="event-date-section-tittle"><img src="@/assets/date-outline-white-oval.svg" alt="" class="image-265">
           <div class="date-text-wrapper">
             <div class="date-title">Sunday, March 3</div>
@@ -197,6 +198,7 @@
             </div>
           </li>
         </ul>
+      -->
         <div class="event-date-section-tittle"><img src="@/assets/date-outline-white-oval.svg" alt="" class="image-265">
           <div class="date-text-wrapper">
             <div class="date-title">Monday, March 4</div>
