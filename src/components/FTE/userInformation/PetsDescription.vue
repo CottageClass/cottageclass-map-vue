@@ -30,7 +30,12 @@ export default {
     }
   },
   mounted: function () {
-    this.$emit('input', { err: this.noTextErrorMsg })
+    this.emitData({ err: this.noTextErrorMsg })
+  },
+  methods: {
+    emitData (data) {
+      this.$emit('input', Object.assign(this.value, data))
+    }
   },
   watch: {
     blurb: {
@@ -42,7 +47,7 @@ export default {
         } else {
           this.blurb.err = this.noTextErrorMsg
         }
-        this.$emit('input', { err: this.blurb.err, text: this.blurb.text })
+        this.emitData('input', { err: this.blurb.err, text: this.blurb.text })
       },
       deep: true
     }
