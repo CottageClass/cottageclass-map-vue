@@ -13,7 +13,8 @@ export default new Vuex.Store(
       eventsByDate: null, // We shouldn't store all events.  It will have to change later
       currentUser: null,
       alert: null,
-      createdEventData: null
+      createdEventData: null,
+      RSVPAttempEventId: null
     },
     mutations: {
       setEventsByDate: (state, payload) => {
@@ -24,6 +25,9 @@ export default new Vuex.Store(
       },
       showAlert: (state, payload) => {
         state.alert = payload.alert
+      },
+      setRSVPAttempEventId: (state, payload) => {
+        state.RSVPAttempEventId = payload.id
       },
       hideAlert: (state) => {
         state.alert = null
@@ -91,7 +95,8 @@ export default new Vuex.Store(
         } else {
           return null
         }
-      }
+      },
+      rsvpAttemptedId: state => state.RSVPAttempEventId
     }
   }
 )

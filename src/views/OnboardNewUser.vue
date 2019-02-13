@@ -248,13 +248,20 @@ export default {
       }).then(res => {
         console.log('event creation SUCCESS')
         console.log(res)
-        this.$router.push({ name: 'RSVPPrompt' })
+        this.moveOntoNextFTE()
       }).catch(err => {
         console.log(err)
         that.stepIndex = stepSequence.length - 1
         that.modelForCurrentStep.err = 'Sorry, there was a problem saving your information. Try again?'
         throw err
       })
+    },
+    moveOntoNextFTE () {
+      if (this.rsvpAttemptedId) {
+        this.$router.push({ name: 'RsvpConfirmation', params: { eventId: this.rsvpAttemptedId } })
+      } else {
+        this.$router.push({ name: 'RSVPPrompt' })
+      }
     },
     nextStep () {
       if (!this.error) {
