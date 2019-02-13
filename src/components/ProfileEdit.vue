@@ -36,6 +36,12 @@
         placeholder="Your illustrious biography"
         />
     </Question>
+    <Question
+      title="Got any photos you'd like to share?"
+      subtitle="Adding photos to your profile helps give other members a sense of your family."
+      >
+      <MultipleImageUpload v-model="currentUser.images" />
+    </Question>
     <Availability v-model="availability" :required="false"/>
     <ErrorMessage v-if="showError && error" :text=" children.err" />
     <Children v-model="children" :required="false" />
@@ -58,6 +64,7 @@ import PageActionsFooter from '@/components/PageActionsFooter.vue'
 import OnboardingStyleWrapper from '@/components/onboarding/OnboardingStyleWrapper.vue'
 import ErrorMessage from '@/components/onboarding/ErrorMessage.vue'
 import FormWithTextArea from '@/components/onboarding/FormWithTextArea.vue'
+import MultipleImageUpload from '@/components/onboarding/MultipleImageUpload.vue'
 import * as api from '@/utils/api.js'
 import { mapGetters } from 'vuex'
 
@@ -65,7 +72,7 @@ var VueScrollTo = require('vue-scrollto')
 
 export default {
   name: 'ProfileEdit',
-  components: { Location, Phone, Availability, MainNav, OnboardingStyleWrapper, PageActionsFooter, ErrorMessage, Children, Question, FormFieldAndLabel, FormWithTextArea },
+  components: { Location, Phone, Availability, MainNav, OnboardingStyleWrapper, PageActionsFooter, ErrorMessage, Children, Question, FormFieldAndLabel, FormWithTextArea, MultipleImageUpload },
   data () {
     return {
       location: {},
