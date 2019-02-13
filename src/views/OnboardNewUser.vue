@@ -6,6 +6,7 @@
           :button="nextButtonState"
           @next="nextStep"
           @prev="prevStep"
+          :hidePrevious="stepIndex === 0"
         />
         <OnboardingStyleWrapper styleIs="onboarding">
           <ErrorMessage v-if="error && this.showError" :text="error" />
