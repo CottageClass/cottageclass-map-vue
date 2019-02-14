@@ -101,7 +101,6 @@ Vue.use(VueGoogleMaps, {
 })
 
 router.beforeEach((to, from, next) => {
-  console.log('going to new route: ' + to)
   store.dispatch('newRoute', { to, from, next })
 })
 

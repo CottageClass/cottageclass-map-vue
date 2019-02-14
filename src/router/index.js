@@ -6,7 +6,7 @@ import EmergencyInfo from '@/components/EmergencyInfo'
 import ProviderProfile from '@/components/ProviderProfile.vue'
 import RequestModal from '@/components/RequestModal.vue'
 import HowItWorks from '@/components/HowItWorks.vue'
-import NewUser from '@/components/NewUser.vue'
+import SplashPage from '@/views/SplashPage.vue'
 import RequestModal2 from '@/components/RequestModal2.vue'
 import RequestRecipients from '@/components/RequestRecipients.vue'
 import AdminMessages from '@/components/AdminMessages.vue'
@@ -18,12 +18,18 @@ import CancelRSVP from '@/components/CancelRSVP.vue'
 import MyRSVPs from '@/components/MyRSVPs.vue'
 import Faq from '@/components/Faq.vue'
 import MyEvents from '@/components/MyEvents.vue'
-import Invite from '@/components/onboarding/Invite.vue'
+import SocialInvite from '@/views/SocialInvite.vue'
 import EventEdit from '@/components/EventEdit.vue'
 import ProfileEdit from '@/components/ProfileEdit.vue'
-import EmergencyContacts from '@/components/onboarding/EmergencyContacts.vue'
-import ChildSpecialRequirements from '@/components/onboarding/ChildSpecialRequirements.vue'
-import ChildSpecialRequirementsYesNo from '@/components/onboarding/ChildSpecialRequirementsYesNo.vue'
+import EmergencyContacts from '@/components/FTE/EmergencyContacts.vue'
+import ChildSpecialRequirements from '@/components/FTE/ChildSpecialRequirements.vue'
+import ChildSpecialRequirementsYesNo from '@/components/FTE/ChildSpecialRequirementsYesNo.vue'
+import SignInWithEmail from '@/views/SignInWithEmail.vue'
+import SignUpWithEmail from '@/views/SignUpWithEmail.vue'
+import OnboardNewUser from '@/views/OnboardNewUser.vue'
+import RSVPPrompt from '@/views/RSVPPrompt.vue'
+import InviteExistingUsers from '@/views/InviteExistingUsers.vue'
+
 Vue.use(Router)
 
 export default new Router({
@@ -31,8 +37,8 @@ export default new Router({
   routes: [
     {
       path: '/',
-      name: 'NewUser',
-      component: NewUser
+      name: 'SplashPage',
+      component: SplashPage
     },
     {
       path: '/offer',
@@ -58,6 +64,15 @@ export default new Router({
       name: 'Home',
       component: Events,
       props: true
+    },{
+      path: '/sign-in',
+      name: 'SignIn',
+      component: SignInWithEmail
+    },
+    {
+      path: '/sign-up',
+      name: 'SignUp',
+      component: SignUpWithEmail
     },
     {
       path: '/profile/edit',
@@ -65,15 +80,20 @@ export default new Router({
       component: ProfileEdit
     },
     {
-      path: '/provider-profile/:id',
+      path: '/users/:id',
       name: 'ProviderProfile',
       component: ProviderProfile,
       props: true
     },
     {
       path: '/event/:id/share',
-      name: 'Invite',
-      component: Invite
+      name: 'SocialInvite',
+      component: SocialInvite
+    },
+    {
+      path: '/event/:id/invite',
+      name: 'InviteExistingUsers',
+      component: InviteExistingUsers
     },
     {
       path: '/event/:id/edit',
@@ -158,6 +178,16 @@ export default new Router({
       path: '/rsvp/:eventId',
       name: 'RsvpInfoCollection',
       component: RsvpInfoCollection
+    },
+    {
+      path: '/welcome',
+      name: 'OnboardNewUser',
+      component: OnboardNewUser
+    },
+    {
+      path: '/welcome-RSVP',
+      name: 'RSVPPrompt',
+      component: RSVPPrompt
     }
   ],
   scrollBehavior (to, from, savedPosition) {

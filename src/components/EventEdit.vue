@@ -51,23 +51,23 @@
 </template>
 
 <script>
-import EventName from '@/components/onboarding/EventName.vue'
-import YesOrNo from '@/components/onboarding/YesOrNo.vue'
+import EventName from '@/components/base/eventSpecification/EventName.vue'
+import YesOrNo from '@/components/base/YesOrNo.vue'
 import MainNav from '@/components/MainNav.vue'
 import DateTimePicker from '@/components/DateTimePicker.vue'
 import PageActionsFooter from '@/components/PageActionsFooter.vue'
-import ErrorMessage from '@/components/onboarding/ErrorMessage.vue'
+import ErrorMessage from '@/components/base/ErrorMessage.vue'
 import * as api from '@/utils/api.js'
-import EventActivity from '@/components/onboarding/EventActivity.vue'
-import Food from '@/components/onboarding/Food.vue'
-import HouseRules from '@/components/onboarding/HouseRules.vue'
-import PetsDescription from '@/components/onboarding/PetsDescription.vue'
-import MaxChildren from '@/components/onboarding/MaxChildren.vue'
-import OnboardingStyleWrapper from '@/components/onboarding/OnboardingStyleWrapper.vue'
-import Question from '@/components/onboarding/Question.vue'
+import EventActivity from '@/components/base/eventSpecification/EventActivity.vue'
+import Food from '@/components/base/eventSpecification/Food.vue'
+import HouseRules from '@/components/FTE/userInformation/HouseRules.vue'
+import PetsDescription from '@/components/FTE/userInformation/PetsDescription.vue'
+import MaxChildren from '@/components/base/eventSpecification/MaxChildren.vue'
+import OnboardingStyleWrapper from '@/components/FTE/OnboardingStyleWrapper.vue'
+import Question from '@/components/base/Question.vue'
 import DeleteEventConfirmationModal from '@/components/DeleteEventConfirmationModal.vue'
 
-import AgeRange from '@/components/onboarding/AgeRange.vue'
+import AgeRange from '@/components/base/eventSpecification/AgeRange.vue'
 var moment = require('moment')
 
 var VueScrollTo = require('vue-scrollto')
