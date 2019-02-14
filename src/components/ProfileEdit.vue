@@ -11,8 +11,9 @@
     <Location :currentAddress="currentUser.fullAddress" :currentApartment="currentUser.apartment" v-model="location" :required="false" />
       <ErrorMessage v-if="showError && error" :text="availability.err" />
     <Availability v-model="availability" :required="false"/>
-    <ErrorMessage v-if="showError && error" :text=" children.err" />
+    <ErrorMessage v-if="showError && error" :text="children.err" />
     <Children v-model="children" :required="false" />
+    <LanguagesSpoken v-model="currentUser.languages"/>
   </OnboardingStyleWrapper>
   <PageActionsFooter :buttonText="saveButtonText" @click="submitUserInformation"/>
   </div>
@@ -22,6 +23,7 @@
 
 <script>
 import Location from '@/components/FTE/userInformation/Location.vue'
+import LanguagesSpoken from '@/components/FTE/userInformation/LanguagesSpoken.vue'
 import Children from '@/components/FTE/userInformation/Children.vue'
 import Phone from '@/components/FTE/userInformation/Phone.vue'
 import Availability from '@/components/FTE/userInformation/Availability.vue'
@@ -36,7 +38,7 @@ var VueScrollTo = require('vue-scrollto')
 
 export default {
   name: 'ProfileEdit',
-  components: { Location, Phone, Availability, MainNav, OnboardingStyleWrapper, PageActionsFooter, ErrorMessage, Children },
+  components: { Location, Phone, Availability, MainNav, OnboardingStyleWrapper, PageActionsFooter, ErrorMessage, Children, LanguagesSpoken },
   data () {
     return {
       location: {},
