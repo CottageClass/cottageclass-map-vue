@@ -40,15 +40,15 @@ export default {
       this.$emit('input', {
         selected: this.foodSelected,
         err: this.err
-    })
-  }
+      })
+    }
   },
   mounted: function () {
     this.emitInput()
   },
   computed: {
     err: function () {
-      if (this.foods === '') {
+      if (!this.foodSelected) {
         return this.errorMesg
       } else {
         return false

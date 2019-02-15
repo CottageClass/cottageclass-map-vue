@@ -30,7 +30,7 @@ export default {
   components: { Question },
   data () {
     return {
-      number: '',
+      number: this.value.number,
       errorMesg: 'Please enter a valid US phone number.',
       placeholder: this.currentPhone || 'e.g. 2125551212'
     }

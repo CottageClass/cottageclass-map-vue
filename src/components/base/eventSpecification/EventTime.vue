@@ -38,7 +38,7 @@ export default {
   },
   computed: {
     err: function () {
-      if (this.timeSelected === '') {
+      if (!this.timeSelected) {
         return this.errorMesg
       } else {
         return false

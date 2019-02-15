@@ -15,7 +15,7 @@
           :value="choice"
           :name="choice"
           class="onb-checkbox w-checkbox-input"
-          v-model="value"
+          v-model="vModelProxy"
           >
           <label
           :for="choice"
@@ -25,37 +25,36 @@
          </label>
         </div>
 
+<!-- for checkboxes -->
 
-<!-- for checkboxes --> 
-
-        <div 
+        <div
         v-if="type=='checkbox'"
-        v-for="(key, index) in keys" 
-        class="checkbox-field-extra-space" 
+        v-for="(key, index) in keys"
+        class="checkbox-field-extra-space"
         :class="{'active-checkbox': objValues[index]}"
         >
 
-<!-- for objects with checkboxes --> 
+<!-- for objects with checkboxes -->
 
           <input
           v-if="vModelIs=='object'"
-          v-model="value[key]" 
-          type="checkbox" 
-          :id="index" 
+          v-model="value[key]"
+          type="checkbox"
+          :id="index"
           :name="index"
-          class="onb-checkbox w-checkbox-input" 
+          class="onb-checkbox w-checkbox-input"
           :class="{ 'active-checkbox': objValues[index] }">
 
-<!-- for arrays with checkboxes --> 
+<!-- for arrays with checkboxes -->
 
           <input
           v-if="vModelIs=='array'"
           @click="toggleSelected(key)"
-          type="checkbox" 
-          :id="index" 
+          type="checkbox"
+          :id="index"
           :name="index"
           class="onb-checkbox w-checkbox-input"
-          :class="{ 'active-checkbox': objValues[index] }">          
+          :class="{ 'active-checkbox': objValues[index] }">
           <label :for="index" class="onb-checkbox-label w-form-label">
             {{ keysOrLabels[index] }}
           </label>
@@ -69,8 +68,8 @@
 import * as utils from '@/utils/utils.js'
 export default {
 
-// labelsAndOrder is an array of arrays [key, label] and is optional, for when label names are different than key names. It determines the order. 
-// value is an array of ids or an object of keys and values. if an array of ids, v-model returns ids.  
+// labelsAndOrder is an array of arrays [key, label] and is optional, for when label names are different than key names. It determines the order.
+// value is an array of ids or an object of keys and values. if an array of ids, v-model returns ids.
 
   name: 'MultipleChoice',
   props: ['value', 'labelsAndOrder', 'type', 'choices'],
@@ -107,9 +106,13 @@ export default {
       if (Array.isArray(this.value)) {
         return 'array'
       }  else {
-          return typeof this.value
-        }
+        return typeof this.value
       }
+    },
+    vModelProxy: {
+      get () { return this.value },
+      set (v) { this.$emit('input', v) }
+    }
   },
   methods: {
     capitalize: utils.capitalize,
