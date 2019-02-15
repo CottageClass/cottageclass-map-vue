@@ -675,7 +675,7 @@ h1 {
 }
 
 .map {
-  min-height: 300px;
+  height: 300px;
   min-width: 100%;
   background-position: 50% 50%;
   background-size: cover;
