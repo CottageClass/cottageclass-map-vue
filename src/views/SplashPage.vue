@@ -357,16 +357,12 @@ export default {
       facebookLogin: !this.hideFacebookLogin()
     }
   },
-  mounted: function () {
+  created: function () {
     if (this.currentUser === null) {
       return
     }
-    if (this.currentUser.hasAllRequiredFields) {
-      this.$emit('userAlreadyOnboarded')
-    } else if (this.currentUser.id) {
-      this.$emit('userNotYetOnboarded')
-    } else {
-      return false
+    if (!this.currentUser.hasAllRequiredFields) {
+      this.$router.push({ name: 'OnboardNewUser' })
     }
   },
   methods: {
