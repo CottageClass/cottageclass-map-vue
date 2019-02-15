@@ -87,7 +87,7 @@ export default {
   },
   computed: {
     error: function () {
-      if (this.required != 'false' && (isNaN(this.address.latitude) || isNaN(this.address.longitude))) {
+      if (this.required && (isNaN(this.address.latitude) || isNaN(this.address.longitude))) {
         return 'There was a problem processing your street address. Try again?'
       } else {
         return false

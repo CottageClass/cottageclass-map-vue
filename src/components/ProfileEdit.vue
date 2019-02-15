@@ -12,7 +12,7 @@
       :currentAddress="currentUser.fullAddress"
       :currentApartment="currentUser.apartmentNumber"
       v-model="location"
-      required="false" />
+      />
     <ErrorMessage v-if="showError && error" :text="availability.err" />
     <Question
       title="What do you do for a living?"
