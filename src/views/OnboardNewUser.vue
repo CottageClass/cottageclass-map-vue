@@ -2,9 +2,14 @@
   <div class="onb-body">
     <div class="body">
       <div class="content-wrapper">
-        <Nav :button="nextButtonState" @next="nextStep" @prev="prevStep" />
-        <ErrorMessage v-if="error" :text="error" />
+        <Nav
+          :button="nextButtonState"
+          @next="nextStep"
+          @prev="prevStep"
+          :hidePrevious="stepIndex === 0"
+        />
         <OnboardingStyleWrapper styleIs="onboarding">
+          <ErrorMessage v-if="error && this.showError" :text="error" />
           <Phone
             v-if="currentStep === 'phone'"
             @pressedEnter="nextStep"
@@ -13,7 +18,8 @@
           <Location
             v-if="currentStep === 'location'"
             v-model="userData.location"
-            @pressedEnter="nextStep" />
+            @pressedEnter="nextStep"
+            required="true"/>
           <Children
             v-if="currentStep === 'children'"
             v-model="userData.children" />
@@ -51,7 +57,7 @@
             v-if="currentStep === 'pets' && substep === 'description'"
             v-model="userData.pets" />
           <HouseRules v-if="currentStep === 'houseRules'"
-            v-model="houseRules" />
+            v-model="userData.houseRules" />
         </OnboardingStyleWrapper>
       </div>
     </div>
@@ -63,6 +69,8 @@ import * as api from '@/utils/api'
 import * as Token from '@/utils/tokens'
 import normalize from 'json-api-normalizer'
 import { mapGetters } from 'vuex'
+import sheetsu from 'sheetsu-node'
+import moment from 'moment'
 
 import OnboardingStyleWrapper from '@/components/FTE/OnboardingStyleWrapper.vue'
 import Nav from '@/components/FTE/Nav.vue'
@@ -94,6 +102,7 @@ const stepSequence = [
   'pets',
   'houseRules'
 ]
+const client = sheetsu({ address: 'https://sheetsu.com/apis/v1.0su/62cd725d6088' })
 
 export default {
   name: 'OnboardNewUser',
@@ -117,22 +126,23 @@ export default {
   },
   data () {
     return {
+      showError: false,
       stepIndex: 0,
       substep: '',
       userData: {
-        phone: {},
-        location: {},
-        children: {list: []},
-        pets: {},
-        houseRules: {},
-        emergencyCare: {}
+        phone: { err: null },
+        location: { err: null },
+        children: { list: [], err: null },
+        pets: { err: null },
+        houseRules: { err: null },
+        emergencyCare: { err: null }
       },
       eventSeriesData: {
-        activity: {},
-        food: {},
-        time: {},
-        date: {},
-        maxChildren: {},
+        activity: { err: null },
+        food: { err: null },
+        time: { err: null },
+        date: { err: null },
+        maxChildren: 2,
         childAgeMaximum: 11,
         childAgeMinimum: 2
       }
@@ -143,7 +153,7 @@ export default {
       return stepSequence[this.stepIndex]
     },
     nextButtonState () {
-      return 'next' // TODO
+      return 'next'
     },
     modelForCurrentStep () {
       const models = {
@@ -196,12 +206,10 @@ export default {
   },
   methods: {
     submitEventData: function () {
-      console.log('this.eventDataForSubmissionToAPI')
-      console.log(this.eventDataForSubmissionToAPI)
       return this.axios.post(`${process.env.BASE_URL_API}/api/event_series`, this.eventDataForSubmissionToAPI)
     },
     finishOnboarding () {
-    // send the data to the server
+      // send the data to the server
       const that = this
       const userId = Token.currentUserId(that.$auth)
       const submitInfo = api.submitUserInfo(
@@ -215,28 +223,46 @@ export default {
         console.log('user update FAILURE')
         console.log(err)
         console.log(Object.entries(err))
-        // show on the houseRules step because it's the last step
         that.stepIndex = stepSequence.length - 1
         that.modelForCurrentStep.err = 'Sorry, there was a problem saving your information. Try again?'
         throw err
       })
       submitInfo.then(() => {
+        client.create({
+          'ID': userId,
+          'Date joined': moment(Date()).format('L'),
+          'address': this.userData.location.fullAddress,
+          'phone': this.userData.phone.number,
+          'children': this.userData.children.list,
+          'availability': this.userData.availability,
+          'food': this.eventSeriesData.food.selected
+        }, 'newUsers').then((data) => {
+          console.log(data)
+        }, (err) => {
+          console.log(err)
+        })
         return that.$store.dispatch('establishCurrentUserAsync', userId)
       }).then(() => {
-        console.log('thisthis')
         that.submitEventData().then(res => {
           that.$store.commit('setCreatedEventData', { eventData: normalize(res.data) })
         })
       }).then(res => {
         console.log('event creation SUCCESS')
         console.log(res)
-        this.$router.push({ name: 'RSVPPrompt' })
+        this.moveOntoNextFTE()
       }).catch(err => {
         console.log(err)
         that.stepIndex = stepSequence.length - 1
         that.modelForCurrentStep.err = 'Sorry, there was a problem saving your information. Try again?'
         throw err
       })
+    },
+    moveOntoNextFTE () {
+      if (this.rsvpAttemptedId) {
+        this.$router.push({ name: 'RsvpConfirmation', params: { eventId: this.rsvpAttemptedId } })
+      } else {
+        this.$router.push({ name: 'RSVPPrompt' })
+      }
     },
     nextStep () {
       if (!this.error) {
@@ -258,36 +284,32 @@ export default {
             this.substep = 'canProvide'
           }
         }
+        this.showError = false
         window.scrollTo(0, 0)
+      } else {
+        this.showError = true
       }
     },
     prevStep () {
-      console.log(this.currentStep, this.substep)
       if (this.currentStep === 'pets' && this.substep === 'description') {
         this.substep = 'hasPets'
+        this.modelForCurrentStep.err = false
       } else if (this.currentStep === 'emergencyCare' && this.substep === 'availability') {
         this.substep = 'canProvide'
+        this.modelForCurrentStep.err = false
       } else {
         this.stepIndex -= 1
-        console.log(this.currentStep, this.substep)
-
         if (this.currentStep === 'pets') {
-          if (this.userData.pets.text) {
-            console.log('a')
+          if (this.userData.pets.isTrue) {
             this.substep = 'description'
           } else {
-            console.log('b')
             this.substep = 'hasPets'
           }
         }
-        console.log(this.currentStep, this.substep)
-
         if (this.currentStep === 'emergencyCare') {
           if (this.userData.emergencyCare.isTrue) {
-            console.log('c')
             this.substep = 'availability'
           } else {
-            console.log('d')
             this.substep = 'canProvide'
           }
         }

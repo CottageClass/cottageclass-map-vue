@@ -50,6 +50,11 @@ export default {
   mounted: function () {
     if (this.objects.length < 1) {
       this.objects = [this.newObject()]
+    } else {
+      // verify keys are in object
+      for (let object of this.objects) {
+        object.key = _.uniqueId()
+      }
     }
   },
   computed: {

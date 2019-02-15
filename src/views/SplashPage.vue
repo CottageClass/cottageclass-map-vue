@@ -391,12 +391,12 @@ export default {
           console.log('auth SUCCESS')
           return this.$store.dispatch('establishCurrentUserAsync', Token.currentUserId(component.$auth))
         }).then(() => {
-          if (this.currentUser.hasAllRequiredFields && !this.rsvpAttempted) {
+          if (this.currentUser.hasAllRequiredFields && !this.rsvpAttemptedId) {
             // redirect to home screen if they haven't attempted an RSVP
             this.$router.push({ name: 'Home' })
-          } else if (this.currentUser.hasAllRequiredFields && this.rsvpAttempted) {
+          } else if (this.currentUser.hasAllRequiredFields && !!this.rsvpAttemptedId) {
             // confirm that they want to RSVP if they have attempted an RSVP
-            this.$router.push({ name: 'RsvpConfirmation', params: { eventId: this.rsvpAttempted } })
+            this.$router.push({ name: 'RsvpConfirmation', params: { eventId: this.rsvpAttemptedId } })
           } else if (this.currentUser.id) {
             // begin onboarding
             this.$router.push({ name: 'OnboardNewUser' })

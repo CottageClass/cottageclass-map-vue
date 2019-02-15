@@ -52,8 +52,9 @@
         v-model="currentUser.activities" />
     </Question>
     <Availability v-model="availability" :required="false"/>
-    <ErrorMessage v-if="showError && error" :text=" children.err" />
+    <ErrorMessage v-if="showError && error" :text="children.err" />
     <Children v-model="children" :required="false" />
+    <LanguagesSpoken v-model="currentUser.languages"/>
   </OnboardingStyleWrapper>
   <PageActionsFooter :buttonText="saveButtonText" @click="submitUserInformation"/>
   </div>
@@ -68,6 +69,7 @@ import FormWithTextArea from '@/components/base/FormWithTextArea.vue'
 import MultipleImageUpload from '@/components/base/MultipleImageUpload.vue'
 import MultipleChoice from '@/components/base/MultipleChoice.vue'
 import Location from '@/components/FTE/userInformation/Location.vue'
+import LanguagesSpoken from '@/components/FTE/userInformation/LanguagesSpoken.vue'
 import Children from '@/components/FTE/userInformation/Children.vue'
 import Phone from '@/components/FTE/userInformation/Phone.vue'
 import Availability from '@/components/FTE/userInformation/Availability.vue'
@@ -82,7 +84,7 @@ var VueScrollTo = require('vue-scrollto')
 
 export default {
   name: 'ProfileEdit',
-  components: { Location, Phone, Availability, MainNav, OnboardingStyleWrapper, PageActionsFooter, ErrorMessage, Children, Question, FormFieldAndLabel, FormWithTextArea, MultipleImageUpload, MultipleChoice },
+  components: { Location, Phone, Availability, MainNav, OnboardingStyleWrapper, PageActionsFooter, ErrorMessage, Children, Question, FormFieldAndLabel, FormWithTextArea, MultipleImageUpload, MultipleChoice, LanguagesSpoken },
   data () {
     return {
       location: {},
