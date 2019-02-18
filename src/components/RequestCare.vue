@@ -96,8 +96,7 @@ export default {
   },
   computed: {
     peopleAvailable: function () {
-      return this.people
-      // return this.people.filter(person => person.availableMornings || person.availableAfternoons || person.availableEvenings || person.availableWeekends)
+      return this.people.filter(person => person.availableMornings || person.availableAfternoons || person.availableEvenings || person.availableWeekends)
     },
     providersSectionTitle: function () {
       return 'People in "' + this.network.name + '"'
