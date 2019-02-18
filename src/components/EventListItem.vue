@@ -5,7 +5,7 @@
         <EventCategoryIcon :category="event.activityName" width="100" height="100" />
       </div>
       <div class="event-list-item-content">
-        <div class="spacer w-hidden-main w-hidden-medium"></div>
+        <div v-if="images.length > 0" class="spacer w-hidden-main w-hidden-medium"></div>
         <router-link
           :to="{ name: 'EventPage', params: { id: event.id }}"
           class="link-block-4 w-inline-block">
@@ -23,8 +23,7 @@
             <span>{{ distanceDescription }}</span>
           </div>
         </div>
-        <div class="scrolling-wrapper">
-          <img src="@/assets/Julie-Screen-Shot-2019-01-04-at-3.46.43-PM.jpg" alt="" class="event-household-photo"><img src="@/assets/Julie-Screen-Shot-2019-01-04-at-3.45.40-PM.jpg" alt="" class="event-household-photo"><img src="@/assets/Julie-Screen-Shot-2019-01-04-at-3.44.52-PM.jpg" alt="" class="event-household-photo"><img src="@/assets/Julie-Screen-Shot-2019-01-04-at-3.45.13-PM.jpg" alt="" class="event-household-photo"><img src="@/assets/JulieNEW.jpg" alt="" class="event-household-photo">
+        <div v-if="images.length > 0" class="scrolling-wrapper">
           <img
           v-for="image in images"
           :src="image" alt="" class="event-household-photo">
