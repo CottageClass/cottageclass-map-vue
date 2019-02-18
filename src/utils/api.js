@@ -164,8 +164,8 @@ function createPersonObject (personInApi, availableChildren = []) {
     title: '',
     employer: '',
     backgroundCheck: false,
-    facebookId: p.facebook_id,
-    facebookMapIcon: 'https://graph.facebook.com/' + p.facebook_id + '/picture?width=30',
+    facebookUid: p.facebook_uid,
+    facebookMapIcon: 'https://graph.facebook.com/' + p.facebook_uid + '/picture?width=30',
     // todo: add children now somehow
     children: createChildrenList(),
     // todo: add these once I have them
