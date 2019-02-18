@@ -54,7 +54,7 @@ export default {
       return moment(date).format('dddd, MMM Do')
     },
     fetchMyUpcomingParticipatingEvents: function () {
-      api.fetchMyUpcomingParticipatingEvents().then(res => {
+      api.fetchUpcomingParticipatingEvents(this.currentUser.id).then(res => {
         this.events = res
       })
     }
