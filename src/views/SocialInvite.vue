@@ -76,13 +76,19 @@ export default {
     this.fetchEvent()
   },
   computed: {
-    shareUrl: function () {
+    eventId: function () {
       if (this.nextEventInSeries) {
-        return 'www.kidsclub.io/event/' + this.nextEventInSeries.id
+        return this.nextEventInSeries.id
       } else if (this.$route.params.id) {
-        return 'www.kidsclub.io/event/' + this.$route.params.id
+        return this.$route.params.id
       } else if (this.firstCreatedEventId) {
-        return 'www.kidsclub.io/event/' + this.firstCreatedEventId
+        return this.firstCreatedEventId
+      }
+      return null
+    },
+    shareUrl: function () {
+      if (this.eventId) {
+        return 'www.kidsclub.io/event/' + this.eventId
       } else {
         return 'www.kidsclub.io'
       }
@@ -104,7 +110,7 @@ export default {
       if (this.nextEventInSeries) {
         return this.nextEventInSeries
       } else {
-        return this.eventFromParams
+        return this.eventFromId
       }
     },
     textMessage: function () {
@@ -125,9 +131,9 @@ export default {
     emailLink: function () {
       return 'mailto:?subject=' + this.emailSubject + '&body=' + this.emailBody + 'https%3A%2F%2F' + this.shareUrl + '%2F%0A%0AThanks!%0A%3C3'
     },
-    eventFromParams: function () {
+    eventFromId: function () {
       if (Array.isArray(this.events)) {
-        return this.events.find(event => event.id === this.$route.params.id)
+        return this.events.find(event => event.id === this.eventId)
       } else {
         return {}
       }
@@ -142,7 +148,7 @@ export default {
       this.copyButtonText = 'copied!'
     },
     fetchEvent: function () {
-      api.fetchEvents(this.$route.params.id).then(
+      api.fetchEvents(this.eventId).then(
         (res) => {
           this.events = res
         })
