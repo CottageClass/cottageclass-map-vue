@@ -1,5 +1,5 @@
 <template>
-  <OnboardingStyleWrapper styleIs="editing">
+  <StyleWrapper styleIs="editing">
     <!-- wrapper for desktop screens -->
 
     <div class="onb-body">
@@ -88,7 +88,7 @@
 </div>
 </div>
 </div>
-</OnboardingStyleWrapper>
+</StyleWrapper>
 </template>
 
 <script>
@@ -98,14 +98,14 @@ import AvatarImage from '@/components/base/AvatarImage'
 import * as api from '@/utils/api.js'
 import networks from '@/assets/network-info.json'
 import ChildAges from '@/components/ChildAges.vue'
-import OnboardingStyleWrapper from '@/components/FTE/OnboardingStyleWrapper.vue'
+import StyleWrapper from '@/components/FTE/StyleWrapper.vue'
 import moment from 'moment'
 import ProviderInfo from '@/components/base/ProviderInfo.vue'
 import ChildInfo from '@/components/ChildInfo.vue'
 
 export default {
   name: 'ProviderProfile',
-  components: { Images, AvatarImage, ChildAges, OnboardingStyleWrapper, ProviderInfo, ChildInfo },
+  components: { Images, AvatarImage, ChildAges, StyleWrapper, ProviderInfo, ChildInfo },
   data () {
     return {
       user: {},

@@ -1,5 +1,5 @@
 <template>
-  <OnboardingStyleWrapper styleIs="onboarding">
+  <StyleWrapper styleIs="onboarding">
     <div class="onb-body">
       <div class="body">
         <div class="content-wrapper">
@@ -18,7 +18,7 @@
         </div>
       </div>
     </div>
-  </OnboardingStyleWrapper>
+  </StyleWrapper>
 </template>
 
 <script>
@@ -26,13 +26,13 @@ import ManyFormFieldGroups from '@/components/base/ManyFormFieldGroups.vue'
 import ErrorMessage from '@/components/base/ErrorMessage.vue'
 import Question from '@/components/base/Question.vue'
 import Nav from '@/components/FTE/Nav.vue'
-import OnboardingStyleWrapper from '@/components/FTE/OnboardingStyleWrapper.vue'
+import StyleWrapper from '@/components/FTE/StyleWrapper.vue'
 import * as api from '@/utils/api.js'
 import { mapGetters } from 'vuex'
 
 export default {
   name: 'EmergencyContacts',
-  components: { ManyFormFieldGroups, Nav, OnboardingStyleWrapper, Question, ErrorMessage },
+  components: { ManyFormFieldGroups, Nav, StyleWrapper, Question, ErrorMessage },
   data () {
     return {
       contacts: [],

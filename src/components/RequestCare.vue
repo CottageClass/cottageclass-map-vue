@@ -1,7 +1,7 @@
 <template>
 <div>
    <MainNav />
-  <OnboardingStyleWrapper styleIs="editing">
+  <StyleWrapper styleIs="editing">
     <!-- wrapper for desktop screens -->
 
     <div class="onb-body">
@@ -55,7 +55,7 @@
 </div>
   </div>
 
-  </OnboardingStyleWrapper>
+  </StyleWrapper>
 </div>
 
 </template>
@@ -63,7 +63,7 @@
 <script>
 import MainNav from './MainNav.vue'
 import RequestCareProviderItem from '@/components/RequestCareProviderItem.vue'
-import OnboardingStyleWrapper from '@/components/FTE/OnboardingStyleWrapper.vue'
+import StyleWrapper from '@/components/FTE/StyleWrapper.vue'
 import ShareButton from '@/components/ShareButton.vue'
 import networks from '@/assets/network-info.json'
 import { mapGetters } from 'vuex'
@@ -71,7 +71,7 @@ import * as api from '@/utils/api.js'
 
 export default {
   name: 'RequestCare',
-  components: { RequestCareProviderItem, ShareButton, MainNav, OnboardingStyleWrapper },
+  components: { RequestCareProviderItem, ShareButton, MainNav, StyleWrapper },
   data () {
     return {
       people: [], // gets updated on mount by fetchUsersInNetwork

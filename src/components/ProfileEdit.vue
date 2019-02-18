@@ -3,7 +3,7 @@
   <MainNav />
   <div class="container w-container">
   <h1 class="heading-1">Edit profile</h1>
-  <OnboardingStyleWrapper styleIs="editing" class="cards" v-if="currentUser">
+  <StyleWrapper styleIs="editing" class="cards" v-if="currentUser">
       <ErrorMessage v-if="showError && error" text="Your form has errors. Please fix them to continue..." />
       <ErrorMessage v-if="showError && error" :text="phone.err" />
     <Phone v-model="phone" :currentPhone="currentUser.phone" :required="false" />
@@ -13,7 +13,7 @@
     <Availability v-model="availability" :required="false"/>
     <ErrorMessage v-if="showError && error" :text=" children.err" />
     <Children v-model="children" :required="false" />
-  </OnboardingStyleWrapper>
+  </StyleWrapper>
   <PageActionsFooter :buttonText="saveButtonText" @click="submitUserInformation"/>
   </div>
 </div>
@@ -27,7 +27,7 @@ import Phone from '@/components/FTE/userInformation/Phone.vue'
 import Availability from '@/components/FTE/userInformation/Availability.vue'
 import MainNav from '@/components/MainNav.vue'
 import PageActionsFooter from '@/components/PageActionsFooter.vue'
-import OnboardingStyleWrapper from '@/components/FTE/OnboardingStyleWrapper.vue'
+import StyleWrapper from '@/components/FTE/StyleWrapper.vue'
 import ErrorMessage from '@/components/base/ErrorMessage.vue'
 import * as api from '@/utils/api.js'
 import { mapGetters } from 'vuex'
@@ -36,7 +36,7 @@ var VueScrollTo = require('vue-scrollto')
 
 export default {
   name: 'ProfileEdit',
-  components: { Location, Phone, Availability, MainNav, OnboardingStyleWrapper, PageActionsFooter, ErrorMessage, Children },
+  components: { Location, Phone, Availability, MainNav, StyleWrapper, PageActionsFooter, ErrorMessage, Children },
   data () {
     return {
       location: {},
