@@ -107,7 +107,8 @@
           <h1 class="onb-heading-large">Registration complete!</h1>
           <p class="onb-paragraph-subheading-2">Sign in to continue.</p>
         </div>
-        <button @click="$emit('activateScreen', 'loginWithEmail')" class="button-text splash-button w-inline-block">Sign in</button>
+
+        <button @click.prevent="$router.push( {name: 'SignIn' })" class="button-text splash-button w-inline-block">Sign in</button>
       </div>
     </div>
   </div>
