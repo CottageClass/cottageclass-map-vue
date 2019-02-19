@@ -2,7 +2,10 @@
   <div class="main-nav">
     <Alert v-if="alert" />
     <div class="container w-container">
-      <div class="logo-wrapper"><router-link :to="{ name: 'NewUser' }" class="w-inline-block"><img src="@/assets/kc-logo-landscape.svg" alt="" class="logo"></router-link>
+      <div class="logo-wrapper">
+        <router-link :to="{ name: logoRouterTarget }" class="w-inline-block">
+          <img src="@/assets/kc-logo-landscape.svg" alt="" class="logo">
+        </router-link>
       </div>
       <div class="actions-wrapper">
         <router-link to="/profile/edit">
@@ -60,10 +63,9 @@
             </a>
           </li>
           <li v-if="!isAuthenticated">
-            <!-- Can't use router link here because it won't refresh on frontpage -->
-            <a href="/?activeScreen=loginWithEmail" class="link-block w-inline-block">
-              <div class="text-block">Sign in</div>
-            </a>
+            <router-link to="/sign-in" class="link-block w-inline-block">
+              <div class="text-block">Sign In</div>
+            </router-link>
           </li>
         </ul>
       </div>
@@ -101,7 +103,12 @@ export default {
       this.$router.push('/')
     }
   },
-  computed: mapGetters([ 'isAuthenticated', 'currentUser', 'alert' ])
+  computed: {
+    logoRouterTarget () {
+      return this.isAuthenticated ? 'Home' : 'SplashPage'
+    },
+    ... mapGetters([ 'isAuthenticated', 'currentUser', 'alert' ])
+  }
 }
 </script>
 

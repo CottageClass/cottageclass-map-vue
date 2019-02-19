@@ -52,8 +52,9 @@
         v-model="currentUser.activities" />
     </Question>
     <Availability v-model="availability" :required="false"/>
-    <ErrorMessage v-if="showError && error" :text=" children.err" />
+    <ErrorMessage v-if="showError && error" :text="children.err" />
     <Children v-model="children" :required="false" />
+    <LanguagesSpoken v-model="currentUser.languages"/>
   </OnboardingStyleWrapper>
   <PageActionsFooter :buttonText="saveButtonText" @click="submitUserInformation"/>
   </div>
@@ -62,19 +63,20 @@
 </template>
 
 <script>
-import Location from '@/components/onboarding/Location.vue'
-import FormFieldAndLabel from '@/components/onboarding/FormFieldAndLabel.vue'
-import Children from '@/components/onboarding/Children.vue'
-import Question from '@/components/onboarding/Question.vue'
-import Phone from '@/components/onboarding/Phone.vue'
-import Availability from '@/components/onboarding/Availability.vue'
+import FormFieldAndLabel from '@/components/base/FormFieldAndLabel.vue'
+import Question from '@/components/base/Question.vue'
+import FormWithTextArea from '@/components/base/FormWithTextArea.vue'
+import MultipleImageUpload from '@/components/base/MultipleImageUpload.vue'
+import MultipleChoice from '@/components/base/MultipleChoice.vue'
+import Location from '@/components/FTE/userInformation/Location.vue'
+import LanguagesSpoken from '@/components/FTE/userInformation/LanguagesSpoken.vue'
+import Children from '@/components/FTE/userInformation/Children.vue'
+import Phone from '@/components/FTE/userInformation/Phone.vue'
+import Availability from '@/components/FTE/userInformation/Availability.vue'
 import MainNav from '@/components/MainNav.vue'
 import PageActionsFooter from '@/components/PageActionsFooter.vue'
-import OnboardingStyleWrapper from '@/components/onboarding/OnboardingStyleWrapper.vue'
-import ErrorMessage from '@/components/onboarding/ErrorMessage.vue'
-import FormWithTextArea from '@/components/onboarding/FormWithTextArea.vue'
-import MultipleImageUpload from '@/components/onboarding/MultipleImageUpload.vue'
-import MultipleChoice from '@/components/onboarding/MultipleChoice.vue'
+import OnboardingStyleWrapper from '@/components/FTE/OnboardingStyleWrapper.vue'
+import ErrorMessage from '@/components/base/ErrorMessage.vue'
 import * as api from '@/utils/api.js'
 import { mapGetters } from 'vuex'
 
@@ -82,7 +84,7 @@ var VueScrollTo = require('vue-scrollto')
 
 export default {
   name: 'ProfileEdit',
-  components: { Location, Phone, Availability, MainNav, OnboardingStyleWrapper, PageActionsFooter, ErrorMessage, Children, Question, FormFieldAndLabel, FormWithTextArea, MultipleImageUpload, MultipleChoice },
+  components: { Location, Phone, Availability, MainNav, OnboardingStyleWrapper, PageActionsFooter, ErrorMessage, Children, Question, FormFieldAndLabel, FormWithTextArea, MultipleImageUpload, MultipleChoice, LanguagesSpoken },
   data () {
     return {
       location: {},

@@ -53,3 +53,4 @@ CORE FUNCTIONALITY
 * not-logged-in user can rsvp after signing up (via rsvp route)
 * User can browse events (logged in, not)
 * All links in navigation work (logged in, not)
+* All individual event pages linked to from the front page load. 

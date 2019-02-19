@@ -12,7 +12,9 @@ export default new Vuex.Store(
     state: {
       eventsByDate: null, // We shouldn't store all events.  It will have to change later
       currentUser: null,
-      alert: null
+      alert: null,
+      createdEventData: null,
+      RSVPAttempEventId: null
     },
     mutations: {
       setEventsByDate: (state, payload) => {
@@ -24,12 +26,18 @@ export default new Vuex.Store(
       showAlert: (state, payload) => {
         state.alert = payload.alert
       },
+      setRSVPAttemptEventId: (state, payload) => {
+        state.RSVPAttempEventId = payload.id
+      },
       hideAlert: (state) => {
         state.alert = null
       },
       showAlertOnNextRoute: (state, payload) => {
         state.alert = payload.alert
         state.alert.preshow = true // this indicates that we will show the alert in the next route
+      },
+      setCreatedEventData: (state, payload) => {
+        state.createdEventData = payload.eventData
       }
     },
     actions: {
@@ -80,7 +88,15 @@ export default new Vuex.Store(
       isAuthenticated: (state) => {
         return state.currentUser !== null
       },
-      alert: state => state.alert
+      alert: state => state.alert,
+      firstCreatedEventId: (state) => {
+        if (state.createdEventData) {
+          return Object.keys(state.createdEventData.event).sort()[0]
+        } else {
+          return null
+        }
+      },
+      rsvpAttemptedId: state => state.RSVPAttempEventId
     }
   }
 )

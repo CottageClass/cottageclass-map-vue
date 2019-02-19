@@ -38,11 +38,11 @@
 
 import * as api from '@/utils/api.js'
 import * as utils from '@/utils/utils.js'
-import Nav from '@/components/onboarding/Nav.vue'
-import ErrorMessage from '@/components/onboarding/ErrorMessage.vue'
-import Question from '@/components/onboarding/Question.vue'
-import MultipleChoice from '@/components/onboarding/MultipleChoice.vue'
-import OnboardingStyleWrapper from '@/components/onboarding/OnboardingStyleWrapper.vue'
+import Nav from '@/components/FTE/Nav.vue'
+import ErrorMessage from '@/components/base/ErrorMessage.vue'
+import Question from '@/components/base/Question.vue'
+import MultipleChoice from '@/components/base/MultipleChoice.vue'
+import OnboardingStyleWrapper from '@/components/FTE/OnboardingStyleWrapper.vue'
 import sheetsu from 'sheetsu-node'
 // this component has a working loading indicator and no other logic. todo: break out and rename.
 import LoadingSpinner from '@/components/LoadingSpinner.vue'
@@ -136,16 +136,16 @@ export default {
     redirectToSignupIfNotAuthenticated: function () {
       if (!this.$auth.isAuthenticated()) {
         console.log('User attempted to RSVP without being authenticated')
-        this.$cookies.set('rsvpAttempted', this.eventId)
-        this.$router.push('/?activeScreen=signup')
+        this.$store.commit('setRSVPAttemptEventId', { id: this.eventId })
+        this.$router.push({ name: 'SignUp' })
       }
     },
     redirectToOnboardingIfNotOnboarded: function () {
       if (!this.currentUser.hasAllRequiredFields) {
-      // send them back to onboarding.
+        // send them back to onboarding.
         console.log('user doesnt have required fields on rsvpinfocollection step, sending them back to onboarding', this.currentUser)
-        this.$cookies.set('rsvpAttempted', this.eventId)
-        this.$router.push('/')
+        this.$store.commit('setRSVPAttemptEventId', { id: this.eventId })
+        this.$router.push({ name: 'OnboardNewUser' })
       } else {
         console.log('user already onboarded, not redirecting')
       }
@@ -186,7 +186,7 @@ export default {
       }
     },
     forgetRsvpAttempted: function () {
-      this.$cookies.remove('rsvpAttempted')
+      this.$store.commit('setRSVPAttemptEventId', { id: null })
     },
     submitRsvp: function () {
       this.error = ''

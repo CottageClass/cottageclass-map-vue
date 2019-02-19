@@ -7,8 +7,6 @@
      <h1 class="h1-display">Upcoming Playdates</h1>
      <p v-if="isAuthenticated">Within
       <select v-model="maximumDistanceFromUserInMiles">
-        <option>0.2</option>
-        <option>0.5</option>
         <option>1</option>
         <option>2</option>
         <option>5</option>
@@ -17,7 +15,7 @@
         <option>50</option>
       </select> miles</p>
       <EventList
-          :events="eventsWithinDistance"
+          :events="eventsSortedByDate"
           :noEventsMessage="noEventsMessage"
       />
     </div>
@@ -39,12 +37,6 @@ import { mapGetters } from 'vuex'
 
 var moment = require('moment')
 
-// todo:
-// work on event page until it's complete for one event, so I get all the data I need
-// try to get as far as possible without transforming the data in any way? or possibly go through each one by one as before.
-// change logic for "is today"
-// sort events by date so that current date display logic will work
-
 export default {
   name: 'Events',
   components: { EventList, MainNav, Footer },
@@ -53,11 +45,12 @@ export default {
       events: null,
       maximumDistanceFromUserInMiles: '5',
       showAllButtonText: 'Show all playdates',
-      showShowAllButton: false
+      showShowAllButton: false,
+      noEventsMessage: 'Sorry, there are no upcoming playdates in your area'
     }
   },
   computed: {
-    eventsByDate: function () {
+    eventsSortedByDate: function () {
       if (this.events) {
         return this.events.concat().sort((eventA, eventB) => {
           return moment(eventA.startsAt).diff(moment(eventB.startsAt))
@@ -65,17 +58,14 @@ export default {
       }
       return null
     },
-    eventsWithinDistance: function () {
-      if (this.isAuthenticated && !!this.eventsByDate) {
-        return this.eventsByDate.filter(event => this.distanceFromCurrentUser(event.hostFuzzyLatitude, event.hostFuzzyLongitude) <= parseFloat(this.maximumDistanceFromUserInMiles))
-      } else {
-        return this.eventsByDate
-      }
-    },
-    noEventsMessage: () => 'Sorry, there are no upcoming playdates in your area',
     ...mapGetters([
       'distanceFromCurrentUser', 'currentUser', 'isAuthenticated'
     ])
+  },
+  watch: {
+    maximumDistanceFromUserInMiles: function () {
+      this.fetchEventsWithinDistance()
+    }
   },
   methods: {
     limitNumberOfEvents: function (events) {
@@ -91,32 +81,26 @@ export default {
     formatDate: function (date) {
       return moment(date).format('dddd, MMM Do')
     },
-    fetchAllEvents: function () {
-      this.showAllButtonText = 'Loading more...'
+    fetchEventsWithinDistance: function () {
+      api.fetchUpcomingEventsWithinDistance(this.maximumDistanceFromUserInMiles, this.currentUser.latitude, this.currentUser.longitude).then(
+        (res) => {
+          this.events = res
+        })
+    },
+    fetchAllUpcomingEvents: function () {
       api.fetchEvents('upcoming').then(
         (res) => {
           this.events = res
-          window.globalEventList = res
-          this.showShowAllButton = false
-        })
-    },
-    fetchUpcomingEvents: function () {
-      this.events = window.globalEventList
-      if (!(this.events && this.events.length > 50)) {
-        api.fetchEvents('upcoming/page/1/page_size/50').then(
-          (res) => {
-            this.events = res
-            window.globalEventList = res
-            this.showShowAllButton = true
-            if (this.eventsWithinDistance.length < 10) {
-              this.fetchAllEvents()
-            }
-          })
-      }
+        }
+      )
     }
   },
   mounted: function () {
-    this.fetchUpcomingEvents()
+    if (this.isAuthenticated) {
+      this.fetchEventsWithinDistance()
+    } else {
+      this.fetchAllUpcomingEvents()
+    }
   }
 }
 </script>

@@ -23,8 +23,8 @@
 </template>
 
 <script>
-import Nav from '@/components/onboarding/Nav.vue'
-import RequestCare from '@/components/onboarding/RequestCare.vue'
+import Nav from '@/components/FTE/Nav.vue'
+import RequestCare from '@/views/RequestCare.vue'
 import * as Token from '@/utils/tokens.js'
 import { mapGetters } from 'vuex'
 import sheetsu from 'sheetsu-node'
