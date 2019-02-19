@@ -24,7 +24,7 @@
               <button
               v-if="showFacebookLogin"
               class="button-text splash-button w-inline-block facebook-sign-in-button"
-              @click="$emit('authenticateFacebook')"
+              @click.prevent="authenticate('facebook')"
               >Continue with Facebook</button>
               <p class="onb-paragraph-subheading-2">
                 <span v-if="showFacebookLogin">Or enter</span>
@@ -117,15 +117,16 @@
 <script>
 import ErrorMessage from '@/components/base/ErrorMessage.vue'
 import OnboardingStyleWrapper from '@/components/FTE/OnboardingStyleWrapper.vue'
+import providerAuth from '@/mixins/ProviderAuthentication'
 
 export default {
   name: 'SignUpWithEmail',
   components: { ErrorMessage, OnboardingStyleWrapper },
+  mixins: [providerAuth],
   data: function () {
     return {
       success: false,
       disableForm: false,
-      currentUser: {},
       first_name: '',
       last_name: '',
       email: '',
