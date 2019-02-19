@@ -28,6 +28,7 @@
         <div class="signup-wrapper">
           <a
           v-if="!!facebookLogin"
+          href=""
           @click.prevent="authenticate('facebook')"
           class="fb-button w-inline-block">
           <img src="@/assets/facebook-button-icon.svg" width="24" height="24" alt=""><div class="fb-button-text">Continue with Facebook</div></a>
