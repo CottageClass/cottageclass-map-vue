@@ -28,17 +28,18 @@
         <div class="signup-wrapper">
           <a
           v-if="!!facebookLogin"
-          @click="authenticate('facebook')"
+          href=""
+          @click.prevent="authenticate('facebook')"
           class="fb-button w-inline-block">
           <img src="@/assets/facebook-button-icon.svg" width="24" height="24" alt=""><div class="fb-button-text">Continue with Facebook</div></a>
           <a
           v-else
-          @click="$router.push({name: 'SignUp'})"
+          @click.prevent="$router.push({name: 'SignUp'})"
           class="fb-button w-inline-block">
           <img src="@/assets/add.svg" width="24" height="24" alt="">
           <div class="fb-button-text">Create your account</div></a>
-          <div v-if="facebookLogin" class="use-password-text">Or <a href="#" class="links" @click="$router.push({name: 'SignUp'})">use a password instead</a></div>
-          <div v-else class="use-password-text">Or <a href="#" class="links" @click="$router.push({name: 'SignIn'})">sign in now</a></div>
+          <div v-if="facebookLogin" class="use-password-text">Or <a href="#" class="links" @click.prevent="$router.push({name: 'SignUp'})">use a password instead</a></div>
+          <div v-else class="use-password-text">Or <a href="#" class="links" @click.prevent="$router.push({name: 'SignIn'})">sign in now</a></div>
           <div class="terms-text">By signing in you agree to our <a href="https://cottageclass.com/terms-of-service">Terms of Service</a> and <a href="https://cottageclass.com/privacy-policy">Privacy Policy</a>.</div>
         </div>
       </div>
@@ -346,11 +347,12 @@ import RsvpButton from '@/components/RsvpButton.vue'
 import MainNav from '@/components/MainNav.vue'
 import Footer from '@/components/Footer.vue'
 import { mapGetters } from 'vuex'
-import * as Token from '@/utils/tokens'
+import providerAuth from '@/mixins/ProviderAuthentication'
 
 export default {
   name: 'SplashPage',
   components: { RsvpButton, MainNav, Footer },
+  mixins: [providerAuth],
   data () {
     return {
       networks: networks,
@@ -370,42 +372,8 @@ export default {
       return ['(iPhone|iPod|iPad)(?!.*Safari)'].every(expression => {
         return !!navigator.userAgent.match(new RegExp(`(${expression})`, 'ig'))
       })
-    },
-    authenticate: function (provider) {
-      /*
-   *  Logs in the user (Facebook)
-   * - follows OAuth flow using VueAuth to get OAuth code
-   * - sends code to backend to exchange for access_token
-   * - backend fetches access_token, stores it in DB, and sends back JWT for user
-   * - VueAuthenticate stores JWT for future API access authorization
-   */
-      console.log('authing')
-      // store value of this to access this.$emit during callback
-      let component = this
-      this.$auth.authenticate(provider)
-        .then(res => {
-          console.log('auth SUCCESS')
-          return this.$store.dispatch('establishCurrentUserAsync', Token.currentUserId(component.$auth))
-        }).then(() => {
-          if (this.currentUser.hasAllRequiredFields && !this.rsvpAttemptedId) {
-            // redirect to home screen if they haven't attempted an RSVP
-            this.$router.push({ name: 'Home' })
-          } else if (this.currentUser.hasAllRequiredFields && !!this.rsvpAttemptedId) {
-            // confirm that they want to RSVP if they have attempted an RSVP
-            this.$router.push({ name: 'RsvpConfirmation', params: { eventId: this.rsvpAttemptedId } })
-          } else if (this.currentUser.id) {
-            // begin onboarding
-            this.$router.push({ name: 'OnboardNewUser' })
-          } else {
-            return false
-          }
-        }).catch(function (err) {
-          console.log('auth FAILURE or user not onboarded yet')
-          console.log(err)
-        })
-    },
-  },
-  computed: mapGetters(['currentUser'])
+    }
+  }
 }
 
 </script>

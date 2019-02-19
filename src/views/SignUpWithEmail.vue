@@ -7,7 +7,7 @@
       <div class="content-wrapper">
 <!-- nav -->
     <div class="title-bar">
-      <a @click="$emit('activateScreen', 'facebook')" class="button-back w-inline-block"></a>
+      <a @click.prevent="$router.go(-1)" class="button-back w-inline-block"></a>
       <a @click="signup" :class="nextButtonClassObject">
         <div class="title-bar-next-button-text">NEXT</div>
       </a>
@@ -24,12 +24,12 @@
               <button
               v-if="showFacebookLogin"
               class="button-text splash-button w-inline-block facebook-sign-in-button"
-              @click="$emit('authenticateFacebook')"
+              @click.prevent="authenticate('facebook')"
               >Continue with Facebook</button>
               <p class="onb-paragraph-subheading-2">
                 <span v-if="showFacebookLogin">Or enter</span>
                 <span v-else>Enter</span> your information below. Already have an account?
-                <a @click="$emit('activateScreen', 'loginWithEmail')">Sign in here</a>.
+                <a href="" @click.prevent="$router.push( {name: 'SignIn' })">Sign in here</a>.
               </p>
             </div>
           </div>
@@ -107,7 +107,8 @@
           <h1 class="onb-heading-large">Registration complete!</h1>
           <p class="onb-paragraph-subheading-2">Sign in to continue.</p>
         </div>
-        <button @click="$emit('activateScreen', 'loginWithEmail')" class="button-text splash-button w-inline-block">Sign in</button>
+
+        <button @click.prevent="$router.push( {name: 'SignIn' })" class="button-text splash-button w-inline-block">Sign in</button>
       </div>
     </div>
   </div>
@@ -117,15 +118,16 @@
 <script>
 import ErrorMessage from '@/components/base/ErrorMessage.vue'
 import OnboardingStyleWrapper from '@/components/FTE/OnboardingStyleWrapper.vue'
+import providerAuth from '@/mixins/ProviderAuthentication'
 
 export default {
-  name: 'Signup',
+  name: 'SignUpWithEmail',
   components: { ErrorMessage, OnboardingStyleWrapper },
+  mixins: [providerAuth],
   data: function () {
     return {
       success: false,
       disableForm: false,
-      currentUser: {},
       first_name: '',
       last_name: '',
       email: '',
