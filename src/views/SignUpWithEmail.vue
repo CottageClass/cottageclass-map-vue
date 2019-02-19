@@ -119,7 +119,7 @@ import ErrorMessage from '@/components/base/ErrorMessage.vue'
 import OnboardingStyleWrapper from '@/components/FTE/OnboardingStyleWrapper.vue'
 
 export default {
-  name: 'Signup',
+  name: 'SignUpWithEmail',
   components: { ErrorMessage, OnboardingStyleWrapper },
   data: function () {
     return {
