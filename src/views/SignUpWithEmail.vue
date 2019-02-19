@@ -118,7 +118,7 @@
 <script>
 import ErrorMessage from '@/components/base/ErrorMessage.vue'
 import OnboardingStyleWrapper from '@/components/FTE/OnboardingStyleWrapper.vue'
-import providerAuth from '@/mixins/ProviderAuthentication'
+import providerAuth from '@/mixins/providerAuthentication'
 
 export default {
   name: 'SignUpWithEmail',
