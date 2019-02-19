@@ -29,7 +29,7 @@
               <p class="onb-paragraph-subheading-2">
                 <span v-if="showFacebookLogin">Or enter</span>
                 <span v-else>Enter</span> your information below. Already have an account?
-                <a @click="$emit('activateScreen', 'loginWithEmail')">Sign in here</a>.
+                <a href="" @click.prevent="$router.push( {name: 'SignIn' })">Sign in here</a>.
               </p>
             </div>
           </div>
