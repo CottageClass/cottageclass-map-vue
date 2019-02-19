@@ -7,7 +7,7 @@
       <div class="content-wrapper">
 <!-- nav -->
     <div class="title-bar">
-      <a @click="$emit('activateScreen', 'facebook')" class="button-back w-inline-block"></a>
+      <a @click.prevent="$router.go(-1)" class="button-back w-inline-block"></a>
       <a @click="signup" :class="nextButtonClassObject">
         <div class="title-bar-next-button-text">NEXT</div>
       </a>
