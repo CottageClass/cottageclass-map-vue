@@ -13,8 +13,8 @@ export default {
       if (this.person) {
         if (this.person.avatar) {
           return this.person.avatar
-        } else if (this.person.facebookId || this.person.facebookUid) {
-          return 'https://graph.facebook.com/' + (this.person.facebookId || this.person.facebookUid) + '/picture?width=200'
+        } else if (this.person.facebookUid) {
+          return 'https://graph.facebook.com/' + this.person.facebookUid + '/picture?width=200'
         } else {
           return placeholder
         }

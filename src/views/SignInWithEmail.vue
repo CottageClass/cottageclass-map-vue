@@ -9,7 +9,7 @@
 
   <!-- nav -->
     <div class="title-bar">
-      <a @click="$emit('activateScreen', 'facebook')" class="button-back w-inline-block"></a>
+      <a @click.prevent="$router.go(-1)" class="button-back w-inline-block"></a>
     </div>
 
     <div class="content-container">
@@ -26,12 +26,12 @@
     <button
       v-if="showFacebookLogin"
       class="button-text splash-button w-inline-block facebook-sign-in-button"
-      @click="$emit('authenticateFacebook')"
+      @click.prevent="authenticate('facebook')"
       >Continue with Facebook
     </button>
       <p>
         <span v-if="showFacebookLogin">Or sign</span>
-        <span v-else>Sign</span> in with your email address. Don't have an account? <a @click="$emit('activateScreen', 'signup')">Sign up here</a>.
+        <span v-else>Sign</span> in with your email address. Don't have an account? <a href="" @click.prevent="$router.push({ name: 'SignUp' })">Sign up here</a>.
       </p>
     </div>
 
@@ -59,7 +59,10 @@
           <button type="submit" class="button-text splash-button w-inline-block">Sign in</button>
       </form>
     </div>
-    <p>Forgot your password? Write us: <a href="mailto:contact@cottageclass.com">contact@cottageclass.com</a></p>
+    <p><router-link :to="{ name: 'PasswordReset'}" href="">
+      Forgot your password?
+      </router-link>
+      </p>
   </div>
 </div>
 </div>
@@ -74,10 +77,12 @@ import { mapGetters } from 'vuex'
 import * as Token from '@/utils/tokens.js'
 import ErrorMessage from '@/components/base/ErrorMessage.vue'
 import StyleWrapper from '@/components/FTE/StyleWrapper.vue'
+import providerAuth from '@/mixins/ProviderAuthentication'
 
 export default {
   name: 'SignInWithEmail',
   components: { ErrorMessage, StyleWrapper },
+  mixins: [providerAuth],
   data: function () {
     return {
       email: '',
