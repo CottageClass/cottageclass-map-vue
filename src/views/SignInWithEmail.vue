@@ -1,5 +1,5 @@
 <template>
-<OnboardingStyleWrapper styleIs="onboarding">
+<StyleWrapper styleIs="onboarding">
 
   <!-- wrapper for desktop screens -->
 
@@ -65,7 +65,7 @@
 </div>
     </div>
     </div>
-</OnboardingStyleWrapper>
+</StyleWrapper>
 </template>
 
 <script>
@@ -73,11 +73,11 @@
 import { mapGetters } from 'vuex'
 import * as Token from '@/utils/tokens.js'
 import ErrorMessage from '@/components/base/ErrorMessage.vue'
-import OnboardingStyleWrapper from '@/components/FTE/OnboardingStyleWrapper.vue'
+import StyleWrapper from '@/components/FTE/StyleWrapper.vue'
 
 export default {
   name: 'SignInWithEmail',
-  components: { ErrorMessage, OnboardingStyleWrapper },
+  components: { ErrorMessage, StyleWrapper },
   data: function () {
     return {
       email: '',

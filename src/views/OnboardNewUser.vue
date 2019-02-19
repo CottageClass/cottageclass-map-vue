@@ -4,7 +4,7 @@
       <div class="content-wrapper">
         <Nav :button="nextButtonState" @next="nextStep" @prev="prevStep" />
         <ErrorMessage v-if="error" :text="error" />
-        <OnboardingStyleWrapper styleIs="onboarding">
+        <StyleWrapper styleIs="onboarding">
           <Phone
             v-if="currentStep === 'phone'"
             @pressedEnter="nextStep"
@@ -52,7 +52,7 @@
             v-model="userData.pets" />
           <HouseRules v-if="currentStep === 'houseRules'"
             v-model="houseRules" />
-        </OnboardingStyleWrapper>
+        </StyleWrapper>
       </div>
     </div>
   </div>
@@ -64,7 +64,7 @@ import * as Token from '@/utils/tokens'
 import normalize from 'json-api-normalizer'
 import { mapGetters } from 'vuex'
 
-import OnboardingStyleWrapper from '@/components/FTE/OnboardingStyleWrapper.vue'
+import StyleWrapper from '@/components/FTE/StyleWrapper.vue'
 import Nav from '@/components/FTE/Nav.vue'
 import ErrorMessage from '@/components/base/ErrorMessage.vue'
 
@@ -99,7 +99,7 @@ export default {
   name: 'OnboardNewUser',
   props: [],
   components: {
-    OnboardingStyleWrapper,
+    StyleWrapper,
     Nav,
     ErrorMessage,
     Phone,

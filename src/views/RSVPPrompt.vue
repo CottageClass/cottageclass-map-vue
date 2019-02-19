@@ -3,7 +3,7 @@
     <div class="body">
       <div class="content-wrapper">
         <Nav :button="skip" @next="nextStep" hidePrevious="true" />
-        <OnboardingStyleWrapper styleIs="onboarding">
+        <StyleWrapper styleIs="onboarding">
           <LoadingSpinner v-if="eventsNotBelongingToCurrentUser.length < 1" />
           <Question
             title="RSVP to a playdate near you"
@@ -13,7 +13,7 @@
             :events="eventsNotBelongingToCurrentUser"
             :showDates="false"
           />
-        </OnboardingStyleWrapper>
+        </StyleWrapper>
         </div>
       </div>
     </div>
@@ -23,14 +23,14 @@
 import Question from '@/components/base/Question.vue'
 import EventList from '@/components/EventList.vue'
 import * as api from '@/utils/api.js'
-import OnboardingStyleWrapper from '@/components/FTE/OnboardingStyleWrapper.vue'
+import StyleWrapper from '@/components/FTE/StyleWrapper.vue'
 import Nav from '@/components/FTE/Nav.vue'
 import LoadingSpinner from '@/components/LoadingSpinner.vue'
 import { mapGetters } from 'vuex'
 
 export default {
   name: 'RSVPPrompt',
-  components: { Question, EventList, OnboardingStyleWrapper, Nav, LoadingSpinner },
+  components: { Question, EventList, StyleWrapper, Nav, LoadingSpinner },
   props: [],
   data () {
     return {

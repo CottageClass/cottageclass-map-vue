@@ -1,5 +1,5 @@
 <template>
- <OnboardingStyleWrapper styleIs="onboarding">
+ <StyleWrapper styleIs="onboarding">
 
   <!-- wrapper for desktop screens -->
   <div class="onb-body">
@@ -111,16 +111,16 @@
       </div>
     </div>
   </div>
-</OnboardingStyleWrapper>
+</StyleWrapper>
 </template>
 
 <script>
 import ErrorMessage from '@/components/base/ErrorMessage.vue'
-import OnboardingStyleWrapper from '@/components/FTE/OnboardingStyleWrapper.vue'
+import StyleWrapper from '@/components/FTE/StyleWrapper.vue'
 
 export default {
   name: 'Signup',
-  components: { ErrorMessage, OnboardingStyleWrapper },
+  components: { ErrorMessage, StyleWrapper },
   data: function () {
     return {
       success: false,
