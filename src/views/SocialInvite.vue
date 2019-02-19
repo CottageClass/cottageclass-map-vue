@@ -81,6 +81,8 @@ export default {
         return 'www.kidsclub.io/event/' + this.nextEventInSeries.id
       } else if (this.$route.params.id) {
         return 'www.kidsclub.io/event/' + this.$route.params.id
+      } else if (this.firstCreatedEventId) {
+        return 'www.kidsclub.io/event/' + this.firstCreatedEventId
       } else {
         return 'www.kidsclub.io'
       }

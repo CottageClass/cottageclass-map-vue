@@ -1,5 +1,6 @@
 <template>
 <StyleWrapper styleIs="onboarding">
+<LoadingSpinner v-if="users === null" />
   <div class="onb-body">
     <div class="body">
       <div class="content-wrapper">
@@ -38,11 +39,12 @@ import StyleWrapper from '@/components/FTE/StyleWrapper.vue'
 import InviteUserListItem from '@/components/FTE/InviteUserListItem.vue'
 import { mapGetters } from 'vuex'
 import Alert from '@/components/Alert.vue'
+import LoadingSpinner from '@/components/LoadingSpinner.vue'
 import alerts from '@/mixins/alerts.js'
 
 export default {
   name: 'InviteExistingUsers',
-  components: { Nav, StyleWrapper, InviteUserListItem, Alert },
+  components: { Nav, StyleWrapper, InviteUserListItem, Alert, LoadingSpinner },
   props: [ 'eventData' ],
   mixins: [alerts],
   data () {
@@ -93,7 +95,8 @@ export default {
         that.users.forEach(user => {
           this.$set(that.inviteStates, user.id, false)
         })
-      } else {
+      }
+      if (that.users.length === 0) {
         // there are no users within 20 miles so we return to home
         this.$router.push({ name: 'Home' })
       }

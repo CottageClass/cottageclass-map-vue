@@ -136,16 +136,16 @@ export default {
     redirectToSignupIfNotAuthenticated: function () {
       if (!this.$auth.isAuthenticated()) {
         console.log('User attempted to RSVP without being authenticated')
-        this.$cookies.set('rsvpAttempted', this.eventId)
-        this.$router.push('/?activeScreen=signup')
+        this.$store.commit('setRSVPAttemptEventId', { id: this.eventId })
+        this.$router.push({ name: 'SignUp' })
       }
     },
     redirectToOnboardingIfNotOnboarded: function () {
       if (!this.currentUser.hasAllRequiredFields) {
-      // send them back to onboarding.
+        // send them back to onboarding.
         console.log('user doesnt have required fields on rsvpinfocollection step, sending them back to onboarding', this.currentUser)
-        this.$cookies.set('rsvpAttempted', this.eventId)
-        this.$router.push('/')
+        this.$store.commit('setRSVPAttemptEventId', { id: this.eventId })
+        this.$router.push({ name: 'OnboardNewUser' })
       } else {
         console.log('user already onboarded, not redirecting')
       }
@@ -186,7 +186,7 @@ export default {
       }
     },
     forgetRsvpAttempted: function () {
-      this.$cookies.remove('rsvpAttempted')
+      this.$store.commit('setRSVPAttemptEventId', { id: null })
     },
     submitRsvp: function () {
       this.error = ''

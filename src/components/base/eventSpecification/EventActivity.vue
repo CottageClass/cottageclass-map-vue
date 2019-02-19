@@ -36,15 +36,15 @@ export default {
       this.$emit('input', {
         selected: this.activitySelected,
         err: this.err
-    })
-  }
+      })
+    }
   },
   mounted: function () {
     this.emitInput()
   },
   computed: {
     err: function () {
-      if (this.activitySelected === '') {
+      if (!this.activitySelected) {
         return this.errorMesg
       } else {
         return false

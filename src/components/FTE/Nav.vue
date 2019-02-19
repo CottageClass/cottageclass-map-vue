@@ -285,6 +285,7 @@ a {
   font-weight: 700;
   letter-spacing: 1.2px;
   text-transform: uppercase;
+  cursor: pointer;
 }
 
 @media (max-width: 991px) {
