@@ -5,15 +5,14 @@
   <h1 class="heading-1">Edit profile</h1>
   <OnboardingStyleWrapper styleIs="editing" class="cards" v-if="currentUser">
     <ErrorMessage v-if="showError && error" text="Your form has errors. Please fix them to continue..." />
-    <ErrorMessage v-if="showError && error" :text="phone.err" />
+    <ErrorMessage v-if="showError" :text="phone.err" />
     <Phone v-model="phone" :currentPhone="currentUser.phone" :required="false" />
-    <ErrorMessage v-if="showError && error" :text="location.err" />
+    <ErrorMessage v-if="showError" :text="location.err" />
     <Location
       :currentAddress="currentUser.fullAddress"
       :currentApartment="currentUser.apartmentNumber"
       v-model="location"
       />
-    <ErrorMessage v-if="showError && error" :text="availability.err" />
     <Question
       title="What do you do for a living?"
       subtitle="Tell other families a bit about what you do for work.">
@@ -52,7 +51,7 @@
         v-model="currentUser.activities" />
     </Question>
     <Availability v-model="availability" :required="false"/>
-    <ErrorMessage v-if="showError && error" :text="children.err" />
+    <ErrorMessage v-if="showError" :text="children.err" />
     <Children v-model="children" :required="false" />
     <LanguagesSpoken v-model="currentUser.languages"/>
   </OnboardingStyleWrapper>
@@ -105,7 +104,7 @@ export default {
   computed: {
     children: function () { return { 'list': this.currentUser.children } },
     error: function () {
-      if (!!this.phone.err || !!this.availability.err || !!this.location.err || !!this.children.err) {
+      if (!!this.phone.err || !!this.location.err || !!this.children.err) {
         return true
       } else {
         return false
