@@ -131,6 +131,10 @@ export function submitUserInfo (userId, phone, location, availability, children,
     postData.activities = userObj.activities
   }
 
+  if (userObj && userObj.languages) {
+    postData.languages = userObj.languages
+  }
+
   console.log('postdata', postData)
   return Vue.axios.post(
     `${process.env.BASE_URL_API}/users/${userId}`,
