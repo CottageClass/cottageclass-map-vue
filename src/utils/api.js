@@ -403,7 +403,7 @@ export function fetchEvents (params) {
 
 export function fetchUpcomingEventsWithinDistance (miles, lat, lon, sort) {
   return Vue.axios.get(
-    `${process.env.BASE_URL_API}/api/events/miles/${miles}/latitude/${lat}/longitude/${lon}`
+    `${process.env.BASE_URL_API}/api/events/upcoming/miles/${miles}/latitude/${lat}/longitude/${lon}`
   ).then(res => {
     console.log('FETCH UPCOMING EVENTS WITHIN DISTANCE SUCCESS')
     console.log(res.data)
