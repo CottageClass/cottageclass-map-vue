@@ -7,6 +7,7 @@ import store from './store'
 import * as VueGoogleMaps from 'vue2-google-maps'
 import './registerServiceWorker'
 import VueClipboard from 'vue-clipboard2'
+import VueAnalytics from 'vue-analytics'
 
 /*
  * Cookie setup
@@ -102,6 +103,12 @@ Vue.use(VueGoogleMaps, {
 
 router.beforeEach((to, from, next) => {
   store.dispatch('newRoute', { to, from, next })
+})
+
+// passing the router into the analytics plugin will automaticall track page views
+Vue.use(VueAnalytics, {
+  id: 'UA-11154339-3',  // TODO this is a placeholder ID
+  router
 })
 
 /* eslint-disable no-new */
