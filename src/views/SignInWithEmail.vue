@@ -59,7 +59,10 @@
           <button type="submit" class="button-text splash-button w-inline-block">Sign in</button>
       </form>
     </div>
-    <p>Forgot your password? Write us: <a href="mailto:contact@cottageclass.com">contact@cottageclass.com</a></p>
+    <p><router-link :to="{ name: 'PasswordReset'}" href="">
+      Forgot your password?
+      </router-link>
+      </p>
   </div>
 </div>
 </div>
