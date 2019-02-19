@@ -122,9 +122,9 @@
 
 import * as api from '@/utils/api.js'
 import AvatarImage from '@/components/base/AvatarImage'
-import RsvpButton from './RsvpButton.vue'
-import EditButton from './EditButton.vue'
-import MainNav from './MainNav.vue'
+import RsvpButton from '@/components/RsvpButton.vue'
+import EditButton from '@/components/EditButton.vue'
+import MainNav from '@/components/MainNav.vue'
 import Footer from '@/components/Footer.vue'
 import EventCategoryIcon from '@/components/EventCategoryIcon.vue'
 import ChildAges from '@/components/ChildAges.vue'
