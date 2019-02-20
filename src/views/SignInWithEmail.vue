@@ -96,9 +96,10 @@ export default {
     if (this.$auth) {
       if (this.isAuthenticated) {
         if (this.currentUser.hasAllRequiredFields) {
-          this.$emit('userAlreadyOnboarded')
+          this.$router.push({ name: 'Home' })
         } else if (this.currentUser.id) {
-          this.$emit('userNotYetOnboarded')
+          this.$router.push({ name: 'OnboardNewUSer' })
+
         } else {
           return false
         }
@@ -161,9 +162,9 @@ export default {
                 return component.$store.dispatch('establishCurrentUserAsync', Token.currentUserId(component.$auth))
               }).then(() => {
                 if (component.currentUser.hasAllRequiredFields) {
-                  component.$emit('userAlreadyOnboarded')
+                  component.$router.push({ name: 'Home' })
                 } else if (component.currentUser.id) {
-                  component.$emit('userNotYetOnboarded')
+                  component.$router.push({ name: 'OnboardNewUser' })
                 } else {
                   return false
                 }
