@@ -5,7 +5,7 @@
         <EventCategoryIcon :category="event.activityName" width="100" height="100" />
   </div>
   <div class="event-list-item-content">
-    <a href="event-detail.html" class="link-block-4 w-inline-block">
+    <a class="link-block-4 w-inline-block">
       <h2 class="event-heading">{{ event.name }}</h2>
     </a>
     <div class="event-summary">
