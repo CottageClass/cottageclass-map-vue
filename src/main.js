@@ -53,6 +53,14 @@ const origin = window.location.origin
  * - gives us auth/login/logout methods
  * - see: https://www.npmjs.com/package/vue-authenticate
  */
+
+let facebookClientId
+if (process.env.NODE_ENV === 'prodution') {
+  facebookClientId = '905335782985620' // Real app
+} else if (process.env.NODE_ENV === 'development') {
+  facebookClientId = '1714001398699903' // Test app
+}
+
 Vue.use(VueAuthenticate, {
   // baseUrl: 'https://cottageclass-app-api.herokuapp.com',
   baseUrl: process.env.BASE_URL_API,
@@ -60,12 +68,9 @@ Vue.use(VueAuthenticate, {
   tokenName: 'jwt',
   providers: {
     facebook: {
-      clientId: '905335782985620',
-      redirectUri: `${origin}/oauth-callback`
-      // Add additional scopes (properties) to be retrieved from Facebook here
-      // - see link below for properties accessible by default and properties requiring app review:
-      // - https://developers.facebook.com/docs/facebook-login/permissions/#reference-default
-      // scope: [],
+      clientId: facebookClientId,
+      redirectUri: `${origin}/oauth-callback`,
+      scope: ['user_photos']
     }
   }
 })
