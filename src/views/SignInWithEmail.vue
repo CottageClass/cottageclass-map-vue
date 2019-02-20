@@ -161,9 +161,9 @@ export default {
                 return component.$store.dispatch('establishCurrentUserAsync', Token.currentUserId(component.$auth))
               }).then(() => {
                 if (component.currentUser.hasAllRequiredFields) {
-                  component.$emit('userAlreadyOnboarded')
+                  component.$router.push({ name: 'Home' })
                 } else if (component.currentUser.id) {
-                  component.$emit('userNotYetOnboarded')
+                  component.$router.push({ name: 'OnboardNewUser' })
                 } else {
                   return false
                 }
