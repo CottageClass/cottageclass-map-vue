@@ -152,7 +152,11 @@ export default {
       return stepSequence[this.stepIndex]
     },
     nextButtonState () {
-      return 'next'
+      if (this.modelForCurrentStep.err) {
+        return 'inactive'
+      } else {
+        return 'next'
+      }
     },
     modelForCurrentStep () {
       const models = {
