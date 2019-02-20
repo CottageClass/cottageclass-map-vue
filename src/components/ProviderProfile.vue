@@ -7,7 +7,7 @@
         <div class="content-wrapper user-profile-wrapper">
     <div class="providerp-provider-info-section">
       <a @click="$router.go(-1)" class="providerp-button-back w-inline-block"><img src="../assets/Arrow-Back-2.svg">
-    </a><AvatarImage :person="{facebookId: user.facebookUid, avatar: user.avatar}" className="avatar-large"/>
+    </a><AvatarImage :person="{facebookUid: user.facebookUid, avatar: user.avatar}" className="avatar-large"/>
     <h1 class="providerp-h1">{{ user.firstName }}</h1>
     <div class="providerp-occupation" v-if="user.title && user.employer">{{ user.title }} at {{ user.employer }}</div>
     <div class="providerp-occupation">Member since {{ joinedDateFormatted }}</div>

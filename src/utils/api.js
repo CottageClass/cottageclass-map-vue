@@ -164,8 +164,8 @@ function createPersonObject (personInApi, availableChildren = []) {
     title: '',
     employer: '',
     backgroundCheck: false,
-    facebookId: p.facebook_id,
-    facebookMapIcon: 'https://graph.facebook.com/' + p.facebook_id + '/picture?width=30',
+    facebookUid: p.facebook_uid,
+    facebookMapIcon: 'https://graph.facebook.com/' + p.facebook_uid + '/picture?width=30',
     // todo: add children now somehow
     children: createChildrenList(),
     // todo: add these once I have them
@@ -403,7 +403,7 @@ export function fetchEvents (params) {
 
 export function fetchUpcomingEventsWithinDistance (miles, lat, lon, sort) {
   return Vue.axios.get(
-    `${process.env.BASE_URL_API}/api/events/miles/${miles}/latitude/${lat}/longitude/${lon}`
+    `${process.env.BASE_URL_API}/api/events/upcoming/miles/${miles}/latitude/${lat}/longitude/${lon}`
   ).then(res => {
     console.log('FETCH UPCOMING EVENTS WITHIN DISTANCE SUCCESS')
     console.log(res.data)
