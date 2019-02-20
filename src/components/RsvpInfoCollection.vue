@@ -197,13 +197,16 @@ export default {
       // open event page where user will see success message
         component.sendNotifications()
         component.forgetRsvpAttempted()
-        this.$store.commit('showAlertOnNextRoute', {
+        return this.$store.commit('showAlertOnNextRoute', {
           alert: {
             message: "Congratulations, you have RSVP&apos;ed to this event! You&apos;ll soon receive an email confirming your RSVP.",
             status: 'success'
           }
         })
-        component.$router.push({ name: 'EventPage', params: { id: this.eventId } })
+      }).then(res => {
+        return component.$ga.event('RSVP', 'sent', component.eventId)
+      }).then(res => {
+        return component.$router.push({ name: 'EventPage', params: { id: this.eventId } })
       }).catch(err => {
         console.log(err)
         this.error = 'Sorry, there was a problem submitting your RSVP. Try again?'
