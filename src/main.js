@@ -107,7 +107,7 @@ router.beforeEach((to, from, next) => {
 
 // passing the router into the analytics plugin will automaticall track page views
 Vue.use(VueAnalytics, {
-  id: 'UA-11154339-3',  // TODO this is a placeholder ID
+  id: 'UA-62051804-1',
   router
 })
 
