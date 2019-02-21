@@ -77,6 +77,7 @@ import PageActionsFooter from '@/components/PageActionsFooter.vue'
 import StyleWrapper from '@/components/FTE/StyleWrapper.vue'
 import ErrorMessage from '@/components/base/ErrorMessage.vue'
 import * as api from '@/utils/api.js'
+import * as Token from '@/utils/tokens.js'
 import { mapGetters } from 'vuex'
 
 var VueScrollTo = require('vue-scrollto')
