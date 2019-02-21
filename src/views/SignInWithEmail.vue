@@ -77,7 +77,7 @@ import { mapGetters } from 'vuex'
 import * as Token from '@/utils/tokens.js'
 import ErrorMessage from '@/components/base/ErrorMessage.vue'
 import StyleWrapper from '@/components/FTE/StyleWrapper.vue'
-import providerAuth from '@/mixins/ProviderAuthentication'
+import providerAuth from '@/mixins/providerAuthentication'
 
 export default {
   name: 'SignInWithEmail',
