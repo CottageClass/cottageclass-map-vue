@@ -17,7 +17,7 @@
 
         <div v-if="!success">
           <div class="onb-content-container-2">
-            <ErrorMessage v-if="showError && (errors.all().length > 0 || error)" :text="error" :messages="allErrors" }} />
+            <ErrorMessage v-if="showError && (errors.all().length > 0 || error)" :text="error" :messages="allErrors" />
             </div>
             <div class="onb-top-content-container">
               <h1 class="onb-heading-large">Join KidsClub</h1>
@@ -256,7 +256,7 @@ export default {
                   .login({ email, password })
                   .then(res => {
                     console.log('auth success:', res)
-                    component.$emit('userNotYetOnboarded')
+                    return component.$router.push({ name: 'OnboardNewUser' })
                   })
                   .catch(function (err) {
                     console.log('auth FAILURE or user not onboarded yet')
