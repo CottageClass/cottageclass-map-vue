@@ -317,6 +317,7 @@ a {
   margin-top: -4px;
   margin-right: 17px;
   margin-left: 10px;
+  flex: 1;
   line-height: 17px;
 }
 
