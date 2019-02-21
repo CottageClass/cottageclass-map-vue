@@ -281,6 +281,7 @@ export default {
         } else if (this.currentStep === 'emergencyCare' && this.substep === 'canProvide' && this.userData.emergencyCare.isTrue) {
           this.substep = 'availability'
         } else {
+          this.$ga.event('onboarding', 'stepComplete', this.currentStep)
           this.stepIndex += 1
           if (this.currentStep === 'pets') {
             this.substep = 'hasPets'

@@ -171,6 +171,7 @@ a {
   width: 40px;
   height: 40px;
   max-width: 40px;
+  border-radius: 50%;
 }
 
 .host-meta {
@@ -392,6 +393,7 @@ a {
 }
 
 .host-info {
+  flex: 1;
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -409,10 +411,6 @@ a {
 
 .event-summary {
   color: #333;
-}
-
-.avatar-small {
-  border-radius: 50%;
 }
 
 .event-time {

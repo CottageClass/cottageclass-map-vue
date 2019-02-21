@@ -77,8 +77,11 @@ export default {
         })
     },
     confirm: function () {
+      const component = this
       api.removeEventParticipant(this.eventId)
         .then(res => {
+          return component.$ga.event('RSVP', 'canceled', component.eventId)
+        }).then(res => {
           // send a text to the host
           // send reason to spreadsheet
 
