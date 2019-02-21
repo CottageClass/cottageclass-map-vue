@@ -1,12 +1,18 @@
 <template>
 <div>
    <MainNav />
+  <StyleWrapper styleIs="editing">
+    <!-- wrapper for desktop screens -->
+
+    <div class="onb-body">
+      <div class="body">
+        <div class="content-wrapper user-profile-wrapper">
 <!-- the map! -->
   <div class="map-container">
   <GmapMap
     :disableDefaultUI="true"
-    :center="network.location"
-    :zoom="network.zoom"
+    :center="currentUserLocation"
+    :zoom="mapZoomValue"
     :options="mapOptions"
     style="width: 100%; height: 180px;">
       <GmapMarker
@@ -28,7 +34,6 @@
     :key="person.id"
     />
   </div>
-
   <!-- share button -->
   <div class="invite-friends-container">
     <h5 class="heading">Want more people you know?</h5>
@@ -39,18 +44,18 @@
   shareText="I'm sharing childcare with a small circle of parents and friends. If you'd like to join sign up here!"
   shareUrl="https://www.kidsclub.io/"/>
   </div>
-
+          </div></div>
     <br><br>
-    <h5 class="heading-2">Map data &#169; 2018 Google (<a href="https://www.google.com/intl/en-US_US/help/terms_maps.html">terms of use</a> - <a href="https://www.google.com/maps/@40.6782,-73.9442,12z/data=!10m2!1e3!2e10!12b1?rapsrc=apiv3">report a map error</a>)</h5>
+    <h5 class="google-maps-required-text">Map data &#169; 2018 Google (<a href="https://www.google.com/intl/en-US_US/help/terms_maps.html">terms of use</a> - <a href="https://www.google.com/maps/@40.6782,-73.9442,12z/data=!10m2!1e3!2e10!12b1?rapsrc=apiv3">report a map error</a>)</h5>
 
  <!-- request care button -->
 
-<!--
    <div class="fb-container">
     <router-link to="/request-create" class="fb-button w-inline-block"><span><img src="@/assets/request-care-white.svg" width="24" height="24" alt="" /><span class="fb-button-text">Request care</span></span></router-link>
--->
-
+</div>
   </div>
+
+  </StyleWrapper>
 </div>
 
 </template>
@@ -58,6 +63,7 @@
 <script>
 import MainNav from './MainNav.vue'
 import RequestCareProviderItem from '@/components/RequestCareProviderItem.vue'
+import StyleWrapper from '@/components/FTE/StyleWrapper.vue'
 import ShareButton from '@/components/ShareButton.vue'
 import networks from '@/assets/network-info.json'
 import { mapGetters } from 'vuex'
@@ -65,7 +71,7 @@ import * as api from '@/utils/api.js'
 
 export default {
   name: 'RequestCare',
-  components: { RequestCareProviderItem, ShareButton, MainNav },
+  components: { RequestCareProviderItem, ShareButton, MainNav, StyleWrapper },
   data () {
     return {
       people: [], // gets updated on mount by fetchUsersInNetwork
@@ -73,7 +79,8 @@ export default {
       mapOptions: { // move this to map component when i separate it.
         'disableDefaultUI': true, // turns off map controls
         'gestureHandling': 'greedy' // allows one finger pan.
-      }
+      },
+      mapZoomValue: 13
     }
   },
   methods: {
@@ -83,20 +90,19 @@ export default {
     }
   },
   mounted: function () {
-    api.fetchUsersInNetwork(this.network.stub).then(res => {
-      this.people = res.filter(person => person.id !== this.currentUser.id)
+    api.fetchUsersWithinDistance(10, this.currentUser.latitude, this.currentUser.longitude).then(res => {
+      this.people = res
     })
   },
   computed: {
-    network: function () {
-      let networkId = this.currentUser.networkCode
-      return this.networks.find(network => network.stub === networkId)
-    },
     peopleAvailable: function () {
       return this.people.filter(person => person.availableMornings || person.availableAfternoons || person.availableEvenings || person.availableWeekends)
     },
     providersSectionTitle: function () {
       return 'People in "' + this.network.name + '"'
+    },
+    currentUserLocation: function () {
+      return { lat: parseFloat(this.currentUser.latitude), lng: parseFloat(this.currentUser.longitude) }
     },
     ...mapGetters(['currentUser'])
   }
@@ -104,6 +110,19 @@ export default {
 </script>
 
 <style scoped>
+
+.google-maps-required-text {
+  text-align: center;
+  margin: 0 auto 0 auto;
+  font-weight: normal;
+  opacity: .5;
+}
+
+.user-profile-wrapper {
+  padding-top: 0px !important;
+  background-color: #f2f2f2 !important;
+  min-height: unset;
+}
 
 .invite-friends-container {
   font-family: soleil;

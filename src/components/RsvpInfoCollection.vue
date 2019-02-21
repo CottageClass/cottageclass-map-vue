@@ -1,5 +1,5 @@
 <template>
-<OnboardingStyleWrapper styleIs="onboarding">
+<StyleWrapper styleIs="onboarding">
 
   <!-- wrapper for desktop screens -->
 
@@ -31,7 +31,7 @@
 </div>
 </div>
 </div>
-</OnboardingStyleWrapper>
+</StyleWrapper>
 </template>
 
 <script>
@@ -42,7 +42,7 @@ import Nav from '@/components/FTE/Nav.vue'
 import ErrorMessage from '@/components/base/ErrorMessage.vue'
 import Question from '@/components/base/Question.vue'
 import MultipleChoice from '@/components/base/MultipleChoice.vue'
-import OnboardingStyleWrapper from '@/components/FTE/OnboardingStyleWrapper.vue'
+import StyleWrapper from '@/components/FTE/StyleWrapper.vue'
 import sheetsu from 'sheetsu-node'
 // this component has a working loading indicator and no other logic. todo: break out and rename.
 import LoadingSpinner from '@/components/LoadingSpinner.vue'
@@ -53,7 +53,7 @@ var client = sheetsu({ address: 'https://sheetsu.com/apis/v1.0su/62cd725d6088' }
 
 export default {
   name: 'RsvpInfoCollection',
-  components: { Nav, LoadingSpinner, ErrorMessage, MultipleChoice, OnboardingStyleWrapper, Question },
+  components: { Nav, LoadingSpinner, ErrorMessage, MultipleChoice, StyleWrapper, Question },
   data () {
     return {
       childrenSelected: [],

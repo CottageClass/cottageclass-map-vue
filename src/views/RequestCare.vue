@@ -1,5 +1,5 @@
 <template>
-  <OnboardingStyleWrapper styleIs="onboarding">
+  <StyleWrapper styleIs="onboarding">
     <div class="onb-body">
       <div class="body">
         <div class="content-wrapper">
@@ -26,18 +26,18 @@
         </div>
       </div>
     </div>
-  </OnboardingStyleWrapper>
+  </StyleWrapper>
 </template>
 
 <script>
 import CountdownPromo from '@/components/FTE/CountdownPromo.vue'
 import DateTimePicker from '@/components/DateTimePicker.vue'
-import OnboardingStyleWrapper from '@/components/FTE/OnboardingStyleWrapper.vue'
+import StyleWrapper from '@/components/FTE/StyleWrapper.vue'
 
 export default {
   name: 'RequestCare',
   props: ['value'],
-  components: { CountdownPromo, DateTimePicker, OnboardingStyleWrapper },
+  components: { CountdownPromo, DateTimePicker, StyleWrapper },
   data () {
     return {
       bookingRequest: this.value
