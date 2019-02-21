@@ -34,7 +34,7 @@ export function initProxySession (currentUserId, receiverId, requestMessage, ack
  * USERS
  */
 
-export function submitUserInfo (userId, phone, location, availability, children) {
+export function submitUserInfo (userId, phone, location, availability, children, userObj) {
   console.log('attempting to submit', userId, phone, location, availability, children)
 
   let postData = {
@@ -111,6 +111,30 @@ export function submitUserInfo (userId, phone, location, availability, children)
     postData.childrenAttributes = childrenAttributes
   }
 
+  if (userObj && userObj.employer) {
+    postData.employer = userObj.employer
+  }
+
+  if (userObj && userObj.jobPosition) {
+    postData.jobPosition = userObj.jobPosition
+  }
+
+  if (userObj && userObj.profileBlurb) {
+    postData.profileBlurb = userObj.profileBlurb
+  }
+
+  if (userObj && userObj.images) {
+    postData.images = userObj.images
+  }
+
+  if (userObj && userObj.activities) {
+    postData.activities = userObj.activities
+  }
+
+  if (userObj && userObj.languages) {
+    postData.languages = userObj.languages
+  }
+
   console.log('postdata', postData)
   return Vue.axios.post(
     `${process.env.BASE_URL_API}/users/${userId}`,
@@ -164,8 +188,8 @@ function createPersonObject (personInApi, availableChildren = []) {
     title: '',
     employer: '',
     backgroundCheck: false,
-    facebookId: p.facebook_id,
-    facebookMapIcon: 'https://graph.facebook.com/' + p.facebook_id + '/picture?width=30',
+    facebookUid: p.facebook_uid,
+    facebookMapIcon: 'https://graph.facebook.com/' + p.facebook_uid + '/picture?width=30',
     // todo: add children now somehow
     children: createChildrenList(),
     // todo: add these once I have them
@@ -268,15 +292,15 @@ export function fetchCurrentUser (userId) {
 export function fetchUser (userId) {
   return Vue.axios.get(
     `${process.env.BASE_URL_API}/api/users/${userId}`
-    ).then(res => {
-      console.log('FETCH USER #' + userId + ' SUCCESS')
-      console.log(res)
-      let normalizedData = normalize(res.data)
-      let user = normalizedData.user[userId].attributes
-      user.networkCode = 'brooklyn-events' // give everyone the new network code
-      user.id = userId
-      return user
-    }).catch(err => {
+  ).then(res => {
+    console.log('FETCH USER #' + userId + ' SUCCESS')
+    console.log(res)
+    let normalizedData = normalize(res.data)
+    let user = normalizedData.user[userId].attributes
+    user.networkCode = 'brooklyn-events' // give everyone the new network code
+    user.id = userId
+    return user
+  }).catch(err => {
     console.log('FETCH USER #' + userId + ' FAILURE')
     console.log(err.errors)
     throw err
@@ -374,9 +398,9 @@ export function submitNotification (participantId, notificationBodyText) {
  * EVENTS
  */
 
-export function fetchMyUpcomingEvents (params) {
+export function fetchUpcomingEvents (userId) {
   return Vue.axios.get(
-    `${process.env.BASE_URL_API}/api/user/created_events/upcoming`
+    `${process.env.BASE_URL_API}/api/users/${userId}/events/created/upcoming/page/1/page_size/100`
   ).then(res => {
     console.log('FETCH MY UPCOMING EVENTS SUCCESS')
     return Object.values(normalize(res.data).event).map(parseEventData)
@@ -403,7 +427,7 @@ export function fetchEvents (params) {
 
 export function fetchUpcomingEventsWithinDistance (miles, lat, lon, sort) {
   return Vue.axios.get(
-    `${process.env.BASE_URL_API}/api/events/miles/${miles}/latitude/${lat}/longitude/${lon}/sort/chronological`
+    `${process.env.BASE_URL_API}/api/events/upcoming/miles/${miles}/latitude/${lat}/longitude/${lon}/sort/chronological`
   ).then(res => {
     console.log('FETCH UPCOMING EVENTS WITHIN DISTANCE SUCCESS')
     console.log(res.data)
@@ -417,10 +441,11 @@ export function fetchUpcomingEventsWithinDistance (miles, lat, lon, sort) {
   })
 }
 
-export function fetchMyUpcomingParticipatingEvents () {
-  return Vue.axios.get(`${process.env.BASE_URL_API}/api/user/participated_events/upcoming`)
+export function fetchUpcomingParticipatingEvents (userId) {
+  return Vue.axios.get(`${process.env.BASE_URL_API}/api/users/${userId}/events/participated/upcoming/page/1/page_size/100`)
     .then(res => {
       console.log('GET PARTICIPATING EVENTS SUCCESS')
+      console.log(res)
       const normedData = normalize(res.data)
       if (!normedData.event) {
         return []

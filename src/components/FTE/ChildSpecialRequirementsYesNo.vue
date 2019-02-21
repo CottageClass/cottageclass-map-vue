@@ -1,5 +1,5 @@
 <template>
-  <OnboardingStyleWrapper styleIs="onboarding">
+  <StyleWrapper styleIs="onboarding">
     <div class="onb-body">
       <div class="body">
         <div class="content-wrapper">
@@ -12,19 +12,19 @@
         </div>
       </div>
     </div>
-  </OnboardingStyleWrapper>
+  </StyleWrapper>
 </template>
 
 <script>
 import YesOrNo from '@/components/base/YesOrNo.vue'
 import Nav from '@/components/FTE/Nav.vue'
 import ErrorMessage from '@/components/base/ErrorMessage.vue'
-import OnboardingStyleWrapper from '@/components/FTE/OnboardingStyleWrapper.vue'
+import StyleWrapper from '@/components/FTE/StyleWrapper.vue'
 import { mapGetters } from 'vuex'
 
 export default {
   name: 'ChildSpecialRequirementsYesNo',
-  components: { YesOrNo, OnboardingStyleWrapper, ErrorMessage, Nav },
+  components: { YesOrNo, StyleWrapper, ErrorMessage, Nav },
   data () {
     return {
       childHasSpecialNeeds: {},
