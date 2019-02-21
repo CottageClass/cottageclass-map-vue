@@ -1,5 +1,5 @@
 <template>
-  <OnboardingStyleWrapper styleIs="onboarding">
+  <StyleWrapper styleIs="editing">
     <!-- wrapper for desktop screens -->
 
     <div class="onb-body">
@@ -7,7 +7,7 @@
         <div class="content-wrapper user-profile-wrapper">
     <div class="providerp-provider-info-section">
       <a @click="$router.go(-1)" class="providerp-button-back w-inline-block"><img src="../assets/Arrow-Back-2.svg">
-    </a><AvatarImage :person="{facebookUid: user.facebookUid, avatar: user.avatar}" className="avatar-large"/>
+    </a><AvatarImage :person="user" className="avatar-large"/>
     <h1 class="providerp-h1">{{ user.firstName }}</h1>
     <div class="providerp-occupation" v-if="user.title && user.employer">{{ user.title }} at {{ user.employer }}</div>
     <div class="providerp-occupation">Member since {{ joinedDateFormatted }}</div>
@@ -28,7 +28,7 @@
 
 <!-- Photos -->
 
-  <div v-if="user.images" class="group-title-container-2">
+  <div v-if="user.images.length > 0" class="group-title-container-2">
     <h5 class="list-title-2">Photos</h5>
   </div>
 
@@ -88,7 +88,7 @@
 </div>
 </div>
 </div>
-</OnboardingStyleWrapper>
+</StyleWrapper>
 </template>
 
 <script>
@@ -98,14 +98,14 @@ import AvatarImage from '@/components/base/AvatarImage'
 import * as api from '@/utils/api.js'
 import networks from '@/assets/network-info.json'
 import ChildAges from '@/components/ChildAges.vue'
-import OnboardingStyleWrapper from '@/components/FTE/OnboardingStyleWrapper.vue'
+import StyleWrapper from '@/components/FTE/StyleWrapper.vue'
 import moment from 'moment'
 import ProviderInfo from '@/components/base/ProviderInfo.vue'
 import ChildInfo from '@/components/ChildInfo.vue'
 
 export default {
   name: 'ProviderProfile',
-  components: { Images, AvatarImage, ChildAges, OnboardingStyleWrapper, ProviderInfo, ChildInfo },
+  components: { Images, AvatarImage, ChildAges, StyleWrapper, ProviderInfo, ChildInfo },
   data () {
     return {
       user: {},
@@ -227,10 +227,6 @@ img {
   color: rgba(0, 0, 0, .5);
   font-size: 13px;
   text-align: left;
-}
-
-.body {
-  background-color: #f2f2f2;
 }
 
 .map {

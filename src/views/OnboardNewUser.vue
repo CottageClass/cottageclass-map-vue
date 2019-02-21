@@ -8,7 +8,7 @@
           @prev="prevStep"
           :hidePrevious="stepIndex === 0"
         />
-        <OnboardingStyleWrapper styleIs="onboarding">
+        <StyleWrapper styleIs="onboarding">
           <ErrorMessage v-if="error && this.showError" :text="error" />
           <Phone
             v-if="currentStep === 'phone'"
@@ -58,7 +58,7 @@
             v-model="userData.pets" />
           <HouseRules v-if="currentStep === 'houseRules'"
             v-model="userData.houseRules" />
-        </OnboardingStyleWrapper>
+        </StyleWrapper>
       </div>
     </div>
   </div>
@@ -72,7 +72,7 @@ import { mapGetters } from 'vuex'
 import sheetsu from 'sheetsu-node'
 import moment from 'moment'
 
-import OnboardingStyleWrapper from '@/components/FTE/OnboardingStyleWrapper.vue'
+import StyleWrapper from '@/components/FTE/StyleWrapper.vue'
 import Nav from '@/components/FTE/Nav.vue'
 import ErrorMessage from '@/components/base/ErrorMessage.vue'
 
@@ -108,7 +108,7 @@ export default {
   name: 'OnboardNewUser',
   props: [],
   components: {
-    OnboardingStyleWrapper,
+    StyleWrapper,
     Nav,
     ErrorMessage,
     Phone,

@@ -1,5 +1,5 @@
 <template>
-<OnboardingStyleWrapper styleIs="onboarding">
+<StyleWrapper styleIs="onboarding">
   <div class="onb-body">
     <div class="body">
       <div class="content-wrapper">
@@ -44,12 +44,12 @@
       </div>
     </div>
   </div>
-</OnboardingStyleWrapper>
+</StyleWrapper>
 </template>
 
 <script>
 import ErrorMessage from '@/components/base/ErrorMessage.vue'
-import OnboardingStyleWrapper from '@/components/FTE/OnboardingStyleWrapper.vue'
+import StyleWrapper from '@/components/FTE/StyleWrapper.vue'
 import {
   formatNumber,
   isValidNumber
@@ -61,7 +61,7 @@ var client = sheetsu({ address: 'https://sheetsu.com/apis/v1.0su/62cd725d6088' }
 
 export default {
   name: 'ResetPassword',
-  components: { ErrorMessage, OnboardingStyleWrapper },
+  components: { ErrorMessage, StyleWrapper },
   data: function () {
     return {
       email: '',

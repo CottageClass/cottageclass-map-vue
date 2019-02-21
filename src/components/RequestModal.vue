@@ -33,9 +33,9 @@
         </select>
 
         <div class="avatar-and-cta-container">
-          <AvatarImage person="provider" class="image" />
+          <AvatarImage :person="provider" class="image" />
           <div class="text-block-4">
-            Send a text message to<br><span class="text-span">{{ provider.firstName}} {{ provider.lastInitial }}.</span><span class="black-50"></span>
+            Send a text message to<br><span class="text-span">{{ provider.firstName}}</span><span class="black-50"></span>
           </div>
         </div>
 
@@ -46,7 +46,6 @@
         >
           {{ sendButtonText }}
         </button>
-        <div class="small-text-black-40">You can edit it on the next screen.<br>Each booking costs ${{ network.price }}/hour<br> &amp; you only pay for what you use.</div>
       </div>
     </div>
   </div>
@@ -54,15 +53,7 @@
 </template>
 
 <script>
-// todo:
-// make close work.
-// pass event back so that the main window has knowledge of this.
-// format text message so that it gives a readable date and "tomorrow"
-// consider showing start / end on same line side by side to make more room for avatar
-// consider putting avatar at the top.
-// try adding an animation so it fades in
 
-import networks from '../assets/network-info.json'
 import * as api from '@/utils/api.js'
 import * as Token from '@/utils/tokens.js'
 import AvatarImage from '@/components/base/AvatarImage'
@@ -85,29 +76,19 @@ export default {
       startTime: '19:00',
       endTime: '22:00',
       people: [],
-      networks: networks,
-      providerId: this.$route.params.id,
       twilioProxyNumberForProvider: null,
-      sendButtonText: 'Send Text'
+      sendButtonText: 'Send Text',
+      provider: null,
+      providerId: this.$route.params.id
     }
   },
   computed: {
-    network: function () {
-      let networkId = Token.currentUserNetworkCode(this.$auth)
-      return this.networks.find(network => network.stub === networkId)
-    },
-    provider: function () {
-      return this.people.find(person => person.id === this.providerId) || {}
-    },
     ...mapGetters([ 'currentUser' ])
   },
   mounted: function () {
-    // fetch users in network
-    api.fetchUsersInNetwork(this.network.stub)
-      .then(people => {
-        this.people = people
-        this.currentUser = people.find(person => person.id === this.currentUser.id)
-      })
+    api.fetchUser(this.$route.params.id).then(res => {
+      this.provider = res
+    })
   },
   methods: {
     submitRequest: function () {
@@ -135,7 +116,7 @@ export default {
     },
     messageForProvider: function () {
       // Those crazy unicode characters are emojis :)
-      let msg = 'Hi ' + this.provider.firstName + '!! I\'m ' + this.currentUser.firstName + ' from ' + this.network.name + ', I\'m looking for care for ' + this.numberOfChildren + ' ' + ((this.numberOfChildren > 1) ? 'children' : 'child') + ' ' + this.day + ' from ' + this.formatTime(this.startTime) + ' to ' + this.formatTime(this.endTime) + ', and I saw you were often available at these times. Would this work? Thanks! \ud83c\udf08\u26a1\ud83e\udd84'
+      let msg = 'Hi ' + this.provider.firstName + '!! I\'m ' + this.currentUser.firstName + ' from KidsClub.io, I\'m looking for care for ' + this.numberOfChildren + ' ' + ((this.numberOfChildren > 1) ? 'children' : 'child') + ' ' + this.day + ' from ' + this.formatTime(this.startTime) + ' to ' + this.formatTime(this.endTime) + ', and I saw you were often available at these times. Would this work? Thanks! \ud83c\udf08\u26a1\ud83e\udd84'
       return msg
     },
     acknowledgmentMessage: function () {
@@ -159,15 +140,12 @@ export default {
         'Requester Phone': this.currentUser.phone,
         'Provider ID': this.provider.id,
         'Provider Name': this.provider.firstName + ' ' + this.provider.lastInitial,
-        'Provider Phone #': this.provider.phone,
         'Date submitted': moment(Date()).format('L'),
         'Time submitted': moment(Date()).format('LT'),
         'Request Day': this.day,
         'Start Time': this.startTime,
         'End Time': this.endTime,
         '# Children': this.numberOfChildren,
-        'Network': this.network.name,
-        'Network Code': this.network.stub
       }, 'requests').then((data) => {
         console.log(data)
       }, (err) => {

@@ -1,5 +1,5 @@
 <template>
-<OnboardingStyleWrapper styleIs="onboarding">
+<StyleWrapper styleIs="onboarding">
 <LoadingSpinner v-if="users === null" />
   <div class="onb-body">
     <div class="body">
@@ -29,13 +29,13 @@
       </div>
     </div>
   </div>
-</OnboardingStyleWrapper>
+</StyleWrapper>
 </template>
 
 <script>
 import Nav from '@/components/FTE/Nav.vue'
 import * as api from '@/utils/api.js'
-import OnboardingStyleWrapper from '@/components/FTE/OnboardingStyleWrapper.vue'
+import StyleWrapper from '@/components/FTE/StyleWrapper.vue'
 import InviteUserListItem from '@/components/FTE/InviteUserListItem.vue'
 import { mapGetters } from 'vuex'
 import Alert from '@/components/Alert.vue'
@@ -44,7 +44,7 @@ import alerts from '@/mixins/alerts.js'
 
 export default {
   name: 'InviteExistingUsers',
-  components: { Nav, OnboardingStyleWrapper, InviteUserListItem, Alert, LoadingSpinner },
+  components: { Nav, StyleWrapper, InviteUserListItem, Alert, LoadingSpinner },
   props: [ 'eventData' ],
   mixins: [alerts],
   data () {
