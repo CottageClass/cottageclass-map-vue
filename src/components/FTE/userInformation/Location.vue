@@ -21,7 +21,7 @@
           @keyup.enter="$emit('pressedEnter')"
           name="apartmentNumber"
           v-model="apartmentNumber"
-          placeholder="Apartment #"
+          :placeholder="apartmentNumber || 'Apartment #'"
           class="location-text-field w-input"
         ></form>
     <a v-if="!showApartmentField" @click="toggleApartmentField" class="onb-button-add-group w-inline-block"><img src="@/assets/add.svg" alt="" class="image-7"><div class="onb-button-add-group-text">Add apartment #</div></a>
@@ -33,7 +33,7 @@ import VueGoogleAutocomplete from 'vue-google-autocomplete'
 import Question from '@/components/base/Question.vue'
 export default {
   name: 'Location',
-  props: ['currentAddress', 'value'],
+  props: ['currentAddress', 'value', 'required', 'currentApartment'],
   components: { Question, VueGoogleAutocomplete },
   data () {
     return {
@@ -87,7 +87,7 @@ export default {
   },
   computed: {
     error: function () {
-      if (isNaN(this.address.latitude) || isNaN(this.address.longitude)) {
+      if (this.required && (isNaN(this.address.latitude) || isNaN(this.address.longitude))) {
         return 'There was a problem processing your street address. Try again?'
       } else {
         return false

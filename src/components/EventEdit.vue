@@ -7,7 +7,7 @@
   <MainNav />
   <div class="container w-container">
   <h1 class="heading-1">Editing event #{{ eventId }} </h1>
-  <OnboardingStyleWrapper styleIs="editing" class="cards" v-if="event">
+  <StyleWrapper styleIs="editing" class="cards" v-if="event">
       <ErrorMessage v-if="showError && error" text="Your entries have errors. Please fix them to continue..." />
       <EventName v-model="event.name" />
       <EventActivity v-model="event.activity" />
@@ -43,7 +43,7 @@
       </Question>
 
       <!-- </edit date & time> -->
-  </OnboardingStyleWrapper>
+  </StyleWrapper>
   <PageActionsFooter :buttonText="saveButtonText" @click="saveEvent"/>
   </div>
 </div>
@@ -63,7 +63,7 @@ import Food from '@/components/base/eventSpecification/Food.vue'
 import HouseRules from '@/components/FTE/userInformation/HouseRules.vue'
 import PetsDescription from '@/components/FTE/userInformation/PetsDescription.vue'
 import MaxChildren from '@/components/base/eventSpecification/MaxChildren.vue'
-import OnboardingStyleWrapper from '@/components/FTE/OnboardingStyleWrapper.vue'
+import StyleWrapper from '@/components/FTE/StyleWrapper.vue'
 import Question from '@/components/base/Question.vue'
 import DeleteEventConfirmationModal from '@/components/DeleteEventConfirmationModal.vue'
 
@@ -74,7 +74,7 @@ var VueScrollTo = require('vue-scrollto')
 
 export default {
   name: 'ProfileEdit',
-  components: { EventActivity, Food, HouseRules, PetsDescription, MaxChildren, MainNav, OnboardingStyleWrapper, PageActionsFooter, ErrorMessage, YesOrNo, Question, DateTimePicker, EventName, AgeRange, DeleteEventConfirmationModal },
+  components: { EventActivity, Food, HouseRules, PetsDescription, MaxChildren, MainNav, StyleWrapper, PageActionsFooter, ErrorMessage, YesOrNo, Question, DateTimePicker, EventName, AgeRange, DeleteEventConfirmationModal },
   data () {
     return {
       eventId: this.$route.params.id,

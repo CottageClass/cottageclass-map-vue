@@ -1,5 +1,5 @@
 <template>
-<OnboardingStyleWrapper styleIs="onboarding">
+<StyleWrapper styleIs="onboarding">
     <!-- wrapper for desktop screens -->
 
     <div class="onb-body">
@@ -33,7 +33,7 @@
 </div>
 </div>
 </div>
-</OnboardingStyleWrapper>
+</StyleWrapper>
 </template>
 
 <script>
@@ -43,12 +43,12 @@ import EventListItem from '@/components/EventListItem.vue'
 import Nav from '@/components/FTE/Nav.vue'
 import LoadingSpinner from '@/components/LoadingSpinner.vue'
 import ErrorMessage from '@/components/base/ErrorMessage.vue'
-import OnboardingStyleWrapper from '@/components/FTE/OnboardingStyleWrapper.vue'
+import StyleWrapper from '@/components/FTE/StyleWrapper.vue'
 import YesOrNo from '@/components/base/YesOrNo.vue'
 
 export default {
   name: 'RsvpConfirmation',
-  components: { EventListItem, Nav, LoadingSpinner, ErrorMessage, OnboardingStyleWrapper, YesOrNo },
+  components: { EventListItem, Nav, LoadingSpinner, ErrorMessage, StyleWrapper, YesOrNo },
   data () {
     return {
       eventId: this.$route.params.eventId,

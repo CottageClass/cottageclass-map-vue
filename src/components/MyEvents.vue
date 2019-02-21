@@ -70,7 +70,7 @@ export default {
       return moment(date).format('dddd, MMM Do')
     },
     fetchMyUpcomingEvents: function () {
-      api.fetchMyUpcomingEvents().then(res => {
+      api.fetchUpcomingEvents(this.currentUser.id).then(res => {
         this.events = res
       })
     }
