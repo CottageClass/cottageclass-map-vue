@@ -67,7 +67,6 @@
 <script>
 import * as api from '@/utils/api'
 import * as Token from '@/utils/tokens'
-import normalize from 'json-api-normalizer'
 import { mapGetters } from 'vuex'
 import sheetsu from 'sheetsu-node'
 import moment from 'moment'
@@ -248,7 +247,7 @@ export default {
         return that.$store.dispatch('establishCurrentUserAsync', userId)
       }).then(() => {
         that.submitEventData().then(res => {
-          that.$store.commit('setCreatedEventData', { eventData: normalize(res.data) })
+          that.$store.commit('setCreatedEvents', { eventData: res })
         })
       }).then(res => {
         console.log('event creation SUCCESS')
