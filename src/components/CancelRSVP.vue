@@ -2,7 +2,7 @@
 
 <div class="body">
   <div class="content-wrapper">
-    <OnboardingStyleWrapper styleIs="onboarding">
+    <StyleWrapper styleIs="onboarding">
       <Question
       class='rsvp-cancel-reason'
       title="Cancel your RSVP."
@@ -19,13 +19,13 @@
             </div>
           </div>
       </Question>
-    </OnboardingStyleWrapper>
+    </StyleWrapper>
   </div>
 </div>
 </template>
 
 <script>
-import OnboardingStyleWrapper from '@/components/FTE/OnboardingStyleWrapper.vue'
+import StyleWrapper from '@/components/FTE/StyleWrapper.vue'
 import Question from '@/components/base/Question.vue'
 import * as api from '@/utils/api'
 import sheetsu from 'sheetsu-node'
@@ -36,7 +36,7 @@ var client = sheetsu({ address: 'https://sheetsu.com/apis/v1.0su/62cd725d6088' }
 
 export default {
   name: 'CancelRSVP',
-  components: { Question, OnboardingStyleWrapper },
+  components: { Question, StyleWrapper },
   props: ['eventId'],
   data: () => {
     return {

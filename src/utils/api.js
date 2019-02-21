@@ -34,7 +34,7 @@ export function initProxySession (currentUserId, receiverId, requestMessage, ack
  * USERS
  */
 
-export function submitUserInfo (userId, phone, location, availability, children) {
+export function submitUserInfo (userId, phone, location, availability, children, userObj) {
   console.log('attempting to submit', userId, phone, location, availability, children)
 
   let postData = {
@@ -111,6 +111,30 @@ export function submitUserInfo (userId, phone, location, availability, children)
     postData.childrenAttributes = childrenAttributes
   }
 
+  if (userObj && userObj.employer) {
+    postData.employer = userObj.employer
+  }
+
+  if (userObj && userObj.jobPosition) {
+    postData.jobPosition = userObj.jobPosition
+  }
+
+  if (userObj && userObj.profileBlurb) {
+    postData.profileBlurb = userObj.profileBlurb
+  }
+
+  if (userObj && userObj.images) {
+    postData.images = userObj.images
+  }
+
+  if (userObj && userObj.activities) {
+    postData.activities = userObj.activities
+  }
+
+  if (userObj && userObj.languages) {
+    postData.languages = userObj.languages
+  }
+
   console.log('postdata', postData)
   return Vue.axios.post(
     `${process.env.BASE_URL_API}/users/${userId}`,
@@ -164,8 +188,8 @@ function createPersonObject (personInApi, availableChildren = []) {
     title: '',
     employer: '',
     backgroundCheck: false,
-    facebookId: p.facebook_id,
-    facebookMapIcon: 'https://graph.facebook.com/' + p.facebook_id + '/picture?width=30',
+    facebookUid: p.facebook_uid,
+    facebookMapIcon: 'https://graph.facebook.com/' + p.facebook_uid + '/picture?width=30',
     // todo: add children now somehow
     children: createChildrenList(),
     // todo: add these once I have them
@@ -403,7 +427,7 @@ export function fetchEvents (params) {
 
 export function fetchUpcomingEventsWithinDistance (miles, lat, lon, sort) {
   return Vue.axios.get(
-    `${process.env.BASE_URL_API}/api/events/miles/${miles}/latitude/${lat}/longitude/${lon}`
+    `${process.env.BASE_URL_API}/api/events/upcoming/miles/${miles}/latitude/${lat}/longitude/${lon}`
   ).then(res => {
     console.log('FETCH UPCOMING EVENTS WITHIN DISTANCE SUCCESS')
     console.log(res.data)

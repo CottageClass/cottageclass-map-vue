@@ -13,7 +13,7 @@
 
       <h1 class="event-detail-heading">{{ event.name }}</h1>
       <div class="action-bar">
-        <div class="host-info"><router-link :to="{ name: 'ProviderProfile', params: { id: event.hostId }}"><AvatarImage className="avatar-large" :person="{facebookId: event.hostFacebookUid, avatar: event.hostAvatar}"/></router-link>
+        <div class="host-info"><router-link :to="{ name: 'ProviderProfile', params: { id: event.hostId }}"><AvatarImage className="avatar-large" :person="{facebookUid: event.hostFacebookUid, avatar: event.hostAvatar}"/></router-link>
           <div class="host-info-wrapper">
             <div class="hosted-by">Hosted by <router-link :to="{ name: 'ProviderProfile', params: { id: event.hostId }}" class="host">{{ event.hostFirstName }}</router-link> &amp;
             <ChildAges :childAges="event.hostChildAges" singular="kid" plural="kids"/><span v-if="event.participants && event.participants.length > 0"><Participants :participants="event.participants" /></span><span v-else>.</span></div>
@@ -79,7 +79,7 @@
         <div class="card-large-text">{{ event.petDescription }}</div>
       </div>
 
-      <div class="event-specifics-card"><router-link :to="{ name: 'ProviderProfile', params: { id: event.hostId }}" class="host"><AvatarImage className="avatar-x-large" :person="{facebookId: event.hostFacebookUid, avatar: event.hostAvatar}"/></router-link>
+      <div class="event-specifics-card"><router-link :to="{ name: 'ProviderProfile', params: { id: event.hostId }}" class="host"><AvatarImage className="avatar-x-large" :person="{facebookUid: event.hostFacebookUid, avatar: event.hostAvatar}"/></router-link>
         <div class="card-small-text">Host</div>
         <div class="card-large-text">{{ event.hostFirstName }}</div>
         <div v-if="event.hostChildAges && event.hostChildAges.length > 0" class="card-large-text-gray">Parent to <ChildAges :childAges="event.hostChildAges" singular="child" plural="children" />.

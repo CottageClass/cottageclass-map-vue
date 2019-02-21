@@ -1,7 +1,7 @@
 <template>
   <span class="body">
   <div class="scrolling-wrapper">
-    <div class="card" v-for="image in person.images"><img :src="require(`../assets/${image}`)"></div>
+    <div class="card" v-for="image in person.images"><img :src="image"></div>
   </div>
 </span>
 </template>
