@@ -204,7 +204,7 @@ export default {
         }
       }
     },
-    ...mapGetters(['currentUser'])
+    ...mapGetters(['currentUser', 'rsvpAttemptedId'])
 
   },
   methods: {
