@@ -131,6 +131,7 @@
             <div class="date-title">Saturday, February 16</div>
           </div>
         </div>
+        <!--
         <ul class="unordered-list-events">
           <li class="event-list-item">
             <div class="event-list-item-graphic color-hot-pink"><img src="@/assets/film-projector.svg" alt="" class="emoji"></div>
@@ -162,7 +163,6 @@
             </div>
           </li>
         </ul>
-        <!--
         <div class="event-date-section-tittle"><img src="@/assets/date-outline-white-oval.svg" alt="" class="image-265">
           <div class="date-text-wrapper">
             <div class="date-title">Sunday, March 3</div>
