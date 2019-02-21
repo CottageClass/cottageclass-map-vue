@@ -210,7 +210,7 @@ export default {
   },
   methods: {
     submitEventData: function () {
-      return this.axios.post(`${process.env.BASE_URL_API}/api/event_series`, this.eventDataForSubmissionToAPI)
+      return api.submitEventSeriesData(this.eventDataForSubmissionToAPI)
     },
     finishOnboarding () {
       // send the data to the server

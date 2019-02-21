@@ -411,6 +411,14 @@ export function fetchUpcomingEvents (userId) {
   })
 }
 
+export function submitEventSeriesData (data) {
+  return Vue.axios.post(
+    `${process.env.BASE_URL_API}/api/event_series`, data
+  ).then(res => {
+    return Object.values(normalize(res.data).event).map(parseEventData)
+  })
+}
+
 export function fetchEvents (params) {
   return Vue.axios.get(
     `${process.env.BASE_URL_API}/api/events/${params || ''}`
