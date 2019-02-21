@@ -23,7 +23,7 @@ export default {
   data () {
     return {
       languages: languages.getData(),
-      languageCodesChosen: [],
+      languageCodesChosen: this.value,
       choicesAreHidden: true
     }
   },
