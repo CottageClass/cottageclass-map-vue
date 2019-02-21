@@ -331,7 +331,7 @@ a {
   display: -ms-flexbox;
   display: flex;
   min-height: 180px;
-  min-width: 320px;
+  min-width: 200px;
   -webkit-box-pack: center;
   -webkit-justify-content: center;
   -ms-flex-pack: center;
