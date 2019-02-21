@@ -18,7 +18,8 @@
           <Location
             v-if="currentStep === 'location'"
             v-model="userData.location"
-            @pressedEnter="nextStep" />
+            @pressedEnter="nextStep"
+            required="true"/>
           <Children
             v-if="currentStep === 'children'"
             v-model="userData.children" />
