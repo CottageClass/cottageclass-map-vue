@@ -76,35 +76,24 @@ export default {
     this.fetchEvent()
   },
   computed: {
+    eventId: function () {
+      if (this.firstCreatedEvent.id) {
+        return this.firstCreatedEvent.id
+      }
+      return null
+    },
     shareUrl: function () {
-      if (this.nextEventInSeries) {
-        return 'www.kidsclub.io/event/' + this.nextEventInSeries.id
-      } else if (this.$route.params.id) {
-        return 'www.kidsclub.io/event/' + this.$route.params.id
-      } else if (this.firstCreatedEventId) {
-        return 'www.kidsclub.io/event/' + this.firstCreatedEventId
+      if (this.eventId) {
+        return 'www.kidsclub.io/event/' + this.eventId
       } else {
         return 'www.kidsclub.io'
       }
     },
-    nextEventInSeries: function () {
-      if (this.eventData) {
-        let events = this.eventData.event
-        let eventIds = Object.keys(events)
-        let eventId = eventIds[0]
-        let event = events[eventId].attributes
-        event.id = eventId
-        event.activityName = event.activityNames.length > 0 && event.activityNames[0]
-        return event
+    eventToShare: function () {
+      if (this.firstCreatedEvent) {
+        return this.firstCreatedEvent
       } else {
         return null
-      }
-    },
-    eventToShare: function () {
-      if (this.nextEventInSeries) {
-        return this.nextEventInSeries
-      } else {
-        return this.eventFromParams
       }
     },
     textMessage: function () {
@@ -125,24 +114,17 @@ export default {
     emailLink: function () {
       return 'mailto:?subject=' + this.emailSubject + '&body=' + this.emailBody + 'https%3A%2F%2F' + this.shareUrl + '%2F%0A%0AThanks!%0A%3C3'
     },
-    eventFromParams: function () {
-      if (Array.isArray(this.events)) {
-        return this.events.find(event => event.id === this.$route.params.id)
-      } else {
-        return {}
-      }
-    },
-    ...mapGetters([ 'firstCreatedEventId' ])
+    ...mapGetters([ 'firstCreatedEvent' ])
   },
   methods: {
     nextStep () {
-      this.$router.push({ name: 'InviteExistingUsers', params: { id: this.firstCreatedEventId } })
+      this.$router.push({ name: 'InviteExistingUsers', params: { id: this.firstCreatedEvent.id } })
     },
     onCopy: function () {
       this.copyButtonText = 'copied!'
     },
     fetchEvent: function () {
-      api.fetchEvents(this.$route.params.id).then(
+      api.fetchEvents(this.eventId).then(
         (res) => {
           this.events = res
         })
