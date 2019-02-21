@@ -115,6 +115,7 @@ a {
 .avatar-small {
   width: 40px;
   height: 40px;
+  border-radius: 50%;
 }
 
 .body {
@@ -280,6 +281,7 @@ a {
 }
 
 .host-info {
+  flex: 1;
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -297,10 +299,6 @@ a {
 
 .event-summary {
   color: #333;
-}
-
-.avatar-small {
-  border-radius: 50%;
 }
 
 .event-time {
