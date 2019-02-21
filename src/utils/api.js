@@ -292,15 +292,15 @@ export function fetchCurrentUser (userId) {
 export function fetchUser (userId) {
   return Vue.axios.get(
     `${process.env.BASE_URL_API}/api/users/${userId}`
-    ).then(res => {
-      console.log('FETCH USER #' + userId + ' SUCCESS')
-      console.log(res)
-      let normalizedData = normalize(res.data)
-      let user = normalizedData.user[userId].attributes
-      user.networkCode = 'brooklyn-events' // give everyone the new network code
-      user.id = userId
-      return user
-    }).catch(err => {
+  ).then(res => {
+    console.log('FETCH USER #' + userId + ' SUCCESS')
+    console.log(res)
+    let normalizedData = normalize(res.data)
+    let user = normalizedData.user[userId].attributes
+    user.networkCode = 'brooklyn-events' // give everyone the new network code
+    user.id = userId
+    return user
+  }).catch(err => {
     console.log('FETCH USER #' + userId + ' FAILURE')
     console.log(err.errors)
     throw err
@@ -398,9 +398,9 @@ export function submitNotification (participantId, notificationBodyText) {
  * EVENTS
  */
 
-export function fetchMyUpcomingEvents (params) {
+export function fetchUpcomingEvents (userId) {
   return Vue.axios.get(
-    `${process.env.BASE_URL_API}/api/user/created_events/upcoming`
+    `${process.env.BASE_URL_API}/api/users/${userId}/events/created/upcoming/page/1/page_size/100`
   ).then(res => {
     console.log('FETCH MY UPCOMING EVENTS SUCCESS')
     return Object.values(normalize(res.data).event).map(parseEventData)
@@ -442,10 +442,11 @@ export function fetchUpcomingEventsWithinDistance (miles, lat, lon, sort) {
   })
 }
 
-export function fetchMyUpcomingParticipatingEvents () {
-  return Vue.axios.get(`${process.env.BASE_URL_API}/api/user/participated_events/upcoming`)
+export function fetchUpcomingParticipatingEvents (userId) {
+  return Vue.axios.get(`${process.env.BASE_URL_API}/api/users/${userId}/events/participated/upcoming/page/1/page_size/100`)
     .then(res => {
       console.log('GET PARTICIPATING EVENTS SUCCESS')
+      console.log(res)
       const normedData = normalize(res.data)
       if (!normedData.event) {
         return []
