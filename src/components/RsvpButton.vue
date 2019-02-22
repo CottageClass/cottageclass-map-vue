@@ -14,7 +14,7 @@
         </p>
     </div>
   </div>
-  <div v-else-if="full" class="button w-button full">&check; EVENT IS FULL</div>
+  <div v-else-if="full" class="button full">&check; EVENT IS FULL</div>
   <router-link
       v-else
       :to="{ name: 'RsvpInfoCollection', params: { eventId: eventId }}"
@@ -37,6 +37,7 @@ export default {
 
 .button-sub-link-paragraph {
   text-align: right;
+  font-size: 12px;
 }
 
 .button-sub-link-container {
@@ -62,12 +63,12 @@ export default {
   color: #fff;
 }
 
-.button:hover {
+.rsvp-button:hover {
   background-image: -webkit-gradient(linear, left top, left bottom, from(rgba(0, 0, 0, .1)), to(rgba(0, 0, 0, .1)));
   background-image: linear-gradient(180deg, rgba(0, 0, 0, .1), rgba(0, 0, 0, .1));
 }
 
-.button:active {
+.rsvp-button:active {
   background-image: -webkit-gradient(linear, left top, left bottom, from(rgba(0, 0, 0, .1)), to(rgba(0, 0, 0, .1)));
   background-image: linear-gradient(180deg, rgba(0, 0, 0, .1), rgba(0, 0, 0, .1));
 }
@@ -75,6 +76,10 @@ export default {
 .user-participating {
   background-color: transparent !important;
   color: rgb(12, 186, 82);
+  border-style: solid;
+  border-width: 1px;
+  border-color: rgb(12, 186, 82);
+  cursor: unset;
 }
 
 .full {
