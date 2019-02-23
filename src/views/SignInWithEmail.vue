@@ -1,5 +1,5 @@
 <template>
-<OnboardingStyleWrapper styleIs="onboarding">
+<StyleWrapper styleIs="onboarding">
 
   <!-- wrapper for desktop screens -->
 
@@ -59,13 +59,16 @@
           <button type="submit" class="button-text splash-button w-inline-block">Sign in</button>
       </form>
     </div>
-    <p>Forgot your password? Write us: <a href="mailto:contact@cottageclass.com">contact@cottageclass.com</a></p>
+    <p><router-link :to="{ name: 'PasswordReset'}" href="">
+      Forgot your password?
+      </router-link>
+      </p>
   </div>
 </div>
 </div>
     </div>
     </div>
-</OnboardingStyleWrapper>
+</StyleWrapper>
 </template>
 
 <script>
@@ -73,12 +76,12 @@
 import { mapGetters } from 'vuex'
 import * as Token from '@/utils/tokens.js'
 import ErrorMessage from '@/components/base/ErrorMessage.vue'
-import OnboardingStyleWrapper from '@/components/FTE/OnboardingStyleWrapper.vue'
-import providerAuth from '@/mixins/ProviderAuthentication'
+import StyleWrapper from '@/components/FTE/StyleWrapper.vue'
+import providerAuth from '@/mixins/providerAuthentication'
 
 export default {
   name: 'SignInWithEmail',
-  components: { ErrorMessage, OnboardingStyleWrapper },
+  components: { ErrorMessage, StyleWrapper },
   mixins: [providerAuth],
   data: function () {
     return {
@@ -93,9 +96,10 @@ export default {
     if (this.$auth) {
       if (this.isAuthenticated) {
         if (this.currentUser.hasAllRequiredFields) {
-          this.$emit('userAlreadyOnboarded')
+          this.$router.push({ name: 'Home' })
         } else if (this.currentUser.id) {
-          this.$emit('userNotYetOnboarded')
+          this.$router.push({ name: 'OnboardNewUSer' })
+
         } else {
           return false
         }
@@ -158,9 +162,9 @@ export default {
                 return component.$store.dispatch('establishCurrentUserAsync', Token.currentUserId(component.$auth))
               }).then(() => {
                 if (component.currentUser.hasAllRequiredFields) {
-                  component.$emit('userAlreadyOnboarded')
+                  component.$router.push({ name: 'Home' })
                 } else if (component.currentUser.id) {
-                  component.$emit('userNotYetOnboarded')
+                  component.$router.push({ name: 'OnboardNewUser' })
                 } else {
                   return false
                 }

@@ -6,7 +6,7 @@
 
 <script>
 export default {
-  name: 'OnboardingStyleWrapper',
+  name: 'StyleWrapper',
   props: ['styleIs']
 }
 </script>

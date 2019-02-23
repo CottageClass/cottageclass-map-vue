@@ -3,18 +3,58 @@
   <MainNav />
   <div class="container w-container">
   <h1 class="heading-1">Edit profile</h1>
-  <OnboardingStyleWrapper styleIs="editing" class="cards" v-if="currentUser">
+  <StyleWrapper styleIs="editing" class="cards" v-if="currentUser">
       <ErrorMessage v-if="showError && error" text="Your form has errors. Please fix them to continue..." />
       <ErrorMessage v-if="showError && error" :text="phone.err" />
     <Phone v-model="phone" :currentPhone="currentUser.phone" :required="false" />
-      <ErrorMessage v-if="showError && error" :text="location.err" />
-    <Location :currentAddress="currentUser.fullAddress" :currentApartment="currentUser.apartment" v-model="location" :required="false" />
-      <ErrorMessage v-if="showError && error" :text="availability.err" />
+    <ErrorMessage v-if="showError" :text="location.err" />
+    <Location
+      :currentAddress="currentUser.fullAddress"
+      :currentApartment="currentUser.apartmentNumber"
+      v-model="location"
+      />
+    <Question
+      title="What do you do for a living?"
+      subtitle="Tell other families a bit about what you do for work.">
+      <FormFieldAndLabel
+        placeholder="Your employer"
+        label="Where do you work?"
+        v-model="currentUser.employer"
+        />
+      <FormFieldAndLabel
+        placeholder="Your title or role"
+        label="What do you do?"
+        v-model="currentUser.jobPosition"
+        />
+    </Question>
+    <Question
+      title="Tell us a bit about yourself"
+      subtitle="Other members would love to know a bit more about you and your family.">
+      <FormWithTextArea
+        v-model="currentUser.profileBlurb"
+        placeholder="Your illustrious biography"
+        />
+    </Question>
+    <Question
+      title="Got any photos you'd like to share?"
+      subtitle="Adding photos to your profile helps give other members a sense of your family."
+      >
+      <MultipleImageUpload v-model="currentUser.images" />
+    </Question>
+    <Question
+      title="What are your interests?"
+      subtitle="Pick some favorite interests and activities (things you like to do as a family) to find other families with common interests."
+      >
+      <MultipleChoice
+        :labelsAndOrder="[['travel', 'Travel' ], ['team sports', 'Team sports'], ['puzzles & games', 'Puzzles & games'], ['art & drawing', 'Art & drawing'], ['computers', 'Computers'], ['music', 'Music'], ['dance', 'Dance'], ['theater', 'Theater'], ['gardening', 'Gardening'], ['activism', 'Activism'], ['reading books', 'Reading books'], ['camping', 'Camping'], ['hiking', 'Hiking'], ['bike rides', 'Bike rides'], ['road trips', 'Road trips'], ['museums', 'Museums']]"
+        type="checkbox"
+        v-model="currentUser.activities" />
+    </Question>
     <Availability v-model="availability" :required="false"/>
-    <ErrorMessage v-if="showError && error" :text="children.err" />
+    <ErrorMessage v-if="showError" :text="children.err" />
     <Children v-model="children" :required="false" />
     <LanguagesSpoken v-model="currentUser.languages"/>
-  </OnboardingStyleWrapper>
+  </StyleWrapper>
   <PageActionsFooter :buttonText="saveButtonText" @click="submitUserInformation"/>
   </div>
 </div>
@@ -22,6 +62,11 @@
 </template>
 
 <script>
+import FormFieldAndLabel from '@/components/base/FormFieldAndLabel.vue'
+import Question from '@/components/base/Question.vue'
+import FormWithTextArea from '@/components/base/FormWithTextArea.vue'
+import MultipleImageUpload from '@/components/base/MultipleImageUpload.vue'
+import MultipleChoice from '@/components/base/MultipleChoice.vue'
 import Location from '@/components/FTE/userInformation/Location.vue'
 import LanguagesSpoken from '@/components/FTE/userInformation/LanguagesSpoken.vue'
 import Children from '@/components/FTE/userInformation/Children.vue'
@@ -29,16 +74,17 @@ import Phone from '@/components/FTE/userInformation/Phone.vue'
 import Availability from '@/components/FTE/userInformation/Availability.vue'
 import MainNav from '@/components/MainNav.vue'
 import PageActionsFooter from '@/components/PageActionsFooter.vue'
-import OnboardingStyleWrapper from '@/components/FTE/OnboardingStyleWrapper.vue'
+import StyleWrapper from '@/components/FTE/StyleWrapper.vue'
 import ErrorMessage from '@/components/base/ErrorMessage.vue'
 import * as api from '@/utils/api.js'
+import * as Token from '@/utils/tokens.js'
 import { mapGetters } from 'vuex'
 
 var VueScrollTo = require('vue-scrollto')
 
 export default {
   name: 'ProfileEdit',
-  components: { Location, Phone, Availability, MainNav, OnboardingStyleWrapper, PageActionsFooter, ErrorMessage, Children, LanguagesSpoken },
+  components: { Location, Phone, Availability, MainNav, StyleWrapper, PageActionsFooter, ErrorMessage, Children, Question, FormFieldAndLabel, FormWithTextArea, MultipleImageUpload, MultipleChoice, LanguagesSpoken },
   data () {
     return {
       location: {},
@@ -59,7 +105,7 @@ export default {
   computed: {
     children: function () { return { 'list': this.currentUser.children } },
     error: function () {
-      if (!!this.phone.err || !!this.availability.err || !!this.location.err || !!this.children.err) {
+      if (!!this.phone.err || !!this.location.err || !!this.children.err) {
         return true
       } else {
         return false
@@ -71,8 +117,9 @@ export default {
     submitUserInformation: function () {
       if (!this.error) {
         this.saveButtonText = 'Saving...'
-        api.submitUserInfo(this.currentUser.id, this.phone, this.location, this.availability, this.children).then(res => {
+        api.submitUserInfo(this.currentUser.id, this.phone, this.location, this.availability, this.children, this.currentUser).then(res => {
           this.saveButtonText = ' \u2714 Saved'
+          this.$store.dispatch('establishCurrentUserAsync', Token.currentUserId(this.$auth))
           console.log('user update SUCCESS')
           console.log(res)
           return res

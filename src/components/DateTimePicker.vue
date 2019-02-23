@@ -22,8 +22,8 @@ export default {
   props: ['value', 'showDate'],
   data () {
     return {
-      dateTimeSelected: moment(this.value).format('YYYY-MM-DDTHH:mm'),
-      timeZoneString: this.value.slice(-6),
+      dateTimeSelected: this.value ? moment(this.value).format('YYYY-MM-DDTHH:mm') : null,
+      timeZoneString: (this.value && this.value.length > 17) ? this.value.slice(-6) : '',
       hideDateTimeInputOnMobile: true
     }
   },

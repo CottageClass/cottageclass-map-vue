@@ -1,52 +1,80 @@
 <template>
 <router-link :to="{ name: 'EventPage', params: { id: event.id }}">
-<li class="event-list-item">
+  <li class="event-list-item">
       <div class="event-list-item-graphic" :style="{ backgroundColor: backgroundColor(index)}">
         <EventCategoryIcon :category="event.activityName" width="100" height="100" />
-  </div>
-  <div class="event-list-item-content">
-    <a href="event-detail.html" class="link-block-4 w-inline-block">
-      <h2 class="event-heading">{{ event.name }}</h2>
-    </a>
-    <div class="event-summary">
+      </div>
+      <div class="event-list-item-content">
+        <div v-if="images.length > 0" class="spacer w-hidden-main w-hidden-medium"></div>
+        <router-link
+          :to="{ name: 'EventPage', params: { id: event.id }}"
+          class="link-block-4 w-inline-block">
+          <h2 class="event-heading">{{ event.name }}</h2>
+        </router-link>
+        <div class="event-summary">
           <div class="event-time">
             {{ formatDate(event.startsAt) }}, {{ formatTime(event.startsAt) }} – {{ formatTime(event.endsAt) }}
-    </div>
+          </div>
+          <div class="event-ages">
+            Ages {{event.childAgeMinimum}}-{{event.childAgeMaximum}} ({{event.maximumChildren}} kids total)
+          </div>
           <div class="event-location">
             {{ event.hostNeighborhood || event.hostLocality || event.hostAdminAreaLevel1 }}
-            <span v-if="distance">- {{ distance }} miles from you</span>
+            <span>{{ distanceDescription }}</span>
           </div>
         </div>
-    <div class="action-bar">
-          <div class="host-info">
-            <router-link :to="{ name: 'ProviderProfile', params: { id: event.hostId }}"><AvatarImage class="avatar-small" :person="{facebookUid: event.hostFacebookUid, avatar: event.hostAvatar}" /></router-link>
+        <div v-if="images.length > 0" class="scrolling-wrapper">
+          <img
+          v-for="image in images"
+          :src="image" alt="" class="event-household-photo">
+        </div>
+        <div class="action-bar">
+          <div class="host-container">
+            <div class="host-info">
+            <router-link :to="{ name: 'ProviderProfile', params: { id: event.hostId }}">
+              <AvatarImage class="avatar-small" :person="{facebookUid: event.hostFacebookUid, avatar: event.hostAvatar}" />
+            </router-link>
             <div class="text-block">
               Hosted by
-              <router-link :to="{ name: 'ProviderProfile', params: { id: event.hostId }}" class="host-name link">{{ event.hostFirstName }}</router-link> &amp;
-              <ChildAges :childAges="event.hostChildAges" singular="kid" plural="kids"/>.
+            <router-link
+              :to="{ name: 'ProviderProfile', params: { id: event.hostId }}"
+              class="host-name link">
+                {{ event.hostFirstName }}
+            </router-link> &amp;
+            <ChildAges :childAges="event.hostChildAges" singular="kid" plural="kids"/>.
+          </div>
+          </div>
+
+          <div class="host-meta" v-if="employmentDescription || event.hostVerified">
+            <div class="host-occupation">{{employmentDescription}}</div>
+            <div class="background-checked-wrapper" v-if="event.hostVerified">
+              <img src="@/assets/check-green.svg" alt="">
+              <div class="background-checked">Background Checked</div>
+            </div>
+          </div>
+        </div>
+        <RsvpButton v-if="showRsvpButton" :userParticipating="event.participated" :full="event.full" :eventId="event.id" />
+        <EditButton v-if="showEditButton" :eventId="event.id" />
+        </div>
       </div>
-      </div>
-          <RsvpButton v-if="showRsvpButton" :userParticipating="event.participated" :full="event.full" :eventId="event.id" />
-          <EditButton v-if="showEditButton" :eventId="event.id" />
-      </div>
-    </div>
-  </li>
+    </li>
 </router-link>
 </template>
+
 <script>
-// todo: pass "person" object to AvatarImage
 
 import AvatarImage from '@/components/base/AvatarImage'
 import RsvpButton from './RsvpButton.vue'
 import EditButton from './EditButton.vue'
 import EventCategoryIcon from '@/components/EventCategoryIcon.vue'
 import ChildAges from '@/components/ChildAges.vue'
+import { mapGetters } from 'vuex'
 
 var moment = require('moment')
 
 export default {
   name: 'EventListItem',
-  props: ['event', 'index', 'showRsvpButton', 'distance', 'showEditButton'],
+  props: ['event', 'index', 'showRsvpButton', 'showEditButton'],
   components: { AvatarImage, RsvpButton, EventCategoryIcon, EditButton, ChildAges },
   methods: {
     backgroundColor: function (index) {
@@ -80,6 +108,33 @@ export default {
           return 'grinning-face-with-smiling-eyes.svg' // party-popper.svg
       }
     }
+  },
+  computed: {
+    employmentDescription: function () {
+      const position = this.event.hostJobPosition
+      const employer = this.event.hostEmployer
+      if (position && employer) {
+        return position + ', ' + employer
+      } else if (position) {
+        return position
+      } else if (employer) {
+        return employer
+      } else {
+        return null
+      }
+    },
+    distanceDescription: function () {
+      const distance = this.distanceFromCurrentUser(this.event.hostFuzzyLatitude, this.event.hostFuzzyLongitude)
+      if (distance) {
+        return `- ${distance} miles from you`
+      } else {
+        return null
+      }
+    },
+    images: function () {
+      return this.event.hostImages
+    },
+    ...mapGetters([ 'distanceFromCurrentUser' ])
   }
 }
 </script>
@@ -115,6 +170,59 @@ a {
 .avatar-small {
   width: 40px;
   height: 40px;
+  max-width: 40px;
+  border-radius: 50%;
+}
+
+.host-meta {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  margin-top: 10px;
+  padding-top: 6px;
+  padding-bottom: 6px;
+  padding-left: 12px;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  -webkit-box-align: start;
+  -webkit-align-items: flex-start;
+  -ms-flex-align: start;
+  align-items: flex-start;
+  border-left: 4px solid rgba(0, 0, 0, .15);
+}
+
+.host-container {
+  padding-right: 24px;
+}
+
+.host-info {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+  -ms-flex-align: center;
+  align-items: center;
+}
+
+.host-occupation {
+  margin-bottom: 4px;
+  color: #858585;
+  font-size: 12px;
+  line-height: 17px;
+  font-weight: 400;
+}
+
+.text-block {
+  margin-top: -4px;
+  margin-right: 17px;
+  margin-left: 10px;
+  line-height: 17px;
 }
 
 .body {
@@ -207,6 +315,11 @@ a {
   display: -ms-flexbox;
   display: flex;
   margin-bottom: 16px;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+  -webkit-flex-direction: row;
+  -ms-flex-direction: row;
+  flex-direction: row;
   border-radius: 4px;
   background-color: #fff;
   box-shadow: 0 1px 5px 0 rgba(0, 0, 0, .1);
@@ -218,7 +331,7 @@ a {
   display: -ms-flexbox;
   display: flex;
   min-height: 180px;
-  min-width: 180px;
+  min-width: 200px;
   -webkit-box-pack: center;
   -webkit-justify-content: center;
   -ms-flex-pack: center;
@@ -280,6 +393,7 @@ a {
 }
 
 .host-info {
+  flex: 1;
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -299,10 +413,6 @@ a {
   color: #333;
 }
 
-.avatar-small {
-  border-radius: 50%;
-}
-
 .event-time {
   margin-bottom: 4px;
   font-size: 13px;
@@ -317,6 +427,7 @@ a {
   margin-top: -4px;
   margin-right: 17px;
   margin-left: 10px;
+  flex: 1;
   line-height: 17px;
 }
 
@@ -413,6 +524,37 @@ a {
   font-size: 24px;
 }
 
+.scrolling-wrapper {
+  position: static;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex !important;
+  overflow: hidden;
+  width: auto;
+  min-height: 100px;
+  margin-top: 20px;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+  -ms-flex-align: center;
+  align-items: center;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  overflow: -moz-scrollbars-none;
+  -ms-overflow-style: none;
+}
+
+.scrolling-wrapper::-webkit-scrollbar {
+  display: none;
+  width: 0 !important;
+}
+
+.event-household-photo {
+  max-height: 100px;
+  min-height: 100px;
+  padding-right: 8px;
+}
+
 @media (max-width: 991px) {
   .div-block-32 {
     width: 40%;
@@ -430,11 +572,48 @@ a {
     background-color: #fff;
     box-shadow: 0 14px 20px 0 rgba(0, 0, 0, .11);
   }
+
+  .scrolling-wrapper {
+    margin-top: 16px;
+  }
 }
+
+.background-checked {
+  margin-left: 4px;
+  padding-left: 0px;
+  color: #000;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+}
+
+.background-checked-wrapper {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  margin-top: 2px;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+  -ms-flex-align: center;
+  align-items: center;
+}
+
 
 @media (max-width: 767px) {
   .body {
     padding-bottom: 100px;
+  }
+
+  .event-list-item-content {
+    position: relative;
+    padding: 24px;
+  }
+
+  .spacer {
+    height: 100px;
+    margin-bottom: 12px;
   }
 
   .div-block-32 {
@@ -488,6 +667,19 @@ a {
     -webkit-align-items: center;
     -ms-flex-align: center;
     align-items: center;
+  }
+
+  .scrolling-wrapper {
+    position: absolute;
+    left: 0px;
+    top: 5px;
+    margin-top: 16px;
+    padding-right: 24px;
+    padding-left: 24px;
+    -webkit-box-pack: justify;
+    -webkit-justify-content: space-between;
+    -ms-flex-pack: justify;
+    justify-content: space-between;
   }
 }
 
@@ -549,5 +741,6 @@ a {
     -ms-flex-align: center;
     align-items: center;
   }
+
 }
 </style>

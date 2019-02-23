@@ -34,14 +34,7 @@ export default {
     return {
       dateSelected: '',
       errorMesg: 'Please choose a day for your activity.',
-      dates: [ // this is hardcoded for now but we'll automatically populate this soon.
-        '2019-02-15',
-        '2019-02-16',
-        '2019-02-22',
-        '2019-02-23',
-        'Other'
-      ],
-      otherDate: null
+      otherDate: null,
     }
   },
   mounted: function () {
@@ -50,6 +43,20 @@ export default {
     })
   },
   computed: {
+    firstDate: function () {
+      return moment().startOf('week').add(3, 'weeks').add(5, 'days')
+    },
+    datesAsMoments: function () {
+      return [
+        this.firstDate,
+        this.firstDate.clone().add(1, 'days'),
+        this.firstDate.clone().add(1, 'weeks'),
+        this.firstDate.clone().add(1, 'weeks').add(1, 'days')
+      ]
+    },
+    dates: function () {      
+      return [...this.datesAsMoments.map(date => date.format('YYYY-MM-DD')), 'Other'] 
+    },
     labelsAndOrder: function () {
       return this.dates.map(date => [date, this.displayDate(date)])
     },

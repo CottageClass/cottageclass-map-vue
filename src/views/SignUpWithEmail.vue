@@ -1,5 +1,5 @@
 <template>
- <OnboardingStyleWrapper styleIs="onboarding">
+ <StyleWrapper styleIs="onboarding">
 
   <!-- wrapper for desktop screens -->
   <div class="onb-body">
@@ -17,7 +17,7 @@
 
         <div v-if="!success">
           <div class="onb-content-container-2">
-            <ErrorMessage v-if="showError && (errors.all().length > 0 || error)" :text="error" :messages="allErrors" }} />
+            <ErrorMessage v-if="showError && (errors.all().length > 0 || error)" :text="error" :messages="allErrors" />
             </div>
             <div class="onb-top-content-container">
               <h1 class="onb-heading-large">Join KidsClub</h1>
@@ -112,17 +112,17 @@
       </div>
     </div>
   </div>
-</OnboardingStyleWrapper>
+</StyleWrapper>
 </template>
 
 <script>
 import ErrorMessage from '@/components/base/ErrorMessage.vue'
-import OnboardingStyleWrapper from '@/components/FTE/OnboardingStyleWrapper.vue'
-import providerAuth from '@/mixins/ProviderAuthentication'
+import StyleWrapper from '@/components/FTE/StyleWrapper.vue'
+import providerAuth from '@/mixins/providerAuthentication'
 
 export default {
   name: 'SignUpWithEmail',
-  components: { ErrorMessage, OnboardingStyleWrapper },
+  components: { ErrorMessage, StyleWrapper },
   mixins: [providerAuth],
   data: function () {
     return {
@@ -256,7 +256,7 @@ export default {
                   .login({ email, password })
                   .then(res => {
                     console.log('auth success:', res)
-                    component.$emit('userNotYetOnboarded')
+                    return component.$router.push({ name: 'OnboardNewUser' })
                   })
                   .catch(function (err) {
                     console.log('auth FAILURE or user not onboarded yet')

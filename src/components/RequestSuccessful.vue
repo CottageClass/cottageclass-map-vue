@@ -1,5 +1,5 @@
 <template>
-<OnboardingStyleWrapper styleIs="onboarding">
+<StyleWrapper styleIs="onboarding">
 <div class="body">
   <div class="content-container">
     <div class="title-container">
@@ -13,15 +13,15 @@
     </router-link>
   </div>
 </div>
-</OnboardingStyleWrapper>
+</StyleWrapper>
 </template>
 
 <script>
-import OnboardingStyleWrapper from '@/components/FTE/OnboardingStyleWrapper.vue'
+import StyleWrapper from '@/components/FTE/StyleWrapper.vue'
 
 export default {
   name: 'RequestSuccessful',
-  components: { OnboardingStyleWrapper }
+  components: { StyleWrapper }
 }
 
 </script>
