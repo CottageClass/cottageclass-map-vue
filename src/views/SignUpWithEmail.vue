@@ -4,7 +4,9 @@
   <MainNav />
     <div class="content-container w-container">
     <div class="primary-container">
-      <ErrorMessage v-if="showError && (errors.all().length > 0 || error)" :text="error" :messages="allErrors" />
+      <StyleWrapper styleIs="onboarding">
+       <ErrorMessage v-if="showError && (errors.all().length > 0 || error)" :text="error" :messages="allErrors" />
+      </StyleWrapper>
       <h1 class="auth-heading">Sign Up</h1>
         <div class="auth-wrapper">
           <a 
@@ -111,11 +113,11 @@ import ErrorMessage from '@/components/base/ErrorMessage.vue'
 import providerAuth from '@/mixins/providerAuthentication'
 import MainNav from '@/components/MainNav.vue'
 import Footer from '@/components/Footer.vue'
-
+import StyleWrapper from '@/components/FTE/StyleWrapper.vue'
 
 export default {
   name: 'SignUpWithEmail',
-  components: { ErrorMessage, MainNav, Footer },
+  components: { ErrorMessage, MainNav, Footer, StyleWrapper },
   mixins: [providerAuth],
   data: function () {
     return {
