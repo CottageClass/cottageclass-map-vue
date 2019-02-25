@@ -1,5 +1,4 @@
 <template>
-        <!-- title & form -->
 <div class="body body-2">
   <MainNav />
     <div class="content-container w-container">
@@ -15,7 +14,7 @@
           class="fb-button w-inline-block"
           @click.prevent="authenticate('facebook')"     
           >
-            <img src="images/facebook-button-icon.svg" width="24" height="24" alt="">
+            <img src="@/assets/facebook-button-icon.svg" width="24" height="24" alt="">
             <div class="fb-button-text">Sign up with Facebook</div>
           </a>
           <span v-if="showFacebookLogin">
