@@ -57,7 +57,7 @@
         :full="event.full"
         :eventId="eventId"
         />
-        <ContactHostButton v-if="!hostIsCurrentUser" class="w-inline-block" />
+        <ContactHostButton v-if="!hostIsCurrentUser" class="w-inline-block" :eventId="event.id"/>
       </div>
         <!-- Summary info -->
 

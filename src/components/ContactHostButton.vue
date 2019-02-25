@@ -1,7 +1,6 @@
 <template>
-  <!-- TODO implement ContactHost forms/page  -->
   <router-link
-      :to="{ name: 'ContactHost', params: { eventId }}"
+      :to="{ name: 'ContactForm', params: { eventId }}"
       class="contact-button"
   >
     Contact Host
