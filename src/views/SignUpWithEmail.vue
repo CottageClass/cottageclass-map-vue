@@ -98,7 +98,7 @@
             <input type="submit" value="Sign up" class="submit-button w-button">
           </form>
         </div>
-        <div class="terms-text">By signing in you agree to our <a href="#" class="links terms-link">Terms of Service</a> and <a href="#" class="links terms-link">Privacy Policy</a>.</div>
+        <div class="terms-text">By signing in you agree to our <a href="https://cottageclass.com/terms-of-service" class="links terms-link">Terms of Service</a> and <a href="https://cottageclass.com/privacy-policy" class="links terms-link">Privacy Policy</a>.</div>
         <div class="auth-links">Have an account? <a href="" @click.prevent="$router.push( {name: 'SignIn' })">Log in</a></div>
       </div>
     </div>
