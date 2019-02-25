@@ -1,7 +1,6 @@
 <template>
-  <div v-if="userParticipating">
+  <div v-if="userParticipating" class="participating-container">
     <div class="button w-button user-participating">&check; RSVP REQUESTED</div>
-    <br/>
     <div class="button-sub-link-container">
       <p class="button-sub-link-paragraph">
         <router-link
@@ -37,11 +36,9 @@ export default {
 
 .button-sub-link-paragraph {
   text-align: right;
-  font-size: 12px;
-}
-
-.button-sub-link-container {
   width: 100%;
+  font-size: 12px;
+  display:inline-block;
 }
 
 .rsvp-button {
@@ -87,6 +84,12 @@ export default {
   color: #ff672f !important;
 }
 
+.participating-container {
+  display: flex;
+  align-items: flex-end;
+  flex-direction: column;
+}
+
 @media (max-width: 479px) {
   .button {
     width: 100%;
@@ -94,6 +97,9 @@ export default {
   }
   .full {
     text-align: center !important;
+  }
+  .button-sub-link-container {
+    width: 100%;
   }
 }
 

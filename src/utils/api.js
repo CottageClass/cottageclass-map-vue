@@ -1,10 +1,7 @@
 import Vue from 'vue'
 import camelcaseKeys from 'camelcase-keys'
-// import * as Token from './tokens.js'
 import normalize from 'json-api-normalizer'
-
-// var moment = require('moment')
-
+import _ from 'lodash'
 /*
  * PROXY SESSIONS
  */
@@ -432,6 +429,33 @@ export function fetchEvents (params) {
     throw err
   })
 }
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// FIXIT this is a hack until #164151153 ticket.
+// HACK
+// TODO
+/////////////////////////////////////////////////
+
+export function fetchEventMetadata (eventId) {
+  return Vue.axios.get(
+    `${process.env.BASE_URL_API}/api/events/${eventId}`
+  ).then(res => {
+    console.log('FETCH EVENT-PARTICIPANT SUCCESS')
+    const participants = _.values(normalize(res.data).participant)
+    const host = _.values(normalize(res.data).user)[0]
+    console.log({ participants, host })
+    return { participants, host }
+  }).catch(err => {
+    console.log('FETCH EVENT-PARTICIPANT FAILURE')
+    console.log(err.errors)
+    throw err
+  })
+}
+/////////////////////////////////////////////////
+/////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
 
 export function fetchUpcomingEventsWithinDistance (miles, lat, lon, sort) {
   return Vue.axios.get(

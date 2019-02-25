@@ -21,9 +21,9 @@ export default {
 
 .contact-button {
   padding: 12px;
-  -webkit-align-self: flex-end;
-  -ms-flex-item-align: end;
-  align-self: flex-end;
+  -webkit-align-self: flex-start;
+  -ms-flex-item-align: start;
+  align-self: flex-start;
   border-style: solid;
   border-width: 1px;
   border-color: hsla(208.8118811881188, 82.11%, 51.76%, 1.00);
@@ -41,10 +41,10 @@ export default {
 }
 
 .contact-button:active {
-    background-color: #e6e6e6;
+  background-color: #e6e6e6;
 }
 
-@media (max-width: 767px) {
+@media (max-width: 479px) {
   .contact-button {
     width: 100%;
     margin-top: 0px;

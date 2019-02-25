@@ -26,21 +26,29 @@
       <div class="guests-container">
         <!-- TODO put in participant info when it's available -->
         <router-link
-        v-for="participant in [1,2,3,4,5,6,7,8,9]"
-        v-bind:key="participant"
-        to=""
+        v-for="participant in participants"
+        v-bind:key="participant.id"
+        :to="{ name: 'ProviderProfile', params: { id: participant.attributes.userId }}"
         class="guest-link w-inline-block">
           <AvatarImage
             className="avatar-32"
-            :person="{facebookUid: event.hostFacebookUid, avatar: event.hostAvatar}"/>
+            :person="{facebookUid: participant.attributes.userFacebookUid, avatar: participant.attributes.userAvatar}"/>
           <img src="@/assets/check-circle-24.svg" alt="" class="checkmark-green">
         </router-link>
         <div class="guests-text">
-          <a href="#">XXXXX</a>, <a href="#">YYYYYYY</a>, <a href="#">ZZZZZZ</a> and 99 more attending.
+          <span v-for="(participant, index) in participants.slice(0, 3)">
+          <router-link
+            :to="{ name: 'ProviderProfile', params: { id: participant.attributes.userId }}"
+            v-bind:key="participant.id">
+            {{ capitalize(participant.attributes.userFirstName) }}
+          </router-link>
+          {{ (index===participants.length-1) ? '' : ', ' }}
+          </span>
+          <span v-if="participants.length > 3"> and {{ participants.length-3 }} other{{participants.length>4 ?'s' : ''}} </span>
         </div>
       </div>
       <div class="button-container-event-detail">
-        <EditButton
+        <EditButton class="button-event-detail"
         v-if="hostIsCurrentUser"
         :eventId="eventId"/>
         <RsvpButton
@@ -49,7 +57,7 @@
         :full="event.full"
         :eventId="eventId"
         />
-        <ContactHostButton class="w-inline-block" />
+        <ContactHostButton v-if="!hostIsCurrentUser" class="w-inline-block" />
       </div>
         <!-- Summary info -->
 
@@ -106,7 +114,9 @@
           <router-link :to="{name: 'ProviderProfile', params: {id: event.hostId}}">{{ event.hostFirstName }}</router-link> &amp; <ChildAges :childAges="event.hostChildAges" singular="child" plural="children" />.
         </div>
         <div class="card-small-text-gray">{{ jobText }}</div>
-        <div class="card-large-text">{{ hostBio }}</div>
+        <div class="card-large-text">
+          <p v-for="paragraph in hostBio">{{ paragraph }}</p>
+        </div>
         <div v-if="images && images.length>0">
           <div class="divider-1px"></div>
           <div class="card-section-text">Household Photos</div>
@@ -162,7 +172,10 @@ import Footer from '@/components/Footer.vue'
 import EventCategoryIcon from '@/components/EventCategoryIcon.vue'
 import ChildAges from '@/components/ChildAges.vue'
 import Participants from '@/components/Participants.vue'
+import * as utils from '@/utils/utils.js'
+
 import { mapGetters } from 'vuex'
+import _ from 'lodash'
 
 var moment = require('moment')
 
@@ -182,6 +195,8 @@ export default {
   data () {
     return {
       event: null,
+      participants: null,
+      hostBlurb: '',
       eventId: this.$route.params.id,
       mapOptions: {
         'disableDefaultUI': true, // turns off map controls
@@ -205,11 +220,16 @@ export default {
       return moment(time24).format('LT')
     },
     fetchEvent: function () {
+      api.fetchEventMetadata(this.$route.params.id).then(res => {
+        this.participants = res.participants
+        this.hostBlurb = _.split(res.host.attributes.profileBlurb, /\s*[\n\r]+\s*/).filter(s => s !== '') // break it up into paragraphs
+      })
       api.fetchEvents(this.$route.params.id).then(
         (res) => {
           this.event = res[0]
         })
-    }
+    },
+    capitalize: utils.capitalize
   },
   created: function () {
     this.fetchEvent()
@@ -244,6 +264,9 @@ export default {
     },
     images: function () {
       return this.event.hostImages
+    },
+    hostBio: function () {
+      return this.hostBlurb
     },
     ...mapGetters(['currentUser'])
   }
@@ -864,7 +887,7 @@ h1 {
 }
 
 .button-container-event-detail {
-  display: -webkit-box;
+  display: flex;
   display: -webkit-flex;
   display: -ms-flexbox;
   width: 100%;
@@ -880,6 +903,7 @@ h1 {
   justify-content: flex-start;
   align-items: flex-start;
 }
+
 .button-container-event-detail > * {
   margin-right: 8px;
 }
@@ -921,7 +945,9 @@ h1 {
   text-transform: uppercase;
   text-align: center;
 }
-
+.event-specifics-host-card p {
+  margin-bottom: 28px;
+}
 .event-specifics-host-card {
   position: relative;
   display: -webkit-box;
@@ -1157,6 +1183,11 @@ h1 {
     margin-top: 20px;
   }
 
+  .button-container-event-detail > * {
+    width: 100%;
+    margin-right: 0px;
+  }
+
   .button-container-event-detail {
     width: 100%;
     margin-top: 32px;
@@ -1165,6 +1196,14 @@ h1 {
     -webkit-flex-direction: column;
     -ms-flex-direction: column;
     flex-direction: column;
+  }
+
+  .button-event-detail {
+    width: 100%;
+    margin-top: 0px;
+    margin-left: 8px;
+    padding-top: 10px;
+    padding-bottom: 11px;
   }
 }
 
