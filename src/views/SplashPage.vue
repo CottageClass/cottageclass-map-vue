@@ -6,6 +6,7 @@
       <div class="hero-content">
         <h1 class="h1-display">The best kids&rsquo; activities in your neighborhood are <span class="highlight">free</span></h1>
         <div class="hero-subtitle">Host kids once a month at your home to get free, unlimited access to your neighborhood's best babysitters: other experienced parents like you.</div>
+        <a href="" class="button-hero w-button" @click.prevent="$router.push({ name: 'SignUp' })">Sign up today. It's free!</a>
         <div class="how-wrapper">
           <ul class="unordered-list">
             <li class="list-item"><img src="@/assets/give-care.svg" alt="" class="image-262">
@@ -20,27 +21,7 @@
               <div class="hero-list-item-heading">Socially.</div>
               <div class="hero-list-item-subtitle">You can invite a circle of trusted friends, or meet new families near you.</div>
             </li>
-            <!-- So we can direct link to the sign in button-->
-            <span id="signup"></span>
           </ul>
-        </div>
-
-        <div class="signup-wrapper">
-          <a
-          v-if="!!facebookLogin"
-          href=""
-          @click.prevent="authenticate('facebook')"
-          class="fb-button w-inline-block">
-          <img src="@/assets/facebook-button-icon.svg" width="24" height="24" alt=""><div class="fb-button-text">Continue with Facebook</div></a>
-          <a
-          v-else
-          @click.prevent="$router.push({name: 'SignUp'})"
-          class="fb-button w-inline-block">
-          <img src="@/assets/add.svg" width="24" height="24" alt="">
-          <div class="fb-button-text">Create your account</div></a>
-          <div v-if="facebookLogin" class="use-password-text">Or <a href="#" class="links" @click.prevent="$router.push({name: 'SignUp'})">use a password instead</a></div>
-          <div v-else class="use-password-text">Or <a href="#" class="links" @click.prevent="$router.push({name: 'SignIn'})">sign in now</a></div>
-          <div class="terms-text">By signing in you agree to our <a href="https://cottageclass.com/terms-of-service">Terms of Service</a> and <a href="https://cottageclass.com/privacy-policy">Privacy Policy</a>.</div>
         </div>
       </div>
     </div>
@@ -383,6 +364,29 @@ export default {
   margin-bottom: 0;
 }
 
+.button-hero {
+  padding: 20px 40px 21px;
+  border: 1px solid #1f88e9;
+  border-radius: 4px;
+  background-color: #1f88e9;
+  box-shadow: 1px 1px 15px 0 hsla(208.8118811881188, 82.11%, 51.76%, 0.60);
+  opacity: 1;
+  font-size: 13px;
+  letter-spacing: 1.3px;
+  text-transform: uppercase;
+  color: #fff;
+}
+
+.button-hero:hover {
+  background-image: -webkit-gradient(linear, left top, left bottom, from(rgba(0, 0, 0, .1)), to(rgba(0, 0, 0, .1)));
+  background-image: linear-gradient(180deg, rgba(0, 0, 0, .1), rgba(0, 0, 0, .1));
+}
+
+.button-hero:active {
+  background-image: -webkit-gradient(linear, left top, left bottom, from(rgba(0, 0, 0, .1)), to(rgba(0, 0, 0, .1)));
+  background-image: linear-gradient(180deg, rgba(0, 0, 0, .1), rgba(0, 0, 0, .1));
+}
+
 /* Naming necessary to avoid CSS bleed in production */
 
 .body-homepage {
@@ -565,7 +569,7 @@ a {
 }
 
 .highlight {
-  color: #0dba52;
+  color: #1f88e9;
 }
 
 .hero-content {
@@ -2416,10 +2420,6 @@ a {
   -webkit-align-items: center;
   -ms-flex-align: center;
   align-items: center;
-}
-
-.highlight {
-  color: #0dba52;
 }
 
 .hero-content {
