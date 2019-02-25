@@ -59,14 +59,19 @@
           </li>
           <li v-if="isAuthenticated">
             <a @click="logout" href="" class="link-block w-inline-block">
-              <div class="text-block">Logout</div>
+              <div class="text-block">Log out</div>
             </a>
           </li>
           <li v-if="!isAuthenticated">
-            <router-link to="/sign-in" class="link-block w-inline-block">
-              <div class="text-block">Sign In</div>
+            <router-link to="/log-in" class="link-block w-inline-block">
+              <div class="text-block">Log in</div>
             </router-link>
           </li>
+          <li v-if="!isAuthenticated">
+            <router-link to="/sign-up" class="link-block w-inline-block">
+              <div class="text-block">Sign up</div>
+            </router-link>
+          </li>          
         </ul>
       </div>
     </div>
