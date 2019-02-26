@@ -45,7 +45,6 @@ export default {
   },
   methods: {
     send () {
-      console.log('sending')
       api.initProxySession(
         this.currentUser.id,
         parseInt(this.event.hostId),
