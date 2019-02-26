@@ -146,7 +146,7 @@
         <div v-if="!hostIsCurrentUser" class="card-large-text">Want to help spread the word?</div>
         <div v-else class="card-large-text">Invite others to your playdate!</div>
           <router-link :to="'/event/' + $route.params.id + '/share'" class="rsvp-button-bottom">
-            <a class="button w-button">INVITE FRIENDS</a>
+            <a class="share-button w-button">INVITE FRIENDS</a>
           </router-link>
       </div>
 
@@ -642,19 +642,20 @@ h1 {
   line-height: 17px;
 }
 
-.button {
+.share-button {
   padding: 12px 32px;
   border-radius: 4px;
   background-color: #1f88e9;
   text-align: center;
+  color: #fff;
 }
 
-.button:hover {
+.share-button:hover {
   background-image: -webkit-gradient(linear, left top, left bottom, from(rgba(0, 0, 0, .1)), to(rgba(0, 0, 0, .1)));
   background-image: linear-gradient(180deg, rgba(0, 0, 0, .1), rgba(0, 0, 0, .1));
 }
 
-.button:active {
+.share-button:active {
   background-image: -webkit-gradient(linear, left top, left bottom, from(rgba(0, 0, 0, .1)), to(rgba(0, 0, 0, .1)));
   background-image: linear-gradient(180deg, rgba(0, 0, 0, .1), rgba(0, 0, 0, .1));
 }
