@@ -44,7 +44,7 @@
           </router-link>
           {{ (index===participants.length-1) ? '' : ', ' }}
           </span>
-          <span v-if="participants.length > 3"> and {{ participants.length-3 }} other{{participants.length>4 ?'s' : ''}} </span>
+          <span v-if="participants.length > 3"> and {{ participants.length-3 }} more </span> attending.
         </div>
       </div>
       <div class="button-container-event-detail">
