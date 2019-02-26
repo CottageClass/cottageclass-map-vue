@@ -2,6 +2,7 @@ import Vue from 'vue'
 import camelcaseKeys from 'camelcase-keys'
 import normalize from 'json-api-normalizer'
 import axios from 'axios'
+import createEvent from './createEvent'
 
 export function initProxySession (currentUserId, receiverId, requestMessage, acknowledgmentMessage) {
   console.log('INITIATING PROXY WITH users ' + currentUserId + ', ' + receiverId)
@@ -415,11 +416,17 @@ export function submitEventSeriesData (data) {
 }
 
 export const fetchEvent = async (id) => {
+  id = id.toString()
   try {
     const res = await axios.get(`${process.env.BASE_URL_API}/api/events/${id}`)
-    return res
+    if (res) {
+      const normalizedData = normalize(res.data)
+      return createEvent(normalizedData)
+    } else {
+      throw Error('failed to fetch event')
+    }
   } catch (e) {
-    console.error(e)
+    throw e
   }
 }
 

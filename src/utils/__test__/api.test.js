@@ -1,11 +1,13 @@
 import { fetchEvent } from '../api'
+import mockAxios from 'axios'
 
 describe('fetchEvent', () => {
-  it('has the right id', () => {
-    fetchEvent(367).then(res => {
-      expect(res.id).toBe('367')
-    }).catch((e) => {
-      console.error(e)
-    })
+  it('has the right data', async () => {
+    const event = await fetchEvent('2186')
+    expect(mockAxios.get).toHaveBeenCalledTimes(1)
+    expect(event.data).toMatchSnapshot()
+  })
+  it('throws an error with a bad id', async () => {
+    await expect(fetchEvent(123123)).rejects.toEqual(Error('failed to fetch event'))
   })
 })
