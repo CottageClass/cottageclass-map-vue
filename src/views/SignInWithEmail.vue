@@ -19,7 +19,7 @@
                   @click.prevent="authenticate('facebook')"     
                   >
                     <img src="@/assets/facebook-button-icon.svg" width="24" height="24" alt="">
-                    <div class="fb-button-text">Log in with Facebook</div>
+                    <div class="fb-button-text">Continue with Facebook</div>
                   </a>
                 <span v-if="showFacebookLogin">    
                   <div class="divider-container">
@@ -51,7 +51,7 @@
                 :class="{'invalid': errors.has('password') }"
                 class="input-field w-input"
               >
-                <button type="submit" class="submit-button w-button">Sign in</button>
+                <button type="submit" class="submit-button w-button">Log in</button>
             </form>
               </div>
               <div class="auth-links"><router-link :to="{ name: 'PasswordReset'}" href="">Forgot password?<br></router-link>No account? <a href="" @click.prevent="$router.push({ name: 'SignUp' })">Get started for free!</a></div>

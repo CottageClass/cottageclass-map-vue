@@ -66,7 +66,7 @@ export default new Router({
       component: Events,
       props: true
     },{
-      path: '/sign-in',
+      path: '/log-in',
       name: 'SignIn',
       component: SignInWithEmail
     },
