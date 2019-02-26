@@ -1,13 +1,8 @@
 import Vue from 'vue'
 import camelcaseKeys from 'camelcase-keys'
-// import * as Token from './tokens.js'
 import normalize from 'json-api-normalizer'
+import axios from 'axios'
 
-// var moment = require('moment')
-
-/*
- * PROXY SESSIONS
- */
 export function initProxySession (currentUserId, receiverId, requestMessage, acknowledgmentMessage) {
   console.log('INITIATING PROXY WITH users ' + currentUserId + ', ' + receiverId)
   let postData = {
@@ -419,8 +414,17 @@ export function submitEventSeriesData (data) {
   })
 }
 
+export const fetchEvent = async (id) => {
+  try {
+    const res = await axios.get(`${process.env.BASE_URL_API}/api/events/${id}`)
+    return res
+  } catch (e) {
+    console.error(e)
+  }
+}
+
 export function fetchEvents (params) {
-  return Vue.axios.get(
+  return axios.get(
     `${process.env.BASE_URL_API}/api/events/${params || ''}`
   ).then(res => {
     console.log('FETCH EVENTS SUCCESS')
