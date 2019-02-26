@@ -1,4 +1,5 @@
 <template>
+<span>
 <div class="body-homepage">
   <MainNav />
   <div class="hero-section">
@@ -315,10 +316,12 @@
     </div>
   </div>
 </div>
-
 <Footer />
-
 </div>
+  <div class="mobile-signup-wrapper">
+    <a href="" class="button-hero-mobile w-button" @click.prevent="$router.push({ name: 'SignUp' })">Sign up today. It's free!</a>
+  </div>
+  </span>
 </template>
 
 <script>
@@ -377,12 +380,60 @@ export default {
   color: #fff;
 }
 
+.mobile-signup-wrapper {
+  position: fixed;
+  left: 0px;
+  right: 0px;
+  bottom: 0px;
+  display: none;
+  width: 100%;
+  padding: 10px;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+  -ms-flex-align: center;
+  align-items: center;
+  background-color: #fff;
+  box-shadow: 0 -1px 8px 0 rgba(0, 0, 0, .05);
+}
+
 .button-hero:hover {
   background-image: -webkit-gradient(linear, left top, left bottom, from(rgba(0, 0, 0, .1)), to(rgba(0, 0, 0, .1)));
   background-image: linear-gradient(180deg, rgba(0, 0, 0, .1), rgba(0, 0, 0, .1));
 }
 
 .button-hero:active {
+  background-image: -webkit-gradient(linear, left top, left bottom, from(rgba(0, 0, 0, .1)), to(rgba(0, 0, 0, .1)));
+  background-image: linear-gradient(180deg, rgba(0, 0, 0, .1), rgba(0, 0, 0, .1));
+}
+
+.button-hero-mobile { 
+  padding: 20px 40px 21px;
+  border: 1px solid #1f88e9;
+  border-radius: 4px;
+  background-color: #1f88e9;
+  box-shadow: 1px 1px 15px 0 hsla(208.8118811881188, 82.11%, 51.76%, 0.60);
+  opacity: 1;
+  font-size: 13px;
+  letter-spacing: 1.3px;
+  text-transform: uppercase;
+  color: #fff;
+}
+
+.button-hero-mobile:hover {
+  background-image: -webkit-gradient(linear, left top, left bottom, from(rgba(0, 0, 0, .1)), to(rgba(0, 0, 0, .1)));
+  background-image: linear-gradient(180deg, rgba(0, 0, 0, .1), rgba(0, 0, 0, .1));
+}
+
+.button-hero-mobile:active {
   background-image: -webkit-gradient(linear, left top, left bottom, from(rgba(0, 0, 0, .1)), to(rgba(0, 0, 0, .1)));
   background-image: linear-gradient(180deg, rgba(0, 0, 0, .1), rgba(0, 0, 0, .1));
 }
@@ -1942,6 +1993,19 @@ a {
 @media (max-width: 479px) {
   .body {
     padding-bottom: 110px;
+  }
+
+  .mobile-signup-wrapper {
+    padding-right: 20px;
+    padding-left: 20px;
+  }
+  .button-hero-mobile {
+    width: 100%;
+    text-align: center;
+  }
+
+  .button-hero {
+    display: none;
   }
 
   .nav-container {
@@ -3635,6 +3699,38 @@ a {
 @media (max-width: 767px) {
   .body {
     padding-bottom: 100px;
+  }
+
+  .mobile-signup-wrapper {
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    padding-right: 32px;
+    padding-left: 32px;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -webkit-flex-direction: column;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    -webkit-box-pack: start;
+    -webkit-justify-content: flex-start;
+    -ms-flex-pack: start;
+    justify-content: flex-start;
+    -webkit-flex-wrap: nowrap;
+    -ms-flex-wrap: nowrap;
+    flex-wrap: nowrap;
+    -webkit-box-align: center;
+    -webkit-align-items: center;
+    -ms-flex-align: center;
+    align-items: center;
+    -webkit-align-content: center;
+    -ms-flex-line-pack: center;
+    align-content: center;
+  }
+  .button-hero-mobile {
+    padding: 8px 16px;
+    font-size: 12px;
   }
 
   .nav-container {
