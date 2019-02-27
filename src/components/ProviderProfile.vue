@@ -1,4 +1,5 @@
 <template>
+<div>
   <StyleWrapper styleIs="editing">
     <div class="onb-body">
       <div class="body">
@@ -68,11 +69,15 @@
       </div>
     </div>
   </StyleWrapper>
+  <PageActionsFooter
+    v-if="isCurrentUser"
+    buttonText="EDIT"
+    @click="goToEdit"/>
+</div>
 </template>
 
 <script>
 import Images from './Images.vue'
-import * as Token from '@/utils/tokens.js'
 import AvatarImage from '@/components/base/AvatarImage'
 import * as api from '@/utils/api.js'
 import networks from '@/assets/network-info.json'
@@ -80,11 +85,12 @@ import ChildAges from '@/components/ChildAges.vue'
 import StyleWrapper from '@/components/FTE/StyleWrapper.vue'
 import moment from 'moment'
 import ProviderInfo from '@/components/base/ProviderInfo.vue'
-import ChildInfo from '@/components/ChildInfo.vue'
+import PageActionsFooter from '@/components/PageActionsFooter.vue'
+import { mapGetters } from 'vuex'
 
 export default {
   name: 'ProviderProfile',
-  components: { Images, AvatarImage, ChildAges, StyleWrapper, ProviderInfo, ChildInfo },
+  components: { Images, AvatarImage, ChildAges, StyleWrapper, ProviderInfo, PageActionsFooter },
   data () {
     return {
       user: {},
@@ -94,6 +100,11 @@ export default {
          'disableDefaultUI': true, // turns off map controls
          'gestureHandling': 'none' // prevents any kind of scrolling
        }
+    }
+  },
+  methods: {
+    goToEdit: function () {
+      this.$router.push({ name: 'ProfileEdit' })
     }
   },
   mounted: function () {
@@ -114,7 +125,11 @@ export default {
     },
     joinedDateFormatted: function () {
       return moment(this.user.createdAt).format('MMMM, YYYY')
-    }
+    },
+    isCurrentUser: function () {
+      return this.currentUser.id.toString() === this.$route.params.id.toString()
+    },
+    ...mapGetters([ 'currentUser' ])
   }
 }
 
