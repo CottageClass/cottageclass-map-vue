@@ -71,6 +71,20 @@ Vue.use(VueAuthenticate, {
   }
 })
 
+axios.interceptors.request.use((config) => {
+  let vm = new Vue()
+  let auth = vm.$auth
+  const tokenHeader = auth.options.tokenHeader
+  if (auth.isAuthenticated()) {
+    config.headers[tokenHeader] = [
+      auth.options.tokenType, auth.getToken()
+    ].join(' ')
+  } else {
+    delete config.headers[tokenHeader]
+  }
+  return config
+})
+
 Vue.config.productionTip = false
 
 /*
