@@ -124,7 +124,7 @@ export default {
       this.copyButtonText = 'copied!'
     },
     fetchEvent: async function () {
-      this.events = await api.fetchEvents(this.eventId)
+      this.events = await api.fetchEvent(this.eventId)
     }
   }
 }

@@ -1,9 +1,7 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import * as api from '../utils/api'
-import moment from 'moment'
 import createPersistedState from 'vuex-persistedstate'
-import _ from 'lodash'
 
 Vue.use(Vuex)
 
@@ -11,16 +9,12 @@ export default new Vuex.Store(
   {
     plugins: [createPersistedState()],
     state: {
-      eventsByDate: null, // We shouldn't store all events.  It will have to change later
       currentUser: null,
       alert: null,
       createdEvents: null,
       RSVPAttempEventId: null
     },
     mutations: {
-      setEventsByDate: (state, payload) => {
-        state.eventsByDate = payload.events
-      },
       setCurrentUser: (state, payload) => {
         state.currentUser = payload.user
       },
@@ -42,17 +36,6 @@ export default new Vuex.Store(
       }
     },
     actions: {
-      //////////////////////////////////////////
-      // Once again, we should not be doing this
-      //////////////////////////////////////////
-      fetchAllEventsAsync: ({ commit }) => {
-        api.fetchEvents().then(events => {
-          events.sort((eventA, eventB) => {
-            return moment(eventA.startsAt).diff(moment(eventB.startsAt))
-          })
-          commit('setEventsByDate', { events })
-        })
-      },
       establishCurrentUserAsync: ({ commit }, userId) => {
         console.log('establish')
         if (userId === null) {
