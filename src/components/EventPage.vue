@@ -16,7 +16,7 @@
         <div class="host-info"><router-link :to="{ name: 'ProviderProfile', params: { id: event.hostId }}"><AvatarImage className="avatar-large" :person="{facebookUid: event.hostFacebookUid, avatar: event.hostAvatar}"/></router-link>
           <div class="host-info-wrapper">
             <div class="hosted-by">Hosted by <router-link :to="{ name: 'ProviderProfile', params: { id: event.hostId }}" class="host">{{ event.hostFirstName }}</router-link> &amp;
-            <ChildAges :childAges="event.hostChildAges" singular="kid" plural="kids"/><span v-if="event.participants && event.participants.length > 0"><Participants :participants="event.participants" /></span><span v-else>.</span></div>
+            <ChildAges :childAges="event.hostChildAges" singular="kid" plural="kids"/><span v-if="event.participatingParents && event.participatingParents.length > 0"><Participants :participants="event.participatingParents" /></span><span v-else>.</span></div>
             <div v-if="event.hostVerified" class="background-checked-wrapper"><img src="@/assets/check-green.svg" alt="">
               <div class="background-checked">Background Checked</div>
             </div>
@@ -26,25 +26,25 @@
       <div class="guests-container">
         <!-- TODO put in participant info when it's available -->
         <router-link
-        v-for="participant in participants"
+        v-for="participant in event.participatingParents"
         v-bind:key="participant.id"
-        :to="{ name: 'ProviderProfile', params: { id: participant.attributes.userId }}"
+        :to="{ name: 'ProviderProfile', params: { id: participant.userId }}"
         class="guest-link w-inline-block">
           <AvatarImage
             className="avatar-32"
-            :person="{facebookUid: participant.attributes.userFacebookUid, avatar: participant.attributes.userAvatar}"/>
+            :person="{facebookUid: participant.userFacebookUid, avatar: participant.userAvatar}"/>
           <img src="@/assets/check-circle-24.svg" alt="" class="checkmark-green">
         </router-link>
         <div class="guests-text">
-          <span v-for="(participant, index) in participants.slice(0, 3)">
+          <span v-for="(participant, index) in event.participatingParents.slice(0, 3)">
           <router-link
-            :to="{ name: 'ProviderProfile', params: { id: participant.attributes.userId }}"
+            :to="{ name: 'ProviderProfile', params: { id: participant.userId }}"
             v-bind:key="participant.id">
-            {{ capitalize(participant.attributes.userFirstName) }}
+            {{ capitalize(participant.userFirstName) }}
           </router-link>
-          {{ (index===participants.length-1) ? '' : ', ' }}
+          {{ (index===event.participatingParents.length-1) ? '' : ', ' }}
           </span>
-          <span v-if="participants.length > 3"> and {{ participants.length-3 }} more </span> attending.
+          <span v-if="event.participatingParents.length > 3"> and {{ event.participatingParents.length-3 }} more </span> attending.
         </div>
       </div>
       <div class="button-container-event-detail">
@@ -195,8 +195,6 @@ export default {
   data () {
     return {
       event: null,
-      participants: null,
-      hostBlurb: '',
       eventId: this.$route.params.id,
       mapOptions: {
         'disableDefaultUI': true, // turns off map controls
@@ -219,18 +217,9 @@ export default {
     formatTime: function (time24) {
       return moment(time24).format('LT')
     },
-    fetchEvent: function () {
-      api.fetchEventMetadata(this.$route.params.id).then(res => {
-        this.participants = res.participants
-        this.hostBlurb = _.split(res.host.attributes.profileBlurb, /\s*[\n\r]+\s*/).filter(s => s !== '') // break it up into paragraphs
-      })
-      api.fetchEvents(this.$route.params.id).then(
-        (res) => {
-          this.event = res[0]
-        })
-    },
     fetchEvent: async function () {
       this.event = await api.fetchEvent(this.$route.params.id)
+      console.log(this.event)
     },
     capitalize: utils.capitalize
   },
@@ -269,7 +258,7 @@ export default {
       return this.event.hostImages
     },
     hostBio: function () {
-      return this.hostBlurb
+      return this.event.hostBlurb
     },
     ...mapGetters(['currentUser'])
   }
