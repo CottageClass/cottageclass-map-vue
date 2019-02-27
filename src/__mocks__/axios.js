@@ -1,6 +1,7 @@
 const event2186 = require('./__mockData__/event_2186.json')
 const allEvents = require('./__mockData__/all_events.json')
 const user1230Events = require('./__mockData__/user_1230_events.json')
+const user1228 = require('./__mockData__/user_1228.json')
 
 export default {
   get: jest.fn((url) => {
@@ -20,6 +21,9 @@ export default {
     }
     if (url === userUrl + `1230/events/created/upcoming/page/1/page_size/100`) {
       return Promise.resolve(user1230Events)
+    }
+    if (url === userUrl + '1228') {
+      return Promise.resolve(user1228)
     }
   })
 }
