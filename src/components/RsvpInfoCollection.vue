@@ -161,18 +161,16 @@ export default {
     calculateAge: function (birthdate) {
       return moment().diff(birthdate, 'years')
     },
-    fetchEventInformation: function () {
-      api.fetchEvents(this.$route.params.eventId).then(
-        (res) => {
-          this.event = res[0]
-          if (this.event.full || this.event.maximumChildren === 0) {
-            this.error = 'We\'re sorry, this event is full!'
-          }
-        }).catch(
-        (err) => {
-          console.log(err.stack)
-          this.error = 'Sorry, there was a problem retrieving information about the event. Go back and try again?'
-        })
+    fetchEventInformation: async function () {
+      try {
+        this.event = await api.fetchEvent(this.$route.params.eventId)
+        if (this.event.full || this.event.maximumChildren === 0) {
+          this.error = 'We\'re sorry, this event is full!'
+        }
+      } catch (err) {
+        console.log(err.stack)
+        this.error = 'Sorry, there was a problem retrieving information about the event. Go back and try again?'
+      }
     },
     nextStep: function () {
       if (this.tooManyChildren) {

@@ -229,6 +229,9 @@ export default {
           this.event = res[0]
         })
     },
+    fetchEvent: async function () {
+      this.event = await api.fetchEvent(this.$route.params.id)
+    },
     capitalize: utils.capitalize
   },
   created: function () {

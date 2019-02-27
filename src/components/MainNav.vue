@@ -8,7 +8,7 @@
         </router-link>
       </div>
       <div class="actions-wrapper">
-        <router-link to="/profile/edit">
+        <router-link :to="{name: 'ProviderProfile', params: {id: currentUser.id}}">
           <AvatarImage
           v-if="currentUser"
           :person="currentUser"

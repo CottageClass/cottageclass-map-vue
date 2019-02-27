@@ -1,0 +1,64 @@
+{
+  "data": {
+    "data": {
+      "id": "1228",
+      "type": "user",
+      "attributes": {
+        "id": 1228,
+        "avatar": "https://res.cloudinary.com/cottageclass2/image/upload/v1550852508/avatars/ari_photo_qie6qh.png",
+        "first_name": "ari",
+        "verified": false,
+        "fuzzy_latitude": "42.2804470048222",
+        "fuzzy_longitude": "-71.7921261738453",
+        "locality": "Worcester",
+        "sublocality": null,
+        "neighborhood": "Biotech Park Area",
+        "admin_area_level_1": "Massachusetts",
+        "admin_area_level_2": "Worcester County",
+        "images": [],
+        "languages": [],
+        "job_position": null,
+        "employer": null,
+        "highest_education": null,
+        "school": null,
+        "facebook_uid": null,
+        "instagram_user": null,
+        "twitter_user": null,
+        "linkedin_user": null,
+        "created_at": "2019-02-22T16:21:51.663Z",
+        "child_ages": [
+          2
+        ],
+        "profile_blurb": null
+      },
+      "relationships": {
+        "children": {
+          "data": [
+            {
+              "id": "766",
+              "type": "child"
+            }
+          ]
+        }
+      }
+    },
+    "included": [
+      {
+        "id": "766",
+        "type": "child",
+        "attributes": {
+          "parent_id": 1228,
+          "age": 2
+        },
+        "relationships": {
+          "parent": {
+            "data": {
+              "id": "1228",
+              "type": "user"
+            }
+          }
+        }
+      }
+    ]
+  }
+}
