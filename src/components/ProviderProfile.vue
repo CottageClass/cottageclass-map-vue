@@ -1,5 +1,4 @@
 <template>
-<div>
   <StyleWrapper styleIs="editing">
     <div class="onb-body">
       <div class="body">
@@ -66,14 +65,13 @@
           <div class="providerp-post-comment-container"><a :href="'mailto:contact@cottageclass.com?subject=Concern re: ' + user.firstName + ' ' + user.lastInitial + '. (' + user.id + ')&body=(please%20detail%20your%20concern%20here)'" class="pprofile-compose-button w-inline-block"><img src="../assets/compose.svg" class="image-5"><div class="pprofile-comment-prompt-button-text">Post a concern</div></a></div>
           <div class="spacer-100px"></div>
         </div>
+        <PageActionsFooter class='edit-button'
+          v-if="isCurrentUser"
+          buttonText="EDIT"
+          @click="goToEdit"/>
       </div>
     </div>
   </StyleWrapper>
-  <PageActionsFooter
-    v-if="isCurrentUser"
-    buttonText="EDIT"
-    @click="goToEdit"/>
-</div>
 </template>
 
 <script>
@@ -148,6 +146,7 @@ export default {
 
 .body {
   font-family: soleil, sans-serif;
+  padding-bottom: 100px;
   color: #333;
   font-size: 14px;
   line-height: 20px;
