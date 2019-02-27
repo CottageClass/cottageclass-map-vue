@@ -1,99 +1,83 @@
 <template>
+<div>
   <StyleWrapper styleIs="editing">
-    <!-- wrapper for desktop screens -->
-
     <div class="onb-body">
       <div class="body">
         <div class="content-wrapper user-profile-wrapper">
-    <div class="providerp-provider-info-section">
-      <a @click="$router.go(-1)" class="providerp-button-back w-inline-block"><img src="../assets/Arrow-Back-2.svg">
-    </a><AvatarImage :person="user" className="avatar-large"/>
-    <h1 class="providerp-h1">{{ user.firstName }}</h1>
-    <div class="providerp-occupation" v-if="user.title && user.employer">{{ user.title }} at {{ user.employer }}</div>
-    <div class="providerp-occupation">Member since {{ joinedDateFormatted }}</div>
-    <div v-if="user.childAges && user.childAges.length > 0" class="providerp-children">
-        Parent to <ChildAges :childAges="user.childAges" singular="child" plural="children" />.
-      </div>
+          <div class="providerp-provider-info-section">
+            <a @click="$router.go(-1)" class="providerp-button-back w-inline-block"><img src="../assets/Arrow-Back-2.svg">
+            </a><AvatarImage :person="user" className="avatar-large"/>
+            <h1 class="providerp-h1">{{ user.firstName }}</h1>
+            <div class="providerp-occupation" v-if="user.title && user.employer">{{ user.title }} at {{ user.employer }}</div>
+            <div class="providerp-occupation">Member since {{ joinedDateFormatted }}</div>
+            <div v-if="user.childAges && user.childAges.length > 0" class="providerp-children">
+                Parent to <ChildAges :childAges="user.childAges" singular="child" plural="children" />.
+            </div>
 
-    <div v-if="user.blurb" class="providerp-chat-bubble-container">
-      <div class="providerp-chat-bubble-caret"><img src="../assets/chat-bubble-caret.svg"></div>
-      <div class="providerp-chat-bubble-primary">
-        <div>{{ user.blurb }}</div>
-      </div>
-    </div>
-  </div>
-  <div class="providerp-provider-info-bullets">
-    <ProviderInfo :person="user" />
-  </div>
+            <div v-if="user.blurb" class="providerp-chat-bubble-container">
+              <div class="providerp-chat-bubble-caret"><img src="../assets/chat-bubble-caret.svg"></div>
+              <div class="providerp-chat-bubble-primary">
+                <div>{{ user.blurb }}</div>
+              </div>
+            </div>
+          </div>
+          <div class="providerp-provider-info-bullets">
+            <ProviderInfo :person="user" />
+          </div>
+          <div v-if="user.images.length > 0" class="group-title-container-2">
+            <h5 class="list-title-2">Photos</h5>
+          </div>
+          <Images :person="user"/>
+          <div class="group-title-container-2">
+            <h5 class="list-title-2"><span v-if="user.neighborhood">Neighborhood: {{ user.neighborhood }}</span><span v-else>Location</span></h5>
+          </div>
 
-<!-- Photos -->
-
-  <div v-if="user.images.length > 0" class="group-title-container-2">
-    <h5 class="list-title-2">Photos</h5>
-  </div>
-
-  <Images :person="user"/>
-
- <!-- location with link to directions -->
-
-  <div class="group-title-container-2">
-    <h5 class="list-title-2"><span v-if="user.neighborhood">Neighborhood: {{ user.neighborhood }}</span><span v-else>Location</span></h5>
-  </div>
-
-   <div class="map-container">
-  <GmapMap
-    :disableDefaultUI="true"
-    :center="userLocation"
-    :zoom="13"
-    :options="mapOptions"
-    style="width: 100%; height: 230px;">
-      <GmapMarker
-      :position="userLocation"
-      :title="user.firstName"
-      icon="https://storage.googleapis.com/cottageclass-prod/images/map-radius.png"
-      />
-    </GmapMap>
-  </div>
-
+          <div class="map-container">
+            <GmapMap
+              :disableDefaultUI="true"
+              :center="userLocation"
+              :zoom="13"
+              :options="mapOptions"
+              style="width: 100%; height: 230px;">
+                <GmapMarker
+                :position="userLocation"
+                :title="user.firstName"
+                icon="https://storage.googleapis.com/cottageclass-prod/images/map-radius.png"
+                />
+            </GmapMap>
+          </div>
 <!-- Positive reviews -->
-  <div class="group-title-container-2">
-    <h5 class="list-title-2">Great Experiences</h5>
-  </div>
-  <!-- <span v-for="review in user.reviews">
-</span> -->
-
+          <div class="group-title-container-2">
+            <h5 class="list-title-2">Great Experiences</h5>
+          </div>
 <!-- Leave a review -->
 
-  <div class="providerp-post-comment-container"><a :href="'mailto:contact@cottageclass.com?subject=Great experience with ' + user.firstName + ' ' + user.lastInitial + '. (' + user.id + ')&body=(please%20describe%20your%20great%20experience%20here!)'" class="pprofile-compose-button w-inline-block"><img src="../assets/compose.svg" class="image-5"><div class="pprofile-comment-prompt-button-text">Post a great experience</div></a>
-    <div class="providerp-book-care-container" v-if="userAvailableSometimes">
-      <router-link :to="{ name: 'RequestModal', params: { id: user.id }}" class="pprovider-book-care-button w-inline-block"><img src="../assets/request-care-white.svg"><div class="pprovider-primary-action-text">Request childcare</div>
-      </router-link>
-    </div>
-  </div>
-
+          <div class="providerp-post-comment-container"><a :href="'mailto:contact@cottageclass.com?subject=Great experience with ' + user.firstName + ' ' + user.lastInitial + '. (' + user.id + ')&body=(please%20describe%20your%20great%20experience%20here!)'" class="pprofile-compose-button w-inline-block"><img src="../assets/compose.svg" class="image-5"><div class="pprofile-comment-prompt-button-text">Post a great experience</div></a>
+            <div class="providerp-book-care-container" v-if="userAvailableSometimes">
+              <router-link :to="{ name: 'RequestModal', params: { id: user.id }}" class="pprovider-book-care-button w-inline-block"><img src="../assets/request-care-white.svg"><div class="pprovider-primary-action-text">Request childcare</div>
+              </router-link>
+            </div>
+          </div>
 <!-- Negative reviews (concerns) -->
-
-  <div class="group-title-container-2">
-    <h5 class="list-title-2">Concerns</h5>
-  </div>
-  <!-- <span v-for="review in user.concerns">
-</span> -->
-
+          <div class="group-title-container-2">
+            <h5 class="list-title-2">Concerns</h5>
+          </div>
   <!-- concern link -->
-
-  <div class="providerp-post-comment-container"><a :href="'mailto:contact@cottageclass.com?subject=Concern re: ' + user.firstName + ' ' + user.lastInitial + '. (' + user.id + ')&body=(please%20detail%20your%20concern%20here)'" class="pprofile-compose-button w-inline-block"><img src="../assets/compose.svg" class="image-5"><div class="pprofile-comment-prompt-button-text">Post a concern</div></a></div>
-
-  <div class="spacer-100px"></div>
-
+          <div class="providerp-post-comment-container"><a :href="'mailto:contact@cottageclass.com?subject=Concern re: ' + user.firstName + ' ' + user.lastInitial + '. (' + user.id + ')&body=(please%20detail%20your%20concern%20here)'" class="pprofile-compose-button w-inline-block"><img src="../assets/compose.svg" class="image-5"><div class="pprofile-comment-prompt-button-text">Post a concern</div></a></div>
+          <div class="spacer-100px"></div>
+        </div>
+      </div>
+    </div>
+  </StyleWrapper>
+  <PageActionsFooter
+    v-if="isCurrentUser"
+    buttonText="EDIT"
+    @click="goToEdit"/>
 </div>
-</div>
-</div>
-</StyleWrapper>
 </template>
 
 <script>
 import Images from './Images.vue'
-import * as Token from '@/utils/tokens.js'
 import AvatarImage from '@/components/base/AvatarImage'
 import * as api from '@/utils/api.js'
 import networks from '@/assets/network-info.json'
@@ -101,11 +85,12 @@ import ChildAges from '@/components/ChildAges.vue'
 import StyleWrapper from '@/components/FTE/StyleWrapper.vue'
 import moment from 'moment'
 import ProviderInfo from '@/components/base/ProviderInfo.vue'
-import ChildInfo from '@/components/ChildInfo.vue'
+import PageActionsFooter from '@/components/PageActionsFooter.vue'
+import { mapGetters } from 'vuex'
 
 export default {
   name: 'ProviderProfile',
-  components: { Images, AvatarImage, ChildAges, StyleWrapper, ProviderInfo, ChildInfo },
+  components: { Images, AvatarImage, ChildAges, StyleWrapper, ProviderInfo, PageActionsFooter },
   data () {
     return {
       user: {},
@@ -115,6 +100,11 @@ export default {
          'disableDefaultUI': true, // turns off map controls
          'gestureHandling': 'none' // prevents any kind of scrolling
        }
+    }
+  },
+  methods: {
+    goToEdit: function () {
+      this.$router.push({ name: 'ProfileEdit' })
     }
   },
   mounted: function () {
@@ -135,7 +125,11 @@ export default {
     },
     joinedDateFormatted: function () {
       return moment(this.user.createdAt).format('MMMM, YYYY')
-    }
+    },
+    isCurrentUser: function () {
+      return this.currentUser.id.toString() === this.$route.params.id.toString()
+    },
+    ...mapGetters([ 'currentUser' ])
   }
 }
 
