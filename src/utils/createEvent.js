@@ -2,15 +2,11 @@ import _ from 'lodash'
 import moment from 'moment'
 import { capitalize } from './utils'
 
-export default (data) => {
-  console.log({data})
+export const createEvent = (data) => {
   const id = _.keys(data.event)[0]
+  // console.log(data.event)
   const event = data.event[id]
-  const eventAttributes = event.attributes
-  let attributes = _.clone(eventAttributes)
-
-  // some data cleaning
-  attributes = cleanEvent(attributes)
+  const attributes = cleanEvent(event.attributes)
 
   const participatingChildren = _.map(event.relationships.participants.data, e => e.id)
   const participatingParents = _.map(_.values(data.participant), p => cleanPerson(p.attributes))
@@ -22,6 +18,23 @@ export default (data) => {
     participatingChildren,
     participatingParents
   }
+}
+
+export const createEvents = (data, sortFunction) => {
+  const all = _.mapValues(data.event, e => {
+    return {
+      id: e.id,
+      ...cleanEvent(e.attributes)
+    }
+  })
+
+  // if no sort method is given, sort by id ascending (use int value, not lexiacal)
+  sortFunction = sortFunction || (e => parseInt(e.id))
+  // use this to sort by distance or
+  const sorted = _.sortBy(all, sortFunction)
+  sorted.all = all
+
+  return sorted
 }
 
 /*
