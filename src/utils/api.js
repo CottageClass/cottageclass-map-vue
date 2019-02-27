@@ -1,13 +1,9 @@
 import Vue from 'vue'
 import camelcaseKeys from 'camelcase-keys'
-// import * as Token from './tokens.js'
 import normalize from 'json-api-normalizer'
+import axios from 'axios'
+import { createEvent, createEvents } from './createEvent'
 
-// var moment = require('moment')
-
-/*
- * PROXY SESSIONS
- */
 export function initProxySession (currentUserId, receiverId, requestMessage, acknowledgmentMessage) {
   console.log('INITIATING PROXY WITH users ' + currentUserId + ', ' + receiverId)
   let postData = {
@@ -398,12 +394,12 @@ export function submitNotification (participantId, notificationBodyText) {
  * EVENTS
  */
 
-export function fetchUpcomingEvents (userId) {
-  return Vue.axios.get(
+export const fetchUpcomingEvents = async (userId, sortBy) => {
+  return axios.get(
     `${process.env.BASE_URL_API}/api/users/${userId}/events/created/upcoming/page/1/page_size/100`
   ).then(res => {
     console.log('FETCH MY UPCOMING EVENTS SUCCESS')
-    return Object.values(normalize(res.data).event).map(parseEventData)
+    return createEvents(normalize(res.data), sortBy)
   }).catch(err => {
     console.log('FETCH MY UPCOMING EVENTS FAILURE')
     console.log(err.errors)
@@ -419,34 +415,35 @@ export function submitEventSeriesData (data) {
   })
 }
 
-export function fetchEvents (params) {
-  return Vue.axios.get(
-    `${process.env.BASE_URL_API}/api/events/${params || ''}`
-  ).then(res => {
-    console.log('FETCH EVENTS SUCCESS')
-    console.log(res.data)
-    return Object.values(normalize(res.data).event).map(parseEventData)
+export const fetchEvent = async (id) => {
+  id = id.toString()
+  try {
+    const res = await axios.get(`${process.env.BASE_URL_API}/api/events/${id}`)
+    if (res) {
+      return createEvent(normalize(res.data))
+    } else {
+      throw Error('failed to fetch event')
+    }
+  } catch (e) {
+    throw e
+  }
+}
+
+export const fetchEvents = async (params, sortBy) => {
+  const url = `${process.env.BASE_URL_API}/api/events/${params || ''}`
+  return axios.get(url).then(res => {
+    console.log('FETCH SUCCESS -- ', url)
+    // console.log(res.data)
+    return createEvents(normalize(res.data), sortBy)
   }).catch(err => {
-    console.log('FETCH EVENTS FAILURE')
+    console.log('FETCH FAILURE -- ', url)
     console.log(err.errors)
     throw err
   })
 }
 
-export function fetchUpcomingEventsWithinDistance (miles, lat, lon, sort) {
-  return Vue.axios.get(
-    `${process.env.BASE_URL_API}/api/events/upcoming/miles/${miles}/latitude/${lat}/longitude/${lon}/sort/chronological`
-  ).then(res => {
-    console.log('FETCH UPCOMING EVENTS WITHIN DISTANCE SUCCESS')
-    console.log(res.data)
-    // this seems to reverse list order so we reverse on next line
-    let listOfEvents = Object.values(normalize(res.data).event).map(parseEventData)
-    return listOfEvents
-  }).catch(err => {
-    console.log('FETCH UPCOMING EVENTS WITHIN DISTANCE FAILURE')
-    console.log(err.errors)
-    throw err
-  })
+export function fetchUpcomingEventsWithinDistance (miles, lat, lon) {
+  return fetchEvents(`upcoming/miles/${miles}/latitude/${lat}/longitude/${lon}`, e => e.startsAt)
 }
 
 export function fetchUpcomingParticipatingEvents (userId) {

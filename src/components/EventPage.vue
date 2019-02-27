@@ -161,11 +161,8 @@ export default {
     formatTime: function (time24) {
       return moment(time24).format('LT')
     },
-    fetchEvent: function () {
-      api.fetchEvents(this.$route.params.id).then(
-        (res) => {
-          this.event = res[0]
-        })
+    fetchEvent: async function () {
+      this.event = await api.fetchEvent(this.$route.params.id)
     }
   },
   created: function () {
