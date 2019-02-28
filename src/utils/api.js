@@ -3,7 +3,6 @@ import normalize from 'json-api-normalizer'
 import axios from 'axios'
 import { createEvent, createEvents } from './createEvent'
 import { createUser } from './createUser';
-import Vue from 'vue'
 
 export function initProxySession (currentUserId, receiverId, requestMessage, acknowledgmentMessage) {
   console.log('INITIATING PROXY WITH users ' + currentUserId + ', ' + receiverId)
@@ -248,34 +247,32 @@ export function fetchUsersWhoHaveMadeInquiries (currentUserId) {
     throw err
   })
 }
-// uses more recent API endpoint which for now only provides public user information
 
-export function fetchUser (userId) {
-  return axios.get(
-    `${process.env.BASE_URL_API}/api/users/${userId}`
-  ).then(res => {
-    console.log('FETCH USER #' + userId + ' SUCCESS')
+// Public
+export async function fetchUser (userId) {
+  try {
+    const res = await axios.get(`${process.env.BASE_URL_API}/api/users/${userId}`)
+    console.log('FETCH PUBLIC USER #' + userId + ' SUCCESS')
     return createUser(normalize(res.data))
-  }).catch(err => {
-    console.log('FETCH USER #' + userId + ' FAILURE')
+  } catch (err) {
+    console.log('FETCH PUBLIC USER #' + userId + ' FAILURE')
     console.log(err.errors)
     throw err
-  })
+  }
 }
 
-export function fetchCurrentUser (userId) {
-  return Vue.axios.get(
-    `${process.env.BASE_URL_API}/users/${userId}`
-  ).then(res => {
-    console.log('FETCH USER #' + userId + ' SUCCESS')
+// Private
+export async function fetchCurrentUser (userId) {
+  try {
+    const res = await axios.get(`${process.env.BASE_URL_API}/users/${userId}`)
+    console.log('FETCH PRIVATE USER #' + userId + ' SUCCESS')
     return createUser(normalize(res.data))
-  }).catch(err => {
-    console.log('FETCH USER #' + userId + ' FAILURE')
+  } catch (err) {
+    console.log('FETCH PRIVATE USER #' + userId + ' FAILURE')
     console.log(err.errors)
     throw err
-  })
+  }
 }
-
 
 /*
  * CHILDREN
