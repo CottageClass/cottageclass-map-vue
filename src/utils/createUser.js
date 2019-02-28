@@ -4,7 +4,6 @@ export const createUser = (data) => {
   const includedChildren = data.child
   const id = _.keys(data.user)[0]
   const p = data.user[id].attributes
-  console.log({p})
   const childIds = data.user[id].relationships.children.data.map(e => e.id)
   const children = _.map(childIds, id => parseChildData(includedChildren[id]))
   const hasAllRequiredFields = !!(p.phone && p.latitude && p.longitude)
@@ -31,6 +30,7 @@ const parseChildData = (c) => {
   attributes.firstName = attributes.firstName && _.capitalize(attributes.firstName)
   return {
     id: c.id,
+    emergencyContacts: c.relationships.emergencyContacts && _.map(c.relationships.emergencyContacts.data, 'id'),
     ...attributes
   }
 }

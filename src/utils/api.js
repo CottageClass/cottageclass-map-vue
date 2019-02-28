@@ -3,6 +3,7 @@ import normalize from 'json-api-normalizer'
 import axios from 'axios'
 import { createEvent, createEvents } from './createEvent'
 import { createUser } from './createUser';
+import Vue from 'vue'
 
 export function initProxySession (currentUserId, receiverId, requestMessage, acknowledgmentMessage) {
   console.log('INITIATING PROXY WITH users ' + currentUserId + ', ' + receiverId)
@@ -253,7 +254,6 @@ export function fetchUser (userId) {
   return axios.get(
     `${process.env.BASE_URL_API}/api/users/${userId}`
   ).then(res => {
-    console.log(JSON.stringify({res}, null, 4))
     console.log('FETCH USER #' + userId + ' SUCCESS')
     return createUser(normalize(res.data))
   }).catch(err => {
@@ -262,6 +262,20 @@ export function fetchUser (userId) {
     throw err
   })
 }
+
+export function fetchCurrentUser (userId) {
+  return Vue.axios.get(
+    `${process.env.BASE_URL_API}/users/${userId}`
+  ).then(res => {
+    console.log('FETCH USER #' + userId + ' SUCCESS')
+    return createUser(normalize(res.data))
+  }).catch(err => {
+    console.log('FETCH USER #' + userId + ' FAILURE')
+    console.log(err.errors)
+    throw err
+  })
+}
+
 
 /*
  * CHILDREN

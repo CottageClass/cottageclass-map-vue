@@ -27,7 +27,7 @@ describe('createUser', () => {
 
     let user
     beforeAll(async () => {
-      const res = await mockAxios.get(`${process.env.BASE_URL_API}/api/users/1228`)
+      const res = await mockAxios.get(`${process.env.BASE_URL_API}/users/1228`)
       user = createUser(normalize(res.data))
     })
 
@@ -41,7 +41,7 @@ describe('createUser', () => {
       expect(user.children.length).toBe(1)
       expect(user.children[0].id).toBe('766')
       expect(user.children[0].firstName).toBe('Pesh')
-      expect(user.children[0]).toHaveProperty('emergencyContacts')
+      expect(user.children[0].emergencyContacts).toHaveLength(1)
     })
   })
 })

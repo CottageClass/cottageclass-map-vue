@@ -23,10 +23,14 @@ export default {
     if (url === userUrl + `1230/events/created/upcoming/page/1/page_size/100`) {
       return Promise.resolve(user1230Events)
     }
-    if (url === userUrl + '1230') {
+
+    // this is the unauthenticated endpont
+    if (url === `${process.env.BASE_URL_API}/api/users/1230`) {
       return Promise.resolve(user1230)
     }
-    if (url === userUrl + '1228') {
+
+    // this is the authenticated endpont
+    if (url === `${process.env.BASE_URL_API}/users/1228`) {
       return Promise.resolve(user1228)
     }
   })
