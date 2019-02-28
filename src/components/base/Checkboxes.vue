@@ -5,11 +5,11 @@
           v-for="(id, index) in ids"
           class="checkbox-field-extra-space"
           :class="{'active-checkbox': isChecked(index)}"
+          @click="toggleSelected(id)"
         >
           <input
-            @click="toggleSelected(id)"
             type="checkbox"
-            :id="index"
+            :id="'cb-' + _uid + '-' + index"
             :name="index"
             class="onb-checkbox w-checkbox-input"
             :checked="isChecked(index)"
@@ -23,12 +23,10 @@
 </template>
 
 <script>
-import _ from 'lodash'
 
 export default {
 // labels is an array of arrays [id, label]
 // value is an array of ids
-
   name: 'Checkboxes',
   props: ['value', 'labels'],
   data: () => {
@@ -40,12 +38,15 @@ export default {
     },
     isChecked: function () {
       return function (index) {
-        return this.state.includes(this.ids[index])
+        return this.state && this.state.includes(this.ids[index])
       }
     }
   },
   methods: {
     toggleSelected: function (id) {
+      console.log('cb-' + this._uid + '-' + id)
+      console.log(this.state)
+      if (!this.state) { return }
       if (this.state.includes(id)) {
         this.state = this.state.filter(item => item !== id)
       } else {
