@@ -1,8 +1,8 @@
-import Vue from 'vue'
 import camelcaseKeys from 'camelcase-keys'
 import normalize from 'json-api-normalizer'
 import axios from 'axios'
 import { createEvent, createEvents } from './createEvent'
+import { createUser } from './createUser';
 
 export function initProxySession (currentUserId, receiverId, requestMessage, acknowledgmentMessage) {
   console.log('INITIATING PROXY WITH users ' + currentUserId + ', ' + receiverId)
@@ -12,7 +12,7 @@ export function initProxySession (currentUserId, receiverId, requestMessage, ack
       acknowledgmentMessage: acknowledgmentMessage
     }
   }
-  return Vue.axios.post(
+  return axios.post(
     `${process.env.BASE_URL_API}/users/${receiverId}/proxy_sessions`,
     postData
   ).then(res => {
@@ -132,7 +132,7 @@ export function submitUserInfo (userId, phone, location, availability, children,
   }
 
   console.log('postdata', postData)
-  return Vue.axios.post(
+  return axios.post(
     `${process.env.BASE_URL_API}/users/${userId}`,
     postData
   ).then(res => {
@@ -207,7 +207,7 @@ function createPeopleObject (responseData) {
 }
 
 export function fetchUsersWithinDistance (miles, lat, lon) {
-  return Vue.axios.get(
+  return axios.get(
     `${process.env.BASE_URL_API}/api/users/miles/${miles}/latitude/${lat}/longitude/${lon}/page/1/page_size/10`
   ).then(res => {
     console.log('FETCH USERS WITHIN DISTANCE SUCCESS')
@@ -221,7 +221,7 @@ export function fetchUsersWithinDistance (miles, lat, lon) {
 }
 
 export function fetchUsersInNetwork (networkId) {
-  return Vue.axios.get(
+  return axios.get(
     `${process.env.BASE_URL_API}/networks/${networkId}/users`
   ).then(res => {
     console.log('FETCH USERS IN NETWORK SUCCESS')
@@ -235,7 +235,7 @@ export function fetchUsersInNetwork (networkId) {
 }
 
 export function fetchUsersWhoHaveMadeInquiries (currentUserId) {
-  return Vue.axios.get(
+  return axios.get(
     `${process.env.BASE_URL_API}/users/${currentUserId}/inquiries`
   ).then(res => {
     console.log('FETCH USERS WHO HAVE MADE INQUIRIES SUCCESS')
@@ -247,55 +247,15 @@ export function fetchUsersWhoHaveMadeInquiries (currentUserId) {
     throw err
   })
 }
-
-// same as above but using 'normalize' json normalizer to correctly extract children
-// uses old API endpoint. todo: modify backend to provide all current user information if the current user themself is requesting it, then switch this to use newer /api/users/:id endpoint.
-export function fetchCurrentUser (userId) {
-  return Vue.axios.get(
-    `${process.env.BASE_URL_API}/users/${userId}`
-  ).then(res => {
-    console.log('FETCH CURRENT USER SUCCESS')
-    console.log(res)
-    let normalizedData = normalize(res.data)
-    let user = normalizedData.user[userId].attributes
-    user.hasAllRequiredFields = user.phone && user.latitude && user.longitude
-    user.networkCode = 'brooklyn-events' // give everyone the new network code
-    if ('child' in normalizedData) {
-      let childrenById = normalizedData.child
-      let childIds = Object.keys(childrenById)
-      let generateChild = function (aChildId) {
-        let child = childrenById[aChildId].attributes
-        child.id = aChildId
-        child.emergencyContacts = childrenById[aChildId].relationships.emergencyContacts.data
-        child.firstName = capitalize(child.firstName)
-        return child
-      }
-      user.children = childIds.map(generateChild)
-    } else {
-      user.children = []
-    }
-    user.id = userId
-    return user
-  }).catch(err => {
-    console.log('FETCH CURRENT USER FAILURE')
-    console.log(err.errors)
-    throw err
-  })
-}
-
 // uses more recent API endpoint which for now only provides public user information
 
 export function fetchUser (userId) {
-  return Vue.axios.get(
+  return axios.get(
     `${process.env.BASE_URL_API}/api/users/${userId}`
   ).then(res => {
+    console.log(JSON.stringify({res}, null, 4))
     console.log('FETCH USER #' + userId + ' SUCCESS')
-    console.log(res)
-    let normalizedData = normalize(res.data)
-    let user = normalizedData.user[userId].attributes
-    user.networkCode = 'brooklyn-events' // give everyone the new network code
-    user.id = userId
-    return user
+    return createUser(normalize(res.data))
   }).catch(err => {
     console.log('FETCH USER #' + userId + ' FAILURE')
     console.log(err.errors)
@@ -308,7 +268,7 @@ export function fetchUser (userId) {
  */
 
 export function submitEmergencyContacts (childId, arrayOfContacts) {
-  return Vue.axios.put(
+  return axios.put(
     `${process.env.BASE_URL_API}/api/user/children/${childId}`,
     {
       child:
@@ -325,7 +285,7 @@ export function submitEmergencyContacts (childId, arrayOfContacts) {
 
 // backend requires user to be an admin
 export function fetchAllUsers () {
-  return Vue.axios.get(
+  return axios.get(
     `${process.env.BASE_URL_API}/users`
   ).then(res => {
     console.log('FETCH ALL USERS SUCCESS')
@@ -354,7 +314,7 @@ function createMessageObject (msgFromApi) {
 }
 
 export function fetchMessagesForUserPair (participantId1, participantId2) {
-  return Vue.axios.get(
+  return axios.get(
     `${process.env.BASE_URL_API}/users/${participantId1}/messages/${participantId2}`
   ).then(res => {
     console.log('FETCH Messages for User Pair SUCCESS')
@@ -378,7 +338,7 @@ export function submitNotification (participantId, notificationBodyText) {
       'body': notificationBodyText
     }
   }
-  return Vue.axios.post(
+  return axios.post(
     `${process.env.BASE_URL_API}/api/users/${participantId}/notifications/`, notificationData
   ).then(res => {
     console.log('NOTIFICATION submission SUCCESS')
@@ -408,7 +368,7 @@ export const fetchUpcomingEvents = async (userId, sortBy) => {
 }
 
 export function submitEventSeriesData (data) {
-  return Vue.axios.post(
+  return axios.post(
     `${process.env.BASE_URL_API}/api/event_series`, data
   ).then(res => {
     return Object.values(normalize(res.data).event).map(parseEventData)
@@ -447,7 +407,7 @@ export function fetchUpcomingEventsWithinDistance (miles, lat, lon) {
 }
 
 export function fetchUpcomingParticipatingEvents (userId) {
-  return Vue.axios.get(`${process.env.BASE_URL_API}/api/users/${userId}/events/participated/upcoming/page/1/page_size/100`)
+  return axios.get(`${process.env.BASE_URL_API}/api/users/${userId}/events/participated/upcoming/page/1/page_size/100`)
     .then(res => {
       console.log('GET PARTICIPATING EVENTS SUCCESS')
       console.log(res)
@@ -465,7 +425,7 @@ export function fetchUpcomingParticipatingEvents (userId) {
 }
 
 export function removeEventParticipant (eventId) {
-  return Vue.axios.delete(`${process.env.BASE_URL_API}/api/events/${eventId}/participants`)
+  return axios.delete(`${process.env.BASE_URL_API}/api/events/${eventId}/participants`)
     .then(res => {
       console.log('REMOVE EVENT PARTICIPANT SUCCESS')
       console.log(res)
@@ -490,7 +450,7 @@ export function submitEventParticipant (eventId, participantChildIds) {
       'participant_children_attributes': participantChildIds.map(createChild)
     }
   }
-  return Vue.axios.post(`${process.env.BASE_URL_API}/api/events/${eventId}/participants`, participantData)
+  return axios.post(`${process.env.BASE_URL_API}/api/events/${eventId}/participants`, participantData)
     .then(res => {
       console.log('SUBMIT EVENT PARTICIPANT SUCCESS')
       console.log(res)
@@ -505,7 +465,7 @@ export function submitEventParticipant (eventId, participantChildIds) {
 }
 
 export function deleteEvent (eventId, successCallback) {
-  return Vue.axios.delete(`${process.env.BASE_URL_API}/api/events/${eventId}`)
+  return axios.delete(`${process.env.BASE_URL_API}/api/events/${eventId}`)
     .then(res => {
       console.log('DELETE EVENT SUCCESS')
       console.log(res)

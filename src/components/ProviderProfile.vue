@@ -105,10 +105,8 @@ export default {
       this.$router.push({ name: 'ProfileEdit' })
     }
   },
-  mounted: function () {
-    api.fetchUser(this.$route.params.id).then(res => {
-      this.user = res
-    })
+  mounted: async function () {
+    this.user = await api.fetchUser(this.$route.params.id)
   },
   computed: {
     network: function () {

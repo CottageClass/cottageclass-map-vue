@@ -41,7 +41,7 @@ export default new Vuex.Store(
         if (userId === null) {
           commit('setCurrentUser', { user: null })
         } else {
-          return api.fetchCurrentUser(userId).then(user => {
+          return api.fetchUser(userId).then(user => {
             commit('setCurrentUser', { user })
           })
         }

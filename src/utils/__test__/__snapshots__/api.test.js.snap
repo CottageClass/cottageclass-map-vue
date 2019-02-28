@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`fetchEvent has the right data 1`] = `
+exports[`events fetchEvent has the right data 1`] = `
 Object {
   "child": Object {
     "733": Object {
@@ -285,7 +285,7 @@ Elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
 }
 `;
 
-exports[`fetchEvents has the right data 1`] = `
+exports[`events fetchEvents has the right data 1`] = `
 Array [
   Object {
     "activityName": "movie night",
@@ -1975,7 +1975,7 @@ Elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
 ]
 `;
 
-exports[`fetchUpcomingEvents for user has the right data 1`] = `
+exports[`events fetchUpcomingEvents for user has the right data 1`] = `
 Array [
   Object {
     "activityName": "baking",
@@ -2370,7 +2370,7 @@ Elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
 ]
 `;
 
-exports[`fetchUpcomingEventsWithinDistance has the right data 1`] = `
+exports[`events fetchUpcomingEventsWithinDistance has the right data 1`] = `
 Array [
   Object {
     "activityName": "games & puzzles",
