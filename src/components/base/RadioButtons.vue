@@ -49,8 +49,7 @@ export default {
         if (!this.labels) {
           return choice
         } else {
-          const pair = _.filter(this.labels, p => p[0]==choice)[0]
-          console.log(pair)
+          const pair = _.filter(this.labels, p => p[0] === choice)[0]
           return pair[1]
         }
       }
