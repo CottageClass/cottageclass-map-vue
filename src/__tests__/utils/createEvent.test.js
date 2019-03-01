@@ -1,4 +1,4 @@
-import { createEvent, createEvents } from '../createEvent'
+import { createEvent, createEvents } from '@/utils/createEvent'
 import mockAxios from 'axios'
 import normalize from 'json-api-normalizer'
 import moment from 'moment'

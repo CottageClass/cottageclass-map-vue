@@ -1,4 +1,4 @@
-import { createUser } from '../createUser'
+import { createUser } from '@/utils/createUser'
 import mockAxios from 'axios'
 import normalize from 'json-api-normalizer'
 

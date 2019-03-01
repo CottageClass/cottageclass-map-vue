@@ -4,7 +4,7 @@ import {
   fetchUpcomingEventsWithinDistance,
   fetchUpcomingEvents,
   fetchUser
-} from '../api'
+} from '@/utils/api'
 import mockAxios from 'axios'
 
 describe('events', () => {
