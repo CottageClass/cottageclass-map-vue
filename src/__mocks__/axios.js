@@ -3,6 +3,7 @@ const allEvents = require('./__mockData__/all_events.json')
 const user1230Events = require('./__mockData__/user_1230_events.json')
 const user1230 = require('./__mockData__/user_1230.json')
 const user1228 = require('./__mockData__/user_1228.json')
+const user1281 = require('./__mockData__/user_1281.json')
 
 export default {
   get: jest.fn((url) => {
@@ -27,6 +28,9 @@ export default {
     // this is the unauthenticated endpont
     if (url === `${process.env.BASE_URL_API}/api/users/1230`) {
       return Promise.resolve(user1230)
+    }
+    if (url === `${process.env.BASE_URL_API}/api/users/1281`) {
+      return Promise.resolve(user1281)
     }
 
     // this is the authenticated endpont
