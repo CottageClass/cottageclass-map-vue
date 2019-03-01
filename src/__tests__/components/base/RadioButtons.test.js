@@ -11,10 +11,8 @@ describe('RadioButtons', () => {
       propsData: {
         choices: ['hey', 'whatsup', 'hello'],
         value
-      },
-      sync: false // this is because we're using an old version of vue.  we should upgrade
+      }
     })
-    await Vue.nextTick()
   })
 
   it('mounts with the correct state', () => {
@@ -27,14 +25,13 @@ describe('RadioButtons', () => {
     expect(wrapper.emitted().input[0][0]).toEqual('')
   })
 
-  it('sets the state with a click', async () => {
+  it('sets the state with a click', () => {
     const heyInput = wrapper.find('input[value="hey"]')
     const heyDiv = wrapper.findAll('div').filter(d => {
       // very obnoxious way to find direct parent of input with value="hey"
       return d.find('input[value="hey"]').exists() && !d.find('form').exists()
     }).at(0)
     heyInput.trigger('click')
-    await Vue.nextTick()
 
     expect(wrapper.vm.state).toBe('hey')
     expect(wrapper.emitted().input).toHaveLength(2)
@@ -42,15 +39,13 @@ describe('RadioButtons', () => {
     expect(isChecked(heyDiv)).toBeTruthy()
   })
 
-  it('sets the state with a click', async () => {
+  it('sets the state with a click', () => {
     const helloInput = wrapper.find('input[value="hello"]')
     const helloDiv = wrapper.findAll('div').filter(d => {
       // very obnoxious way to find direct parent of input with value="hello"
       return d.find('input[value="hello"]').exists() && !d.find('form').exists()
     }).at(0)
-
     helloInput.trigger('click')
-    await Vue.nextTick()
 
     expect(wrapper.vm.state).toBe('hello')
     expect(wrapper.emitted().input).toHaveLength(3)
