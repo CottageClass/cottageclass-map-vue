@@ -1,6 +1,6 @@
 <template>
   <StyleWrapper styleIs="editing">
-    <div class="onb-body">
+    <div class="onb-body" v-if="user">
       <div class="body">
         <div class="content-wrapper user-profile-wrapper">
           <div class="providerp-provider-info-section">
@@ -9,7 +9,7 @@
             <h1 class="providerp-h1">{{ user.firstName }}</h1>
             <div class="providerp-occupation" v-if="user.title && user.employer">{{ user.title }} at {{ user.employer }}</div>
             <div class="providerp-occupation">Member since {{ joinedDateFormatted }}</div>
-            <div v-if="user.childAges && user.childAges.length > 0" class="providerp-children">
+            <div v-if="user && user.childAges && user.childAges.length > 0" class="providerp-children">
                 Parent to <ChildAges :childAges="user.childAges" singular="child" plural="children" />.
             </div>
 
@@ -23,7 +23,7 @@
           <div class="providerp-provider-info-bullets">
             <ProviderInfo :person="user" />
           </div>
-          <div v-if="user.images.length > 0" class="group-title-container-2">
+          <div v-if="user && user.images.length > 0" class="group-title-container-2">
             <h5 class="list-title-2">Photos</h5>
           </div>
           <Images :person="user"/>
@@ -75,7 +75,7 @@
 </template>
 
 <script>
-import Images from './Images.vue'
+import Images from '@/components/Images.vue'
 import AvatarImage from '@/components/base/AvatarImage'
 import * as api from '@/utils/api.js'
 import networks from '@/assets/network-info.json'
@@ -91,7 +91,7 @@ export default {
   components: { Images, AvatarImage, ChildAges, StyleWrapper, ProviderInfo, PageActionsFooter },
   data () {
     return {
-      user: {},
+      user: null,
       networks: networks,
       mapOptions:
        { // move this to map component when i separate it.
