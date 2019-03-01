@@ -44,8 +44,6 @@ export default {
   },
   methods: {
     toggleSelected: function (id) {
-      console.log('cb-' + this._uid + '-' + id)
-      console.log(this.state)
       if (!this.state) { return }
       if (this.state.includes(id)) {
         this.state = this.state.filter(item => item !== id)
@@ -55,6 +53,10 @@ export default {
     }
   },
   watch: {
+    value: function () {
+      // update the state if the props change, after a fetch or something
+      this.state = this.value
+    },
     state: function () {
       this.$emit('input', this.state)
     }
