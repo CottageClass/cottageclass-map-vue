@@ -79,6 +79,8 @@ import * as api from '@/utils/api.js'
 import * as Token from '@/utils/tokens.js'
 import { mapGetters } from 'vuex'
 
+import _ from 'lodash'
+
 var VueScrollTo = require('vue-scrollto')
 
 export default {
@@ -108,12 +110,12 @@ export default {
       saveButtonText: 'Save'
     }
   },
-  mounted: function () {
-    this.availability = {
-      availableAfternoons: this.currentUser.availableAfternoons,
-      availableMornings: this.currentUser.availableMornings,
-      availableEvenings: this.currentUser.availableEvenings,
-      availableWeekends: this.currentUser.availableWeekends
+  created: function () {
+    this.initialAvailability = {
+      availableAfternoons: !!this.currentUser.availableAfternoons,
+      availableMornings: !!this.currentUser.availableMornings,
+      availableEvenings: !!this.currentUser.availableEvenings,
+      availableWeekends: !!this.currentUser.availableWeekends
     }
   },
   computed: {
