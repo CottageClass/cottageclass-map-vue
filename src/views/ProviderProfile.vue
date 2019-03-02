@@ -1,29 +1,30 @@
 <template>
   <StyleWrapper styleIs="editing">
-    <div class="onb-body">
+    <div class="onb-body" v-if="user">
       <div class="body">
         <div class="content-wrapper user-profile-wrapper">
           <div class="providerp-provider-info-section">
             <a @click="$router.go(-1)" class="providerp-button-back w-inline-block"><img src="../assets/Arrow-Back-2.svg">
             </a><AvatarImage :person="user" className="avatar-large"/>
             <h1 class="providerp-h1">{{ user.firstName }}</h1>
-            <div class="providerp-occupation" v-if="user.title && user.employer">{{ user.title }} at {{ user.employer }}</div>
-            <div class="providerp-occupation">Member since {{ joinedDateFormatted }}</div>
-            <div v-if="user.childAges && user.childAges.length > 0" class="providerp-children">
+            <div class="providerp-occupation">{{ employmentDescription }}</div>
+            <div v-if="user.languages.length" class="languages">{{ languageText }}</div>
+            <div class="providerp-member-since">Member since {{ joinedDateFormatted }}</div>
+            <div v-if="user && user.childAges && user.childAges.length > 0" class="providerp-children">
                 Parent to <ChildAges :childAges="user.childAges" singular="child" plural="children" />.
             </div>
 
-            <div v-if="user.blurb" class="providerp-chat-bubble-container">
+            <div v-if="user.profileBlurb" class="providerp-chat-bubble-container">
               <div class="providerp-chat-bubble-caret"><img src="../assets/chat-bubble-caret.svg"></div>
               <div class="providerp-chat-bubble-primary">
-                <div>{{ user.blurb }}</div>
+                <div class="blurb">{{ user.profileBlurb }}</div>
               </div>
             </div>
           </div>
           <div class="providerp-provider-info-bullets">
             <ProviderInfo :person="user" />
           </div>
-          <div v-if="user.images.length > 0" class="group-title-container-2">
+          <div v-if="user && user.images.length > 0" class="group-title-container-2">
             <h5 class="list-title-2">Photos</h5>
           </div>
           <Images :person="user"/>
@@ -75,7 +76,7 @@
 </template>
 
 <script>
-import Images from './Images.vue'
+import Images from '@/components/Images.vue'
 import AvatarImage from '@/components/base/AvatarImage'
 import * as api from '@/utils/api.js'
 import networks from '@/assets/network-info.json'
@@ -86,12 +87,15 @@ import ProviderInfo from '@/components/base/ProviderInfo.vue'
 import PageActionsFooter from '@/components/PageActionsFooter.vue'
 import { mapGetters } from 'vuex'
 
+import _ from 'lodash'
+import languageList from 'language-list'
+
 export default {
   name: 'ProviderProfile',
   components: { Images, AvatarImage, ChildAges, StyleWrapper, ProviderInfo, PageActionsFooter },
   data () {
     return {
-      user: {},
+      user: null,
       networks: networks,
       mapOptions:
        { // move this to map component when i separate it.
@@ -109,6 +113,19 @@ export default {
     this.user = await api.fetchUser(this.$route.params.id)
   },
   computed: {
+    employmentDescription: function () {
+      const position = this.user.jobPosition
+      const employer = this.user.employer
+      if (position && employer) {
+        return position + ', ' + employer
+      } else if (position) {
+        return position
+      } else if (employer) {
+        return employer
+      } else {
+        return null
+      }
+    },
     network: function () {
       let networkId = 'brooklyn-events'
       return this.networks.find(network => network.stub === networkId)
@@ -123,7 +140,13 @@ export default {
       return moment(this.user.createdAt).format('MMMM, YYYY')
     },
     isCurrentUser: function () {
+      if (!this.currentUser) { return false }
       return this.currentUser.id.toString() === this.$route.params.id.toString()
+    },
+    languageText: function () {
+      const languageCodes = this.user.languages
+      const languages = _.map(languageCodes, languageList().getLanguageName)
+      return 'Speaks ' + [languages.slice(0, -1).join(', '), _.last(languages)].join(' and ')
     },
     ...mapGetters([ 'currentUser' ])
   }
@@ -514,7 +537,7 @@ img {
   color: rgba(0, 0, 0, .25);
 }
 
-.providerp-occupation {
+.providerp-occupation, .providerp-member-since, .languages {
   max-width: 500px;
   margin-top: 0px;
   margin-bottom: 4px;

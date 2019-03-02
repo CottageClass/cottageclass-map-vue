@@ -219,7 +219,7 @@ export default {
         userId,
         this.userData.phone,
         this.userData.location,
-        this.userData.availability,
+        this.userData.emergencyCare,
         this.userData.children
       )
       submitInfo.catch(err => {

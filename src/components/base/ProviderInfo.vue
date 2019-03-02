@@ -7,7 +7,7 @@
       </div>
     </div>
 
-    <div class="tag-group-container" v-if="person.activities.length"><img src="../../assets/tag.svg" class="image-tag">
+    <div class="tag-group-container activities" v-if="person.activities.length"><img src="../../assets/tag.svg" class="image-tag">
       <div class="tags-container" v-for="activity in person.activities">
         <div class="tag">
           <div class="small-text-upper-black-40">{{ activity }}</div>
