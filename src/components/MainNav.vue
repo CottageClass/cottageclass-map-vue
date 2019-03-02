@@ -8,7 +8,7 @@
         </router-link>
       </div>
       <div class="actions-wrapper">
-        <router-link :to="{name: 'ProviderProfile', params: {id: currentUser.id}}">
+        <router-link v-if="currentUser" :to="{name: 'ProviderProfile', params: {id: currentUser.id}}">
           <AvatarImage
           v-if="currentUser"
           :person="currentUser"
@@ -71,7 +71,7 @@
             <router-link to="/sign-up" class="link-block w-inline-block">
               <div class="text-block">Sign up</div>
             </router-link>
-          </li>          
+          </li>
         </ul>
       </div>
     </div>
