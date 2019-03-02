@@ -1876,6 +1876,10 @@ a {
   text-decoration: none;
 }
 
+.page-actions-wrapper a {
+  color: white;
+}
+
 a:hover {
   text-decoration: underline;
 }

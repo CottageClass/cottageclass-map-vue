@@ -47,7 +47,6 @@ export default {
   },
   watch: {
     reason: function () {
-      console.log('x')
       if (this.reason && this.reason.length >= this.charLimit) {
         this.reason = this.reason.slice(this.charLimit)
       }
