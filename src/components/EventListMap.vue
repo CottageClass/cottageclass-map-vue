@@ -83,14 +83,14 @@ export default {
 
 <style scoped>
 .map-wrapper {
-  height: 300px;
+  height: 100%;
   min-width: 100%;
   background-position: 50% 50%;
   background-size: cover;
 }
 @media (max-width: 991px) {
   .map-wrapper {
-    height: 200px;
+    height: 100%;
   }
 }
 </style>

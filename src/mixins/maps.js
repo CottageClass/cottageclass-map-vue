@@ -6,7 +6,7 @@ export default {
     google: VueGoogleMaps.gmapApi,
     circlePath () {
       return function (center, radius, numPoints) {
-        numPoints = numPoints || 40
+        numPoints = numPoints || 80
         const d2r = Math.PI / 180
         const circleLatLngs = []
         const circleLat = radius * 0.014483
@@ -27,10 +27,10 @@ export default {
       return new this.google.maps.Polygon({
         paths: this.circlePath(center, radius),
         strokeColor: '#FF0000',
-        strokeOpacity: 0.5,
+        strokeOpacity: 0.3,
         strokeWeight: 2,
         fillColor: '#FF0000',
-        fillOpacity: 0.35,
+        fillOpacity: 0.25,
         map: map
       })
     }

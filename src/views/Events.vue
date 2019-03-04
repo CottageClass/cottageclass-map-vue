@@ -108,6 +108,11 @@ select {
   background-color: #fff;
 }
 
+.map-list-container {
+  display: flex;
+  flex-direction: row-reverse;
+}
+
 h1 {
   margin-top: 20px;
   margin-bottom: 10px;
@@ -276,6 +281,13 @@ a {
   border-radius: 4px;
 }
 
+.map {
+  height: 500px;
+    width: 300px;
+  background-position: 50% 50%;
+  background-size: cover;
+}
+
 @media (max-width: 991px) {
   .h1-display {
     font-size: 32px;
@@ -288,6 +300,13 @@ a {
 }
 
 @media (max-width: 767px) {
+  .map-list-container {
+    display: flex;
+    flex-direction: column;
+  }
+  .map {
+    width: 100%;
+  }
   .body {
     padding-bottom: 100px;
   }
