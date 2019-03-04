@@ -38,20 +38,8 @@ export default {
       if (this.isMobile) {
         this.$router.push('/events/map')
       }
-    }
-  },
-  computed: {
-    distanceOptions: () => [ 1, 2, 5, 10, 20, 50 ],
-    mapOptions: function () {
-      return {
-        'disableDefaultUI': true, // turns off map controls
-        'gestureHandling': this.isMobile ? 'none' : 'cooperative' // allow scrolling on desktop but not mobile'
-      }
     },
-    ...mapGetters([ 'isAuthenticated' ])
-  },
-  watch: {
-    events: async function () {
+    updateEvents: async function () {
       this.map = await this.$refs.mapRef.$mapPromise
       this.circles = []
       const that = this
@@ -69,7 +57,26 @@ export default {
       }
     }
   },
+  computed: {
+    distanceOptions: () => [ 1, 2, 5, 10, 20, 50 ],
+    mapOptions: function () {
+      return {
+        'disableDefaultUI': true, // turns off map controls
+        'gestureHandling': this.isMobile ? 'none' : 'cooperative' // allow scrolling on desktop but not mobile'
+      }
+    },
+    ...mapGetters([ 'isAuthenticated' ])
+  },
+  watch: {
+    events: function () {
+      this.updateEvents()
+    }
+  },
   mounted: async function () {
+    if (this.events && this.events.length) {
+      // draw in events if they are already loaded
+      this.updateEvents()
+    }
   }
 }
 </script>
