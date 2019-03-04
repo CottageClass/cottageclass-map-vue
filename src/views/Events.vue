@@ -1,30 +1,24 @@
 <template>
   <div class="body">
     <MainNav />
-  <div class="content-section background-01">
-    <div class="divider-2px"></div>
-    <div class="content-container-4 w-container">
-     <h1 class="h1-display">Upcoming Playdates</h1>
-     <p v-if="isAuthenticated">Within
-      <select v-model="maximumDistanceFromUserInMiles">
-        <option>1</option>
-        <option>2</option>
-        <option>5</option>
-        <option>10</option>
-        <option>20</option>
-        <option>50</option>
-      </select> miles</p>
-      <EventList
-          :events="events"
-          :noEventsMessage="noEventsMessage"
-      />
+    <div class="content-section background-01">
+      <div class="divider-2px"></div>
+      <h1 class="h1-display">Upcoming Playdates</h1>
+        <div class="map-list-container">
+          <EventListMap
+            class="map"
+            :events="events"
+          />
+          <div class="list-container w-container">
+            <EventList
+              class="list"
+              :events="events"
+              :noEventsMessage="noEventsMessage"
+            />
+        </div>
+      </div>
     </div>
-  </div>
-
-<!-- Footer -->
-
- <Footer />
-
+    <Footer />
   </div>
 </template>
 
@@ -32,6 +26,7 @@
 import EventList from '@/components/EventList.vue'
 import MainNav from '@/components/MainNav.vue'
 import Footer from '@/components/Footer.vue'
+import EventListMap from '@/components/EventListMap.vue'
 import * as api from '@/utils/api.js'
 import { mapGetters } from 'vuex'
 
@@ -39,7 +34,7 @@ var moment = require('moment')
 
 export default {
   name: 'Events',
-  components: { EventList, MainNav, Footer },
+  components: { EventList, MainNav, Footer, EventListMap },
   data () {
     return {
       events: null,
@@ -74,13 +69,18 @@ export default {
       return moment(date).format('dddd, MMM Do')
     },
     fetchEventsWithinDistance: async function () {
-      this.events = await api.fetchUpcomingEventsWithinDistance(
+      this.events = await (api.fetchUpcomingEventsWithinDistance(
         this.maximumDistanceFromUserInMiles,
         this.currentUser.latitude,
-        this.currentUser.longitude)
+        this.currentUser.longitude)).slice(20) // limited to 20 until pagination (soon)
     },
     fetchAllUpcomingEvents: async function () {
-      this.events = await api.fetchEvents('upcoming', e => e.startsAt)
+      const res = (await api.fetchEvents('upcoming', e => e.startsAt)).slice(20)
+      this.events = []
+      // slice doesn't work here because fetchEvents returns an object
+      for (let i = 0; i < 20; i++) {
+        this.events.push(res[i])
+      }
     }
   },
   mounted: function () {
@@ -97,10 +97,6 @@ export default {
 select {
   appearance: menulist;
   --webkit-appearance: menulist;
-}
-
-.image-8 {
-  margin-bottom: 0;
 }
 
 .body {
@@ -158,12 +154,6 @@ a {
   font-family: soleil, sans-serif;
 }
 
-.image-2 {
-  margin-right: 17px;
-  float: left;
-  opacity: 0.8;
-}
-
 .h1-display {
   margin-bottom: 24px;
   line-height: 66px;
@@ -187,45 +177,6 @@ a {
   width: 100%;
   height: 2px;
   background-color: #f3f3f3;
-}
-
-.content-container-2 {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  margin-top: 0px;
-  margin-bottom: 0px;
-  padding: 112px 32px;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-  -webkit-flex-direction: column;
-  -ms-flex-direction: column;
-  flex-direction: column;
-  -webkit-box-pack: start;
-  -webkit-justify-content: flex-start;
-  -ms-flex-pack: start;
-  justify-content: flex-start;
-  -webkit-box-align: center;
-  -webkit-align-items: center;
-  -ms-flex-align: center;
-  align-items: center;
-}
-
-.image-261 {
-  max-width: 90%;
-}
-
-.image-262 {
-  width: 100px;
-  height: 100px;
-  margin-bottom: 16px;
-}
-
-.image-263 {
-  min-width: 80px;
-  margin-right: 8px;
-  margin-left: 8px;
 }
 
 .link {
@@ -280,30 +231,7 @@ a {
   background-color: #f6f6f6;
 }
 
-.content-container-3 {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  margin-top: 0px;
-  margin-bottom: 0px;
-  padding: 112px 32px;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-  -webkit-flex-direction: column;
-  -ms-flex-direction: column;
-  flex-direction: column;
-  -webkit-box-pack: start;
-  -webkit-justify-content: flex-start;
-  -ms-flex-pack: start;
-  justify-content: flex-start;
-  -webkit-box-align: center;
-  -webkit-align-items: center;
-  -ms-flex-align: center;
-  align-items: center;
-}
-
-.content-container-4 {
+.list-container {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -348,36 +276,13 @@ a {
   border-radius: 4px;
 }
 
-.image-264 {
-  width: 40px;
-  background-color: #fff;
-}
-
-.image-265 {
-  width: 40px;
-}
-
 @media (max-width: 991px) {
   .h1-display {
     font-size: 32px;
     line-height: 42px;
   }
 
-  .content-container-2 {
-    padding-top: 100px;
-    padding-bottom: 128px;
-  }
-
-  .image-263 {
-    min-width: 50px;
-  }
-
-  .content-container-3 {
-    padding-top: 100px;
-    padding-bottom: 128px;
-  }
-
-  .content-container-4 {
+  .list-container {
     padding-bottom: 128px;
   }
 }
@@ -392,31 +297,9 @@ a {
     line-height: 34px;
   }
 
-  .content-container-2 {
-    padding-right: 32px;
-    padding-bottom: 100px;
-    padding-left: 32px;
-  }
-
-  .image-263 {
-    min-width: 40px;
-  }
-
   .date-title {
     font-size: 22px;
     line-height: 26px;
-  }
-
-  .content-container-3 {
-    padding-right: 32px;
-    padding-bottom: 100px;
-    padding-left: 32px;
-  }
-
-  .content-container-4 {
-    padding-right: 32px;
-    padding-bottom: 100px;
-    padding-left: 32px;
   }
 }
 
@@ -429,35 +312,14 @@ a {
     margin-top: 52px;
   }
 
-  .content-container-2 {
-    padding-top: 64px;
-    padding-bottom: 64px;
-  }
-
-  .image-261 {
-    max-width: 100%;
-  }
-
   .date-title {
     font-size: 18px;
     line-height: 24px;
     text-align: left;
   }
 
-  .content-container-3 {
-    padding: 64px 16px;
-  }
-
-  .content-container-4 {
-    padding: 64px 16px;
-  }
-
-  .image-264 {
-    width: 32px;
-  }
-
-  .image-265 {
-    width: 32px;
+  .list-container {
+    padding: 0px 16px 64px;
   }
 }
 </style>

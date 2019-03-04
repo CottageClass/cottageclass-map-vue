@@ -12,7 +12,7 @@ export default {
     if (url === eventUrl + '2186') {
       return Promise.resolve(event2186)
     }
-    if (url === eventUrl) {
+    if (url === eventUrl || url === eventUrl + 'upcoming') {
       return Promise.resolve(allEvents)
     }
     if (url === eventUrl + 'upcoming/miles/10/latitude/42.2798738/longitude/-71.7900378') {
