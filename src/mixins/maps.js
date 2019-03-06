@@ -33,6 +33,13 @@ export default {
         fillOpacity: 0.25,
         map: map
       })
+    },
+    zoomLevelForScale (metersPerPixel, map) {
+      const lat = map.center.lat()
+      return Math.log2(156543.03392 * Math.cos(lat * Math.PI / 180) / metersPerPixel)
+    },
+    latlng (lat, lng) {
+      return new this.google.maps.LatLng(lat, lng)
     }
   }
 }

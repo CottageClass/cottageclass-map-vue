@@ -3,11 +3,17 @@
     <MainNav />
     <div class="content-section background-01">
       <div class="divider-2px"></div>
-      <h1 class="h1-display">Upcoming Playdates</h1>
+      <div class="top-container w-container">
+        <h1 class="title">Book a Playdate</h1>
+        <div class="page-subtitle">Here are some playdates that are booking up soon. <strong>Reserve your spot</strong> before they’re booked.</div>
+      </div>
+      <div class="main-container">
         <div class="map-list-container">
           <EventListMap
             class="map"
             :events="events"
+            @maxDistanceSet="updateEventsForZoomLevel($event)"
+            :center="center"
           />
           <div class="list-container w-container">
             <EventList
@@ -15,6 +21,7 @@
               :events="events"
               :noEventsMessage="noEventsMessage"
             />
+          </div>
         </div>
       </div>
     </div>
@@ -27,7 +34,7 @@ import EventList from '@/components/EventList.vue'
 import MainNav from '@/components/MainNav.vue'
 import Footer from '@/components/Footer.vue'
 import EventListMap from '@/components/EventListMap.vue'
-import * as api from '@/utils/api.js'
+import { fetchUpcomingEventsWithinDistance, fetchEvents } from '@/utils/api.js'
 import { mapGetters } from 'vuex'
 
 var moment = require('moment')
@@ -45,6 +52,13 @@ export default {
     }
   },
   computed: {
+    center () {
+      if (this.currentUser) {
+        return { lat: this.currentUser.latitude, lng: this.currentUser.longitude }
+      } else {
+        return { lat: 40.688309, lng: -73.994639 } // BoCoCa
+      }
+    },
     ...mapGetters([
       'distanceFromCurrentUser', 'currentUser', 'isAuthenticated'
     ])
@@ -55,12 +69,8 @@ export default {
     }
   },
   methods: {
-    limitNumberOfEvents: function (events) {
-      if (this.limitTo) {
-        return events.slice(0, parseInt(this.limitTo))
-      } else {
-        return events
-      }
+    updateEventsForZoomLevel: async function (e) {
+      this.events = await fetchUpcomingEventsWithinDistance(e.miles, e.center.lat(), e.center.lng())
     },
     isToday: function (date) {
       return moment(0, 'HH').diff(date, 'days') === 0
@@ -69,13 +79,13 @@ export default {
       return moment(date).format('dddd, MMM Do')
     },
     fetchEventsWithinDistance: async function () {
-      this.events = await (api.fetchUpcomingEventsWithinDistance(
+      this.events = await (fetchUpcomingEventsWithinDistance(
         this.maximumDistanceFromUserInMiles,
         this.currentUser.latitude,
-        this.currentUser.longitude)).slice(20) // limited to 20 until pagination (soon)
+        this.currentUser.longitude))
     },
     fetchAllUpcomingEvents: async function () {
-      const res = (await api.fetchEvents('upcoming', e => e.startsAt)).slice(20)
+      const res = (await fetchEvents('upcoming', e => e.startsAt)).slice(20)
       this.events = []
       // slice doesn't work here because fetchEvents returns an object
       for (let i = 0; i < 20; i++) {
@@ -108,18 +118,16 @@ select {
   background-color: #fff;
 }
 
+.page-subtitle {
+  font-size: 15px;
+  line-height: 19px;
+}
+
 .map-list-container {
   display: flex;
   flex-direction: row-reverse;
-}
-
-h1 {
-  margin-top: 20px;
-  margin-bottom: 10px;
-  font-size: 55px;
-  line-height: 44px;
-  font-weight: 700;
-  text-align: center;
+  margin-right: auto;
+  margin-left: auto;
 }
 
 h2 {
@@ -157,11 +165,6 @@ a {
   overflow: visible;
   background-color: #fff;
   font-family: soleil, sans-serif;
-}
-
-.h1-display {
-  margin-bottom: 24px;
-  line-height: 66px;
 }
 
 .content-section {
@@ -241,22 +244,19 @@ a {
   display: -webkit-flex;
   display: -ms-flexbox;
   display: flex;
-  margin-top: 0px;
-  margin-bottom: 0px;
-  padding: 32px 32px 112px;
+  width: 568px;
+  min-height: 100px;
+  padding-right: 32px;
   -webkit-box-orient: vertical;
   -webkit-box-direction: normal;
   -webkit-flex-direction: column;
   -ms-flex-direction: column;
   flex-direction: column;
-  -webkit-box-pack: start;
-  -webkit-justify-content: flex-start;
-  -ms-flex-pack: start;
-  justify-content: flex-start;
-  -webkit-box-align: center;
-  -webkit-align-items: center;
-  -ms-flex-align: center;
-  align-items: center;
+  -webkit-box-align: start;
+  -webkit-align-items: flex-start;
+  -ms-flex-align: start;
+  align-items: flex-start;
+  background-color: transparent;
 }
 
 .date-text-wrapper {
@@ -282,63 +282,68 @@ a {
 }
 
 .map {
-  height: 500px;
-    width: 300px;
-  background-position: 50% 50%;
-  background-size: cover;
+  position: sticky;
+  top: 32px;
+  display: block;
+  width: 320px;
+  height:438px;
+  clear: none;
+  border-top-left-radius: 4px;
+  border-top-right-radius: 4px;
+}
+
+.top-container {
+  position: relative;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  padding-right: 32px;
+  padding-bottom: 24px;
+  padding-left: 32px;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+}
+
+.main-container {
+  position: relative;
+  min-height: 800px;
+  display: flex;
+  margin-bottom: 100px;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 40px 32px;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: flex-start;
 }
 
 @media (max-width: 991px) {
-  .h1-display {
-    font-size: 32px;
-    line-height: 42px;
+  .map {
+    position: relative;
+    top: 0;
+    width: 100%;
+    height: 200px;
+    cursor:s-resize;
   }
-
   .list-container {
+    width:100%;
+    padding-top: 20px;
+    padding-right: 0px;
     padding-bottom: 128px;
   }
-}
-
-@media (max-width: 767px) {
   .map-list-container {
+    width: 100%;
+    margin: 0;
     display: flex;
     flex-direction: column;
   }
-  .map {
-    width: 100%;
-  }
-  .body {
-    padding-bottom: 100px;
-  }
-
-  .h1-display {
-    font-size: 28px;
-    line-height: 34px;
-  }
-
-  .date-title {
-    font-size: 22px;
-    line-height: 26px;
+  .main-container {
+    padding: 0px;
   }
 }
 
-@media (max-width: 479px) {
-  .body {
-    padding-bottom: 110px;
-  }
-
-  .event-date-section-tittle {
-    margin-top: 52px;
-  }
-
-  .date-title {
-    font-size: 18px;
-    line-height: 24px;
-    text-align: left;
-  }
-
-  .list-container {
-    padding: 0px 16px 64px;
-  }
-}
 </style>

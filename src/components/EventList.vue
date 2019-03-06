@@ -218,9 +218,9 @@ a {
   display: -webkit-flex;
   display: -ms-flexbox;
   display: flex;
-  margin-top: 68px;
+  margin-top: 16px;
   margin-bottom: 16px;
-  padding: 16px 16px 16px 0px;
+  padding: 4px 16px 4px 0px;
   -webkit-box-pack: start;
   -webkit-justify-content: flex-start;
   -ms-flex-pack: start;
@@ -230,6 +230,10 @@ a {
   -ms-flex-align: center;
   align-items: center;
   border-radius: 4px;
+}
+.event-date-section-tittle:first-of-type {
+  margin-top: 0px;
+  padding-top: 0px;
 }
 
 .date-title {
