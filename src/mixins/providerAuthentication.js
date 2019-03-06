@@ -21,7 +21,7 @@ export default {
           console.log(this.currentUser)
           if (this.currentUser.hasAllRequiredFields && !this.rsvpAttemptedId) {
             // redirect to home screen if they haven't attempted an RSVP
-            this.$router.push({ name: 'Home' })
+            this.$router.push({ name: 'Events' })
           } else if (this.currentUser.hasAllRequiredFields && !!this.rsvpAttemptedId) {
             // confirm that they want to RSVP if they have attempted an RSVP
             this.$router.push({ name: 'RsvpConfirmation', params: { eventId: this.rsvpAttemptedId } })

@@ -62,8 +62,8 @@ export default new Router({
       component: EmergencyInfo
     },
     {
-      path: '/home',
-      name: 'Home',
+      path: '/events',
+      name: 'Events',
       component: Events,
       props: true
     },{

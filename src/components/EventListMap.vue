@@ -89,7 +89,7 @@ export default {
       }
     },
     showSelector: function () {
-      return this.$router.currentRoute.name === 'Home' && !this.isMobile
+      return this.$router.currentRoute.name === 'Events' && !this.isMobile
     }
   },
   watch: {

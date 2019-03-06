@@ -110,7 +110,7 @@ export default {
   },
   computed: {
     logoRouterTarget () {
-      return this.isAuthenticated ? 'Home' : 'SplashPage'
+      return this.isAuthenticated ? 'Events' : 'SplashPage'
     },
     ... mapGetters([ 'isAuthenticated', 'currentUser', 'alert' ])
   }
