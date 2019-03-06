@@ -404,7 +404,6 @@ export const fetchEvents = async (params, sortBy) => {
   const url = `${process.env.BASE_URL_API}/api/events/${params || ''}`
   return axios.get(url).then(res => {
     console.log('FETCH SUCCESS -- ', url)
-    // console.log(res.data)
     return createEvents(normalize(res.data), sortBy)
   }).catch(err => {
     console.log('FETCH FAILURE -- ', url)
@@ -413,8 +412,11 @@ export const fetchEvents = async (params, sortBy) => {
   })
 }
 
-export function fetchUpcomingEventsWithinDistance (miles, lat, lon) {
-  return fetchEvents(`upcoming/miles/${miles}/latitude/${lat}/longitude/${lon}`, e => e.startsAt)
+export function fetchUpcomingEventsWithinDistance ({ miles, lat, lng, pageSize = 10, page = 1 }) {
+  return fetchEvents(
+    `upcoming/miles/${miles}/latitude/${lat}/longitude/${lng}/page/${page}/page_size/${pageSize}`,
+    e => e.startsAt
+  )
 }
 
 export function fetchUpcomingParticipatingEvents (userId) {
