@@ -12,6 +12,7 @@ import RequestRecipients from '@/components/RequestRecipients.vue'
 import AdminMessages from '@/components/AdminMessages.vue'
 import EventPage from '@/components/EventPage.vue'
 import Events from '@/views/Events.vue'
+import EventsDetail from '@/views/EventsDetail.vue'
 import RsvpInfoCollection from '@/components/RsvpInfoCollection.vue'
 import RsvpConfirmation from '@/components/RsvpConfirmation.vue'
 import CancelRSVP from '@/components/CancelRSVP.vue'
@@ -66,7 +67,14 @@ export default new Router({
       name: 'Events',
       component: Events,
       props: true
-    },{
+    },
+    {
+      path: '/events/detail',
+      name: 'EventsDetail',
+      component: EventsDetail,
+      props: true
+    },
+    {
       path: '/log-in',
       name: 'SignIn',
       component: SignInWithEmail

@@ -34,7 +34,7 @@ import EventList from '@/components/EventList.vue'
 import MainNav from '@/components/MainNav.vue'
 import Footer from '@/components/Footer.vue'
 import EventListMap from '@/components/EventListMap.vue'
-import { fetchUpcomingEventsWithinDistance, fetchEvents } from '@/utils/api.js'
+import { fetchEvents } from '@/utils/api.js'
 import { mapGetters } from 'vuex'
 
 var moment = require('moment')
@@ -44,7 +44,6 @@ export default {
   components: { EventList, MainNav, Footer, EventListMap },
   data () {
     return {
-      events: null,
       maximumDistanceFromUserInMiles: '5',
       showAllButtonText: 'Show all playdates',
       showShowAllButton: false,
@@ -60,7 +59,7 @@ export default {
       }
     },
     ...mapGetters([
-      'distanceFromCurrentUser', 'currentUser', 'isAuthenticated'
+      'distanceFromCurrentUser', 'currentUser', 'isAuthenticated', 'events'
     ])
   },
   watch: {
@@ -70,7 +69,7 @@ export default {
   },
   methods: {
     updateEventsForZoomLevel: async function (e) {
-      this.events = await fetchUpcomingEventsWithinDistance(e.miles, e.center.lat(), e.center.lng())
+      this.$store.dispatch('fetchUpcomingEventsWithinDistance', { miles: e.miles, lat: e.center.lat(), lng: e.center.lng() })
     },
     isToday: function (date) {
       return moment(0, 'HH').diff(date, 'days') === 0
@@ -79,10 +78,11 @@ export default {
       return moment(date).format('dddd, MMM Do')
     },
     fetchEventsWithinDistance: async function () {
-      this.events = await (fetchUpcomingEventsWithinDistance(
-        this.maximumDistanceFromUserInMiles,
-        this.currentUser.latitude,
-        this.currentUser.longitude))
+      this.$store.dispatch('fetchUpcomingEventsWithinDistance', {
+        miles: this.maximumDistanceFromUserInMiles,
+        lat: this.currentUser.latitude,
+        lng: this.currentUser.longitude
+      })
     },
     fetchAllUpcomingEvents: async function () {
       const res = (await fetchEvents('upcoming', e => e.startsAt)).slice(20)
@@ -104,10 +104,6 @@ export default {
 </script>
 
 <style scoped>
-select {
-  appearance: menulist;
-  --webkit-appearance: menulist;
-}
 
 .body {
   all: unset;

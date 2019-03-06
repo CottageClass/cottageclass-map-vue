@@ -1,11 +1,33 @@
+<!--
+This is the map view of a list of events
+ -->
+
 <template>
   <div class="container">
-    <p v-if="showSelector" class="distance-selector">Within
-      <select v-model="maximumDistanceFromUserInMiles">
-        <option v-for="distance in distanceOptions">{{distance}}</option>
-      </select> miles
-    </p>
-    <div class="map-wrapper" @click="mapClick">
+    <div v-if="showSelector" class="top-container">
+      <router-link
+      v-if="showNavigation"
+      :to="{name: 'Events'}"
+      class="back-button w-inline-block">
+        <img src="../assets/arrow-back-black.svg">
+      </router-link>
+      <p class="distance-selector">Within
+        <select v-model="maximumDistanceFromUserInMiles">
+          <option v-for="distance in distanceOptions">{{distance}}</option>
+        </select> miles
+      </p>
+      <a
+      v-if="showNavigation"
+      @click="switchType"
+      class="toggle-button w-inline-block">
+        <div>{{ otherType }}</div>
+      </a>
+
+    </div>
+    <div
+    v-if="type==='map'"
+    class="map-wrapper"
+    @click="mapClick">
       <GmapMap
       class="google-map"
       ref="mapRef"
@@ -16,12 +38,22 @@
       style="width: 100%; height: 100%;">
       </GmapMap>
     </div>
+    <div
+    v-if="type==='list'"
+    class="list-container w-container">
+      <EventList
+        class="list"
+        :events="events"
+        :noEventsMessage="noEventsMessage"
+      />
+    </div>
   </div>
 </template>
 
 <script>
 import maps from '@/mixins/maps'
 import screen from '@/mixins/screen'
+import EventList from '@/components/EventList.vue'
 
 const DISTANCE_OPTIONS = [ 1, 2, 5, 10, 20, 50 ]
 
@@ -29,9 +61,11 @@ export default {
   name: 'EventListMap',
   props: ['events', 'center'],
   mixins: [ maps, screen ],
+  components: { EventList },
   data () {
     return {
       map: null,
+      type: 'map',
       maximumDistanceFromUserInMiles: DISTANCE_OPTIONS[2],
       circles: []
     }
@@ -39,8 +73,11 @@ export default {
   methods: {
     mapClick () {
       if (this.isMobile) {
-        this.$router.push('/events/map')
+        this.$router.push({ name: 'EventsDetail' })
       }
+    },
+    switchType () {
+      this.type = this.otherType
     },
     updateEvents: async function () {
       this.map = await this.$refs.mapRef.$mapPromise
@@ -78,6 +115,18 @@ export default {
     }
   },
   computed: {
+    otherType: function () {
+      if (this.type === 'map') {
+        return 'list'
+      }
+      if (this.type === 'list') {
+        return 'map'
+      }
+      throw Error('Type is neither list nor map')
+    },
+    showNavigation: function () {
+      return this.$router.currentRoute.name === 'EventsDetail'
+    },
     centerLatLng: function () {
       return this.latlng(this.center.lat, this.center.lng)
     },
@@ -89,7 +138,8 @@ export default {
       }
     },
     showSelector: function () {
-      return this.$router.currentRoute.name === 'Events' && !this.isMobile
+      return (this.$router.currentRoute.name === 'Events' && !this.isMobile) ||
+             (this.$router.currentRoute.name === 'EventsDetail')
     }
   },
   watch: {
@@ -115,11 +165,17 @@ export default {
 }
 </script>
 
-<style scoped>
+<style scoped lang="scss">
 .distance-selector {
   text-align: center;
   margin: 10px;
 }
+
+select {
+  appearance: menulist;
+  --webkit-appearance: menulist;
+}
+
 .container {
   display: flex;
   flex-direction: column;
@@ -131,9 +187,45 @@ export default {
   background-position: 50% 50%;
   background-size: cover;
 }
+
 @media (max-width: 991px) {
   .map-wrapper {
-    height: 100%;
+    height: 200px;
+    flex: 1;
+  }
+
+  .top-container {
+    display: flex;
+    flex-direction: row;
+    height: 48px;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .back-button {
+    display: flex;
+    padding-left: 10px;
+  }
+
+  .toggle-button {
+    display: flex;
+    color: #1f88e9;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    text-decoration: none;
+    width: 66px;
+    height: 48px;
+    font-size: 13px;
+    text-align: center;
+    border-left: 1px solid rgba(0, 0, 0, .04);
+    align-items: center;
+    div {
+      margin: auto;
+    }
+  }
+  .list-container {
+    flex: 1;
+    overflow-y: scroll
   }
 }
 </style>

@@ -2,12 +2,14 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import * as api from '../utils/api'
 import createPersistedState from 'vuex-persistedstate'
+import events from './events'
 
 Vue.use(Vuex)
 
 export default new Vuex.Store(
   {
     plugins: [createPersistedState()],
+    modules: { events },
     state: {
       currentUser: null,
       alert: null,
