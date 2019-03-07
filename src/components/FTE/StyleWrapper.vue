@@ -13,9 +13,8 @@ export default {
 
 <style lang="scss">
 
-
 .onb-checkbox {
-  margin-top: 22px;
+  margin-top: 22px !important;
   padding-top: 0px;
   padding-bottom: 0px;
 }

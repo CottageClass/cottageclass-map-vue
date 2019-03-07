@@ -10,7 +10,7 @@
           :id="choice"
           :value="choice"
           :name="choice"
-          class="w-checkbox-input onb-checkbox"
+          class="onb-checkbox w-checkbox-input"
           v-model="state"
           >
           <label :for="choice" class="onb-checkbox-label w-form-label">
