@@ -385,20 +385,6 @@ img {
   margin-right: 6px;
 }
 
-.tag-group-container {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  margin-top: 6px;
-  margin-bottom: 8px;
-  -webkit-box-align: start;
-  -webkit-align-items: flex-start;
-  -ms-flex-align: start;
-  align-items: flex-start;
-  flex-wrap: wrap;
-}
-
 .time-group-container {
   display: -webkit-box;
   display: -webkit-flex;
@@ -1101,17 +1087,6 @@ img {
 
   .time {
     clear: both;
-  }
-
-  .tag-group-container {
-    display: -webkit-box;
-    display: -webkit-flex;
-    display: -ms-flexbox;
-    display: flex;
-    -webkit-box-align: start;
-    -webkit-align-items: flex-start;
-    -ms-flex-align: start;
-    align-items: flex-start;
   }
 
   .providerp-provider-info-section {
