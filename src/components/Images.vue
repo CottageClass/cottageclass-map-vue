@@ -2,7 +2,7 @@
   <span class="body">
     <div class="mask">
       <div class="scrolling-wrapper">
-        <div class="carousel-image-container" v-for="image in person.images"><img :src="image"></div>
+        <div class="carousel-image-container" v-for="image in images"><img :src="image"></div>
       </div>
     </div>
   </span>
@@ -11,7 +11,7 @@
 <script>
 export default {
   name: 'Images',
-  props: ['person']
+  props: ['images']
 }
 </script>
 
