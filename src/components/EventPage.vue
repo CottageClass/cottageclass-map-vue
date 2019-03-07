@@ -35,7 +35,7 @@
             :person="{facebookUid: participant.userFacebookUid, avatar: participant.userAvatar}"/>
           <img src="@/assets/check-circle-24.svg" alt="" class="checkmark-green">
         </router-link>
-        <div class="guests-text">
+        <div v-if="event.participatingParents.length" class="guests-text">
           <span v-for="(participant, index) in event.participatingParents.slice(0, 3)">
           <router-link
             :to="{ name: 'ProviderProfile', params: { id: participant.userId }}"
@@ -949,7 +949,7 @@ h1 {
   display: flex;
   width: 100%;
   margin-top: 16px;
-  padding: 32px 32px 180px;
+  padding: 32px 32px 60px;
   -webkit-box-orient: vertical;
   -webkit-box-direction: normal;
   -webkit-flex-direction: column;
