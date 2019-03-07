@@ -117,14 +117,10 @@
         <div class="card-large-text">
           <p v-for="paragraph in hostBio">{{ paragraph }}</p>
         </div>
-        <div v-if="images && images.length>0">
+        <div v-if="images && images.length>0" class="image-container">
           <div class="divider-1px"></div>
           <div class="card-section-text">Household Photos</div>
-          <div class="scrolling-wrapper-detail">
-            <img
-            v-for="image in images"
-            :src="image" alt="" class="event-household-photo">
-          </div>
+          <Images :images="images" />
         </div>
       </div>
 
@@ -172,8 +168,9 @@ import Footer from '@/components/Footer.vue'
 import EventCategoryIcon from '@/components/EventCategoryIcon.vue'
 import ChildAges from '@/components/ChildAges.vue'
 import Participants from '@/components/Participants.vue'
-import * as utils from '@/utils/utils.js'
+import Images from '@/components/Images.vue'
 
+import * as utils from '@/utils/utils.js'
 import { mapGetters } from 'vuex'
 import _ from 'lodash'
 
@@ -190,7 +187,8 @@ export default {
     EventCategoryIcon,
     EditButton,
     ChildAges,
-    Participants
+    Participants,
+    Images
   },
   data () {
     return {
@@ -320,6 +318,10 @@ body {
 .scrolling-wrapper-detail::-webkit-scrollbar {
   width: 0 !important;
   display: none;
+}
+
+.image-container {
+  width: 80%;
 }
 
 h1 {
