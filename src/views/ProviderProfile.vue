@@ -53,8 +53,12 @@
 <!-- Leave a review -->
 
           <div class="providerp-post-comment-container"><a :href="'mailto:contact@cottageclass.com?subject=Great experience with ' + user.firstName + ' ' + user.lastInitial + '. (' + user.id + ')&body=(please%20describe%20your%20great%20experience%20here!)'" class="pprofile-compose-button w-inline-block"><img src="../assets/compose.svg" class="image-5"><div class="pprofile-comment-prompt-button-text">Post a great experience</div></a>
-            <div class="providerp-book-care-container" v-if="userAvailableSometimes">
-              <router-link :to="{ name: 'RequestModal', params: { id: user.id }}" class="pprovider-book-care-button w-inline-block"><img src="../assets/request-care-white.svg"><div class="pprovider-primary-action-text">Request childcare</div>
+            <div class="providerp-book-care-container" v-if="userAvailableSometimes && !isCurrentUser">
+              <router-link
+              :to="{ name: 'RequestModal', params: { id: user.id }}"
+              class="pprovider-book-care-button w-inline-block">
+                <img src="../assets/request-care-white.svg"
+                ><div class="pprovider-primary-action-text">Request childcare</div>
               </router-link>
             </div>
           </div>
@@ -379,20 +383,6 @@ img {
 .image-time {
   margin-top: 2px;
   margin-right: 6px;
-}
-
-.tag-group-container {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  margin-top: 6px;
-  margin-bottom: 8px;
-  -webkit-box-align: start;
-  -webkit-align-items: flex-start;
-  -ms-flex-align: start;
-  align-items: flex-start;
-  flex-wrap: wrap;
 }
 
 .time-group-container {
@@ -1097,17 +1087,6 @@ img {
 
   .time {
     clear: both;
-  }
-
-  .tag-group-container {
-    display: -webkit-box;
-    display: -webkit-flex;
-    display: -ms-flexbox;
-    display: flex;
-    -webkit-box-align: start;
-    -webkit-align-items: flex-start;
-    -ms-flex-align: start;
-    align-items: flex-start;
   }
 
   .providerp-provider-info-section {
