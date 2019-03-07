@@ -107,7 +107,8 @@ export default {
       phone: {},
       availability: {},
       showError: false,
-      saveButtonText: 'Save'
+      saveButtonText: 'Save',
+      children: null
     }
   },
   created: function () {
@@ -117,9 +118,9 @@ export default {
       availableEvenings: !!this.currentUser.availableEvenings,
       availableWeekends: !!this.currentUser.availableWeekends
     }
+    this.children = { 'list': this.currentUser.children || [] }
   },
   computed: {
-    children: function () { return { 'list': this.currentUser.children } },
     error: function () {
       if (!!this.phone.err || !!this.location.err || !!this.children.err) {
         return true
