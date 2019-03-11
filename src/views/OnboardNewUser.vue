@@ -8,7 +8,7 @@
           @prev="prevStep"
           :hidePrevious="stepIndex === 0"
         />
-        <OnboardingStyleWrapper styleIs="onboarding">
+        <StyleWrapper styleIs="onboarding">
           <ErrorMessage v-if="error && this.showError" :text="error" />
           <Phone
             v-if="currentStep === 'phone'"
@@ -18,7 +18,8 @@
           <Location
             v-if="currentStep === 'location'"
             v-model="userData.location"
-            @pressedEnter="nextStep" />
+            @pressedEnter="nextStep"
+            required="true"/>
           <Children
             v-if="currentStep === 'children'"
             v-model="userData.children" />
@@ -57,7 +58,7 @@
             v-model="userData.pets" />
           <HouseRules v-if="currentStep === 'houseRules'"
             v-model="userData.houseRules" />
-        </OnboardingStyleWrapper>
+        </StyleWrapper>
       </div>
     </div>
   </div>
@@ -66,12 +67,11 @@
 <script>
 import * as api from '@/utils/api'
 import * as Token from '@/utils/tokens'
-import normalize from 'json-api-normalizer'
 import { mapGetters } from 'vuex'
 import sheetsu from 'sheetsu-node'
 import moment from 'moment'
 
-import OnboardingStyleWrapper from '@/components/FTE/OnboardingStyleWrapper.vue'
+import StyleWrapper from '@/components/FTE/StyleWrapper.vue'
 import Nav from '@/components/FTE/Nav.vue'
 import ErrorMessage from '@/components/base/ErrorMessage.vue'
 
@@ -107,7 +107,7 @@ export default {
   name: 'OnboardNewUser',
   props: [],
   components: {
-    OnboardingStyleWrapper,
+    StyleWrapper,
     Nav,
     ErrorMessage,
     Phone,
@@ -152,7 +152,11 @@ export default {
       return stepSequence[this.stepIndex]
     },
     nextButtonState () {
-      return 'next'
+      if (this.modelForCurrentStep.err) {
+        return 'inactive'
+      } else {
+        return 'next'
+      }
     },
     modelForCurrentStep () {
       const models = {
@@ -200,12 +204,12 @@ export default {
         }
       }
     },
-    ...mapGetters(['currentUser'])
+    ...mapGetters(['currentUser', 'rsvpAttemptedId'])
 
   },
   methods: {
     submitEventData: function () {
-      return this.axios.post(`${process.env.BASE_URL_API}/api/event_series`, this.eventDataForSubmissionToAPI)
+      return api.submitEventSeriesData(this.eventDataForSubmissionToAPI)
     },
     finishOnboarding () {
       // send the data to the server
@@ -215,7 +219,7 @@ export default {
         userId,
         this.userData.phone,
         this.userData.location,
-        this.userData.availability,
+        this.userData.emergencyCare,
         this.userData.children
       )
       submitInfo.catch(err => {
@@ -243,7 +247,7 @@ export default {
         return that.$store.dispatch('establishCurrentUserAsync', userId)
       }).then(() => {
         that.submitEventData().then(res => {
-          that.$store.commit('setCreatedEventData', { eventData: normalize(res.data) })
+          that.$store.commit('setCreatedEvents', { eventData: res })
         })
       }).then(res => {
         console.log('event creation SUCCESS')
@@ -276,6 +280,7 @@ export default {
         } else if (this.currentStep === 'emergencyCare' && this.substep === 'canProvide' && this.userData.emergencyCare.isTrue) {
           this.substep = 'availability'
         } else {
+          this.$ga.event('onboarding', 'stepComplete', this.currentStep)
           this.stepIndex += 1
           if (this.currentStep === 'pets') {
             this.substep = 'hasPets'

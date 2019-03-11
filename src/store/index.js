@@ -1,7 +1,6 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import * as api from '../utils/api'
-import moment from 'moment'
 import createPersistedState from 'vuex-persistedstate'
 
 Vue.use(Vuex)
@@ -10,16 +9,12 @@ export default new Vuex.Store(
   {
     plugins: [createPersistedState()],
     state: {
-      eventsByDate: null, // We shouldn't store all events.  It will have to change later
       currentUser: null,
       alert: null,
-      createdEventData: null,
+      createdEvents: null,
       RSVPAttempEventId: null
     },
     mutations: {
-      setEventsByDate: (state, payload) => {
-        state.eventsByDate = payload.events
-      },
       setCurrentUser: (state, payload) => {
         state.currentUser = payload.user
       },
@@ -36,22 +31,11 @@ export default new Vuex.Store(
         state.alert = payload.alert
         state.alert.preshow = true // this indicates that we will show the alert in the next route
       },
-      setCreatedEventData: (state, payload) => {
-        state.createdEventData = payload.eventData
+      setCreatedEvents: (state, payload) => {
+        state.createdEvents = payload.eventData
       }
     },
     actions: {
-      //////////////////////////////////////////
-      // Once again, we should not be doing this
-      //////////////////////////////////////////
-      fetchAllEventsAsync: ({ commit }) => {
-        api.fetchEvents().then(events => {
-          events.sort((eventA, eventB) => {
-            return moment(eventA.startsAt).diff(moment(eventB.startsAt))
-          })
-          commit('setEventsByDate', { events })
-        })
-      },
       establishCurrentUserAsync: ({ commit }, userId) => {
         console.log('establish')
         if (userId === null) {
@@ -89,9 +73,16 @@ export default new Vuex.Store(
         return state.currentUser !== null
       },
       alert: state => state.alert,
+      firstCreatedEvent: (state, getters) => {
+        if (state.createdEvents) {
+          return state.createdEvents[0]
+        } else {
+          return null
+        }
+      },
       firstCreatedEventId: (state) => {
-        if (state.createdEventData) {
-          return Object.keys(state.createdEventData.event).sort()[0]
+        if (state.createdEvents) {
+          return state.createdEvents[0].id
         } else {
           return null
         }

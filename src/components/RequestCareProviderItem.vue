@@ -1,5 +1,5 @@
 <template>
-  <router-link :to="{ name: 'ProviderProfile', params: { person, id: person.id }}">
+  <router-link class="provider-item-link" :to="{ name: 'ProviderProfile', params: { person, id: person.id }}">
   <span class="'body'">
     <div class="landing-page-list-item-header">
       <div class="avatar-name-container">
@@ -18,8 +18,10 @@
         </div>
       </router-link>
     </div>
+<!-- todo: replace with new images     
     <Images :person="person" />
-
+    -->
+<!-- todo: replace with real employer info.      
     <div class="title-bar-and-action-v2">
       <div class="div-block-7">
         <div class="name-and-caption">
@@ -28,10 +30,15 @@
           </h5>
         </div>
       </div>
+      -->
+<!-- todo: replace with child age info.      
       <h5 class="caption" v-if="person.children.length">
         <ChildInfo :children="person.children" />
       </h5>
+-->  
+<!-- Todo: fix style     
       <ProviderInfo :person="person" />
+-->      
     </div>
   </span>
 </router-link>
@@ -62,7 +69,12 @@ export default {
   background-color: #d1e3f0;
 }
 
-a {
+.provider-item-link {
+  text-decoration: none;
+  color: #333;
+}
+
+.provider-item-link:hover {
   text-decoration: none;
 }
 
@@ -1008,6 +1020,7 @@ img {
   -ms-flex-align: center;
   align-items: center;
   background-color: #fff;
+  margin: 1px 0 1px 0;
 }
 
 @media (max-width: 479px) {

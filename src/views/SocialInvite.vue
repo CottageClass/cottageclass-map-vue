@@ -1,5 +1,5 @@
 <template>
-<OnboardingStyleWrapper styleIs="onboarding">
+<StyleWrapper styleIs="onboarding">
   <div class="onb-body">
     <div class="body">
       <div class="content-wrapper">
@@ -37,7 +37,7 @@
       </div>
     </div>
   </div>
-</OnboardingStyleWrapper>
+</StyleWrapper>
 </template>
 
 <script>
@@ -54,13 +54,12 @@ import TextMessageLink from '@/components/TextMessageLink.vue'
 import EventListItem from '@/components/EventListItem.vue'
 import Nav from '@/components/FTE/Nav.vue'
 import * as api from '@/utils/api.js'
-import OnboardingStyleWrapper from '@/components/FTE/OnboardingStyleWrapper.vue'
+import StyleWrapper from '@/components/FTE/StyleWrapper.vue'
 import { mapGetters } from 'vuex'
 
 export default {
   name: 'SocialInvite',
-  components: { TextMessageLink, EventListItem, Nav, OnboardingStyleWrapper },
-  props: [ 'eventData' ],
+  components: { TextMessageLink, EventListItem, Nav, StyleWrapper },
   data () {
     return {
       copyButtonText: 'copy link',
@@ -69,42 +68,33 @@ export default {
       emailBody: 'Hi%20everyone!%0A%0AI%20hope%20you%20can%20all%20join%20me%20at%20this%20event%20we%20are%20hosting%20to%20start%20a%20new%20local%20network%20for%20sharing%20childcare!%20Can%20you%20come%3F%0A%0A',
       emailSubject: 'Sharing%20childcare%20(we%20should%20do%20this!)',
       isMobileDevice: typeof window.orientation !== 'undefined',
-      events: null
+      fetchedEvent: null
     }
   },
   mounted: function () {
     this.fetchEvent()
   },
   computed: {
+    eventId: function () {
+      if (this.$route.params.id) {
+        return this.$route.params.id
+      } else if (this.firstCreatedEvent.id) {
+        return this.firstCreatedEvent.id
+      }
+      return null
+    },
     shareUrl: function () {
-      if (this.nextEventInSeries) {
-        return 'www.kidsclub.io/event/' + this.nextEventInSeries.id
-      } else if (this.$route.params.id) {
-        return 'www.kidsclub.io/event/' + this.$route.params.id
-      } else if (this.firstCreatedEventId) {
-        return 'www.kidsclub.io/event/' + this.firstCreatedEventId
+      if (this.eventId) {
+        return 'www.kidsclub.io/event/' + this.eventId
       } else {
         return 'www.kidsclub.io'
       }
     },
-    nextEventInSeries: function () {
-      if (this.eventData) {
-        let events = this.eventData.event
-        let eventIds = Object.keys(events)
-        let eventId = eventIds[0]
-        let event = events[eventId].attributes
-        event.id = eventId
-        event.activityName = event.activityNames.length > 0 && event.activityNames[0]
-        return event
-      } else {
-        return null
-      }
-    },
     eventToShare: function () {
-      if (this.nextEventInSeries) {
-        return this.nextEventInSeries
+      if (this.firstCreatedEvent) {
+        return this.firstCreatedEvent
       } else {
-        return this.eventFromParams
+        return this.fetchedEvent
       }
     },
     textMessage: function () {
@@ -125,27 +115,22 @@ export default {
     emailLink: function () {
       return 'mailto:?subject=' + this.emailSubject + '&body=' + this.emailBody + 'https%3A%2F%2F' + this.shareUrl + '%2F%0A%0AThanks!%0A%3C3'
     },
-    eventFromParams: function () {
-      if (Array.isArray(this.events)) {
-        return this.events.find(event => event.id === this.$route.params.id)
-      } else {
-        return {}
-      }
-    },
-    ...mapGetters([ 'firstCreatedEventId' ])
+    ...mapGetters([ 'firstCreatedEvent' ])
   },
   methods: {
     nextStep () {
-      this.$router.push({ name: 'InviteExistingUsers', params: { id: this.firstCreatedEventId } })
+      if (this.firstCreatedEvent) {
+        // this is the case if we're in the FTE flow
+        this.$router.push({ name: 'InviteExistingUsers', params: { id: this.firstCreatedEvent.id } })
+      } else {
+        this.$router.go(-1)
+      }
     },
     onCopy: function () {
       this.copyButtonText = 'copied!'
     },
-    fetchEvent: function () {
-      api.fetchEvents(this.$route.params.id).then(
-        (res) => {
-          this.events = res
-        })
+    fetchEvent: async function () {
+      this.events = await api.fetchEvent(this.eventId)
     }
   }
 }

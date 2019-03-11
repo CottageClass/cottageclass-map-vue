@@ -15,7 +15,7 @@
         <option>50</option>
       </select> miles</p>
       <EventList
-          :events="eventsSortedByDate"
+          :events="events"
           :noEventsMessage="noEventsMessage"
       />
     </div>
@@ -50,14 +50,6 @@ export default {
     }
   },
   computed: {
-    eventsSortedByDate: function () {
-      if (this.events) {
-        return this.events.concat().sort((eventA, eventB) => {
-          return moment(eventA.startsAt).diff(moment(eventB.startsAt))
-        })
-      }
-      return null
-    },
     ...mapGetters([
       'distanceFromCurrentUser', 'currentUser', 'isAuthenticated'
     ])
@@ -81,18 +73,14 @@ export default {
     formatDate: function (date) {
       return moment(date).format('dddd, MMM Do')
     },
-    fetchEventsWithinDistance: function () {
-      api.fetchUpcomingEventsWithinDistance(this.maximumDistanceFromUserInMiles, this.currentUser.latitude, this.currentUser.longitude).then(
-        (res) => {
-          this.events = res
-        })
+    fetchEventsWithinDistance: async function () {
+      this.events = await api.fetchUpcomingEventsWithinDistance(
+        this.maximumDistanceFromUserInMiles,
+        this.currentUser.latitude,
+        this.currentUser.longitude)
     },
-    fetchAllUpcomingEvents: function () {
-      api.fetchEvents('upcoming').then(
-        (res) => {
-          this.events = res
-        }
-      )
+    fetchAllUpcomingEvents: async function () {
+      this.events = await api.fetchEvents('upcoming', e => e.startsAt)
     }
   },
   mounted: function () {

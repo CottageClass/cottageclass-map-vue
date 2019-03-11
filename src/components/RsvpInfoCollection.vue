@@ -1,5 +1,5 @@
 <template>
-<OnboardingStyleWrapper styleIs="onboarding">
+<StyleWrapper styleIs="onboarding">
 
   <!-- wrapper for desktop screens -->
 
@@ -23,15 +23,14 @@
   title="Which children would you like to RSVP?"
   :subtitle="spotsRemainingPhrase"
   >
-   <MultipleChoice
-   type="checkbox"
+   <Checkboxes
    v-model="childrenSelected"
-   :labelsAndOrder="labelsAndOrder"/>
+   :labels="labelsAndOrder"/>
  </Question>
 </div>
 </div>
 </div>
-</OnboardingStyleWrapper>
+</StyleWrapper>
 </template>
 
 <script>
@@ -41,8 +40,8 @@ import * as utils from '@/utils/utils.js'
 import Nav from '@/components/FTE/Nav.vue'
 import ErrorMessage from '@/components/base/ErrorMessage.vue'
 import Question from '@/components/base/Question.vue'
-import MultipleChoice from '@/components/base/MultipleChoice.vue'
-import OnboardingStyleWrapper from '@/components/FTE/OnboardingStyleWrapper.vue'
+import Checkboxes from '@/components/base/Checkboxes.vue'
+import StyleWrapper from '@/components/FTE/StyleWrapper.vue'
 import sheetsu from 'sheetsu-node'
 // this component has a working loading indicator and no other logic. todo: break out and rename.
 import LoadingSpinner from '@/components/LoadingSpinner.vue'
@@ -53,7 +52,7 @@ var client = sheetsu({ address: 'https://sheetsu.com/apis/v1.0su/62cd725d6088' }
 
 export default {
   name: 'RsvpInfoCollection',
-  components: { Nav, LoadingSpinner, ErrorMessage, MultipleChoice, OnboardingStyleWrapper, Question },
+  components: { Nav, LoadingSpinner, ErrorMessage, Checkboxes, StyleWrapper, Question },
   data () {
     return {
       childrenSelected: [],
@@ -161,18 +160,16 @@ export default {
     calculateAge: function (birthdate) {
       return moment().diff(birthdate, 'years')
     },
-    fetchEventInformation: function () {
-      api.fetchEvents(this.$route.params.eventId).then(
-        (res) => {
-          this.event = res[0]
-          if (this.event.full || this.event.maximumChildren === 0) {
-            this.error = 'We\'re sorry, this event is full!'
-          }
-        }).catch(
-        (err) => {
-          console.log(err.stack)
-          this.error = 'Sorry, there was a problem retrieving information about the event. Go back and try again?'
-        })
+    fetchEventInformation: async function () {
+      try {
+        this.event = await api.fetchEvent(this.$route.params.eventId)
+        if (this.event.full || this.event.maximumChildren === 0) {
+          this.error = 'We\'re sorry, this event is full!'
+        }
+      } catch (err) {
+        console.log(err.stack)
+        this.error = 'Sorry, there was a problem retrieving information about the event. Go back and try again?'
+      }
     },
     nextStep: function () {
       if (this.tooManyChildren) {
@@ -197,13 +194,16 @@ export default {
       // open event page where user will see success message
         component.sendNotifications()
         component.forgetRsvpAttempted()
-        this.$store.commit('showAlertOnNextRoute', {
+        return this.$store.commit('showAlertOnNextRoute', {
           alert: {
             message: "Congratulations, you have RSVP&apos;ed to this event! You&apos;ll soon receive an email confirming your RSVP.",
             status: 'success'
           }
         })
-        component.$router.push({ name: 'EventPage', params: { id: this.eventId } })
+      }).then(res => {
+        return component.$ga.event('RSVP', 'sent', component.eventId)
+      }).then(res => {
+        return component.$router.push({ name: 'EventPage', params: { id: this.eventId } })
       }).catch(err => {
         console.log(err)
         this.error = 'Sorry, there was a problem submitting your RSVP. Try again?'

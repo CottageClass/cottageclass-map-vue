@@ -3,8 +3,10 @@
 This is the Vue.js frontend for https://www.kidsclub.io. Code for the Rails backend lives at: https://github.com/CottageClass/cottageclass-app-api
 
 ##Setup
+* make sure you're using the right version of npm and of python
 First run :
- `npm install`
+
+```npm install```
 
 ## Running locally
 

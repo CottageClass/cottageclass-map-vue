@@ -3,7 +3,7 @@ import Router from 'vue-router'
 import RequestCare from '@/components/RequestCare.vue'
 import Bookings from '@/components/Bookings'
 import EmergencyInfo from '@/components/EmergencyInfo'
-import ProviderProfile from '@/components/ProviderProfile.vue'
+import ProviderProfile from '@/views/ProviderProfile.vue'
 import RequestModal from '@/components/RequestModal.vue'
 import HowItWorks from '@/components/HowItWorks.vue'
 import SplashPage from '@/views/SplashPage.vue'
@@ -30,6 +30,7 @@ import OnboardNewUser from '@/views/OnboardNewUser.vue'
 import RSVPPrompt from '@/views/RSVPPrompt.vue'
 import InviteExistingUsers from '@/views/InviteExistingUsers.vue'
 import PasswordReset from '@/views/PasswordReset.vue'
+import ContactForm from '@/views/ContactForm.vue'
 
 Vue.use(Router)
 
@@ -66,7 +67,7 @@ export default new Router({
       component: Events,
       props: true
     },{
-      path: '/sign-in',
+      path: '/log-in',
       name: 'SignIn',
       component: SignInWithEmail
     },
@@ -194,6 +195,12 @@ export default new Router({
       path: '/password-reset',
       name: 'PasswordReset',
       component: PasswordReset
+    },
+    {
+      path: '/contact/:eventId',
+      name: 'ContactForm',
+      component: ContactForm,
+      props: true
     }
   ],
   scrollBehavior (to, from, savedPosition) {

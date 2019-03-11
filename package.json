@@ -6,14 +6,13 @@
   "author": "holmesworcester <hwilson@gmail.com>",
   "scripts": {
     "build": "node build/build.js",
-    "test": "npm run unit && npm run e2e",
     "e2e": "node test/e2e/runner.js",
     "lint": "vue-cli-service lint",
     "deploy": "node ./node_modules/vue-gh-pages/index.js -b gh-pages",
     "dev": "webpack-dev-server --inline --progress --config build/webpack.dev.conf.js",
     "heroku-postbuild": "npm run build",
     "start": "node server.js",
-    "unit": "jest --config test/unit/jest.conf.js --coverage"
+    "test": "jest --config ./jest.conf.js --watch"
   },
   "dependencies": {
     "@pderas/vue2-geocoder": "^1.0.2",
@@ -36,7 +35,8 @@
     "sass-loader": "^7.1.0",
     "sheetsu-node": "0.0.7",
     "vee-validate": "^2.1.4",
-    "vue": "^2.5.2",
+    "vue": "^2.6.8",
+    "vue-analytics": "^5.16.2",
     "vue-authenticate": "^1.3.4",
     "vue-axios": "^2.1.3",
     "vue-clickaway": "^2.2.2",
@@ -52,6 +52,7 @@
   "devDependencies": {
     "@vue/cli-plugin-eslint": "^3.3.0",
     "@vue/cli-plugin-pwa": "^3.0.3",
+    "@vue/test-utils": "^1.0.0-beta.29",
     "autoprefixer": "^7.1.2",
     "babel-core": "^6.22.1",
     "babel-eslint": "^10.0.1",
@@ -109,7 +110,7 @@
     "vue-jest": "^1.0.2",
     "vue-loader": "^15.5.1",
     "vue-style-loader": "^3.0.1",
-    "vue-template-compiler": "^2.5.2",
+    "vue-template-compiler": "^2.6.8",
     "webpack": "^3.6.0",
     "webpack-bundle-analyzer": "^2.9.0",
     "webpack-dev-server": "^2.9.1",
