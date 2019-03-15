@@ -157,9 +157,8 @@ export default {
     if (this.events && this.events.length) {
       // draw in events if they are already loaded
       this.updateEvents()
-    } else {
-      map.setCenter(this.centerLatLng)
     }
+    map.setCenter(this.centerLatLng)
     this.setZoomLevelForMaxDistance()
   }
 }
