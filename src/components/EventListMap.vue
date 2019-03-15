@@ -134,7 +134,7 @@ export default {
     mapOptions: function () {
       return {
         'disableDefaultUI': true, // turns off map controls
-        'gestureHandling': this.isMobile ? 'none' : 'cooperative' // allow scrolling on desktop but not mobile'
+        'gestureHandling': 'greedy'
       }
     },
     showSelector: function () {
