@@ -72,7 +72,7 @@ export default {
   },
   methods: {
     mapClick () {
-      if (this.isMobile) {
+      if (this.isMobile && this.$router.currentRoute.name === 'Events') {
         this.$router.push({ name: 'EventsDetail' })
       }
     },
@@ -99,6 +99,7 @@ export default {
         if (circle) {
           that.circles.push(circle)
           circle.addListener('click', function () {
+            console.log('clicked circle, should open event #' + event.id)
             that.$router.push({ name: 'EventPage', params: { id: event.id } })
           })
         }
