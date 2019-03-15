@@ -32,7 +32,7 @@ This is the map view of a list of events
       class="google-map"
       ref="mapRef"
       :disableDefaultUI="true"
-      :center="centerLatLng"
+      :center="{ lat: 40.689587754466, lng: -73.9978254887843 }"
       :zoom="13"
       :options="mapOptions"
       style="width: 100%; height: 100%;">
