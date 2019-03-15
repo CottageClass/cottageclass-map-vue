@@ -28,6 +28,7 @@ This is the map view of a list of events
     v-if="type==='map'"
     class="map-wrapper"
     @click="mapClick">
+    <a href="" @click.prevent="" class="map-button-1 w-button">Search this area</a>
       <GmapMap
       class="google-map"
       ref="mapRef"
@@ -99,7 +100,6 @@ export default {
         if (circle) {
           that.circles.push(circle)
           circle.addListener('click', function () {
-            console.log('clicked circle, should open event #' + event.id)
             that.$router.push({ name: 'EventPage', params: { id: event.id } })
           })
         }
@@ -186,6 +186,55 @@ select {
   min-width: 100%;
   background-position: 50% 50%;
   background-size: cover;
+  position: relative;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  width: 100%;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+  -webkit-flex-direction: row;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  -webkit-box-align: start;
+  -webkit-align-items: flex-start;
+  -ms-flex-align: start;
+  align-items: flex-start;
+  background-color: #fff;  
+}
+
+.map-button-1 {
+  position: absolute;
+  top: 0%;
+  z-index: 1000;
+  width: auto;
+  margin-top: 12px;
+  padding: 12px 16px;
+  -webkit-align-self: flex-end;
+  -ms-flex-item-align: end;
+  align-self: flex-end;
+  border: 1px solid #1f88e9;
+  border-radius: 4px;
+  background-color: #1f88e9;
+  box-shadow: 0 1px 20px 0 rgba(0, 0, 0, .4);
+  opacity: 0.9;
+  font-weight: 400;
+  text-align: center;
+}
+
+.map-button-1:hover {
+  background-image: -webkit-gradient(linear, left top, left bottom, from(rgba(0, 0, 0, .1)), to(rgba(0, 0, 0, .1)));
+  background-image: linear-gradient(180deg, rgba(0, 0, 0, .1), rgba(0, 0, 0, .1));
+}
+
+.map-button-1:active {
+  background-image: -webkit-gradient(linear, left top, left bottom, from(rgba(0, 0, 0, .1)), to(rgba(0, 0, 0, .1)));
+  background-image: linear-gradient(180deg, rgba(0, 0, 0, .1), rgba(0, 0, 0, .1));
 }
 
 @media (max-width: 991px) {
