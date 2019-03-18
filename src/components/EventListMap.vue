@@ -25,7 +25,7 @@ This is the map view of a list of events
 
     </div>
     <div
-    v-if="type==='map'"
+    v-show="type==='map'"
     class="map-wrapper"
     @click="mapClick">
     <a
