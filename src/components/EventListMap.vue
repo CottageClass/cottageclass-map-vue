@@ -189,8 +189,9 @@ select {
 .container {
   display: flex;
   flex-direction: column;
-  background-color: white;
+  background-color: #f6f6f6;
 }
+
 .map-wrapper {
   height: 412px;
   min-width: 100%;
@@ -259,6 +260,7 @@ select {
     height: 48px;
     justify-content: space-between;
     align-items: center;
+    background-color: white;
   }
 
   .back-button {
