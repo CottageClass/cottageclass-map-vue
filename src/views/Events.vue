@@ -4,8 +4,8 @@
     <div class="content-section background-01">
       <div class="divider-2px"></div>
       <div class="top-container w-container">
-        <h1 class="title">Book a Playdate</h1>
-        <div class="page-subtitle">Here are some playdates that are booking up soon. <strong>Reserve your spot</strong> before they’re booked.</div>
+        <h1 class="title">Find nearby playdates</h1>
+        <div class="page-subtitle">The hosts of the playdates below are looking to meet other nearby parents. <strong>RSVP, or reach out &amp; introduce yourself</strong>.</div>
       </div>
       <div class="main-container">
         <div class="map-list-container">
