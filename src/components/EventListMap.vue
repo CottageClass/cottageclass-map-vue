@@ -61,6 +61,7 @@ This is the map view of a list of events
 import maps from '@/mixins/maps'
 import screen from '@/mixins/screen'
 import EventList from '@/components/EventList.vue'
+import _ from 'lodash/fp'
 
 const DISTANCE_OPTIONS = [ 1, 2, 5, 10, 20, 50 ]
 
@@ -97,7 +98,7 @@ export default {
       this.circles = []
 
       const that = this
-      for (let event of this.events) {
+      for (let event of _.reverse(this.events)) {
         const circle = that.addCircle(
           { lat: event.hostFuzzyLatitude, lng: event.hostFuzzyLongitude },
           0.2,
