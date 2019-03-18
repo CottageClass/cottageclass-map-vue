@@ -28,7 +28,13 @@ This is the map view of a list of events
     v-if="type==='map'"
     class="map-wrapper"
     @click="mapClick">
-    <a href="" @click.prevent="searchButtonClick" class="map-button-1 w-button">Search this area</a>
+    <a
+     v-if="showNavigation || !isMobile"
+     href=""
+     @click.prevent="searchButtonClick"
+     class="map-button-1 w-button">
+     Search this area
+     </a>
       <GmapMap
       class="google-map"
       ref="mapRef"
@@ -116,7 +122,7 @@ export default {
     },
     searchButtonClick: async function () {
       const map = await this.$refs.mapRef.$mapPromise
-      this.$emit('maxDistanceSet', { center: map.center, miles: this.maximumDistanceFromUserInMiles })
+      this.$emit('maxDistanceSet', { center: map.center, miles: this.maximumDistanceFromUserInMiles }) // this should get the zoom level from the actual map
     }
   },
   computed: {

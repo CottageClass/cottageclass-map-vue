@@ -211,6 +211,7 @@ a {
 
 .events-list-wrapper {
   width: 100%;
+  margin-top: -84px;
 }
 
 .event-date-section-tittle {
@@ -218,9 +219,9 @@ a {
   display: -webkit-flex;
   display: -ms-flexbox;
   display: flex;
-  margin-top: 16px;
+  margin-top: 68px;
   margin-bottom: 16px;
-  padding: 4px 16px 4px 0px;
+  padding: 16px 16px 16px 0px;
   -webkit-box-pack: start;
   -webkit-justify-content: flex-start;
   -ms-flex-pack: start;
@@ -230,10 +231,6 @@ a {
   -ms-flex-align: center;
   align-items: center;
   border-radius: 4px;
-}
-.event-date-section-tittle:first-of-type {
-  margin-top: 0px;
-  padding-top: 0px;
 }
 
 .date-title {
@@ -356,6 +353,10 @@ a {
 
   .content-container-4 {
     padding-bottom: 128px;
+  }
+
+  .events-list-wrapper {
+    margin-top: -48px;
   }
 }
 
