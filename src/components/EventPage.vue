@@ -197,8 +197,7 @@ export default {
       mapOptions: {
         'disableDefaultUI': true, // turns off map controls
         'gestureHandling': 'none' // prevents any kind of scrolling
-      },
-      locationPlaceholder: { 'lat': 40.6869221, 'lng': -73.9978474 } // todo: pull from actual location
+      }
     }
   },
   methods: {

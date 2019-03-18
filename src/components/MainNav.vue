@@ -21,7 +21,7 @@
       class="nav-links-expanded">
         <ul class="unordered-list-2 w-list-unstyled">
           <li>
-            <router-link to="/home" class="link-block w-inline-block">
+            <router-link :to="{name: 'Events'}" class="link-block w-inline-block">
               <div class="text-block">Upcoming Playdates</div>
             </router-link>
           </li>
@@ -110,7 +110,7 @@ export default {
   },
   computed: {
     logoRouterTarget () {
-      return this.isAuthenticated ? 'Home' : 'SplashPage'
+      return this.isAuthenticated ? 'Events' : 'SplashPage'
     },
     ... mapGetters([ 'isAuthenticated', 'currentUser', 'alert' ])
   }
