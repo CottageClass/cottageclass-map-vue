@@ -18,7 +18,7 @@ npm run dev
 
 ## Deploying
 
-Changes to master will auto deploy to https://cottageclass-app-staging.herokuapp.com/. Once staging has been QA'd, we use Heroku "pipelines" to push master to production with one click.
+Changes to master will auto deploy to https://cottageclass-app-staging.herokuapp.com/. Once staging has been QA'd, deploy to production **directly from source**.  Ie. do not use the "push to production" feature in heroku pipelines becuase environment variables will not be set in the javascript.  Namely `GOOGLE_ANALYTICS_ID` is fetched during the webpacker phase and that is baked in the js that is deployed.  
 
 ## Testing locally with Express.js
 
